@@ -1,5 +1,5 @@
 /******************************************************** MAIN **********************************************************************/
-.home{
+.main{
     width: 92%;
     left: 8%;
     position: relative;
@@ -137,7 +137,7 @@
 /* MEDIA QUERY */
 
 @media (max-width: rem(1440px))  {
-    .home{
+    .main{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{
@@ -171,7 +171,7 @@
 
 
 @media (max-width: rem(1200px))  {
-    .home{
+    .main{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{
@@ -195,7 +195,7 @@
 
 /* Tablette */
 @media (max-width: rem(900px))  {
-    .home{
+    .main{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{
