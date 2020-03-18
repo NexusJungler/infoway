@@ -1,5 +1,8 @@
 # Working with multiple databases (Symfony v.4)
 
+## create database
+> php bin/console doctrine:database:create --em=[connection_name]
+
 ## Create entities
 > php bin/console make:entity `[namespace]\[entity_name]`
 
@@ -11,4 +14,5 @@
 
 ## Execute fixtures
 > php bin/console doctrine:fixtures:load --group=[group_name]
+
 
