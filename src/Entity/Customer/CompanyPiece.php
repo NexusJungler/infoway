@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Table(name="company_piece")
  * @ORM\Entity(repositoryClass="App\Repository\Customer\CompanyPieceRepository")
  */
 class CompanyPiece
@@ -52,7 +53,6 @@ class CompanyPiece
      */
     private $city;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="CompanyPieceType", inversedBy="CompanyPiece")
      * @ORM\JoinColumn(nullable=false)
@@ -60,6 +60,9 @@ class CompanyPiece
     private $type;
 
     /**
+     * CompanyPiece is in Customer db,so we will use our Api to simulate this relation
+     * Relation : ManyToOne (Many CompanyPiece can be link with same Admin\Country)
+     *
      * @ORM\Column(type="integer")
      */
     private $country;
@@ -68,6 +71,15 @@ class CompanyPiece
      * @ORM\Column(type="string")
      */
     private $logoName;
+
+    /**
+     * CompanyPiece is in Customer db,so we will use our Api to simulate this relation
+     * Relation : ManyToOne (Many CompanyPiece can be link with same Admin\TimeZone)
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $timeZone;
+
 
     public function getId(): ?int
     {
@@ -98,12 +110,12 @@ class CompanyPiece
         return $this;
     }
 
-    public function getPostalCode(): ?int
+    public function getPostalCode(): ?string
     {
         return $this->postal_code;
     }
 
-    public function setPostalCode(?int $postal_code): self
+    public function setPostalCode(?string $postal_code): self
     {
         $this->postal_code = $postal_code;
 
@@ -179,6 +191,20 @@ class CompanyPiece
     public function setLogoName(string $logoName): self
     {
         $this->logoName = $logoName;
+
+        return $this;
+    }
+
+
+    public function getTimeZone(): ?int
+    {
+        return $this->timeZone;
+    }
+
+
+    public function setTimeZone(int $timeZone): self
+    {
+        $this->timeZone = $timeZone;
 
         return $this;
     }

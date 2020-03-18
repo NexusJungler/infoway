@@ -15,7 +15,8 @@ constructor() {
 
       $(this).addClass('current');
       $("#"+tab_id).addClass('current');
-      $("#"+tab_text_id).addClass('current');  
+      $("#"+tab_text_id).addClass('current');   
+
     })   
 
     $(".dropdown .btn-dropdown").on('click', function() {
@@ -32,17 +33,16 @@ constructor() {
       
 
     if( countCheckbox  ){
-
       clickedInputContainer.find('.multiSel').text(countCheckbox + " Selected");
       clickedInputContainer.find(".hida").hide();
-
-    }else{
+      }else{
         clickedInputContainer.find('.multiSel').remove();
         clickedInputContainer.find(".hida").show();
-        if( countCheckbox == 0){  
+        if( countCheckbox == 0){
+          
         }
         
-    }
+      }
 
 
       // var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
@@ -69,32 +69,6 @@ constructor() {
       // }
             
     });
-
-    $(".wrapper-content").on('scroll', function() {
-        let $val = $(this).scrollLeft();
-
-        if($(this).scrollLeft() + $(this).innerWidth()>=$(this)[0].scrollWidth){
-            $(".nav-next").hide();
-          } else {
-          $(".nav-next").show();
-        }
-
-        if($val == 0){
-          $(".nav-prev").hide();
-        } else {
-          $(".nav-prev").show();
-        }
-      });
-    console.log( 'init-scroll: ' + $(".nav-next").scrollLeft() );
-    $(".nav-next").on("click", function(){
-      $(".wrapper-content").animate( { scrollLeft: '+=460' }, 200);
-      
-    });
-    $(".nav-prev").on("click", function(){
-      $(".wrapper-content").animate( { scrollLeft: '-=460' }, 200);
-    });
-
-	
 
   }
 

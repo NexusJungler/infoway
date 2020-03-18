@@ -4,18 +4,17 @@
 namespace App\Controller;
 
 
-use App\Entity\Admin\Action;
-use App\Entity\Admin\Permission;
-use App\Entity\Admin\Role;
-use App\Entity\Admin\Subject;
-use App\Entity\Admin\User;
+
+use App\Entity\Admin\{ Action AS Admin_Action, Country AS Admin_Country, Customer AS Admin_Customer,
+    Feature AS Admin_Feature, Permission AS Admin_Permission, Role AS Admin_Role,
+    Subject AS Admin_Subject, TimeZone AS Admin_TimeZone, User AS Admin_User };
 use App\Form\UserType;
-use App\Service\EmailSenderService;
-use Exception;
+use App\Service\{EmailSenderService, PermissionsHandler, TokenGeneratorService};
+use Doctrine\Persistence\ObjectManager;
+use \Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -28,6 +27,17 @@ class UserController extends AbstractController
 
 
     /**
+     * @var ObjectManager
+     */
+    private ObjectManager $__manager;
+
+    public function __construct()
+    {
+
+    }
+
+
+    /**
      * @Route(path="/login", name="user::login",methods="GET|POST")
      * @param AuthenticationUtils $authenticationUtils
      * @param TranslatorInterface $translator
@@ -35,7 +45,9 @@ class UserController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
     {
-        if ($this->getUser()) {
+
+        die();
+        /*if ($this->getUser()) {
              return $this->redirectToRoute('app::home');
          }
 
@@ -56,7 +68,7 @@ class UserController extends AbstractController
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'message' => $error
-        ]);
+        ]);*/
     }
 
     /**
@@ -70,7 +82,8 @@ class UserController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EmailSenderService $emailSenderHelper): Response
     {
 
-        $user = new User();
+        die();
+/*        $user = new Admin_User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -103,7 +116,7 @@ class UserController extends AbstractController
 
         return $this->render('back-office/user/create_show_edit.html.twig', [
             'form' => $form->createView(),
-        ]);
+        ]);*/
 
     }
 
@@ -140,7 +153,8 @@ class UserController extends AbstractController
 	public function sendPasswordResetEmail(Request $request, EmailSenderService $mailer): Response
     {
 
-        if(is_null($request->request->get('username')))
+        die();
+/*        if(is_null($request->request->get('username')))
         {
             throw new Exception("Missing 'username' parameter !");
         }
@@ -183,7 +197,7 @@ class UserController extends AbstractController
         // message flash dans la session
         (new Session())->getFlashBag()->add("message", "Merci de vérifier votre boîte mail, un mail contenant le lien pour réinitialiser votre mot de passe vous a été envoyé !");
 
-        return $this->redirectToRoute("password_forget");
+        return $this->redirectToRoute("password_forget");*/
 
     }
 
@@ -195,14 +209,14 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param User $user
+     * @param Admin_User $user
      * @return Response
      * @throws Exception
      */
-	public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, User $user): Response
+	public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, Admin_User $user): Response
     {
 
-        if($request->isMethod("POST"))
+/*        if($request->isMethod("POST"))
         {
             if(!empty($request->request->get("new_password")))
             {
@@ -228,27 +242,129 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render("security/resetPassword.html.twig");
+        return $this->render("security/resetPassword.html.twig");*/
+
+    die();
       
     }
 
     /**
      * @Route(path="/registration/confirm/{registration_token}", name="user::registration_confirmation", methods="GET|POST")
      *
-     * @param User $user
+     * @param Admin_User $user
      * @return Response
      */
-     public function registrationConfirm(User $user): Response
+     public function registrationConfirm(Admin_User $user): Response
      {
 
-        $user->setRegistrationToken("")
+        /*$user->setRegistrationToken("")
              ->setRegistrationIsConfirmed(true);
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->render("security/confirmInscription.html.twig");
+        return $this->render("security/confirmInscription.html.twig");*/
+        die();
 
      }
 
+
+    /**
+     * @Route(path="/users/list", name="user::showAllUsers")
+     * @return Response
+     */
+    public function showAllUsers()
+    {
+
+        $this->__manager = $this->getDoctrine()->getManager('default');
+
+        return $this->render(
+            'user/user.showAll.html.twig', [
+            'users' => $this->__manager->getRepository(Admin_User::class)->findAll()
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/user/{id}/permissions", name="user::showUserPermissions")
+     * @return Response
+     */
+    public function showUserPermissions(Admin_User $user)
+    {
+
+        $this->__manager = $this->getDoctrine()->getManager('default');
+
+        $permissionsHandler = new PermissionsHandler($this->__manager);
+
+        $userPermissions = $permissionsHandler->getUserPermissions($user, true);
+        $userRolePermissions = $permissionsHandler->getUserRolePermissions($user, false);
+
+        $actions = $this->__manager->getRepository(Admin_Action::class)->findAll();
+
+        //dd($userRolePermissions, $userPermissions);
+
+        dump($user, $userPermissions);
+
+        return $this->render('user/user.editPermissions.html.twig', [
+            'user' => (object) ['id' => $user->getId(), 'username' => $user->getUsername(), 'role' => $user->getRole()->getName()],
+            'userPermissions' => $userPermissions,
+            'rolePermissions' => $userRolePermissions,
+            'actions' => $actions
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/edit/user/{id}/permissions", name="user::editUserPermissions", methods="POST")
+     */
+    public function editUserPermissions(Admin_User $user, Request $request)
+    {
+
+        if($request->request->get('permissions') === null)
+            throw new Exception(sprintf("Internal Error : Missing or invalid '%s' parameter !",'permissions'));
+
+        $permissions = json_decode($request->request->get('permissions'));
+
+        // before update
+        //dump(sizeof($user->getPermissions()->getValues()));
+
+        $updateState = $this->updateUserPermissions($user, $permissions);
+
+        // after update
+        //dd(sizeof($user->getPermissions()->getValues()));
+
+        return new JsonResponse([
+            'status' => 200,
+            'message' => "200 OK"
+        ]);
+
+    }
+
+
+    private function updateUserPermissions(Admin_User $user, array $permissions)
+    {
+
+        $userPermissionsDefaultSize = sizeof($user->getPermissions()->getValues());
+
+        foreach ($permissions as $permission_json)
+        {
+
+            $permission = $this->getDoctrine()->getManager('default')->getRepository(Admin_Permission::class)->findOneById($permission_json->__id);
+
+            if(!$permission_json->__state AND $user->getPermissions()->contains($permission))
+                $user->removePermission($permission);
+
+            elseif ($permission_json->__state AND !$user->getPermissions()->contains($permission))
+                $user->addPermission($permission);
+
+        }
+
+        if(($userPermissionsDefaultSize !== $user->getPermissions()->getValues()) )
+            $this->getDoctrine()->getManager('default')->flush();
+
+        return true;
+
+    }
 
 }

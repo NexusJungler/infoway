@@ -1,11 +1,7 @@
-/** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
     @return #{$remSize}rem;
 }
-
-/************************* CUSTOM ICON  ***************************/
-@import 'custom_icon.scss';
 
 /************************* HEADER CSS ***************************/
 @import 'header_menu.scss';
@@ -13,38 +9,11 @@
 /************************* NAV CSS ***************************/
 @import 'nav_left.scss';
 
-/************************* BODY HEADER CSS ***************************/
-@import 'main.scss';
-// @import 'body_header.scss';
 
-/************************* BODYMENU WRAPPER CSS ***************************/
-@import 'menu_wrapper.scss';
-
-/************************* PAGE CSS ***************************/
-
-/** HOME**/
-@import 'home_page.scss';
-
-/** PRODUCTS **/
+@import 'settings/create.scss';
+@import 'Custome/dropdown.scss';
+@import 'Custome/display-down.scss';
 @import 'products.scss';
-
-/** SITE **/
 @import 'site.scss';
 
-/** SETTINGS **/
-@import 'settings.scss';
-@import 'settings/create.scss';
 
-/** PROGRAMMING **/
-// @import 'programming.scss';
-
-/** MEDIA **/
-// @import 'media.scss';
-
-/** INFO **/
-// @import 'info.scss';
-
-/************************* CUSTOM CSS  ***************************/
-@import 'Custome/table.scss';
-@import 'Custome/dropdown.scss';
-@import 'Custome/display_down.scss';

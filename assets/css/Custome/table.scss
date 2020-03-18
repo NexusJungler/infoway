@@ -10,7 +10,6 @@
     border-radius: 0.5rem 0.5rem 0 0;
     overflow: hidden;
     width: 100%;
-    
 }
 
 .table-custome .table-info{
@@ -25,7 +24,6 @@
     font: 0.8rem 'Barlow', medium;
     color: #FFFFFF;
     padding: 0.5rem 1rem;
-    border-right: 1px solid #AAAAAA;
     
 }
 
@@ -42,9 +40,8 @@
     background: #ffffff 0% 0% no-repeat padding-box;
 }
 .table-custome tbody tr td {
-    padding-bottom: 0.5rem;
-    border-right: 1px solid #AAAAAA;
-    
+    padding: 0.3rem;
+    border: 1px solid #899CA4;
 }
 
 .table-custome tr th {
@@ -57,7 +54,6 @@
 
 
 .tbody{
-    border: 1px solid #4D646D;
     tr{
         div{
             justify-content: center;
@@ -65,8 +61,6 @@
         }
         p{
             position: relative;
-            padding-top: 3px;
-            padding-left: 5px;
             display: block;
             height: 20px;
             width: 71px;
@@ -76,14 +70,12 @@
             border-radius: 0.375rem 0 0 0.375rem;
             font: rem(10px) 'Barlow', medium;
             text-align: center;
-            color: black;
-            margin-right: 5px;
             &::before {
                 content: '';
                 position: absolute;
-                left: 4px;
-                top: 5px;
-                width: 6px;
+                left: 2px;
+                top: 3px;
+                width: 7px;
                 height: 6px;
                 background: #e8e4e4 0% 0% no-repeat padding-box;
                 box-shadow: 0.125rem 0.125rem 0.125rem #00000029;

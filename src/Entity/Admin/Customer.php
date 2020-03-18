@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
+ * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\CustomerRepository")
  */
 class Customer
@@ -53,15 +54,23 @@ class Customer
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin\Country", inversedBy="customers")
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="customers")
      * @ORM\JoinColumn(nullable=false)
      */
     private $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Admin\User", mappedBy="customer", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="User", mappedBy="customer", orphanRemoval=true)
      */
     private $users;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TimeZone")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $timezone;
+
+
 
     public function __construct()
     {
@@ -185,6 +194,18 @@ class Customer
                 $user->setCustomer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTimezone(): ?TimeZone
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?TimeZone $timezone): self
+    {
+        $this->timezone = $timezone;
 
         return $this;
     }

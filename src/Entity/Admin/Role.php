@@ -2,14 +2,14 @@
 
 namespace App\Entity\Admin;
 
-use App\Entity\Admin\Permission;
-use App\Entity\Admin\User;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @ORM\Table(name="role")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\RoleRepository")
  * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
  */
@@ -27,22 +27,20 @@ class Role
      */
     private $name;
 
-
-
     /**
      * @ORM\ManyToMany(targetEntity="Permission", inversedBy="roles")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $permission;
+    private $permissions;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Admin\User", mappedBy="role", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="User", mappedBy="role", orphanRemoval=true)
      */
     private $users;
 
     public function __construct()
     {
-        $this->permission = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -68,15 +66,15 @@ class Role
     /**
      * @return Collection|Permission[]
      */
-    public function getPermission(): Collection
+    public function getPermissions(): Collection
     {
-        return $this->permission;
+        return $this->permissions;
     }
 
     public function addPermission(Permission $permission): self
     {
-        if (!$this->permission->contains($permission)) {
-            $this->permission[] = $permission;
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
         }
 
         return $this;
@@ -84,8 +82,8 @@ class Role
 
     public function removePermission(Permission $permission): self
     {
-        if ($this->permission->contains($permission)) {
-            $this->permission->removeElement($permission);
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
         }
 
         return $this;

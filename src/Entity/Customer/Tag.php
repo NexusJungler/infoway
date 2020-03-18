@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @ORM\Table(name="tag")
  * @ORM\Entity(repositoryClass="App\Repository\Customer\TagsRepository")
  * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
  */

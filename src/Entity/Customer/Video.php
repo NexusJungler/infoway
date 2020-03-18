@@ -6,6 +6,7 @@ namespace App\Entity\Customer;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="video")
  * @ORM\Entity(repositoryClass="App\Repository\Customer\VideoRepository")
  */
 class Video

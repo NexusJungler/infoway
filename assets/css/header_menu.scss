@@ -6,38 +6,29 @@
     flex-direction: row;
     width: 100%;
     height: 130px;
-    background-color: #324147;
     z-index: 10;
-
-    /** HEADER LOGO **/
-    .logo__infoway {
-        width: 8%;
-        padding: 2.5em 2em;
-        background-color: white;
-        // transition: width 0.8s ease-in;
-        &.logo__infoway-active{
-            width: 12%;
-            // transition: width 0.8s ease-in;
-
-        }
-    }
-
-    /** HEADER MENU RIGHT **/
-    #header__block{
-        position: absolute;
-        left: 12%;
-        display: flex;
-        width: 88%;
-        background-color: #FFFFFF;
-
-        /* block left */
-        .header__block--left {
-            display: flex;
-            width: 85%;
-        }
-    }
 }
 
+.logo__infoway {
+    width: 10%;
+    padding: 2.5em 2em;
+}
+
+#header__block{
+    display: flex;
+    width: 90%;
+    background-color: #FFFFFF;
+}
+
+/* block left */
+
+.header__block--left {
+    display: flex;
+    /*justify-content: space-around;*/
+    /* align-items: center; */
+    width: 65%;
+    /* background: linear-gradient(-271deg, #324147 1%, #4D646D 17%); */
+}
 
 /* btn style */
 
@@ -56,64 +47,60 @@
     border: none;
 }
 
-.update__all {
-    color: #fff;
-    background-color: #F57171;
-    box-shadow: 3px 3px 3px #00000029;
-}
-
-.btn-back{
-        bottom: 0rem;
-        background-color: transparent;
-        color: #899CA4;
-        border: 0.06rem solid #899CA4;
-        border-radius: 0.3rem;
-}
-
-/***************************************************** gradient left*****************************************************************/
+/* gradient left */
 
 .header__gradient-left{
     flex: 0 0 33.333%;
     max-width: 33.33%;
     background: linear-gradient(-271deg, #324147 1%, #4D646D 17%);
-    .logo__enseigne {
-        display: flex;
-        height: 100%;
-        flex-basis: 22%;
-        justify-content: center;
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-    }
-    .all__enseigne{
-        position: relative;
-        flex-direction: row;
-        font: 1.2rem 'Barlow', sans-serif;
-        color: #4D646D;
-        margin-left: 0.5rem;
-        margin-top: 1.2rem;
-        .enseigne{
-            select {
-                font: 1.1rem 'Barlow', sans-serif;
-                color: #FFFFFF;;
-                background-color: transparent!important;
-                border: 0em;
-                padding: 0.2em 0.2em;
-                option{
-                    color: #4D646D;
-                }
-            }
-        } 
-        .btn-back{
-            margin-top: rem(3px);
-        }
-    }
-    
 }
 
-/***************************************************** gradient center *****************************************************************/
+.logo__enseigne {
+    display: flex;
+    height: 100%;
+    flex-basis: 22%;
+    justify-content: center;
+    /* background: linear-gradient(100deg, #324147 30%, #4D646D 50%, #4D646D 100%); */
+}
+
+.logo__enseigne img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.all__enseigne{
+    position: relative;
+    flex-direction: row;
+    font: 1.2rem 'Barlow', sans-serif;
+    color: #4D646D;
+    margin-left: 0.5rem;
+    margin-top: 1.2rem;
+}
+
+.enseigne select {
+    font: 1.1rem 'Barlow', sans-serif;
+    color: #FFFFFF;;
+    background-color: transparent!important;
+    border: 0em;
+    padding: 0.2em 0.2em;
+}
+
+.all__enseigne .btn-back{
+    bottom: 1rem;
+}
+
+.enseigne select option{
+    color: #4D646D;
+}
+.update__all {
+    color: #fff;
+    background-color: #F57171;
+    box-shadow: 3px 3px 3px #00000029;
+
+}
+
+/* gradient center */
 
 .header__gradient-center{
     flex: 0 0 33.333%;
@@ -123,60 +110,54 @@
     height: 130px;
     position: relative;
     z-index: 500;
-    &::before {
-        content: '';
-        display: block;
-        background: linear-gradient(-271deg, #324147 1%, #4D646D 17%);
-        transform: skewX(-30deg);
-        position: absolute;
-        width: 101%;
-        height: 100%;
-        left: -37px;
-    }
-
-    .btn-back{
-        display:none;
-    }
-
-    .update {
-        display: flex;
-        position: relative;
-    }
-    .all__enseigne-site{
-        position: relative;
-        flex-direction: row;
-        margin-left: 0.5rem;
-        font: 1.2rem 'Barlow', sans-serif;
-        color: #4D646D;
-        .enseigne-site{
-            select {
-                font: 1.1rem 'Barlow', sans-serif;
-                color: #FFFFFF;;
-                background-color: transparent!important;
-                border: 0em;
-                padding: 0.2em 0.2em;
-                option{
-                    color: #4D646D;
-                }
-            }
-        } 
-        .update__enseigne-site {
-            color: #fff;
-            background-color: #4F9BAE;
-            border: 1px solid #899CA4;
-            margin-right: 30px;
-        }
-    }
-    
-    .update .update__all{
-        top: 0.5rem;
-        position: relative;
-    }
 }
 
+.header__gradient-center::before {
+    content: '';
+    display: block;
+    /* background: linear-gradient(-317deg, #324147 3%, #4D646D 16%); */
+    background: linear-gradient(-271deg, #324147 1%, #4D646D 17%);
+    transform: skewX(-30deg);
+    position: absolute;
+    width: 101%;
+    height: 100%;
+    left: -37px;
+}
+.update {
+    display: flex;
+    position: relative;
+}
 
-/***************************************************** gradient right *****************************************************************/
+.all__enseigne-site{
+    position: relative;
+    flex-direction: row;
+    margin-left: 0.5rem;
+    font: 1.2rem 'Barlow', sans-serif;
+    color: #4D646D;
+}
 
+.enseigne-site select {
+    font: 1.1rem 'Barlow', sans-serif;
+    color: #FFFFFF;;
+    background-color: transparent!important;
+    border: 0em;
+    padding: 0.2em 0.2em;
+}
+.enseigne-site select option{
+    color: #4D646D;
+}
+.update__enseigne-site {
+    color: #fff;
+    background-color: #4F9BAE;
+    border: 1px solid #899CA4;
+    margin-right: 30px;
+}
+.update .update__all{
+    top: 0.5rem;
+    position: relative;
+}
+
+/* gradient right */
 
 .header__gradient-right {
     flex: 0 0 33.333%;
@@ -185,47 +166,58 @@
     height: 130px;
     position: relative;
     z-index: 500;
-    &::before {
-        content: '';
-        display: block;
-        background: linear-gradient(-317deg, #324147 3%, #4D646D 16%);
-        transform: skewX(-30deg);
-        position: absolute;
-        width: 80%;
-        height: 100%;
-        left: -37px;
-    }
-    .all__site{
-        position: relative;
-        flex-direction: row;
-        font: 1.2rem 'Barlow', sans-serif;
-        color: #4D646D;
-        margin-left: 0.5rem;
-        margin-top: 1.2rem;
-    }
-    .site{
-        select {
-            font: 1.1rem 'Barlow', sans-serif;
-            color: #FFFFFF;;
-            background-color: transparent!important;
-            border: 0em;
-            padding: 0.2em 0.2em;
-            option{
-                color: #4D646D;
-            }
-        }
-    } 
-    .update__site {
-        color: #fff;
-        background-color: #4F9BAE;
-        border: 1px solid #899CA4;
-        margin-right: 30px;
-        top: 0.5rem; 
-        position: relative;
-    }
+}
+
+.header__gradient-right::before {
+    content: '';
+    display: block;
+    background: linear-gradient(-317deg, #324147 3%, #4D646D 16%);
+    transform: skewX(-30deg);
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    left: -37px;
+}
+
+.all__site{
+    position: relative;
+    flex-direction: row;
+    font: 1.2rem 'Barlow', sans-serif;
+    color: #4D646D;
+    margin-left: 0.5rem;
+    margin-top: 1.2rem;
+}
+
+.site select {
+    font: 1.1rem 'Barlow', sans-serif;
+    color: #FFFFFF;;
+    background-color: transparent!important;
+    border: 0em;
+    padding: 0.2em 0.2em;
+}
+
+.site select option{
+    color: #4D646D;
 }
 
 
+.update__site {
+    color: #fff;
+    background-color: #4F9BAE;
+    border: 1px solid #899CA4;
+    margin-right: 30px;
+    top: 0.5rem; 
+    position: relative;
+}
+
+.btn-back{
+    position: absolute;
+    bottom: 0rem;
+    background-color: transparent;
+    color: #899CA4;
+    border: 0.06rem solid #899CA4;
+    border-radius: 0.3rem;
+}
 
 /* .btn-back span{
     content: "";
@@ -246,301 +238,9 @@
     margin-left: 0.3rem;
 } */
 
+
+
 /* .disabled {
     background-color: #4D646D;
     color: #C0CCD1;
 } */
-
-/************************************************************** HEADER BLOCK RIGHT **********************************************************/
-
-.header__block--right {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width:30%;
-    padding-right: 70px;
-}
-
-.all__user--account {
-    display: flex;
-    flex-direction: row;
-}
-
-.user {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-}
-
-.user__logo {
-    background-color: #4F9BAE;
-    border-radius: 50%;
-    border: 1px solid #4F9BAE;
-    width: 45px;
-    height: 45px;
-}
-.username__first--letter{
-    text-align: center;
-    font-size: 2em;
-    margin-top: -0.2em;
-    margin-left: 0.3em;
-    display: inline-block;
-    color: #fff;
-
-}
-
-.clock__all {
-
-}
-
-.hours {
-    color: #FFFFFF;
-    background-color: #4D646D;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    width: 30%;
-    height: 27px;
-    text-align: center;
-}
-
-.hours::after {
-    content: '';
-    border-bottom: 1px solid #4D646D;
-    position: absolute;
-    top: 7.5%;
-    width: 12%;
-    margin-left: -3%;
-}
-
-.date {
-    font: 1.2rem 'Barlow', sans-serif;
-    color: #4D646D;
-    width: 100%;
-    margin-top: 1em;
-}
-
-
-/* MEDIA QUERY */
-
-
-
-@media (max-width : rem(1640px)){
-    .header{
-        #header__block{
-            .header__block--left{
-                width: 75%;
-                .header__gradient-center{
-                    &::before{
-                        transform: skewX(-25deg);
-                        width: 100%;
-                        left: rem(-30px);
-                    } 
-                    .update{
-                        img{
-                            height: rem(80px);
-                        }
-                    }
-                }
-                .header__gradient-right{
-                    &::before{
-                        transform: skewX(-25deg);
-                        width: 90%;
-                        left: rem(-32px);
-                    }
-                    .all__site{
-                        width: 60%;
-                        margin-left: rem(38px);
-                    }
-                }
-            }
-            .header__block--right{
-                display: block;
-                padding-right: 0;
-                width: 20%;
-                .clock__all{
-                    padding-top: rem(10px);
-                    height: 50%;
-                    width: 100%;
-                }
-                .all__user--account {
-                    padding-top: rem(10px);
-                }
-            }
-            .update__site, .update__all, .btn-back {
-                padding: rem(5px) rem(7px) rem(6px) ;
-                font-size: rem(14px);
-            }
-            .number__enseigne, .number__enseigne-site, .number__site {
-                position: relative;
-                color: #7BA2B1;
-                // font-size: rem(13px);
-                bottom: rem(7px);
-                left: rem(9px);
-            }
-        }
-    } 
-}
-
-@media (max-width: rem(1440px))  {
-    .header{
-        #header__block{
-            .header__block--left{
-                width: 75%;
-                .header__gradient-left,
-                .header__gradient-center,
-                .header__gradient-right{
-                    .all__enseigne,
-                    .all__site{
-                        padding: rem(30px) 0 0 0 ;
-                    }
-                }
-                .header__gradient-center{
-                    display:block;
-                    &::before{
-                        transform: skewX(-20deg);
-                        width: 100%;
-                        left: rem(-23px);
-                    } 
-                    .update{
-                        padding: rem(30px) 0 0 0 ;
-                        img{
-                            height: rem(70px);
-                        }
-                    }
-                }
-                .header__gradient-right{
-                    &::before{
-                        transform: skewX(-20deg);
-                        width: 90%;
-                        left: rem(-24px);
-                    }
-                    .all__site{
-                        width: 60%;
-                        margin-left: rem(38px);
-                        .update{
-                            .update__site{
-                                margin-right: 0;
-                            }
-                        }
-                    }
-                }
-            }
-
-            .all__site,
-            .all__enseigne{
-                margin: 0;
-            }
-            .enseigne-site select,
-            .site select{
-                font-size: 1rem;
-            }
-            .number__enseigne, .number__enseigne-site, .number__site {
-                font-size: rem(13px);
-            }
-        }
-    } 
-}
-
-@media (max-width: rem(1250px))   {
-    .header{
-        #header__block{
-            .header__block--left{
-                width: 80%;
-                .header__gradient-left{
-                    flex: 0 0 32.333%;
-                    max-width: 32.33%; 
-                    .logo__enseigne img{
-                        margin: 1.875rem 0 0 0;
-                        height: rem(60px);
-                    }
-                }
-                .header__gradient-center{
-                    display:block;
-                    .update{
-                        img{
-                            height: rem(50px);
-                        }
-                    }
-                    &::before{
-                        transform: skewX(-15deg);
-                        width: 113%;
-                        left: -17px;
-                    } 
-                }
-                .header__gradient-right{
-                    &::before{
-                        transform: skewX(-15deg);
-                        width: 84%;
-                        left: 12px;
-                    }
-                }
-            }
-        }
-    } 
-}
-
- /* Tablette */
-@media (max-width: rem(900px)) {
-    .header{
-        .logo__infoway {
-            padding: 2.5em 1em;
-            width: 12%;
-        } 
-        #header__block{
-            .header__block--left{
-                width: 80%;
-                .header__gradient-left{
-                    .logo__enseigne{
-                        img{
-                            display: none;
-                        }   
-                    }
-                    .btn-back{
-                        margin-top:4px;
-                    }
-                }
-                .header__gradient-center{
-                    &::before{
-                    } 
-                    .update{
-                        left: rem(-10px);
-                        img{
-                            display: none;
-                        }
-                    }
-                }
-                .header__gradient-right{
-                    &::before{
-                        width: 93%;
-                        left: rem(1px);
-                    }
-                    .all__site{
-                        width: 100%;
-                        margin-left: rem(10px);
-                        .update{
-                            .update__site{
-                                margin-right: 0;
-                            }
-                        }
-                    }
-                }
-            }
-            .header__block--right{
-                display: block;
-                padding-right: 0;
-                width: 20%;
-                .clock__all{
-                    padding-top: rem(10px);
-                    height: 50%;
-                    width: 100%;
-                }
-                .all__user--account {
-                    padding-top: rem(10px);
-                }
-            }
-        }
-    }
-    
-}
-

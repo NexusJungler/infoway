@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="company_piece_type")
  * @ORM\Entity(repositoryClass="App\Repository\Customer\CompanyPieceTypeRepository")
  */
 class CompanyPieceType

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
+ * @ORM\Table(name="country")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\CountryRepository")
  */
 class Country
@@ -22,13 +23,13 @@ class Country
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=80)
      */
     private $name;
 
-    public function __construct()
+    public function getId(): ?int
     {
-
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -41,11 +42,6 @@ class Country
         $this->name = $name;
 
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
 }

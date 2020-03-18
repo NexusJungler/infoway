@@ -2,15 +2,12 @@
 
 namespace App\Entity\Admin;
 
-use App\Entity\Admin\Action;
-use App\Entity\Admin\Role;
-use App\Entity\Admin\Subject;
-use App\Entity\Admin\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="permission")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\PermissionRepository")
  */
 class Permission
@@ -29,12 +26,7 @@ class Permission
     private $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="permission")
-     * @ORM\JoinTable(name="user_permission",
-     *   joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="permissions")
      */
     private $users;
 
@@ -50,7 +42,12 @@ class Permission
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $subject;
-    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Feature", inversedBy="permissions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $feature;
 
 
     public function __construct()
@@ -125,7 +122,7 @@ class Permission
         return $this->action;
     }
 
-    public function setAction(?Action $action): self
+    public function setAction(Action $action): self
     {
         $this->action = $action;
 
@@ -137,9 +134,21 @@ class Permission
         return $this->subject;
     }
 
-    public function setSubject(?Subject $subject): self
+    public function setSubject(Subject $subject): self
     {
         $this->subject = $subject;
+
+        return $this;
+    }
+
+    public function getFeature(): ?Feature
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(Feature $feature): self
+    {
+        $this->feature = $feature;
 
         return $this;
     }

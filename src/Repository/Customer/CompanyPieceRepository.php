@@ -3,8 +3,10 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\CompanyPiece;
+use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method CompanyPiece|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,11 +14,18 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method CompanyPiece[]    findAll()
  * @method CompanyPiece[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CompanyPieceRepository extends ServiceEntityRepository
+class CompanyPieceRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CompanyPiece::class);
+    }
+
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
     }
 
     // /**

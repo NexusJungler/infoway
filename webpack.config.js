@@ -43,6 +43,7 @@ Encore
     //.addEntry('modal_message', './assets/js/modal_message.js')
     .addEntry('back-office', './assets/js/back-office.js')
     .addEntry('back-office_create-customer', './assets/js/back-office_create-customer.js')
+    .addEntry('permission', './assets/js/permission.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
