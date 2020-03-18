@@ -1,66 +1,9 @@
-<div>
-    <p>Je veut créer :</p>
-    <form action="#" id="create-entity-choice">
-
-        {% for companyPiece in authorizedCompanyPieces %}
-            <label>
-                <input type="radio" name="choice" data-id="{{ companyPiece.id }}" value="{{ companyPiece.name }}" {% if loop.first %} checked {% endif %}> {{ companyPiece.name }}
-            </label>
-        {% endfor %}
-
-    </form>
-</div>
-
-
 <div class="tab-content-title">
-    <h3 class="title">Créer <span style="display: block; padding-left: 5%">{{ authorizedCompanyPieces[0].name }}</span></h3>
+    <h3 class="title">Créer une Marque</h3>
     <p>Areas</p>
 </div>
 
-{{ form_start(form) }}
-
-    <div class="tab-content-bloc"> 
-        <div class="tab-content-bloc-cm-left">
-            <div class="bloc-form ">
-                <div class="bloc-form-content">
-                </div>
-            </div>    
-        </div>
-    </div>
-    {{ form_errors(form) }}
-
-    <div class="row">
-        <div class="col">
-            {{ form_row(form.name) }}
-        </div>
-
-        <div>
-            <label for="country">Country</label>
-            <select name="country" id="country" required>
-                <option value="">Selectionner un pays</option>
-                {% for country in countries %}
-                    <option value="{{ country.id }}">{{ country.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        {{ form_row(form.city) }}
-
-        {{ form_rest(form) }}
-
-    </div>
-
-    <input type="hidden" name="type" value="{{ authorizedCompanyPieces[0].id }}">
-
-    <button type="submit">Valider</button>
-
-{{ form_end(form) }}
-
-
-
-
-
-{#<form action="" method="">
+<form action="" method="">
     <div class="tab-content-bloc" >
         <div class="tab-content-bloc-cm-left">
             <div class="bloc-form ">
@@ -68,16 +11,16 @@
 
                     <div class="row">
                         <label class="label-custome">Nom de la Societé</label>
-                        #}{# {% macro input(name, value, type = "text") %} #}{#
-                            #}{# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}{#
+                        {# {% macro input(name, value, type = "text") %} #}
+                            {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
                             <input type="text" class="input-custome"  name="nom_societe"  value="text"/>
-                        #}{# {% endmacro %} #}{#
+                        {# {% endmacro %} #}
                     </div>
 
                     <div class="inputRdo row">
                         <div class="rdo">
                             <input id="cree-marque" name="cree" type="radio" checked/>
-                            <label for="cree-marque"> Je crée une marque : </label>
+                            <label for="cree-marque"> Je crée un grope de site : </label>
                         </div>
                         <div class="rdo">
                             <input id="cree-enseigne" name="cree" type="radio"/>
@@ -87,10 +30,10 @@
 
                     <div class="row">
                         <label class="label-custome">Nom</label>
-                        #}{# {% macro input(name, value, type = "text") %} #}{#
+                        {# {% macro input(name, value, type = "text") %} #}
                             <div>
                                 <div class="row-flex">
-                                    #}{# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}{#
+                                    {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
                                     <input type="text"  class="input-custome"  name="nom_groupe" value="exemple : Régime B "/>
                                     <input type="submit" value="ok" class="form-btn-sumbit">
                                 </div>
@@ -99,8 +42,8 @@
                                     <input type="file" name="file" id="file-input">
                                 </div>
                             </div>
-                        #}{# {% endmacro %} #}{#
-
+                        {# {% endmacro %} #}
+                        
                     </div>
 
                     <div class="row-flex">
@@ -121,13 +64,13 @@
 
                     <div class="row">
                         <label for="sel-administrateurs" class="label-custome">Administrateurs</label>
-                        <div class="dropdown mutliSelect">
+                        <div class="dropdown mutliSelect"> 
                             <div  class="select-input">
                                 <button type="button" class="btn-dropdown" id="select-brand" data-down="down-brand">
-                                    <p  class="multiSel"></p>
-                                    <span class="hida">Select</span>
+                                    <p  class="multiSel"></p>  
+                                    <span class="hida">Select</span> 
                                     <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                </button>
+                                </button> 
                                 <div class="select-down">
                                     <ul id="down-brand">
                                         {% for customer in customer %}
@@ -146,7 +89,7 @@
                     </div>
 
                 </div>
-
+            
                 <div class="bloc-form-img">
                     <div class="marque-img">
                         <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
@@ -155,12 +98,12 @@
                         <p>Logo</p>
                         <img id="upload-image" src="" alt="">
                     </div>
-
+                    
                 </div>
             </div>
         </div>
 
-        <div class="tab-content-bloc-cm-right">
+        <div class="tab-content-bloc-cm-right"> 
             <div class="tab-content-brand">
                 <div class="bloc-poste-title">
                     <p>Sites de la Marque</p>
@@ -173,11 +116,12 @@
                         </label>
                     {% endfor %}
                 </div>
-            </div>
+            </div>    
         </div>
     </div>
 
     <div class="">
         <button name="btn-mofifier" class="btn">Créer</button>
-    </div>
-</form>#}
+    </div>                      
+</form>
+

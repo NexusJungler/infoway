@@ -1,0 +1,155 @@
+/*****************************************************  page marque  *****************************************************************/
+
+.tab-content-bloc {
+    display: flex;
+    padding: 1.5rem 0;
+}
+
+.row-flex{
+    display: flex;
+}
+
+/* == tab-content-bloc-left == */
+
+.tab-content-bloc-left {
+    border: 0.06rem solid #899CA4;
+    width: 40%;
+    margin-right: 4rem;
+}
+
+.bloc-societe{
+    display: flex;
+    width: 100%;
+}
+.bloc-societe-form{
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    display: inline-block;
+    width: 80%;
+}
+.bloc-societe-form .row{
+    padding: 0 0 0.7rem 0;
+    display: flex;
+}
+
+/* == tab-content-bloc-right == */
+
+.tab-content-bloc-right {
+    border: 0.06rem solid #899CA4;
+    width: 640px;
+    margin-right: 4rem;
+}
+
+.bloc-group-top .inputGroup{
+    display: flex;
+}
+
+.bloc-group-top .rdo-rajoute{
+    margin-left: 4rem;
+}
+
+.bloc-group-top .inputGroup label {
+    margin-left: -1rem;
+} 
+
+.tab-content-bloc-right .form-file{
+    margin-left: 2.5rem;
+}
+.tab-content-bloc-right .custom-file:after{
+    right: 40px;
+}
+
+.tab-content-bloc-right .form-file > label {
+    width: 87%;   
+}
+
+.custom-file .file-width{
+    width:41% ;
+}
+
+.bloc-group-bottom{
+    padding-bottom: 1rem;
+}
+
+.bloc-group-bottom .col{
+    width: 25%;
+}
+.bloc-group-bottom .rdo-square{
+    border-right: 0.06rem solid #4D646D;
+    margin-right: 1rem;
+
+}
+
+
+.bloc-group-bottom .rdo-square::after {
+    content: '';
+    border-right: 0.06rem solid #4D646D;
+    position: relative;
+    display: block;
+}
+.bloc-group-bottom .rdo-square input[type="radio"] + label span {
+    margin-right: 0.5rem;
+    top: 0.1rem;
+    position: relative;
+}
+
+
+
+.bloc-group-bottom .mini-btn-right{
+    margin-top: 0.2rem;
+    margin-right: 0.3rem;
+}
+
+.btn-statut{
+    justify-content: flex-end;
+}
+.btn-statut .btn-right{
+    margin-left: 0.8rem;
+}
+
+
+
+
+.bloc-societe-img{
+    width: 20%;
+    padding-top: 0.1rem;
+    text-align: center;
+}
+
+.bloc-societe-img img{ 
+    width: 4.5rem;
+}
+
+
+
+
+
+
+
+
+.bloc-group-top{
+    background: #F6F6F6;
+    padding: 0.5rem;
+    display: flex;
+}
+
+.bloc-group-top p{
+    font: 1rem 'Barlow', lighter;
+    color: #4D646D;
+    margin-right: 3rem;
+}
+
+.bloc-group{
+    padding: 1rem 0.6rem ;
+}
+
+.form-row{
+    display: flex;
+    padding: 0 0 1rem 0;
+}
+.color-cyan-linear{
+    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+}
+
+
+
+

@@ -1,6 +1,7 @@
 <div class="tab-content-title">
-    <h3 class="title">Créer un Utilisateur</h3>
+    <h3 class="title">Créer une Utilisateur</h3>
     <p>Areas</p>
+    {{ form }}
 </div>
 
 <form action="" method="">
@@ -13,20 +14,20 @@
                     <div class="row">
                         <label class="label-custome">Nom</label>
                         {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
-                        <input type="text" class="input-custome"  name="create-user"  value="Créer utilisateur"/>
+                        <input type="text" class="input-custome"  name="create-user"  value=""  placeholder="Créer utilisateur"/>
                         <input type="submit" value="ok" class="form-btn-sumbit">
                     </div>
 
                     <div class="row-flex">
                         <label class="label-custome">Login</label>
                         {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
-                        <input type="text" class="input-custome"  name="login"  value="login"/>
+                        <input type="text" class="input-custome"  name="login"  value="" placeholder="login"/>
                         <input type="submit" value="ok" class="form-btn-sumbit">
                     </div>
                     <div class="row">
                         <label class="label-custome">Mot de passe</label>
                         {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
-                        <input type="text" class="input-custome"  name="password"  value="Mot de passe"/>
+                        <input type="text" class="input-custome"  name="password"  value="" placeholder="Mot de passe"/>
                         <input type="submit" value="ok" class="form-btn-sumbit">
                     </div>
 

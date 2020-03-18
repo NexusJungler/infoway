@@ -1,115 +1,105 @@
 
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-                    <main class="main">
-                        <div class="jumbotron">
-                            <div class="page__title">
-                                <div class="page__title--img">
-                                    <img src="{{ 'build/images/home_blanc.png' }}" alt="home">
-                                </div>
-                                <h1> Bienvenue Nadya !</h1>
-                            </div>
+    <main class="main home">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue Estelle' } %}
+            </section>
+        </div>
 
-                            <div class="search__form">
-                                <form action="" method="get">
-                                    <input type="text" name="query" placeholder="Rechercher un élément...">
-                                    <button><img src="{{ asset('build/images/search_icon.png') }}" class="search_icon" alt="search icon"></button>
-                                </form>
-                            </div>
-                        </div>
+        <div class="home-information">
 
-                        <div class="information">
+            <div class="home_info-title">
+                <h2> Administrateur AREAS</h2>
+            </div>
 
-                            <div class="info__title">
-                                <h2> Administrateur AREAS</h2>
-                            </div>
+            <div class="home_info-contact">
+                <div class="info_contact-nom">
+                    <p class="border--line">Votre contact<span>Simon Pommeret</span></p>
+                    <p>01 45 23 45 99</p>
+                </div>
+                <div class="info_contact-hotline">
+                    <p class="border--line bold">Hotline</p>
+                    <p>01 45 23 34 58</p>
+                </div>
+            </div>
 
-                            <div class="info__contact">
-                                <div class="info__contact--nom">
-                                    <p class="border--line">Votre contact<span>Simon Pommeret</span></p>
-                                    <p>01 45 23 45 99</p>
-                                </div>
-                                <div class="info__contact--hotline">
-                                    <p class="border--line bold">Hotline</p>
-                                    <p>01 45 23 34 58</p>
-                                </div>
-                            </div>
+            <div class="home_enseignes-row">
+                <p class="border--line">Vos enseignes</p>
+                <div class="home_enseignes-bloc">
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="Factory & cO">
+                        <p>Factory &amp; co</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>Super Wild Coffee</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Francesca.png') }}" alt="logo quick">
+                        <p>Francesca</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="logo quick">
+                        <p>Factory &amp; co</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Francesca.png') }}" alt="logo quick">
+                        <p>Francesca</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>Super Wild Coffee</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="logo quick">
+                        <p>Factory &amp; co</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>Super Wild Coffee</p>
+                    </div>
+                </div>
+            </div>
 
-                            <div class="enseignes-row">
-                                <p class="border--line">Vos enseignes</p>
-                                <div class="enseignes__bloc">
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="Factory & cO">
-                                        <p>Factory &amp; co</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
-                                        <p>Super Wild Coffee</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_Francesca.png') }}" alt="logo quick">
-                                        <p>Francesca</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="logo quick">
-                                        <p>Factory &amp; co</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_Francesca.png') }}" alt="logo quick">
-                                        <p>Francesca</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
-                                        <p>Super Wild Coffee</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="logo quick">
-                                        <p>Factory &amp; co</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
-                                        <p>Super Wild Coffee</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="company">
-                                <div class="company-bloc">
-                                    <p class="border--line">
-                                        Vous avez <span class="col-right"><span class="bold">140</span> sites</span>
-                                    </P>
-                                    <div class="col-right1 company-info company-info-have">
-                                        <p><span class="bold">700</span> ecran</p>
-                                        <p><span class="bold">700</span> Flux Menuboard</p>
-                                        <p><span class="bold">700</span> Flux priceborad</p>
-                                        <p><span class="bold">700</span> Flux Tv</p>
-                                    </div>
-                                </div>
-                                <div class="company-bloc">
-                                    <p class="border--line">
-                                        Catégories <span class="col-right"><span class="bold">5</span> catégories</span>
-                                    </P>
-                                    <div class="col-right1 company-info company-info-categories">
-                                        <p>ecran</p>
-                                        <p>Flux Menuboard</p>
-                                        <p>Flux priceborad</p>
-                                        <p>Flux Tv</p>
-                                    </div>
-                                </div>
-                                <div class="company-bloc">
-                                    <p class="border--line ">
-                                        Groupes de prix <span class="col-right"><span class="bold">3</span> type de prix</span>
-                                    </P>
-                                    <div class="col-right1 company-info company-info-groups">
-                                        <p class="bold">ecran</p>
-                                        <p class="bold">Flux Menuboard</p>
-                                        <p class="bold">Flux priceborad</p>
-                                        <p class="bold">Flux Tv</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                {% endblock %}  
+            <div id="company">
+                <div class="company-bloc">
+                    <p class="border--line">
+                        Vous avez <span class="col-right"><span class="bold">140</span> sites</span>
+                    </P>
+                    <div class="col-right1 company-info company-info-have">
+                        <p><span class="bold">700</span> ecran</p>
+                        <p><span class="bold">700</span> Flux Menuboard</p>
+                        <p><span class="bold">700</span> Flux priceborad</p>
+                        <p><span class="bold">700</span> Flux Tv</p>
+                    </div>
+                </div>
+                <div class="company-bloc">
+                    <p class="border--line">
+                        Catégories <span class="col-right"><span class="bold">5</span> catégories</span>
+                    </P>
+                    <div class="col-right1 company-info company-info-categories">
+                        <p>ecran</p>
+                        <p>Flux Menuboard</p>
+                        <p>Flux priceborad</p>
+                        <p>Flux Tv</p>
+                    </div>
+                </div>
+                <div class="company-bloc">
+                    <p class="border--line ">
+                        Groupes de prix <span class="col-right"><span class="bold">3</span> type de prix</span>
+                    </P>
+                    <div class="col-right1 company-info company-info-groups">
+                        <p class="bold">ecran</p>
+                        <p class="bold">Flux Menuboard</p>
+                        <p class="bold">Flux priceborad</p>
+                        <p class="bold">Flux Tv</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+{% endblock %}
