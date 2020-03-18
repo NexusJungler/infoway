@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Bienvenue !{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+            <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+            <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+            {{ encore_entry_link_tags('app') }}
+        {#{{ encore_entry_link_tags('modal_message') }}#}
+        {% endblock %}
+    </head>
+    <body>
+
+        {% if (message is defined) and (message is not null) %}
+            <div style="display: none" id="message" data-message="{{ message }}"></div>
+        {% endif %}
+
+        {% block header %}
+            <header class="header">
+                <div class="logo__infoway">
+                    <img src="{{ asset('build/images/infoway.png') }}" alt="logo infoway">
+                </div>
+
+                <div id="header__block">
+                    <div class="header__block--left">
+                        <div class="header__gradient-left">
+                            <div class="logo__enseigne">
+                                <img src="{{ asset('build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
+                            <div class="all__enseigne">
+                                <form class="enseigne">
+                                    <select name="enseigne" id="enseigne">
+
+                                        {# {% for customer in customer %}
+                                            <option value="{{customer}}">{{customer}}</option>
+                                        {% endfor %} #}
+                                    </select>
+                                    <p class="number__enseigne"><span >25</span> enseignes</p>
+                                    <div>
+                                        <button class="btn-back"><span></span>Revenir</button>   
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header__gradient-center">
+                        <div class="update">
+                            <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
+                            <div class="all__enseigne-site">
+                                <form class="enseigne-site">
+                                    <select name="enseigne-site" id="enseigne-site">
+                                        <option value="">Sélectionner l'enseigne</option>
+                                        {# {% for customer in customer %}
+                                            <option value="{{customer}}">{{customer}}</option>
+                                        {% endfor %} #}
+                                    </select><br>
+                                    <p class="number__enseigne-site"><span >7</span>Sites<p>
+                                    <div>
+                                        <button class="update__all">Mettre à jour l'enseigne</button>  
+                                    </div>
+                                    <div>
+                                        <button class="btn-back"><span></span>Revenir</button>   
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="header__gradient-right">
+                        <div class="all__site">
+                            <form class="site">
+                                <select name="site" id="site">
+                                    <option value="">sélectionner site</option>
+                                    {# {% for customer in customer %}
+                                            <option value="{{customer}}">{{customer}}</option>
+                                        {% endfor %} #}
+                                </select>
+                                <p class="number__site">Lemans</p>
+                                
+                            </form>
+                            <div class="update">
+                                <button class="update__site disabled">Mettre à jour le site</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="header__block--right">
+                    <div class="clock__all">
+                        <div class="clock-container" {% if location is defined %} data-city="{{ location.city }}" data-timezone="{{ location.timezone }}" data-date_format="{{ location.date_format }}" data-clock_format="{{ location.clock_format }}" {% endif %}>
+
+
+
+                        </div>
+
+                        <i class="arrow-down" id="showTimeZoneList"></i>
+
+                        <div id="timeZoneList-container" style="display: none">
+                            <ul id="timeZoneList">
+                                <li class="timezone" data-language="jpn" data-timezone="Asia/Tokyo" data-date_format="Y-m-d" data-clock_format="24">Tokyo</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="all__user--account">
+                        <div class="user__logo">
+                            <span class="username__first--letter">N</span>
+                        </div>
+                        <div class="user">
+                            {# <span class="user__name">
+                                {% if user.isLoggedIn %}
+                                    {{ user.name }}!
+                                {% endif %}
+                            </span> #}
+                            <span class="user__name">Nadya</span>
+                            <span class="user__rule">Admin</span>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        {% block container %}
+            <div id="container">
+                {% block nav %}
+                    <nav class="nav">
+                        <ul class="nav__menu">
+                            <li><a href="/"></a><img src="{{ 'build/images/home.png' }}" alt="home"></li>
+                            <li><a href="/setting">Configuration<img src="{{ 'build/images/edition.png' }}" alt=""></a></li>
+                            <li><a href="/site">Sites<img src="{{ 'build/images/site.png' }}" alt=""> </a></li>
+                            <li>Produits <a href="/products"><img src="{{ 'build/images/product_price.png' }}" alt=""></a></li>
+                            <li>Programmation<img src="{{ 'build/images/programmation.png' }}" alt=""></li>
+                            <li>Médiathèque<img src="{{ 'build/images/mediatheque.png' }}" alt=""></li>
+                            <li>Infos<img src="{{ 'build/images/infos.png' }}" alt=""></li>
+                        </ul>
+                    </nav>
+                {% endblock %}
+
+                {% block body %}
+                {% endblock %}  
+                  
+            </div>
+        {% endblock %}
+
+        {% block footer %}
+
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {#{{ encore_entry_script_tags('modal_message') }}#}
+        {% endblock javascripts %}
+    </body>
+</html>

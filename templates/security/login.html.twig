@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/lib/fontawesome-pro-5.10.2-web/css/all.css" rel="stylesheet">
+     {{ encore_entry_link_tags('app_login') }}
+     <title>Connexion</title>
+</head>
+<body class="main__gradiant--grey">
+<header>
+    <h1></h1>
+</header>
+<div id="container" >
+
+    <div class="main-header">
+        <div class="resume">
+            <h1 class="logo">infoway <img src="{{ asset('build/images/infoway.png') }}" alt="logo"></h1>
+            <span class="desc">Spécialiste de l'affichage dynamique</span>
+        </div>
+        <div class="degrade"></div>
+        <span class="adress">INFOWAY S.A.S 6 rue Lorget | 93200 Saint-Denis</span>
+    </div>
+
+    <div class="form-login">
+        {# {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %} #}
+        <form  method="post">
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Utilisateur" {% if last_username is defined %} value="{{ last_username }}" {% endif %} required>
+                <span class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="user_password" name="user_password" placeholder="Mot de passe" required>
+                <span class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" name="_remember_me"><span class="memoriser">Mémoriser</span>
+            </div>
+
+            <div class="form-group">
+                <a href="{{ path('user::password_forget') }}" class="forget_password_link">Mot de passe oublié ?</a>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" id="_csrf_token" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </div>
+            <div class="form-group">
+                <button type="submit"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<footer class="footer">
+    <p>Direction <span class="direction">| Christophe Gambier</span></p>
+    <p>Responsable technique <span class="technical">| Antoine Lord Michel</span></p>
+    <p>Comptabilité <span class="accounting">| Carmen Rioja Comptabilite</span></p>
+</footer>
+
+{{ encore_entry_script_tags('app_login') }}
+
+</body>
+</html>

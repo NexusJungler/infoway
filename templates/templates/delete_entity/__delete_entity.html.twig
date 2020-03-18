@@ -1,0 +1,6 @@
+<form action="{{ form_action }}"
+      method="post" onsubmit="return confirm('Etes-vous certain de vouloir faire celà ? Cette action est définitive !')">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ subject.id) }}">
+    <button class="btn btn-danger">Supprimer</button>
+</form>

@@ -1,0 +1,428 @@
+/* =============== RESET ================= */
+* {
+    box-sizing: border-box
+}
+html {
+    font-size: 16px;
+}
+p{
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.1em;
+    margin-bottom: -0.2em;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.625;
+    margin: 0;
+    padding: 0;
+    color: #6F6F6F;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color .3s;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/***************************************************** css custom *****************************************************************/
+
+.border--line::after{
+    content: '';
+    border-bottom: 1px solid #4D646D;
+    position: relative;
+    display: block;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+
+
+
+/************************************************************** HEADER BLOCK RIGHT **********************************************************/
+
+.header__block--right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width:30%;
+    padding-right: 70px;
+}
+
+.all__user--account {
+    display: flex;
+    flex-direction: row;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.user__logo {
+    background-color: #4F9BAE;
+    border-radius: 50%;
+    border: 1px solid #4F9BAE;
+    width: 45px;
+    height: 45px;
+}
+.username__first--letter{
+    text-align: center;
+    font-size: 2em;
+    margin-top: -0.2em;
+    margin-left: 0.3em;
+    display: inline-block;
+    color: #fff;
+
+}
+
+.clock__all {
+
+}
+
+.hours {
+    color: #FFFFFF;
+    background-color: #4D646D;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    width: 30%;
+    height: 27px;
+    text-align: center;
+}
+
+.hours::after {
+    content: '';
+    border-bottom: 1px solid #4D646D;
+    position: absolute;
+    top: 7.5%;
+    width: 12%;
+    margin-left: -3%;
+}
+
+.date {
+    font: 1.2rem 'Barlow', sans-serif;
+    color: #4D646D;
+    width: 100%;
+    margin-top: 1em;
+}
+
+
+/******************************************************** MAIN **********************************************************************/
+.main {
+    width: 90%;
+    left: 10%;
+    position: relative;
+    z-index: 2;
+}
+
+
+.jumbotron {
+    display: flex;
+    justify-content: space-between;
+    height: 153px;
+    background-color: #EBEBEB;
+    color: #404040;
+}
+
+.page__title {
+    display: flex;
+    flex-direction: row;
+    font: 1.6rem 'Barlow', sans-serif;
+    color: #899CA4;
+    margin: 25px 35px;
+    /* width: 55%; */
+}
+.page__title--img {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: #4F9BAE;
+}
+.page__title--img img {
+    text-align: center;
+    width: 35px;
+    /* height: 31px; */
+    margin: 13px 10px;
+}
+
+.page__title h1 {
+    margin-left: 15px;
+    margin-top: -5px;
+    color: #283338;
+    font: 3rem 'segoe UI';
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.page__title .cercle{
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: #4F9BAE ;
+    border-radius: 50%;
+    margin: 1.2rem 1rem 0 1rem;
+}
+
+.page__title h2{
+    font: 2.1rem 'Barlow';
+    font-weight: bold;
+    color: #306D7C;
+    text-transform: uppercase;
+}
+.page__info{
+    width: 20%;
+    margin-top: 3rem;
+}
+.page__info p{
+    color: #4D646D;
+    font: 0.75rem 'Barlow', lighter;
+    display: flex;
+    padding-bottom: 0.5rem;
+}
+
+.page__info p::before{
+    content: "";
+    width: 17px;
+    height: 17px;
+    background: #C0CCD1 0% 0% no-repeat padding-box;
+    border: 1px solid #4D646D;
+    margin-right: 0.5rem;
+    border-radius: 10%;
+}
+
+.page__info p:nth-child(2)::before{
+    content: "";
+    background: transparent linear-gradient(180deg, #53B3C7 0%, #4F9BAE 100%) 0% 0% no-repeat padding-box;}
+
+:nth-child(2)
+
+.search__form {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    width: 30%;
+}
+
+.search__form form{
+    display: flex;
+    padding: 2%;
+    width: 100%;
+}
+
+.search_icon {
+    width: 28px;
+    height: 30px;
+}
+
+.search__form button {
+    background-color: transparent;
+    border: none;
+}
+
+.search__form input {
+    width: 390px;
+    max-width: 100% ;
+    height: 35px;
+    background: #FFFFFF;
+    border-radius: 9px;
+    padding-left: 5%;
+    font-size: 15px;
+    border: none;
+    font-style: italic;
+
+}
+
+/* information */
+.information{
+    padding: 0 50px;
+}
+
+.info__title{
+    font-family: "barlow";
+    font-size: 15px;
+    font-style: normal;
+    color: #306D7C;
+    margin-left: 75px;
+    padding-bottom: 1em;
+}
+
+.info__contact{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.info__contact p{
+    margin: 3px 5px;
+    text-align: right;
+    font: 1.4rem 'Barlow', sans-serif;
+    color: #4D646D;
+}
+
+.info__contact--nom span{
+    margin-left: 10rem;
+    font-weight: bold;
+}
+
+.info__contact--hotline{
+    padding-left: 8em;
+}
+
+.info__contact--hotline .bold{
+    font-weight: bold;
+}
+
+.info__contact--hotline .border--line::after {
+    margin-left: -34%;
+}
+
+/* Enseignes */
+
+.enseignes-row{
+    font: 1.4rem 'Barlow', sans-serif;
+    color: #4D646D;
+}
+
+.enseignes-row .border--line::after{
+    margin-top: 0.2em;
+}
+
+.enseignes__bloc{
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding: 0.8em 1em 0 6rem;
+    width: 100%;
+}
+.enseignes__bloc div{
+    text-align: center;
+    flex: 0 0 16%;
+    max-width: 16%;
+    opacity: 0.50;
+}
+.enseignes__bloc img{
+  width: 2.25em;
+}
+.enseignes__bloc p{
+    margin: 0 0 1em 0;
+    font: 1.2rem 'Barlow', sans-serif;
+    color: #4D646D;
+}
+
+/***************************************************** infomation company *****************************************************************/
+
+#company{
+    display: flex;
+    flex-wrap: wrap;
+} 
+
+
+
+.company-bloc{
+    flex: 0 0 26%;
+    max-width: 26%;
+    margin-right: 5em;
+    margin-top: 2em;
+    font: 1.4rem 'Barlow', sans-serif;
+}
+
+.company-bloc p {
+    position: relative;
+}
+
+.col-right{
+    position: absolute;
+    right: 0;
+}
+
+.company-bloc:last-child{
+    margin-right: 0;
+}
+
+.company-info p {
+    padding-top: 0.4em;
+    font: 1.2rem 'Barlow', sans-serif;
+    text-align: right;
+}
+/* .company-info-have p{
+    margin-right: -4.3em;
+}
+.company-info-categories p{
+    margin-right: -0.6em;
+}
+.company-info-groups p{
+    margin-right: -0.2em;
+} */
+
+
+
+
+/* MEDIA QUERY */
+
+/* Tablette */
+
+@media (max-width: 64em)  {
+    .company-bloc {
+        flex: 0 0 39%;
+        max-width: 40%;
+        margin-right: 4em;
+        margin-top: 2em;
+    }
+}
+
+
+@media (max-width: 48em)  {
+
+    /***************************************************** HEADER *****************************************************************/
+
+    .logo__infoway {
+        padding: 2.5em 1em;
+    }
+
+    /***************************************************** Contact *****************************************************************/
+
+    .info__contact--nom span {
+        margin-left: 3rem;
+    }
+    .info__contact--hotline {
+        padding-left: 5em;
+    }
+
+    /* Enseignes */
+
+    .enseignes__bloc {
+        padding: 0.8em 1em 0 2rem;
+    }
+
+    .enseignes__bloc div {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    #company{
+        margin: 0em 4em;
+    }
+    .company-bloc{
+        position: relative;
+        width: 100%;
+        flex: none;
+        max-width: 100%;
+    }
+
+    
+}
+
+/* Mobile */
+@media (max-width: 26.8em)  {
+
+}
+

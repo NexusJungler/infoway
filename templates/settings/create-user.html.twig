@@ -1,0 +1,137 @@
+<div class="tab-content-title">
+    <h3 class="title">Créer un Utilisateur</h3>
+    <p>Areas</p>
+</div>
+
+<form action="" method="">
+{# {% macro input(name, value, type = "text") %} #}
+    <div class="tab-content-bloc" >
+        <div class="tab-content-bloc-cm-left">
+            <div class="bloc-form ">
+                <div class="bloc-form-content">
+
+                    <div class="row">
+                        <label class="label-custome">Nom</label>
+                        {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
+                        <input type="text" class="input-custome"  name="create-user"  value="Créer utilisateur"/>
+                        <input type="submit" value="ok" class="form-btn-sumbit">
+                    </div>
+
+                    <div class="row-flex">
+                        <label class="label-custome">Login</label>
+                        {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
+                        <input type="text" class="input-custome"  name="login"  value="login"/>
+                        <input type="submit" value="ok" class="form-btn-sumbit">
+                    </div>
+                    <div class="row">
+                        <label class="label-custome">Mot de passe</label>
+                        {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
+                        <input type="text" class="input-custome"  name="password"  value="Mot de passe"/>
+                        <input type="submit" value="ok" class="form-btn-sumbit">
+                    </div>
+
+                    <div class="row">
+                        <label for="sel-administrateurs" class="label-custome">Associé à</label>
+                        <div class="dropdown mutliSelect"> 
+                            <div  class="select-input">
+                                <button type="button" class="btn-dropdown" id="accocie" data-down="down-associate">
+                                    <p  class="multiSel"></p>  
+                                    <span class="hida">Select</span> 
+                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                </button>
+                                <div class="select-down">
+                                    <ul id="down-associate">
+                                        {% for customer in customer %}
+                                            <li>
+                                                <label class="mutliselect-chkbox">{{customer}}
+                                                    <input type="checkbox" name="accocie" data-satuts="accocie" value="{{customer}}">
+                                                    <span class="mutliselect-check"></span>
+                                                </label>
+                                            <li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="sel-administrateurs" class="label-custome">Satut</label>
+
+                        <div class="dropdown mutliSelect" > 
+                            <div class="select-input">
+                                <button type="button" class="btn-dropdown" id="status" data-down="down-status">
+                                    <p  class="multiSel" ></p>  
+                                    <span class="hida">Choisir dans la liste</span>    
+                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                </button> 
+                                <div class="select-down">
+                                    <ul id="down-status">
+                                        {% for customer in customer %}
+                                            <li>
+                                                <label class="mutliselect-chkbox">{{customer}}
+                                                    <input type="checkbox" name="satut"  data-satuts="status" value="{{customer}}">
+                                                    <span class="mutliselect-check"></span>
+                                                </label>
+                                            <li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="ok"  class="form-btn-sumbit">
+                    </div>
+
+                    <div class="row">
+                        <label class="label-custome">TAGS</label>
+                        <div class="row-flex radio-tags">
+                            <div class="checkbox">
+                                <label class="mutliselect-chkbox">Cree des TAGS
+                                    <input type="radio" name="create-tags"   value="">
+                                    <span class="mutliselect-check"></span>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="mutliselect-chkbox">Affecte des TAGS
+                                    <input type="radio" name="create-tags"  value="">
+                                    <span class="mutliselect-check"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+        
+        
+        <div class="tab-content-bloc-cm-right"> 
+            <div class="tab-content-poste">
+                <p>Affichage par défaut de l'utilisateur selon statut</p>
+            </div>
+            <div class="tab-content-brand">
+                <div class="bloc-poste-title">
+                    <p>Sites de la Marque</p>
+                </div>
+                <div class="inputchkbox">
+                    {% for customer in customer %}
+                        <label class="chkbox" >{{customer}}
+                            <input type="checkbox" value="{{customer}}" >
+                            <span class="checkmark"></span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="">
+        <button name="btn-mofifier" class="btn">Créer</button>
+    </div> 
+
+    
+{# {% endmacro %} #}                         
+</form>
+
