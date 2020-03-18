@@ -7,6 +7,7 @@
 /var/
 /vendor/
 /assets/images
+/assets/css/fontawesome
 /assets/js/fontawesome
 
 ###< symfony/framework-bundle ###
