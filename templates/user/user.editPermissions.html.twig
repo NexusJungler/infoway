@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+    <div style="margin-left: 15%">
+
+        <h1 id="profile" data-user="{{ user.id }}">Profile : {{ user.username }}</h1>
+
+        <div id="permissions">
+
+            {% if rolePermissions | length > 0 %}
+
+            <table style="text-align: center">
+
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        {% for action in actions %}
+                            <th data-id="{{ action.id }}" style="padding: 2%; border: 1px solid #000">{{ action.name }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for feature in rolePermissions %}
+                        {% for subject in feature['subjects'] %}
+                            <tr style="border: 1px solid #000">
+                                <td data-id="{{ subject['id'] }}">{{ subject['name'] }}</td>
+                                {% for index, value in subject['checkboxes'] %}
+                                    {% if value is not same as(null) %}
+                                        <td style="padding: 2%; border: 1px solid #000">
+                                            <input type="checkbox" class="permission" data-permission="{{ value['permission_id'] }}" data-action="{{ value['action'] }}" data-subject="{{ value['subject'] }}" {% if value['permission_id'] in userPermissions['permissions_id'] %} checked {% endif %}>
+                                        </td>
+                                    {% else %}
+                                        <td style="border: 1px solid #000"></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+            <button id="updatePermissionsButton">Valider</button>
+
+            {% else %}
+
+                <h1>Aucune permissions !</h1>
+
+            {% endif %}
+
+        </div>
+
+        <a style="color: black !important;" href="{{ path('user::showAllUsers') }}">&leftarrow; Retour</a>
+
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('permission') }}
+{% endblock javascripts %}
+

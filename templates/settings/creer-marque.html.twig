@@ -1,0 +1,127 @@
+<div class="tab-content-title">
+    <h3 class="title">Créer une Marque</h3>
+    <p>Areas</p>
+</div>
+
+<form action="" method="">
+    <div class="tab-content-bloc" >
+        <div class="tab-content-bloc-cm-left">
+            <div class="bloc-form ">
+                <div class="bloc-form-content">
+
+                    <div class="row">
+                        <label class="label-custome">Nom de la Societé</label>
+                        {# {% macro input(name, value, type = "text") %} #}
+                            {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
+                            <input type="text" class="input-custome"  name="nom_societe"  value="text"/>
+                        {# {% endmacro %} #}
+                    </div>
+
+                    <div class="inputRdo row">
+                        <div class="rdo">
+                            <input id="cree-marque" name="cree" type="radio" checked/>
+                            <label for="cree-marque"> Je crée un grope de site : </label>
+                        </div>
+                        <div class="rdo">
+                            <input id="cree-enseigne" name="cree" type="radio"/>
+                            <label for="cree-enseigne">La marque c'est l'enseigne : </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="label-custome">Nom</label>
+                        {# {% macro input(name, value, type = "text") %} #}
+                            <div>
+                                <div class="row-flex">
+                                    {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
+                                    <input type="text"  class="input-custome"  name="nom_groupe" value="exemple : Régime B "/>
+                                    <input type="submit" value="ok" class="form-btn-sumbit">
+                                </div>
+                                <div class="file-custome" >
+                                    <label for="file" class="label-file " ><span class="image-title">Importer logo </span> <div class="logo-icone"><i class="fas fa-folder-open"></i></div></label>
+                                    <input type="file" name="file" id="file-input">
+                                </div>
+                            </div>
+                        {# {% endmacro %} #}
+                        
+                    </div>
+
+                    <div class="row-flex">
+                        <div class="label-custome">Importer listes</div>
+                        <div class="file-custome" >
+                            <a href="#" download class="btn-download-custome ">Télécharger Modèle vierge <div class="logo-icone"><i class="fas fa-file-download"></i></div></a>
+                        </div>
+                    </div>
+
+                    <div class=" row">
+                        <div class="label-custome"></div>
+                        <div class="file-custome">
+                            <label for="file" class="label-file">Charger liste sites <div class="logo-icone"><i class="fas fa-folder-open"></i></div></label>
+                            <input type="file" name="file" >
+                        </div>
+                        <input type="submit" value="ok"  class="form-btn-sumbit">
+                    </div>
+
+                    <div class="row">
+                        <label for="sel-administrateurs" class="label-custome">Administrateurs</label>
+                        <div class="dropdown mutliSelect"> 
+                            <div  class="select-input">
+                                <button type="button" class="btn-dropdown" id="select-brand" data-down="down-brand">
+                                    <p  class="multiSel"></p>  
+                                    <span class="hida">Select</span> 
+                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                </button> 
+                                <div class="select-down">
+                                    <ul id="down-brand">
+                                        {% for customer in customer %}
+                                            <li>
+                                                <label class="mutliselect-chkbox">{{customer}}
+                                                    <input type="checkbox" name="brand" data-satuts="select-brand" value="{{customer}}">
+                                                    <span class="mutliselect-check"></span>
+                                                </label>
+                                            <li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="ok"  class="form-btn-sumbit">
+                    </div>
+
+                </div>
+            
+                <div class="bloc-form-img">
+                    <div class="marque-img">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
+                    </div>
+                    <div class="img-update">
+                        <p>Logo</p>
+                        <img id="upload-image" src="" alt="">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content-bloc-cm-right"> 
+            <div class="tab-content-brand">
+                <div class="bloc-poste-title">
+                    <p>Sites de la Marque</p>
+                </div>
+                <div class="inputchkbox">
+                    {% for customer in customer %}
+                        <label class="chkbox" >{{customer}}
+                            <input type="checkbox" value="{{customer}}" >
+                            <span class="checkmark"></span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>    
+        </div>
+    </div>
+
+    <div class="">
+        <button name="btn-mofifier" class="btn">Créer</button>
+    </div>                      
+</form>
+

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main home home-products">
+        <div class="main-content">
+
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Produits / Prix' } %}
+            </section>
+
+            <section id="wrapper">
+                <article class="wrapper-content">
+                    <ul class="tabs">
+                        <li class="tablinks active current" data-tab="tab-products" data-tab-text="products"> <p class="css-tab__label">Produits / prix</p> </li>
+                        <li class="tablinks" data-tab="tab-categories" data-tab-text="Catégories"> <p class="css-tab__label">Catégories</p> </li>
+                        <li class="tablinks" data-tab="tab-price" data-tab-text="Groupe de Prix"> <p class="css-tab__label">Groupe de Prix</p> </li>
+                        <li class="tablinks creer" data-tab="tab-create-date" data-tab-text="Créer DATE"> <p class="css-tab__label">Créer DATE</p> </li>
+                    </ul>
+                </article>
+            </section>
+
+        <section id="wrapper_tabcontent">
+
+            <article id="tab-products" class="tab-content current">
+                {% include 'products/products_price.html.twig' %} 
+            </article>
+                
+            <article id="tab-categories" class="tab-content create-brand tab-create">
+                 {% include 'products/products_price.html.twig' %}
+            </article>
+
+            <article id="tab-price" class="tab-content  tab-create">
+            </article>
+
+            <article id="tab-create-date" class="tab-content  tab-create">
+            </article>
+            
+        </section>        
+        </div>
+    </main>
+{% endblock %}

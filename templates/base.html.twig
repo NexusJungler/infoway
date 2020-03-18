@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}Bienvenue !{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+            <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+            <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+            {{ encore_entry_link_tags('app') }}
+        {#{{ encore_entry_link_tags('modal_message') }}#}
+        {% endblock %}
+
+    </head>
+    <body>
+
+        {% if (message is defined) and (message is not null) %}
+            <div style="display: none" id="message" data-message="{{ message }}"></div>
+        {% endif %}
+
+        {% block header %}
+            <header class="header">
+                <div class="logo__infoway">
+                    <img src="{{ asset('build/images/infoway.png') }}" alt="logo infoway">
+                </div>
+                <div class="menu-wrap">
+                    <input type="checkbox" class="toggler" />
+                    <div class="hamburger"><div></div></div>
+                </div>
+                <div id="header__block">
+                    <div class="header__block--left">
+                        <div class="header__gradient-left">
+                            <div class="logo__enseigne">
+                                <img src="{{ asset('build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
+                            <div class="all__enseigne">
+                                <form class="enseigne">
+                                    <select name="enseigne" id="enseigne">
+                                    <option value="">AREAS</option>
+                                        {# {% for customer in customer %}
+                                            <option value="{{customer}}">{{customer}}</option>
+                                        {% endfor %} #}
+                                    </select>
+                                    <p class="number__enseigne"><span >25</span> enseignes</p>
+                                    <div>
+                                        <button class="btn-back"><span></span>Revenir</button>   
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header__gradient-center">
+                        <div class="update">
+                            <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
+                            <div class="all__enseigne-site">
+                                <form class="enseigne-site">
+                                    <select name="enseigne-site" id="enseigne-site">
+                                        <option value="">Sélectionner l'enseigne</option>
+                                        {# {% for customer in customer %}
+                                            <option value="{{customer}}">{{customer}}</option>
+                                        {% endfor %} #}
+                                    </select><br>
+                                    <p class="number__enseigne-site"><span >7</span>Sites<p>
+                                    <div>
+                                        <button class="update__all">Mettre à jour l'enseigne</button>  
+                                    </div>
+                                    <div>
+                                        <button class="btn-back"><span></span>Revenir</button>   
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="header__gradient-right">
+                        <div class="all__site">
+                            <form class="site">
+                                <select name="site" id="site">
+                                    <option value="">sélectionner site</option>
+                                    {# {% for customer in customer %}
+                                            <option value="{{customer}}">{{customer}}</option>
+                                        {% endfor %} #}
+                                </select>
+                                <p class="number__site">Lemans</p>
+                                
+                            </form>
+                            <div class="update">
+                                <button class="update__site disabled">Mettre à jour le site</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="header__block--right">
+                    <div class="clock__all">
+                        <div class="clock-container" {% if location is defined %} data-city="{{ location.city }}" data-timezone="{{ location.timezone }}" data-date_format="{{ location.date_format }}" data-clock_format="{{ location.clock_format }}" {% endif %}>
+                        </div>
+
+                        <i class="arrow-down" id="showTimeZoneList"></i>
+
+                        <div id="timeZoneList-container" style="display: none">
+                            <ul id="timeZoneList">
+                                <li class="timezone" data-language="jpn" data-timezone="Asia/Tokyo" data-date_format="Y-m-d" data-clock_format="24">Tokyo</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="all__user--account">
+                        <div class="user__logo">
+                            <span class="username__first--letter">N</span>
+                        </div>
+                        <div class="user">
+                            {# <span class="user__name">
+                                {% if user.isLoggedIn %}
+                                    {{ user.name }}!
+                                {% endif %}
+                            </span> #}
+                            <span class="user__name">Nadya</span>
+                            <span class="user__rule">Admin</span>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        {% block container %}
+            <div id="container" class="menu" >
+ 
+                {% block nav %}
+                    <nav class="nav">
+                        <ul class="nav-menu"> 
+                            <li class="nav__menu-home active">
+                                <a href="/" class=""><i class="icon icon-iy-airplay"></i></a>
+                            </li>
+                            <li  class="nav-menu-hover">
+                                <a href="/setting" ><span class="nav-menu-title">Configuration</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <ul class="nav-sous-menu">
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/setting"><span class="nav-mobile-title">Configuration</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                            </li>
+                            <li  class="nav-menu-hover">
+                                <a href="/site"><span class="nav-menu-title">Sites</span><i class="icon icon-iy-site"></i></a>
+                                <ul class="nav-sous-menu">
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/site"><span class="nav-mobile-title">Sites</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-menu-hover">
+                                <a href="/products"><span class="nav-menu-title">Produits</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <ul class="nav-sous-menu">
+                                    <li><a href="" ><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/products"><span class="nav-mobile-title">Produits</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-menu-hover">
+                                <a href="/programming"><span class="nav-menu-title">Programmation</span><i class="icon icon-iy-programming"></i></a>
+                                <ul class="nav-sous-menu">
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/programming"><span class="nav-mobile-title">Programmation</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
+                                </ul>
+                            </li >
+                            <li class="nav-menu-hover">
+                                <a href="/media"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/media"><span class="nav-mobile-title">Médiathèque</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-menu-hover">
+                                <a href="/info"><span class="nav-menu-title">Infos</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/info"><span class="nav-mobile-title">Infos</span></a></li>
+                                </ul>
+                            </li>
+                                
+                        </ul>
+                    </nav>
+
+                {% endblock %}
+
+                {% block body %}
+
+                {% endblock %}  
+                  
+            </div>
+
+        {% endblock %}
+
+        {% block footer %}
+
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {#{{ encore_entry_script_tags('modal_message') }}#}
+        {% endblock javascripts %}
+
+    </body>
+
+</html>

@@ -1,0 +1,100 @@
+/***            Container            ****/
+
+
+.clock__all {
+    width: 50%;
+    position: relative;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.date-container {
+    border-top: 1px solid #000;
+}
+
+.clock__all i {
+    border: solid #000;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    position: absolute;
+    right: 40%;
+    top: 20%;
+}
+
+.clock__all i.arrow-up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.clock__all i.arrow-down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+#timeZoneList-container {
+    position: absolute;
+    right: -5%;
+    width: 40%;
+    top: 50%;
+    text-align: center;
+}
+
+#timeZoneList-container li:hover {
+    cursor: pointer;
+    background-color: darkgrey;
+    color: #FFF;
+}
+
+/**  ClockManager  **/
+
+.clock-container .clock {
+    color: #FFFFFF;
+    background-color: #4D646D;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    width: 100%;
+    height: 27px;
+    text-align: center;
+}
+
+.clock-container .clock .container {
+    width: 100%;
+}
+
+.clock-container .clock .clock-header {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 40%;
+}
+
+.clock-container .clock .clock-header:hover {
+    cursor: pointer;
+}
+
+.hour {
+
+}
+
+/*.hour::after {*/
+/*    content: '';*/
+/*    border-bottom: 1px solid #4D646D;*/
+/*    position: absolute;*/
+/*    top: 7.5%;*/
+/*    width: 12%;*/
+/*    margin-left: -3%;*/
+/*}*/
+
+/** Date  **/
+.date {
+    font: 1.2rem 'Barlow', sans-serif;
+    color: #4D646D;
+    width: 100%;
+    margin-top: .5rem;
+}
+
