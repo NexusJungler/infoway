@@ -6,6 +6,9 @@
 /public/bundles/
 /var/
 /vendor/
+/assets/images
+/assets/js/fontawesome
+
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
