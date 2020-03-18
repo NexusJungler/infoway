@@ -2,333 +2,66 @@
 
 {% block title "Configuration" %}
 
-
 {% block body %}
-    <main class="main">
+    <main class="main home home-setting">
+        <div class="main-content">
 
-        <div class="jumbotron">
-            <div class="page__title">
-                <div class="page__title--img">
-                    <img src="/build/images/home_blanc.png" alt="home">
-                </div>
-                <h1>Configuration</h1>
-                <span class="cercle"></span>
-                <h2 id="settings" class="tab-content current">Parametres</h2>
-                <h2 id="creation" class="tab-content">Creation</h2>
-            </div>
-            <div class="page__info">
-                <p>Parametres existants</p>
-                <p>Création d'une nouvelle configuration</p>
-            </div>
-            <div class="search__form">
-                <form action="" method="get">
-                    <input type="text" name="query" placeholder="Rechercher un élément...">
-                    <button><img src="{{ asset('build/images/search_icon.png') }}" class="search_icon" alt="search icon"></button>
-                </form>
-            </div>
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'showSecondTitles': true } %}
+                
+                <article id="wrapper">
+                    <div class="wrapper-content">
+                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+                        <ul class="tabs">
+                            <li class="tablinks active current" data-tab="tab-marque" data-tab-text="settings"> <p class="css-tab__label">Marque</p> </li>
+                            <li class="tablinks " data-tab="tab-utilisateurs" data-tab-text="settings"> <p class="css-tab__label">Utilisateurs</p> </li>
+                            <li class="tablinks " data-tab="tab-sites" data-tab-text="settings"> <p class="css-tab__label">Sites</p> </li>
+                            <li class="tablinks " data-tab="tab-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li>
+                            <li class="tablinks creer" data-tab="tab-create-brand" data-tab-text="creation"> <p class="css-tab__label">Créer Marque <i class="fas fa-plus"></i><span class="tab-bloc"></span></p> </li>
+                            <li class="tablinks creer" data-tab="tab-create-user" data-tab-text="creation"> <p class="css-tab__label">Créer Utilisateurs <i class="fas fa-plus"></i><span class="tab-bloc"></span></p> </li>
+                            <li class="tablinks creer" data-tab="tab-create-site" data-tab-text="creation"> <p class="css-tab__label">Créer Site <i class="fas fa-plus"></i><span class="tab-bloc"></span></p> </li>
+                        </ul>
+                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </article>
+
+            </section>
+
+            <section id="wrapper_tabcontent">
+
+                <article id="tab-marque" class="tab-content current">
+                    {% include 'settings/marque.html.twig' %}
+                </article>
+
+                <article id="tab-utilisateurs" class="tab-content">
+                    <h2>utilisateurs</h2>
+                </article>
+                        
+                <article id="tab-site" class="tab-content ">
+                    <h2>Gestion de site<h2>
+                </article>
+
+                <article id="tab-tags" class="tab-content ">
+                    <h2>Gestion des TAGS<h2>
+                </article>
+                
+                <article id="tab-create-brand" class="tab-content create-brand tab-create">
+                    {% include 'settings/creer-marque.html.twig' %}  
+                    {# {% include 'settings/creer-compagnie-division.html.twig' %} #}
+                </article>
+
+                <article id="tab-create-user" class="tab-content  tab-create">
+                    {% include 'settings/create-user.html.twig' with { 'form': "78" } %}  
+                </article>
+
+                <article id="tab-create-site" class="tab-content  tab-create">
+                    {% include 'settings/creer-site.html.twig' %}  
+                </article>
+                
+            </section>   
         </div>
-
-        <section id="wrapper">
-            <div class="content">
-                <ul class="tabs">
-                    <li class="tablinks active current" data-tab="marque" data-tab-text="settings"> <p class="css-tab__label">Marque</p> </li>
-                    <li class="tablinks " data-tab="utilisateurs" data-tab-text="settings"> <p class="css-tab__label">Utilisateurs</p> </li>
-                    <li class="tablinks " data-tab="sites" data-tab-text="settings"> <p class="css-tab__label">Sites</p> </li>
-                    <li class="tablinks " data-tab="tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li>
-                    <li class="tablinks creer" data-tab="create-brand" data-tab-text="creation"> <p class="css-tab__label">Créer Marque</p> </li>
-                    <li class="tablinks creer" data-tab="create-user" data-tab-text="creation"> <p class="css-tab__label">Créer Utilisateurs</p> </li>
-                    <li class="tablinks creer" data-tab="create-site" data-tab-text="creation"> <p class="css-tab__label">Créer Site</p> </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="wrapper_tabcontent">
-
-            <article id="marque" class="tab-content ">
-
-                <div class="tab-content-title">
-                    <h3 class="title">marque</h3>
-                    <p>Super Wild Coffee</p>
-                </div>
-
-                <div class="tab-content-bloc" >
-                    <div class="tab-content-bloc-left" >
-                        <form action="">
-                            <div class="bloc-societe">
-
-                                <div class="bloc-societe-form">
-
-                                    <div class="row">
-                                        <label class="label-custome">Nom de la Societé</label>
-                                        {# {% macro input(name, value, type = "text") %}
-                                            <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  />
-                                        {% endmacro %} #}
-                                        <input type="text" class="input-custome" id="nom_societe" name="nom_societe"  value="text"/>
-                                    </div>
-                                    
-                                    <div class="row-flex">
-                                        <label class="label-custome">Nom</label>
-                                        <select name="marque-select " class="marque-select select-custome">
-                                            {% for customer in customer %}
-                                                <option value="{{customer}}">{{customer}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-
-                                    <div class="custom-file row">
-                                        <div class="file-width"></div>
-                                        <label for="file" class="label-file">Modifier logo</label>
-                                        <input type="file" name="file" >
-                                    </div>
-                
-                                    
-                    
-                                    
-                                    
-                                    <div class="row btn-statut ">
-                                        <p>Modifier son Statut</p>
-                                        <button class="btn-right"><i class="fas fa-angle-right"></i></button>
-                                    </div>
-                                    
-                                </div>
-                            
-                                <div class="bloc-societe-img">
-                                    <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
-                                    <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
-                                </div>
-
-                            </div>
-                            <div class="tab-content-btn">
-                                <button name="btn-mofifier" class="btn">Modifier</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="tab-content-bloc-right">    
-                        <form action="" >
-                            <div class="bloc-group-top">
-                                <div class="inputRdo">
-                                    <div class="rdo-cree">
-                                        <input id="cree" name="cree" type="radio" checked/>
-                                        <label for="cree"> Je crée une marque : </label>
-                                    </div>
-                                    <div class="rdo-rajoute">
-                                        <input id="rajoute" name="cree" type="radio"/>
-                                        <label for="rajoute">Je rajoute des sites à un groupe : </label>
-                                    </div>
-                                </div>  
-                            </div>
-
-                            <div class="bloc-group-center">
-                                <div class="bloc-societe-form" >
-                                    <div class="row">
-                                        <label class="label-custome ">Nom du groupe</label>
-                                        {# {% macro input(name, value, type = "text") %}
-                                            <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  />
-                                            <input type="text" id="nom_groupe" name="nom_groupe" />
-                                            <input type="submit" value="ok" class="form-btn-sumbit">
-                                        {% endmacro %} #}
-                                        <input type="text"  class="input-custome" id="nom_groupe" name="nom_groupe" value="exemple : Régime B "/>
-                                        <input type="submit" value="ok" class="form-btn-sumbit">
-                                    </div>
-                                    <div class="row-flex">
-                                        <label class="label-custome ">Importer liste</label>
-                                        <div class="custom-file form-file">
-                                            <div class="file-width"></div>
-                                            <label for="file" class="label-file">Télécharger Modéle vierge</label>
-                                            <input type="file" name="file" >
-                                        </div>
-                                    </div>
-
-                                    <div class="custom-file row">
-                                        <div class="file-width"></div>
-                                        <label for="file" class="label-file">Charger liste sites</label>
-                                        <input type="file" name="file" >
-                                        <input type="submit" value="ok"  class="form-btn-sumbit">
-                                    </div>
-                                </div> 
-                            </div>
-                            <div class="bloc-group-bottom">
-                                <div class="row-flex">
-
-                                    <div class="col">
-                                        <p class="">Type de group</p>
-                                    </div>
-
-                                    <div class="rdo-square col">
-                                        <div >
-                                            <input type="radio"  id="text" name="test" value="cree" checked/>
-                                            <label for="text"><span></span>Critère exclusif</label>
-                                        </div>
-                                        <div class="rounded">
-                                            <span class="mini-circle"></span>
-                                            <p>Région B</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="rdo-square col">
-                                        <div>
-                                            <input type="radio" id="text2" name="test" value="rajoute" />
-                                            <label for="text2"><span></span>Critère optionnel</label> 
-                                        </div> 
-                                        <div class="rounded">
-                                            <span class="mini-circle"></span>
-                                            <p>--------</p>
-                                        </div> 
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="row-flex">
-                                            <button name="btn-liste" class="mini-btn-right"><i class="fas fa-angle-right"></i></button>
-                                            <p>Choisir dans liste </p>
-                                        </div>
-                                        
-                                        <div class="rounded">
-                                            <span class="mini-circle"></span>
-                                            <p>Gouter</p>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-content-btn">
-                                    <button name="btn-cree" class="btn">Créer group</button>
-                                </div>
-                        </form>       
-                    </div>
-                </div>
-                <div >
-                     <table class="table-custome">
-                        <thead  class="table-info">
-                            <tr>
-                                <th>6 Marque</th>
-                                <th>Critère exclusif</th>
-                                <th>Critère optionnels</th>
-                                <th>Administrateurs</th>
-                                <th>Statut</th>
-                                <th>Nbre de sites</th>
-                            </tr>
-                        </thead>
-                        
-                            <tr>
-                                <td>Race</td>
-                                <td>Jack Russell</td>
-                                <td>Poodle</td>
-                                <td>Streetdog</td>
-                                <td>Cocker Spaniel</td>
-                                <td>Cocker Spaniel</td>
-                            </tr>
-                            <tr>
-                                <td>Race</td>
-                                <td>Jack Russell</td>
-                                <td>Poodle</td>
-                                <td>Streetdog</td>
-                                <td>Cocker Spaniel</td>
-                                <td>Cocker Spaniel</td>
-                            </tr>
-                            <tr>
-                                <td>Race</td>
-                                <td>Jack Russell</td>
-                                <td>Poodle</td>
-                                <td>Streetdog</td>
-                                <td>Cocker Spaniel</td>
-                                <td>Cocker Spaniel</td>
-                            </tr>
-                            <tr>
-                                <td>Race</td>
-                                <td>Jack Russell</td>
-                                <td>Poodle</td>
-                                <td>Streetdog</td>
-                                <td>Cocker Spaniel</td>
-                                <td>Cocker Spaniel</td>
-                            </tr>
-                    </table>    
-                </div>
-            </article>
-
-
-            <div id="utilisateurs" class="tab-content">
-
-                {% include 'settings/marque.html.twig' %}
-                <h2>utilisateurs</h2>
-
-                <h4>Radio Button</h4>
-                <div class="rdo-square">
-                    <div >
-                            <p >Je crée un grope de site :</p> 
-                            <input type="radio"  id="cree" name="radio" value="cree" checked/>
-                            <label for="cree"><span></span> kjfdsoif</label>
-                        </div>
-                        <div>
-                            <p>Je rajoute des sites à un groupe : </p>
-                            <input type="radio" id="rajoute" name="radio" value="rajoute" />
-                            <label for="rajoute"><span></span>ccxbcxbbcx</label> 
-                        </div>  
-                </div>
-
-                
-                <h4>Checkbox</h4>
-                        
-                        <form action="" class="ckbox-square">
-                            <div >
-                                <input type="checkbox" name="" value="" id="checkbox01">
-                                <label for="checkbox01"><span></span>ytrytry</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="" value="" id="checkbox02">
-                                <label for="checkbox02">ytrty</label>
-                            </div>
-                        </form>
-
-                        <h2>Radio Buttons</h2>
-                            <form action="" class="inputRdo">
-                                <div >
-                                    <input id="radio1" name="radio" type="radio"/>
-                                    <label for="radio1">Yes</label>
-                                </div>
-                                <div >
-                                    <input id="radio2" name="radio" type="radio"/>
-                                    <label for="radio2">No</label>
-                                </div>
-                            </form>                
-                    <input type="submit" value="ok" class="form-btn-sumbit">
-
-            </div>
-                    
-                    
-
-                        
-    
-                <div id="site" class="tab-content ">
-                    <h2>Gestion de site</h2>
-
-
-
-                </div>
-                <div id="tags" class="tab-content ">
-                    <h2>Gestion des TAGS</h2>
-
-
-            
-                </div>
-                
-                <div id="create-brand" class="tab-content create-brand tab-create">
-                    {% include 'settings/gerer-compagnie-division.html.twig' %}
-                </div>
-
-                <div id="create-user" class="tab-content current tab-create">
-                    {% include 'settings/create-user.html.twig' %}  
-                </div>
-
-                <div id="create-site" class="tab-content  tab-create">
-                    {% include 'settings/creer-site.html.twig' %}
-                </div>
-            
-        </section>        
 
     </main>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('setting') }}
-{% endblock javascripts %}
+

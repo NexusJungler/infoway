@@ -106,4 +106,70 @@ class AppController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route(path="/programming", name="app:programming")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function programming(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("programming.html.twig", [
+            'customer' => $customer
+        ]);
+
+    }
+    
+    /**
+     * @Route(path="/media", name="app:media")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function media(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("media.html.twig", [
+            'customer' => $customer
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/info", name="app:info")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function info(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("info.html.twig", [
+            'customer' => $customer
+        ]);
+
+    }
+
 }

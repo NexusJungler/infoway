@@ -20,6 +20,15 @@
     display: flex;
 }
 
+.bloc-form-content .bloc-form-row{
+    padding: 0 0 0.7rem 0;
+    display: flex;
+}
+
+.bloc-form-content .bloc-form-row-flex{
+    display: flex;
+}
+
 /* ===========  class custom form image =========== */
 
 .bloc-form-img{
@@ -138,7 +147,7 @@
     border: 0.06rem solid #C0CCD1;
     border-radius: 0.4rem;
     font: 0.9rem 'Barlow', italic;
-    text-transform: uppercase;
+    
     color: #4D646D;
     width: 65%;
 }    
@@ -318,44 +327,7 @@
     margin-right: 0.6rem;
 }
 
-/* == table ==  */
-#table{
-    width: 100%;
-}
-.table-custome{
-    border-collapse: collapse;
-    border-radius: 0.5rem 0.5rem 0 0;
-    overflow: hidden;
-    width: 100%;
-}
 
-.table-custome .table-info{
-    background: #899CA4 0% 0% no-repeat padding-box;
-    border: 1px solid #4D646D;
-    border-radius: 0.5rem 0.5rem 0 0;
-}
-
-
-
-.table-custome th{
-    font: 0.8rem 'Barlow', medium;
-    color: #FFFFFF;
-    padding: 0.5rem 1rem;
-    
-}
-
-.table-custome tbody tr {
-    
-    background: #DCECEF 0% 0% no-repeat padding-box;
-    
-}
-.table-custome tbody tr:nth-child(2n+2) {
-    background: #ffffff 0% 0% no-repeat padding-box;
-}
-.table-custome tbody tr td {
-    padding: 0.3rem;
-    border: 1px solid #899CA4;
-}
 
 
 
