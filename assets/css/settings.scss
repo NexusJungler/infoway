@@ -151,5 +151,14 @@
 }
 
 
-
+.home-setting{
+    .setting-display{
+        padding: 0;
+        &.display::after {
+            content: '';
+            top: 2.3125rem;
+            border: 1px solid #4D646D;
+        }
+    }
+}
 

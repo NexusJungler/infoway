@@ -35,14 +35,11 @@ change_image.changeimage();
 let table_products= new Table();
 table_products.table();
 
-
-
 let nav_bar= new Navbar();
 nav_bar.navbarleft();
 
 // let chech_box = new Checkbox();
 // chech_box.chech();
-
 
 const clock= new ClockManager();
 clock.enable();
