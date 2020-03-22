@@ -5,7 +5,7 @@ namespace App\Entity\Admin;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="time_zone")
+ * @ORM\Table(name="timezone")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\TimeZoneRepository")
  */
 class TimeZone
@@ -18,7 +18,7 @@ class TimeZone
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 

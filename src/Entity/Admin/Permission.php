@@ -2,15 +2,12 @@
 
 namespace App\Entity\Admin;
 
-use App\Entity\Admin\Action;
-use App\Entity\Admin\Role;
-use App\Entity\Admin\Subject;
-use App\Entity\Admin\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="permission")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\PermissionRepository")
  */
 class Permission
@@ -23,18 +20,19 @@ class Permission
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+
+    /**
      * @ORM\ManyToMany(targetEntity="Role", mappedBy="permission")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="permission")
-     * @ORM\JoinTable(name="user_permission",
-     *   joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="permissions")
      */
     private $users;
 
@@ -43,14 +41,19 @@ class Permission
      * @ORM\ManyToOne(targetEntity="Action", inversedBy="permissions")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $action;
+    //private $action;
 
     /**
      * @ORM\ManyToOne(targetEntity="Subject", inversedBy="permissions")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $subject;
-    
+    //private $subject;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Feature", inversedBy="permissions")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $feature;
 
 
     public function __construct()
@@ -62,6 +65,18 @@ class Permission
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -120,12 +135,12 @@ class Permission
         return $this;
     }
 
-    public function getAction(): ?Action
+    /*public function getAction(): ?Action
     {
         return $this->action;
     }
 
-    public function setAction(?Action $action): self
+    public function setAction(Action $action): self
     {
         $this->action = $action;
 
@@ -137,9 +152,21 @@ class Permission
         return $this->subject;
     }
 
-    public function setSubject(?Subject $subject): self
+    public function setSubject(Subject $subject): self
     {
         $this->subject = $subject;
+
+        return $this;
+    }*/
+
+    public function getFeature(): ?Feature
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(?Feature $feature): self
+    {
+        $this->feature = $feature;
 
         return $this;
     }

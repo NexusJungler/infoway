@@ -27,7 +27,7 @@ class Role
      */
     private $name;
 
-
+    // multi-site (franchisé), multi-enseigne,
 
     /**
      * @ORM\ManyToMany(targetEntity="Permission", inversedBy="roles")
@@ -68,7 +68,7 @@ class Role
     /**
      * @return Collection|Permission[]
      */
-    public function getPermission(): Collection
+    public function getPermissions(): Collection
     {
         return $this->permission;
     }

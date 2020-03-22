@@ -7,6 +7,10 @@
 
         <h1 id="profile" data-user="{{ user.id }}">Profile : {{ user.username }}</h1>
 
+        <div id="result" style="display: none;">
+
+        </div>
+
         <div id="permissions">
 
             {% if rolePermissions | length > 0 %}
@@ -15,27 +19,21 @@
 
                 <thead>
                     <tr>
-                        <th>Subject</th>
-                        {% for action in actions %}
-                            <th data-id="{{ action.id }}" style="padding: 2%; border: 1px solid #000">{{ action.name }}</th>
-                        {% endfor %}
+                        <th>{{ user.username }}</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for feature in rolePermissions %}
-                        {% for subject in feature['subjects'] %}
+                        <tr>
+                            <td>{{ feature['name'] }}</td>
+                        </tr>
+                        {% for permission in feature['permissions'] %}
                             <tr style="border: 1px solid #000">
-                                <td data-id="{{ subject['id'] }}">{{ subject['name'] }}</td>
-                                {% for index, value in subject['checkboxes'] %}
-                                    {% if value is not same as(null) %}
-                                        <td style="padding: 2%; border: 1px solid #000">
-                                            <input type="checkbox" class="permission" data-permission="{{ value['permission_id'] }}" data-action="{{ value['action'] }}" data-subject="{{ value['subject'] }}" {% if value['permission_id'] in userPermissions['permissions_id'] %} checked {% endif %}>
-                                        </td>
-                                    {% else %}
-                                        <td style="border: 1px solid #000"></td>
-                                    {% endif %}
-                                {% endfor %}
+                                <td data-id="{{ permission['id'] }}">{{ permission['name'] }}</td>
+                                <td>
+                                    <input type="checkbox" class="permission" data-permission_name="{{ permission['name'] }}" data-permission_id="{{ permission['id'] }}" {% if userPermissions | length > 0 and permission['id'] in userPermissions['permissions'] %} checked {% endif %}>
+                                </td>
                             </tr>
                         {% endfor %}
                     {% endfor %}

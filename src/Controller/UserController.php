@@ -11,9 +11,13 @@ use App\Entity\Admin\Subject;
 use App\Entity\Admin\User;
 use App\Form\UserType;
 use App\Service\EmailSenderService;
+use App\Service\PermissionsHandler;
+use App\Service\TokenGeneratorService;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -25,6 +29,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends AbstractController
 {
+
+    private ObjectManager $__manager;
 
 
     /**
@@ -59,54 +65,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/register", name="user::register", methods="GET|POST")
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param EmailSenderService $emailSenderHelper
-     * @return Response
-     * @throws Exception
-     */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EmailSenderService $emailSenderHelper): Response
-    {
-
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $token = bin2hex(openssl_random_pseudo_bytes(64));
-
-            $user->setPassword($passwordEncoder->encodePassword($user, $user->getUserPassword()))
-                 ->setRegistrationToken($token)
-                 ->setRegistrationDate(new \DateTime())
-                 ->setRegistrationIsConfirmed(false);
-
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
-
-            $emailSenderHelper->sendEmail("cbaby@infoway.fr", $user->getEmail(),
-                                          "cbaby@infoway.fr", "Registration confirmation", $this->renderView(
-                    "security/confirmInscriptionEmail.html.twig", [
-                    'username' => $user->getUsername(),
-                    'token' => $token
-                ]), 'text/html');
-
-
-            $this->addFlash('message', "Merci de vérifier votre boite mail, un mail contenant un lien de confirmation vient de vous etre envoyé ! Merci d'utiliser ce lien pour confirmer cotre inscription ");
-
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app::register');
-        }
-
-        return $this->render('back-office/user/create_show_edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
-
-    }
-
 
     /**
      * @Route("path=/logout", name="user::logout")
@@ -137,7 +95,7 @@ class UserController extends AbstractController
      * @return Response
      * @throws Exception
      */
-	public function sendPasswordResetEmail(Request $request, EmailSenderService $mailer): Response
+	public function sendPasswordResetEmail(Request $request, EmailSenderService $mailer, TokenGeneratorService $tokenGeneratorService): Response
     {
 
         if(is_null($request->request->get('username')))
@@ -145,22 +103,14 @@ class UserController extends AbstractController
             throw new Exception("Missing 'username' parameter !");
         }
 
-        $user = $this->getDoctrine()->getRepository(User::class)->checkIfUserExist(["username" => $request->request->get('username')]);
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneByUsername($request->request->get('username'));
 
         if (!$user) {
             throw new Exception("User not found !");
         }
 
-        // openssl_random_pseudo_bytes generate a pseudo-random string of bytes using length
-        // openssl_random_pseudo_bytes(int $length)
-        // https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php
-        //
-        // bin2hex convert binary data into hexadecimal
-        // bin2hex(string $binaryData)
-        // https://www.php.net/manual/en/function.bin2hex.php
-        $token = bin2hex(openssl_random_pseudo_bytes(64));
+        $token = $tokenGeneratorService->generate(64);
 
-        // recupère l'email saisie via le formulaire
         $userEmail = $user->getEmail();
 
         $user->setUserPassword("")
@@ -183,7 +133,7 @@ class UserController extends AbstractController
         // message flash dans la session
         (new Session())->getFlashBag()->add("message", "Merci de vérifier votre boîte mail, un mail contenant le lien pour réinitialiser votre mot de passe vous a été envoyé !");
 
-        return $this->redirectToRoute("password_forget");
+        return $this->redirectToRoute("user::password_forget");
 
     }
 
@@ -208,10 +158,7 @@ class UserController extends AbstractController
             {
 
                 // on rajoute le token dans le champ "password_reset_token"
-                $user->setUserPassword($passwordEncoder->encodePassword($user, $request->get("new_password")));
-
-                // on recupère la date actuelle on l'enregistre
-                $user->setPasswordResetDate(new \DateTime());
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->get("new_password")));
 
                 // le token a été utilisé, on peut le supprimer
                 $user->setPasswordResetToken("");
@@ -241,14 +188,114 @@ class UserController extends AbstractController
      public function registrationConfirm(User $user): Response
      {
 
-        $user->setRegistrationToken("")
-             ->setRegistrationIsConfirmed(true);
+         // uncomment this if you want delete registration token on account confirmation
+        /*$user->setRegistrationToken("");
 
-        $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();*/
 
         return $this->render("security/confirmInscription.html.twig");
 
      }
+
+
+    /**
+     * @Route(path="/users/list", name="user::showAllUsers")
+     * @return Response
+     */
+    public function showAllUsers()
+    {
+
+        $this->__manager = $this->getDoctrine()->getManager('default');
+
+        return $this->render(
+            'user/user.showAll.html.twig', [
+            'users' => $this->__manager->getRepository(User::class)->findAll()
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/user/{id}/permissions", name="user::showUserPermissions")
+     * @return Response
+     */
+    public function showUserPermissions(User $user)
+    {
+
+        $this->__manager = $this->getDoctrine()->getManager('default');
+
+        $permissionsHandler = new PermissionsHandler($this->__manager);
+
+        $userPermissions = $permissionsHandler->getUserPermissions($user, true);
+        $userRolePermissions = $permissionsHandler->getUserRolePermissions($user, false);
+
+        $actions = $this->__manager->getRepository(Action::class)->findAll();
+
+        //dd($userRolePermissions, $userPermissions);
+
+        dump($userRolePermissions, $userPermissions);
+
+        return $this->render('user/user.editPermissions.html.twig', [
+            'user' => (object) ['id' => $user->getId(), 'username' => $user->getUsername(), 'role' => $user->getRole()->getName()],
+            'userPermissions' => $userPermissions,
+            'rolePermissions' => $userRolePermissions,
+            'actions' => $actions
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/edit/user/{id}/permissions", name="user::editUserPermissions", methods="POST")
+     */
+    public function editUserPermissions(User $user, Request $request)
+    {
+
+        if($request->request->get('permissions') === null)
+            throw new Exception(sprintf("Internal Error : Missing or invalid '%s' parameter !",'permissions'));
+
+        $permissions = json_decode($request->request->get('permissions'));
+
+        // before update
+        //dump(sizeof($user->getPermissions()->getValues()));
+
+        $updateState = $this->updateUserPermissions($user, $permissions);
+
+        // after update
+        //dd(sizeof($user->getPermissions()->getValues()));
+
+        return new JsonResponse([
+            'status' => 200,
+            'message' => "200 OK"
+        ]);
+
+    }
+
+
+    private function updateUserPermissions(User $user, array $permissions)
+    {
+
+        $userPermissionsDefaultSize = sizeof($user->getPermissions()->getValues());
+
+        foreach ($permissions as $permission_json)
+        {
+
+            $permission = $this->getDoctrine()->getManager('default')->getRepository(Permission::class)->findOneById($permission_json->__id);
+
+            if(!$permission_json->__state AND $user->getPermissions()->contains($permission))
+                $user->removePermission($permission);
+
+            elseif ($permission_json->__state AND !$user->getPermissions()->contains($permission))
+                $user->addPermission($permission);
+
+        }
+
+        if(($userPermissionsDefaultSize !== $user->getPermissions()->getValues()) )
+            $this->getDoctrine()->getManager('default')->flush();
+
+        return true;
+
+    }
 
 
 }

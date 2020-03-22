@@ -13,6 +13,6 @@
 > php bin/console doctrine:migrations:migrate --em=[connection_name] --configuration=/config/doctrine_migrations_[default or customer].yaml
 
 ## Execute fixtures
-> php bin/console doctrine:fixtures:load --group=[group_name]
+> php bin/console doctrine:fixtures:load --group=[group_name] --em=[connection_name]
 
 

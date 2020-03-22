@@ -12,7 +12,7 @@ class ArraySearchRecursiveService
 
     }
 
-    public function search($search, array $array, $currentKey = null, bool $allPath = true)
+    public function search($search, array $array, $currentKey = null, bool $allPath = false)
     {
 
         $pos = false;

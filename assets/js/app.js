@@ -9,7 +9,7 @@ require('../css/class/managers/clockManager.css');
 
 
 // impoet font awesome
-require('../css/fontawesome/css/all.css');
+//require('../css/fontawesome/css/all.css');
 
 // import JS
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";
@@ -19,7 +19,7 @@ import {Checkbox} from "./class/checkbox/checkbox";
 import {Table} from "./class/Table/Table";
 import {Navbar} from "./class/Navbar/Navbar";
 
-require('../js/fontawesome/js/all')
+//require('../js/fontawesome/js/all')
 
 
 const $ = require('jquery');

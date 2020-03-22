@@ -6,12 +6,13 @@ namespace App\Entity\Admin;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserRepository")
  */
-class User
+class User implements UserInterface
 {
 
     /**
@@ -22,12 +23,17 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, name="first_name")
      */
-    private $name;
+    private $firstName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin\Role", inversedBy="users")
+     * @ORM\Column(type="string", length=30, name="last_name")
+     */
+    private $lastName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
     private $role;
@@ -35,7 +41,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $login;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,7 +54,7 @@ class User
     private $phone_number;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 
@@ -63,25 +69,64 @@ class User
     private $password_reset_token;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin\Customer", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customer;
 
+    /**
+     * CompanyPiece is in Customer db,so we will use our Api to simulate this relation
+     * Relation : ManyToOne (Many User can be link with same Customer\CompanyPiece)
+     *
+     * @ORM\Column(type="integer", nullable=false, name="company_piece")
+     */
+    private $companyPiece;
 
-    public function getId()
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="users")
+     * @ORM\JoinTable(name="user_permission")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $permissions;
+
+    // many to many -> site
+
+    // lier un user à une instance et pouvoir recupérer les sites via l'instance
+
+    // permissions accés base, site, ...
+
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->name;
+        return $this->firstName;
     }
 
-    public function setName(string $name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->name = $name;
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -98,14 +143,14 @@ class User
         return $this;
     }
 
-    public function getLogin(): ?string
+    public function getUsername(): ?string
     {
-        return $this->login;
+        return $this->username;
     }
 
-    public function setLogin(string $login): self
+    public function setUsername(string $username): self
     {
-        $this->login = $login;
+        $this->username = $username;
 
         return $this;
     }
@@ -175,9 +220,76 @@ class User
         return $this->customer;
     }
 
-    public function setCustomer(?Customer $customer): self
+    public function setCustomer(Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+
+    public function getCompanyPiece(): ?int
+    {
+        return $this->companyPiece;
+    }
+
+
+    public function setCompanyPiece(int $companyPiece): self
+    {
+        $this->companyPiece = $companyPiece;
+
+        return $this;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return [
+            $this->getRole()->getName()
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+
+    }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
+        }
 
         return $this;
     }

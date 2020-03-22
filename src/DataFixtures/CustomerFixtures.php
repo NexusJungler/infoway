@@ -54,6 +54,7 @@ class CustomerFixtures extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
+        // @see : https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html#fixture-groups-only-executing-some-fixtures
         return [ 'customer' ];
     }
 
@@ -75,7 +76,7 @@ class CustomerFixtures extends Fixture implements FixtureGroupInterface
 
             $companyPieceType = new CompanyPieceType();
             $companyPieceType->setName($type)
-                             ->setLevel($level);
+                ->setLevel($level);
 
             $manager->persist($companyPieceType);
 
@@ -100,15 +101,15 @@ class CustomerFixtures extends Fixture implements FixtureGroupInterface
 
             $companyPiece = new CompanyPiece();
             $companyPiece->setName($this->__faker->company)
-                         //->setType($pieceType)
-                         ->setAddress($this->__faker->address)
-                         ->setPostalCode($this->__faker->postcode)
-                         ->setPhoneNumber($this->__faker->phoneNumber)
-                         ->setDescription($this->__faker->text)
-                         ->setCity($this->__faker->city)
-                         ->setCountry(1)
-                         ->setLogoName($this->__faker->imageUrl($width = 640, $height = 480))
-                         ->setTimeZone(1);
+                //->setType($pieceType)
+                ->setAddress($this->__faker->address)
+                ->setPostalCode($this->__faker->postcode)
+                ->setPhoneNumber($this->__faker->phoneNumber)
+                ->setDescription($this->__faker->text)
+                ->setCity($this->__faker->city)
+                ->setCountry(1)
+                ->setLogoName($this->__faker->imageUrl($width = 640, $height = 480))
+                ->setTimeZone(1);
 
             $pieceType->addCompanyPiece($companyPiece);
 

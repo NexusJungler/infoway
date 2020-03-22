@@ -4,7 +4,6 @@
 namespace App\Service;
 
 
-use App\Entity\Media;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -12,11 +11,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class MediaUploaderService
 {
 
-    private $targetDirectory;
+    private string $__targetDirectory;
 
     public function __construct(string $targetDirectory = "uploads/")
     {
-        $this->targetDirectory = $targetDirectory;
+        $this->__targetDirectory = $targetDirectory;
     }
 
 
@@ -30,7 +29,7 @@ class MediaUploaderService
         try
         {
 
-            $file->move($this->getTargetDirectory(), $fileName);
+            $file->move($this->__targetDirectory, $fileName);
 
         }
         catch (FileException $e)
@@ -45,12 +44,12 @@ class MediaUploaderService
 
     public function getTargetDirectory()
     {
-        return $this->targetDirectory;
+        return $this->__targetDirectory;
     }
 
     public function setTargetDirectory(string $targetDirectory): self
     {
-        $this->targetDirectory = $targetDirectory;
+        $this->__targetDirectory = $targetDirectory;
 
         return $this;
     }
