@@ -2,14 +2,13 @@
 
 namespace App\Entity\Admin;
 
-
+use App\Entity\Admin\Permission;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="subject")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\SubjectRepository")
  * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
  */

@@ -21,6 +21,7 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
         parent::__construct($registry, Product::class);
     }
 
+
     public function setEntityManager(ObjectManager $entityManager): self
     {
         $this->_em = $entityManager;

@@ -21,6 +21,7 @@ class TagsRepository extends ServiceEntityRepository implements RepositoryInterf
         parent::__construct($registry, Tag::class);
     }
 
+
     public function setEntityManager(ObjectManager $entityManager): self
     {
         $this->_em = $entityManager;

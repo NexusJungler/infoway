@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
- * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserRepository")
  */
 class User implements UserInterface
@@ -90,6 +89,12 @@ class User implements UserInterface
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $permissions;
+
+    // many to many -> site
+
+    // lier un user à une instance et pouvoir recupérer les sites via l'instance
+
+    // permissions accés base, site, ...
 
     public function __construct()
     {
@@ -288,7 +293,5 @@ class User implements UserInterface
 
         return $this;
     }
-
-
 
 }

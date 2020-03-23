@@ -21,6 +21,7 @@ class CompanyPieceTypeRepository extends ServiceEntityRepository implements Repo
         parent::__construct($registry, CompanyPieceType::class);
     }
 
+
     public function setEntityManager(ObjectManager $entityManager): self
     {
         $this->_em = $entityManager;
@@ -57,12 +58,11 @@ class CompanyPieceTypeRepository extends ServiceEntityRepository implements Repo
     }
     */
 
-    public function findWhereLevelGreaterThan(int $level)
-    {
+    public function findByLevel($value) {
         return $this->createQueryBuilder('s')
-                    ->andWhere('s.level > :level')
-                    ->setParameter('level', $level)
-                    ->getQuery()
-                    ->getResult();
+            ->andWhere('s.level > :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
     }
 }

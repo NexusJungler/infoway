@@ -8,6 +8,7 @@ class Permission {
     constructor()
     {
         this.__id = null;
+        this.__name = null;
         this.__action = null;
         this.__subject = null;
         this.__feature = null;
@@ -33,6 +34,20 @@ class Permission {
             throw new Error("Internal error : invalid typeof Permission::setId() argument ! Argument must be 'int' ");
 
         this.__id = id;
+
+        return this;
+    }
+
+    getName() {
+        return this.__name;
+    }
+
+    setName(name) {
+
+        if(typeof name !== 'string')
+            throw new Error("Internal error : invalid typeof Permission::setName() argument ! Argument must be 'string' ");
+
+        this.__name = name;
 
         return this;
     }

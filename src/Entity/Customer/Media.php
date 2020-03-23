@@ -12,7 +12,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
- * @ORM\Table(name="media")
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  */
 class Media

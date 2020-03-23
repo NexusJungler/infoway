@@ -6,7 +6,6 @@ use App\Entity\Customer\Media;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="App\Repository\Customer\ImageRepository")
  */
 class Image

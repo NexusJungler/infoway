@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="createCustomer" style="margin-left: 10%">
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <div>
+            <button>Submit</button>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock body %}

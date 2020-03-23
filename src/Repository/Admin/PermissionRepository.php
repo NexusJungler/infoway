@@ -2,13 +2,12 @@
 
 namespace App\Repository\Admin;
 
-use App\Entity\Admin\Action;
 use App\Entity\Admin\Permission;
+use App\Entity\Admin\Role;
 use App\Entity\Admin\User;
+use App\Service\ArraySearchRecursiveService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use App\Service\ArraySearchRecursiveService;
-
 
 /**
  * @method Permission|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,9 +17,8 @@ use App\Service\ArraySearchRecursiveService;
  */
 class PermissionRepository extends ServiceEntityRepository
 {
-    /**
-     * @var ArraySearchRecursiveService
-     */
+
+
     private ArraySearchRecursiveService $__searchRecursiveService;
 
     public function __construct(ManagerRegistry $registry)
@@ -28,6 +26,7 @@ class PermissionRepository extends ServiceEntityRepository
         parent::__construct($registry, Permission::class);
         $this->__searchRecursiveService = new ArraySearchRecursiveService();
     }
+
 
     /**
      * Remove duplicate value in array
@@ -50,6 +49,27 @@ class PermissionRepository extends ServiceEntityRepository
         return $result;
     }
 
+
+    public function createNewDatabaseAccessPermission(string $databaseName, array $admins): bool
+    {
+
+        $permission = new Permission();
+        $permission->setName("Accéder à la base '" . $databaseName. "'")
+                    // give access on this permission to God role
+                   ->addRole($this->getEntityManager()->getRepository(Role::class)->findOneByName('God'));
+
+        foreach ($admins as $admin)
+        {
+            $permission->addUser($admin);
+
+            $this->getEntityManager()->persist($admin);
+        }
+
+        $this->getEntityManager()->persist($permission);
+        $this->getEntityManager()->flush();
+
+        return true;
+    }
 
 
     // /**
@@ -80,5 +100,4 @@ class PermissionRepository extends ServiceEntityRepository
         ;
     }
     */
-
 }

@@ -4,8 +4,8 @@ security:
         #in_memory: { memory: null }
         from_database:
             entity:
-                class: App\Entity\User
-                property: login
+                class: App\Entity\Admin\User
+                property: username
 
     firewalls:
         dev:
@@ -16,7 +16,7 @@ security:
 
             form_login:
                 check_path: user::login
-                username_parameter: login
+                username_parameter: username
                 password_parameter: password
 
             logout:
@@ -50,6 +50,6 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
 
     encoders:
-        App\Entity\User:
+        App\Entity\Admin\User:
             algorithm: auto
             cost: 12

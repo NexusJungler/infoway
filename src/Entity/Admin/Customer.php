@@ -7,11 +7,14 @@ namespace App\Entity\Admin;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
- * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\CustomerRepository")
+ *
+ * Unique name
+ * @UniqueEntity("name")
  */
 class Customer
 {
@@ -24,7 +27,7 @@ class Customer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=60, unique=true)
      */
     private $name;
 
@@ -69,8 +72,6 @@ class Customer
      * @ORM\JoinColumn(nullable=false)
      */
     private $timezone;
-
-
 
     public function __construct()
     {
@@ -197,6 +198,7 @@ class Customer
 
         return $this;
     }
+
 
     public function getTimezone(): ?TimeZone
     {

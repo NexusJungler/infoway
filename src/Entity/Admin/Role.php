@@ -2,14 +2,14 @@
 
 namespace App\Entity\Admin;
 
-
+use App\Entity\Admin\Permission;
+use App\Entity\Admin\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="role")
  * @ORM\Entity(repositoryClass="App\Repository\Admin\RoleRepository")
  * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
  */
@@ -27,20 +27,22 @@ class Role
      */
     private $name;
 
+    // multi-site (franchisé), multi-enseigne,
+
     /**
      * @ORM\ManyToMany(targetEntity="Permission", inversedBy="roles")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $permissions;
+    private $permission;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="role", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Admin\User", mappedBy="role", orphanRemoval=true)
      */
     private $users;
 
     public function __construct()
     {
-        $this->permissions = new ArrayCollection();
+        $this->permission = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -68,13 +70,13 @@ class Role
      */
     public function getPermissions(): Collection
     {
-        return $this->permissions;
+        return $this->permission;
     }
 
     public function addPermission(Permission $permission): self
     {
-        if (!$this->permissions->contains($permission)) {
-            $this->permissions[] = $permission;
+        if (!$this->permission->contains($permission)) {
+            $this->permission[] = $permission;
         }
 
         return $this;
@@ -82,8 +84,8 @@ class Role
 
     public function removePermission(Permission $permission): self
     {
-        if ($this->permissions->contains($permission)) {
-            $this->permissions->removeElement($permission);
+        if ($this->permission->contains($permission)) {
+            $this->permission->removeElement($permission);
         }
 
         return $this;
