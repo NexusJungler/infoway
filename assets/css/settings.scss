@@ -79,7 +79,6 @@
 
 }
 
-
 .bloc-group-bottom .rdo-square::after {
     content: '';
     border-right: 0.06rem solid #4D646D;
@@ -91,7 +90,6 @@
     top: 0.1rem;
     position: relative;
 }
-
 
 
 .bloc-group-bottom .mini-btn-right{
@@ -107,8 +105,6 @@
 }
 
 
-
-
 .bloc-societe-img{
     width: 20%;
     padding-top: 0.1rem;
@@ -118,12 +114,6 @@
 .bloc-societe-img img{ 
     width: 4.5rem;
 }
-
-
-
-
-
-
 
 
 .bloc-group-top{
@@ -150,6 +140,191 @@
     background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
 }
 
+.home-setting{
+    .setting-display{
+        padding: 0;
+        .display-btn{
+            p{
+                font-size: 16px;
+                color: #899CA4;
+            }
+        }
+        .display-content {
+            display: flex;
+            justify-content: flex-end;
+            .display-btn {
+                display: flex;
+                position: relative;
+            }
+        }
+    }
+
+    .content-tags{
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        .content-tags-bloc{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 20%;
+            border: 1px solid #899CA4;
+            
+            &:nth-child(2n+2){
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+                .tags-bloc-title{
+                    background: #4D646D 0% 0% no-repeat padding-box;
+                }
+            }
+            .tags-bloc-title{
+                text-align: center;
+                justify-content: center;
+                font: rem(17px) 'Barlow', medium;
+                color: white;
+                padding: 12px 6px;
+                background: #899CA4 0% 0% no-repeat padding-box;
+            }
+            .tags-poster{
+                padding: 20px 10px 30px;
+                text-align: center;
+                height: 100%;
+                .container-tags{
+                    position: relative;
+                    display: block;
+                    height: 25px;
+                    padding: 3px 14px 3px 19px;
+                    // background-color: #EAF1F2 0% 0% no-repeat padding-box;
+                    background: #F6F0D5 0% 0% no-repeat padding-box;
+                    box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
+                    border: 0.0625rem solid #FFFFFF;
+                    border-radius: 1.375rem 0 0 1.375rem;
+                    font: rem(14px) 'Barlow', medium;
+                    text-align: center;
+                    color: #283338;;
+                    width: 40%;
+                    justify-content: center;
+                    display: inline-block;
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 4px;
+                        top: 3px;
+                        width: 15px;
+                        height: 15px;
+                        background: #e8e4e4 0% 0% no-repeat padding-box;
+                        box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
+                        border: 0.0625rem solid #FFFFFF;
+                        opacity: 1;
+                        border-radius: 50%;
+                        margin-right: 0.6rem;
+                    }
+                }
+                .delete-tags{
+                    position: absolute;
+                    top: 4px;
+                    right: 84px;
+                    background-color: transparent;
+                    border: 0;
+                    font-size: 16px;
+               }
+            }
+
+            .tags-btn-valid{
+                padding: 12px;
+                text-align: center;
+                background: #EBEBEB 0% 0% no-repeat padding-box;
+            }
+        }
+    }
 
 
+    .container-input {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin-bottom: rem(2px);
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .container-rdo {
+            position: absolute;
+            top: -1px;
+            left: 30px;
+            height: 23px;
+            width: 23px;
+            background-color:  white;
+            border-radius: 3px;
+            border: 1px solid #4D646D;
+    
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+                top: 1px;
+                left: 1px;
+                width: 19px;
+                height: 19px;
+                border-radius: 3px;
+                background: #53B3C7;
+            }
+        }
+        &:hover input ~ .container-rdo {
+            background-color: #ccc;
+        }
+
+        input:checked ~ .container-rdo {
+            background-color: white;
+        }
+
+        input:checked ~ .container-rdo:after {
+            display: block;
+        }
+
+        /** sytle css radio tags **/ 
+
+        .container-rdo-tags{
+            position: absolute;
+            top: 5px;
+            left: 30px;
+            height: 16px;
+            width: 16px;
+            background-color:  white;
+            border-radius: 3px;
+            border: 1px solid #4D646D;
+    
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+                top: 1px;
+                left: 1px;
+                width: 12px;
+                height: 12px;
+                border-radius: 3px;
+                background: #53B3C7;
+            }
+        }
+
+        &:hover input ~ .container-rdo-tags {
+            background-color: #ccc;
+        }
+
+        input:checked ~ .container-rdo-tags {
+            background-color: white;
+        }
+
+        input:checked ~ .container-rdo-tags:after {
+            display: block;
+        }
+    }
+
+    
+
+}
 
