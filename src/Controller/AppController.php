@@ -43,7 +43,7 @@ class AppController extends AbstractController
 
         //dump($location);
 
-        return $this->render("home.html.twig", [
+        return $this->render("home-infoway.html.twig", [
             'customer' => $customer,
             'location' => $location
         ]);
