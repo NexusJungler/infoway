@@ -3,33 +3,92 @@
     <p>SUPER WILD COFFEE</p>
 </div>
 
-<form action="" method="">
-    <div class="display setting-display ">
-        <div class="display-content">
-
-            <div class="display-btn">
-                <p>Produits : </p>
-                <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
-                <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
-                <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
-                <button type="button" class="tags-table">TAG</button>
-            </div>
-        </div>
-    </div> 
-
-    <div>
-        <div>
-        marque/ enseigne
-        </div>
-        <div>
-        Groupe de prix
-        </div>
-        <div>
-        Critére exclusif
-        </div>
-        <div>
-        Critére secondaire
+<div class="display setting-display ">
+    <div class="display-content">
+        <div class="display-btn">
+            <p>(Sélectionner le TYPE de TAGS avant de créer) </p>
+            <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Créer</button>
+            <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+            <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+            <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+            <button type="button" class="tags-table">TAG</button>
         </div>
     </div>
+</div> 
+
+<form action="" method="">
+    
+    <div class="content-tags">
+
+        <div class="content-tags-bloc">
+            <div class="tags-bloc-title ">
+                <label class="container">Marque / Enseigne
+                    <input type="radio" checked="checked" name="typetags">
+                    <span class="rdo2"></span>
+                </label>
+            </div>
+
+            <div class="tags-poster">
+                <label class="container"><p>QUICK Cie</p>
+                    <input type="radio" name="tags1">
+                    <span class="rdo2"></span>
+                </label>
+                <label class="container"><p>QUICK NC</p>
+                    <input type="radio" name="tags">
+                    <span class="rdo2"></span>
+                </label>
+            </div>
+
+            <div class="tags-btn-valid">
+                <button name="btn-mofifier" class="btn">Valider</button>
+            </div>    
+        </div>
+
+        <div class="content-tags-bloc">
+           <div class="tags-bloc-title ">
+                <label class="container">Groupe de prix
+                    <input type="radio" name="typetags">
+                    <span class="rdo2"></span>
+                </label>
+            </div>
+            <div class="tags-poster">
+                
+            </div>
+            <div class="tags-btn-valid">
+                <button name="btn-mofifier" class="btn">Valider</button>
+            </div>  
+        </div>
+
+        <div class="content-tags-bloc">
+            <div class="tags-bloc-title ">
+                <label class="container">Critére exclusif
+                    <input type="radio" name="typetags">
+                    <span class="rdo2"></span>
+                </label>
+            </div>
+            <div class="tags-poster">
+
+            </div>
+            <div class="tags-btn-valid">
+                <button name="btn-mofifier" class="btn">Valider</button>
+            </div>  
+        </div>
+
+        <div class="content-tags-bloc">
+            <div class="tags-bloc-title ">
+                <label class="container">Critére secondaire
+                    <input type="radio" name="typetags">
+                    <span class="rdo2"></span>
+                </label>
+            </div>
+            <div class="tags-poster">
+
+            </div>
+            <div class="tags-btn-valid">
+                <button name="btn-mofifier" class="btn">Valider</button>
+            </div>  
+        </div>
+
+    </div>
+
 </form>

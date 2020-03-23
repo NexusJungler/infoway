@@ -154,11 +154,99 @@
 .home-setting{
     .setting-display{
         padding: 0;
-        &.display::after {
-            content: '';
-            top: 2.3125rem;
-            border: 1px solid #4D646D;
+        .display-content {
+            display: flex;
+            justify-content: flex-end;
+            .display-btn {
+                display: flex;
+                position: relative;
+            }
         }
     }
+
+    .content-tags{
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        .content-tags-bloc{
+            width: 20%;
+            border: 1px solid #899CA4;
+            &:nth-child(2n+2){
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+            }
+            .tags-bloc-title{
+                text-align: center;
+                justify-content: center;
+                font: rem(16px) 'Barlow', medium;
+                padding: 12px 6px;
+            }
+            .tags-poster{
+                padding: 10px;
+            }
+
+            .tags-btn-valid{
+                padding: 12px;
+                text-align: center;
+            }
+        }
+    }
+
+
+
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+      }
+      
+      .rdo2 {
+        position: absolute;
+        top: -1px;
+        left: 30px;
+        height: 23px;
+        width: 23px;
+        background-color:  white;
+        border-radius: 6px;
+        border: 1px solid #4D646D;
+      }
+      
+      .container:hover input ~ .rdo2 {
+        background-color: #ccc;
+      }
+      
+      .container input:checked ~ .rdo2 {
+        background-color: white;
+      }
+      
+      .rdo2:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+      
+      .container input:checked ~ .rdo2:after {
+        display: block;
+      }
+      
+      .container .rdo2:after {
+        top: 1px;
+        left: 1px;
+        width: 19px;
+        height: 19px;
+        border-radius: 4px;
+        background: #53B3C7;
+      }
+
 }
 
