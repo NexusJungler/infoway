@@ -8,26 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\ImageRepository")
  */
-class Image
+class Image extends Media
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Media", inversedBy="image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $media;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $extension;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -43,34 +26,7 @@ class Image
      */
     private $width;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
-    public function getMedia(): ?Media
-    {
-        return $this->media;
-    }
-
-    public function setMedia(Media $media): self
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
-    public function getExtension(): ?string
-    {
-        return $this->extension;
-    }
-
-    public function setExtension(string $extension): self
-    {
-        $this->extension = $extension;
-
-        return $this;
-    }
 
     public function getRatio(): ?string
     {

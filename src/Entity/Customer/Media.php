@@ -12,7 +12,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
+
+ */
+/**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="media_type", type="string")
+ * @ORM\DiscriminatorMap({"media" = "Media","image" = "Image", "video" = "Video"})
  */
 class Media
 {
@@ -27,6 +33,11 @@ class Media
      * @ORM\Column(type="string", length=255)
      */
     private $fileName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $extension;
 
     /**
      * @ORM\Column(type="string", length=255)
