@@ -19,9 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 class UserRepository extends ServiceEntityRepository
 {
 
-    /**
-     * @var ArraySearchRecursiveService
-     */
+
     private ArraySearchRecursiveService $__searchRecursiveService;
 
 
@@ -38,7 +36,6 @@ class UserRepository extends ServiceEntityRepository
         return $this;
     }
 
-
     public function getUserPermissions(User $user, bool $onlyIds = false): array
     {
         return $this->reformatPermissions($user->getPermissions()->getValues(), $onlyIds);
@@ -54,13 +51,81 @@ class UserRepository extends ServiceEntityRepository
     /**
      * Reformat permissions array to :
      * [
-     *      Feature.name => [ 'permissions' => [ 'action' => Action.name, 'subject' => Subject.name ] ]
+     *      Feature.name => [ 'permissions' => [ [ 'id' => permission.id, 'name' => permission.name] ], ... ]
      * ]
      *
      * @param array $permissions
      * @return array
      */
     private function reformatPermissions(array $permissions, bool $onlyIds = false): array
+    {
+
+        $formattedPermissions = [];
+
+        foreach ($permissions as $index => $permission)
+        {
+
+            $featurePosition = $this->__searchRecursiveService->search($permission->getFeature()->getName(), $formattedPermissions, null, false);
+
+            if($featurePosition === false)
+            {
+
+                $data = [
+                    'feature_id' => $permission->getFeature()->getId(),
+                    'name' => $permission->getFeature()->getName(),
+                    'permissions' => [
+                        0 => [
+                            'id' => $permission->getId(),
+                            'name' => $permission->getName()
+                        ]
+                    ]
+                ];
+
+                $formattedPermissions[] = $data;
+
+            }
+            else
+            {
+
+                $formattedPermissions[$featurePosition]['permissions'][] = [
+                    'id' => $permission->getId(),
+                    'name' => $permission->getName()
+                ];
+
+            }
+
+
+        }
+
+        if($onlyIds)
+            return $this->getPermissionsId($formattedPermissions);
+
+        return $formattedPermissions;
+
+    }
+
+
+    private function getPermissionsId(array $formattedPermissions): array
+    {
+
+        $output['permissions'] = [];
+
+        foreach ($formattedPermissions as $formattedPermission)
+        {
+
+            foreach ($formattedPermission['permissions'] as $permission)
+            {
+                $output['permissions'][] = $permission['id'];
+            }
+
+        }
+
+        return $output;
+    }
+
+
+
+    /*private function reformatPermissions(array $permissions, bool $onlyIds = false): array
     {
 
         $formattedPermissions = [];
@@ -134,7 +199,7 @@ class UserRepository extends ServiceEntityRepository
 
         return $formattedPermissions;
 
-    }
+    }*/
 
 
     /**

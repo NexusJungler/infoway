@@ -1,38 +1,96 @@
+
 class Table  {
+
+
+    constructor (){
+        
+        $('#selectAll').on("click",(e)=>this.onClickSelectAll(e));
+        
+        $(".delete-table").on("click",(e)=>this.onClickDeleteTable(e));
+
+        $('.display-content-poste input[type="checkbox"]').on("change",(e)=>this.onClickDeletecol(e));
+
+        $('.table-custome .tbody input[name=select]').on('click',(e)=>this.onClickInputSelect(e));
+    }
+
+    onClickSelectAll(e){
+
+        if($(e.currentTarget).is(":checked")){
+            $('.table-custome .tbody input[name=select]').prop('checked',true);
+        }else{
+            $('.table-custome .tbody input[name=select]').prop('checked',false);
+        }
+
+    }
+
+    onClickInputSelect(){
+
+        if (!$(this).prop("checked")) {
+            $("#selectAll").prop("checked", false);
+        }
+    }
+
+    /**  DELETE LIST  **/
+    onClickDeleteTable(e){
+        
+        // let allVals = []
+        let tableClass = $(e.currentTarget).data('tablelistdelete');
+        
+         $('.table-'+tableClass+' tbody tr').find('input').each(function(){
+
+
+            if ($(this).is(":checked")) {
+                $(this).parents(".table-custome tr").remove();
+            }  else{
+
+            }
+        });
+
+        // if(allVals.length = 0){
+        //     alert("select");
+        // }else{
+        //     console.log("text")
+        //     $.each(allVals, function( index, value ) {
+        //         $(this).parents(".table-custome tr").remove();
+        //     });
+              
+        //     $(this).parents(".table-custome tr").remove();
+        // }
+
+        // AJAX Request
+        $.ajax({
+            url : '',
+            type : 'post',
+
+            success : function(){
+                alert("succes");
+            },
+            error : function(){
+                alert("fails");
+            }
+        })
+    }
+
+    /**  DELETE COL  **/
+    onChangeDeleteCol(e){
+
+        let $checkBox = $(e.currentTarget) ;
+
+        let data_table_deleteCol = $(e.currentTarget).data("tabledeletecol")
+
+        if( $checkBox. is( ':checked' ) ){
+            $('.table-custome .table-info tr th.'+data_table_deleteCol).show();
+            $('.table-custome .tbody tr td.'+data_table_deleteCol).show();
+        } else{
+            $('.table-custome .table-info tr th.'+data_table_deleteCol).hide();
+            $('.table-custome .tbody tr td.'+data_table_deleteCol).hide();
+        }
+    }
 
     table() {	
         
-        // delete ligne
-
-        $('input[type="checkbox"]').change( e => {
-
-            let $chechedchange = $(e.currentTarget);
-            let indexCol = $chechedchange.parents('.product-select-col').index() + 2;
-            console.log(indexCol);
-
-            if($chechedchange.is(":checked")){
-                $('.table-custome .table-info tr th:nth-child('+(indexCol)+')').show();
-                $('.table-custome .tbody tr td:nth-child('+(indexCol)+')').show();
-                // return;
-            } else{
-                $('.table-custome .table-info tr th:nth-child('+(indexCol)+')').hide();
-                $('.table-custome .tbody tr td:nth-child('+(indexCol)+')').hide();
-            }
-        })
-
-
-        // delete
-        $(".delete-table").click(function(){
-            $('.table-custome').find('input[name="select"]').each(function(){
-                if ($(this).is(":checked")) {
-                    // $('.delete-table').removeAttr('disabled');
-                    $(this).parents(".table-custome tr").remove();
-                }  else{
-                    // $('.delete-table').attr('disabled', true);
-                }
-            });
-        });
-
+        
+        
         // popup
 
         // $(".add-table").click(function(){
@@ -142,7 +200,6 @@ class Table  {
         // }
         // function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
 
-        
     }
     
 }

@@ -3,21 +3,12 @@
 
 namespace App\Controller;
 
-
-use App\Entity\Admin\{Country, Role};
-use App\Entity\Customer\{CompanyPiece, CompanyPieceType, Media};
-use App\Form\CreateCompanyPieceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\{ Request, Response };
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-
 
 class AppController extends AbstractController
 {
-
-
 
     /**
      *
@@ -57,112 +48,17 @@ class AppController extends AbstractController
         ]);
     }
 
-
-
-
-
     /**
-     * @Route(path="/setting", name="app:settings")
+     * @Route(path="/test", name="app:test")
      *
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
-    public function settings(Request $request): Response
+    public function test(Request $request): Response
     {
-        $customer = [
-            'ARES',
-            'Q087',
-            'AEAS',
-            'Q087A2',
-            'ARAS',
-            'Q08'
-        ];
 
-        $roles = [
+        return $this->render("test.html.twig", [
 
-        ];
-
-        $subdivision = new CompanyPiece();
-
-        $currentUserDatabaseManager = 'quick'; // dynamic
-
-        $customerEm = $this->getDoctrine()->getManager($currentUserDatabaseManager);
-        $adminEm = $this->getDoctrine()->getManager();
-
-        $companyPieceTypeRep = $customerEm->getRepository( CompanyPieceType::class)->setEntityManager($customerEm);
-        $countryRep = $adminEm->getRepository(Country::class);
-        $roleRep = $adminEm->getRepository(Role::class);
-
-        $allCompanyPieceTypeLevel1 = $companyPieceTypeRep->findWhereLevelGreaterThan(1);
-
-
-        $form = $this->createForm( CreateCompanyPieceType::class, $subdivision);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-
-            // içi controller le type reçu avant de faire la requete pour le select
-            $companyPieceTypeId = intval($request->request->get('type'));
-            $countryId = intval($request->request->get('country'));
-
-
-            $type = $companyPieceTypeRep->findOneById($companyPieceTypeId);
-            if(!$type)
-                throw new \Exception(sprintf("Internal error : cannot find CompanyPieceType with id '%d' !", $companyPieceTypeId));
-
-
-            $country = $countryRep->findOneById($countryId);
-            if(!$country)
-                throw new \Exception(sprintf("Internal error : cannot find country with id '%d' !", $countryId));
-
-
-            $logoFile = $form->get('file')->getData();
-
-            /*$finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mimeType = finfo_file($finfo, $logoFile);
-            $splash = explode('/', $mimeType);
-            $real_file_extension = $splash[1];
-
-            if(!in_array($real_file_extension, $this->getParameter("logoAuthorizedMimeTypes")))
-                echo "error";*/
-
-            $newFileName = $subdivision->getName().'.'.$logoFile->guessExtension();
-
-            try {
-                $logoFile->move(
-                    $this->getParameter('logoDirectory'),
-                    $newFileName
-                );
-            }
-            catch (FileException $e) {
-                dd($e->getMessage());
-            }
-
-            $subdivision->setType($type)
-                        ->setCountry($country->getId())
-                        ->setLogoName($newFileName);
-
-            dd($subdivision, $request->request);
-
-            $customerEm->persist($subdivision);
-            $customerEm->flush();
-
-            echo "submitted";
-
-            dd($subdivision);
-
-        }
-
-
-        dump($allCompanyPieceTypeLevel1, $subdivision);
-
-        return $this->render("setting.html.twig", [
-            'customer' => $customer,
-            'form' => $form->createView(),
-            'authorizedCompanyPieces' => $allCompanyPieceTypeLevel1,
-            'countries' => $countryRep->findAll(),
-            'roles' => $roleRep->findAll(),
         ]);
 
     }
@@ -186,10 +82,8 @@ class AppController extends AbstractController
         return $this->render("products.html.twig", [
             'customer' => $customer
         ]);
-
     }
 
-    
     /**
      * @Route(path="/site", name="app:site")
      *
@@ -207,6 +101,71 @@ class AppController extends AbstractController
             'Q08'
         ];
         return $this->render("site.html.twig", [
+            'customer' => $customer
+        ]);
+    }
+
+     /**
+     * @Route(path="/programming", name="app:programming")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function programming(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("programming.html.twig", [
+            'customer' => $customer
+        ]);
+
+    }
+    
+    /**
+     * @Route(path="/media", name="app:media")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function media(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("media.html.twig", [
+            'customer' => $customer
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/info", name="app:info")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function info(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("info.html.twig", [
             'customer' => $customer
         ]);
 

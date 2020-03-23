@@ -20,6 +20,12 @@ class Permission
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+
+    /**
      * @ORM\ManyToMany(targetEntity="Role", mappedBy="permission")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -35,17 +41,17 @@ class Permission
      * @ORM\ManyToOne(targetEntity="Action", inversedBy="permissions")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $action;
+    //private $action;
 
     /**
      * @ORM\ManyToOne(targetEntity="Subject", inversedBy="permissions")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $subject;
+    //private $subject;
 
     /**
      * @ORM\ManyToOne(targetEntity="Feature", inversedBy="permissions")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $feature;
 
@@ -59,6 +65,18 @@ class Permission
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -117,7 +135,7 @@ class Permission
         return $this;
     }
 
-    public function getAction(): ?Action
+    /*public function getAction(): ?Action
     {
         return $this->action;
     }
@@ -139,14 +157,14 @@ class Permission
         $this->subject = $subject;
 
         return $this;
-    }
+    }*/
 
     public function getFeature(): ?Feature
     {
         return $this->feature;
     }
 
-    public function setFeature(Feature $feature): self
+    public function setFeature(?Feature $feature): self
     {
         $this->feature = $feature;
 

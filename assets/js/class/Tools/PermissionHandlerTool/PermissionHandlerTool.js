@@ -26,7 +26,7 @@ class PermissionHandlerTool
                 this.__$container.find("input[type='checkbox'].permission").each( (index, input) => {
 
                     let permission = new Permission();
-                    let action = new Action();
+                    /*let action = new Action();
                     let subject = new Subject();
 
                     let actionName = this.__$container.find(`table thead th[data-id='${ $(input).data('action') }']`).text();
@@ -38,17 +38,21 @@ class PermissionHandlerTool
 
                     subject.setId( $(input).data('subject') )
                            .setName( subjectName )
-                    ;
+                    ;*/
 
-                    permission.setId( $(input).data('permission') )
-                              .setAction(action)
-                              .setSubject(subject)
+                    permission.setId( $(input).data('permission_id') )
+                              .setName( $(input).data('permission_name') )
+                              //.setAction(action)
+                              //.setSubject(subject)
                               .setState( $(input).is(':checked') )
                     ;
 
                     data.permissions.push(permission);
 
                 } );
+
+                $("#result").empty();
+                $("#result").hide();
 
                 $.ajax({
                     type: 'post',
@@ -60,12 +64,45 @@ class PermissionHandlerTool
 
                     .done( (response) => {
 
+                        if(response.status === 200)
+                        {
+                            if( $("#result").find("p").length < 1 )
+                            {
+
+                                $("<p>", {
+                                    text: 'Permission updated !'
+                                }).appendTo($("#result"));
+
+                            }
+                        }
+                        else
+                        {
+                            if( $("#result").find("p").length < 1 )
+                            {
+
+                                $("<p>", {
+                                    text: 'Error !'
+                                }).appendTo($("#result"));
+
+                            }
+                        }
+
+                        $("#result").show();
                         console.log(response); //debugger
 
                     } )
 
                     .fail( (errorType, errorStatus, errorThrown ) => {
 
+                        if( $("#result").find("p").length < 1 )
+                        {
+
+                            $("<p>", {
+                                text: 'Error !'
+                            }).appendTo($("#result"));
+
+                        }
+                        $("#result").show();
                         console.error(errorType, errorStatus, errorThrown);
 
                     } );

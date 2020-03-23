@@ -6,32 +6,20 @@ namespace App\Service;
 
 use App\Entity\Admin\{Permission, Role, User};
 use App\Repository\Admin\{ PermissionRepository, UserRepository };
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\{ EntityManager, EntityRepository };
+use Doctrine\ORM\{EntityManager, EntityManagerInterface, EntityRepository};
 
 class PermissionsHandler
 {
 
 
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $__manager;
+    private EntityManagerInterface $__manager;
+
+    private UserRepository $__userRepository;
+
+    private PermissionRepository $__permissionRepository;
 
 
-    /**
-     * @var UserRepository|ObjectRepository|EntityRepository
-     */
-    private $__userRepository;
-
-
-    /**
-     * @var PermissionRepository|ObjectRepository|EntityRepository
-     */
-    private $__permissionRepository;
-
-
-    public function __construct(EntityManager $manager)
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->__manager = $manager;
         $this->__userRepository = $manager->getRepository(User::class);
@@ -45,9 +33,15 @@ class PermissionsHandler
     }
 
 
-    public function getUserRolePermissions(User $user, bool $onlyIds = false)
+    public function getUserRolePermissions(User $user, bool $onlyIds = false): array
     {
         return $this->__userRepository->getUserRolePermissions($user, $onlyIds);
+    }
+
+
+    public function createNewDatabaseAccessPermission(string $databaseName, array $admins): bool
+    {
+        return $this->__permissionRepository->createNewDatabaseAccessPermission($databaseName, $admins);
     }
 
 }

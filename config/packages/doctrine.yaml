@@ -1,6 +1,5 @@
 doctrine:
     dbal:
-
         default_connection: default
         connections:
             default:
@@ -8,36 +7,29 @@ doctrine:
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-
             kfc:
                 url: '%env(resolve:DATABASE_KFC_URL)%'
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-
             quick:
                 url: '%env(resolve:DATABASE_QUICK_URL)%'
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-
-
-
     orm:
         default_entity_manager: default
         entity_managers:
             default:
                 connection: default
                 mappings:
-                    Main:
+                    Admin:
                         is_bundle: false
                         type: annotation
                         dir: '%kernel.project_dir%/src/Entity/Admin'
                         prefix: App\Entity\Admin
-                        alias: Main
-
-
-            kfc:
+                        alias: Admin
+            Kfc:
                 connection: kfc
                 mappings:
                     kfc:
@@ -46,9 +38,7 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity/Customer'
                         prefix: App\Entity\Customer
                         alias: Kfc
-
-
-            quick:
+            Quick:
                 connection: quick
                 mappings:
                     quick:
