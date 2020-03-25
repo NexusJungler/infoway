@@ -53,7 +53,7 @@ class Customer
 
     /**
      * Many Groups have Many Users.
-     * @ManyToMany(targetEntity="User", mappedBy="customers")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="customers")
      */
     private $users;
 

@@ -72,8 +72,8 @@ class User
 
     /**
      * Many Users have Many Groups.
-     * @ManyToMany(targetEntity="Customer", inversedBy="users")
-     * @JoinTable(name="users_customers")
+     * @ORM\ManyToMany(targetEntity="Customer", inversedBy="users")
+     * @ORM\JoinTable(name="users_customers")
      */
     private $customers;
 
@@ -85,7 +85,7 @@ class User
 
     /**
      * Many Users have Many Groups.
-     * @MOR\ManyToMany(targetEntity="Permission")
+     * @ORM\ManyToMany(targetEntity="Permission")
      * @ORM\JoinTable(name="users_permissions",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}

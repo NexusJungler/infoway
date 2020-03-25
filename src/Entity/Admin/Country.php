@@ -26,10 +26,6 @@ class Country
      */
     private $name;
 
-    public function __construct()
-    {
-
-    }
 
     public function getName(): ?string
     {
