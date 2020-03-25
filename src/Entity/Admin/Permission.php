@@ -26,12 +26,6 @@ class Permission
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", mappedBy="permission")
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    private $roles;
-
-    /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="permissions")
      */
     private $users;

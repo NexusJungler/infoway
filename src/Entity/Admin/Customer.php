@@ -32,6 +32,11 @@ class Customer
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $logo;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $address;
@@ -62,20 +67,11 @@ class Customer
      */
     private $country;
 
-    /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="customer", orphanRemoval=true)
-     */
-    private $users;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="TimeZone")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $timezone;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+
     }
 
 
