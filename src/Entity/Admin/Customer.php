@@ -52,6 +52,12 @@ class Customer
     private $city;
 
     /**
+     * Many Groups have Many Users.
+     * @ManyToMany(targetEntity="User", mappedBy="customers")
+     */
+    private $users;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */

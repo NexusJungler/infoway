@@ -71,6 +71,13 @@ class User
     private $activated;
 
     /**
+     * Many Users have Many Groups.
+     * @ManyToMany(targetEntity="Customer", inversedBy="users")
+     * @JoinTable(name="users_customers")
+     */
+    private $customers;
+
+    /**
      * One user has many roles. This is the inverse side.
      * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
      */
