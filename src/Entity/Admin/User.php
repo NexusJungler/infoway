@@ -92,6 +92,14 @@ class User
      *      )
      */
     private $permissions;
+
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user")
+     */
+    private $sites;
+
     /**
      * @ORM\ManyToOne(targetEntity="Perimeter")
      * @ORM\JoinColumn(name="perimeter_id", referencedColumnName="id")

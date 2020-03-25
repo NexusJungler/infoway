@@ -21,6 +21,13 @@ class UserSites
      */
     private $site;
 
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="sites")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,4 +44,6 @@ class UserSites
 
         return $this;
     }
+
+
 }
