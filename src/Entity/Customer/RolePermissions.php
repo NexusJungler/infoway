@@ -21,6 +21,15 @@ class RolePermissions
      */
     private $permission;
 
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="permissions")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     */
+    private $role;
+
+
+
     public function getId(): ?int
     {
         return $this->id;

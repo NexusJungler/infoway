@@ -21,6 +21,13 @@ class Role
      */
     private $name;
 
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="RolePermissions", mappedBy="role")
+     */
+    private $permissions;
+
+
     public function getId(): ?int
     {
         return $this->id;
