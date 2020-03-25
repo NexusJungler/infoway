@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserRolesRepository")
+ * @ORM\Table(name="user_roles")
  */
 class UserRoles
 {
@@ -25,12 +26,12 @@ class UserRoles
     private $user;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="role_id",type="integer")
      */
     private $role;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="customer_id",type="integer")
      */
     private $customerId;
 

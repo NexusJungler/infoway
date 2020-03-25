@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserSitesRepository")
+ * @ORM\Table(name="user_site")
  */
 class UserSites
 {
@@ -17,7 +18,7 @@ class UserSites
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="site_id",type="integer")
      */
     private $site;
 

@@ -45,23 +45,23 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(name="phone_number",type="string", length=30, nullable=true)
      */
     private $phoneNumber;
 
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="password_reset_tocket",type="string", length=255, nullable=true)
      */
     private $passwordResetToken;
 
     /**
-     * @ORM\Column(type="date", length=255, nullable=true)
+     * @ORM\Column(name="requested_password_at",type="datetime", length=255, nullable=true)
      */
     private $requestedPasswordAt;
 
     /**
-     * @ORM\Column(type="date", length=255)
+     * @ORM\Column(name="created_at",type="datetime", length=255)
      */
     private $createdAt;
 
