@@ -19,21 +19,21 @@ class RolePermissions
     /**
      * @ORM\Column(type="integer")
      */
-    private $permissionId;
+    private $permission;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPermissionId(): ?int
+    public function getPermission(): ?int
     {
-        return $this->permissionId;
+        return $this->permission;
     }
 
-    public function setPermissionId(int $permissionId): self
+    public function setPermissionId(int $permission): self
     {
-        $this->permissionId = $permissionId;
+        $this->permission = $permission;
 
         return $this;
     }
