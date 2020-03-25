@@ -27,7 +27,7 @@ class Permission
 
     /**
      * @ORM\ManyToOne(targetEntity="Feature")
-     * @ORM\JoinColumn(name="permission_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
      */
     private $feature;
 
