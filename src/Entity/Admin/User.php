@@ -84,6 +84,15 @@ class User
     private $roles;
 
     /**
+     * Many Users have Many Groups.
+     * @MOR\ManyToMany(targetEntity="Permission")
+     * @ORM\JoinTable(name="users_permissions",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
+     *      )
+     */
+    private $permissions;
+    /**
      * @ORM\ManyToOne(targetEntity="Perimeter")
      * @ORM\JoinColumn(name="perimeter_id", referencedColumnName="id")
      */
