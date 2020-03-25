@@ -32,5 +32,4 @@ class Permission
     private $feature;
 
 
-
 }
