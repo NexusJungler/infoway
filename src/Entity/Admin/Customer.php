@@ -4,6 +4,7 @@
 namespace App\Entity\Admin;
 
 
+use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,6 +31,8 @@ class Customer
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $name;
+
+    private $sites ;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
@@ -73,12 +76,14 @@ class Customer
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->sites = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getName(): ?string
     {
@@ -158,11 +163,48 @@ class Customer
         return $this;
     }
 
+    /**
+     * @param string $sites
+     */
+    public function setSites(ArrayCollection $sites): void
+    {
+        $this->sites = $sites;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSites(): ArrayCollection
+    {
+        return $this->sites;
+    }
+
+
     public function removeUser(User $user): self
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
             $user->removeCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->setCustomer($this->getId());
+        }
+
+        return $this;
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site) ) {
+            $this->sites->removeElement($site);
+            $site->setCustomer(null);
         }
 
         return $this;

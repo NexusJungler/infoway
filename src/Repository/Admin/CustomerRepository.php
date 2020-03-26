@@ -3,8 +3,11 @@
 namespace App\Repository\Admin;
 
 use App\Entity\Admin\Customer;
+use App\Entity\Customer\Site;
+use App\Repository\Customer\SiteRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @method Customer|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,11 +17,32 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class CustomerRepository extends ServiceEntityRepository
 {
+
+    private $_registry ;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Customer::class);
+        $this->_registry = $registry ;
+
     }
 
+
+
+    public function findCustomerWithSiteByName($customerName)
+    {
+
+        $customer = $this->findOneByName($customerName);
+
+        $customManager = $this->_registry->getManager($customerName);
+
+        $customerSiteRepo = $customManager->getRepository(Site::class);
+
+        $customerSites = $customerSiteRepo->findAll();
+
+        dd($customerSites);
+
+    }
     // /**
     //  * @return Customer[] Returns an array of Customer objects
     //  */
