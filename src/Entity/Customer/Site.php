@@ -49,17 +49,17 @@ class Site
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $country;
+    private $countryId;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $timezone;
+    private $timezoneId;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $customer;
+    private $customerId;
 
 
 
@@ -140,40 +140,41 @@ class Site
         return $this;
     }
 
-    public function getCountry(): ?int
+    public function getCountryId(): ?int
     {
-        return $this->country;
+        return $this->countryId;
     }
 
-    public function setCountry(?int $country): self
+    public function setCountryId(?int $countryId): self
     {
-        $this->country = $country;
+        $this->countryId = $countryId;
 
         return $this;
     }
 
-    public function getTimezone(): ?int
+    public function getTimezoneId(): ?int
     {
-        return $this->timezone;
+        return $this->timezoneId;
     }
 
-    public function setTimezone(?int $timezone): self
+    public function setTimezoneId(?int $timezoneId): self
     {
-        $this->timezone = $timezone;
+        $this->timezoneId = $timezoneId;
 
         return $this;
     }
 
-    public function getCustomer(): ?int
+    public function getCustomerId(): ?int
     {
-        return $this->customer;
+        return $this->customerId;
     }
 
-    public function setCustomer(int $customer): self
+    public function setCustomerId(int $customerId): self
     {
-        $this->customer = $customer;
+        $this->customerId = $customerId;
 
         return $this;
     }
+
 
 }
