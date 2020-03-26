@@ -109,6 +109,13 @@ class User
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->customers = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
+        $this->sites = new ArrayCollection();
+
+        $this->setCreatedAt(new \DateTime());
+        $this->setActivated(0);
+
     }
 
     public function getId(): ?int
@@ -263,6 +270,89 @@ class User
     public function setPerimeter(?Perimeter $perimeter): self
     {
         $this->perimeter = $perimeter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Customer[]
+     */
+    public function getCustomers(): Collection
+    {
+        return $this->customers;
+    }
+
+    public function addCustomer(Customer $customer): self
+    {
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+        }
+
+        return $this;
+    }
+
+    public function removeCustomer(Customer $customer): self
+    {
+        if ($this->customers->contains($customer)) {
+            $this->customers->removeElement($customer);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserSites[]
+     */
+    public function getSites(): Collection
+    {
+        return $this->sites;
+    }
+
+    public function addSite(UserSites $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSite(UserSites $site): self
+    {
+        if ($this->sites->contains($site)) {
+            $this->sites->removeElement($site);
+            // set the owning side to null (unless already changed)
+            if ($site->getUser() === $this) {
+                $site->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity\Customer;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +29,11 @@ class Role
      */
     private $permissions;
 
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -41,6 +48,37 @@ class Role
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RolePermissions[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(RolePermissions $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+            $permission->setRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(RolePermissions $permission): self
+    {
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
+            // set the owning side to null (unless already changed)
+            if ($permission->getRole() === $this) {
+                $permission->setRole(null);
+            }
+        }
 
         return $this;
     }

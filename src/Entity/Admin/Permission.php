@@ -31,5 +31,34 @@ class Permission
      */
     private $feature;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFeature(): ?Feature
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(?Feature $feature): self
+    {
+        $this->feature = $feature;
+
+        return $this;
+    }
+
 
 }
