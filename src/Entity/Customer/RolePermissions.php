@@ -19,7 +19,9 @@ class RolePermissions
     /**
      * @ORM\Column(type="integer")
      */
-    private $permission;
+    private $permissionId;
+
+    private $permission ;
 
     /**
      * Many features have one product. This is the owning side.
@@ -35,14 +37,14 @@ class RolePermissions
         return $this->id;
     }
 
-    public function getPermission(): ?int
+    public function getPermissionId(): ?int
     {
-        return $this->permission;
+        return $this->permissionId;
     }
 
-    public function setPermissionId(int $permission): self
+    public function setPermissionId(int $permissionId): self
     {
-        $this->permission = $permission;
+        $this->permissionId = $permissionId;
 
         return $this;
     }

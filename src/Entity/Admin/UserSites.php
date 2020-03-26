@@ -20,8 +20,9 @@ class UserSites
     /**
      * @ORM\Column(name="site_id",type="integer")
      */
-    private $site;
+    private $siteId;
 
+    private $site ;
     /**
      * Many features have one product. This is the owning side.
      * @ORM\ManyToOne(targetEntity="User", inversedBy="sites")
@@ -34,14 +35,14 @@ class UserSites
         return $this->id;
     }
 
-    public function getSite(): ?int
+    public function getSiteId(): ?int
     {
-        return $this->site;
+        return $this->siteId;
     }
 
-    public function setSite(int $site): self
+    public function setSiteId(int $siteId): self
     {
-        $this->site = $site;
+        $this->siteId = $siteId;
 
         return $this;
     }

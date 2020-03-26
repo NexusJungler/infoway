@@ -28,12 +28,16 @@ class UserRoles
     /**
      * @ORM\Column(name="role_id",type="integer")
      */
+    private $roleId;
+
     private $role;
 
     /**
      * @ORM\Column(name="customer_id",type="integer")
      */
     private $customerId;
+
+    private $customer ;
 
     public function getId(): ?int
     {
@@ -42,12 +46,12 @@ class UserRoles
 
     public function getRoleId(): ?int
     {
-        return $this->role;
+        return $this->roleId;
     }
 
-    public function setRoleId(int $role): self
+    public function setRoleId(int $roleId): self
     {
-        $this->role = $role;
+        $this->roleId = $roleId;
 
         return $this;
     }
