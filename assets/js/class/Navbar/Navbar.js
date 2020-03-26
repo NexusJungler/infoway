@@ -3,7 +3,6 @@ class Navbar {
 
     navbarleft() {	
 
-
         $('.menu-wrap input[type="checkbox"]').change( e =>{
             
             let $checkBox = $(e.currentTarget) ;
@@ -39,11 +38,7 @@ class Navbar {
                 $('.menu .nav .nav-menu > li .nav-sous-menu-mobile').show();
 
             }
-        })
-
-
-
-            
+        })            
     }
     
 }

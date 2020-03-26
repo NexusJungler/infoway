@@ -29,7 +29,7 @@
 
             <section id="wrapper_tabcontent">
 
-                <article id="tab-marque" class="tab-content current">
+                <article id="tab-marque" class="tab-content ">
                     {% include 'settings/marque.html.twig' %}
                 </article>
 
@@ -37,12 +37,12 @@
                     <h2>utilisateurs</h2>
                 </article>
                         
-                <article id="tab-site" class="tab-content ">
-                    <h2>Gestion de site<h2>
+                <article id="tab-sites" class="tab-content ">
+                    {% include 'settings/management-site.html.twig' %}  
                 </article>
 
-                <article id="tab-tags" class="tab-content ">
-                    <h2>Gestion des TAGS<h2>
+                <article id="tab-tags" class="tab-content current">
+                   {% include 'settings/management-tags.html.twig' %}  
                 </article>
                 
                 <article id="tab-create-brand" class="tab-content create-brand tab-create">
@@ -60,7 +60,6 @@
                 
             </section>   
         </div>
-
     </main>
 {% endblock %}
 
