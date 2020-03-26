@@ -1,0 +1,31 @@
+.form-content{
+    border: 0.06rem solid #899CA4;
+    margin: 1.5rem 0;
+    padding: rem(15px);
+    .row{
+        display: flex;
+        .form-label{
+            display: block;
+            width: 30%;
+            max-width: 50%;
+            font: 1rem 'Barlow', lighter;
+            color: #899CA4;
+            padding-top: 0.5rem;
+            margin-bottom: rem(15px);
+        }
+        .form-input{
+            width: 16.8rem;
+            max-width: 100%;
+            height: 2rem;
+            background-color: #fff;
+            padding: 0.3em ;
+            border: 0.06rem solid #C0CCD1;
+            border-radius: 0.4rem;
+            font: 0.9rem 'Barlow', italic;
+            color: #4D646D;
+        }
+    }
+}
+    
+    
+    

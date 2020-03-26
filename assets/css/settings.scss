@@ -140,7 +140,10 @@
     background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
 }
 
+
+
 .home-setting{
+
     .setting-display{
         padding: 0;
         .display-btn{
@@ -197,7 +200,7 @@
                     background: #F6F0D5 0% 0% no-repeat padding-box;
                     box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
                     border: 0.0625rem solid #FFFFFF;
-                    border-radius: 1.375rem 0 0 1.375rem;
+                    border-radius: 1.375rem rem(11px)  rem(11px)  1.375rem ;
                     font: rem(14px) 'Barlow', medium;
                     text-align: center;
                     color: #283338;;
@@ -222,11 +225,38 @@
                 .delete-tags{
                     position: absolute;
                     top: 4px;
-                    right: 84px;
+                    right: 88px;
                     background-color: transparent;
                     border: 0;
                     font-size: 16px;
-               }
+                }
+                
+            }
+            @mixin random-color($selector) {
+                #{$selector}: unquote("rgba(#{random(256) - 1}, #{random(256)-1}, #{random(256 - 1)}, #{random(100)/100})");
+              }
+            .tags-poster-marque{
+                .container-tags {
+                    background: #EAF1F2 0% 0% no-repeat padding-box;
+                }
+            }
+            .tags-poster-prix{
+                .container-tags {
+                   
+                }
+            }
+            .tags-poster-exclusif{
+                .container-tags {
+                    background: #F57171 0% 0% no-repeat padding-box;
+                }
+            }
+            .tags-poster-secondaire{
+                .container-tags {
+                    background: #F6F6F6 0% 0% no-repeat padding-box;
+                    &::before {
+                        @include random-color('background-color');
+                    }
+                }
             }
 
             .tags-btn-valid{
@@ -325,6 +355,37 @@
     }
 
     
-
+    .add-popup {
+        position: absolute;
+        height: 70%;
+        width: 30%;
+        background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
+        align-items: center;
+        pointer-events: none;
+        opacity: 0;
+        top: 45%;
+        left: 40%;
+        z-index:10000;
+        transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+        &.is-open {
+            opacity: 1;
+            pointer-events: auto;
+            .modal {
+                transform: translate(0px, 0px);
+            }
+        }
+    }
 }
 
+
+
+#tab-create-user{
+    .form-content{
+        width: 45%;
+        .row{
+            div:first-child{
+                margin-right: 2rem;
+            }
+        }
+    }
+}
