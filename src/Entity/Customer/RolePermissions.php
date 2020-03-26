@@ -17,7 +17,7 @@ class RolePermissions
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="permission_id",type="integer")
      */
     private $permissionId;
 

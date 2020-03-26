@@ -34,7 +34,6 @@ class TestController extends AbstractController
         $site->setCountry(1);
         $site->setTimezone(1);
         $site->setCustomer(1);
-        $site->setCode('Q021');
 
 
         $em->persist($site);
