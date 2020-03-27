@@ -73,6 +73,7 @@ class Customer
      */
     private $timeZone;
 
+
     public function __construct()
     {
         $this->users = new ArrayCollection();

@@ -30,6 +30,12 @@ class UserSites
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     */
+    private $customer;
+
     public function getId(): ?int
     {
         return $this->id;
