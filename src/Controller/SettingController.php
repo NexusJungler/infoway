@@ -35,7 +35,7 @@ class SettingController extends AbstractController
 
         $subdivision = new CompanyPiece();
         $permission = 1;
-        $currentUserDatabaseManager = 'kfc'; // must be dynamic
+        $currentUserDatabaseManager = 'Kfc'; // must be dynamic
 
         $adminEm = $this->getDoctrine()->getManager();
         $customerEm = $this->getDoctrine()->getManager($currentUserDatabaseManager);

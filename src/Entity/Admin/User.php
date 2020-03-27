@@ -3,16 +3,17 @@
 
 namespace App\Entity\Admin;
 
+use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserRepository")
  */
-class User implements UserInterface
+class User
 {
 
     /**
@@ -21,6 +22,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
 
     /**
      * @ORM\Column(type="string", length=30, name="first_name")
@@ -32,16 +34,11 @@ class User implements UserInterface
      */
     private $lastName;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $username;
+    private $mail;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -49,56 +46,80 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(name="phone_number",type="string", length=30, nullable=true)
      */
-    private $phone_number;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $registration_token;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $password_reset_token;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $customer;
-
-    /**
-     * CompanyPiece is in Customer db,so we will use our Api to simulate this relation
-     * Relation : ManyToOne (Many User can be link with same Customer\CompanyPiece)
-     *
-     * @ORM\Column(type="integer", nullable=false, name="company_piece")
-     */
-    private $companyPiece;
+    private $phoneNumber;
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="users")
-     * @ORM\JoinTable(name="user_permission")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\Column(name="password_reset_tocket",type="string", length=255, nullable=true)
+     */
+    private $passwordResetToken;
+
+    /**
+     * @ORM\Column(name="requested_password_at",type="datetime", length=255, nullable=true)
+     */
+    private $requestedPasswordAt;
+
+    /**
+     * @ORM\Column(name="created_at",type="datetime", length=255)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean", length=1)
+     */
+    private $activated;
+
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Customer", inversedBy="users")
+     * @ORM\JoinTable(name="users_customers")
+     */
+    private $customers;
+
+    /**
+     * One user has many roles. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
+     */
+    private $roles;
+
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Permission")
+     * @ORM\JoinTable(name="users_permissions",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
+     *      )
      */
     private $permissions;
 
-    // many to many -> site
 
-    // lier un user à une instance et pouvoir recupérer les sites via l'instance
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user")
+     */
+    private $sitesIds;
 
-    // permissions accés base, site, ...
+    private $sites;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Perimeter")
+     * @ORM\JoinColumn(name="perimeter_id", referencedColumnName="id")
+     */
+    private $perimeter;
 
     public function __construct()
     {
+        $this->roles = new ArrayCollection();
+        $this->customers = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+        $this->sitesIds = new ArrayCollection();
+        $this->sites = new ArrayCollection();
+
+        $this->setCreatedAt(new \DateTime());
+        $this->setActivated(0);
+
     }
 
     public function getId(): ?int
@@ -123,7 +144,6 @@ class User implements UserInterface
         return $this->lastName;
     }
 
-
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -131,26 +151,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRole(): ?Role
+    public function getMail(): ?string
     {
-        return $this->role;
+        return $this->mail;
     }
 
-    public function setRole(?Role $role): self
+    public function setMail(string $mail): self
     {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
+        $this->mail = $mail;
 
         return $this;
     }
@@ -169,103 +177,147 @@ class User implements UserInterface
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(string $phone_number): self
+    public function setPhoneNumber(?string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getRegistrationToken(): ?string
-    {
-        return $this->registration_token;
-    }
-
-    public function setRegistrationToken(?string $registration_token): self
-    {
-        $this->registration_token = $registration_token;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
     public function getPasswordResetToken(): ?string
     {
-        return $this->password_reset_token;
+        return $this->passwordResetToken;
     }
 
-    public function setPasswordResetToken(?string $password_reset_token): self
+    public function setPasswordResetToken(?string $passwordResetToken): self
     {
-        $this->password_reset_token = $password_reset_token;
+        $this->passwordResetToken = $passwordResetToken;
 
         return $this;
     }
 
-    public function getCustomer(): ?Customer
+    public function getRequestedPasswordAt(): ?\DateTimeInterface
     {
-        return $this->customer;
+        return $this->requestedPasswordAt;
     }
 
-    public function setCustomer(Customer $customer): self
+    public function setRequestedPasswordAt(?\DateTimeInterface $requestedPasswordAt): self
     {
-        $this->customer = $customer;
+        $this->requestedPasswordAt = $requestedPasswordAt;
 
         return $this;
     }
 
-
-    public function getCompanyPiece(): ?int
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->companyPiece;
+        return $this->createdAt;
     }
 
-
-    public function setCompanyPiece(int $companyPiece): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->companyPiece = $companyPiece;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-
-    /**
-     * @inheritDoc
-     */
-    public function getRoles()
+    public function getActivated(): ?bool
     {
-        return [
-            $this->getRole()->getName()
-        ];
+        return $this->activated;
+    }
+
+    public function setActivated(bool $activated): self
+    {
+        $this->activated = $activated;
+
+        return $this;
     }
 
     /**
-     * @inheritDoc
+     * @return Collection|UserRoles[]
      */
-    public function getSalt()
+    public function getRoles(): Collection
     {
+        return $this->roles;
+    }
 
+    public function addRole(UserRoles $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+            $role->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(UserRoles $role): self
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+            // set the owning side to null (unless already changed)
+            if ($role->getUser() === $this) {
+                $role->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPerimeter(): ?Perimeter
+    {
+        return $this->perimeter;
+    }
+
+    public function setPerimeter(?Perimeter $perimeter): self
+    {
+        $this->perimeter = $perimeter;
+
+        return $this;
     }
 
     /**
-     * @inheritDoc
+     * @return Collection|Customer[]
      */
-    public function eraseCredentials()
+    public function getCustomers(): Collection
     {
+        return $this->customers;
+    }
 
+    public function addCustomer(Customer $customer): self
+    {
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSitesIds(): Collection
+    {
+        return $this->sitesIds;
+    }
+
+    /**
+     * @param ArrayCollection $sitesIds
+     */
+    public function setSitesIds(ArrayCollection $sitesIds): void
+    {
+        $this->sitesIds = $sitesIds;
+    }
+
+    public function removeCustomer(Customer $customer): self
+    {
+        if ($this->customers->contains($customer)) {
+            $this->customers->removeElement($customer);
+        }
+
+        return $this;
     }
 
     /**
@@ -289,6 +341,60 @@ class User implements UserInterface
     {
         if ($this->permissions->contains($permission)) {
             $this->permissions->removeElement($permission);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSites(): ArrayCollection
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param ArrayCollection $sites
+     */
+    public function setSites(ArrayCollection $sites): void
+    {
+        $this->sites = $sites;
+    }
+
+    public function addSite(Site $site) {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+        }
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site)) {
+//            $this->sites->removeElement($site);
+        }
+
+        return $this;
+    }
+
+    public function addSitesId(UserSites $sitesId): self
+    {
+        if (!$this->sitesIds->contains($sitesId)) {
+            $this->sitesIds[] = $sitesId;
+            $sitesId->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSitesId(UserSites $sitesId): self
+    {
+        if ($this->sitesIds->contains($sitesId)) {
+            $this->sitesIds->removeElement($sitesId);
+            // set the owning side to null (unless already changed)
+            if ($sitesId->getUser() === $this) {
+                $sitesId->setUser(null);
+            }
         }
 
         return $this;

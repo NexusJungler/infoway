@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Entity\Customer;
+namespace App\Entity\Admin;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\TagsRepository")
- * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\PerimeterRepository")
  */
-class Tag
+class Perimeter
 {
     /**
      * @ORM\Id()
@@ -21,9 +17,14 @@ class Tag
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $level;
 
     public function getId(): ?int
     {
@@ -42,4 +43,15 @@ class Tag
         return $this;
     }
 
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
 }

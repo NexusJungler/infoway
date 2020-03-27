@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Entity\Admin;
+namespace App\Entity\Customer;
 
-use App\Entity\Admin\Permission;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Admin\ActionRepository")
- * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\RoleRepository")
  */
-class Action
+class Role
 {
     /**
      * @ORM\Id()
@@ -22,22 +19,21 @@ class Action
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Permission", mappedBy="action")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="RolePermissions", mappedBy="role")
      */
     private $permissions;
-
-
 
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -57,36 +53,33 @@ class Action
     }
 
     /**
-     * @return Collection|Permission[]
+     * @return Collection|RolePermissions[]
      */
     public function getPermissions(): Collection
     {
         return $this->permissions;
     }
 
-    public function addPermission(Permission $permission): self
+    public function addPermission(RolePermissions $permission): self
     {
         if (!$this->permissions->contains($permission)) {
             $this->permissions[] = $permission;
-            $permission->setAction($this);
+            $permission->setRole($this);
         }
 
         return $this;
     }
 
-    public function removePermission(Permission $permission): self
+    public function removePermission(RolePermissions $permission): self
     {
         if ($this->permissions->contains($permission)) {
             $this->permissions->removeElement($permission);
             // set the owning side to null (unless already changed)
-            if ($permission->getAction() === $this) {
-                $permission->setAction(null);
+            if ($permission->getRole() === $this) {
+                $permission->setRole(null);
             }
         }
 
         return $this;
     }
-
-    
-
 }

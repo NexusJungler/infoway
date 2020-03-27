@@ -22,14 +22,10 @@ class Country
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
-    public function __construct()
-    {
-
-    }
 
     public function getName(): ?string
     {
