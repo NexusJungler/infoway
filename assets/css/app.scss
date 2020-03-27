@@ -4,6 +4,17 @@
     @return #{$remSize}rem;
 }
 
+/************************* CUSTOM CSS  ***************************/
+@import 'Custome/table.scss';
+
+@import 'Custome/dropdown.scss';
+
+@import 'Custome/display_down.scss';
+
+@import 'Custome/scrollbar.scss';
+
+@import 'Custome/form.scss';
+
 /************************* CUSTOM ICON  ***************************/
 @import 'custom_icon.scss';
 
@@ -44,13 +55,3 @@
 /** INFO **/
 // @import 'info.scss';
 
-/************************* CUSTOM CSS  ***************************/
-@import 'Custome/table.scss';
-
-@import 'Custome/dropdown.scss';
-
-@import 'Custome/display_down.scss';
-
-@import 'Custome/scrollbar.scss';
-
-@import 'Custome/form.scss';

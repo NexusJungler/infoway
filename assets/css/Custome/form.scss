@@ -27,5 +27,51 @@
     }
 }
     
-    
-    
+
+.container-chkbox {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font: rem(15px) 'Barlow', medium;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    &:hover input ~ .checkmark-chkbox {
+        background-color: #ccc;
+    }
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    input:checked ~ .checkmark-chkbox {
+        background-color: white;
+    }
+    input:checked ~ .checkmark-chkbox:after {
+        display: block;
+    }
+    .checkmark-chkbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 17px;
+        width: 17px;
+        border: 1px solid #4D646D;
+        &:after {
+            content: "";
+            position: absolute;
+            display: none;
+            top: 1px;
+            left: 1px;
+            width: 13px;
+            height: 13px;
+            background: #4F9BAE 0% 0% no-repeat padding-box;
+        }
+          
+    }
+}
+  

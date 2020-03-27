@@ -28,163 +28,132 @@
 
     </div>
 
-    <div class="form-content">
+    <div class="form-content form-content-chkbox">
         <div class="row">
             <label class="form-label" for="phone">Périmètres :</label>
-            <div class="row">
-                <div class="checkbox">
-                    <label class="mutliselect-chkbox">Infoway
-                        <input type="radio" name="Perimeters"   value="">
-                        <span class="mutliselect-check"></span>
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label class="mutliselect-chkbox">Multi Enseigne
-                        <input type="radio" name="Perimeters"  value="">
-                        <span class="mutliselect-check"></span>
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label class="mutliselect-chkbox">Multi Site
-                        <input type="radio" name="Perimeters"  value="">
-                        <span class="mutliselect-check"></span>
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label class="mutliselect-chkbox">Local
-                        <input type="radio" name="Perimeters"  value="">
-                        <span class="mutliselect-check"></span>
-                    </label>
-                </div>
+            <div class="row row-chkbox">
+
+                <label class="container-chkbox">Infoway
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Multi-Enseigne
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Enseigne
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Multi-Site
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Local
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+
             </div>
         </div>
     </div>
 
 
+    <div class="form-content-table">
+        <div class="content-table-left">
+            <p class="table-titel">Enseigne</p>
+            <div class="table">
+                <table class="table-custome " >
+                    <thead  class="table-info thead-content">
+                        <tr>
+                            <th><input type="checkbox" name="select-enseigne" id="selectAll">Tous</th>
+                            <th>Role</th>
+                            <th>Affichies sites</th>     
+                        </tr>
+                    </thead>
+                    <tbody class="tbody tbody-content scrollbar-table">
+                        <tr>
+                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">Burger King</td>
+                            <td> 
+                                <div class="checkboxs-list" >
+                                    <div class="dropdown mutliSelect"> 
+                                        <div class="select-input">
+                                            <button type="button" class="btn-dropdown"id="select-groupe" data-down="down-groupe">
+                                                <span class="multiSel">Choisir rôle</span>    
+                                                <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                            </button> 
+                                            <div class="select-down">
+                                                <ul id="down-groupe">
+                                                    <li>
+                                                        <label class="mutliselect-chkbox">Admin
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                        <label class="mutliselect-chkbox">Siege
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                        <label class="mutliselect-chkbox">Directeur
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                        <label class="mutliselect-chkbox">Manager
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td> 
+                                <button type="button">voir</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">KFC</td>
+                            <td ></td>
+                            <td ></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">Quick</td>
+                            <td ></td>
+                            <td ></td>
+                        </tr>
+                    </tbody>   
+                </table>    
+            </div> 
+        </div>
 
+        <div  class="content-table-right">
+            <p class="table-titel">Site</p>
+            <div class="table">
+                <table class="table-custome " >
+                    <thead  class="table-info thead-content">
+                        <tr>
+                            <th><input type="checkbox" name="select-site" id="selectAll">Tous</th>
+                            <th>Identifiants</th>
+                            <th>Adresse</th>  
+                        </tr>
+                    </thead>
+                    <tbody class="tbody tbody-content scrollbar-table">
+                        <tr>
+                            <td><input type="checkbox" name="select-site" data-input-select="2">AnseVata</td>
+                            <td>Bobigny</td>
+                            <td>25 rue st charles 06000 AMIENS  </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="select-site" data-input-select="2">AnseVata</td>
+                            <td>Bobigny</td>
+                            <td>25 rue st charles 06000 AMIENS  </td>
+                        </tr>
 
-
-
-
-    
-
-    <div>
-        <p>Enseigne</p>
-        <div class="table">
-            <table class="table-custome table" >
-                <thead  class="table-info thead-info">
-                    <tr>
-                        <th><input type="checkbox" name="select-enseigne" id="selectAll">Enseigne</th>
-                        <th>Role</th>
-                        <th></th>     
-                    </tr>
-                </thead>
-                <tbody class="tbody tbody-content scrollbar-table">
-                    <tr>
-                        <td><input type="checkbox" name="select-enseigne" data-input-select="2">Burger King</td>
-                        <td> 
-                            <div>
-                                <label class="container">Admin
-                                    <input type="radio" checked="checked">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Siege
-                                    <input type="radio">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Directeur
-                                    <input type="radio">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Manager
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td ></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="select-enseigne" data-input-select="2">KFC</td>
-                        <td >
-                            <div>
-                                <label class="container">Admin
-                                    <input type="radio" checked="checked">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Siege
-                                    <input type="radio">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Directeur
-                                    <input type="radio">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Manager
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td ></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="select-enseigne" data-input-select="2">Quick</td>
-                        <td >
-                            <div>
-                                <label class="container">Admin
-                                    <input type="radio" checked="checked">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Siege
-                                    <input type="radio">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Directeur
-                                    <input type="radio">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Manager
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td ></td>
-                    </tr>
-                </tbody>   
-            </table>    
-        </div> 
-        <p>Site</p>
-        <div class="table">
-            <table class="table-custome table" >
-                <thead  class="table-info thead-info">
-                    <tr>
-                        <th><input type="checkbox" name="select-site" id="selectAll">Site</th>
-                        <th>Nom</th>
-                        <th>Adresse</th>  
-                    </tr>
-                </thead>
-                <tbody class="tbody tbody-content scrollbar-table">
-                    <tr>
-                        <td><input type="checkbox" name="select-site" data-input-select="2">Q041</td>
-                        <td>Bobigny</td>
-                        <td>25 rue st charles 06000 AMIENS  </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="select-site" data-input-select="2">Q041</td>
-                        <td>Bobigny</td>
-                        <td>25 rue st charles 06000 AMIENS  </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="select-site" data-input-select="2">Q041</td>
-                        <td>Bobigny</td>
-                        <td>25 rue st charles 06000 AMIENS  </td>
-                    </tr>
-
-                </tbody>      
-            </table>    
-        </div> 
+                    </tbody>      
+                </table>    
+            </div> 
+        </div>
 
     </div>
 
