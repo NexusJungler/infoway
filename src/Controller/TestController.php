@@ -25,39 +25,49 @@ class TestController extends AbstractController
 
         $em =  $this->getDoctrine()->getManager();
 
+
         $userRepo = $em->getRepository(User::class);
+        $customerRepo = $em->getRepository(Customer::class);
         $allUsers = $userRepo->findAll();
+
+        dd($userRepo->getUserWithSitesById(1));
+        $allSitesNeededFilteredByCustomersArray=[];
 
         foreach($allUsers as $user){
 
-            $userEnseignes = $user->getCustomers();
 
-            foreach($userEnseignes as $enseigne){
+            foreach($user->getSitesIds() as $site) {
+                $siteCustomer = $site->getCustomer();
+                $siteCustomerName = $siteCustomer->getName();
 
-                $customEm = $this->getDoctrine()->getManager($enseigne->getName());
-                $siteRepo = $customEm->getRepository(Site::class,$enseigne->getName());
+                if( !array_key_exists( $siteCustomerName , $allSitesNeededFilteredByCustomersArray ) )$allSitesNeededFilteredByCustomersArray[ $siteCustomerName ] = [] ;
+                $allSitesNeededFilteredByCustomersArray[ $siteCustomerName ][] = $site->getSiteId();
+            };
+        }
 
-                $allSitesInCUrrentEnseigne = $siteRepo->findAll();
+        $allCustomers = $customerRepo->findBy(['name' => array_keys($allSitesNeededFilteredByCustomersArray)]);
+        $allCustomersIndexedByName = [];
 
-                foreach($allSitesInCUrrentEnseigne as $siteInCurrentEnseigne){
-                    $enseigne->addSite($siteInCurrentEnseigne) ;
-                }
+       foreach($allCustomers as $customer){
+           $allCustomersIndexedByName[$customer->getName()] = $customer ;
+       }
+
+        foreach( $allSitesNeededFilteredByCustomersArray as $enseigne => $site ){
+
+            if (!array_key_exists($enseigne,$allCustomersIndexedByName) || ! $allCustomersIndexedByName[$enseigne] instanceof Customer){
+              continue ;
             }
-            foreach($userEnseignes as $enseigne){
-              dump($enseigne->getSites());
+
+            $enseigneEntity = $allCustomersIndexedByName[ $enseigne ];
+
+            $siteRepo  = $this->getDoctrine()->getRepository(Site::class, $enseigne );
+            $userSites = $siteRepo->findBy(['id'=> $site]);
+
+            foreach($userSites as $userSite){
+                $userSite->setCustomer($enseigneEntity);
+                $user->addSite($userSite);
             }
         }
-        dd($allUsers);
-//       // $customerRepo->findUserEnseignesAndSitesByUserName('test');
-//      //  $customerRepo->findCustomerWithSiteByName('kfc') ;
-//        $role = $em->getRepository(Role::class)->findOneById(1);
-//
-//        $rolePermission = new RolePermissions() ;
-//        $rolePermission->setRole($role);
-//        $rolePermission->setPermissionId(1);
-//
-//        $em->persist($rolePermission);
-//        $em->flush();
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',

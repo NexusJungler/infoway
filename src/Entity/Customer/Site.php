@@ -2,6 +2,7 @@
 
 namespace App\Entity\Customer;
 
+use App\Entity\Admin\Customer;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,20 +48,21 @@ class Site
     private $description;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(name="country_id",type="integer", nullable=true)
      */
     private $countryId;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(name="timezone_id",type="integer", nullable=true)
      */
     private $timezoneId;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="customer_id",type="integer")
      */
     private $customerId;
 
+    private $customer ;
 
 
     public function getId(): ?int
@@ -175,6 +177,18 @@ class Site
 
         return $this;
     }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+
 
 
 }

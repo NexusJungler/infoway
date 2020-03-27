@@ -3,6 +3,7 @@
 
 namespace App\Entity\Admin;
 
+use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -98,6 +99,8 @@ class User
      * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user")
      */
+    private $sitesIds;
+
     private $sites;
 
     /**
@@ -111,6 +114,7 @@ class User
         $this->roles = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+        $this->sitesIds = new ArrayCollection();
         $this->sites = new ArrayCollection();
 
         $this->setCreatedAt(new \DateTime());
@@ -291,6 +295,22 @@ class User
         return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getSitesIds(): Collection
+    {
+        return $this->sitesIds;
+    }
+
+    /**
+     * @param ArrayCollection $sitesIds
+     */
+    public function setSitesIds(ArrayCollection $sitesIds): void
+    {
+        $this->sitesIds = $sitesIds;
+    }
+
     public function removeCustomer(Customer $customer): self
     {
         if ($this->customers->contains($customer)) {
@@ -327,36 +347,57 @@ class User
     }
 
     /**
-     * @return Collection|UserSites[]
+     * @return ArrayCollection
      */
-    public function getSites(): Collection
+    public function getSites(): ArrayCollection
     {
         return $this->sites;
     }
 
-    public function addSite(UserSites $site): self
+    /**
+     * @param ArrayCollection $sites
+     */
+    public function setSites(ArrayCollection $sites): void
     {
+        $this->sites = $sites;
+    }
+
+    public function addSite(Site $site) {
         if (!$this->sites->contains($site)) {
             $this->sites[] = $site;
-            $site->setUser($this);
+        }
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site)) {
+//            $this->sites->removeElement($site);
         }
 
         return $this;
     }
 
-    public function removeSite(UserSites $site): self
+    public function addSitesId(UserSites $sitesId): self
     {
-        if ($this->sites->contains($site)) {
-            $this->sites->removeElement($site);
+        if (!$this->sitesIds->contains($sitesId)) {
+            $this->sitesIds[] = $sitesId;
+            $sitesId->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSitesId(UserSites $sitesId): self
+    {
+        if ($this->sitesIds->contains($sitesId)) {
+            $this->sitesIds->removeElement($sitesId);
             // set the owning side to null (unless already changed)
-            if ($site->getUser() === $this) {
-                $site->setUser(null);
+            if ($sitesId->getUser() === $this) {
+                $sitesId->setUser(null);
             }
         }
 
         return $this;
     }
-
-
 
 }

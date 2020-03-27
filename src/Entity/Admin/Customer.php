@@ -195,7 +195,8 @@ class Customer
     {
         if (!$this->sites->contains($site)) {
             $this->sites[] = $site;
-            $site->setCustomer($this->getId());
+            $site->setCustomerId($this->getId());
+            $site->setCustomer($this);
         }
 
         return $this;
@@ -205,7 +206,7 @@ class Customer
     {
         if ($this->sites->contains($site) ) {
             $this->sites->removeElement($site);
-            $site->setCustomer(null);
+//            $site->setCustomer(null);
         }
 
         return $this;
