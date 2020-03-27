@@ -1,131 +1,160 @@
 <div class="tab-content-title">
     <h3 class="title">Créer une Utilisateur</h3>
-    <p>Areas</p>
-    {{ form }}
 </div>
 
 <form action="" method="">
-{# {% macro input(name, value, type = "text") %} #}
-    <div class="tab-content-bloc" >
-        <div class="tab-content-bloc-cm-left">
-            <div class="bloc-form ">
-                <div class="bloc-form-content">
-
-                    <div class="row">
-                        <label class="label-custome">Nom</label>
-                        {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
-                        <input type="text" class="input-custome"  name="create-user"  value=""  placeholder="Créer utilisateur"/>
-                        <input type="submit" value="ok" class="form-btn-sumbit">
-                    </div>
-
-                    <div class="row-flex">
-                        <label class="label-custome">Login</label>
-                        {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
-                        <input type="text" class="input-custome"  name="login"  value="" placeholder="login"/>
-                        <input type="submit" value="ok" class="form-btn-sumbit">
-                    </div>
-                    <div class="row">
-                        <label class="label-custome">Mot de passe</label>
-                        {# <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  /> #}
-                        <input type="text" class="input-custome"  name="password"  value="" placeholder="Mot de passe"/>
-                        <input type="submit" value="ok" class="form-btn-sumbit">
-                    </div>
-
-                    <div class="row">
-                        <label for="sel-administrateurs" class="label-custome">Associé à</label>
-                        <div class="dropdown mutliSelect"> 
-                            <div  class="select-input">
-                                <button type="button" class="btn-dropdown" id="accocie" data-down="down-associate">
-                                    <p  class="multiSel"></p>  
-                                    <span class="hida">Select</span> 
-                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                </button>
-                                <div class="select-down">
-                                    <ul id="down-associate">
-                                        {% for customer in customer %}
-                                            <li>
-                                                <label class="mutliselect-chkbox">{{customer}}
-                                                    <input type="checkbox" name="accocie" data-satuts="accocie" value="{{customer}}">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            <li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="sel-administrateurs" class="label-custome">Satut</label>
-
-                        <div class="dropdown mutliSelect" > 
-                            <div class="select-input">
-                                <button type="button" class="btn-dropdown" id="status" data-down="down-status">
-                                    <p  class="multiSel" ></p>  
-                                    <span class="hida">Choisir dans la liste</span>    
-                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                </button> 
-                                <div class="select-down">
-                                    <ul id="down-status">
-                                        {% for customer in customer %}
-                                            <li>
-                                                <label class="mutliselect-chkbox">{{customer}}
-                                                    <input type="checkbox" name="satut"  data-satuts="status" value="{{customer}}">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            <li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="submit" value="ok"  class="form-btn-sumbit">
-                    </div>
-
-                    <div class="row">
-                        <label class="label-custome">TAGS</label>
-                        <div class="row-flex radio-tags">
-                            <div class="checkbox">
-                                <label class="mutliselect-chkbox">Cree des TAGS
-                                    <input type="radio" name="create-tags"   value="">
-                                    <span class="mutliselect-check"></span>
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label class="mutliselect-chkbox">Affecte des TAGS
-                                    <input type="radio" name="create-tags"  value="">
-                                    <span class="mutliselect-check"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            
+    
+    <div class="form-content">
+    
+        <div class="row">
+            <div class="row">
+                <label class="form-label" for="fristname">Nom</label>
+                <input type="text" name="fristname"  placeholder="Nom" class="input-custome" required/>
+            </div>
+            <div class="row">
+                <label class="form-label">Prenom</label>
+                <input type="text"  name="lastname"   placeholder="Prenom" class="form-input" required/>
             </div>
         </div>
         
-        
-        <div class="tab-content-bloc-cm-right"> 
-            <div class="tab-content-poste">
-                <p>Affichage par défaut de l'utilisateur selon statut</p>
-            </div>
-            <div class="tab-content-brand">
-                <div class="bloc-poste-title">
-                    <p>Sites de la Marque</p>
-                </div>
-                <div class="inputchkbox">
-                    {% for customer in customer %}
-                        <label class="chkbox" >{{customer}}
-                            <input type="checkbox" value="{{customer}}" >
-                            <span class="checkmark"></span>
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
-            
+        <div class="row">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" name="email" placeholder="Email" class="input-custome"  required/>
         </div>
+        <div class="row">
+            <label class="form-label" for="phone">Numero de téléphone</label>
+            <input type="tel" name="phone" placeholder="Numero de téléphone" class="input-custome" />
+        </div>
+
+    </div>
+
+    <div class="form-content form-content-chkbox">
+        <div class="row">
+            <label class="form-label" for="phone">Périmètres :</label>
+            <div class="row row-chkbox">
+
+                <label class="container-chkbox">Infoway
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Multi-Enseigne
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Enseigne
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Multi-Site
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+                <label class="container-chkbox">Local
+                    <input type="checkbox" name="Perimeters" >
+                    <span class="checkmark-chkbox"></span>
+                </label>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-content-table">
+        <div class="content-table-left">
+            <p class="table-titel">Enseigne</p>
+            <div class="table">
+                <table class="table-custome " >
+                    <thead  class="table-info thead-content">
+                        <tr>
+                            <th><input type="checkbox" name="select-enseigne" id="selectAll">Tous</th>
+                            <th>Role</th>
+                            <th>Affichies sites</th>     
+                        </tr>
+                    </thead>
+                    <tbody class="tbody tbody-content scrollbar-table">
+                        <tr>
+                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">Burger King</td>
+                            <td> 
+                                <div class="checkboxs-list" >
+                                    <div class="dropdown mutliSelect"> 
+                                        <div class="select-input">
+                                            <button type="button" class="btn-dropdown"id="select-groupe" data-down="down-groupe">
+                                                <span class="multiSel">Choisir rôle</span>    
+                                                <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                            </button> 
+                                            <div class="select-down">
+                                                <ul id="down-groupe">
+                                                    <li>
+                                                        <label class="mutliselect-chkbox">Admin
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                        <label class="mutliselect-chkbox">Siege
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                        <label class="mutliselect-chkbox">Directeur
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                        <label class="mutliselect-chkbox">Manager
+                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
+                                                            <span class="mutliselect-check"></span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td> 
+                                <button type="button">voir</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">KFC</td>
+                            <td ></td>
+                            <td ></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">Quick</td>
+                            <td ></td>
+                            <td ></td>
+                        </tr>
+                    </tbody>   
+                </table>    
+            </div> 
+        </div>
+
+        <div  class="content-table-right">
+            <p class="table-titel">Site</p>
+            <div class="table">
+                <table class="table-custome " >
+                    <thead  class="table-info thead-content">
+                        <tr>
+                            <th><input type="checkbox" name="select-site" id="selectAll">Tous</th>
+                            <th>Identifiants</th>
+                            <th>Adresse</th>  
+                        </tr>
+                    </thead>
+                    <tbody class="tbody tbody-content scrollbar-table">
+                        <tr>
+                            <td><input type="checkbox" name="select-site" data-input-select="2">AnseVata</td>
+                            <td>Bobigny</td>
+                            <td>25 rue st charles 06000 AMIENS  </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="select-site" data-input-select="2">AnseVata</td>
+                            <td>Bobigny</td>
+                            <td>25 rue st charles 06000 AMIENS  </td>
+                        </tr>
+
+                    </tbody>      
+                </table>    
+            </div> 
+        </div>
+
     </div>
 
     <div class="">

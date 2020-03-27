@@ -3,6 +3,11 @@ class Navbar {
 
     navbarleft() {	
 
+
+        $('#text').click(function () {
+            $('#menu-closed').addClass('menu-test');
+          });
+
         $('.menu-wrap input[type="checkbox"]').change( e =>{
             
             let $checkBox = $(e.currentTarget) ;

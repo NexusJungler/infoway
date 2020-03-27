@@ -1,11 +1,14 @@
 // sass
-import '../css/general/reset.scss';
+import '../css/general/reset.scss'
 import '../css/app.scss';
 
 // css
 require('../css/app.css');
 require('../css/custom-style.css');
 require('../css/class/managers/clockManager.css');
+
+// impoet font awesome
+//require('../css/fontawesome/css/all.css');
 
 // import JS
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";

@@ -53,7 +53,7 @@
                     </div>
                 </article > 
 
-                <article id="table">
+                <article class="table">
                     <table class="table-custome table-site" >
                         <thead  class="table-info thead-info">
                             <tr>
@@ -78,13 +78,19 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="tbody scrollbar">
+                        <tbody class="tbody tbody-content scrollbar-table">
                             <tr>
                                 <td><input type="checkbox" name="select" data-input-select="1">Q040</td>
-                                <td class="societe"> <div> <p>Quick cie</p> <p>Quick cie</p></div></td>
-                                <td class="groupe"><div> <p>MEDIUM</p></div></td>
-                                <td class="selectif"><div> <p>NAT</p></div></td>
-                                <td class="critere"><div><p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>                  
+                                <td class="societe"> <div class="tags-table"> <p class="container-tags">Quick cie</p> <p class="container-tags">Quick cie</p></div></td>
+                                <td class="groupe"><div class="tags-table"> <p class="container-tags">MEDIUM</p></div></td>
+                                <td class="selectif"><div class="tags-table"> <p class="container-tags">NAT</p></div></td>
+                                <td class="critere">
+                                    <div>
+                                        <p class="container-tags">Ptit</p>
+                                        <p class="container-tags"> Dej</p>
+                                        <p class="container-tags"> Anniv</p>
+                                    </div
+                                </td>                  
                             </tr>
                             <tr>
                                 <td><input type="checkbox" name="select" data-input-select="2">Q041</td>
@@ -126,9 +132,25 @@
                                 <td class="societe"><div> <p>Quick cie </p></div></td>
                                 <td class="groupe" ><div> <p>MEDIUM</p></div></td>
                                 <td class="selectif"><div> <p>NAT</p></div></td>
-                                <td class="critere"><div><p>Ptit</p><p> Dej</p><p> Anniv</p><p>Ptit</p><p> Dej</p>
-                                {# <p> Anniv</p><p>Ptit</p><p> Dej</p><p> Anniv</p> #}
-                                </div></td>  
+                                <td class="critere">
+                                        <div id="menu">
+                                            <ul id="menu-closed">
+                                                <li><p class="container-tags">Start</p></li>
+                                                <li><p class="container-tags"> Events</p></li>
+                                                <li><p>Calendar</p></li>
+                                                <li><p>Portfolio</p></li>
+                                                <li><p>Blog</p></li>
+                                                <li><p>Products</p></li>
+                                                <li><p>Things</p></li>
+                                                <li><p>About</p></li>
+                                                <li><p>Contact</p></li>
+                                                <li><p>Login</p></li>
+                                                <li><a href="#menu-closed">X</a></li>
+                                                {# <li><a href="#menu">...</a></li> #}
+                                                <li><button id="text" >...</button></li>
+                                            </ul>
+                                        </div>
+                                </td>  
                             </tr>
                         </tbody>
                         
