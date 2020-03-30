@@ -13,10 +13,22 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class UserListener
 {
+
     // the entity listener methods receive two arguments:
     // the entity instance and the lifecycle event
+    private $_doctrine ;
+    /**
+     * UserListener constructor.
+     */
+    public function __construct($doctrine)
+    {
+       $this->_doctrine = $doctrine ;
+    }
+
     public function initializeSites(User $user, $e)
     {
+        dd($user);
+        dd($this->_doctrine);
        $user->setSites(new ArrayCollection());
     }
 }
