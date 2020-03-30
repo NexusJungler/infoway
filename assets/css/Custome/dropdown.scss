@@ -6,7 +6,8 @@
     }
     
     .select-down {
-        position: relative;
+        position: absolute;
+        width: 239px;
     }
 
     span.value {
@@ -34,7 +35,7 @@
         color: #4D646D;;
         display: none;
         left: 0;
-        padding: 2px 15px 2px 5px;
+        padding: 9px 15px 2px 7px;
         position: absolute;
         top: 0px;
         width: 16.8rem;
