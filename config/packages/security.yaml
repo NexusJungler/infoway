@@ -2,10 +2,10 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         #in_memory: { memory: null }
-        from_database:
+        app_user_provider:
             entity:
                 class: App\Entity\Admin\User
-                property: username
+                property: email
 
     firewalls:
         dev:
@@ -15,8 +15,8 @@ security:
             anonymous: true
 
             form_login:
-                check_path: user::login
-                username_parameter: username
+                check_path: app_login
+                username_parameter: email
                 password_parameter: password
 
             logout:
@@ -29,6 +29,9 @@ security:
                 secret:   '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path:     /
+            guard:
+                authenticators:
+                    - App\Security\LoginAuthenticator
                   # by default, the feature is enabled by checking a
                   # checkbox in the login form (see below), uncomment the
                   # following line to always enable it.

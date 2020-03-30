@@ -7,15 +7,15 @@ use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserRepository")
  */
-class User
+class User implements UserInterface
 {
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -23,6 +23,10 @@ class User
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=30, name="first_name")
@@ -33,17 +37,6 @@ class User
      * @ORM\Column(type="string", length=30, name="last_name")
      */
     private $lastName;
-
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mail;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
 
     /**
      * @ORM\Column(name="phone_number",type="string", length=30, nullable=true)
@@ -109,6 +102,13 @@ class User
      */
     private $perimeter;
 
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -125,6 +125,89 @@ class User
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles->getValues();
+    }
+
+    public function addRole(UserRoles $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+            $role->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(UserRoles $role): self
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+            // set the owning side to null (unless already changed)
+            if ($role->getUser() === $this) {
+                $role->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string)$this->email;
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string)$this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getFirstName(): ?string
@@ -147,30 +230,6 @@ class User
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }
@@ -236,49 +295,6 @@ class User
     }
 
     /**
-     * @return Collection|UserRoles[]
-     */
-    public function getRoles(): Collection
-    {
-        return $this->roles;
-    }
-
-    public function addRole(UserRoles $role): self
-    {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-            $role->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRole(UserRoles $role): self
-    {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
-            // set the owning side to null (unless already changed)
-            if ($role->getUser() === $this) {
-                $role->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getPerimeter(): ?Perimeter
-    {
-        return $this->perimeter;
-    }
-
-    public function setPerimeter(?Perimeter $perimeter): self
-    {
-        $this->perimeter = $perimeter;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Customer[]
      */
     public function getCustomers(): Collection
@@ -293,22 +309,6 @@ class User
         }
 
         return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getSitesIds(): Collection
-    {
-        return $this->sitesIds;
-    }
-
-    /**
-     * @param ArrayCollection $sitesIds
-     */
-    public function setSitesIds(ArrayCollection $sitesIds): void
-    {
-        $this->sitesIds = $sitesIds;
     }
 
     public function removeCustomer(Customer $customer): self
@@ -347,6 +347,37 @@ class User
     }
 
     /**
+     * @return Collection|UserSites[]
+     */
+    public function getSitesIds(): Collection
+    {
+        return $this->sitesIds;
+    }
+
+    public function addSitesId(UserSites $sitesId): self
+    {
+        if (!$this->sitesIds->contains($sitesId)) {
+            $this->sitesIds[] = $sitesId;
+            $sitesId->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSitesId(UserSites $sitesId): self
+    {
+        if ($this->sitesIds->contains($sitesId)) {
+            $this->sitesIds->removeElement($sitesId);
+            // set the owning side to null (unless already changed)
+            if ($sitesId->getUser() === $this) {
+                $sitesId->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getSites(): ArrayCollection
@@ -377,25 +408,14 @@ class User
         return $this;
     }
 
-    public function addSitesId(UserSites $sitesId): self
+    public function getPerimeter(): ?Perimeter
     {
-        if (!$this->sitesIds->contains($sitesId)) {
-            $this->sitesIds[] = $sitesId;
-            $sitesId->setUser($this);
-        }
-
-        return $this;
+        return $this->perimeter;
     }
 
-    public function removeSitesId(UserSites $sitesId): self
+    public function setPerimeter(?Perimeter $perimeter): self
     {
-        if ($this->sitesIds->contains($sitesId)) {
-            $this->sitesIds->removeElement($sitesId);
-            // set the owning side to null (unless already changed)
-            if ($sitesId->getUser() === $this) {
-                $sitesId->setUser(null);
-            }
-        }
+        $this->perimeter = $perimeter;
 
         return $this;
     }
