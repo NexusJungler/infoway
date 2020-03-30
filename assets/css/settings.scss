@@ -386,7 +386,28 @@
                padding-right: 2rem;
             }
         }
+        .row-email,
+        .row-phone{
+            .input-custome{
+                width: 100%;
+            }
+            
+        }
+        .row-email{
+            position: relative;
+            
+            .form-error{
+                position: absolute;
+                bottom: 0;
+                color: red;
+            }
+            
+        } 
+        .error-active{
+            padding-bottom: 15px;
+        }
     }
+    
     .form-content-chkbox{
         .row{
             .form-label{
@@ -440,14 +461,22 @@
                     height: 500px;
                     display: block;
                     overflow: auto;
-                    .container-chkbox{
-                    padding-top: 1px;
-                        margin-bottom: 0;
-                    }
+                    
                     tr{
                         td{
                             border-right: 0px;
                             width: 200px;
+                            .container-chkbox{
+                                padding-top: 1px;
+                                margin-bottom: 0;
+                            }
+                            &:nth-child(2){
+   
+                                .container-chkbox{
+                                    margin-bottom: 10px;
+                                }
+                                
+                            }
                         }
                         td:first-child {
                             width: 19%;
@@ -455,6 +484,11 @@
                     }
                     tr:nth-child(2n+2){
                         background-color: #C7D0D4;
+                        td{
+                            .container-chkbox{
+                                margin-bottom: 10px;
+                            }
+                        }
                     }
                 }
             }
@@ -462,8 +496,9 @@
 
         .content-table-left{
             margin-right: 50px;
+            max-width: 640px;
             .table{
-                width: 640px;
+                width: 100%;
                 .thead-content{
                     tr{
                         th:first-child {
@@ -513,8 +548,9 @@
         }
 
         .content-table-right{
+            max-width: 830px;
             .table{
-                width: 830px;
+                width: 100%;
                 .table-custome{
                     .thead-content{
                         th{
