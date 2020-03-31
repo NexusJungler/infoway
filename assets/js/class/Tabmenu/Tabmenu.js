@@ -18,6 +18,8 @@ constructor() {
       $("#"+tab_text_id).addClass('current');  
     })   
 
+
+
     $(".dropdown .btn-dropdown").on('click', function() {
       var down_id = $(this).attr('data-down');
 
@@ -29,16 +31,14 @@ constructor() {
       let clickedInputContainer = $(e.delegateTarget);
       let countCheckbox = clickedInputContainer.find('input[type="checkbox"]:checked').length;
 
-      
-
     if( countCheckbox  ){
 
       clickedInputContainer.find('.multiSel').text(countCheckbox + " Selected");
-      clickedInputContainer.find(".hida").hide();
+      // clickedInputContainer.find(".hida").hide();
 
     }else{
         clickedInputContainer.find('.multiSel').remove();
-        clickedInputContainer.find(".hida").show();
+        // clickedInputContainer.find(".hida").show();
         if( countCheckbox == 0){  
         }
         
