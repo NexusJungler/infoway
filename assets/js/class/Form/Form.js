@@ -1,4 +1,8 @@
 class Form  {
+
+    constructor (){
+        
+    }
     
     ValidateEmail() {	
         
@@ -11,12 +15,12 @@ class Form  {
 
             if(emailaddress == '') {
                 $("#email").after('<span class="form-error">Veuillez saisir votre adresse e-mail.</span>');
-                $(".row-email").addClass("error-active");
+                $(".col-email").addClass("error-active");
                 hasError = true;
             }
             else if(!emailReg.test(emailaddress)) {
                 $("#email").after('<span class="form-error">Entrez une adresse e-mail valide.</span>');
-                $(".row-email").addClass("error-active");
+                $(".col-email").addClass("error-active");
                 hasError = true;
             }
             if(hasError == true) { 
@@ -26,6 +30,8 @@ class Form  {
    
         });
     }
+
+
     
 }
     

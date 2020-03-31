@@ -1,9 +1,21 @@
 <div class="tab-content-title">
-    <h3 class="title">Créer une Utilisateur</h3>
+    <h3 class="title">Créer un Utilisateur</h3>
 </div>
 
 {# <form action="{{ path('user:createUser') }}" method="post" name="user"> #}
 <form action="" method="post" name="user">
+
+    <article class="display setting-display ">
+        <div class="display-content">
+            <div class="display-btn">
+                <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Créer</button>
+                <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+            </div>
+        </div>
+    </article > 
+
 
     <div class="form-content">
     
@@ -14,15 +26,15 @@
             </div>
             <div class="row">
                 <label class="form-label">Prenom</label>
-                <input type="text"  name="user[lastname]"   placeholder="Prenom" class="form-input" required/>
+                <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" required/>
             </div>
         </div>
         
-        <div class="row row-email">
+        <div class="row col-email">
             <label class="form-label" for="email">Email</label>
             <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  required/>
         </div>
-        <div class="row row-phone">
+        <div class="row col-phone">
             <label class="form-label" for="phone">Téléphone</label>
             <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
         </div>
@@ -87,7 +99,7 @@
                                 <div class="checkboxs-list" >
                                     <div class="dropdown mutliSelect"> 
                                         <div class="select-input">
-                                            <button type="button" class="btn-dropdown"id="select-groupe" data-down="down-groupe">
+                                            <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe">
                                                 <span class="multiSel">Choisir rôle</span>    
                                                 <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
                                             </button> 
@@ -138,33 +150,33 @@
                                 <div class="checkboxs-list" >
                                     <div class="dropdown mutliSelect"> 
                                         <div class="select-input">
-                                            <button type="button" class="btn-dropdown"id="select-groupe" data-down="down-groupe">
+                                            <button type="button" class="btn-dropdown"id="select-groupe2" data-down="down-groupe1">
                                                 <span class="multiSel">Choisir rôle</span>    
                                                 <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
                                             </button> 
                                             <div class="select-down">
-                                                <ul id="down-groupe" class="row-chkbox" >
+                                                <ul id="down-groupe1" class="row-chkbox" >
                                                     <li>
                                                         <label class="container-chkbox">Admin
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="admin">
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="admin">
                                                             <span class="checkmark-chkbox"></span>
                                                         </label>
                                                     </li>
                                                     <li>
                                                         <label class="container-chkbox">Siege
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="siege">
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="siege">
                                                             <span class="checkmark-chkbox"></span>
                                                         </label>
                                                     </li>
                                                     <li>    
                                                         <label class="container-chkbox">Directeur
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="directeur">
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="directeur">
                                                             <span class="checkmark-chkbox"></span>
                                                         </label>
                                                     </li>
                                                     <li>    
                                                         <label class="container-chkbox">Manager
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="manager">
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="manager">
                                                             <span class="checkmark-chkbox"></span>
                                                         </label>
                                                     </li>
@@ -206,6 +218,8 @@
                             <th>Adresse</th>  
                         </tr>
                     </thead>
+                    <div class="div-tbody">
+                    
                     <tbody class="tbody tbody-content scrollbar-table">
                         <tr>
                             <td>
@@ -237,7 +251,9 @@
                             <td>Bobigny</td>
                             <td>25 rue st charles 06000 AMIENS  </td>
                         </tr>
-                    </tbody>      
+                    </tbody>  
+                    
+                    </div>
                 </table>    
             </div> 
         </div>
