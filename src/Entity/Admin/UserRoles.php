@@ -33,11 +33,10 @@ class UserRoles
     private $role;
 
     /**
-     * @ORM\Column(name="customer_id",type="integer")
+     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
-    private $customerId;
-
-    private $customer ;
+    private $customer;
 
     public function getId(): ?int
     {
@@ -56,29 +55,6 @@ class UserRoles
         return $this;
     }
 
-    public function getCustomerRole(): ?int
-    {
-        return $this->customerId;
-    }
-
-    public function setCustomerRole(int $customerId): self
-    {
-        $this->customerId = $customerId;
-
-        return $this;
-    }
-
-    public function getCustomerId(): ?int
-    {
-        return $this->customerId;
-    }
-
-    public function setCustomerId(int $customerId): self
-    {
-        $this->customerId = $customerId;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -88,6 +64,18 @@ class UserRoles
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
 
         return $this;
     }

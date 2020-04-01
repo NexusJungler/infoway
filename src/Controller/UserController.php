@@ -33,37 +33,39 @@ class UserController extends AbstractController
     private ObjectManager $__manager;
 
 
-    /**
-     * @Route(path="/login", name="user::login",methods="GET|POST")
-     * @param AuthenticationUtils $authenticationUtils
-     * @param TranslatorInterface $translator
-     * @return Response
-     */
-    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
-    {
-        if ($this->getUser()) {
-             return $this->redirectToRoute('app::home');
-         }
-
-        // get the login error if there is one
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        if(!is_null($error))
-        {
-            //translate
-            $error = $translator->trans($error->getMessageKey());
-        }
-
-        dump($error);
-
-        return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'message' => $error
-        ]);
-    }
+//    /**
+//     * @Route(path="/login", name="user::login",methods="GET|POST")
+//     * @param AuthenticationUtils $authenticationUtils
+//     * @param TranslatorInterface $translator
+//     * @return Response
+//     */
+//    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
+//    {
+//
+//        if ($this->getUser()) {
+//             return $this->redirectToRoute('app::home');
+//         }
+//
+//        // get the login error if there is one
+//        // last username entered by the user
+//        $lastUsername = $authenticationUtils->getLastUsername();
+//
+//
+//        $error = $authenticationUtils->getLastAuthenticationError();
+//
+//        if(!is_null($error))
+//        {
+//            //translate
+//            $error = $translator->trans($error->getMessageKey());
+//        }
+//
+//        dump($error);
+//
+//        return $this->render('security/login.html.twig', [
+//            'last_username' => $lastUsername,
+//            'message' => $error
+//        ]);
+//    }
 
 
     /**

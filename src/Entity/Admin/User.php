@@ -7,15 +7,16 @@ use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use \App\Entity\Customer\Role ;
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserRepository")
  */
-class User
+class User implements UserInterface
 {
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -23,6 +24,10 @@ class User
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=30, name="first_name")
@@ -33,17 +38,6 @@ class User
      * @ORM\Column(type="string", length=30, name="last_name")
      */
     private $lastName;
-
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mail;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
 
     /**
      * @ORM\Column(name="phone_number",type="string", length=30, nullable=true)
@@ -82,15 +76,16 @@ class User
      * One user has many roles. This is the inverse side.
      * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
      */
-    private $roles;
+    private $userRoles;
 
     /**
-     * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Permission")
-     * @ORM\JoinTable(name="users_permissions",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
-     *      )
+     * One user has many roles. This is the inverse side.
+     */
+    private $roles = [];
+
+    /**
+     * One user has many roles. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="UserPermission", mappedBy="user")
      */
     private $permissions;
 
@@ -109,9 +104,15 @@ class User
      */
     private $perimeter;
 
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->permissions = new ArrayCollection();
         $this->sitesIds = new ArrayCollection();
@@ -119,12 +120,96 @@ class User
 
         $this->setCreatedAt(new \DateTime());
         $this->setActivated(0);
+        $this->userRoles = new ArrayCollection();
 
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role,$customer): self
+    {
+        $customer->setRole( $role );
+        if( !in_array( $customer, $this->roles) ){
+            $this->roles[] = $customer ;
+        }
+
+        return $this;
+    }
+
+    public function removeRole(UserRoles $role): self
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+            // set the owning side to null (unless already changed)
+            if ($role->getUser() === $this) {
+                $role->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string)$this->email;
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string)$this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getFirstName(): ?string
@@ -147,30 +232,6 @@ class User
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }
@@ -236,49 +297,6 @@ class User
     }
 
     /**
-     * @return Collection|UserRoles[]
-     */
-    public function getRoles(): Collection
-    {
-        return $this->roles;
-    }
-
-    public function addRole(UserRoles $role): self
-    {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-            $role->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRole(UserRoles $role): self
-    {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
-            // set the owning side to null (unless already changed)
-            if ($role->getUser() === $this) {
-                $role->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getPerimeter(): ?Perimeter
-    {
-        return $this->perimeter;
-    }
-
-    public function setPerimeter(?Perimeter $perimeter): self
-    {
-        $this->perimeter = $perimeter;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Customer[]
      */
     public function getCustomers(): Collection
@@ -293,22 +311,6 @@ class User
         }
 
         return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getSitesIds(): Collection
-    {
-        return $this->sitesIds;
-    }
-
-    /**
-     * @param ArrayCollection $sitesIds
-     */
-    public function setSitesIds(ArrayCollection $sitesIds): void
-    {
-        $this->sitesIds = $sitesIds;
     }
 
     public function removeCustomer(Customer $customer): self
@@ -347,34 +349,11 @@ class User
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection|UserSites[]
      */
-    public function getSites(): ArrayCollection
+    public function getSitesIds(): Collection
     {
-        return $this->sites;
-    }
-
-    /**
-     * @param ArrayCollection $sites
-     */
-    public function setSites(ArrayCollection $sites): void
-    {
-        $this->sites = $sites;
-    }
-
-    public function addSite(Site $site) {
-        if (!$this->sites->contains($site)) {
-            $this->sites[] = $site;
-        }
-    }
-
-    public function removeSite(Site $site): self
-    {
-        if ($this->sites->contains($site)) {
-//            $this->sites->removeElement($site);
-        }
-
-        return $this;
+        return $this->sitesIds;
     }
 
     public function addSitesId(UserSites $sitesId): self
@@ -394,6 +373,85 @@ class User
             // set the owning side to null (unless already changed)
             if ($sitesId->getUser() === $this) {
                 $sitesId->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSites(): ArrayCollection
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param ArrayCollection $sites
+     */
+    public function setSites(ArrayCollection $sites): void
+    {
+        $this->sites = $sites;
+    }
+
+    public function addSite(Site $site, Customer $customer) {
+        if( ! $customer->getSites()->contains( $site ) ){
+            $customer->addSite( $site );
+        }
+        if( $customer->getSites()->contains($site) ){
+            if( ! $this->sites->contains( $customer ) ){
+                $this->sites[] = $customer ;
+            }
+        }
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site)) {
+//            $this->sites->removeElement($site);
+        }
+
+        return $this;
+    }
+
+    public function getPerimeter(): ?Perimeter
+    {
+        return $this->perimeter;
+    }
+
+    public function setPerimeter(?Perimeter $perimeter): self
+    {
+        $this->perimeter = $perimeter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRoles[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(UserRoles $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(UserRoles $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            // set the owning side to null (unless already changed)
+            if ($userRole->getUser() === $this) {
+                $userRole->setUser(null);
             }
         }
 

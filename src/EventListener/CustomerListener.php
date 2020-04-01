@@ -18,5 +18,6 @@ class CustomerListener
     {
 
        $customer->setSites(new ArrayCollection());
+
     }
 }
