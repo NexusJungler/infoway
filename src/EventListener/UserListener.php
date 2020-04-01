@@ -27,8 +27,6 @@ class UserListener
 
     public function initializeSites(User $user, $e)
     {
-        dd($user);
-        dd($this->_doctrine);
        $user->setSites(new ArrayCollection());
     }
 }

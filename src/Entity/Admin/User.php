@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use \App\Entity\Customer\Role ;
 
 
 
@@ -75,15 +76,16 @@ class User implements UserInterface
      * One user has many roles. This is the inverse side.
      * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
      */
-    private $roles;
+    private $userRoles;
 
     /**
-     * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Permission")
-     * @ORM\JoinTable(name="users_permissions",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
-     *      )
+     * One user has many roles. This is the inverse side.
+     */
+    private $roles = [];
+
+    /**
+     * One user has many roles. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="UserPermission", mappedBy="user")
      */
     private $permissions;
 
@@ -111,7 +113,6 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->permissions = new ArrayCollection();
         $this->sitesIds = new ArrayCollection();
@@ -119,6 +120,7 @@ class User implements UserInterface
 
         $this->setCreatedAt(new \DateTime());
         $this->setActivated(0);
+        $this->userRoles = new ArrayCollection();
 
     }
 
@@ -129,14 +131,14 @@ class User implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->roles->getValues();
+        return $this->roles;
     }
 
-    public function addRole(UserRoles $role): self
+    public function addRole(Role $role,$customer): self
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-            $role->setUser($this);
+        $customer->setRole( $role );
+        if( !in_array( $customer, $this->roles) ){
+            $this->roles[] = $customer ;
         }
 
         return $this;
@@ -393,9 +395,14 @@ class User implements UserInterface
         $this->sites = $sites;
     }
 
-    public function addSite(Site $site) {
-        if (!$this->sites->contains($site)) {
-            $this->sites[] = $site;
+    public function addSite(Site $site, Customer $customer) {
+        if( ! $customer->getSites()->contains( $site ) ){
+            $customer->addSite( $site );
+        }
+        if( $customer->getSites()->contains($site) ){
+            if( ! $this->sites->contains( $customer ) ){
+                $this->sites[] = $customer ;
+            }
         }
     }
 
@@ -416,6 +423,37 @@ class User implements UserInterface
     public function setPerimeter(?Perimeter $perimeter): self
     {
         $this->perimeter = $perimeter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRoles[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(UserRoles $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(UserRoles $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            // set the owning side to null (unless already changed)
+            if ($userRole->getUser() === $this) {
+                $userRole->setUser(null);
+            }
+        }
 
         return $this;
     }

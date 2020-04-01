@@ -18,6 +18,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Service\SessionManager;
 
 class LoginAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -27,6 +28,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $lastRegisteredUser ;
 
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -34,6 +36,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->lastRegisteredUser = null;
     }
 
     public function supports(Request $request)
@@ -73,6 +76,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
+        $this->lastRegisteredUser = $user;
         return $user;
     }
 
@@ -89,6 +93,13 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
+
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $userRepo->getUserWithRoles($this->lastRegisteredUser);
+        $userRepo->getUserWithSites($this->lastRegisteredUser);
+//        $sessionManager = new SessionManager() ;
+//        $sessionManager->set('user',$this->lastRegisteredUser);
+//        dd($sessionManager->get('user'));
         return new RedirectResponse($this->urlGenerator->generate('app'));
     }
 

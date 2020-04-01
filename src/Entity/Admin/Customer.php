@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Entity\Customer\Role ;
 
 
 /**
@@ -33,6 +34,8 @@ class Customer
     private $name;
 
     private $sites ;
+
+    private $role;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
@@ -60,6 +63,7 @@ class Customer
      */
     private $users;
 
+
     /**
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
@@ -80,9 +84,27 @@ class Customer
         $this->sites = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole():?Role
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole(Role $role): self
+    {
+        $this->role = $role;
+        return $this;
     }
 
 
@@ -195,8 +217,6 @@ class Customer
     {
         if (!$this->sites->contains($site)) {
             $this->sites[] = $site;
-            $site->setCustomerId($this->getId());
-            $site->setCustomer($this);
         }
 
         return $this;

@@ -6,6 +6,7 @@ use App\Entity\Admin\Action;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Permission;
 use App\Entity\Admin\User;
+use App\Entity\Customer\Role;
 use App\Entity\Customer\Site;
 use App\Service\ArraySearchRecursiveService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -34,6 +35,69 @@ class UserRepository extends ServiceEntityRepository
         $this->__searchRecursiveService = new ArraySearchRecursiveService();
     }
 
+
+    public function getUserWithSites(User $user){
+
+        $userSites = $user->getSitesIds() ;
+
+        $allSitesNeededFilteredByCustomersArray=[];
+
+        foreach($userSites as $userSite){
+            $siteCustomer = $userSite->getCustomer();
+            $siteCustomerName = $siteCustomer->getName();
+
+            if( !array_key_exists( $siteCustomerName , $allSitesNeededFilteredByCustomersArray ) )$allSitesNeededFilteredByCustomersArray[ $siteCustomerName ] = [] ;
+            $allSitesNeededFilteredByCustomersArray[ $siteCustomerName ][] = $userSite->getSiteId();
+
+        }
+
+        $adminManager = $this->_registry->getManager('default');
+        $customerRepo = $adminManager->getRepository(Customer::class) ;
+
+        $allCustomers = $customerRepo->findBy(['name' => array_keys($allSitesNeededFilteredByCustomersArray)]);
+        $allCustomersIndexedByName = [];
+
+        foreach($allCustomers as $customer){
+            $allCustomersIndexedByName[ $customer->getName() ] = $customer ;
+        }
+        foreach( $allSitesNeededFilteredByCustomersArray as $enseigne => $site ){
+
+            if (!array_key_exists($enseigne,$allCustomersIndexedByName) || ! $allCustomersIndexedByName[$enseigne] instanceof Customer){
+                continue ;
+            }
+
+            $enseigneEntity = $allCustomersIndexedByName[ $enseigne ];
+            $adminManager = $this->_registry->getManager($enseigne);
+            $siteRepo  = $adminManager->getRepository(Site::class );
+            $userSites = $siteRepo->findBy(['id'=> $site]);
+
+            foreach($userSites as $userSite){
+                $enseigneEntity->addSite($userSite);
+                $user->addSite($userSite,$enseigneEntity);
+            }
+        }
+
+    }
+
+    public function getUserWithRoles( User $user ){
+
+        foreach($user->getUserRoles() as $userRole){
+
+            $roleCustomer = $userRole->getCustomer();
+            $siteCustomerName = $roleCustomer->getName();
+
+            $userRoleId = $userRole->getRoleId();
+
+
+            $currentEm = $this->_registry->getManager($siteCustomerName);
+
+            $roleRepo  = $currentEm->getRepository( Role::class );
+            $currentRole = $roleRepo->findOneById( $userRoleId );
+
+            $user->addRole($currentRole,$roleCustomer);
+        }
+
+    }
 
     public function getUserWithSitesById($id){
         $user = $this->findOneById($id);
@@ -72,6 +136,7 @@ class UserRepository extends ServiceEntityRepository
             $userSites = $siteRepo->findBy(['id'=> $site]);
 
             foreach($userSites as $userSite){
+
                 $userSite->setCustomer($enseigneEntity);
                 $user->addSite($userSite);
                 dd($user);
