@@ -3,7 +3,7 @@
 </div>
 
 {# <form action="{{ path('user:createUser') }}" method="post" name="user"> #}
-<form action="" method="post" name="user">
+<form action="" method="post" name="user" id="create-user">
 
     <article class="display setting-display ">
         <div class="display-content">
@@ -40,7 +40,8 @@
         </div>
 
     </div>
-
+    <p class="message-error"></p>
+    
     <div class="form-content form-content-chkbox">
         <div class="row">
             <label class="form-label" for="phone">Périmètres :</label>
@@ -79,7 +80,7 @@
                         <tr>
                             <th>
                                 <label class="container-chkbox">Tous
-                                    <input type="radio" name="select-enseigne" value="tous" id="selectAll" >
+                                    <input type="checkbox" name="selectenseigne" value="tous" id="selectAll" >
                                     <span class="checkmark-chkbox"></span>
                                 </label>
                             </th>
@@ -88,51 +89,22 @@
                         </tr>
                     </thead>
                     <tbody class="tbody tbody-content scrollbar-table">
-                        <tr>
+                        <tr class="input1">
                             <td>
                                 <label class="container-chkbox">Burger King
-                                    <input type="radio" name="select-enseigne" value="burger king">
+                                    <input type="checkbox" name="selectenseigne"  class="input1" value="burger king">
                                     <span class="checkmark-chkbox"></span>
                                 </label>
                             </td>
-                            <td> 
-                                <div class="checkboxs-list" >
-                                    <div class="dropdown mutliSelect"> 
-                                        <div class="select-input">
-                                            <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe">
-                                                <span class="multiSel">Choisir rôle</span>    
-                                                <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                            </button> 
-                                            <div class="select-down">
-                                                <ul id="down-groupe" class="row-chkbox" >
-                                                    <li>
-                                                        <label class="container-chkbox">Admin
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="admin">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="container-chkbox">Siege
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="siege">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                    <li>    
-                                                        <label class="container-chkbox">Directeur
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="directeur">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                    <li>    
-                                                        <label class="container-chkbox">Manager
-                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="manager">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <td > 
+                                <div class="select" >
+                                    <select class="select-list" name="selectrole">
+                                        <option>Choisir rôle </option>
+                                        <option value="admin">Admin</option>
+                                        <option value="siege">Siege</option>
+                                        <option value="directeur">Directeur</option>
+                                        <option value="manager">Manager</option>
+                                    </select>
                                 </div>
                             </td>
                             <td> 
@@ -142,48 +114,19 @@
                         <tr>
                             <td>
                                 <label class="container-chkbox">KFC
-                                    <input type="radio" name="select-enseigne" value="kfc" >
+                                    <input type="checkbox" name="selectenseigne" value="kfc" >
                                     <span class="checkmark-chkbox"></span>
                                 </label>
                             </td>
                             <td>
-                                <div class="checkboxs-list" >
-                                    <div class="dropdown mutliSelect"> 
-                                        <div class="select-input">
-                                            <button type="button" class="btn-dropdown"id="select-groupe2" data-down="down-groupe1">
-                                                <span class="multiSel">Choisir rôle</span>    
-                                                <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                            </button> 
-                                            <div class="select-down">
-                                                <ul id="down-groupe1" class="row-chkbox" >
-                                                    <li>
-                                                        <label class="container-chkbox">Admin
-                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="admin">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="container-chkbox">Siege
-                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="siege">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                    <li>    
-                                                        <label class="container-chkbox">Directeur
-                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="directeur">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                    <li>    
-                                                        <label class="container-chkbox">Manager
-                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="manager">
-                                                            <span class="checkmark-chkbox"></span>
-                                                        </label>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="select" >
+                                    <select class="select-list">
+                                        <option>Choisir rôle </option>
+                                        <option value="admin">Admin</option>
+                                        <option value="siege">Siege</option>
+                                        <option value="directeur">Directeur</option>
+                                        <option value="manager">Manager</option>
+                                    </select>
                                 </div>
                             </td>
                             <td> <button class="btn-display-teach" type="button">voir</button></td>
@@ -191,11 +134,21 @@
                         <tr>
                             <td>
                                 <label class="container-chkbox">Quick
-                                    <input type="radio" name="select-enseigne" value="quick" >
+                                    <input type="checkbox" name="selectenseigne" value="quick" >
                                     <span class="checkmark-chkbox"></span>
                                 </label>
                             </td>
-                            <td></td>
+                            <td>
+                                <div class="select" >
+                                    <select class="select-list">
+                                        <option>Choisir rôle </option>
+                                        <option value="admin">Admin</option>
+                                        <option value="siege">Siege</option>
+                                        <option value="directeur">Directeur</option>
+                                        <option value="manager">Manager</option>
+                                    </select>
+                                </div>
+                            </td>
                             <td> <button class="btn-display-teach" type="button">voir</button></td>
                         </tr>
                     </tbody>   
@@ -211,7 +164,7 @@
                         <tr>
                             <th>
                                 <label class="container-chkbox">Tous
-                                    <input type="radio" name="select-site" id="selectAll" >
+                                    <input type="radio" name="select-site" class="selectAll" >
                                     <span class="checkmark-chkbox"></span>
                                 </label>
                             <th>Identifiants</th>

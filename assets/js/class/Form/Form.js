@@ -1,10 +1,6 @@
 class Form  {
 
-    constructor (){
-        
-    }
-    
-    ValidateEmail() {	
+    FormValidate() {	
         
         $("#email").blur(function(){
 
@@ -29,10 +25,48 @@ class Form  {
             }
    
         });
+
+        $('.form-content-table input[type="checkbox"]').change( e =>{
+
+            let $checkEnseigne = $(e.currentTarget) ;
+
+            if( $checkEnseigne.is( ':checked' ) ){
+                console.log($checkEnseigne.parent());
+                console.log($(".form-content-table .table").find(`tr.${ $checkEnseigne.attr('class')} `)); 
+                $(".form-content-table .table").find(`tr.${ $checkEnseigne.attr('class')} .select`).addClass('select-active');
+            }
+            else{
+                $(".form-content-table .table").find(`tr.${ $checkEnseigne.attr('class')} .select`).removeClass('select-active');
+            }
+        });
+
+        $('#create-user').validate({
+           
+            rules:{
+                Perimeters:{ required: true },
+                selectenseigne:{ required: true }
+            },
+            messages:{
+                Perimeters:{
+                  required:"Please select a Color<br/>"
+                },
+                selectenseigne:{
+                    required:"Please select a Color<br/>"
+                }
+            },
+            errorPlacement: function(error, element) {
+                if ( element.is(":radio") ) {
+                      error.appendTo( element('.message-error') );
+                }else { 
+                    // This is the default behavior 
+                    error.insertAfter( element );
+                }
+            }
+        });
+
     }
 
-
-    
+  
 }
     
 export {Form}

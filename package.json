@@ -16,6 +16,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-loader": "^7.1.5",
         "jquery": "^3.4.1"
     }
 }

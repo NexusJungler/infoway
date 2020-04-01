@@ -1,4 +1,4 @@
-// sass
+/** SCSS **/
 import '../css/general/reset.scss'
 import '../css/app.scss';
 
@@ -25,6 +25,10 @@ import {Form} from "./class/Form/Form";
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
+//jqueryValidate
+require('../js/jqueryValidate/jquery.validate.min.js');
+
+
 // Tabs Menu
 let tab_menu = new Tabmenu();
 tab_menu.tabmenu();
@@ -39,7 +43,7 @@ let nav_bar= new Navbar();
 nav_bar.navbarleft();
 
 let form = new Form();
-form.ValidateEmail();
+form.FormValidate();
 
 // let chech_box = new Checkbox();
 // chech_box.chech();
