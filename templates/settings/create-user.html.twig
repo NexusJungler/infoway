@@ -1,29 +1,42 @@
 <div class="tab-content-title">
-    <h3 class="title">Créer une Utilisateur</h3>
+    <h3 class="title">Créer un Utilisateur</h3>
 </div>
 
-<form action="" method="">
-    
+{# <form action="{{ path('user:createUser') }}" method="post" name="user"> #}
+<form action="" method="post" name="user">
+
+    <article class="display setting-display ">
+        <div class="display-content">
+            <div class="display-btn">
+                <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Créer</button>
+                <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+            </div>
+        </div>
+    </article > 
+
+
     <div class="form-content">
     
         <div class="row">
             <div class="row">
                 <label class="form-label" for="fristname">Nom</label>
-                <input type="text" name="fristname"  placeholder="Nom" class="input-custome" required/>
+                <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" required/>
             </div>
             <div class="row">
                 <label class="form-label">Prenom</label>
-                <input type="text"  name="lastname"   placeholder="Prenom" class="form-input" required/>
+                <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" required/>
             </div>
         </div>
         
-        <div class="row">
+        <div class="row col-email">
             <label class="form-label" for="email">Email</label>
-            <input type="email" name="email" placeholder="Email" class="input-custome"  required/>
+            <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  required/>
         </div>
-        <div class="row">
-            <label class="form-label" for="phone">Numero de téléphone</label>
-            <input type="tel" name="phone" placeholder="Numero de téléphone" class="input-custome" />
+        <div class="row col-phone">
+            <label class="form-label" for="phone">Téléphone</label>
+            <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
         </div>
 
     </div>
@@ -32,25 +45,24 @@
         <div class="row">
             <label class="form-label" for="phone">Périmètres :</label>
             <div class="row row-chkbox">
-
                 <label class="container-chkbox">Infoway
-                    <input type="checkbox" name="Perimeters" >
+                    <input type="radio" name="Perimeters" value"infoway">
                     <span class="checkmark-chkbox"></span>
                 </label>
                 <label class="container-chkbox">Multi-Enseigne
-                    <input type="checkbox" name="Perimeters" >
+                    <input type="radio" name="Perimeters" value="multi enseigne" >
                     <span class="checkmark-chkbox"></span>
                 </label>
                 <label class="container-chkbox">Enseigne
-                    <input type="checkbox" name="Perimeters" >
+                    <input type="radio" name="Perimeters"  value="enseigne" >
                     <span class="checkmark-chkbox"></span>
                 </label>
                 <label class="container-chkbox">Multi-Site
-                    <input type="checkbox" name="Perimeters" >
+                    <input type="radio" name="Perimeters"  value="multi site" >
                     <span class="checkmark-chkbox"></span>
                 </label>
                 <label class="container-chkbox">Local
-                    <input type="checkbox" name="Perimeters" >
+                    <input type="radio" name="Perimeters"  value="local" >
                     <span class="checkmark-chkbox"></span>
                 </label>
 
@@ -58,48 +70,63 @@
         </div>
     </div>
 
-
     <div class="form-content-table">
         <div class="content-table-left">
             <p class="table-titel">Enseigne</p>
             <div class="table">
-                <table class="table-custome " >
-                    <thead  class="table-info thead-content">
+                <table class="table-custome row-chkbox" >
+                    <thead  class="table-info thead-content ">
                         <tr>
-                            <th><input type="checkbox" name="select-enseigne" id="selectAll">Tous</th>
+                            <th>
+                                <label class="container-chkbox">Tous
+                                    <input type="radio" name="select-enseigne" value="tous" id="selectAll" >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </th>
                             <th>Role</th>
                             <th>Affichies sites</th>     
                         </tr>
                     </thead>
                     <tbody class="tbody tbody-content scrollbar-table">
                         <tr>
-                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">Burger King</td>
+                            <td>
+                                <label class="container-chkbox">Burger King
+                                    <input type="radio" name="select-enseigne" value="burger king">
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </td>
                             <td> 
                                 <div class="checkboxs-list" >
                                     <div class="dropdown mutliSelect"> 
                                         <div class="select-input">
-                                            <button type="button" class="btn-dropdown"id="select-groupe" data-down="down-groupe">
+                                            <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe">
                                                 <span class="multiSel">Choisir rôle</span>    
                                                 <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
                                             </button> 
                                             <div class="select-down">
-                                                <ul id="down-groupe">
+                                                <ul id="down-groupe" class="row-chkbox" >
                                                     <li>
-                                                        <label class="mutliselect-chkbox">Admin
-                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
-                                                            <span class="mutliselect-check"></span>
+                                                        <label class="container-chkbox">Admin
+                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="admin">
+                                                            <span class="checkmark-chkbox"></span>
                                                         </label>
-                                                        <label class="mutliselect-chkbox">Siege
-                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
-                                                            <span class="mutliselect-check"></span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="container-chkbox">Siege
+                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="siege">
+                                                            <span class="checkmark-chkbox"></span>
                                                         </label>
-                                                        <label class="mutliselect-chkbox">Directeur
-                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
-                                                            <span class="mutliselect-check"></span>
+                                                    </li>
+                                                    <li>    
+                                                        <label class="container-chkbox">Directeur
+                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="directeur">
+                                                            <span class="checkmark-chkbox"></span>
                                                         </label>
-                                                        <label class="mutliselect-chkbox">Manager
-                                                            <input type="checkbox" name="satut"  data-satuts="select-groupe" value="">
-                                                            <span class="mutliselect-check"></span>
+                                                    </li>
+                                                    <li>    
+                                                        <label class="container-chkbox">Manager
+                                                            <input type="radio" name="role"  data-satuts="select-groupe" value="manager">
+                                                            <span class="checkmark-chkbox"></span>
                                                         </label>
                                                     </li>
                                                 </ul>
@@ -109,18 +136,67 @@
                                 </div>
                             </td>
                             <td> 
-                                <button type="button">voir</button>
+                                <button class="btn-display-teach" type="button">voir</button>
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">KFC</td>
-                            <td ></td>
-                            <td ></td>
+                            <td>
+                                <label class="container-chkbox">KFC
+                                    <input type="radio" name="select-enseigne" value="kfc" >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <div class="checkboxs-list" >
+                                    <div class="dropdown mutliSelect"> 
+                                        <div class="select-input">
+                                            <button type="button" class="btn-dropdown"id="select-groupe2" data-down="down-groupe1">
+                                                <span class="multiSel">Choisir rôle</span>    
+                                                <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                            </button> 
+                                            <div class="select-down">
+                                                <ul id="down-groupe1" class="row-chkbox" >
+                                                    <li>
+                                                        <label class="container-chkbox">Admin
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="admin">
+                                                            <span class="checkmark-chkbox"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label class="container-chkbox">Siege
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="siege">
+                                                            <span class="checkmark-chkbox"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li>    
+                                                        <label class="container-chkbox">Directeur
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="directeur">
+                                                            <span class="checkmark-chkbox"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li>    
+                                                        <label class="container-chkbox">Manager
+                                                            <input type="radio" name="role"  data-satuts="select-groupe2" value="manager">
+                                                            <span class="checkmark-chkbox"></span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td> <button class="btn-display-teach" type="button">voir</button></td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="select-enseigne" data-input-select="2">Quick</td>
-                            <td ></td>
-                            <td ></td>
+                            <td>
+                                <label class="container-chkbox">Quick
+                                    <input type="radio" name="select-enseigne" value="quick" >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </td>
+                            <td></td>
+                            <td> <button class="btn-display-teach" type="button">voir</button></td>
                         </tr>
                     </tbody>   
                 </table>    
@@ -130,38 +206,64 @@
         <div  class="content-table-right">
             <p class="table-titel">Site</p>
             <div class="table">
-                <table class="table-custome " >
+                <table class="table-custome row-chkbox" >
                     <thead  class="table-info thead-content">
                         <tr>
-                            <th><input type="checkbox" name="select-site" id="selectAll">Tous</th>
+                            <th>
+                                <label class="container-chkbox">Tous
+                                    <input type="radio" name="select-site" id="selectAll" >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
                             <th>Identifiants</th>
                             <th>Adresse</th>  
                         </tr>
                     </thead>
+                    <div class="div-tbody">
+                    
                     <tbody class="tbody tbody-content scrollbar-table">
                         <tr>
-                            <td><input type="checkbox" name="select-site" data-input-select="2">AnseVata</td>
+                            <td>
+                                <label class="container-chkbox">AnseVata
+                                    <input type="radio" name="select-site"  >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </td>
                             <td>Bobigny</td>
                             <td>25 rue st charles 06000 AMIENS  </td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="select-site" data-input-select="2">AnseVata</td>
+                            <td>
+                                <label class="container-chkbox">AnseVata
+                                    <input type="radio" name="select-site"  >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </td>
                             <td>Bobigny</td>
                             <td>25 rue st charles 06000 AMIENS  </td>
                         </tr>
-
-                    </tbody>      
+                        <tr>
+                            <td>
+                            <label class="container-chkbox">AnseVata
+                                    <input type="radio" name="select-site"  >
+                                    <span class="checkmark-chkbox"></span>
+                                </label>
+                            </td>
+                            <td>Bobigny</td>
+                            <td>25 rue st charles 06000 AMIENS  </td>
+                        </tr>
+                    </tbody>  
+                    
+                    </div>
                 </table>    
             </div> 
         </div>
 
     </div>
 
-    <div class="">
-        <button name="btn-mofifier" class="btn">Créer</button>
+    <div class="form-content-btn">
+        <button name="btn-user-valide" class="btn btn-user-valide">Valide</button>
     </div> 
 
-    
-{# {% endmacro %} #}                         
+                       
 </form>
 
