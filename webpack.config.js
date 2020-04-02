@@ -44,6 +44,8 @@ Encore
     .addEntry('back-office', './assets/js/back-office.js')
     .addEntry('back-office_create-customer', './assets/js/back-office_create-customer.js')
     .addEntry('permission', './assets/js/permission.js')
+    // create-user
+    .addEntry('create-user', './assets/js/create/create-user.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

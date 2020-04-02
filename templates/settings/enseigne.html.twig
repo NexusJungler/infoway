@@ -1,9 +1,13 @@
-{% block marque %}
-    
-    <div class="tab-content-title">
-                        <h3>marque</h3>
-                        <p>Super Wild Coffee</p>
-                    </div>
+{% extends 'setting.html.twig' %}
+
+{% block maincontent %}
+<section id="wrapper_tabcontent">
+    <article id="tab-marque" class="tab-content current">
+
+        <div class="tab-content-title">
+            <h3>Enseigne</h3>
+            <p>Super Wild Coffee</p>
+        </div>
 
                     <div class="tab-content-bloc" >
                         <div class="tab-content-bloc-left" >
@@ -23,9 +27,7 @@
                                         <div class="row-flex">
                                             <label class="label-custome">Nom</label>
                                             <select name="marque-select " class="marque-select select-custome">
-{#                                                {% for customer in customer %}#}
-{#                                                    <option value="{{customer}}">{{customer}}</option>#}
-{#                                                {% endfor %}#}
+
                                             </select>
                                         </div>
 
@@ -197,4 +199,6 @@
                                 </tr>
                         </table>    
                     </div>
+    </article>    
+</section>       
 {% endblock %}

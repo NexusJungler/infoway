@@ -18,6 +18,19 @@ constructor() {
       $("#"+tab_text_id).addClass('current');  
     })   
 
+    
+    $('.btn-display-teach').click(function(){
+      var tab_list_enseigne= $(this).attr('data-list-enseigne');
+
+      $('.tbody-content tr').removeClass('current');
+
+      $(this).addClass('current');
+
+      $(".tbody-content ."+tab_list_enseigne).addClass('current');
+    })
+
+
+
 
 
     $(".dropdown .btn-dropdown").on('click', function() {

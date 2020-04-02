@@ -1,3 +1,38 @@
+/* =============== RESET ================= */
+* {
+    box-sizing: border-box
+}
+html {
+    font-size: 16px;
+}
+p{
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.1em;
+    margin-bottom: -0.2em;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.625;
+    margin: 0;
+    padding: 0;
+    color: #6F6F6F;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color .3s;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
@@ -5,15 +40,15 @@
 }
 
 /************************* CUSTOM CSS  ***************************/
-@import 'Custome/table.scss';
+@import 'custome/table.scss';
 
-@import 'Custome/dropdown.scss';
+@import 'custome/dropdown.scss';
 
-@import 'Custome/display_down.scss';
+@import 'custome/display_down.scss';
 
-@import 'Custome/scrollbar.scss';
+@import 'custome/scrollbar.scss';
 
-@import 'Custome/form.scss';
+@import 'custome/form.scss';
 
 /************************* CUSTOM ICON  ***************************/
 @import 'custom_icon.scss';

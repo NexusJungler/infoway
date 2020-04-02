@@ -29,7 +29,7 @@
                 display: inline-table;
                 padding: 0.6rem 0.9rem;
                 cursor: pointer;
-                width: 19%;
+                width: 50%;
                 margin-right: 1rem;
                 background: transparent linear-gradient(180deg, #A4B4BB 0%, #C0CCD1 100%) 0% 0% no-repeat padding-box;
                 border: 0.06rem solid #4D646D;
@@ -136,7 +136,6 @@
 #wrapper_tabcontent{
     padding-left: 7%;
     padding-right: 5%;
-    background-color: #ffffff;
     .tab-content-title {
         display: flex;
         padding-top: 0.5rem;

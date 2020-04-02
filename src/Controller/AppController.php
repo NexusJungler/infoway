@@ -42,7 +42,7 @@ class AppController extends AbstractController
 
         //dump($location);
 
-        return $this->render("home.html.twig", [
+        return $this->render("home/zone-diffusion.html.twig", [
             'customer' => $customer,
             'location' => $location
         ]);
@@ -170,5 +170,65 @@ class AppController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route(path="/createuser", name="app:createuser")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function createUser(Request $request): Response
+    {
+    
+        return $this->render("settings/create-user.html.twig", [
+           
+        ]);
+
+    }
+
+    /**
+     * @Route(path="settinguser", name="app:settinguser")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function settinguser(Request $request): Response
+    {
+    
+        return $this->render("settings/setting-user.html.twig", [
+           
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/enseigne", name="app:enseigne")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function enseigne(Request $request): Response
+    {
+    
+        return $this->render("settings/enseigne.html.twig", [
+           
+        ]);
+
+    }
+    /**
+     * @Route(path="/managementtags", name="app:managementtags")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function managementtags(Request $request): Response
+    {
+    
+        return $this->render("settings/management-tags.html.twig", [
+           
+        ]);
+
+    }
+   
 
 }

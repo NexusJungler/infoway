@@ -1,7 +1,24 @@
+/***************************************************** css custom *****************************************************************/
+
+.border--line::after{
+    content: '';
+    border-bottom: 1px solid #4D646D;
+    position: relative;
+    display: block;
+    top: 3px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
 /***************************************************** HOME INFO *****************************************************************/
 
 .home-information{
-    padding: 0 3% 4% 7%;
+    padding: 4% 3% 4% 7%;
+    .row{
+        display: flex
+    }
     .home_info-title{
         font-family: "barlow";
         font-size: rem(27px);
@@ -37,10 +54,44 @@
         
     }
 }
+/***************************************************** infomation company *****************************************************************/
+
+.company{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    .company-bloc{
+        width: 50%;
+        margin-right: 5em;
+        font: 1.4rem 'Barlow', sans-serif;
+        border: 1px solid #899CA4;
+        padding: 15px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        p {
+            position: relative;
+        }
+        &:last-child{
+            margin-right: 0;
+        }
+        
+    }
+
+    .col-right{
+        position: absolute;
+        right: 0;
+    }
+    .company-info p {
+        padding-top: 0.4em;
+        font: 1.2rem 'Barlow', sans-serif;
+        text-align: right;
+    }
+
+} 
 
 /* Enseignes */
 
 .home_enseignes-row{
+    margin-top: 50px;
     font: 1.4rem 'Barlow', sans-serif;
     color: #4D646D;
     .border--line::after{
@@ -49,10 +100,11 @@
     .home_enseignes-bloc{
         display: inline-flex;
         flex-wrap: wrap;
-        padding: 0.8em 1em 0 6rem;
+        padding: 2rem 1rem 2rem 2rem;
         width: 100%;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
         img{
-            width: 2.25em;
+            width: 3.25em;
         }
         p{
             font: 1.2rem 'Barlow', sans-serif;
@@ -61,7 +113,7 @@
     }
     .home_enseignes-col{
         text-align: center;
-        width: 16%;
+        width: 14%;
         opacity: 0.50;
         margin: 0 0 1em 0;
         &::after{
@@ -84,6 +136,159 @@
 }
 
 
+/** Zone de diffusion **/
+.home-table{
+    margin-top: 20px;
+    display: flex;
+    .dropdown {
+        width: 100%;
+        .btn-dropdown {
+            padding: 0;
+            height: auto;
+            background-color: transparent;
+            border-radius: 0;
+            border: 0;
+            .multiSel{
+                color: black;
+                font-weight: bold;
+            }
+        }
+        .logo-icone{
+            top:-7px;
+        }
+
+        ul {
+            background: #FFFFFF;
+            color: #4D646D;
+            display: none;
+            left: -16px;
+            padding: 9px 15px 2px 7px;
+            position: absolute;
+            top: 9px;
+            width: 7.8rem;
+            max-width: 100%;
+            list-style: none;
+            height: 8.25rem;
+            overflow: auto;
+            border: 0.06rem solid #C0CCD1;
+            border-top: 0rem;
+            z-index: 1;
+        }
+    }
+    .home-table-left{
+        margin-right: 50px;
+        max-width: 840px;
+
+        .table{
+            .table-custome{
+                .thead-content{
+                    &::after{
+                        
+                        background: #A4B4BB 0% 0% no-repeat padding-box;
+                        border-bottom: 0;
+                        height: 33px;
+                    }
+                    th{
+                        color: black;
+                        &:nth-child(1){
+                            width: 7%;
+                        }
+                        &:nth-child(3){
+                            width: 9%;
+                        }
+                        &:nth-child(4){
+                            width: 5%;
+                        }
+                    }
+                }
+                .tbody-content{
+                    background-color: #DDE1E4;
+                    height: 280px;
+                    display: block;
+                    overflow: auto;
+                   
+                    td{
+                        text-align: center;
+                        border: 0;
+                        &:nth-child(1){
+                            width: 6.5%;
+                        }
+                        &:nth-child(3){
+                            width: 8%;
+                        }
+                        &:nth-child(4){
+                            width: 5%;
+                        }
+                        // &:last-child{
+                        //     border-right: 1px solid #AAAAAA;
+                        // }
+                    }
+                }
+
+            }
+        }
+    }
+
+    .home-table-right{
+        max-width: 640px;
+    }
+
+    .table-custome{
+        .thead-info,
+        .thead-content {
+            background: #A4B4BB 0% 0% no-repeat padding-box;
+            th{
+                font: 0.8rem 'Barlow', medium;
+                color: #FFFFFF;
+                padding: 0.5rem 1rem;
+                position: relative;
+                width: 50px;
+                &:first-child{
+                    width: 6%;
+                }
+                span{
+                    font: rem(14px) 'Barlow', italic;
+                }
+            }
+        }
+
+        .tbody-content{
+            
+            border: 1px solid #4D646D;
+            tr:nth-child(2n+2) {
+                background-color: #F6F6F6;
+            }
+            td {
+            
+                width: 50px;
+                &:first-child{
+                    width: 8%;
+                }
+                input{
+                    margin: 0;
+                    margin-right: 15px;
+                }
+               
+            }
+        }
+
+    }    
+
+}
+
+
+/* MEDIA QUERY */
+
+/* Tablette */
+
+@media (max-width: 64em)  {
+    .company-bloc {
+        flex: 0 0 39%;
+        max-width: 40%;
+        margin-right: 4em;
+        margin-top: 2em;
+    }
+}
 
 /* MEDIA QUERY */
 

@@ -1,17 +1,31 @@
-<div class="tab-content-title">
-    <h3 class="title">Créer une Utilisateur</h3>
-    <p> DEl&CIA</p>
-</div>
+{% extends 'setting.html.twig' %}
 
+{% block maincontent %}
+<section id="wrapper_tabcontent">
+    <article id="tab-user" class="tab-content current">
 
-<form action="" method="post" name="user">
-
-    <article class="display setting-display ">
-        <div class="display-content">
-            <div class="display-btn">
-                {# <a class="btn" href="{{ path('create-user') }}" role="button"><i class="fas fa-plus"></i>Créer utilisateur</a> #}
+            <div class="tab-content-title">
+                <h3 class="title">Utilisateur</h3>
+                <p> DEl&CIA</p>
             </div>
-        </div>
-    </article > 
 
-</form>    
+
+            <form action="" method="post" name="user">
+
+                <article class="display setting-display ">
+                    <div class="display-content">
+                        <div class="display-btn">
+                            <a class="btn" href="{{ path('app:createuser') }}" role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                        </div>
+                    </div>
+                </article > 
+
+
+            </form>
+
+    </article> 
+
+</section >
+
+
+{% endblock %}
