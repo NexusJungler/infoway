@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main home home-site">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Site' } %}
+            </section>
+
+            <section id="wrapper_tabcontent">
+                <article class="display site-display ">
+                    <div class="display-content">
+                        <div class="display-content-columns">
+                            <div class="display-content-poste">
+                                <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                <div class="display-content-down">
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox" > Société / Marque
+                                            <input type="checkbox"  checked name="satut" data-tableDeleteCol="societe" value="" >
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox"> Groupe de prix
+                                            <input type="checkbox" checked name="satut" data-tableDeleteCol="groupe" value="">
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox"> Critéré sélectif obligatoire</span>
+                                            <input type="checkbox" name="satut" data-tableDeleteCol="selectif" value="">
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox"> Critérés
+                                            <input type="checkbox" checked name="satut" data-tableDeleteCol="critere" value="">
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="display-btn">
+                            <p>Produits : </p>
+                            <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
+                            <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                            <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                            <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                            <button type="button" class="tags-table">TAG</button>
+                        </div>
+                    </div>
+                </article > 
+
+                <article class="table">
+                    <table class="table-custome table-site" >
+                        <thead  class="table-info thead-info">
+                            <tr>
+                                <th >
+                                    <input type="checkbox" name="select" id="selectAll">
+                                    Site SWC
+                                    <button><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                </th>
+                                <th class="header__item societe">
+                                    <a id="f-name" class="filter" href="#">
+                                        Société / Marque
+                                    </a>
+                                </th>
+                                <th class="groupe">
+                                    Groupe de prix
+                                </th>
+                                <th id="f-tags" class="selectif">
+                                    Critéré sélectif obligatoire<span> (l'un ou l'autre)</span>
+                                </th>
+                                <th class="critere">
+                                    Critérés
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody tbody-content scrollbar-table">
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="1">Q040</td>
+                                <td class="societe"> <div class="tags-table"> <p class="container-tags">Quick cie</p> <p class="container-tags">Quick cie</p></div></td>
+                                <td class="groupe"><div class="tags-table"> <p class="container-tags">MEDIUM</p></div></td>
+                                <td class="selectif"><div class="tags-table"> <p class="container-tags">NAT</p></div></td>
+                                <td class="critere">
+                                    <div>
+                                        <p class="container-tags">Ptit</p>
+                                        <p class="container-tags"> Dej</p>
+                                        <p class="container-tags"> Anniv</p>
+                                    </div
+                                </td>                  
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="2">Q041</td>
+                                <td class="societe"><div> <p>Jack Russell</p></div></td>
+                                <td class="groupe" ><div> <p>PREMIUM</p></div></td>
+                                <td class="selectif"><div> <p>HALAL</p></div></td>
+                                <td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="2">Q041</td>
+                                <td class="societe"><div> <p>Jack Russell</p></div></td>
+                                <td class="groupe" ><div> <p>PREMIUM</p></div></td>
+                                <td class="selectif"><div> <p>HALAL</p></div></td>
+                                <td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="2">Q041</td>
+                                <td class="societe"><div> <p>Jack Russell</p></div></td>
+                                <td class="groupe" ><div> <p>PREMIUM</p></div></td>
+                                <td class="selectif"><div> <p>HALAL</p></div></td>
+                                <td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="2">Q041</td>
+                                <td class="societe"><div> <p>Jack Russell</p></div></td>
+                                <td class="groupe" ><div> <p>PREMIUM</p></div></td>
+                                <td class="selectif"><div> <p>HALAL</p></div></td>
+                                <td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="2">Q041</td>
+                                <td class="societe"><div> <p>Jack Russell</p></div></td>
+                                <td class="groupe" ><div> <p>PREMIUM</p></div></td>
+                                <td class="selectif"><div> <p>HALAL</p></div></td>
+                                <td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select" data-input-select="3">Q042</td>
+                                <td class="societe"><div> <p>Quick cie </p></div></td>
+                                <td class="groupe" ><div> <p>MEDIUM</p></div></td>
+                                <td class="selectif"><div> <p>NAT</p></div></td>
+                                <td class="critere">
+                                        <div id="menu">
+                                            <ul id="menu-closed">
+                                                <li><p class="container-tags">Start</p></li>
+                                                <li><p class="container-tags"> Events</p></li>
+                                                <li><p>Calendar</p></li>
+                                                <li><p>Portfolio</p></li>
+                                                <li><p>Blog</p></li>
+                                                <li><p>Products</p></li>
+                                                <li><p>Things</p></li>
+                                                <li><p>About</p></li>
+                                                <li><p>Contact</p></li>
+                                                <li><p>Login</p></li>
+                                                <li><a href="#menu-closed">X</a></li>
+                                                {# <li><a href="#menu">...</a></li> #}
+                                                <li><button id="text" >...</button></li>
+                                            </ul>
+                                        </div>
+                                </td>  
+                            </tr>
+                        </tbody>
+                        
+                    </table>    
+                </article>  
+
+            </section>
+        </div>
+    </main>
+    
+{% endblock %}

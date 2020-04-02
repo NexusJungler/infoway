@@ -1,0 +1,34 @@
+<article class="jumbotrom-wrapper">
+
+    <div class="page__title">
+        <div class="page__title-content">
+            <div class="page__title--img">
+                <img src="{{ 'build/images/home_blanc.png' }}" alt="home">
+            </div>
+            <h1> {{ pageTitle }} </h1>
+        </div>
+        
+        <div class="page__title-content-info">
+            {% if showSecondTitles is defined and showSecondTitles is same as(true) %}
+            <span class="page__tilte-cercle"></span>
+            <h2 id="settings" class="tab-content current">Parametres</h2>
+            <h2 id="creation" class="tab-content">Creation</h2>
+            {% endif %}
+        </div>
+        
+    </div>
+
+    {% if showSecondTitles is defined and showSecondTitles is same as(true) %}
+        <div class="page__info">
+            <p>Parametres existants</p>
+            <p>Création d'une nouvelle configuration</p>
+        </div>
+    {% endif %}
+    
+    <div class="search__form">
+        <form action="" method="get">
+            <input type="text" name="query" placeholder="Rechercher un élément...">
+            <button><img src="{{ asset('build/images/search_icon.png') }}" class="search_icon" alt="search icon"></button>
+        </form>
+    </div>
+</article>

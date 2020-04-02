@@ -1,0 +1,49 @@
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                url: '%env(resolve:DATABASE_ADMIN_URL)%'
+                driver: pdo_mysql
+                server_version: '5.7'
+                charset: utf8mb4
+            kfc:
+                url: '%env(resolve:DATABASE_KFC_URL)%'
+                driver: pdo_mysql
+                server_version: '5.7'
+                charset: utf8mb4
+            quick:
+                url: '%env(resolve:DATABASE_QUICK_URL)%'
+                driver: pdo_mysql
+                server_version: '5.7'
+                charset: utf8mb4
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    Admin:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Admin'
+                        prefix: App\Entity\Admin
+                        alias: Admin
+            kfc:
+                connection: kfc
+                mappings:
+                    kfc:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Customer'
+                        prefix: App\Entity\Customer
+                        alias: Kfc
+            quick:
+                connection: quick
+                mappings:
+                    quick:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Customer'
+                        prefix: App\Entity\Customer
+                        alias: Quick

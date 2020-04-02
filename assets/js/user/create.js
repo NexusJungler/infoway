@@ -1,0 +1,1 @@
+import '../../css/settings/create_user.scss';

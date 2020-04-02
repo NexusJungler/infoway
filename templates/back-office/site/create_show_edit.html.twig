@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ title ~ " | Back-office" }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('back-office_create-customer') }}
+{% endblock %}
+
+{% block body %}
+
+    <div id="body">
+
+        <div id="title">
+            <h1>{{ title }}</h1>
+        </div>
+
+        {{ include('templates/flash_message/__flash_message.html.twig') }}
+
+        <div id="form-container">
+
+            {{ form_start(form) }}
+
+                <div id="row-1" class="row">
+                    <div class="input-container" id="name">
+                        {{ form_row(form.name, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+
+                    <div class="input-container" id="address">
+                        {{ form_row(form.address, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+                </div>
+
+
+                <div id="row-2" class="row">
+                    <div class="input-container" id="postal-code">
+                        {{ form_row(form.postal_code, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+
+                    <div class="input-container" id="phone-number">
+                        {{ form_row(form.phone_number, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+                </div>
+
+
+                <div id="row-3" class="row">
+                    <div class="input-container" id="country">
+                        {{ form_row(form.country, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+
+                    <div class="input-container" id="city">
+                        {{ form_row(form.city, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+                </div>
+
+                <div id="row-4" class="row">
+                    <div class="input-container" id="customer">
+                        {{ form_row(form.customer, { 'disabled': ( (app.request.get('_route') is same as('admin_customer::addSite')) or (app.request.get('_route') is same as('admin_site::show')) ) ? true : false } ) }}
+                    </div>
+
+                    <div class="input-container" id="time-zone">
+                        {{ form_row(form.time_zone, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false }) }}
+                    </div>
+                </div>
+
+                <div id="row-5" class="row">
+                    <div id="description-container">
+                        {{ form_row(form.description, { 'disabled': ( app.request.get('_route') is same as('admin_site::show') ) ? true : false } ) }}
+                    </div>
+                </div>
+
+                <div id="row-5" class="row">
+                    <div>
+                        {% if ('create' in app.request.uri) or ('edit' in app.request.uri) %}
+                            <button type="submit">{{ action }}</button>
+
+                         {% else %}
+                             <a href="{{ path('admin_site::edit', { id: site.id, name: site.name }) }}">Editer</a>
+                             <a href="{{ path('admin_site::showSiteSalaries', { id: site.id, name: site.name }) }}">Voir les salariés</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('back-office_create-customer') }}
+{% endblock %}

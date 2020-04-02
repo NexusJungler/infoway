@@ -1,0 +1,13 @@
+body {
+    background-color: #DCDCDC;
+    font-family: 'Barlow', sans-serif;
+}
+
+#body {
+    height: 100vh;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+}

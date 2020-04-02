@@ -1,0 +1,58 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        #in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\Admin\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+
+            form_login:
+                check_path: app_login
+                username_parameter: email
+                password_parameter: password
+
+            logout:
+              path: user::logout
+              target: user::login
+
+
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+            guard:
+                authenticators:
+                    - App\Security\LoginAuthenticator
+                  # by default, the feature is enabled by checking a
+                  # checkbox in the login form (see below), uncomment the
+                  # following line to always enable it.
+                  #always_remember_me: true
+
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/template$, roles: IS_AUTHENTICATED_REMEMBERED }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+
+    encoders:
+        App\Entity\Admin\User:
+            algorithm: auto
+            cost: 12

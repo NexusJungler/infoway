@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "app-infoway";
+  src:url("Custome_icon/app-infoway.eot");
+  src:url("Custome_icon/app-infoway.eot?#iefix") format("embedded-opentype"),
+    url("Custome_icon/app-infoway.woff") format("woff"),
+    url("Custome_icon/app-infoway.ttf") format("truetype"),
+    url("Custome_icon/app-infoway.svg#app-infoway") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "app-infoway" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "app-infoway" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-iy-site:before {
+  content: "\61";
+}
+.icon-iy-airplay:before {
+  content: "\62";
+}
+.icon-iy-produit-prix:before {
+  content: "\63";
+}
+.icon-iy-programming:before {
+  content: "\64";
+}

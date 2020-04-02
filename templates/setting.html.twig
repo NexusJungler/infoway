@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Configuration" %}
+
+{% block body %}
+    <main class="main home home-setting">
+        <div class="main-content">
+
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'showSecondTitles': true } %}
+                
+                <article id="wrapper">
+                    <div class="wrapper-content">
+                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+                        <ul class="tabs">
+                            <li class="tablinks active current" data-tab="tab-marque" data-tab-text="settings"> <p class="css-tab__label">Marque</p> </li>
+                            <li class="tablinks " data-tab="tab-utilisateurs" data-tab-text="settings"> <p class="css-tab__label">Utilisateurs</p> </li>
+                            <li class="tablinks " data-tab="tab-sites" data-tab-text="settings"> <p class="css-tab__label">Sites</p> </li>
+                            <li class="tablinks " data-tab="tab-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li>
+                            <li class="tablinks creer" data-tab="tab-create-brand" data-tab-text="creation"> <p class="css-tab__label">Créer Marque <i class="fas fa-plus"></i><span class="tab-bloc"></span></p> </li>
+                            <li class="tablinks creer" data-tab="tab-create-user" data-tab-text="creation"> <p class="css-tab__label">Créer Utilisateurs <i class="fas fa-plus"></i><span class="tab-bloc"></span></p> </li>
+                            <li class="tablinks creer" data-tab="tab-create-site" data-tab-text="creation"> <p class="css-tab__label">Créer Site <i class="fas fa-plus"></i><span class="tab-bloc"></span></p> </li>
+                        </ul>
+                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </article>
+
+            </section>
+
+            <section id="wrapper_tabcontent">
+
+                {% block maincontent %}
+
+                {% endblock %}
+{#                <article id="tab-marque" class="tab-content ">#}
+{#                    {% include 'settings/marque.html.twig' %}#}
+{#                </article>#}
+
+{#                <article id="tab-utilisateurs" class="tab-content ">#}
+{#                    {% include 'settings/setting-user.html.twig' %}#}
+{#                </article>#}
+{#                        #}
+{#                <article id="tab-sites" class="tab-content ">#}
+{#                    {% include 'settings/management-site.html.twig' %}  #}
+{#                </article>#}
+
+{#                <article id="tab-tags" class="tab-content ">#}
+{#                   {% include 'settings/management-tags.html.twig' %}  #}
+{#                </article>#}
+{#                #}
+{#                <article id="tab-create-brand" class="tab-content create-brand tab-create">#}
+{#                    {% include 'settings/creer-marque.html.twig' %}  #}
+{#                    #}{# {% include 'settings/creer-compagnie-division.html.twig' %} #}
+{#                </article>#}
+
+{#                <article id="tab-create-user" class="tab-content tab-create current">#}
+{#                    {% include 'settings/create-user.html.twig' %}  #}
+{#                </article>#}
+
+{#                <article id="tab-create-site" class="tab-content tab-create ">#}
+{#                    {% include 'settings/creer-site.html.twig' %}  #}
+{#                </article>#}
+                
+            </section>   
+        </div>
+    </main>
+{% endblock %}
+
+

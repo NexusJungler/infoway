@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ "Voir les sites | Back-office" }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('back-office') }}
+{% endblock %}
+
+
+{% block body %}
+
+    <div id="body">
+
+        <div class="jumbotron">
+            <div class="container">
+                <h3>Filtrer</h3>
+                {{ form_start(form) }}
+                <div class="form-row">
+                    <div class="col">
+                        {{ form_widget(form.name) }}
+
+                        {{ form_widget(form.address) }}
+
+                        {{ form_widget(form.city) }}
+
+                        {{ form_widget(form.country) }}
+
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        {{ include('templates/flash_message/__flash_message.html.twig') }}
+
+        {% if sites|length > 0 %}
+
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Pays</th>
+                    <th>Ville</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for site in sites %}
+                    <tr>
+                        <td>{{ site.name }}</td>
+                        <td>{{ site.address }}</td>
+                        <td>{{ site.country.name }}</td>
+                        <td>{{ site.city }}</td>
+                        <td>
+                            <button><a href="{{ path('admin_site::show', {id: site.id, name: site.name}) }}">Consulter</a></button>
+                            <button><a href="{{ path('admin_site::edit', {id: site.id, name: site.name}) }}">Editer</a></button>
+                            {{ include('templates/delete_entity/__delete_entity.html.twig',
+                                {
+                                    form_action: path('admin_site::delete', {id: site.id, name: site.name}),
+                                    subject: site
+                                }
+                            )
+                            }}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+
+        {% else %}
+
+            <h3>Aucun site !</h3>
+
+        {% endif %}
+
+        <button><a href="{{ path('admin_customer::addSite', { id: customer.id, name: customer.name }) }}">Ajouter un site</a></button>
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('back-office') }}
+{% endblock %}

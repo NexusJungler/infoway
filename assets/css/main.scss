@@ -1,0 +1,230 @@
+/******************************************************** MAIN **********************************************************************/
+.home{
+    width: 92%;
+    left: 8%;
+    position: relative;
+    z-index: 2;
+    margin-bottom: rem(80px);
+    .main-content {
+        section{
+            padding-left: 4%;
+            background-color: #EBEBEB;
+        }
+    }
+        
+    .jumbotron {
+        color: #404040;
+        .jumbotrom-wrapper{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    .page__title {
+        display: flex;
+        flex-direction: row;
+        font: 1.6rem 'Barlow', sans-serif;
+        color: #899CA4;
+        margin: 25px 35px;
+        width: 100%;
+        .page__title-content,
+        .page__title-content-info{
+            display: flex;
+        }
+        .page__title--img {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background-color: #4F9BAE;
+            img {
+                text-align: center;
+                width: 35px;
+                /* height: 31px; */
+                max-width: none;
+                margin: 13px 10px;
+            }
+        }
+        h1 {
+            margin-left: 15px;
+            margin-top: -5px;
+            color: #283338;
+            font: 3rem 'segoe UI';
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .page__tilte-cercle{
+            top: 5px;
+            position: relative;
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: #4F9BAE ;
+            border-radius: 50%;
+            margin: 1.2rem 1rem 0 1rem;
+        }
+        h2{
+            margin-top: 8px;
+            font: 2.1rem 'Barlow';
+            font-weight: bold;
+            color: #306D7C;
+            text-transform: uppercase;
+        }
+    }
+
+    .page__info{
+        width: 20%;
+        margin-top: 3rem;
+        p{
+            color: #4D646D;
+            font: 0.75rem 'Barlow', lighter;
+            display: flex;
+            padding-bottom: 0.5rem;
+            &::before{
+                content: "";
+                width: 17px;
+                height: 17px;
+                background: #C0CCD1 0% 0% no-repeat padding-box;
+                border: 1px solid #4D646D;
+                margin-right: 0.5rem;
+                border-radius: 10%;
+            } 
+            &:nth-child(2)::before{
+                content: "";
+                background: transparent linear-gradient(180deg, #53B3C7 0%, #4F9BAE 100%) 0% 0% no-repeat padding-box;
+            }
+        }
+    }
+
+    .search__form {
+        display: flex;
+        align-items: center;
+        margin-right: 2rem;
+        width: 50%;
+        form{
+            justify-content: flex-end;
+            display: flex;
+            padding: 2%;
+            width: 100%;
+        }
+        .search_icon {
+            // width: 28px;
+            // height: 30px;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+        }
+        input {
+            width: 390px;
+            max-width: 100% ;
+            height: 35px;
+            background: #FFFFFF;
+            border-radius: 9px;
+            padding-left: 5%;
+            font-size: 15px;
+            border: none;
+            font-style: italic;
+        }   
+    }
+}
+
+.main-site{
+    .main-content{
+        .jumbotron{
+            height: 155px;
+        }
+    }
+}
+
+/* MEDIA QUERY */
+
+@media (max-width: rem(1440px))  {
+    .home{
+        .jumbotron{
+            .jumbotrom-wrapper{
+                .page__title{
+                    display: inline-block;
+                    width: 50%;
+                    margin: rem(20px) rem(35px);
+                    .page__title--img{
+                        margin-top: rem(10px);
+                    }
+                    .page__tilte-cercle{
+                        display: none;
+                    }
+                    h2{
+                        margin-left: rem(70px);
+                        margin-top: 0;
+                    }
+                }
+                .page__info{
+                    display: none;
+                }
+                .search__form{
+                    width:50%;
+                }
+            }
+        }
+    }   
+    .tab-content-bloc {
+        display: block;
+    }
+}
+
+
+@media (max-width: rem(1200px))  {
+    .home{
+        .jumbotron{
+            .jumbotrom-wrapper{
+                .page__title{
+                    width: 50%;
+                    margin: rem(20px) rem(35px);
+                    .page__title--img{
+                        margin-top: 10px;
+                    }
+                }
+                
+                .search__form{
+                    width:42%;
+                }
+            }
+        }
+    }   
+    .tab-content-bloc {
+        display: block;
+    }
+}
+
+/* Tablette */
+@media (max-width: rem(900px))  {
+    .home{
+        .jumbotron{
+            .jumbotrom-wrapper{
+                .page__title{
+                    h1{
+                        font: 2rem 'segoe UI';
+                        font-weight: bold;
+                    }
+                    h2{
+                        font: 2rem 'segoe UI';
+                    }
+                } 
+                .search__form{
+                    width:40%;
+                } 
+            }
+        } 
+    }
+    .home-setting{
+        .jumbotron{
+            .jumbotrom-wrapper{
+                .page__title{
+                    h1{
+                        margin-top: 5px;
+                    }
+                    h2{
+                        font: 2rem 'segoe UI';
+                    }
+                }  
+            }
+        }
+    }   
+}

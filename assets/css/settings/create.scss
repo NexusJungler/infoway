@@ -1,0 +1,191 @@
+/* == content  == */
+
+.tab-create {
+
+    .bloc-societe-form .row {
+        padding: 0 0 1rem 0;
+    }
+
+    .tab-content-bloc-cm-left {
+        border: 0.06rem solid #899CA4;
+        width: 36.6rem;
+        max-width: 100%;
+        margin-right: 3rem;
+
+        .inputRdo{
+            margin-left: 0.4rem;
+        }
+    }
+
+    .tab-content-bloc-cm-right{
+        .tab-content-poste{
+            width: rem(150px);
+            max-width: 100%;
+            height: 15%;
+            p{
+                font: rem(14.5px) 'Barlow', italic;
+                color: #899CA4;
+                text-align: center;
+            }
+            
+        }
+        .tab-content-brand{
+            border: 0.06rem solid #899CA4;
+            border-radius: 7px 7px 0px 0px;
+            height: 100%;
+            max-height: 85%;
+            .bloc-poste-title{
+                padding: 0.5rem 0.5rem 0.5rem 1rem;
+                background: #A4B4BB 0% 0% no-repeat padding-box;
+                font: 1rem 'Barlow', medium;
+                color: #FAFAFA;
+                border-radius: 6px 6px 0px 0px;
+            }
+        }
+        
+    }
+
+    .chkbox {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font: 1rem 'Barlow', medium;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0.5rem;
+        background-color: #DCECEF;
+        color: #4D646D;
+    
+        &:nth-child(2n+2) {
+            background-color: #ffffff ;
+        }
+    
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            &:checked ~ .checkmark {
+                background: #4F9BAE 0% 0% no-repeat padding-box;
+                box-shadow: inset 0 0 0 0.06rem #FAFAFA;
+            }
+            &:checked ~ .checkmark:after {
+                display: block;
+              }
+        }
+    
+        .checkmark {
+            position: absolute;
+            top: 0.7rem;
+            right:  0.3rem;
+            width: 0.9rem;
+            height: 0.9rem;
+            border: 1px solid #A4B4BB;
+            background-color: #FAFAFA;
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+        }
+    
+        // &:hover input ~ .checkmark {
+        //     background-color: #ccc;
+        // }
+    
+    }    
+
+}
+
+.tab-create .custom-file > label {
+    width: 100%;
+}
+
+.tab-create .input-custome,
+.tab-create .btn-download-custome,
+.tab-create .dropdown {
+    width: 16.8rem;
+    max-width: 100%;
+    height: 2rem;
+}
+
+.tab-create .label-custome {
+    width: 30%;
+    max-width: 50%;
+}
+
+.tab-create .custom-file:after {
+    right: 46px;
+}
+
+.tab-create .tab-content-bloc-cm-right .inputRdo  {
+    display: block;
+}
+
+
+/* == bloc form :create user et site == */
+
+#create-user,
+#create-site{
+    .bloc-form-content {
+        padding: 1rem 1.5rem 0.5rem 1.5rem;
+        width: 90%;
+        .row{
+            padding: 0 0 2rem 0;
+        }
+        .row-flex {
+            padding: 0 0 0.3rem 0;
+        }
+    }   
+}
+
+
+/* == create user == */ 
+
+// #create-user{
+//     .radio-tags{
+//         .checkbox{
+//             margin-right: 2rem;
+//             .mutliselect-chkbox {
+//                 font: rem(14px) 'Barlow', medium;
+//                 margin-top: 1rem;
+            
+//                 .mutliselect-check{
+//                     top:0;
+//                 }
+//             }
+//         }
+            
+        
+//     }
+// }
+
+/* MEDIA QUERY */
+
+/* Tablette */
+
+@media (max-width: 64em)  {
+
+    .tab-create{
+        .tab-content-bloc-cm-left {
+            border: 0.06rem solid #899CA4;
+            width: 100%;
+            margin-bottom: 2rem;
+            /* margin-right: 3rem; */
+        }
+    
+        .tab-content-bloc-cm-right{
+            .tab-content-poste{
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}
+
+
+
+
+
+

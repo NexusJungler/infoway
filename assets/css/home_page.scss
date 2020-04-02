@@ -1,0 +1,131 @@
+/***************************************************** HOME INFO *****************************************************************/
+
+.home-information{
+    padding: 0 3% 4% 7%;
+    .home_info-title{
+        font-family: "barlow";
+        font-size: rem(27px);
+        font-style: normal;
+        color: #306D7C;
+        margin-left: 75px;
+        padding-bottom: 1em;
+    }
+    .home_info-contact{
+        display: flex;
+        justify-content: flex-end;
+        p{
+            margin: 3px 5px;
+            text-align: right;
+            font: 1.4rem 'Barlow', sans-serif;
+            color: #4D646D;
+        }
+        .info_contact-nom{
+            span{
+                margin-left: 10rem;
+                font-weight: bold;
+            }
+        }
+        .info_contact-hotline{
+            padding-left: 8em;
+            .bold{
+                font-weight: bold;
+            }
+            &.border--line::after {
+                margin-left: -34%;
+            }
+        }
+        
+    }
+}
+
+/* Enseignes */
+
+.home_enseignes-row{
+    font: 1.4rem 'Barlow', sans-serif;
+    color: #4D646D;
+    .border--line::after{
+        margin-top: 0.2em;
+    }
+    .home_enseignes-bloc{
+        display: inline-flex;
+        flex-wrap: wrap;
+        padding: 0.8em 1em 0 6rem;
+        width: 100%;
+        img{
+            width: 2.25em;
+        }
+        p{
+            font: 1.2rem 'Barlow', sans-serif;
+            color: #4D646D;
+        }
+    }
+    .home_enseignes-col{
+        text-align: center;
+        width: 16%;
+        opacity: 0.50;
+        margin: 0 0 1em 0;
+        &::after{
+            content: '';
+            border-bottom: 6px solid #4F9BAE;
+            position: relative;
+            display: inline-block;
+            opacity: 0;
+            width: 65%;
+            top: -10px;
+        }
+        &:hover{
+            opacity: 1;
+    
+        }
+        &:hover::after{
+            opacity: 1;
+        }
+    }
+}
+
+
+
+/* MEDIA QUERY */
+
+/** tablette **/
+
+@media (max-width: rem(900px))  {
+    .home-information{
+        .home_info-contact{
+            p{
+            font-size: 1.2rem;
+            }
+            .info_contact-nom{
+                p{
+                    margin: 3px 5px 3px 0;
+                    
+                }
+                span{
+                    margin-left: rem(124px);
+                }
+            }
+            .info_contact-hotline {
+                padding-left: 6em;
+            }
+        }
+    }  
+    
+    .home_enseignes-row{
+        .home_enseignes-bloc {
+            padding: rem(5px);
+            .home_enseignes-col{
+                width: 25%;
+            }
+        }
+    }
+    #company {
+        margin: 0;
+        .company-bloc{
+            position: relative;
+            width: 100%;
+            flex: none;
+            max-width: 100%;
+        }
+    } 
+}
+
