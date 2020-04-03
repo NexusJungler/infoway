@@ -20,7 +20,7 @@ class UserRoles
 
     /**
      * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="roles", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

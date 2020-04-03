@@ -24,9 +24,9 @@ class PerimeterRepository extends ServiceEntityRepository
 public function findPerimeterByLevelEqualOrBellow( int $level ): ?array
 {
     return $this->createQueryBuilder('p')
-        ->andWhere('p.level >= :val')
-        ->setParameter('val', $level)
-        ->OrderBy('p.level','DESC')
+        ->andWhere('p.level >= :level')
+        ->setParameter('level', $level)
+        ->OrderBy('p.level','ASC')
         ->getQuery()
         ->getResult()
     ;

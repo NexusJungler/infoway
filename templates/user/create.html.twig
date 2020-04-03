@@ -60,7 +60,7 @@
                 {% for  perimeter in givablePerimeters %}
                     {% if perimeter.name is defined and perimeter.level is defined %}
                         <label class="container-chkbox">{{ perimeter.name }}
-                            <input type="radio" name="user[perimeter]" value="{{ perimeter.level }}">
+                            <input type="radio" name="user[perimeter]" value="{{ perimeter.id }}">
                             <span class="checkmark-chkbox"></span>
                         </label>
                     {% endif %}

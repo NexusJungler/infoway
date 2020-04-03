@@ -11,12 +11,14 @@ use App\Entity\Admin\Permission;
 use App\Entity\Admin\Subject;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserRoles;
+use App\Entity\Admin\UserSites;
 use App\Form\Admin\UserRolesType;
 use App\Form\UserType;
 use App\Service\EmailSenderService;
 use App\Service\PermissionsHandler;
 use App\Service\SessionManager;
 use App\Service\TokenGeneratorService;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -38,13 +40,14 @@ use App\Entity\Customer\Role ;
 
 class UserController extends AbstractController
 {
-
+    private $passwordEncoder;
     private ObjectManager $__manager;
     private SessionManager $sessionManager ;
 
- public function __construct()
+ public function __construct(UserPasswordEncoderInterface $passwordEncoder)
 {
     $this->sessionManager =  new SessionManager( new Session() );
+    $this->passwordEncoder = $passwordEncoder;
 }
 
 
@@ -113,29 +116,130 @@ class UserController extends AbstractController
     public function userCreateProcess(Request $request): Response
     {
 
+
         $newUser = $request->get('user');
 
-
+        dump($newUser) ;
 
         if(! isset( $newUser[ 'roles' ] ) || !isset( $newUser[ 'roles' ][ 'enseigne' ] ) || !is_array( $newUser[ 'roles' ][ 'enseigne' ] )) throw new \Error('Invalid argument for Role Entry ');
         if(! isset( $newUser[ 'sites' ] ) || !isset( $newUser[ 'sites' ][ 'enseigne' ] ) || !is_array( $newUser[ 'sites' ][ 'enseigne' ] )) throw new \Error('Invalid argument for Site Entry ');
+        if(! isset( $newUser[ 'perimeter' ] ) ) throw new \Error('Invalid argument for Perimeter ');
+        if(! isset( $newUser[ 'email' ] ) ) throw new \Error('Invalid argument for email ');
+        if(! isset( $newUser[ 'phone' ] ) ) throw new \Error('Invalid argument for phone ');
+        if(! isset( $newUser[ 'fristname' ] ) ) throw new \Error('Invalid argument for firstname ');
+        if(! isset( $newUser[ 'lastname' ] ) ) throw new \Error('Invalid argument for lastname ');
 
         $user = $this->sessionManager->get('user');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager('default');
 
         $userRepo = $em->getRepository(User::class) ;
 
         $userFromDb = $userRepo->findOneById($user->getId()) ;
+
+
         if( ! $userFromDb instanceof User) throw new \Error('Impossible to get User Informations') ;
 
+        $newUserEntity = new User() ;
+
+        $newUserEntity->setFirstName( $newUser[ 'fristname' ] );
+        $newUserEntity->setLastName($newUser['lastname']) ;
+        $newUserEntity->setEmail($newUser[ 'email' ] ) ;
+        $newUserEntity->setPhoneNumber($newUser[ 'phone' ]);
+
+        $newUserEntity->setPassword($this->passwordEncoder->encodePassword(
+            $user,
+            'test'
+        ));
+        $newUserPerimeter = $newUser[ 'perimeter' ] ;
+
+        $perimeterRepo = $em->getRepository(Perimeter::class) ;
+
+        $newUserPerimeterFromDb = $perimeterRepo->findOneById($newUserPerimeter) ;
+
+        if( ! $newUserPerimeterFromDb instanceof Perimeter ) throw new \Error('Impossible to recognize gived Perimeter') ;
+
+        $creatorPerimeter = $userFromDb->getPerimeter();
+
+        if($creatorPerimeter->getLevel() > $newUserPerimeterFromDb->getLevel() ) throw new \Error('You do not have the right to choose this perimeter') ;
+
+        $newUserEntity->setPerimeter($newUserPerimeterFromDb) ;
+
+
+
+       //---------------------------------ROLE----------------------------------//
         $userRolesWithCustomerIdAsKey= [] ;
+
+        foreach($user->getRoles() as $customer){
+            if( ! $customer instanceof Customer ) throw new \Error('Impossible to find Role Customer') ;
+            $userRolesWithCustomerIdAsKey[$customer->getId()] = $customer;
+        }
 
         foreach($newUser[ 'roles' ][ 'enseigne' ] as $roleEnseigneId => $roleIdInEnseigne) {
 
+
+        if(! isset( $userRolesWithCustomerIdAsKey[ $roleEnseigneId ])) throw new \Error('Impossible to find  creator Role') ;
+
+                $currentCustomer = $userRolesWithCustomerIdAsKey[ $roleEnseigneId ] ;
+
+                if (! $currentCustomer  instanceof Customer || ! $currentCustomer->getRole() instanceof Role ) throw new \Error('Impossible to find  creator Role ') ;
+
+                $managers =$this->getDoctrine()->getManagers();
+                if(!  isset( $managers[ $currentCustomer->getName() ] ) ) throw new \Error('invalid connection') ;
+
+                $currentEm = $managers[ $currentCustomer->getName() ];
+                $roleRepo = $currentEm->getRepository(Role::class);
+                $roleFromDb = $roleRepo->findOneById( $currentCustomer->getRole()->getId() );
+
+                if( ! $roleFromDb instanceof Role ) throw new \Error('Impossible to find Role ') ;
+
+                $roleFromDbLevel = $roleFromDb->getLevel();
+                $userCreatorRoleLevel = $currentCustomer->getRole()->getLevel() ;
+
+                if ( ! is_int($roleFromDbLevel) ||  !is_int( $userCreatorRoleLevel ) || $userCreatorRoleLevel > $roleFromDbLevel ) throw new \Error('Impossible to set UserRole due to a creator level role problem ') ;
+                $userRoleEntry = new UserRoles() ;
+
+                 $userRoleEntry->setRoleId( $roleFromDb->getId() ) ;
+                 $userRoleEntry->setCustomer( $em->getRepository(Customer::class)->findOneById($currentCustomer->getId()) ) ;
+                 $em->persist($userRoleEntry);
+                 //dd($em);
+            dump($em);
+            $newUserEntity->addUserRole($userRoleEntry);
         }
-        dd($newUser);
-        return $this->render('user/create.html.twig') ;
+
+        $userSitesWithCustomerIdAsKey= [] ;
+        foreach($userFromDb->getSitesIds() as $siteEntry){
+            $userSitesWithCustomerIdAsKey [ $siteEntry->getCustomer()->getId() ][$siteEntry->getSiteId()] = $siteEntry;
+        }
+
+        foreach($newUser[ 'sites' ][ 'enseigne' ] as $siteEnseigneId => $siteIdInEnseigne) {
+            if( isset( $userSitesWithCustomerIdAsKey[ $siteEnseigneId ]  ) && is_array( $userSitesWithCustomerIdAsKey[ $siteEnseigneId ]  ) ){
+
+                $userSiteEntries = $userSitesWithCustomerIdAsKey[ $siteEnseigneId ] ;
+
+                //dd($userSiteEntries);
+                foreach( $siteIdInEnseigne as $newUserSiteId) {
+
+                    if(isset ( $userSiteEntries [ $newUserSiteId ]) ){
+                        $creatorSiteEntry = $userSiteEntries [ $newUserSiteId ] ;
+                        $newUserSiteEntry  = new UserSites();
+                        $newUserSiteEntry->setCustomer( $creatorSiteEntry->getCustomer() ) ;
+                        $newUserSiteEntry->setSiteId( $creatorSiteEntry->getSiteId() );
+                        $em->persist($newUserSiteEntry);
+
+                        $newUserEntity->addSitesId($newUserSiteEntry);
+                    }
+
+                }
+
+            }
+        }
+
+        $em->persist($newUserEntity);
+       // dd($em);
+        $em->flush();
+
+        return $this->redirectToRoute('user::create') ;
     }
 
 //    /**
