@@ -29,6 +29,12 @@ class Role
      */
     private $permissions;
 
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\Column(type="integer" , nullable=false)
+     */
+    private $level;
+
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
@@ -79,6 +85,18 @@ class Role
                 $permission->setRole(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

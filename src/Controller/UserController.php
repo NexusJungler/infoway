@@ -8,7 +8,6 @@ use App\Entity\Admin\Action;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Perimeter;
 use App\Entity\Admin\Permission;
-use App\Entity\Admin\Role;
 use App\Entity\Admin\Subject;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserRoles;
@@ -34,6 +33,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Entity\Customer\Role ;
 
 
 class UserController extends AbstractController
@@ -54,30 +54,87 @@ class UserController extends AbstractController
      */
     public function userCreate(): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $givablesRoles = new \SplObjectStorage() ;
+        $givableSites = [] ;
+        $givablePerimeters = [] ;
+
         $user = $this->sessionManager->get('user');
         if( ! $user instanceof User ) {
             throw new \Error('Impossible to get User from Session');
         }
 
-        $userPerimeter = $user->getPerimeter();
-        if( ! $userPerimeter instanceof Perimeter ) {
-            throw new \Error('Impossible to find User Perimeter ');
+        $userPerimeterFromSession = $user->getPerimeter();
+
+        if( ! $userPerimeterFromSession instanceof Perimeter ) {
+            throw new \Error('Impossible to find User Perimeter in Session ');
         }
-        $perimeterLevel = $userPerimeter->getLevel();
-        dd($userPerimeter);
+
+        $perimeterRepo = $em->getRepository(Perimeter::class);
+        $userPerimeter = $perimeterRepo->findOneById($userPerimeterFromSession->getId());
+        if( ! $userPerimeter instanceof Perimeter ) {
+            throw new \Error('Impossible to find User Perimeter  ');
+        }
+
+        $givablePerimeters = $perimeterRepo ->findPerimeterByLevelEqualOrBellow( $userPerimeter->getLevel() );
 
 
-        return $this->render('user/create.html.twig') ;
+        $userRoles = $user->getRoles();
+
+        foreach( $userRoles as $userRoleByCustomer ) {
+            if( $userRoleByCustomer instanceof Customer ) {
+                $customerRole = $userRoleByCustomer->getRole() ;
+                if( $customerRole instanceof Role ) {
+                    $customererManager = $this->getDoctrine()->getManager( $userRoleByCustomer->getName() );
+                    $roleRepo = $customererManager->getRepository(Role::class);
+
+                    $givableRolesFrombase  = $roleRepo->getRolesByLevelBellow($customerRole->getLevel());
+                    if( is_array($givableRolesFrombase) ) $givablesRoles[ $userRoleByCustomer ] = $givableRolesFrombase ;
+
+                }
+            }
+        }
+       $userSites = $user->getSites() ;
+
+        $givableSites = $userSites ;
+
+        return $this->render('user/create.html.twig', [
+            'givablePerimeters' => $givablePerimeters ,
+            'givableSites'   => $givableSites ,
+            'givableRoles'   => $givablesRoles
+        ]) ;
+
     }
 
     /**
      * @Route(path="/users/create/process", name="users::create::process",methods="POST")
      * @return Response
      */
-    public function userCreateProcess(): Response
+    public function userCreateProcess(Request $request): Response
     {
 
-        dd('ok');
+        $newUser = $request->get('user');
+
+
+
+        if(! isset( $newUser[ 'roles' ] ) || !isset( $newUser[ 'roles' ][ 'enseigne' ] ) || !is_array( $newUser[ 'roles' ][ 'enseigne' ] )) throw new \Error('Invalid argument for Role Entry ');
+        if(! isset( $newUser[ 'sites' ] ) || !isset( $newUser[ 'sites' ][ 'enseigne' ] ) || !is_array( $newUser[ 'sites' ][ 'enseigne' ] )) throw new \Error('Invalid argument for Site Entry ');
+
+        $user = $this->sessionManager->get('user');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userRepo = $em->getRepository(User::class) ;
+
+        $userFromDb = $userRepo->findOneById($user->getId()) ;
+        if( ! $userFromDb instanceof User) throw new \Error('Impossible to get User Informations') ;
+
+        $userRolesWithCustomerIdAsKey= [] ;
+
+        foreach($newUser[ 'roles' ][ 'enseigne' ] as $roleEnseigneId => $roleIdInEnseigne) {
+
+        }
+        dd($newUser);
         return $this->render('user/create.html.twig') ;
     }
 

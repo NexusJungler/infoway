@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Admin\Perimeter;
 use App\Entity\Admin\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -96,14 +97,16 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
 
         $userRepo = $this->entityManager->getRepository(User::class);
+
         $userRepo->getUserWithRoles($this->lastRegisteredUser);
         $userRepo->getUserWithSites($this->lastRegisteredUser);
 
-     //   dd($this->lastRegisteredUser->getPerimeter()->getName());
+
        $sessionManager = new SessionManager(new Session()) ;
+
         $sessionManager->set('user',$this->lastRegisteredUser);
-       $userFromSession  = $sessionManager->get('user');
-       dd($userFromSession->getPerimeter()->__getLazyProperties());
+
+      //  $userFromDatabase=$sessionManager->get('user');
         return new RedirectResponse($this->urlGenerator->generate('app'));
     }
 
