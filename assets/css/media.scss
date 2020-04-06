@@ -1,0 +1,67 @@
+.main-media{
+    .wrapper{
+        .wrapper-content{
+
+        }
+    }
+
+    .add-popup {
+        position: absolute;
+        height: 70%;
+        width: 30%;
+        background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
+        align-items: center;
+        pointer-events: none;
+        opacity: 0;
+        top: 45%;
+        left: 40%;
+        z-index:10000;
+        transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+        &.is-open {
+            opacity: 1;
+            pointer-events: auto;
+            .modal {
+                transform: translate(0px, 0px);
+            }
+        }
+    }
+
+    .modal {
+        margin-top: 10%;
+        transform: translate(0px, -100px);
+        transition: all 0.9s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+        position: relative;
+        padding: 30px;
+        width: 100%;
+        height: 100%;
+        background-color: #ddd;
+        color: #231D23;
+        text-align: center;
+        overflow: hidden;
+        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+        .lead {
+          font-size: 24px;
+          margin-top: 10px;
+        }
+        .tagline {
+          margin-bottom: 40px;
+          color: firebrick;
+          font-size: 18px;
+        }
+        .close-btn {
+          position: absolute;
+          padding: 3px 9px;
+          font-size: 24px;
+          text-align: center;
+          background: #ccc;
+          color: #9c9c9c;
+          top: -1px;
+          right: 0;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 /******************************************************** MENU WRAPPER **********************************************************************/
 
-#wrapper {
+.wrapper {
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -133,7 +133,7 @@
 
 /*****************************************************  WRAPPER CONTENT  *****************************************************************/
 
-#wrapper_tabcontent{
+.wrapper_tabcontent{
     padding-left: 7%;
     padding-right: 5%;
     .tab-content-title {
@@ -165,7 +165,7 @@
 
 /* Tablette */
 @media (max-width: rem(900px))  {
-    #wrapper{
+    .wrapper{
         .nav-next {
             right: rem(5px);
         }

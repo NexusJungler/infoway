@@ -215,6 +215,8 @@ class AppController extends AbstractController
         ]);
 
     }
+
+    
     /**
      * @Route(path="/managementtags", name="app:managementtags")
      *
@@ -225,6 +227,23 @@ class AppController extends AbstractController
     {
     
         return $this->render("settings/management-tags.html.twig", [
+           
+        ]);
+
+    }
+
+    /**  MEDIA **/
+
+    /**
+     * @Route(path="/image", name="app:image")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function image(Request $request): Response
+    {
+    
+        return $this->render("image/media-image.html.twig", [
            
         ]);
 
