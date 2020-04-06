@@ -66,7 +66,7 @@ class User implements UserInterface
     private $activated;
 
     /**
-     * Many Users have Many Groups.
+     * Many Users have Many Customers.
      * @ORM\ManyToMany(targetEntity="Customer", inversedBy="users")
      * @ORM\JoinTable(name="users_customers")
      */
@@ -80,6 +80,7 @@ class User implements UserInterface
 
     /**
      * One user has many roles. This is the inverse side.
+     * L uerinterface a besoin que la propriete  roles contiennent un  tableau contents des objets Role
      */
     private $roles = [];
 
@@ -395,6 +396,7 @@ class User implements UserInterface
         $this->sites = $sites;
     }
 
+    //fonction qui permet d ajouter un objet site recupere d une base d un client a un utilisateur  . Il faut preciser l enseigne c est celle ci qui contiendra tous les sites de l user afin qu ils soient rangés par enseigne
     public function addSite(Site $site, Customer $customer) {
         if( ! $customer->getSites()->contains( $site ) ){
             $customer->addSite( $site );
@@ -406,6 +408,7 @@ class User implements UserInterface
         }
     }
 
+    //TODO permet de supprimer un site
     public function removeSite(Site $site): self
     {
         if ($this->sites->contains($site)) {

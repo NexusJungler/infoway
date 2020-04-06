@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\UserPermissionRepository")
  * @ORM\Table(name="users_permissions")
+ * Entité representant la relation entre un user et une permission. Elle a été créé pour faire le lien entre la base admin et les bases clientes
  */
 class UserPermission
 {
@@ -20,7 +21,6 @@ class UserPermission
 
 
     /**
-     * Many features have one product. This is the owning side.
      * @ORM\ManyToOne(targetEntity="User", inversedBy="permissions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
