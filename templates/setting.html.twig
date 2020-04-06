@@ -13,9 +13,9 @@
                     <div class="wrapper-content">
                         <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
                         <ul class="tabs">
-                            <a href="{{ path('app:enseigne') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="tab-marque" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
-                            <a href="{{ path('app:settinguser') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:settinguser' %}  current {% endif %}" data-tab="tab-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
-                            <a href="{{ path('app:managementtags') }}"><li class="tablinks  {% if app.request.attributes.get('_route') == 'app:managementtags' %}  current {% endif %}" data-tab="tab-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
+                            <a href="{{ path('app:enseigne') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
+                            <a href="{{ path('app:settinguser') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:settinguser' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
+                            <a href="{{ path('app:managementtags') }}"><li class="tablinks  {% if app.request.attributes.get('_route') == 'app:managementtags' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
                         </ul>
                         <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
                     </div>
