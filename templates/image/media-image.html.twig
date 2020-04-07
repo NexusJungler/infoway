@@ -2,74 +2,125 @@
 
 
 {% block maincontent %}
-    <section id="wrapper_tabcontent">
+    <section class="wrapper_tabcontent">
         <article id="picture" class="tab-content current">
-
-        </article>
-
-        <article class="display site-display ">
-            <div class="display-content">
-                <div>
-                    <button type="button" class="btn btn-upload add-table"><i class="fas fa-plus"></i>UPLOAD</button>
-                </div>
-                <div class="display-content-columns">
-                    <div class="display-content-poste">
-                        <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                        <div class="display-content-down">
-                            <div class="product-select-col">
-                                <label class="mutliselect-chkbox" > Société / Marque
-                                    <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Societe" value="" >
-                                    <span class="mutliselect-check"></span>
-                                </label>
-                            </div>
-                            <div class="product-select-col">
-                                <label class="mutliselect-chkbox"> Groupe de prix
-                                    <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Groupe" value="">
-                                    <span class="mutliselect-check"></span>
-                                </label>
-                            </div>
-                            <div class="product-select-col">
-                                <label class="mutliselect-chkbox"> Critéré sélectif obligatoire</span>
-                                    <input type="checkbox"  name="satut"  data-tableDeleteCol="selectif" value="">
-                                    <span class="mutliselect-check"></span>
-                                </label>
-                            </div>
-                            <div class="product-select-col">
-                                <label class="mutliselect-chkbox"> Critérés
-                                    <input type="checkbox"  checked name="satut"  data-tableDeleteCol="critere" value="">
-                                    <span class="mutliselect-check"></span>
-                                </label>
+            <article class="display site-display ">
+                <div class="display-content">
+                    <div>
+                        <button type="button" class="btn btn-upload add-table"><i class="fas fa-plus"></i>UPLOAD</button>
+                    </div>
+                    <div class="display-content-columns">
+                        <div class="display-content-poste">
+                            <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                            <div class="display-content-down">
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox" > Société / Marque
+                                        <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Societe" value="" >
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Groupe de prix
+                                        <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Groupe" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Critéré sélectif obligatoire</span>
+                                        <input type="checkbox"  name="satut"  data-tableDeleteCol="selectif" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Critérés
+                                        <input type="checkbox"  checked name="satut"  data-tableDeleteCol="critere" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="display-btn">
-                    <p>Prodits : </p>
-                    <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
-                    <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
-                    <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
-                    <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
-                    <button type="button" class="tags-table">TAG</button>
+                    <div class="display-btn">
+                        <p>Prodits : </p>
+                        <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
+                        <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                        <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
+                        <button type="button" class="tags-table">TAG</button>
+                    </div>
                 </div>
-            </div>
-        </article > 
-
+            </article > 
 
 
-        <article class="add-popup">
-            <div class="modal">
-                <div>
-                    <label for="myfile">Select a file:</label>
-                    <input type="file" id="myfile" name="myfile">
+
+            <article class="add-popup">
+            
+                <div class="modal">
+                    <div class="model-upload-file">
+
+                        <div class="header-modal">
+                            <div>
+                                <p class="upload-title">Préparation de l'Upload</p>
+                                <p class="download-file">Traitement de la file en cours, veuillez patienter merci</p>
+                                <button type="button" class="btn btn-popupclose">X</button>
+                            </div>
+                        </div>
+
+                        <div class="upload-file">
+                            <label for="uploadmedia">selectionner vos fichiers</label>
+                            <input type="file" id="uploadmedia" name="uploadmedia">
+                        </div>
+
+                        <div class="upload-info">
+
+                            <div class="table">
+                                <table class="table-custome" >
+                                    <thead  class="table-info thead-content">
+                                        <tr>
+                                            <th>Liste des médias déposés :</th>    
+                                            <th></th>
+                                            <th>Formats acceptés</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        <tr>
+                                            <td>la vidéo de l'humour.png</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>la vidéo de l'humour.png</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>  
+                                </table>    
+                            </div> 
+
+                        </div>
+                        
+                        <div>
+                            <input type="button" class="product-btn-add" value="demarrer l'upoad"></input>
+                        </div>
+
+                        <div class="download-file">
+                            <button type="button" class="btn btn-popupclose">Annuler</button>
+                            <input type="button" class="product-btn-add" value="" >Suivant</input>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="modal-upload-download">
+
+                    </div>
+                    
+
+                    
+
                 </div>
-                <div>
-                    <button type="button" class="btn btn-popupclose">ferme</button>
-                    <input type="button" class="product-btn-add" value="demarrer l'upoad"></input>
-                </div>
-            </div>
+            </article>
         </article>
-
     </section>
 
 {% endblock %}

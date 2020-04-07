@@ -7,14 +7,15 @@
     padding-bottom: rem(80px);
     background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
     .main-content {
-        section{
+        > section{
             padding-left: 4%;
-            background-color: #EBEBEB;
+            
         }
     }
         
     .jumbotron {
         color: #404040;
+        background: #D4DCDF 0% 0% no-repeat padding-box;
         .jumbotrom-wrapper{
             display: flex;
             justify-content: space-between;

@@ -87,7 +87,7 @@ ul.tabs li.current::after{
 
 /*****************************************************  page marque  *****************************************************************/
 
-#wrapper_tabcontent{
+.wrapper_tabcontent{
     background-color: #ffffff;
     padding: 0 2rem  2rem ;
 }

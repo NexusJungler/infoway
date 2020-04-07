@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <main class="main home home-products">
+    <main class="main home-products">
+
         <div class="main-content">
 
             <section class="jumbotron">
@@ -11,15 +12,16 @@
             <section class="wrapper">
                 <article class="wrapper-content">
                     <ul class="tabs">
-                        <li class="tablinks active current" data-tab="tab-products" data-tab-text="products"> <p class="css-tab__label">Produits / prix</p> </li>
-                        <li class="tablinks" data-tab="tab-categories" data-tab-text="Catégories"> <p class="css-tab__label">Catégories</p> </li>
-                        <li class="tablinks" data-tab="tab-price" data-tab-text="Groupe de Prix"> <p class="css-tab__label">Groupe de Prix</p> </li>
-                        <li class="tablinks creer" data-tab="tab-create-date" data-tab-text="Créer DATE"> <p class="css-tab__label">Créer DATE</p> </li>
+                        <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-products"> <p class="css-tab__label">Produits / prix</p></li></a>
+                        
+                        {# <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-categories"> <p class="css-tab__label">Catégories</p></li></a>
+                        <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-price"> <p class="css-tab__label">Groupe de Prix</p></li></a>
+                        <a href="{{ path('app:image') }}"><li class="tablinks active creer {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-create-date"> <p class="css-tab__label">Créer DATE</p></li></a> #}
                     </ul>
                 </article>
-            </section>
+            </section> 
 
-        <section id="wrapper_tabcontent">
+        <section class="wrapper_tabcontent">
 
             <article id="tab-products" class="tab-content current">
                 {% include 'products/products_price.html.twig' %} 
@@ -35,7 +37,10 @@
             <article id="tab-create-date" class="tab-content  tab-create">
             </article>
             
-        </section>        
+        </section>    
+
+
         </div>
+
     </main>
 {% endblock %}

@@ -4,8 +4,8 @@
     display:flex;
     flex-direction: column;
     align-items: center;
-    background-color: #EBEBEB;
-    width: 97%;
+    background: #D4DCDF 0% 0% no-repeat padding-box;
+    padding-right: 3%;
 
     .wrapper-content{
         background: #4D646D 0% 0% no-repeat padding-box;
@@ -134,7 +134,7 @@
 /*****************************************************  WRAPPER CONTENT  *****************************************************************/
 
 .wrapper_tabcontent{
-    padding-left: 7%;
+    padding-left: 2.5%;
     padding-right: 5%;
     .tab-content-title {
         display: flex;
