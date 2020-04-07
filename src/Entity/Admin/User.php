@@ -94,11 +94,7 @@ class User implements UserInterface
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Permission")
-     * @ORM\JoinTable(name="users_permissions",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToMany(targetEntity="UserPermission", mappedBy="user")
      */
     private $permissions;
 
