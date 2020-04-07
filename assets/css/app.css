@@ -20,7 +20,6 @@ body {
     margin: 0;
     padding: 0;
     color: #6F6F6F;
-    
 }
 
 a {
@@ -57,7 +56,7 @@ img {
 
 /***************************************************** infomation company *****************************************************************/
 
-#company{
+.company{
     display: flex;
     flex-wrap: wrap;
 } 

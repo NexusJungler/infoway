@@ -1,19 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    <div id="createCustomer" style="margin-left: 10%">
-
-        {{ form_start(form) }}
-
-        {{ form_widget(form) }}
-
-        <div>
-            <button>Submit</button>
+    <main class="main ">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Créer un client', 'showSecondTitles': false } %}
+            </section>
         </div>
 
-        {{ form_end(form) }}
 
-    </div>
+        <div id="createCustomer" style="margin-left: 10%">
+
+            {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+            <div>
+                <button>Submit</button>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </main>
+    
+
+
+    
 
 {% endblock body %}

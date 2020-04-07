@@ -1,0 +1,439 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main">
+
+        <div class="main-content">
+
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue ' ~ app.user.firstName } %}
+            </section>
+        
+            <div class="home-information">
+
+                <div class="row">
+
+                    {% embed 'home/home-company.html.twig' %}
+
+                    {% endembed %}
+
+                    <div class="home_info-contact">
+                        {% embed 'home/home-info-contact.html.twig' %}
+
+                        {% endembed %}
+                    </div>
+                </div>
+                
+                <div class="home-table">
+
+                    <div class="home-table-left">
+                        <p class="table-titel">Zone de diffusion</p>
+                        <div class="menu-dropdown-table">
+                 
+                        <ul class="menu-list-table accordion">
+                            <li id="nav1" class="toggle accordion-toggle"> 
+                                <a class="menu-link" >Menuboard</a>
+                            </li>
+                            <ul class="menu-submenu accordion-content">
+                                <div class="table">
+                                    <table class="table-custome" >
+                                        <thead  class="table-info thead-content">
+                                            <tr>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe">
+                                                                    <span class="multiSel">Orientation</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe2">
+                                                                    <span class="multiSel">Nbre d'écr.</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe2" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe3">
+                                                                    <span class="multiSel">TAGS à Choix unique</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe3" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe4">
+                                                                    <span class="multiSel">TAGS</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe4" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>Prog.</th> 
+                                                <th>Affichier</th>  
+                                            </tr>
+                                        </thead>
+
+                                        <div class="div-tbody">
+                                            <tbody class="tbody tbody-content scrollbar-table">
+                                                <tr>
+                                                    <td>Horizonntal</td>
+                                                    <td>5</td>
+                                                    <td>nat</td>
+                                                    <td>gouter</td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Horizonntal</td>
+                                                    <td>5</td>
+                                                    <td>nat</td>
+                                                    <td>gouter</td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                </tr>
+                                            </tbody>  
+                                        </div>
+
+                                    </table>    
+                                </div>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle"> 
+                                <a class="menu-link" >Entrée de salle</a>
+                            </li>
+                            <ul class="menu-submenu accordion-content">
+                                <div class="table">
+                                    <table class="table-custome" >
+                                        <thead  class="table-info thead-content">
+                                            <tr>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe">
+                                                                    <span class="multiSel">Orientation</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe2">
+                                                                    <span class="multiSel">Nbre d'écr.</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe2" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe3">
+                                                                    <span class="multiSel">TAGS à Choix unique</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe3" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th> 
+                                                    <div class="checkboxs-list" >
+                                                        <div class="dropdown mutliSelect"> 
+                                                            <div class="select-input">
+                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe4">
+                                                                    <span class="multiSel">TAGS</span>    
+                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
+                                                                </button> 
+                                                                <div class="select-down">
+                                                                    <ul id="down-groupe4" class="row-chkbox" >
+                                                                        <li>
+                                                                            <label class="container-chkbox">Tous
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="admin">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <label class="container-chkbox">Horizonntal
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="siege">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                        <li>    
+                                                                            <label class="container-chkbox">vertical
+                                                                                <input type="radio" name="orientation"  data-satuts="select-groupe" value="directeur">
+                                                                                <span class="checkmark-chkbox"></span>
+                                                                            </label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>Prog.</th> 
+                                                <th>Affichier</th>  
+                                            </tr>
+                                        </thead>
+
+                                        <div class="div-tbody">
+                                            <tbody class="tbody tbody-content scrollbar-table">
+                                                <tr>
+                                                    <td>Horizonntal</td>
+                                                    <td>5</td>
+                                                    <td>nat</td>
+                                                    <td>gouter</td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Horizonntal</td>
+                                                    <td>5</td>
+                                                    <td>nat</td>
+                                                    <td>gouter</td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                    <td><i class="icon icon-iy-programming"></i></td>
+                                                </tr>
+                                            </tbody>  
+                                        </div>
+
+                                    </table>    
+                                </div>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle"> 
+                                <a class="menu-link" >Vitrine</a>
+                            </li>
+                            <ul>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle"> 
+                                <a class="menu-link" >Flux TV</a>
+                            </li>
+                            <ul>
+                            </ul>
+                            
+                        </ul>
+                        </div>
+                    </div>
+                    
+                     <div class="home-table-right">
+                        <p class="table-titel">Sites</p>
+                        <div class="table">
+                            <table class="table-custome" >
+                                <thead  class="table-info thead-content">
+                                    <tr>
+                                        <th>Nom des sites</th>    
+                                        <th>Ville</th>
+                                        <th>Adresse</th> 
+                                        <th>Programmation</th>  
+                                    </tr>
+                                </thead>
+
+                                <div class="div-tbody">
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        <tr>
+                                            <td>Q187</td>
+                                            <td>Bobigny</td>
+                                            <td>25 rue st charles </td>
+                                            <td><i class="icon icon-iy-programming"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Q187</td>
+                                            <td>Bobigny</td>
+                                            <td>25 rue st charles</td>
+                                            <td><i class="icon icon-iy-programming"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Q187</td>
+                                            <td>Bobigny</td>
+                                            <td>25 rue st charles</td>
+                                            <td><i class="icon icon-iy-programming"></i></td>
+                                        </tr>
+                                    </tbody>  
+                                </div>
+
+                            </table>    
+                        </div> 
+                    </div>
+                </div>
+                    
+            </div>   
+        </div>
+    </main>
+{% endblock %}

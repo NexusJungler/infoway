@@ -1,0 +1,76 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main home">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'infoway' } %}
+            </section>
+        </div>
+
+        <div class="home-information">
+
+            <div class="home_info-title">
+                <h2> Administrateur infoway</h2>
+            </div>
+
+            <div class="home_enseignes-row">
+                <p class="border--line">Nos Enseignes</p>
+                <div class="home_enseignes-bloc">
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="Factory & cO">
+                        <p>KFC</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>QUICK</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Francesca.png') }}" alt="logo quick">
+                        <p>elior</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="logo quick">
+                        <p>Areas</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Francesca.png') }}" alt="logo quick">
+                        <p>phileas</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>5asec</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_Factory&cO.png') }}" alt="logo quick">
+                        <p>l'arche</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>Red</p>
+                    </div>
+                    <div class="home_enseignes-col">
+                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="logo quick">
+                        <p>pizzaHut</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="company">
+                <div class="company-bloc">
+                    <p class="border--line">
+                        Vous avez <span class="col-right"><span class="bold">140</span> sites</span>
+                    </P>
+                    <div class="col-right1 company-info company-info-have">
+                        <p><span class="bold">700</span> ecran</p>
+                        <p><span class="bold">700</span> Flux Menuboard</p>
+                        <p><span class="bold">700</span> Flux priceborad</p>
+                        <p><span class="bold">700</span> Flux Tv</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+{% endblock %}

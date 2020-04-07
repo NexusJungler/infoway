@@ -6,7 +6,8 @@
     }
     
     .select-down {
-        position: relative;
+        position: absolute;
+        width: 239px;
     }
 
     span.value {
@@ -34,7 +35,7 @@
         color: #4D646D;;
         display: none;
         left: 0;
-        padding: 2px 15px 2px 5px;
+        padding: 9px 15px 2px 7px;
         position: absolute;
         top: 0px;
         width: 16.8rem;
@@ -70,57 +71,6 @@
 }
 
 
-.mutliselect-chkbox {
-    display: block;
-    position: relative;
-    padding-left: 1.8rem;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    font: 1rem 'Segoe UI', sans-serif;
-    color: #4D646D;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-        &:checked ~ .mutliselect-check {
-            background-color: #2196F3;
-        }
-        &:checked ~ .mutliselect-check:after {
-            display: block;
-        }
-    }
 
-    .mutliselect-check {
-        position: absolute;
-        top: 0.25rem;
-        left: 0.3rem;
-        height: 1rem;
-        width: 1rem;
-        background-color: #eee;
-        border: 0.06px solid #4D646D;
-        &:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-        &:after {
-            left: 0.3rem;
-            top: 0rem;
-            width: 0.3rem;
-            height: 0.68rem;
-            border: solid white;
-            border-width: 0 0.06rem 0.06rem 0;
-            -webkit-transform: rotate(39deg);
-            -ms-transform: rotate(39deg);
-            transform: rotate(39deg);
-        }
-    }
-}
 
   

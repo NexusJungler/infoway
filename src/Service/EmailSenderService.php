@@ -7,59 +7,66 @@ namespace App\Service;
 use Exception;
 use Swift_Message;
 use Swift_TransportException;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 
 class EmailSenderService
 {
 
 
-	private $m_mailer;
+	private $mailer;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
 
 
-	public function __construct(\Swift_Mailer $mailer)
+    public function __construct(\Swift_Mailer $mailer, ParameterBagInterface $parameterBag)
 	{
-		$this->m_mailer = $mailer;
+		$this->mailer = $mailer;
+		$this->parameterBag = $parameterBag;
 	}
 
 
 	/**
 	 * Send email
 	 *
-	 * @param \Swift_Mailer $mailer
-	 * @param string $from
 	 * @param string $to
-	 * @param string $replyTo
 	 * @param string $subject
 	 * @param $body
 	 * @param string $bodyContentType
-	 * @return bool
 	 * @throws Exception
 	 */
-	public function sendEmail(string $from, string $to, string $replyTo, string $subject, $body, string $bodyContentType)
+	public function sendEmail(string $to, string $subject, $body, string $bodyContentType)
 	{
 		try
 		{
 
-			$mail = (new Swift_Message($subject))
-				->setFrom($from)
-				->setTo($to)
-				->setReplyTo($replyTo)
+			$message = (new Swift_Message($subject))
+				->setFrom($this->parameterBag->get('mailer_user')) // use parameter defined in config/services.yaml
+                ->setTo($to)
 				->setBody($body, $bodyContentType);
 
-			$this->m_mailer->send($mail);
+            //dd($this->parameterBag->get('mailer_use'));
 
-			return true;
+            $this->mailer->send($message);
 
 		}
 		catch (Swift_TransportException $e)
 		{
 			throw new Exception($e->getMessage());
 		}
+		catch (ParameterNotFoundException $e  )
+        {
+            throw new Exception($e->getMessage());
+        }
 		catch (Exception $e)
 		{
+            //dd(preg_match("/\"\w+\"+/", $e->getMessage(), $matches), str_replace('"',null,$matches[0]));
 			throw new Exception($e->getMessage());
 		}
 
 	}
-
 
 }

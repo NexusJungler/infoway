@@ -13,7 +13,7 @@ Encore
     .setPublicPath('/build')
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
-     .copyFiles({
+    .copyFiles({
         from: './assets/images',
 
         // copying without versioning
@@ -26,7 +26,7 @@ Encore
 
         // only copy files matching this pattern
         pattern: /\.(png|jpg|jpeg)$/
-     })
+    })
 
     /*
      * ENTRY CONFIG
@@ -41,9 +41,12 @@ Encore
     .addEntry('app_login', './assets/js/app_login.js')
     .addEntry('app_register', './assets/js/app_register.js')
     //.addEntry('modal_message', './assets/js/modal_message.js')
-    .addEntry('back-office', './assets/js/back-office.js')
-    .addEntry('back-office_create-customer', './assets/js/back-office_create-customer.js')
     .addEntry('permission', './assets/js/permission.js')
+    // create-user
+    .addEntry('create-user', './assets/js/create/create-user.js')
+    .addEntry('user_login', './assets/js/user_login.js')
+    .addEntry('user_password_forget', './assets/js/user_password_forget.js')
+    .addEntry('user_password_reset', './assets/js/user_password_reset.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -72,21 +75,21 @@ Encore
     })
 
     // enables Sass/SCSS support
-     .enableSassLoader()
+    .enableSassLoader()
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+// uncomment if you use TypeScript
+//.enableTypeScriptLoader()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
+// uncomment to get integrity="..." attributes on your script & link tags
+// requires WebpackEncoreBundle 1.4 or higher
+//.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+// uncomment if you're having problems with a jQuery plugin
+//.autoProvidejQuery()
 
-    // uncomment if you use API Platform Admin (composer req api-admin)
-    //.enableReactPreset()
-    //.addEntry('admin', './assets/js/admin.js')
+// uncomment if you use API Platform Admin (composer req api-admin)
+//.enableReactPreset()
+//.addEntry('admin', './assets/js/admin.js')
 ;
 
 module.exports = Encore.getWebpackConfig();

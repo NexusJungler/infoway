@@ -4,10 +4,12 @@
 namespace App\Entity\Admin;
 
 
+use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Entity\Customer\Role ;
 
 
 /**
@@ -31,6 +33,17 @@ class Customer
      */
     private $name;
 
+    //Cette propriete sert a contenir tous les sites qu un user possede, contenu dans l objet Customer representant l enseigne contenant le site. Cela permettra d avoir un objet user qui contiendra des enseignes qui contiendront des sites
+    private $sites ;
+
+    //Cette propriete sert a contenir le role appartenant a un user stocké dans l enseigne auquel il appartient
+    private $role;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $logo;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -47,42 +60,67 @@ class Customer
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $phone_number;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="customers")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $country;
-
-    /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="customer", orphanRemoval=true)
+     * Many Customers have Many Users.
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="customers")
      */
     private $users;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="TimeZone")
-     * @ORM\JoinColumn(nullable=false)
+     * Une enseigne se situe dans un pays qui quant a lui peut apparaitre dans plusieurs enseignes
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
-    private $timezone;
+    private $country;
+
+
+    /**
+     * Une enseigne possede une timezone qui quant a elle peut apparaitre dans plusieurs enseignes
+     * @ORM\ManyToOne(targetEntity="TimeZone")
+     * @ORM\JoinColumn(name="timezone_id", referencedColumnName="id")
+     */
+    private $timeZone;
+
+    /**
+     * @ORM\Column(type="string", name="phone_number", length=255)
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="text", name="description")
+     */
+    private $description;
+
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->sites = new ArrayCollection();
     }
 
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRole():?Role
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole(Role $role): self
+    {
+        $this->role = $role;
+        return $this;
+    }
+
 
     public function getName(): ?string
     {
@@ -92,6 +130,18 @@ class Customer
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo): self
+    {
+        $this->logo = $logo;
 
         return $this;
     }
@@ -132,26 +182,66 @@ class Customer
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
     {
-        return $this->phone_number;
+        return $this->users;
     }
 
-    public function setPhoneNumber(string $phone_number): self
+    public function addUser(User $user): self
     {
-        $this->phone_number = $phone_number;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addCustomer($this);
+        }
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    /**
+     * @param string $sites
+     */
+    public function setSites(ArrayCollection $sites): void
     {
-        return $this->description;
+        $this->sites = $sites;
     }
 
-    public function setDescription(?string $description): self
+    /**
+     * @return ArrayCollection
+     */
+    public function getSites(): ArrayCollection
     {
-        $this->description = $description;
+        return $this->sites;
+    }
+
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+        }
+
+        return $this;
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site) ) {
+            $this->sites->removeElement($site);
+//            $site->setCustomer(null);
+        }
 
         return $this;
     }
@@ -168,46 +258,38 @@ class Customer
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getTimeZone(): ?TimeZone
     {
-        return $this->users;
+        return $this->timeZone;
     }
 
-    public function addUser(User $user): self
+    public function setTimeZone(?TimeZone $timeZone): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setCustomer($this);
-        }
+        $this->timeZone = $timeZone;
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function getPhoneNumber(): ?string
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getCustomer() === $this) {
-                $user->setCustomer(null);
-            }
-        }
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
-
-    public function getTimezone(): ?TimeZone
+    public function getDescription(): ?string
     {
-        return $this->timezone;
+        return $this->description;
     }
 
-    public function setTimezone(?TimeZone $timezone): self
+    public function setDescription(string $description): self
     {
-        $this->timezone = $timezone;
+        $this->description = $description;
 
         return $this;
     }

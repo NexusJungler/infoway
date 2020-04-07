@@ -4,6 +4,10 @@ class Navbar {
     navbarleft() {	
 
 
+        $('#text').click(function () {
+            $('#menu-closed').addClass('menu-test');
+          });
+
         $('.menu-wrap input[type="checkbox"]').change( e =>{
             
             let $checkBox = $(e.currentTarget) ;
@@ -14,7 +18,7 @@ class Navbar {
 
                  $('.menu .nav').addClass('nav-active');
 
-                 $('.home ').addClass('active-main');
+                 $('.main ').addClass('active-main');
                 // $('.menu .nav').animate({
                 //     width: '12%',
                 // },'slow', 'linear', function() {
@@ -28,7 +32,7 @@ class Navbar {
                 $('.logo__infoway').removeClass('logo__infoway-active');
 
                  $('.menu .nav').removeClass('nav-active');
-                 $('.home ').removeClass('active-main');
+                 $('.main ').removeClass('active-main');
             //     $('.menu .nav').animate({
             //         width: '8%',
             //     },'slow', 'linear', function() {
@@ -39,11 +43,7 @@ class Navbar {
                 $('.menu .nav .nav-menu > li .nav-sous-menu-mobile').show();
 
             }
-        })
-
-
-
-            
+        })            
     }
     
 }

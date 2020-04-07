@@ -1,4 +1,5 @@
-require('../css/app_login.css');
+require('../css/general/reset.scss')
+require('../css/app_login.scss');
 
 
 const $ = require('jquery');

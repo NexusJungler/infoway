@@ -1,19 +1,21 @@
 /******************************************************** MAIN **********************************************************************/
-.home{
+.main{
     width: 92%;
     left: 8%;
     position: relative;
     z-index: 2;
-    margin-bottom: rem(80px);
+    padding-bottom: rem(80px);
+    background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
     .main-content {
-        section{
+        > section{
             padding-left: 4%;
-            background-color: #EBEBEB;
+            
         }
     }
         
     .jumbotron {
         color: #404040;
+        background: #D4DCDF 0% 0% no-repeat padding-box;
         .jumbotrom-wrapper{
             display: flex;
             justify-content: space-between;
@@ -137,7 +139,7 @@
 /* MEDIA QUERY */
 
 @media (max-width: rem(1440px))  {
-    .home{
+    .main{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{
@@ -171,7 +173,7 @@
 
 
 @media (max-width: rem(1200px))  {
-    .home{
+    .main{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{
@@ -195,7 +197,7 @@
 
 /* Tablette */
 @media (max-width: rem(900px))  {
-    .home{
+    .main{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{
@@ -213,7 +215,7 @@
             }
         } 
     }
-    .home-setting{
+    .main_setting{
         .jumbotron{
             .jumbotrom-wrapper{
                 .page__title{

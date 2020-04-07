@@ -121,4 +121,12 @@ class Role
 
         return $this;
     }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermission(): Collection
+    {
+        return $this->permission;
+    }
 }

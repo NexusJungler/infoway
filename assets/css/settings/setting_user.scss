@@ -1,0 +1,25 @@
+#setting-user{
+    .setting-user-table{
+        margin-top: 20px;
+    }
+    .table{
+        .table-custome{
+            .thead-content{
+                th{
+                   width: 50px;
+                    &:first-child{
+                        
+                    }
+                }
+            }
+            .tbody-content{
+                td{
+                    width: 50px;
+                    &:first-child{
+                        
+                    }
+                }
+            }
+        }
+    }
+}

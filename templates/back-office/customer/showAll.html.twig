@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+
+{% block title "Customers | Back-office" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('back-office') }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h3>Filtrer</h3>
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="col">
+                    {{ form_widget(form.name) }}
+
+                    {{ form_widget(form.address) }}
+
+                    {{ form_widget(form.city) }}
+
+                    {{ form_widget(form.country) }}
+
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <h1>{{ numberOfCustomers }} entreprise(s) trouvée(s)</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.city }}</td>
+                    <td>{{ customer.country.name }}</td>
+                    <td>
+                        <a href="{{ path('admin_customer::show',{id: customer.id, name: customer.name  }) }}">Consulter</a>
+                        <a href="{{ path('admin_customer::edit',{id: customer.id, name: customer.name  }) }}">Editer</a>
+                        {{ include('templates/delete_entity/__delete_entity.html.twig',
+                            {
+                                form_action: path('admin_customer::delete', {id: customer.id, name: customer.name}),
+                                subject: customer
+                            }
+                        )
+                        }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button><a href="{{ path('admin_customer::create') }}">Ajouter</a></button>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('back-office') }}
+{% endblock %}

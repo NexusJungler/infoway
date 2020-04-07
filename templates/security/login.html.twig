@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="/lib/fontawesome-pro-5.10.2-web/css/all.css" rel="stylesheet">
-     {{ encore_entry_link_tags('app_login') }}
-     <title>Connexion</title>
+    {{ encore_entry_link_tags('app_login') }}
+    <title>Connexion</title>
 </head>
 <body class="main__gradiant--grey">
 <header>
@@ -23,18 +23,20 @@
         <span class="adress">INFOWAY S.A.S 6 rue Lorget | 93200 Saint-Denis</span>
     </div>
 
+
+
     <div class="form-login">
         {# {% if error %}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %} #}
         <form  method="post">
             <div class="form-group">
-                <input type="text" id="username" name="username" placeholder="Utilisateur" {% if last_username is defined %} value="{{ last_username }}" {% endif %} required>
+                <input type="email" id="inputEmail" name="email" placeholder="Email/Login" {% if last_username is defined %} value="{{ last_username }}" {% endif %} required>
                 <span class="error"></span>
             </div>
 
             <div class="form-group">
-                <input type="password" id="user_password" name="user_password" placeholder="Mot de passe" required>
+                <input type="password" id="user_password" name="password" placeholder="Mot de passe" required>
                 <span class="error"></span>
             </div>
 

@@ -1,6 +1,6 @@
 /*****************************************************  tab menu *****************************************************************/
 
-#wrapper{
+.wrapper{
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -87,7 +87,7 @@ ul.tabs li.current::after{
 
 /*****************************************************  page marque  *****************************************************************/
 
-#wrapper_tabcontent{
+.wrapper_tabcontent{
     background-color: #ffffff;
     padding: 0 2rem  2rem ;
 }
@@ -128,7 +128,6 @@ ul.tabs li.current::after{
     display: flex;
 }
 
-
 /* == tab-content-bloc-left == */
 
 .tab-content-bloc-left {
@@ -136,9 +135,6 @@ ul.tabs li.current::after{
     width: 40%;
     margin-right: 4rem;
 }
-
-
-
 
 
 .bloc-societe{
@@ -175,8 +171,6 @@ ul.tabs li.current::after{
     margin-left: -1rem;
 } 
 
-
-
 .tab-content-bloc-right .form-file{
     margin-left: 2.5rem;
 }
@@ -205,7 +199,6 @@ ul.tabs li.current::after{
 
 }
 
-
 .bloc-group-bottom .rdo-square::after {
     content: '';
     border-right: 0.06rem solid #4D646D;
@@ -217,8 +210,6 @@ ul.tabs li.current::after{
     top: 0.1rem;
     position: relative;
 }
-
-
 
 .bloc-group-bottom .mini-btn-right{
     margin-top: 0.2rem;
@@ -232,9 +223,6 @@ ul.tabs li.current::after{
     margin-left: 0.8rem;
 }
 
-
-
-
 .bloc-societe-img{
     width: 20%;
     padding-top: 0.1rem;
@@ -244,12 +232,6 @@ ul.tabs li.current::after{
 .bloc-societe-img img{ 
     width: 4.5rem;
 }
-
-
-
-
-
-
 
 
 .bloc-group-top{

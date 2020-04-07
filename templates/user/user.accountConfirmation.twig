@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Confirmation du compte" %}
+
+{% block body %}
+
+
+    <div style="margin-left: 10%">
+        {% if error is defined and error is same as(false) %}
+
+            {% for message in app.flashes('message') %}
+                <p>
+                    {{ message }}
+                </p>
+            {% endfor %}
+
+            <p>
+                Pour pouvoir finaliser votre inscription, veuillez choisir votre mot de passe :
+            </p>
+
+            <form action="" method="post" name="user">
+
+                <div>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="user[password]" required>
+                </div>
+
+                <div>
+                    <label for="confirmation">Confirmation</label>
+                    <input type="password" id="confirmation" name="user[password_confirm]" required>
+                </div>
+
+                <div>
+                    <button type="submit">Valider</button>
+                </div>
+
+            </form>
+        {% else %}
+            <p>
+                Désolé, ce lien n'est plus valide !
+            </p>
+        {% endif %}
+    </div>
+
+
+
+
+
+{% endblock body %}

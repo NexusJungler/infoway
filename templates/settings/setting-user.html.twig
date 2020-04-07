@@ -1,0 +1,73 @@
+{% extends 'setting.html.twig' %}
+
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('create-user') }}
+{% endblock %} #}
+
+{% block maincontent %}
+<section class="wrapper_tabcontent">
+
+    <article id="setting-user" class="tab-content current">
+
+        <div class="tab-content-title">
+            <h3 class="title">Utilisateur</h3>
+            <p> DEl&CIA</p>
+        </div>
+
+        <form action="" method="post" name="user">
+
+            <article class="display setting-display ">
+                <div class="display-content">
+                    <div class="display-btn">
+                        <a class="btn" href="{{ path('app:createuser') }}" role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                    </div>
+                </div>
+            </article > 
+
+            <article class="setting-user-table">
+                <div class="table">
+
+                    <table class="table-custome" >
+                        <thead  class="table-info thead-content">
+                            <tr>
+                                <th>Nom</th>    
+                                <th>Prenom</th>
+                                <th>Email</th> 
+                                <th>Téléphone</th>
+                                <th>Nbre Sites</th>
+                                <th></th>  
+                            </tr>
+                        </thead>
+                        <tbody class="tbody tbody-content scrollbar-table">
+                            <tr>
+                                <td>Estelle</td>
+                                <td>Desru</td>
+                                <td>estelle@hotmail.fr</td>
+                                <td>0632526282</td>
+                                <td>5</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Estelle</td>
+                                <td>Desru</td>
+                                <td>estelle@hotmail.fr</td>
+                                <td>0632526282</td>
+                               
+                                <td>5</td>
+                                <td></td>
+                            </tr>
+                        </tbody>  
+                    </table>
+
+                </div> 
+            </article>
+
+        </form>
+
+    </article> 
+
+</section >
+
+
+{% endblock %}

@@ -56,8 +56,8 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
         $this->loadTimeZones($manager);
         $this->loadCountries($manager);
         $this->loadCustomers($manager);
-        $this->loadUsers($manager);
-        $this->loadPermissions($manager);
+        //$this->loadUsers($manager);
+        //$this->loadPermissions($manager);
 
         /***      Datas creation end      ***/
 
@@ -419,6 +419,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
                 ->setPhoneNumber($this->__faker->phoneNumber)
                 ->setDescription($this->__faker->text())
                 ->setCountry($country)
+                ->setLogo("logo_" . $i)
                 ->setTimezone($timeZone);
 
             $manager->persist($customer);
