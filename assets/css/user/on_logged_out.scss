@@ -1,5 +1,11 @@
 @import "../general/reset";
 
+/** Function for converting  px to rem **/
+@function rem($size) {
+  $remSize: $size / 16px;
+  @return #{$remSize}rem;
+}
+
 /* barlow-regular - latin */
 @font-face {
   font-family: 'Barlow';
@@ -13,6 +19,7 @@
   url('../fonts/barlow-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
   url('../fonts/barlow-v4-latin-regular.svg#Barlow') format('svg'); /* Legacy iOS */
 }
+
 /* barlow-italic - latin */
 @font-face {
   font-family: 'Barlow';
@@ -26,7 +33,6 @@
   url('../fonts/barlow-v4-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
   url('../fonts/barlow-v4-latin-italic.svg#Barlow') format('svg'); /* Legacy iOS */
 }
-
 
 * {
   box-sizing: border-box
@@ -100,7 +106,7 @@ img {
 }
 .desc::after {
   content: '';
-  border-bottom: 1px solid #DEDEDE;
+  border-bottom: rem(1px) solid #DEDEDE;
   position: absolute;
   left: 0;
   width: 50%;
@@ -127,13 +133,19 @@ img {
   top: 50%;
   bottom: 20%;
   width: 360px;
-
+  .error{
+    color: #EE322F;
+    font: normal 21px "Barlow";
+    a{
+      color: blue;
+    }
+  }
   form {
     display: flex;
     flex-direction: column;
-
     span.error {
       color: #EE322F;
+      font: normal 21px "Barlow";
     }
 
     input.invalid {
@@ -142,6 +154,20 @@ img {
 
     .form-title {
       color: #000;
+      font: normal 23px "Barlow";
+    }
+    .form_subtitle{
+      padding-top: rem(10px);
+      font: normal 21px "Barlow";
+      color: #BCC5C8;
+    }
+    .password_reset_process_info{
+      font: normal 21px "Barlow";
+      color: #5DA81A;
+      width: 700px;
+      p{
+        padding-bottom: 5px;
+      }
     }
 
     .form-group {
@@ -153,6 +179,15 @@ img {
       margin-bottom: 5%;
     }
 
+    .from-group-memoriser{
+      margin-bottom: 0;
+      height: 30px;
+    }
+    .from-group-forget-pw{
+      height: 30px;
+    }
+
+
     .form_submit_container {
       text-align: right;
 
@@ -160,11 +195,12 @@ img {
         color: #FFF;
         text-transform: uppercase;
         width: 30%;
-        height: 100%;
+        height: 30px;
         background-color: #FF0707;
         border-radius: 11px;
         border: none;
-
+        font: normal 20px "Barlow";
+        letter-spacing: 0px;
         &:focus {
           outline: none;
         }
@@ -183,13 +219,14 @@ img {
       padding-left: 17px;
       border: 1px solid #E3E3E3;
       border-radius: 9px;
-
+      font: normal 18px "Barlow";
       &:focus {
         outline: none;
       }
 
       &::placeholder {
-        color: #707070;
+        color: #DEDEDE;
+        font: normal 18px "Barlow";
       }
 
       &[type="checkbox"] {
@@ -232,6 +269,8 @@ img {
 
     }
 
+
+
   }
 
 }
@@ -259,15 +298,43 @@ img {
 /**************************************************************************** FOOTER **********************************************************************************/
 .footer {
   position: absolute;
-  margin-left: 20px;
+  margin-left: 65px;
+  margin-bottom: 40px;
   bottom: 2%;
   font: 0.75rem 'Barlow', sans-serif;
+  p {
+    color: #717171;
+  }
+  .accounting {
+    color: #CBCBCB;
+  }
+  .footer-technique{
+    margin-bottom: 40px;
+  }
 }
 
-.footer p {
-  color: #717171;
+@media (max-width: rem(1600px))  {
+  .form_container{
+    right: 26%;
+  }
 }
 
-.direction, .technical, .accounting {
-  color: #CBCBCB;
+@media (max-width: rem(1440px))  {
+  .form_container{
+    right: 23%;
+  }
 }
+// @media (min-width: rem(1200px))  {
+//   .form_container{
+//     right: 20%;
+//   }
+// }
+
+// @media (max-width: rem(1024px))  {
+//   .main-header {
+//     left: 11%;
+//   }
+//   .form_container{
+//     right: 13%;
+//   }
+// }

@@ -8,7 +8,7 @@ class UploadHandlerTool extends Tool
     {
         super();
         this.__name = "UploadHandlerTool";
-        this.__authorizedExtensions = [];
+        this.__authorizedExtensions = null;
     }
 
 
@@ -65,6 +65,7 @@ class UploadHandlerTool extends Tool
                 .done( (extensions) => {
 
                     console.table(extensions);
+                    this.__authorizedExtensions = extensions;
 
                 } )
 
@@ -76,6 +77,21 @@ class UploadHandlerTool extends Tool
         }
 
         return this;
+
+    }
+
+    isFileExtensionIsAccepted(extension)
+    {
+        let output = false;
+
+        Object.keys(this.__authorizedExtensions).forEach( (key) => {
+
+            if(this.__authorizedExtensions[key].indexOf(extension) !== -1)
+                output = true;
+
+        } );
+
+        return output;
 
     }
 
@@ -99,27 +115,66 @@ class UploadHandlerTool extends Tool
         {
             $("#uploadmedia").on("change.onFileSelectAddFileInList", e => {
 
-                console.log( $(e.currentTarget)[0].files ); debugger
+                let filesSelected = $(e.currentTarget)[0].files;
 
-                let newUploadFileItem = $("<tr>");
+                filesSelected.forEach( (file) => {
 
-                $("<td>", {
+                    let fileName = file.name;
+                    let fileExtension = fileName.split('.').pop();
+                    let fileIsAccepted = this.isFileExtensionIsAccepted(fileExtension);
 
-                    text: 'fileName'
+                    console.log(file, fileName, fileExtension);
 
-                }).appendTo(newUploadFileItem);
+                    if( $(`.upload-info table tbody tr td[data-file='${fileName}']`).length < 1 )
+                    {
 
-                $("<td>", {
+                        let newUploadFileItem = $("<tr>", {
 
-                    text: ''
+                        });
 
-                }).appendTo(newUploadFileItem);
+                        let fileNameContainer = $("<td>", {
 
-                $("<td>", {
+                            text: fileName
 
-                }).appendTo(newUploadFileItem);
+                        }).attr("data-file", fileName)
+                          .appendTo(newUploadFileItem);
 
-                newUploadFileItem.appendTo( $(".upload-info table tbody") );
+
+                        let fileIsNotAcceptedErrorMessageContainer = $("<td>", {
+
+                        });
+
+
+                        let fileIsAcceptedResultContainer =  $("<td>", {
+
+                        });
+
+                        if(!fileIsAccepted)
+                        {
+                            let fileIsNotAcceptedErrorMessage = $("<span>", {
+
+                                text: "Ce type de fichier n'est pas accepté ! Il ne sera pas être uploader",
+
+                            }).appendTo(fileIsNotAcceptedErrorMessageContainer);
+                        }
+
+                        let fileIsAcceptedResultIcon =  $("<i>", {
+
+                            class: (fileIsAccepted === true) ? 'fas fa-check' : 'fas fa-times'
+
+                        }).appendTo(fileIsAcceptedResultContainer);
+
+                        fileIsNotAcceptedErrorMessageContainer.appendTo(newUploadFileItem);
+
+                        fileIsAcceptedResultContainer.appendTo(newUploadFileItem);
+
+                        newUploadFileItem.appendTo( $(".upload-info table tbody") );
+
+                    }
+
+                } )
+
+
 
 
             })

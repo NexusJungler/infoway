@@ -377,7 +377,7 @@ class UserController extends AbstractController
 
                     if($user)
                     {
-                        $this->sendPasswordResetEmail($emailSenderService, $user);
+                        //$this->sendPasswordResetEmail($emailSenderService, $user);
                         $emailIsSend = true;
                     }
                     else
@@ -435,6 +435,13 @@ class UserController extends AbstractController
             {
                 $error = "Les 2 mots de passe doivent être identique !";
             }
+
+            // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+            elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
+            {
+                $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+            }
+
             else
             {
 
@@ -456,10 +463,11 @@ class UserController extends AbstractController
             {
                 $tokenIsInvalid = true;
 
-                if($user)
-                    $this->sendPasswordResetEmail($emailSenderService, $user);
+                /*if($user)
+                    $this->sendPasswordResetEmail($emailSenderService, $user);*/
 
-                else
+               // else
+                if(!$user)
                     $userNotFound = true;
 
             }
