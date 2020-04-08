@@ -15,9 +15,9 @@ security:
             anonymous: true
 
             form_login:
-                check_path: app_login
-                username_parameter: email
-                password_parameter: password
+                check_path: user_login
+                username_parameter: user[email]
+                password_parameter: user[password]
 
             logout:
               path: user::logout
@@ -48,7 +48,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/template$, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/logout$, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/password/forget$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset/password/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

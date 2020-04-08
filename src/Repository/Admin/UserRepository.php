@@ -36,10 +36,14 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
+    //Methode de recuperaton d un user present  recupere de la base admin avec ses sites recupere dans chaque base correspondante
     public function getUserWithSites(User $user){
 
+        //Recuperation de tous les ids de chaque site appartenant à l'user importés  de la base admin
         $userSites = $user->getSitesIds() ;
 
+
+        //creation du tableau contenant les ids de l user rangés par enseigne (en clé de tableau )  afin d effectuer une seule connection par enseigne quand on va aller chercher les objets site auxquels les ids appartiennent dans leur base
         $allSitesNeededFilteredByCustomersArray=[];
 
         foreach($userSites as $userSite){
@@ -51,26 +55,33 @@ class UserRepository extends ServiceEntityRepository
 
         }
 
+        //On recupere le manager de la connection admin et le repository de l entité Customer
         $adminManager = $this->_registry->getManager('default');
         $customerRepo = $adminManager->getRepository(Customer::class) ;
 
+        //On va chercher tous les objets customers (enseigne) et on les store  dans un nouveau tableau qui contiendra les enseignes existantes en bases avec le nom de chaque enseigne  en guise de clé
         $allCustomers = $customerRepo->findBy(['name' => array_keys($allSitesNeededFilteredByCustomersArray)]);
         $allCustomersIndexedByName = [];
 
         foreach($allCustomers as $customer){
             $allCustomersIndexedByName[ $customer->getName() ] = $customer ;
         }
+
+        //On refait une boucle en verifiant cette fois que les enseignes recuperés de l objet user en parametre existent bien en base . SI tel est le gars on se connecte à chaque base enseigne  et on va recuperer tous les objets sites à partir des ids de ceux ci renseignes  dans l object user fournit en argument
         foreach( $allSitesNeededFilteredByCustomersArray as $enseigne => $site ){
 
             if (!array_key_exists($enseigne,$allCustomersIndexedByName) || ! $allCustomersIndexedByName[$enseigne] instanceof Customer){
                 continue ;
             }
 
+            //on recupere l object enseigne de l iteration en cour correspondant a l enseigne renseignée dans l objet user fournit en argument
             $enseigneEntity = $allCustomersIndexedByName[ $enseigne ];
+            //on se connecte a la base de cette enseigne et on recupere le repository des sites dans celle ci puis on recupere tous les sites de l enseigne appartenant à l'user d'un coup
             $adminManager = $this->_registry->getManager($enseigne);
             $siteRepo  = $adminManager->getRepository(Site::class );
             $userSites = $siteRepo->findBy(['id'=> $site]);
 
+            //pour chacun des sites on les ajoute à l'objet customer (afin d avoir les sites triés par customer) et on les ajoute à l'objet user fournit en argument de methode
             foreach($userSites as $userSite){
                 $enseigneEntity->addSite($userSite);
                 $user->addSite($userSite,$enseigneEntity);
@@ -79,21 +90,23 @@ class UserRepository extends ServiceEntityRepository
 
     }
 
+    //Methode pour recuperer un user present dans la base admin
     public function getUserWithRoles( User $user ){
 
+        //on recupere tous les ids des roles  present dans l objet user fournit en argument et on boucle dessus
         foreach($user->getUserRoles() as $userRole){
 
+            //on recupere le nom de l enseigne auquel le role est atitré et l'id du  role en question
             $roleCustomer = $userRole->getCustomer();
             $siteCustomerName = $roleCustomer->getName();
-
             $userRoleId = $userRole->getRoleId();
 
-
+            //on va chercher le manager de la base stockant l objet role de l id recuperé ,  on va chercher le repository de l entité role en question et on va chercher le l object role lié à l id  dans sa base
             $currentEm = $this->_registry->getManager($siteCustomerName);
-
             $roleRepo  = $currentEm->getRepository( Role::class );
             $currentRole = $roleRepo->findOneById( $userRoleId );
 
+            //On ajoute le role recuperé dans la base à l objet user fournit en parametre
             $user->addRole($currentRole,$roleCustomer);
         }
 
@@ -145,6 +158,8 @@ class UserRepository extends ServiceEntityRepository
 
     }
 
+
+
     public function setEntityManager(ObjectManager $entityManager)
     {
         $this->_em = $entityManager;
@@ -163,6 +178,15 @@ class UserRepository extends ServiceEntityRepository
         return $this->reformatPermissions($user->getRole()->getPermissions()->getValues(), $onlyIds);
     }
 
+    public function getUsersByCustomer(Customer $customer)
+    {
+        return $this->createQueryBuilder('u')
+             ->select('u')
+             ->where(':customer MEMBER OF u.customers')
+             ->setParameter('customer', $customer)
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * Reformat permissions array to :

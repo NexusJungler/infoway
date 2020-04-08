@@ -26,6 +26,7 @@ class Permission
 
 
     /**
+     * Une permission est lié a une feature qui peut quant à  elle apparaitre dans plusieurs permissions
      * @ORM\ManyToOne(targetEntity="Feature")
      * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
      */

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/lib/fontawesome-pro-5.10.2-web/css/all.css" rel="stylesheet">
+    {% if app.request.attributes.get('_route') is same as('user::login') %}
+        {{ encore_entry_link_tags('user_login') }}
+    {% endif %}
+
+    {% if app.request.attributes.get('_route') is same as('user::passwordForget') %}
+        {{ encore_entry_link_tags('user_password_forget') }}
+    {% endif %}
+
+    {% if app.request.attributes.get('_route') is same as('user::resetPassword') %}
+        {{ encore_entry_link_tags('user_password_reset') }}
+    {% endif %}
+    <title>{{ page_title }}</title>
+</head>
+<body class="main__gradiant--grey">
+<header>
+    <h1></h1>
+</header>
+<div id="container" >
+
+    <div class="main-header">
+        <div class="resume">
+            <h1 class="logo"><img src="{{ asset('build/images/logo_infoway.png') }}" alt="logo"></h1>
+            <span class="desc">Spécialiste de l'affichage dynamique</span>
+        </div>
+        <div class="degrade"></div>
+        <span class="adress">INFOWAY S.A.S 6 rue Lorget | 93200 Saint-Denis</span>
+    </div>
+
+    <div class="form_container">
+        {# {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %} #}
+
+        {% if tokenIsInvalid is defined and tokenIsInvalid is same as(true) %}
+            <div class="error">
+                {% if userNotFound is defined and userNotFound is not same as(true) %}
+                <p>Désolé, ce lien n'est plus valide ! Si votre email est correcte, vous allez recevoir un nouveau lien dans quelques minutes.</p>
+
+                {% else %}
+                <p>Désolé, ce lien n'est valide ! Cliquez <a href="{{ path('user::passwordForget') }}">ici</a> pour saisir votre email afin de recevoir un nouveau lien pour réinitialiser votre mot de passe.</p>
+
+                {% endif %}
+            </div>
+        {% else %}
+
+        <form  method="post" name="user">
+
+            <div class="form_title_container form_item_container">
+                <h1 class="form-title">{{ form_title }}</h1>
+                {% if form_subtitle is defined %}
+                    <p class="form_subtitle">{{ form_subtitle }}</p>
+                {% endif %}
+            </div>
+
+            {% if error is defined and error is not null %}
+                <div>
+                    <span class="error">{{ error }}</span>
+                </div>
+            {% endif %}
+
+            {% if app.request.attributes.get('_route') is same as('user::login') %}
+                {% include "user/login_form.html.twig" %}
+            {% endif %}
+
+            {% if app.request.attributes.get('_route') is same as('user::passwordForget') %}
+                {% include "user/password_forget_form.html.twig" %}
+            {% endif %}
+
+            {% if app.request.attributes.get('_route') is same as('user::resetPassword') %}
+                {% include "user/password_reset_form.html.twig" %}
+            {% endif %}
+
+            <div class="form-group form_item_container">
+                <input type="hidden" id="_csrf_token" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </div>
+        </form>
+
+        {% endif %}
+
+    </div>
+</div>
+<footer class="footer">
+    <div class="footer-technique">
+        <p>Hotline technique </p>
+        <p>
+            <a href="tel:+33180031994" class="accounting">01 80 03 19 94</a> / <a href="tel:+33180031996" class="accounting">01 80 03 19 96</a>
+        </p>
+        <p><a href="mailto:hotline@infoway.fr" class="accounting">hotline@infoway.fr</a></p>
+    </div>
+
+    <div class="footer-commercial">
+        <p>Service commercial</p>
+        <p class="accounting">
+            <a href="tel:+33180031991" class="accounting">01 80 03 19 91</a> / <a href="tel:+33635422285" class="accounting">06 35 42 22 85</a>
+        </p>
+    </div>
+   
+    
+
+    {# <p>Direction <span class="direction">| Christophe Gambier</span></p>
+    <p>Responsable technique <span class="technical">| Antoine Lord Michel</span></p>
+    <p>Comptabilité <span class="accounting">| Carmen Rioja Comptabilite</span></p> #}
+</footer>
+
+{% if app.request.attributes.get('_route') is same as('user::login') %}
+    {{ encore_entry_script_tags('user_login') }}
+{% endif %}
+
+{% if app.request.attributes.get('_route') is same as('user::passwordForget') %}
+    {{ encore_entry_script_tags('user_password_forget') }}
+{% endif %}
+
+{% if app.request.attributes.get('_route') is same as('user::resetPassword') %}
+    {{ encore_entry_script_tags('user_password_reset') }}
+{% endif %}
+
+</body>
+</html>

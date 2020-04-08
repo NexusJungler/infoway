@@ -21,10 +21,11 @@ class RolePermissions
      */
     private $permissionId;
 
+    //cette propriete contiendra l objetpermission recuperé de sa base ainsi l objet role de la base admin contiendra des objets permission recuperes depuis la base du client auquel ils appartiennent
     private $permission ;
 
     /**
-     * Many features have one product. This is the owning side.
+     * Many permissions have one role. This is the owning side.
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="permissions")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
      */

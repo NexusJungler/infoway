@@ -33,8 +33,10 @@ class Customer
      */
     private $name;
 
+    //Cette propriete sert a contenir tous les sites qu un user possede, contenu dans l objet Customer representant l enseigne contenant le site. Cela permettra d avoir un objet user qui contiendra des enseignes qui contiendront des sites
     private $sites ;
 
+    //Cette propriete sert a contenir le role appartenant a un user stocké dans l enseigne auquel il appartient
     private $role;
 
     /**
@@ -58,13 +60,14 @@ class Customer
     private $city;
 
     /**
-     * Many Groups have Many Users.
+     * Many Customers have Many Users.
      * @ORM\ManyToMany(targetEntity="User", mappedBy="customers")
      */
     private $users;
 
 
     /**
+     * Une enseigne se situe dans un pays qui quant a lui peut apparaitre dans plusieurs enseignes
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
@@ -72,10 +75,21 @@ class Customer
 
 
     /**
+     * Une enseigne possede une timezone qui quant a elle peut apparaitre dans plusieurs enseignes
      * @ORM\ManyToOne(targetEntity="TimeZone")
      * @ORM\JoinColumn(name="timezone_id", referencedColumnName="id")
      */
     private $timeZone;
+
+    /**
+     * @ORM\Column(type="string", name="phone_number", length=255)
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="text", name="description")
+     */
+    private $description;
 
 
     public function __construct()
@@ -252,6 +266,30 @@ class Customer
     public function setTimeZone(?TimeZone $timeZone): self
     {
         $this->timeZone = $timeZone;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

@@ -22,6 +22,22 @@ class RoleRepository extends ServiceEntityRepository
     // /**
     //  * @return Role[] Returns an array of Role objects
     //  */
+
+    public function getRolesByLevelBellow( $level )
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.level >= :level')
+            ->setParameter('level', $level)
+            ->orderBy('r.level', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    // /**
+    //  * @return Role[] Returns an array of Role objects
+    //  */
     /*
     public function findByExampleField($value)
     {

@@ -3,9 +3,11 @@
 namespace App\Security;
 
 use App\Entity\Admin\User;
+use App\Service\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -18,7 +20,6 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-use App\Service\SessionManager;
 
 class LoginAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -28,7 +29,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
-    private $lastRegisteredUser ;
+    private $lastRegisteredUser;
 
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -41,16 +42,16 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
+        return 'user::login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
+            'email' => $request->request->get('user')['email'],
+            'password' => $request->request->get('user')['password'],
+            'csrf_token' => $request->request->get('user')['csrf_token'],
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
@@ -70,7 +71,6 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
-
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
@@ -82,7 +82,6 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -92,19 +91,23 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-
         $userRepo = $this->entityManager->getRepository(User::class);
+
         $userRepo->getUserWithRoles($this->lastRegisteredUser);
         $userRepo->getUserWithSites($this->lastRegisteredUser);
-//        $sessionManager = new SessionManager() ;
-//        $sessionManager->set('user',$this->lastRegisteredUser);
-//        dd($sessionManager->get('user'));
-        return new RedirectResponse($this->urlGenerator->generate('app'));
+
+
+        $sessionManager = new SessionManager(new Session());
+        $sessionManager->remove('user');
+
+        $sessionManager->set('user',$this->lastRegisteredUser);
+
+        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        return new RedirectResponse($this->urlGenerator->generate('app::homePage'));
     }
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('app_login');
+        return $this->urlGenerator->generate('user::login');
     }
 }

@@ -51,3 +51,9 @@ form.FormValidate();
 
 const clock= new ClockManager();
 clock.enable();
+
+const toolBox = new ToolBox();
+toolBox.activeTool("CustomerCreatorHandler")
+       .activeTool("UploadHandlerTool")
+;
+

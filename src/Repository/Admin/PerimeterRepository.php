@@ -19,6 +19,20 @@ class PerimeterRepository extends ServiceEntityRepository
         parent::__construct($registry, Perimeter::class);
     }
 
+
+
+public function findPerimeterByLevelEqualOrBellow( int $level ): ?array
+{
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.level >= :level')
+        ->setParameter('level', $level)
+        ->OrderBy('p.level','ASC')
+        ->getQuery()
+        ->getResult()
+    ;
+}
+
+
     // /**
     //  * @return Perimeter[] Returns an array of Perimeter objects
     //  */
