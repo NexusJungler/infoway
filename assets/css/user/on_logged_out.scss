@@ -127,19 +127,22 @@ img {
 
 /************************************************************************* FORMULAIRE **************************************************************************/
 
-
-
 .form_container {
   position: absolute;
   right: 30%;
   top: 50%;
   bottom: 20%;
   width: 360px;
+  .error{
+    color: #EE322F;
+    font: normal 21px "Barlow";
+    a{
+      color: blue;
+    }
+  }
   form {
     display: flex;
     flex-direction: column;
-
-    
     span.error {
       color: #EE322F;
       font: normal 21px "Barlow";

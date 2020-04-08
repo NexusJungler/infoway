@@ -92,3 +92,33 @@
         }
     }
 }
+
+
+.main-products{
+  /** PAGE PRODUCT **/
+    .wrapper{
+      .wrapper-content{
+        .tabs{
+          .current{
+            width: 100%;
+          }
+        }
+      }
+    }
+  /** PAGE PRODUCT PRIX**/
+  .prouct-price-content{
+
+    /** tableau**/
+    .table{
+      margin-top: 50px;
+      .table-custome{
+        .thead-info{
+          th{
+            width: 10%;
+          }
+        }
+      }
+    }
+  }
+  
+}

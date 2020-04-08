@@ -78,7 +78,7 @@
             {% endif %}
 
             <div class="form-group form_item_container">
-                <input type="hidden" id="_csrf_token" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" id="_csrf_token" name="user[csrf_token]" value="{{ csrf_token('authenticate') }}">
             </div>
         </form>
 
@@ -89,7 +89,7 @@
 <footer class="footer">
     <div class="footer-technique">
         <p>Hotline technique </p>
-        <p>
+        <p class="accounting">
             <a href="tel:+33180031994" class="accounting">01 80 03 19 94</a> / <a href="tel:+33180031996" class="accounting">01 80 03 19 96</a>
         </p>
         <p><a href="mailto:hotline@infoway.fr" class="accounting">hotline@infoway.fr</a></p>

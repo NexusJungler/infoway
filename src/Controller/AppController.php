@@ -63,6 +63,8 @@ class AppController extends AbstractController
 
     }
 
+    /** Produicts **/ 
+
     /**
      * @Route(path="/products", name="app:products")
      *
@@ -79,10 +81,11 @@ class AppController extends AbstractController
             'tags',
             'Q08'
         ];
-        return $this->render("products.html.twig", [
+        return $this->render("products/products_price.html.twig", [
             'customer' => $customer
         ]);
     }
+
 
     /**
      * @Route(path="/site", name="app:site")
@@ -248,6 +251,8 @@ class AppController extends AbstractController
         ]);
 
     }
+
+
    
 
 }
