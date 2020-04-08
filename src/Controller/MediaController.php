@@ -43,11 +43,12 @@ class MediaController extends AbstractController
 
     /**
      * @Route(path="/upload/media", name="media::uploadMedia", methods={"POST"})
+     * @param Request $request
      */
     public function uploadMedia(Request $request)
     {
 
-        dd($request->request);
+        dd($request->files);
 
     }
 

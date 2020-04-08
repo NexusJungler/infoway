@@ -9,6 +9,7 @@ class UploadHandlerTool extends Tool
         super();
         this.__name = "UploadHandlerTool";
         this.__authorizedExtensions = null;
+        this.__filesToUpload = [];
     }
 
 
@@ -39,6 +40,14 @@ class UploadHandlerTool extends Tool
             $('.btn-popupclose').on("click.onClickOnModalCloseButtonsCloseModal",e => {
 
                 $('.add-popup').removeClass('is-open');
+                $("#uploadmedia").val("");
+                $(".upload-info table .tbody-content").empty();
+                $(".model-upload-file .start_upload_button").hide();
+
+                $('.main-media .upload-file').show();
+                $('.main-media .product-btn-add').show();
+                $('.main-media .upload-title').show();
+                $('.main-media .download-file').hide();
 
             })
 
@@ -95,19 +104,6 @@ class UploadHandlerTool extends Tool
 
     }
 
-    onFileUploadCheckFileExtension(active)
-    {
-
-        if(active)
-        {
-
-        }
-
-        return this;
-
-    }
-
-
     onFileSelectAddFileInList(active)
     {
 
@@ -115,66 +111,58 @@ class UploadHandlerTool extends Tool
         {
             $("#uploadmedia").on("change.onFileSelectAddFileInList", e => {
 
-                let filesSelected = $(e.currentTarget)[0].files;
+                const uploadButton = $(e.currentTarget);
+                let filesSelected = uploadButton[0].files;
 
-                filesSelected.forEach( (file) => {
-
+                filesSelected.forEach( (file, index) => {
+                    //console.log(filesSelected); debugger
                     let fileName = file.name;
                     let fileExtension = fileName.split('.').pop();
                     let fileIsAccepted = this.isFileExtensionIsAccepted(fileExtension);
 
-                    console.log(file, fileName, fileExtension);
+                    //console.log(file, fileName, fileExtension);
 
-                    if( $(`.upload-info table tbody tr td[data-file='${fileName}']`).length < 1 )
+                    // don't duplicate file in upload list
+                    if( $(`.upload-info table tbody tr[data-file='${fileName}']`).length < 1 )
                     {
+
+                        this.__filesToUpload.push( {index: index, name: fileName, file: file} );
 
                         let newUploadFileItem = $("<tr>", {
 
-                        });
+                        }).attr("data-file", fileName);
 
-                        let fileNameContainer = $("<td>", {
+                        let html = `<td>${fileName}</td>
+                                    <td>${ (!fileIsAccepted) ? "<span style='color: red;'>Ce type de fichier n'est pas accepté ! Il ne sera pas être uploader</span>" : ''  }</td>
+                                    <td><i class="${ (!fileIsAccepted) ? 'fas fa-times' : 'fas fa-check' }"></i></td>
+                                    <td><i data-target="${fileName}" class="fas fa-trash-alt remove_file_from_list"></i></td>`;
 
-                            text: fileName
-
-                        }).attr("data-file", fileName)
-                          .appendTo(newUploadFileItem);
-
-
-                        let fileIsNotAcceptedErrorMessageContainer = $("<td>", {
-
-                        });
-
-
-                        let fileIsAcceptedResultContainer =  $("<td>", {
-
-                        });
-
-                        if(!fileIsAccepted)
+                        if(fileIsAccepted)
                         {
-                            let fileIsNotAcceptedErrorMessage = $("<span>", {
 
-                                text: "Ce type de fichier n'est pas accepté ! Il ne sera pas être uploader",
+                            $("<tr>", {
+                                id: `upload_${index}`
+                            }).html(`<td>${fileName}</td>
+                                     <td><progress class="progress_bar" id="progress_${fileName}" max="100" value="0"></progress></td>   
+                                     <td class="upload_state">Téléchargement en cours</td>`)
+                              .appendTo( $(".on_progress table tbody") );
 
-                            }).appendTo(fileIsNotAcceptedErrorMessageContainer);
                         }
 
-                        let fileIsAcceptedResultIcon =  $("<i>", {
-
-                            class: (fileIsAccepted === true) ? 'fas fa-check' : 'fas fa-times'
-
-                        }).appendTo(fileIsAcceptedResultContainer);
-
-                        fileIsNotAcceptedErrorMessageContainer.appendTo(newUploadFileItem);
-
-                        fileIsAcceptedResultContainer.appendTo(newUploadFileItem);
+                        newUploadFileItem.html(html);
 
                         newUploadFileItem.appendTo( $(".upload-info table tbody") );
 
+                        if($(".upload-info table tbody tr").length > 0)
+                            $(".model-upload-file .start_upload_button").show();
+
                     }
 
-                } )
+                } );
 
+                uploadButton.val("");
 
+                //console.log(this.__filesToUpload); debugger
 
 
             })
@@ -188,14 +176,121 @@ class UploadHandlerTool extends Tool
     }
 
 
+    onClickOnRemoveFileButtonRemoveFileFromList(active)
+    {
+
+        if(active)
+        {
+            $(".upload-info table tbody").on("click.onClickOnRemoveFileButtonRemoveFileFromList", ".remove_file_from_list", e => {
+
+                // remove element from list
+                $(`.upload-info table tbody tr[data-file="${ $(e.currentTarget).data('target') }"]`).remove();
+
+                // remove element from array
+                const index = this.__filesToUpload.findIndex( fileToUpload => fileToUpload.name === $(e.currentTarget).data('target') );
+                this.__filesToUpload.splice( index, 1 );
+
+            })
+        }
+        else
+        {
+            $(".upload-info table tbody").off("click.onClickOnRemoveFileButtonRemoveFileFromList", ".remove_file_from_list");
+        }
+
+        return this;
+    }
+
+
+
+    onClickOnStartUploadButtonStartUpload(active)
+    {
+
+        if (active)
+        {
+            $(".model-upload-file .start_upload_button").on("click.onClickOnStartUploadButtonStartUpload", e => {
+
+                /*$('.main-media .upload-file').hide();
+                $('.main-media .product-btn-add').hide();
+                $('.main-media .upload-title').hide();
+                $('.main-media .download-file').show();*/
+
+                $(".files_selection").fadeOut();
+                $(".upload-title").text("Traitement de la file en cours, veuillez patienter merci")
+                $(".on_progress").fadeIn();
+
+                this.__filesToUpload.forEach( (fileToUpload) => {
+
+                    let form = $("<form>", {
+                        method: "post",
+                    });
+
+                    form.on("submit", e => {
+
+                        e.preventDefault();
+
+                        const formData = new FormData();
+
+                        formData.append('file', fileToUpload.file);
+
+                        const xhr = new XMLHttpRequest();
+
+                        xhr.upload.addEventListener("progress", e => {
+
+                            const percent =  e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+                            //let progressBarWith = percent.toFixed(2) + '%';
+                            let progressBarWith = Math.round( percent.toFixed(2) );
+
+                            $(`.on_progress #upload_${fileToUpload.index} progress`).attr("value", progressBarWith);
+                            if(progressBarWith === 100)
+                                $(`.on_progress #upload_${fileToUpload.index} .upload_state`).text("Téléchargement réussi");
+
+                            console.log(progressBarWith);
+
+                        });
+
+                        xhr.addEventListener("load", e => {
+
+                            console.log(e);
+                            $(`.on_progress #upload_${fileToUpload.index} .upload_state`).text("Téléchargement réussi");
+
+                        })
+
+                        $(".upload_abort").on("click", e => {
+
+                            xhr.abort();
+                            console.log("abort"); debugger
+
+                        })
+
+                        xhr.open("POST", "/upload/media");
+                        xhr.send(formData);
+
+                    });
+
+                    form.submit();
+
+                } );
+
+            })
+        }
+        else
+        {
+            $(".model-upload-file .start_upload_button").off("click.onClickOnStartUploadButtonStartUpload");
+        }
+
+        return this;
+    }
+
+
     enable()
     {
         super.enable();
         this.onClickOnUploadButtonShowModal(true)
-            .onClickOnModalCloseButtonsCloseModal(true)
+            .onClickOnModalCloseButtonsCloseModal(false)
             .onPageLoadGetFilesAuthorizedExtensions(true)
-            .onFileUploadCheckFileExtension(true)
             .onFileSelectAddFileInList(true)
+            .onClickOnRemoveFileButtonRemoveFileFromList(true)
+            .onClickOnStartUploadButtonStartUpload(true)
         ;
     }
 
@@ -206,8 +301,9 @@ class UploadHandlerTool extends Tool
         this.onClickOnUploadButtonShowModal(false)
             .onClickOnModalCloseButtonsCloseModal(false)
             .onPageLoadGetFilesAuthorizedExtensions(false)
-            .onFileUploadCheckFileExtension(false)
             .onFileSelectAddFileInList(false)
+            .onClickOnRemoveFileButtonRemoveFileFromList(false)
+            .onClickOnStartUploadButtonStartUpload(false)
         ;
     }
 
