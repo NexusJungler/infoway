@@ -18,7 +18,7 @@ class Navbar {
 
                  $('.menu .nav').addClass('nav-active');
 
-                 $('.home ').addClass('active-main');
+                 $('.main ').addClass('active-main');
                 // $('.menu .nav').animate({
                 //     width: '12%',
                 // },'slow', 'linear', function() {
@@ -32,7 +32,7 @@ class Navbar {
                 $('.logo__infoway').removeClass('logo__infoway-active');
 
                  $('.menu .nav').removeClass('nav-active');
-                 $('.home ').removeClass('active-main');
+                 $('.main ').removeClass('active-main');
             //     $('.menu .nav').animate({
             //         width: '8%',
             //     },'slow', 'linear', function() {

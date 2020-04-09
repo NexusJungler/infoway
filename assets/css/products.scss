@@ -112,29 +112,9 @@
     .table{
       margin-top: 50px;
       .table-custome{
-        overflow: auto;
-        width: 1560px;
-        display: block;
         .thead-info{
           th{
-            width: 50px;
-            &:first-child{
-              width: 2%;
-            }
-            &:nth-child(3){
-              width: 35px;
-            }
-          }
-        }
-        .tbody-content{
-          td{
-            width: 50px;
-            &:first-child{
-              width: 2%;
-            }
-            &:nth-child(3){
-              width: 35px;
-            }
+            width: 10%;
           }
         }
       }

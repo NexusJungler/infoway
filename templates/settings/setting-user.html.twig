@@ -6,7 +6,7 @@
 {% endblock %} #}
 
 {% block maincontent %}
-<section id="wrapper_tabcontent">
+<section class="wrapper_tabcontent">
 
     <article id="setting-user" class="tab-content current">
 
@@ -20,7 +20,7 @@
             <article class="display setting-display ">
                 <div class="display-content">
                     <div class="display-btn">
-                        <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                        <a class="btn" href="{{ path('app:createuser') }}" role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
                     </div>
                 </div>
             </article > 
@@ -39,41 +39,25 @@
                                 <th></th>  
                             </tr>
                         </thead>
-
                         <tbody class="tbody tbody-content scrollbar-table">
-                        {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
-                            {%  for  userInCustomer in usersInCustomer  %}
-                                <tr>
-                                    <td>{#
-                                        #}{% if  userInCustomer.firstName is defined %}{#
-                                        #}{{ userInCustomer.firstName }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>{#
-                                        #}{% if  userInCustomer.lastName is defined %}{#
-                                        #}{{ userInCustomer.lastName }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>{#
-                                        #}{% if  userInCustomer.email is defined %}{#
-                                        #}{{ userInCustomer.email }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>{#
-                                        #}{% if  userInCustomer.phoneNumber is defined %}{#
-                                        #}{{ userInCustomer.phoneNumber }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>
-                                        {#
-                                        #}{% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}{#
-                                        #}{{ userInCustomer.sitesIds | length }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    </tr>
-                            {% endfor  %}
-                        {%  endif  %}{#
-                        #}</tbody>
+                            <tr>
+                                <td>Estelle</td>
+                                <td>Desru</td>
+                                <td>estelle@hotmail.fr</td>
+                                <td>0632526282</td>
+                                <td>5</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Estelle</td>
+                                <td>Desru</td>
+                                <td>estelle@hotmail.fr</td>
+                                <td>0632526282</td>
+                               
+                                <td>5</td>
+                                <td></td>
+                            </tr>
+                        </tbody>  
                     </table>
 
                 </div> 
