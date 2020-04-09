@@ -93,9 +93,9 @@
           }
         }
 
-        .download-file{
+        /*.download-file{
             display: none;
-        }
+        }*/
 
         .table{
             .table-custome{
@@ -123,6 +123,11 @@
                         border: 0;
                         td{
                             border: 0;
+
+                            .remove_file_from_list {
+                                color: red;
+                                cursor: pointer;
+                            }
                         }
                     }
                 }

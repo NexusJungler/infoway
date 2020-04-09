@@ -32,7 +32,7 @@ class MediaController extends AbstractController
     {
         return new JsonResponse([
             'images' => [
-                'jpeg', 'png'
+                'jpeg', 'png', 'zip'
             ],
             'videos' => [
 
@@ -47,8 +47,10 @@ class MediaController extends AbstractController
      */
     public function uploadMedia(Request $request)
     {
-
-        dd($request->files);
+        /*move_uploaded_file($_FILES['file']['tmp_name'], $this->getParameter('logoDirectory') . $_FILES['file']['name']);
+        die;*/
+        return new Response("a");
+        //dd($request->files);
 
     }
 

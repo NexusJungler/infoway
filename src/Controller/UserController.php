@@ -316,7 +316,7 @@ class UserController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
     {
         if ($this->getUser()) {
-             return $this->redirectToRoute('app::homePage');
+             return $this->redirectToRoute('app::home');
          }
 
         // get the login error if there is one
