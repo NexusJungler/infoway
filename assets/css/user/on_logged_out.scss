@@ -140,6 +140,13 @@ img {
       color: blue;
     }
   }
+  div{
+    p{
+      font: normal 21px "Barlow";
+      color: #5DA81A;
+      width: 700px;
+    }
+  }
   form {
     display: flex;
     flex-direction: column;

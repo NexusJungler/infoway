@@ -30,18 +30,6 @@ constructor() {
     })
 
 
-    /**  media test **/
-
-    $('.main-media .product-btn-add').click(function() {
-
-      $('.main-media .upload-file').hide();
-      $('.main-media .product-btn-add').hide();
-      $('.main-media .upload-title').hide();
-      $('.main-media .download-file').show();
-      
-
-    });
-
     /** **/
     
   

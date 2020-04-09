@@ -107,9 +107,9 @@ class Table  {
             return false;
           });
         
-        $('.btn-popupclose').click(function () {
+          $('.btn-popupclose').click(function () {
             $('.add-popup').removeClass('is-open');
-        });
+          });
 
 
           
