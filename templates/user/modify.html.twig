@@ -12,7 +12,7 @@
 
 
         {# <form action="{{ path('user:createUser') }}" method="post" name="user"> #}
-        <form action="{{ path('users::create::process') }}" method="post" name="user" id="create-user">
+        <form action="{{ path('users::edit::process') }}" method="post" name="user" id="create-user">
 
             <article class="display setting-display ">
                 <div class="display-content">
@@ -29,23 +29,26 @@
             <div class="form-content">
 
                 <div class="row">
+                    <div class="hidden-row">
+                        <input type="number" name="user[user]"  class="input-custome" value="{{userToModify.id}}" hidden />
+                    </div>
                     <div class="row">
                         <label class="form-label" for="fristname">Nom</label>
-                        <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" required/>
+                        <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" value="{{ userToModify is defined and userToModify.lastName is defined  ? userToModify.lastName : '' }}" required/>
                     </div>
                     <div class="row">
                         <label class="form-label">Prenom</label>
-                        <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" required/>
+                        <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" value="{{ userToModify is defined and userToModify.firstName is defined  ? userToModify.firstName : '' }}" required/>
                     </div>
                 </div>
 
                 <div class="row col-email">
                     <label class="form-label" for="email">Email</label>
-                    <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  required/>
+                    <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  value="{{ userToModify is defined and userToModify.email is defined  ? userToModify.email : '' }}" required/>
                 </div>
                 <div class="row col-phone">
                     <label class="form-label" for="phone">Téléphone</label>
-                    <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
+                    <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" value="{{ userToModify is defined and userToModify.phoneNumber is defined  ? userToModify.phoneNumber : '' }}" />
                 </div>
 
             </div>
@@ -55,12 +58,12 @@
                 <div class="row">
                     <label class="form-label" for="phone">Périmètres :</label>
                     <div class="row row-chkbox">
-                        {#            {{ dump(givablePerimeters) }}#}
                         {% if givablePerimeters is defined and givablePerimeters is iterable %}
                             {% for  perimeter in givablePerimeters %}
                                 {% if perimeter.name is defined and perimeter.level is defined %}
+
                                     <label class="container-chkbox">{{ perimeter.name }}
-                                        <input type="radio" name="user[perimeter]" value="{{ perimeter.id }}">
+                                        <input type="radio" name="user[perimeter]" value="{{ perimeter.id }}" {{ userToModify is defined and userToModify.perimeter is defined and userToModify.perimeter.id is defined and perimeter.id == userToModify.perimeter.id ? 'checked' : '' }}>
                                         <span class="checkmark-chkbox"></span>
                                     </label>
                                 {% endif %}
@@ -114,7 +117,8 @@
                             <tbody class="tbody tbody-content scrollbar-table">
 
                             {% if givableRoles is defined and  givableRoles is iterable %}
-                                {#                {{ dump(givableRoles) }}#}
+
+
                                 {% for givableRoleInfosByCustomer in givableRoles %}
 
                                     {% set  givableRolesCustomer  = givableRoleInfosByCustomer ['customer'] %}
@@ -134,9 +138,10 @@
                                                         <option>Choisir rôle </option>
                                                         {% if givableRoles is defined and  givableRoles  is iterable %}
 
+
                                                             {% for givableRole in givableRoles  %}
                                                                 {% if  givableRole.name is defined and  givableRole.id is defined  %}
-                                                                    <option value={{ givableRole.id }} >{{ givableRole.name }}</option>
+                                                                    <option value="{{ givableRole.id }}">{{ givableRole.name }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif  %}
@@ -245,7 +250,8 @@
                                                     <tr>
                                                         <td>
                                                             <label class="container-chkbox">{{site.name}}
-                                                                <input type="radio" name={{  "user[sites][enseigne][" ~  customer.id  ~ "][]" }} value="{{ site.id }}">
+
+                                                                <input type="checkbox" name={{  "user[sites][enseigne][" ~  customer.id  ~ "][]" }} value="{{ site.id }}" {{ userToModifySites[ customer.id ] is defined and userToModifySites[ customer.id ][site.id] is defined ? 'checked' : '' }}>
                                                                 {#                                              <input type="number" name="selected-site" value="{{ site.id }}">#}
                                                                 <span class="checkmark-chkbox"></span>
                                                             </label>

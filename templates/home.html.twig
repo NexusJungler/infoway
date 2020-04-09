@@ -3,30 +3,33 @@
 
 {% block body %}
     <main class="main home">
+
         <div class="main-content">
+
             <section class="jumbotron">
                 {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue {{ user.name}}' } %}
             </section>
         
             <div class="home-information">
 
-                <div class="home_info-contact">
-                    {% embed 'home/home-info-contact.html.twig' %}
+                <div class="row">
+
+                    {% embed 'home/home-company.html.twig' %}
 
                     {% endembed %}
-                </div>
 
+                    <div class="home_info-contact">
+                        {% embed 'home/home-info-contact.html.twig' %}
+
+                        {% endembed %}
+                    </div>
+                </div>
+                
                 <div class="home_enseignes-row">
                     {% embed 'home/home-enseigne.html.twig' %}
 
                     {% endembed %}
                 </div>  
-
-                <div class="company">
-                    {% embed 'home/home-company.html.twig' %}
-
-                    {% endembed %}
-                </div>
 
             </div>
         </div>

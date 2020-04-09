@@ -1,9 +1,10 @@
 /** SCSS **/
-import '../css/general/reset.scss'
+import '../css/general/reset.scss';
 import '../css/app.scss';
 
+
 // css
-require('../css/app.css');
+// require('../css/app.css');
 require('../css/custom-style.css');
 require('../css/class/managers/clockManager.css');
 
@@ -26,7 +27,7 @@ const $ = require('jquery');
 global.$ = global.jQuery = $;
 
 //jqueryValidate
-require('../js/jqueryValidate/jquery.validate.min.js');
+require('../js/jqueryValidate/jquery.validate.js');
 
 
 // Tabs Menu

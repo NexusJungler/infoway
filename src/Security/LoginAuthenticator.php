@@ -103,7 +103,8 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
 
        $sessionManager = new SessionManager(new Session()) ;
-       $sessionManager->remove('user');
+
+       if($sessionManager->get('user') !== null ) $sessionManager->remove('user');
 
         $sessionManager->set('user',$this->lastRegisteredUser);
 

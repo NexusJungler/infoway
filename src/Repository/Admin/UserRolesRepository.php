@@ -2,9 +2,12 @@
 
 namespace App\Repository\Admin;
 
+use App\Entity\Admin\Customer;
 use App\Entity\Admin\UserRoles;
+use App\Entity\Customer\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Proxies\__CG__\App\Entity\Admin\User;
 
 /**
  * @method UserRoles|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,24 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class UserRolesRepository extends ServiceEntityRepository
 {
+    private $registry ;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserRoles::class);
+        $this->registry = $registry ;
+    }
+
+    public function getRolesInCustomer(Customer $customer , array $rolesIds) {
+        $allManagers = $this->registry->getManagers() ;
+
+        if( !isset( $allManagers[ $customer->getName() ] )  ) throw new \Error('invalid customer base') ;
+
+            $currentManager = $allManagers[ $customer->getName() ] ;
+            $allRolesReceived = $currentManager->getRepository(Role::class)->findById($rolesIds) ;
+
+        return ['customer' => $customer , 'roles' => $allRolesReceived] ;
+
     }
 
     // /**

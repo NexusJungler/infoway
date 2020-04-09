@@ -5,6 +5,7 @@ namespace App\Entity\Customer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\RoleRepository")
@@ -39,6 +40,7 @@ class Role
     {
         $this->permissions = new ArrayCollection();
     }
+
 
 
     public function getId(): ?int

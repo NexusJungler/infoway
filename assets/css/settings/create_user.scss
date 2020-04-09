@@ -1,10 +1,40 @@
+
+
 #tab-create-user{
+    
+    .tab-content-title {
+        display: flex;
+        padding-top: 0.5rem;
+        h3{
+            color: #4F9BAE;
+            font: 2.2rem 'Barlow', bold;
+            display: flex;
+            font-weight: 800;
+            &::after {
+                content: '';
+                border-left: 0.15rem solid #4F9BAE;    
+                position: relative;
+                margin: 0.3rem 0.5rem;
+                height: 2rem;
+            }
+        }
+        p{
+            color: #4F9BAE;
+            font: 1.4rem 'Barlow', sans-serif;
+            margin-top: 1.1rem;
+        }
+    }
     .form-content{
         width: 690px;
         max-width: 100%;
         .row{
             .row:first-child{
                padding-right: 2rem;
+            }
+            .input-custome{
+                width: 16.8rem;
+                max-width: 100%;
+                height: 2rem;
             }
         }
         .col-email,
@@ -89,6 +119,7 @@
 
     .form-content-table{
         display: flex;
+        
         .table-titel{
             font: rem(28px) 'Barlow', medium;
             margin-bottom: 20px;
@@ -215,6 +246,7 @@
             max-width: 830px;
             .table{
                 width: 100%;
+                
                 .table-custome{
                     .thead-content{
                         th{
@@ -227,14 +259,19 @@
                             }
                         }
                     }
+                    
                     .tbody-content{
                         
                         tr{
+                            display: none;
                             height: 37px;
                             background-color: #BAC4C9;
                             &:nth-child(2){
                                 background-color: #E3E3E3;
                             }
+                        }
+                        .current{
+                            display: block;
                         }
                         td {
                             &:first-child {
@@ -253,6 +290,9 @@
     .form-content-btn{
         text-align: end;
         margin-top: 30px;
+    }
+    .input-custome.error{
+        border: 1px solid red;
     }
     
 }

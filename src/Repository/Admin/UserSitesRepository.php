@@ -2,7 +2,9 @@
 
 namespace App\Repository\Admin;
 
+use App\Entity\Admin\Customer;
 use App\Entity\Admin\UserSites;
+use App\Entity\Customer\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -14,11 +16,26 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class UserSitesRepository extends ServiceEntityRepository
 {
+
+    private $registry ;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserSites::class);
+        $this->registry = $registry ;
     }
 
+    public function getSitesInCustomer(Customer $customer , array $siteIds) {
+        $allManagers = $this->registry->getManagers() ;
+
+        if( !isset( $allManagers[ $customer->getName() ] )  ) throw new \Error('invalid customer base') ;
+
+        $currentManager = $allManagers[ $customer->getName() ] ;
+        $allSitesReceived = $currentManager->getRepository(Site::class)->findById($siteIds) ;
+
+        return ['customer' => $customer , 'sites' => $allSitesReceived] ;
+
+    }
     // /**
     //  * @return UserSites[] Returns an array of UserSites objects
     //  */

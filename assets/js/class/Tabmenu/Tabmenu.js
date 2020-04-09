@@ -18,6 +18,29 @@ constructor() {
       $("#"+tab_text_id).addClass('current');  
     })   
 
+    
+    $('.btn-display-teach').click(function(){
+      var tab_list_enseigne= $(this).attr('data-list-enseigne');
+
+      $('.tbody-content tr').removeClass('current');
+
+      $(this).addClass('current');
+
+      $(".tbody-content ."+tab_list_enseigne).addClass('current');
+    })
+
+
+    /** **/
+    
+  
+    $(".menu-list-table .accordion-toggle").click(function() {
+      $(this).next().toggleClass("open").slideToggle("fast");
+      $(this).toggleClass("active-tab .menu-link").toggleClass("active");
+  
+      $(".menu-list-table .accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
+      $(".menu-list-table .accordion-toggle").not(jQuery(this)).removeClass("active-tab .menu-link").removeClass("active");
+    });
+
 
 
     $(".dropdown .btn-dropdown").on('click', function() {

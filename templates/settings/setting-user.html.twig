@@ -1,17 +1,89 @@
-<div class="tab-content-title">
-    <h3 class="title">Créer une Utilisateur</h3>
-    <p> DEl&CIA</p>
-</div>
+{% extends 'setting.html.twig' %}
 
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('create-user') }}
+{% endblock %} #}
 
-<form action="" method="post" name="user">
+{% block maincontent %}
+<section id="wrapper_tabcontent">
 
-    <article class="display setting-display ">
-        <div class="display-content">
-            <div class="display-btn">
-                {# <a class="btn" href="{{ path('create-user') }}" role="button"><i class="fas fa-plus"></i>Créer utilisateur</a> #}
-            </div>
+    <article id="setting-user" class="tab-content current">
+
+        <div class="tab-content-title">
+            <h3 class="title">Utilisateur</h3>
+            <p> DEl&CIA</p>
         </div>
-    </article > 
 
-</form>    
+        <form action="" method="post" name="user">
+
+            <article class="display setting-display ">
+                <div class="display-content">
+                    <div class="display-btn">
+                        <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                    </div>
+                </div>
+            </article > 
+
+            <article class="setting-user-table">
+                <div class="table">
+
+                    <table class="table-custome" >
+                        <thead  class="table-info thead-content">
+                            <tr>
+                                <th>Nom</th>    
+                                <th>Prenom</th>
+                                <th>Email</th> 
+                                <th>Téléphone</th>
+                                <th>Nbre Sites</th>
+                                <th></th>  
+                            </tr>
+                        </thead>
+
+                        <tbody class="tbody tbody-content scrollbar-table">
+                        {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
+                            {%  for  userInCustomer in usersInCustomer  %}
+                                <tr>
+                                    <td>{#
+                                        #}{% if  userInCustomer.firstName is defined %}{#
+                                        #}{{ userInCustomer.firstName }}{#
+                                        #}{%  endif %}{#
+                                    #}</td>
+                                    <td>{#
+                                        #}{% if  userInCustomer.lastName is defined %}{#
+                                        #}{{ userInCustomer.lastName }}{#
+                                        #}{%  endif %}{#
+                                    #}</td>
+                                    <td>{#
+                                        #}{% if  userInCustomer.email is defined %}{#
+                                        #}{{ userInCustomer.email }}{#
+                                        #}{%  endif %}{#
+                                    #}</td>
+                                    <td>{#
+                                        #}{% if  userInCustomer.phoneNumber is defined %}{#
+                                        #}{{ userInCustomer.phoneNumber }}{#
+                                        #}{%  endif %}{#
+                                    #}</td>
+                                    <td>
+                                        {#
+                                        #}{% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}{#
+                                        #}{{ userInCustomer.sitesIds | length }}{#
+                                        #}{%  endif %}{#
+                                    #}</td>
+                                    </tr>
+                            {% endfor  %}
+                        {%  endif  %}{#
+                        #}</tbody>
+                    </table>
+
+                </div> 
+            </article>
+
+        </form>
+
+    </article> 
+
+</section >
+
+
+{% endblock %}

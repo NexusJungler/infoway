@@ -4,37 +4,26 @@
 namespace App\Controller;
 
 
-use App\Entity\Admin\Action;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Perimeter;
-use App\Entity\Admin\Permission;
-use App\Entity\Admin\Subject;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserRoles;
 use App\Entity\Admin\UserSites;
-use App\Form\Admin\UserRolesType;
-use App\Form\UserType;
-use App\Service\EmailSenderService;
-use App\Service\PermissionsHandler;
+use App\Entity\Customer\Site;
+use App\Service\ArrayHandler;
 use App\Service\SessionManager;
-use App\Service\TokenGeneratorService;
+use App\Service\UserHandler;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use PhpParser\Error;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
 use App\Entity\Customer\Role ;
 
 //Controlleur gerant la partie utilisateur
@@ -59,78 +48,76 @@ class UserController extends AbstractController
      * @return Response
      */
     //methode  gerant la partie creation utilisateur
-    public function userCreate(): Response
+    public function userCreate(UserHandler $userHandlerService): Response
     {
-        //recuperation du manager admin
-        $em = $this->getDoctrine()->getManager();
 
         //creation des variables qui vont contenir les sites roles et perimeter pouvant être transmis par le createur à l user qu'il souhaite creer
-        $givablesRoles = new \SplObjectStorage() ;
+        $givablesRoles =[] ;
         $givableSites = [] ;
         $givablePerimeters = [] ;
 
-        // _____________________________ PARTIE USER ________________________________________
-        //recuperation de l user en session
-        $user = $this->sessionManager->get('user');
+        //recuperation du manager admin
+        $em = $this->getDoctrine()->getManager();
 
-        //Si l object qu on recupere n est pas de type user on envoit une erreur
-        if( ! $user instanceof User ) {
-            throw new \Error('Impossible to get User from Session');
-        }
-
-        // _____________________________ PARTIE PERIMETRE ________________________________________
-        //On recupere le perimetre du createur depuis l utilisateur recuoere depuis la session
-        $userPerimeterFromSession = $user->getPerimeter();
-
-        //Si l object qu on recupere n est pas de type Perimetre on envoit une erreur
-        if( ! $userPerimeterFromSession instanceof Perimeter ) {
-            throw new \Error('Impossible to find User Perimeter in Session ');
-        }
-
-        //Recuperation du repository de l entite perimetre dans admin
+        //Recuperation du Repository User
+        $userRepo = $em->getRepository(User::class) ;
         $perimeterRepo = $em->getRepository(Perimeter::class);
-        //On va recuperer le perimetre en base pour être sur que celui de la session est totalement conforme si l object recupere n est pas de type Perimeter on envoit une erreur
-        $userPerimeter = $perimeterRepo->findOneById($userPerimeterFromSession->getId());
-        if( ! $userPerimeter instanceof Perimeter ) {
-            throw new \Error('Impossible to find User Perimeter  ');
-        }
+
+
+        /** _____________________________ PARTIE USER ________________________________________ */
+        $creatorUser = $userHandlerService->getUserFromSession() ;
+        if( ! $creatorUser instanceof User ) throw new \Error('Impossible to find CreatorInformations') ;
+
+        $creatorUserFromDb = $userRepo->getUserWithSitesById( $creatorUser->getId() ) ;
+        if( ! $creatorUserFromDb instanceof User ) throw new \Error('Impossible to find creator in Db') ;
+
+
+        /** _____________________________ PARTIE PERIMETRE ________________________________________ */
+
+        //On recupere le perimetre du createur depuis l utilisateur recuoere depuis la session
+        $userCreatorPerimeter = $creatorUserFromDb->getPerimeter();
+
 
         //On va chercher tous les perimetre egals ou superieur qui seront ceux que le createur peut donner
-        $givablePerimeters = $perimeterRepo ->findPerimeterByLevelEqualOrBellow( $userPerimeter->getLevel() );
+        $givablePerimeters = $perimeterRepo ->findPerimeterByLevelEqualOrBellow( $userCreatorPerimeter->getLevel() );
 
 
 
-        // _____________________________ PARTIE ROLE ________________________________________
+        /** _____________________________ PARTIE ROLE ________________________________________ **/
 
         //On recupere les roles de l utilisateur depuis la session
-        $userRoles = $user->getRoles();
+        $creatorUserRoles = $creatorUser->getRoles();
 
         //Boucle sur les roles afin de recuperer tous les roles que le createur pourra donner a l utilisateur qu il cree. La fonction a été créé de manniere a ne pas crasher si un des roles recuperés depuis la session est non conforme . Il ne sera simplement pas traité
-        foreach( $userRoles as $userRoleByCustomer ) {
+        foreach( $creatorUserRoles as $creatorUserRoleByCustomer ) {
 
             //On recupere d'abord l objet customer stockant les relations roles avec les bases appartenant au customer. Ceux ci sont filtré selon le customer auquel ils appartiennent.
-            if( $userRoleByCustomer instanceof Customer ) {
+            if( $creatorUserRoleByCustomer instanceof Customer ) {
                 //On recupere le role pour l enseigne traité et on controle son type .
-                $customerRole = $userRoleByCustomer->getRole() ;
+                $customerRole = $creatorUserRoleByCustomer->getRole() ;
                 if( $customerRole instanceof Role ) {
-                    //On va chercher le Manager appartenant à la base enseigne en cour contenant le  role et le repository lié a celui ci .
-                    $customererManager = $this->getDoctrine()->getManager( $userRoleByCustomer->getName() );
-                    $roleRepo = $customererManager->getRepository(Role::class);
+                    $allManagers = $this->getDoctrine()->getManagers() ;
+                    if( isset ( $allManagers[ $creatorUserRoleByCustomer->getName() ] ) ){
+                        $currentEm =  $allManagers[ $creatorUserRoleByCustomer->getName() ] ;
+                        $roleRepo = $currentEm->getRepository(Role::class);
 
-                    //On recupere tous les roles ayant un level egal ou superieur a celui du createur et on verifie bien qu on a recu un tableau et pas une valeur null.
-                    $givableRolesFrombase  = $roleRepo->getRolesByLevelBellow($customerRole->getLevel());
-                    //Si la valeur n est pas null on l ajoute aux roles ajoutables par le createur.
-                    if( is_array($givableRolesFrombase) ) $givablesRoles[ $userRoleByCustomer ] = $givableRolesFrombase ;
+                        //On recupere tous les roles ayant un level egal ou superieur a celui du createur et on verifie bien qu on a recu un tableau et pas une valeur null.
+                        $givableRolesFrombase  = $roleRepo->getRolesByLevelBellow($customerRole->getLevel());
 
+                        //Si la valeur n est pas null on l ajoute aux roles ajoutables par le createur.
+                        if( is_array( $givableRolesFrombase ) ) $givablesRoles[ $creatorUserRoleByCustomer->getId() ] = [
+                            'customer' => $creatorUserRoleByCustomer ,
+                            'roles' => $givableRolesFrombase
+                        ];
+                    }
                 }
             }
         }
 
-        //On recupere tous les sites du createur
-       $userSites = $user->getSites() ;
+        /** _____________________________ PARTIE SITE ________________________________________ **/
 
         //On les place dans la variable contenant tous les sites qu il pourra donner a l utilisateur qu il cree
-        $givableSites = $userSites ;
+        $givableSites = $creatorUser->getSites() ; ;
 
         return $this->render('user/create.html.twig', [
             'givablePerimeters' => $givablePerimeters ,
@@ -140,6 +127,377 @@ class UserController extends AbstractController
 
     }
 
+    /**
+     * @Route(path="/users/edit/{id}", name="user::edit",methods="GET|POST")
+     * @return Response
+     */
+    //methode  gerant la partie modification utilisateur
+    public function userEdit(int $id, UserHandler $userHandlerService): Response
+    {
+
+
+
+        $givablesRoles = [] ;
+        $userToModifyRoles = [] ;
+        $userToModifySites = [] ;
+
+        //Recuperation de l entity manager pour la connection admin
+        $em = $this->getDoctrine()->getManager() ;
+
+        //Recuperation du Repository User
+        $userRepo = $em->getRepository(User::class) ;
+        $perimeterRepo = $em->getRepository(Perimeter::class);
+
+        /** _____________________________ PARTIE USER ________________________________________ */
+      $creatorUser = $userHandlerService->getUserFromSession() ;
+            if( ! $creatorUser instanceof User ) throw new \Error('Impossible to find CreatorInformations') ;
+
+
+        $creatorUserFromDbWithSites = $userRepo->getUserWithSitesById( $creatorUser->getId() ) ;
+        if( ! $creatorUserFromDbWithSites instanceof User ) throw new \Error('Impossible to find creator in Db') ;
+
+
+        $userToModifyFromDb = $userRepo->findOneById($id) ;
+        if( ! $userToModifyFromDb instanceof User ) throw new \Error('Impossible to find User to Modify') ;
+
+                        //Recuperation de l user en base
+
+
+        /** _____________________________ PARTIE PERIMETRE ________________________________________ */
+
+        //On recupere le perimetre du createur depuis l utilisateur recuoere depuis la session
+        $userCreatorPerimeter = $creatorUserFromDbWithSites->getPerimeter();
+
+        //On va chercher tous les perimetre egals ou superieur qui seront ceux que le createur peut donner
+        $givablePerimeters = $perimeterRepo ->findPerimeterByLevelEqualOrBellow( $userCreatorPerimeter->getLevel() );
+
+
+
+        /** _____________________________ PARTIE ROLE ________________________________________ **/
+
+        //On recupere les roles du createur  depuis la session
+        $creatorUserRoles = $creatorUser->getRoles();
+
+        //Boucle sur les roles afin de recuperer tous les roles que le createur pourra donner a l utilisateur qu il cree. La fonction a été créé de manniere a ne pas crasher si un des roles recuperés depuis la session est non conforme . Il ne sera simplement pas traité
+        foreach( $creatorUserRoles as $creatorUserRoleByCustomer ) {
+
+            //On recupere d'abord l objet customer stockant les relations roles avec les bases appartenant au customer. Ceux ci sont filtré selon le customer auquel ils appartiennent.
+            if( $creatorUserRoleByCustomer instanceof Customer ) {
+                //On recupere le role pour l enseigne traité et on controle son type .
+                $customerRole = $creatorUserRoleByCustomer->getRole() ;
+                if( $customerRole instanceof Role ) {
+                    $allManagers = $this->getDoctrine()->getManagers() ;
+                    if( isset ( $allManagers[ $creatorUserRoleByCustomer->getName() ] ) ){
+                        $currentEm =  $allManagers[ $creatorUserRoleByCustomer->getName() ] ;
+                        $roleRepo = $currentEm->getRepository(Role::class);
+
+                        //On recupere tous les roles ayant un level egal ou superieur a celui du createur et on verifie bien qu on a recu un tableau et pas une valeur null.
+                        $givableRolesFrombase  = $roleRepo->getRolesByLevelBellow($customerRole->getLevel());
+
+                        //Si la valeur n est pas null on l ajoute aux roles ajoutables par le createur.
+                        if( is_array( $givableRolesFrombase ) ) $givablesRoles[ $creatorUserRoleByCustomer->getId() ] = [
+                            'customer' => $creatorUserRoleByCustomer ,
+                            'roles' => $givableRolesFrombase
+                        ];
+                    }
+                }
+            }
+        }
+
+
+        foreach($userToModifyFromDb->getUserRoles() as $userRoleEntry){
+            $userToModifyRoles[ $userRoleEntry->getCustomer()->getId() ] = [
+                'customer' => $userRoleEntry->getCustomer() ,
+                'role' =>  $userRoleEntry->getRoleId()
+            ];
+        }
+
+
+        /** _____________________________ PARTIE SITE ________________________________________ **/
+        $userToModifySitesFromDb = $userToModifyFromDb->getSitesIds() ;
+
+        //Creation du tableau des sites indexés par le nom de leur enseigne
+        foreach( $userToModifySitesFromDb as $userToModifySite ) {
+            //Si l entrée de l enseigne du site en cour n existe pas on la cree et lui attribue un tableau vide qui contiendra ses sites
+            if(!isset( $userToModifySites[ $userToModifySite->getCustomer()->getId() ] ) && is_int( $userToModifySite->getSiteId() ) ) $userToModifySites[ $userToModifySite->getCustomer()->getId() ] = [] ;
+
+            $userToModifySites[ $userToModifySite->getCustomer()->getId() ][ $userToModifySite->getSiteId() ] =  $userToModifySite ;
+        }
+
+        $givableSites = $creatorUserFromDbWithSites->getSites();
+
+
+            return $this->render("user/modify.html.twig", [
+                'userToModify' => $userToModifyFromDb ,
+                'givablePerimeters' => $givablePerimeters ,
+                'givableRoles'   => $givablesRoles ,
+                'userToModifyRoles'=> $userToModifyRoles,
+                'userToModifySites' => $userToModifySites ,
+                'givableSites'      => $givableSites
+            ]);
+
+    }
+
+    /**
+     * @Route(path="/users", name="users:view")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function userView(Request $request): Response
+    {
+        //Recuperation de l entité manager pour la conenction admin
+       $em =  $this->getDoctrine()->getManager();
+       //Recuperation du repository de l entité Customer correspondant à l'enseigne
+       $customerRepo = $em->getRepository(Customer::class);
+
+       $currentCustomer = $customerRepo->findOneByName('kfc');
+       $usersInCustomer = $currentCustomer->getUsers() ;
+
+        return $this->render("settings/setting-user.html.twig", [
+            'usersInCustomer' => $usersInCustomer
+        ]);
+
+    }
+
+
+    //Methode gerant le retour du formulaire de creation utilsiateur avec les donnees entrées par le createur
+    /**
+     * @Route(path="/users/process/edit", name="users::edit::process",methods="POST")
+     * @return Response
+     */
+    public function userModifyProcess(Request $request, ArrayHandler $arrayHandler): Response
+    {
+        $userToModifyFormDatas = $request->get('user');
+
+        if(! isset( $userToModifyFormDatas[ 'user' ] ) ) throw new \Error('Invalid argument for user ');
+        if(! isset( $userToModifyFormDatas[ 'roles' ] ) || !isset( $userToModifyFormDatas[ 'roles' ][ 'enseigne' ] ) || !is_array( $userToModifyFormDatas[ 'roles' ][ 'enseigne' ] )) throw new \Error('Invalid argument for Role Entry ');
+        if(! isset( $userToModifyFormDatas[ 'sites' ] ) || !isset( $userToModifyFormDatas[ 'sites' ][ 'enseigne' ] ) || !is_array( $userToModifyFormDatas[ 'sites' ][ 'enseigne' ] )) throw new \Error('Invalid argument for Site Entry ');
+        if(! isset( $userToModifyFormDatas[ 'perimeter' ] ) ) throw new \Error('Invalid argument for Perimeter ');
+        if(! isset( $userToModifyFormDatas[ 'email' ] ) ) throw new \Error('Invalid argument for email ');
+        if(! isset( $userToModifyFormDatas[ 'phone' ] ) ) throw new \Error('Invalid argument for phone ');
+        if(! isset( $userToModifyFormDatas[ 'fristname' ] ) ) throw new \Error('Invalid argument for firstname ');
+        if(! isset( $userToModifyFormDatas[ 'lastname' ] ) ) throw new \Error('Invalid argument for lastname ');
+
+
+        //Recuperation du manager de la connection  admin
+        $em = $this->getDoctrine()->getManager();
+
+        //Recuperation du repo User
+        $userRepo = $em->getRepository(User::class) ;
+       $userRoleRepo = $em->getRepository(UserRoles::class) ;
+       $userSiteRepo = $em->getRepository(UserSites::class) ;
+       $perimeterRepo = $em->getRepository(Perimeter::class) ;
+
+        //On recupere le createur  depuis la session
+        $userCreatorFromSession = $this->sessionManager->get('user');
+
+
+
+        if(! $userCreatorFromSession instanceof  User ) throw new Error('Impossible to find user creator informations') ;
+        $userCreatorFromDb = $userRepo->findOneById($userCreatorFromSession->getId());
+
+        if( !$userCreatorFromDb instanceof  User ) throw new Error('Impossible to find user creator informations from db') ;
+
+        //Recuperation de l user a modifier partir de la Db
+        $userToModifyFromDb = $userRepo->findOneById($userToModifyFormDatas[ 'user' ]);
+        if (! $userToModifyFromDb instanceof User ) throw new \Error('Impossible to find User') ;
+
+        $userToModifyFromDb->setEmail( $userToModifyFormDatas[ 'email' ] ) ;
+        $userToModifyFromDb->setPhoneNumber( $userToModifyFormDatas[ 'phone' ] ) ;
+        $userToModifyFromDb->setFirstName($userToModifyFormDatas['fristname']) ;
+        $userToModifyFromDb->setLastName($userToModifyFormDatas['lastname']) ;
+
+        /** _______________________PERIMETER______________________________  */
+
+        $perimeterSelectedInForm = $userToModifyFormDatas[ 'perimeter' ] ;
+        $selectedPerimeterFromBase = $perimeterRepo->findOneById( $perimeterSelectedInForm ) ;
+
+        if( ! $selectedPerimeterFromBase instanceof Perimeter ) throw new Error('Impossible to find Selected Perimeter In base') ;
+        if($userCreatorFromDb->getPerimeter()->getLevel() > $selectedPerimeterFromBase->getLevel()) throw new Error('creator not Allowed to attribute this periemter');
+        $userToModifyFromDb->setPerimeter($selectedPerimeterFromBase) ;
+
+
+        /**_____________________________________________ROLE______________________________*/
+
+        $allRolesToImports = [] ;
+        $allRoleImported = [] ;
+        $handledUserRolesEntryFiltredByCustomerId = [] ;
+        $useCreatorRolesEntryFiltredByCustomerId = [] ;
+        foreach( $userCreatorFromDb->getUserRoles() as $roleEntry) {
+            if( ! isset( $allRolesToImports[ $roleEntry->getCustomer()->getId() ] ) &&  is_int($roleEntry->getRoleId() ) ) $allRolesToImports[ $roleEntry->getCustomer()->getId() ] = [
+                'enseigne' => $roleEntry->getCustomer() ,
+                'roles' => []
+            ];
+            $allRolesToImports[ $roleEntry->getCustomer()->getId() ]['roles'][] = $roleEntry->getRoleId() ;
+            $useCreatorRolesEntryFiltredByCustomerId[ $roleEntry->getCustomer()->getId() ] =  $roleEntry ;
+        }
+
+        foreach($userToModifyFormDatas[ 'roles' ]['enseigne'] as $userToModifyRoleEnseigneId => $userToModifyRoleEntry){
+
+            if( ! isset( $allRolesToImports[ $userToModifyRoleEnseigneId ] ) ) throw new \Error('some roles selected cannot be affected') ;
+            if( ! in_array($userToModifyRoleEntry , $allRolesToImports[ $userToModifyRoleEnseigneId  ]['roles'] ) )   $allRolesToImports[ $userToModifyRoleEnseigneId ]['roles'][] = $userToModifyRoleEntry ;
+        }
+
+        foreach($allRolesToImports as $allRolesToImportsByCustomer) {
+
+            $currentCustomer = $allRolesToImportsByCustomer['enseigne'] ;
+            $currentCustomerRoles = $allRolesToImportsByCustomer['roles'] ;
+
+           $customerRoles =  $userRoleRepo->getRolesInCustomer($currentCustomer ,  $currentCustomerRoles ) ;
+
+            $allRoleImported[ $customerRoles['customer']->getId() ] = [
+                'customer'   => $customerRoles['customer'],
+                'roles'      => $arrayHandler->filterArrayById( $customerRoles['roles'] )
+            ];
+        }
+
+
+        foreach($userToModifyFromDb->getUserRoles() as $userRoleEntry ) {
+            $handledUserRolesEntryFiltredByCustomerId[ $userRoleEntry->getCustomer()->getId() ] =  $userRoleEntry ;
+        }
+        foreach($userToModifyFormDatas[ 'roles' ]['enseigne'] as $userToModifyRoleEnseigneId => $userToModifyRoleEntry) {
+            //On verifit d'abord qu'il a bien le droit d'avoir ce role
+
+            $roleToAddToModifyUser = $allRoleImported[ $userToModifyRoleEnseigneId ] ['roles'] [$userToModifyRoleEntry] ;
+
+            if(!isset($useCreatorRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId])) throw new Error('User creator cannot give ROle for this customer') ;
+            $userCreatorEntryForThisCustomer = $useCreatorRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId] ;
+            $userCreatorRoleForTHisCustomer = $allRoleImported[$userToModifyRoleEnseigneId]['roles'][$userCreatorEntryForThisCustomer->getRoleId()] ;  ;
+
+            if( ! $userCreatorRoleForTHisCustomer instanceof Role ) throw new Error('Impossible to find Creator Role in imported Roles') ;
+
+            if($userCreatorRoleForTHisCustomer->getLevel() > $roleToAddToModifyUser->getLevel() ) throw new Error('Creator not allowed to choose this role') ;
+
+
+            if(! isset($handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId] ) ){
+                dd('ici');
+                $handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId] = $newUserRoleToAddToModifiedUser = new UserRoles();
+                $newUserRoleToAddToModifiedUser->setCustomer($useCreatorRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId]->getCustomer()) ;
+                $newUserRoleToAddToModifiedUser->setRoleId( $roleToAddToModifyUser->getId() ) ;
+                $newUserRoleToAddToModifiedUser->setUser($userToModifyFromDb);
+            }
+
+            $handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId]->setRoleId($roleToAddToModifyUser->getId());
+
+        }
+
+
+       $roleRemovedEnseigneIds = array_diff(array_keys($handledUserRolesEntryFiltredByCustomerId), array_keys($userToModifyFormDatas[ 'roles' ]['enseigne'] ));
+
+
+        foreach($roleRemovedEnseigneIds as $roleRemovedEnseigneId){
+            if( isset( $handledUserRolesEntryFiltredByCustomerId[$roleRemovedEnseigneId] ) ) {
+                $userToModifyFromDb->removeUserRole($handledUserRolesEntryFiltredByCustomerId[$roleRemovedEnseigneId]);
+            }
+        }
+
+        /**_____________________________________SITES_____________________________________**/
+        $allSitesToImports = [] ;
+        $allSitesImported = [] ;
+        $handledUserSitesEntryFiltredByCustomerId = [] ;
+        $useCreatorSitesEntryFiltredByCustomerId = [] ;
+
+        foreach( $userCreatorFromDb->getSitesIds() as $siteEntry) {
+            if( ! isset( $allSitesToImports[ $siteEntry->getCustomer()->getId() ] ) &&  is_int($siteEntry->getSiteId() ) ) $allSitesToImports[ $siteEntry->getCustomer()->getId() ] = [
+                'enseigne' => $roleEntry->getCustomer() ,
+                'sites' => []
+            ];
+            $allSitesToImports[ $siteEntry->getCustomer()->getId() ]['sites'][] = $siteEntry->getSiteId() ;
+            $useCreatorSitesEntryFiltredByCustomerId[ $siteEntry->getCustomer()->getId() ][ $siteEntry->getSiteId() ] =  $siteEntry ;
+        }
+
+
+        $customersNotPossessedByCreator = [] ;
+        $sitesNotPossessedByCreator =[];
+
+        foreach($userToModifyFormDatas[ 'sites' ]['enseigne'] as $enseigneSelectedInFormId => $sitesSelectedInFormByCustomer ){
+         if( ! isset( $useCreatorSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId] ) ){
+             $customersNotPossessedByCreator[]= $enseigneSelectedInFormId ;
+             continue ;
+         }
+         foreach($sitesSelectedInFormByCustomer as $siteSelectedInFormByCustomer)
+            if( ! isset( $useCreatorSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId][$siteSelectedInFormByCustomer] ) ){
+                $sitesNotPossessedByCreator[$enseigneSelectedInFormId][]= $siteSelectedInFormByCustomer ;
+                continue ;
+            }
+            if( ! in_array($siteSelectedInFormByCustomer , $allSitesToImports[ $enseigneSelectedInFormId  ]['sites'] ) )   $allSitesToImports[ $enseigneSelectedInFormId ]['sites'][] = $siteSelectedInFormByCustomer ;
+        }
+
+        if(count($customersNotPossessedByCreator) > 0) throw new Error('user creator has selected one or more customer that he is not allowed to attribute') ;
+        if(count($sitesNotPossessedByCreator) > 0) throw new Error('user creator has selected one or more site that he is not allowed to attribute') ;
+
+        foreach($allSitesToImports as $allSitesToImportsByCustomer) {
+
+            $currentCustomer = $allSitesToImportsByCustomer['enseigne'] ;
+            $currentCustomerSites = $allSitesToImportsByCustomer['sites'] ;
+
+            $customerSites =  $userSiteRepo->getSitesInCustomer($currentCustomer ,  $currentCustomerSites ) ;
+
+            $allSitesImported[ $customerSites['customer']->getId() ] = [
+                'customer'   => $customerSites['customer'],
+                'sites'      => $arrayHandler->filterArrayById( $customerSites['sites'] )
+            ];
+        }
+
+        foreach($userToModifyFromDb->getSitesIds() as $userSiteEntry ) {
+            dump($userSiteEntry);
+            $handledUserSitesEntryFiltredByCustomerId[ $userSiteEntry->getCustomer()->getId() ][ $userSiteEntry->getSiteId() ] =  $userSiteEntry ;
+        }
+
+        foreach($userToModifyFormDatas[ 'sites' ]['enseigne'] as $enseigneSelectedInFormId => $sitesSelectedInFormByCustomer) {
+
+            //On verifit d'abord qu'il a bien le droit d'avoir ce role
+
+            $userCreatorSitesForTHisCustomer = $allSitesImported[$enseigneSelectedInFormId]['sites'] ;
+            if(!isset($useCreatorSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId])) throw new Error('User creator cannot give site for this customer') ;
+
+            foreach($sitesSelectedInFormByCustomer as $siteSelectedInFormByCustomer){
+                dump($siteSelectedInFormByCustomer);
+                $siteToAddToModifyUser = $allSitesImported[ $enseigneSelectedInFormId ] ['sites'] [$siteSelectedInFormByCustomer] ;
+
+                if(!isset($useCreatorSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId][$siteSelectedInFormByCustomer])) throw new Error('User creator cannot give this site') ;
+                $userCreatorSite = $userCreatorSitesForTHisCustomer[$siteSelectedInFormByCustomer] ;
+
+                if( ! $userCreatorSite instanceof Site ) throw new Error('Impossible to find the  Site in creator sites') ;
+
+                if(! isset($handledUserSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId][ $siteSelectedInFormByCustomer ] ) ){
+
+                    $handledUserSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId][$siteSelectedInFormByCustomer] = $newUserSiteToAddToModifiedUser = new UserSites();
+
+
+                    $newUserSiteToAddToModifiedUser->setCustomer($useCreatorSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId][$siteSelectedInFormByCustomer]->getCustomer()) ;
+;
+                    $userToModifyFromDb->addSitesId($newUserSiteToAddToModifiedUser);
+
+                }
+
+
+                $handledUserSitesEntryFiltredByCustomerId[$enseigneSelectedInFormId][$siteSelectedInFormByCustomer]->setSiteId($siteToAddToModifyUser->getId());
+            }
+        }
+
+
+        foreach($handledUserSitesEntryFiltredByCustomerId as $customer => $customerSites){
+
+            if(!isset( $userToModifyFormDatas[ 'sites' ][ 'enseigne' ][ $customer ] ) ){
+                foreach($customerSites as $userSiteEntry){
+                    $userToModifyFromDb->removeSitesId($userSiteEntry);
+                    continue;
+                }
+            }
+            foreach($customerSites as  $siteId => $userSiteEntry) {
+                if( !in_array($siteId, $userToModifyFormDatas[ 'sites' ][ 'enseigne' ][ $customer ]) ) $userToModifyFromDb->removeSitesId($userSiteEntry);
+            }
+        }
+
+        $em->persist($userToModifyFromDb);
+        $em->flush();
+
+
+        return $this->redirectToRoute('users:view');
+
+    }
     //Methode gerant le retour du formulaire de creation utilsiateur avec les donnees entrées par le createur
     /**
      * @Route(path="/users/create/process", name="users::create::process",methods="POST")
@@ -303,7 +661,7 @@ class UserController extends AbstractController
        // dd($em);
         $em->flush();
 
-        return $this->redirectToRoute('user::create') ;
+        return $this->redirectToRoute('users:view') ;
     }
 
 

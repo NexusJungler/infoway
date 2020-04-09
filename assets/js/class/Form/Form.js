@@ -9,6 +9,7 @@ class Form  {
             let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; 
             let emailaddress = $("#email").val();
 
+
             if(emailaddress == '') {
                 $("#email").after('<span class="form-error">Veuillez saisir votre adresse e-mail.</span>');
                 $(".col-email").addClass("error-active");
@@ -23,43 +24,44 @@ class Form  {
                 // $(".row-email").removeClass("error-active");
                 return false; 
             }
+            
    
         });
 
         $('.form-content-table input[type="checkbox"]').change( e =>{
 
             let $checkEnseigne = $(e.currentTarget) ;
+            let selectRole = $(".select-role").val();
 
             if( $checkEnseigne.is( ':checked' ) ){
-                console.log($checkEnseigne.parent());
-                console.log($(".form-content-table .table").find(`tr.${ $checkEnseigne.attr('class')} `)); 
                 $(".form-content-table .table").find(`tr.${ $checkEnseigne.attr('class')} .select`).addClass('select-active');
+
             }
             else{
                 $(".form-content-table .table").find(`tr.${ $checkEnseigne.attr('class')} .select`).removeClass('select-active');
             }
         });
 
+
+
         $('#create-user').validate({
-           
             rules:{
                 Perimeters:{ required: true },
-                selectenseigne:{ required: true }
+                selectenseigne:{ required: true },
             },
             messages:{
                 Perimeters:{
-                  required:"Please select a Color<br/>"
+                    required:"Veuillez sélectionner perimeters <br/>"
                 },
                 selectenseigne:{
-                    required:"Please select a Color<br/>"
+                    required:"Veuillez sélectionne une enseigne <br/>"
                 }
             },
             errorPlacement: function(error, element) {
                 if ( element.is(":radio") ) {
-                      error.appendTo( element('.message-error') );
-                }else { 
-                    // This is the default behavior 
-                    error.insertAfter( element );
+                    error.appendTo( $("#create-user .message-error"));
+                }else {
+                    error.appendTo( $("#create-user .message-error"));
                 }
             }
         });

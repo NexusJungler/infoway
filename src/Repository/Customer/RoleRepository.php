@@ -2,6 +2,7 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Admin\Customer;
 use App\Entity\Customer\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -33,6 +34,8 @@ class RoleRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+
 
 
     // /**
