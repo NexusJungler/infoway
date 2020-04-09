@@ -118,13 +118,13 @@
 
                             {% if givableRoles is defined and  givableRoles is iterable %}
 
-
                                 {% for givableRoleInfosByCustomer in givableRoles %}
 
                                     {% set  givableRolesCustomer  = givableRoleInfosByCustomer ['customer'] %}
                                     {% set  givableRoles  = givableRoleInfosByCustomer ['roles'] %}
 
                                     {% if  givableRolesCustomer.name is defined  and givableRolesCustomer.id is defined  %}
+                                        {%  set userToModifyRoleInCustomer = userToModifyRoles[givableRolesCustomer.id] is defined and userToModifyRoles[givableRolesCustomer.id]['role'] is defined ? userToModifyRoles[givableRolesCustomer.id]['role'] : null  %}
                                         <tr class="input1">
                                             <td>
                                                 <label class="container-chkbox">{{ givableRolesCustomer.name }}
@@ -141,7 +141,7 @@
 
                                                             {% for givableRole in givableRoles  %}
                                                                 {% if  givableRole.name is defined and  givableRole.id is defined  %}
-                                                                    <option value="{{ givableRole.id }}">{{ givableRole.name }}</option>
+                                                                    <option value={{ givableRole.id }} {{ userToModifyRoleInCustomer is same as( givableRole.id )  ? 'selected' : ''}} >{{ givableRole.name }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif  %}
