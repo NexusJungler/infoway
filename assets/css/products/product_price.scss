@@ -1,0 +1,78 @@
+/** POPUP **/
+@import '../custome/popup.scss';
+
+.main-products{
+    /** PAGE PRODUCT PRIX**/
+    .prouct-price-content{
+  
+        /** tableau**/
+        .table{
+            margin-top: 50px;
+            .table-custome{
+                overflow: auto;
+                width: 100%;
+                max-width: 1560px;
+                display: block;
+                .thead-info{
+                    height: 59px;
+                    &::after{
+                        height: 58px;
+                    }
+                    th{
+                        width: 50px;
+                        &:first-child{
+                            width: 2%;
+                        }
+                        &:nth-child(3){
+                            width: 35px;
+                        }
+                    }
+                }
+
+                .tbody-content{
+                    height: 570px;
+                    display: block;
+                    overflow: auto;
+                    td{
+                        width: 50px;
+                        &:first-child{
+                            width: 2%;
+                        }
+                        &:nth-child(3){
+                            width: 35px;
+                        }
+                        &:last-child{
+                            border-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .add-popup {
+        position: absolute;
+        height: 70%;
+        width: auto;
+        background: rgba(0, 0, 0, 0.7);
+        align-items: center;
+        pointer-events: none;
+        opacity: 0;
+        top: -130px;
+        left: -152px;
+        z-index:10000;
+        // transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+        &.is-open {
+            opacity: 1;
+            pointer-events: auto;
+            .modal {
+                // transform: translate(0px, 0px);
+                width: 92%;
+                height: 100%;
+                top: 13%;
+                left: 8%;
+            }
+        }
+    }
+}

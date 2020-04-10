@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('product') }}
+{% endblock %}
+
+
 {% block body %}
     <main class="main main-products">
 

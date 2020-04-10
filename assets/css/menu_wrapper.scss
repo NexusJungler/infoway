@@ -6,7 +6,7 @@
     align-items: center;
     background: #D4DCDF 0% 0% no-repeat padding-box;
     padding-right: 3%;
-
+    // z-index: 1;
     .wrapper-content{
         background: #4D646D 0% 0% no-repeat padding-box;
         border: 0.06rem solid #707070;
@@ -75,7 +75,7 @@
             .current{
                 background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
                 border-bottom: 0;
-                z-index: 5;
+                // z-index: 5;
                 &::after{
                     content: '';
                     height: rem(46px);

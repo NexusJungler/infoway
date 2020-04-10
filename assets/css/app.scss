@@ -20,6 +20,7 @@ body {
     margin: 0;
     padding: 0;
     color: #6F6F6F;
+    overflow-x: hidden;
 }
 
 a {
@@ -72,7 +73,7 @@ img {
 @import 'home_page.scss';
 
 /** PRODUCTS **/
-@import 'products.scss';
+// @import 'products.scss';
 
 /** SITE **/
 @import 'site.scss';

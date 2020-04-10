@@ -23,13 +23,13 @@ class Table  {
 
     }
 
-    onClickInputSelect(){
-        console.log("test");
-        if (!$(this).prop("checked")) {
-            console.log(test2);
-            $("#selectAll").prop("checked", false);
-        }
-    }
+    // onClickInputSelect(){
+    //     console.log("test");
+    //     if (!$(this).prop("checked")) {
+    //         console.log(test2);
+    //         $("#selectAll").prop("checked", false);
+    //     }
+    // }
 
     /**  DELETE LIST  **/
     onClickDeleteTable(e){

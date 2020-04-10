@@ -1,9 +1,9 @@
 {% extends 'products.html.twig' %}
 
-{# {% block stylesheets %}
+{% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('create-user') }}
-{% endblock %} #}
+    {{ encore_entry_link_tags('product-price') }}
+{% endblock %}
 
 {% block maincontent %}
 
@@ -140,13 +140,13 @@
                         <td><input type="checkbox" name="select"></td>
                         <td>Fish N'</td>
                         <td>x3</td>
-                        <td></td>
+                        <td>Finger food</td>
                         <td>nat</td>
-                        <td>Cocker Spaniel</td>
-                        <td>Cocker Spaniel</td>
+                        <td>halal</td>
+                        <td>menu</td>
                         <td class="table-data">12</td>
                         <td class="table-data">6</td>
-                        <td>Poodle</td>
+                        <td>5</td>
                         <td>Streetdog</td>
                         <td>Cocker Spaniel</td>
                         <td>Cocker Spaniel</td>
@@ -187,6 +187,89 @@
         </article>
 
     </article>
+
+    {# popup-ajoute-product #}
+        <article class="add-popup">
+
+            <div class="modal">
+                <div class="model-product">
+
+                        <div class="header-modal">
+                            <div class="form-content">
+                
+                                <div class="row">
+                                    <div class="row">
+                                        <label class="form-label" for="fristname">Nom</label>
+                                        <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" required/>
+                                    </div>
+                                    <div class="row">
+                                        <label class="form-label">Prenom</label>
+                                        <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" required/>
+                                    </div>
+                                </div>
+                                
+                                <div class="row col-email">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  required/>
+                                </div>
+                                <div class="row col-phone">
+                                    <label class="form-label" for="phone">Téléphone</label>
+                                    <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="upload-info">
+
+                            <div class="table">
+                                <table class="table-custome" >
+                                    <thead  class="table-info thead-content">
+                                        <tr>
+                                            <th>Liste des médias déposés :</th>    
+                                            <th></th>
+                                            <th>Formats acceptés</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        <tr>
+                                            <td>la vidéo de l'humour.png</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>la vidéo de l'humour.png</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>  
+                                </table>    
+                            </div> 
+
+                        </div>
+                        
+                        <div>
+                            <input type="button" class="product-btn-add" value="demarrer l'upoad"></input>
+                        </div>
+
+                        <div class="download-file">
+                            <button type="button" class="btn btn-popupclose">Annuler</button>
+                            <button type="button" class="btn btn-popupclose">Appliquer</button>
+                            <button type="button" class="btn btn-popupclose">Créér le produit</button>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="modal-upload-download">
+
+                    </div>
+                    
+
+                    
+
+                </div>
+           </div>     
+        </article>
 </section>
 
 {% endblock %}
