@@ -96,7 +96,7 @@ class UploadHandlerTool extends Tool
     isFileExtensionIsAccepted(extension)
     {
         let output = false;
-
+        //console.log(this.__authorizedExtensions); debugger
         Object.keys(this.__authorizedExtensions).forEach( (key) => {
 
             if(this.__authorizedExtensions[key].indexOf(extension) !== -1)
@@ -105,6 +105,34 @@ class UploadHandlerTool extends Tool
         } );
 
         return output;
+
+    }
+
+    isFileIsAlreadyUploaded(file)
+    {
+
+        return new Promise( (resolve, reject) => {
+
+            $.ajax({
+                type: 'post',
+                url: '/file/is/uploaded',
+                data: { file: file },
+                async: false
+            })
+
+                .done( (response) => {
+
+                    resolve(parseInt(response) === 0) ;
+
+                } )
+
+                .fail( (errorType, errorStatus, errorThrown) => {
+
+                    reject(new Error(errorType)) ;
+
+                } );
+
+        } );
 
     }
 
@@ -118,31 +146,41 @@ class UploadHandlerTool extends Tool
                 const uploadButton = $(e.currentTarget);
                 let filesSelected = uploadButton[0].files;
 
-                filesSelected.forEach( (file, index) => {
+                filesSelected.forEach( async (file, index) => {
                     //console.log(filesSelected); debugger
                     let fileName = file.name;
                     let fileExtension = fileName.split('.').pop();
                     let fileIsAccepted = this.isFileExtensionIsAccepted(fileExtension);
 
-                    //console.log(file, fileName, fileExtension);
-                    //console.log($(`.upload-info table tbody tr[data-file='${fileName}']`).length); debugger
                     // don't duplicate file in upload list
                     if( $(`.upload-info table tbody tr[data-file='${fileName}']`).length < 1 )
                     {
+                        //console.log("azaz2222222222222"); debugger
 
-                        this.__filesToUpload.push( {index: index, name: fileName, file: file} );
+                        const fileIsAlreadyUploaded = await this.isFileIsAlreadyUploaded(fileName);
 
                         let newUploadFileItem = $("<tr>", {
-                            class: (!fileIsAccepted) ? 'invalid_upload_item' : 'upload_item'
+                            class: (!fileIsAccepted || fileIsAlreadyUploaded) ? 'invalid_upload_item' : 'upload_item'
                         }).attr("data-file", fileName);
 
-                        let html = `<td>${fileName}</td>
-                                    <td>${ (!fileIsAccepted) ? "<span style='color: red;'>Ce type de fichier n'est pas accepté ! Il ne sera pas être uploader</span>" : ''  }</td>
-                                    <td><i class="${ (!fileIsAccepted) ? 'fas fa-times' : 'fas fa-check' }"></i></td>
-                                    <td><i data-target="${fileName}" class="fas fa-trash-alt remove_file_from_list"></i></td>`;
+                        let html = `<td>${fileName}</td>`;
 
-                        if(fileIsAccepted)
+                        if(fileIsAlreadyUploaded)
+                            html += `<td><span style='color: red;'>Un fichier portant le même nom a déjà été uploadé ! Il ne sera pas uploadé</span></td>`;
+
+                        else if(!fileIsAccepted)
+                            html += `<td><span style='color: red;'>Ce type de fichier n'est pas accepté ! Il ne sera pas uploadé</span></td>`;
+
+                        else
+                            html += `<td></td>`;
+
+                        html += `<td><i class="${ (!fileIsAccepted) ? 'fas fa-times' : 'fas fa-check' }"></i></td>
+                                 <td><i data-target="${fileName}" class="fas fa-trash-alt remove_file_from_list"></i></td>`;
+
+                        if(fileIsAccepted && !fileIsAlreadyUploaded)
                         {
+
+                            this.__filesToUpload.push( {index: index, name: fileName, file: file} );
 
                             $("<tr>", {
                                 id: `upload_${index}`
@@ -158,8 +196,11 @@ class UploadHandlerTool extends Tool
 
                         newUploadFileItem.appendTo( $(".upload-info table tbody") );
 
-                        if($(".upload-info table tbody tr").length > 0)
-                            $(".model-upload-file .start_upload_button").show();
+                        if($(".upload-info table tbody tr.upload_item").length > 0)
+                            $(".model-upload-file .start_upload_button").fadeIn();
+
+                        else
+                            $(".model-upload-file .start_upload_button").fadeOut();
 
                     }
 
@@ -208,7 +249,6 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
-
     onClickOnStartUploadButtonStartUpload(active)
     {
 
@@ -224,6 +264,7 @@ class UploadHandlerTool extends Tool
                 //$(".files_selection").fadeOut();
 
                 $(".files_selection").fadeOut();
+                $(".files_selection table tbody").empty();
                 $(".upload-title").text("Traitement de la file en cours, veuillez patienter merci");
                 $(".on_progress").fadeIn();
 
@@ -317,6 +358,7 @@ class UploadHandlerTool extends Tool
 
                 //$(".files_selection").fadeOut();
                 $(".on_progress").fadeOut();
+                $(".on_progress table tbody").empty();
                 $(".upload-title").text("Médias à caractériser");
                 $(".edit_media_info").fadeIn();
 
@@ -339,9 +381,9 @@ class UploadHandlerTool extends Tool
             .onClickOnModalCloseButtonsCloseModal(true)
             .onPageLoadGetFilesAuthorizedExtensions(true)
             .onFileSelectAddFileInList(true)
-            .onClickOnRemoveFileButtonRemoveFileFromList(true)
             .onClickOnStartUploadButtonStartUpload(true)
             .onClickOnNextButtonShowMediaInfosEditContainer(true)
+            .onClickOnRemoveFileButtonRemoveFileFromList(true)
         ;
     }
 
@@ -353,9 +395,9 @@ class UploadHandlerTool extends Tool
             .onClickOnModalCloseButtonsCloseModal(false)
             .onPageLoadGetFilesAuthorizedExtensions(false)
             .onFileSelectAddFileInList(false)
-            .onClickOnRemoveFileButtonRemoveFileFromList(false)
             .onClickOnStartUploadButtonStartUpload(false)
             .onClickOnNextButtonShowMediaInfosEditContainer(false)
+            .onClickOnRemoveFileButtonRemoveFileFromList(false)
         ;
     }
 

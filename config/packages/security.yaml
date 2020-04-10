@@ -51,7 +51,8 @@ security:
         - { path: ^/logout$, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/password/forget$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/reset/password/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/cancel/password/reset/request/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

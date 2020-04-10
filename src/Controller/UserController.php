@@ -326,18 +326,15 @@ class UserController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
 
         if(!is_null($error))
-        {
-            //translate
+            // translate error
+            // (translate can be found in translations/messages.fr.yaml, language can be found in config/packages/translation.yaml)
             $error = $translator->trans($error->getMessageKey());
-        }
 
-        dump($error);
-
-        return $this->render('user/user.login.html.twig', [
+        return $this->render('user/user_login.html.twig', [
             'page_title' => 'Connexion',
             'form_title' => 'Connexion',
             'last_username' => $lastUsername,
-            'message' => $error
+            'error' => $error
         ]);
     }
 
@@ -377,7 +374,7 @@ class UserController extends AbstractController
 
                     if($user)
                     {
-                        //$this->sendPasswordResetEmail($emailSenderService, $user);
+                        $this->sendPasswordResetEmail($emailSenderService, $user);
                         $emailIsSend = true;
                     }
                     else
@@ -396,7 +393,7 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render("user/user.login.html.twig", [
+        return $this->render("user/user_login.html.twig", [
             'page_title' => 'Mot de passe oublié',
             'form_title' => 'Mot de passe oublié ?',
             'form_subtitle' => 'Veuillez renseignez votre email',
@@ -431,27 +428,40 @@ class UserController extends AbstractController
             $userInfo = $request->request->get('user');
             //dd($userInfo);
 
-            if($userInfo['password'] !== $userInfo['password_confirm'])
+            if($user)
             {
-                $error = "Les 2 mots de passe doivent être identique !";
-            }
 
-            // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
-            elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
-            {
-                $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+                if($userInfo['password'] !== $userInfo['password_confirm'])
+                {
+                    $error = "Les 2 mots de passe doivent être identique !";
+                }
+
+                // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+                elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
+                {
+                    $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+                }
+
+                else
+                {
+
+                    $this->updateUserPassword($user,$userInfo['password'], $passwordEncoder, true);
+
+                    $entityManager->flush();
+
+                    $passwordWasUpdated = true;
+                    //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
+                }
+
             }
 
             else
             {
-
-                $this->updateUserPassword($user,$userInfo['password'], $passwordEncoder, true);
-
-                $entityManager->flush();
-
-                $passwordWasUpdated = true;
-                //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
+                $tokenIsInvalid = true;
+                $error = "Désolé, ce lien n'est plus valide ! Cliquez <a href='" . $this->generateUrl('user::passwordForget') . "'>ici</a> pour saisir votre email afin de recevoir un nouveau lien pour réinitialiser votre mot de passe.";
             }
+
+
 
         }
         else
@@ -463,12 +473,18 @@ class UserController extends AbstractController
             {
                 $tokenIsInvalid = true;
 
-                /*if($user)
-                    $this->sendPasswordResetEmail($emailSenderService, $user);*/
 
-               // else
-                if(!$user)
+                if($user)
+                {
+                    $this->sendPasswordResetEmail($emailSenderService, $user);
+                    $error = "Désolé, ce lien n'est plus valide ! Si votre email est correcte, vous allez recevoir un nouveau lien dans quelques minutes.";
+                }
+
+                else
+                {
                     $userNotFound = true;
+                    $error = "Désolé, ce lien n'est plus valide ! Cliquez <a href='" . $this->generateUrl('user::passwordForget') . "'>ici</a> pour saisir votre email afin de recevoir un nouveau lien pour réinitialiser votre mot de passe.";
+                }
 
             }
 
@@ -476,10 +492,10 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render('user/user.login.html.twig', [
+        return $this->render('user/user_login.html.twig', [
             'page_title' => 'Réinitialisation du Mot de passe',
             'form_title' => 'Réinitialisation du mot de passe',
-            'error' => $error ?? null,
+            'error' => $error ?? "",
             'tokenIsInvalid' => $tokenIsInvalid ?? false,
             'passwordWasUpdated' => $passwordWasUpdated ?? false,
             'userNotFound' => $userNotFound ?? null
@@ -498,7 +514,7 @@ class UserController extends AbstractController
         $this->__manager = $this->getDoctrine()->getManager('default');
 
         return $this->render(
-            'user/user.showAll.html.twig', [
+            'user/user_show_all.html.twig', [
             'users' => $this->__manager->getRepository(User::class)->findAll()
         ]);
 
@@ -525,7 +541,7 @@ class UserController extends AbstractController
 
         dump($userRolePermissions, $userPermissions);
 
-        return $this->render('user/user.editPermissions.html.twig', [
+        return $this->render('user/user_edit_permissions.html.twig', [
             'user' => (object) ['id' => $user->getId(), 'username' => $user->getUsername(), 'role' => $user->getRole()->getName()],
             'userPermissions' => $userPermissions,
             'rolePermissions' => $userRolePermissions,
@@ -582,11 +598,7 @@ class UserController extends AbstractController
         if(array_key_exists('email', $userInfo) AND $emailVerificator->isValidEmail($userInfo['email']))
         {
 
-            $emailSenderService->sendEmail($userInfo['email'], 'Inscription Confirmation',$this->renderView(
-                "emails/user.accountConfirmation.twig", [
-                'account_confirmation_token' => $tokenGeneratorService->generate(64),
-                'user' => $userInfo['lastname'] . ' ' . $userInfo['fristname']
-            ]),'text/html');
+            $this->sendAccountConfirmationEmail($emailSenderService, $user);
 
 
             // meessage flash de confirmation de création de l'utilisateur ( et envoie de l'email ?)
@@ -616,23 +628,16 @@ class UserController extends AbstractController
 
             $userInfo = $request->request->get('user');
 
-            if($userInfo['password'] !== $userInfo['password_confirm'])
-            {
-                $this->addFlash('message', 'Les 2 mots de passe doivent être identique !');
-            }
-            else
+            $error = $this->isUserPasswordIsValid($userInfo);
+
+            if($error === null)
             {
 
                 $this->updateUserPassword($user, $userInfo['password'], $passwordEncoder);
 
-                $user->setAccountConfirmedAt(new \DateTime())
-                     ->setAccountConfirmationToken(null)
-                     ->setActivated(true);
-
                 $entityManager->flush();
 
                 $this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
-
             }
 
         }
@@ -646,9 +651,66 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render('user/user.accountConfirmation.twig', [
-            'error' => $error ?? false
+        return $this->render('user/user_login.html.twig', [
+            'error' => $error ?? false,
+            'tokenIsValid' => $tokenIsValid,
+            'page_title' => 'Confirmation de votre compte',
+            'form_title' => 'Confirmation de votre compte',
+            'form_subtitle' => 'Choissisze votre mot de passe',
         ]);
+
+    }
+
+
+    /**
+     * @Route(path="/cancel/password/reset/request/{password_reset_token}", name="user::cancelPasswordResetRequest")
+     */
+    public function cancelPasswordResetRequest(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, string $password_reset_token)
+    {
+
+        $tokenIsInvalid = true;
+        $user = $userRepository->findOneByPasswordResetToken($password_reset_token);
+
+        if($user)
+        {
+            $user->setPasswordResetToken(null)
+                 ->setRequestedPasswordAt(null);
+
+            $entityManager->flush();
+
+            $tokenIsInvalid = false;
+        }
+
+        return $this->render('user/cancel_password_reset_request.html.twig', [
+            'tokenIsInvalid' => $tokenIsInvalid
+        ]);
+
+    }
+
+
+    /**
+     * Réalise les vérifications de conformité du mot de passe de l'utilisateur
+     *
+     * @param $userInfo
+     * @return string|null
+     */
+    private function isUserPasswordIsValid($userInfo)
+    {
+
+        $error = null;
+
+        if($userInfo['password'] !== $userInfo['password_confirm'])
+        {
+            $error = "Les 2 mots de passe doivent être identique !";
+        }
+
+        // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+        elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
+        {
+            $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+        }
+
+        return $error;
 
     }
 
@@ -714,8 +776,22 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         $emailSenderService->sendEmail($user->getEmail(), 'Modification du mot de passe' ,$this->renderView(
-            "emails/user.resetPassword.twig", [
+            "emails/email_reset_password.html.twig", [
             'password_reset_token' => $token,
+            'user' => $user->getLastName() . ' ' . $user->getFirstName()
+        ]),'text/html');
+
+    }
+
+
+    private function sendAccountConfirmationEmail(EmailSenderService $emailSenderService, User $user)
+    {
+
+        $tokenGeneratorService = new TokenGeneratorService();
+
+        $emailSenderService->sendEmail($user->getEmail(), 'Inscription Confirmation',$this->renderView(
+            "emails/email_account_confirmation.twig", [
+            'account_confirmation_token' => $tokenGeneratorService->generate(64),
             'user' => $user->getLastName() . ' ' . $user->getFirstName()
         ]),'text/html');
 
@@ -727,6 +803,7 @@ class UserController extends AbstractController
      * @param string $password
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param bool $isPasswordForget
+     * @throws Exception
      */
     private function updateUserPassword(User $user, string $password, UserPasswordEncoderInterface $passwordEncoder, bool $isPasswordForget = false)
     {
@@ -734,11 +811,16 @@ class UserController extends AbstractController
         $user->setPassword($passwordEncoder->encodePassword($user, $password));
 
         if($isPasswordForget)
-            $user->setPasswordResetToken(null);
-
+        {
+            $user->setPasswordResetToken(null)
+                ->setRequestedPasswordAt(null);
+        }
         else
-            $user->setAccountConfirmationToken(null);
-
+        {
+            $user->setAccountConfirmationToken(null)
+                 ->setActivated(true)
+                 ->setAccountConfirmedAt(new \DateTime());
+        }
         //$this->getDoctrine()->getManager('default')->flush();
 
         //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');

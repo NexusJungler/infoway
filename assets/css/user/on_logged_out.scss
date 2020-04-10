@@ -127,6 +127,19 @@ img {
 
 /************************************************************************* FORMULAIRE **************************************************************************/
 
+.request_canceled_message_container {
+  position: absolute;
+  right: 30%;
+  top: 50%;
+  bottom: 20%;
+  width: 360px;
+
+  .error {
+    color: #EE322F;
+  }
+
+}
+
 .form_container {
   position: absolute;
   right: 30%;
