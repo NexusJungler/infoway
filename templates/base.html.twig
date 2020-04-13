@@ -24,7 +24,7 @@
         {% block header %}
             <header class="header">
                 <div class="logo__infoway">
-                    <img src="{{ asset('build/images/infoway.png') }}" alt="logo infoway">
+                    <img src="{{ asset('/build/images/infoway.png') }}" alt="logo infoway">
                 </div>
                 <div class="menu-wrap">
                     <input type="checkbox" class="toggler" />
@@ -34,7 +34,7 @@
                     <div class="header__block--left">
                         <div class="header__gradient-left">
                             <div class="logo__enseigne">
-                                <img src="{{ asset('build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
+                                <img src="{{ asset('/build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
                             <div class="all__enseigne">
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
@@ -55,7 +55,7 @@
 
                     <div class="header__gradient-center">
                         <div class="update">
-                            <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
+                            <img src="{{ asset('/build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
                             <div class="all__enseigne-site">
                                 <form class="enseigne-site">
                                     <select name="enseigne-site" id="enseigne-site">
@@ -196,9 +196,9 @@
                                 </ul>
                             </li >
                             <li class="nav-menu-hover">
-                                <a href="{{ path('media::showMediatheque') }}"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <a href="/media"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-iy-produit-prix"></i></a>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="{{ path('media::showMediatheque') }}"><span class="nav-mobile-title">Médiathèque</span></a></li>
+                                    <li><a href="/media"><span class="nav-mobile-title">Médiathèque</span></a></li>
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">

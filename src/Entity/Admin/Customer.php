@@ -91,11 +91,16 @@ class Customer
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Admin\Contact", mappedBy="customer", orphanRemoval=true, cascade={"persist"})
+     */
+    private $contacts;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->sites = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
 
@@ -294,5 +299,42 @@ class Customer
         return $this;
     }
 
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->contains($contact)) {
+            $this->contacts->removeElement($contact);
+            // set the owning side to null (unless already changed)
+            if ($contact->getCustomer() === $this) {
+                $contact->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function removeAllContacts()
+    {
+        $this->contacts->clear();
+
+        return $this;
+    }
 
 }

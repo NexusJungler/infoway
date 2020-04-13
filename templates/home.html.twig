@@ -7,7 +7,7 @@
         <div class="main-content">
 
             <section class="jumbotron">
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue ' ~ app.user.firstName } %}
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue ' ~ user.firstName } %}
             </section>
         
             <div class="home-information">

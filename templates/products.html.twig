@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('product') }}
+{% endblock %}
+
+
 {% block body %}
-    <main class="main home-products">
+    <main class="main main-products">
 
         <div class="main-content">
 
@@ -12,7 +18,7 @@
             <section class="wrapper">
                 <article class="wrapper-content">
                     <ul class="tabs">
-                        <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-products"> <p class="css-tab__label">Produits / prix</p></li></a>
+                        <a href="{{ path('app:products') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:products' %}  current {% endif %}" data-tab="tab-products"> <p class="css-tab__label">Produits / prix</p></li></a>
                         
                         {# <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-categories"> <p class="css-tab__label">Catégories</p></li></a>
                         <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-price"> <p class="css-tab__label">Groupe de Prix</p></li></a>
@@ -21,11 +27,15 @@
                 </article>
             </section> 
 
-        <section class="wrapper_tabcontent">
+            <section>
+                {% block  maincontent %}
+                    
+                {% endblock %}
+            </section>
 
-            <article id="tab-products" class="tab-content current">
-                {% include 'products/products_price.html.twig' %} 
-            </article>
+        {# <section class="wrapper_tabcontent">
+
+       
                 
             <article id="tab-categories" class="tab-content create-brand tab-create">
                  {% include 'products/products_price.html.twig' %}
@@ -37,7 +47,7 @@
             <article id="tab-create-date" class="tab-content  tab-create">
             </article>
             
-        </section>    
+        </section>     #}
 
 
         </div>

@@ -11,7 +11,7 @@
             <section class="wrapper">
                 <article class="wrapper-content">
                     <ul class="tabs">
-                        <a href="{{ path('media::showMediatheque') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'media::showMediatheque' %}  current {% endif %}" data-tab="picture"> <p class="css-tab__label">Image</p></li></a>
+                        <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="picture"> <p class="css-tab__label">Image</p></li></a>
                         <li class="tablinks" data-tab="tab-video"> <p class="css-tab__label"> Vidéos </p> </li>
                         <li class="tablinks" data-tab="tab-totem"> <p class="css-tab__label"> Vidéos Synchro </p> </li>
                         <li class="tablinks" data-tab="tab-price"> <p class="css-tab__label"> Vidéos Thématique </p> </li>

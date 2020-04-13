@@ -97,8 +97,9 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         $userRepo->getUserWithSites($this->lastRegisteredUser);
 
 
-        $sessionManager = new SessionManager(new Session());
-        $sessionManager->remove('user');
+        $sessionManager = new SessionManager(new Session()) ;
+
+        if($sessionManager->get('user') !== null ) $sessionManager->remove('user');
 
         $sessionManager->set('user',$this->lastRegisteredUser);
 

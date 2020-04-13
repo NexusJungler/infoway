@@ -38,15 +38,16 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
-    .addEntry('app_login', './assets/js/app_login.js')
-    .addEntry('app_register', './assets/js/app_register.js')
-    //.addEntry('modal_message', './assets/js/modal_message.js')
     .addEntry('permission', './assets/js/permission.js')
     // create-user
     .addEntry('create-user', './assets/js/create/create-user.js')
     .addEntry('user_login', './assets/js/user_login.js')
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
+
+    // Product
+    .addEntry('product', './assets/js/product.js')
+    .addEntry('product-price', './assets/js/product/product_price.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

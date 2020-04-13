@@ -18,7 +18,7 @@ class MediaController extends AbstractController
     public function showMediatheque(Request $request)
     {
 
-        return $this->render("image/media-image.html.twig", [
+        return $this->render("media/media-image.html.twig", [
 
         ]);
 
