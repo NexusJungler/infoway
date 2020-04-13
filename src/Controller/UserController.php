@@ -8,11 +8,11 @@ use App\Entity\Admin\Action;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Perimeter;
 use App\Entity\Admin\Permission;
-use App\Entity\Admin\Role;
 use App\Entity\Admin\Subject;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserRoles;
 use App\Entity\Admin\UserSites;
+use App\Entity\Customer\Role;
 use App\Form\UserType;
 use App\Repository\Admin\UserRepository;
 use App\Service\ArrayHandler;
@@ -56,6 +56,7 @@ class UserController extends AbstractController
 
 
 
+    /**
     /**
      * @Route(path="/users/create", name="user::create",methods="GET|POST")
      * @return Response
@@ -108,7 +109,7 @@ class UserController extends AbstractController
             if( $creatorUserRoleByCustomer instanceof Customer ) {
                 //On recupere le role pour l enseigne traité et on controle son type .
                 $customerRole = $creatorUserRoleByCustomer->getRole() ;
-                if( $customerRole instanceof \App\Entity\Customer\Role) {
+                if( $customerRole instanceof Role ) {
                     $allManagers = $this->getDoctrine()->getManagers() ;
                     if( isset ( $allManagers[ $creatorUserRoleByCustomer->getName() ] ) ){
                         $currentEm =  $allManagers[ $creatorUserRoleByCustomer->getName() ] ;

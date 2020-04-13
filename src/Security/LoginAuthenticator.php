@@ -71,6 +71,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
+
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
@@ -91,6 +92,8 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
+
         $userRepo = $this->entityManager->getRepository(User::class);
 
         $userRepo->getUserWithRoles($this->lastRegisteredUser);
@@ -103,8 +106,8 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
         $sessionManager->set('user',$this->lastRegisteredUser);
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new RedirectResponse($this->urlGenerator->generate('app::home'));
+        //  $userFromDatabase=$sessionManager->get('user');
+        return new RedirectResponse($this->urlGenerator->generate('app'));
     }
 
     protected function getLoginUrl()

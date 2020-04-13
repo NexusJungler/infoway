@@ -239,8 +239,10 @@
                                 <tbody class="tbody tbody-content scrollbar-table">
                                 {%  if  givableSites is defined and givableSites is iterable %}
                                     {% for customer in  givableSites %}
+                                        {{ dump(customer) }}
                                         {% if customer.id is defined and customer.sites is defined and customer.sites is iterable %}
                                             {% for  site in customer.sites %}
+
                                                 {% if site.id is defined and site.name is defined and site.adress is defined  %}
                                                     <tr>
                                                         <td>

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Repository\Customer;
+namespace App\Repository;
 
 
 use App\Entity\Search;

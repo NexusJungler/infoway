@@ -3,12 +3,13 @@
 
 namespace App\Entity\Admin;
 
+
 use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use \App\Entity\Customer\Role;
 
 
 /**
@@ -88,7 +89,7 @@ class User implements UserInterface
 
     /**
      * One user has many roles. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
+     * L uerinterface a besoin que la propriete  roles contiennent un  tableau contents des objets Role
      */
     private $roles = [];
 
@@ -141,14 +142,14 @@ class User implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->roles->getValues();
+        return $this->roles;
     }
 
-    public function addRole(UserRoles $role): self
+    public function addRole(Role $role,$customer): self
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-            $role->setUser($this);
+        $customer->setRole( $role );
+        if( !in_array( $customer, $this->roles) ){
+            $this->roles[] = $customer ;
         }
 
         return $this;
@@ -369,8 +370,11 @@ class User implements UserInterface
     public function addSitesId(UserSites $sitesId): self
     {
         if (!$this->sitesIds->contains($sitesId)) {
+
+            $this->addCustomer($sitesId->getCustomer());
             $this->sitesIds[] = $sitesId;
             $sitesId->setUser($this);
+
         }
 
         return $this;
@@ -405,12 +409,19 @@ class User implements UserInterface
         $this->sites = $sites;
     }
 
-    public function addSite(Site $site) {
-        if (!$this->sites->contains($site)) {
-            $this->sites[] = $site;
+    //fonction qui permet d ajouter un objet site recupere d une base d un client a un utilisateur  . Il faut preciser l enseigne c est celle ci qui contiendra tous les sites de l user afin qu ils soient rangés par enseigne
+    public function addSite(Site $site, Customer $customer) {
+        if( ! $customer->getSites()->contains( $site ) ){
+            $customer->addSite( $site );
+        }
+        if( $customer->getSites()->contains($site) ){
+            if( ! $this->sites->contains( $customer ) ){
+                $this->sites[] = $customer ;
+            }
         }
     }
 
+    //TODO permet de supprimer un site
     public function removeSite(Site $site): self
     {
         if ($this->sites->contains($site)) {
