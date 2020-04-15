@@ -4,16 +4,62 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    configDirectory: '%kernel.project_dir%/config/'
     doctrine_file_path: '%kernel.project_dir%/config/packages/doctrine.yaml'
     env_file_path: '%kernel.project_dir%/.env'
     logoDirectory: '%kernel.project_dir%/public/logo/'
     uploadDirectory: '%kernel.project_dir%/public/upload/'
+    sys_path:
+        datas: "D:/main"
+    
+    # W3C authors recommend to specify both MIME-types and corresponding extensions in input type file "accept" attribute
+    # @see : https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
     uploadAuthorizedMimeTypes:
         image:
-            - jpeg
-            - png
+            mime_type:
+                - image/jpg
+                - image/jpeg
+                - image/png
+                - image/bmp
+                
+            extension:
+                - .jpg
+                - .jpeg
+                - .png
+                - .bmp
+            
         video:
-            -
+            mime_type:
+                -
+            
+            extension:
+                - video/* # aucune limitation
+                - application/vnd.openxmlformats-officedocument.presentationml.presentation # .pptx
+            
+        powerpoint:
+            mime_type:
+                - application/vnd.ms-powerpoint # .ppt
+                
+            extension:
+                - .ppt
+                - .pptx
+            
+        pdf:
+            mime_type:
+                - application/pdf
+                
+            extension:
+                - .pdf
+            
+        word:
+            mime_type:
+                - application/msword # .doc
+                - .doc
+                - application/vnd.openxmlformats-officedocument.wordprocessingml.document # .docx
+                - .docx
+            
+            extension:
+                -
         
     logoAuthorizedMimeTypes:
         - png

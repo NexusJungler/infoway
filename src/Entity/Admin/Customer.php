@@ -92,15 +92,22 @@ class Customer
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Admin\Contact", mappedBy="customer", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Contact", mappedBy="customer", orphanRemoval=true, cascade={"persist"})
      */
     private $contacts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FfmpegTasks", mappedBy="customer", orphanRemoval=true)
+     * @ORM\JoinColumn(name="upload_tasks")
+     */
+    private $uploadTasks;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->sites = new ArrayCollection();
         $this->contacts = new ArrayCollection();
+        $this->uploadTasks = new ArrayCollection();
     }
 
 
@@ -333,6 +340,37 @@ class Customer
     public function removeAllContacts()
     {
         $this->contacts->clear();
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FfmpegTasks[]
+     */
+    public function getUploadTasks(): Collection
+    {
+        return $this->uploadTasks;
+    }
+
+    public function addUploadTask(FfmpegTasks $uploadTask): self
+    {
+        if (!$this->uploadTasks->contains($uploadTask)) {
+            $this->uploadTasks[] = $uploadTask;
+            $uploadTask->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUploadTask(FfmpegTasks $uploadTask): self
+    {
+        if ($this->uploadTasks->contains($uploadTask)) {
+            $this->uploadTasks->removeElement($uploadTask);
+            // set the owning side to null (unless already changed)
+            if ($uploadTask->getCustomer() === $this) {
+                $uploadTask->setCustomer(null);
+            }
+        }
 
         return $this;
     }

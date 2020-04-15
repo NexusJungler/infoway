@@ -42,7 +42,7 @@ class Contact
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin\Customer", inversedBy="contacts")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="contacts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customer;

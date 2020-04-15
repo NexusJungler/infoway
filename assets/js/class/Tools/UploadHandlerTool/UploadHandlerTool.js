@@ -8,8 +8,9 @@ class UploadHandlerTool extends Tool
     {
         super();
         this.__name = "UploadHandlerTool";
-        this.__authorizedExtensions = null;
+        this.__authorizedFiles = null;
         this.__filesToUpload = [];
+        this.__mediaType = null;
     }
 
 
@@ -70,15 +71,31 @@ class UploadHandlerTool extends Tool
         // if tool is actived
         if(active)
         {
+
+            this.__mediaType = $('.main-media').data('media_displayed');
+
             $.ajax({
                type: 'get',
-               url: "/get/files/authorized/extensions",
+               url: `/get/${this.__mediaType}/authorized/extensions`,
             })
 
                 .done( (extensions) => {
 
                     console.table(extensions);
-                    this.__authorizedExtensions = extensions;
+                    
+                    if(Object.keys(extensions).length > 0)
+                    {
+                        this.__authorizedFiles = extensions.mime_type.join(', ');
+                        $("input[type='file']#uploadmedia").attr('accept', extensions.mime_type.join(', ') + ', ' + extensions.extension.join(', '));
+                    }
+
+                    else
+                    {
+                        this.__authorizedFiles = [];
+                        $("input[type='file']#uploadmedia").attr('accept', '*/*');
+                    }
+
+
 
                 } )
 
@@ -93,25 +110,18 @@ class UploadHandlerTool extends Tool
 
     }
 
-    isFileExtensionIsAccepted(extension)
+    isFileExtensionIsAccepted(mime_type)
     {
-        let output = false;
-        //console.log(this.__authorizedExtensions); debugger
-        Object.keys(this.__authorizedExtensions).forEach( (key) => {
+        if(this.__authorizedFiles !== [])
+            return this.__authorizedFiles.indexOf(mime_type) !== -1;
 
-            if(this.__authorizedExtensions[key].indexOf(extension) !== -1)
-                output = true;
-
-        } );
-
-        return output;
-
+        return true;
     }
 
     isFileIsAlreadyUploaded(file)
     {
-
-        return new Promise( (resolve, reject) => {
+        return false;
+        /*return new Promise( (resolve, reject) => {
 
             $.ajax({
                 type: 'post',
@@ -132,7 +142,7 @@ class UploadHandlerTool extends Tool
 
                 } );
 
-        } );
+        } );*/
 
     }
 
@@ -149,8 +159,9 @@ class UploadHandlerTool extends Tool
                 filesSelected.forEach( async (file, index) => {
                     //console.log(filesSelected); debugger
                     let fileName = file.name;
-                    let fileExtension = fileName.split('.').pop();
-                    let fileIsAccepted = this.isFileExtensionIsAccepted(fileExtension);
+                    let fileMimeType = file.type;
+                    //let fileExtension = fileName.split('.').pop();
+                    let fileIsAccepted = this.isFileExtensionIsAccepted(fileMimeType);
 
                     // don't duplicate file in upload list
                     if( $(`.upload-info table tbody tr[data-file='${fileName}']`).length < 1 )
@@ -180,7 +191,7 @@ class UploadHandlerTool extends Tool
                         if(fileIsAccepted && !fileIsAlreadyUploaded)
                         {
 
-                            this.__filesToUpload.push( {index: index, name: fileName, file: file} );
+                            this.__filesToUpload.push( {index: index, name: fileName, file: file, media_type: this.__mediaType} );
 
                             $("<tr>", {
                                 id: `upload_${index}`
@@ -285,6 +296,7 @@ class UploadHandlerTool extends Tool
                             const formData = new FormData();
 
                             formData.append('file', fileToUpload.file);
+                            formData.append('media_type', fileToUpload.media_type); // will be saved in Request->request->parameters['media_type']
 
                             const xhr = new XMLHttpRequest();
 
