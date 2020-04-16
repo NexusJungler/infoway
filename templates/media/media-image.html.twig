@@ -57,19 +57,21 @@
             <article class="add-popup">
             
                 <div class="modal">
-                    <div class="model-upload-file">
 
-                        <div class="header-modal">
-                            <div>
-                                <p class="upload-title">Préparation de l'Upload</p>
-                                <p class="download-file">Traitement de la file en cours, veuillez patienter merci</p>
-                                <button type="button" class="btn btn-popupclose">X</button>
-                            </div>
+                    <div class="header-modal">
+                        <div>
+                            <p class="upload-title">Préparation de l'Upload</p>
+                            <button type="button" class="btn btn-popupclose upload_abort">X</button>
                         </div>
+                    </div>
+
+                    <div class="model-upload-file files_selection">
 
                         <div class="upload-file">
-                            <label for="uploadmedia">selectionner vos fichiers</label>
-                            <input type="file" id="uploadmedia" name="uploadmedia">
+                            <form id="uploadForm">
+                                <label for="uploadmedia">selectionner vos fichiers</label>
+                                <input type="file" id="uploadmedia" name="uploadmedia" multiple>
+                            </form>
                         </div>
 
                         <div class="upload-info">
@@ -80,20 +82,12 @@
                                         <tr>
                                             <th>Liste des médias déposés :</th>    
                                             <th></th>
-                                            <th>Formats acceptés</th> 
+                                            <th>Formats acceptés</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="tbody tbody-content scrollbar-table">
-                                        <tr>
-                                            <td>la vidéo de l'humour.png</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>la vidéo de l'humour.png</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+
                                     </tbody>  
                                 </table>    
                             </div> 
@@ -101,22 +95,55 @@
                         </div>
                         
                         <div>
-                            <input type="button" class="product-btn-add" value="demarrer l'upoad"></input>
-                        </div>
-
-                        <div class="download-file">
-                            <button type="button" class="btn btn-popupclose">Annuler</button>
-                            <input type="button" class="product-btn-add" value="" >Suivant</input>
+                            <button type="button" class="product-btn-add start_upload_button" style="display: none">Démarrer l'upload</button>
                         </div>
                         
                     </div>
                     
-                    <div class="modal-upload-download">
+                    <div class="modal-upload-download on_progress" style="display: none">
+
+                        <div class="upload_list_container">
+                            <table class="upload_list">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody-content">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="download-file">
+                            <button type="button" class="btn btn-popupclose upload_abort">Annuler</button>
+                            <button type="button" class="product-btn-add show_media_edit_container" style="display: none;">Suivant</button>
+                        </div>
 
                     </div>
-                    
 
-                    
+                    <div class="edit_media_info" style="display: none">
+
+                        <div class="media_list_container">
+                            <table class="media_list">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody class="tbody-content">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
 
                 </div>
             </article>

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main home">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Editer un client', 'showSecondTitles': false } %}
+            </section>
+        </div>
+
+
+        <div id="createCustomer" style="margin-left: 10%">
+
+            {{ form_start(form) }}
+
+            {% for error in app.flashes('error') %}
+                <p>
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+            {% if logoCustomer is not null %}
+                <div>
+                    <p>Logo</p>
+                    <img src="{{ asset('logo/' ~ logoCustomer) }}" alt="{{ logoCustomer }}">
+                </div>
+            {% endif %}
+
+            {{ form_widget(form) }}
+
+            <div id="contacts_container">
+                <label for="contacts">Contact(s)</label>
+                <button type="button" id="add_contact">Ajouter un contact</button>
+                {% for contact in contacts %}
+                    {{ dump(contact) }}
+                    <div class="contact" id="contact_{{ loop.index0 }}">
+                        <input type="text" name="contacts[{{ loop.index0 }}][lastname]" placeholder="Nom" value="{{ contact.lastName is defined ? contact.lastName : contact.lastname }}" required>
+                        <input type="text" name="contacts[{{ loop.index0 }}][firstname]" placeholder="Prenom" value="{{ contact.firstName is defined ? contact.firstName : contact.firstname }}" required>
+                        <input type="tel" name="contacts[{{ loop.index0 }}][email]" placeholder="Email" value="{{ contact.email }}" required>
+                        <input type="tel" name="contacts[{{ loop.index0 }}][phonenumber]" placeholder="Tel" value="{{ contact.phoneNumber is defined ? contact.phoneNumber : contact.phonenumber }}" required>
+                        <input type="tel" name="contacts[{{ loop.index0 }}][status]" placeholder="Status" value="{{ contact.status }}" required>
+                        <button type="button" class="delete_contact" data-target="contact_{{ loop.index0 }}">Supprimer</button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </main>
+    
+
+
+    
+
+{% endblock body %}

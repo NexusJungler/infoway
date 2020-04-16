@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('product-price') }}
+    {{ encore_entry_link_tags('product_price') }}
 {% endblock %}
 
 {% block maincontent %}
@@ -11,6 +11,7 @@
     <article id="tab-products" class="tab-content current prouct-price-content">
 
         <article class="display product-display ">
+
             <div class="display-content">
 
                 <article class="display-content-columns">
@@ -81,7 +82,8 @@
 
                 <article class="display-btn">
                     <p>Prodits : </p>
-                    <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
+                    <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                    {# <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button> #}
                     <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
                     <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
                     <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
@@ -89,6 +91,7 @@
                 </article>
 
             </div>
+
         </article >
 
         <article class="table">
@@ -140,13 +143,13 @@
                         <td><input type="checkbox" name="select"></td>
                         <td>Fish N'</td>
                         <td>x3</td>
-                        <td>Finger food</td>
+                        <td></td>
                         <td>nat</td>
-                        <td>halal</td>
-                        <td>menu</td>
+                        <td>Cocker Spaniel</td>
+                        <td>Cocker Spaniel</td>
                         <td class="table-data">12</td>
                         <td class="table-data">6</td>
-                        <td>5</td>
+                        <td>Poodle</td>
                         <td>Streetdog</td>
                         <td>Cocker Spaniel</td>
                         <td>Cocker Spaniel</td>
@@ -186,90 +189,71 @@
             </table>  
         </article>
 
-    </article>
+        
+     {# <article class="add-popup">
 
-    {# popup-ajoute-product #}
-        <article class="add-popup">
+        <div class="modal">
 
-            <div class="modal">
-                <div class="model-product">
+            <div class="header-modal">
+                <article class="tab-content-title">
+                    <h3 class="title">Créer votre produit</h3>
+                </article>
+            </div>
 
-                        <div class="header-modal">
-                            <div class="form-content">
+            <div>
+                <form action="" method="post" name="product" id="create-product"> 
                 
-                                <div class="row">
-                                    <div class="row">
-                                        <label class="form-label" for="fristname">Nom</label>
-                                        <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" required/>
-                                    </div>
-                                    <div class="row">
-                                        <label class="form-label">Prenom</label>
-                                        <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" required/>
-                                    </div>
-                                </div>
-                                
-                                <div class="row col-email">
-                                    <label class="form-label" for="email">Email</label>
-                                    <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  required/>
-                                </div>
-                                <div class="row col-phone">
-                                    <label class="form-label" for="phone">Téléphone</label>
-                                    <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
-                                </div>
-
-                            </div>
+                    <div class="form-content">
+                        <div class="row">
+                            <label class="form-label">Npm du product</label>
+                            <input type="text"  name="name"   placeholder="Chessy Trio" class="input-custome" required/>
                         </div>
 
-                        <div class="upload-info">
-
-                            <div class="table">
-                                <table class="table-custome" >
-                                    <thead  class="table-info thead-content">
-                                        <tr>
-                                            <th>Liste des médias déposés :</th>    
-                                            <th></th>
-                                            <th>Formats acceptés</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody tbody-content scrollbar-table">
-                                        <tr>
-                                            <td>la vidéo de l'humour.png</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>la vidéo de l'humour.png</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>  
-                                </table>    
-                            </div> 
-
-                        </div>
-                        
-                        <div>
-                            <input type="button" class="product-btn-add" value="demarrer l'upoad"></input>
+                        <div class="row">
+                            <label class="form-label" for="fristname">Quantité</label>
+                            <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" required/>
                         </div>
 
-                        <div class="download-file">
-                            <button type="button" class="btn btn-popupclose">Annuler</button>
-                            <button type="button" class="btn btn-popupclose">Appliquer</button>
-                            <button type="button" class="btn btn-popupclose">Créér le produit</button>
+                        <div class="row ">
+                            <label class="form-label" for="decription">Decription</label>
+                            <input type="email" name="user[email]" id="decription" placeholder="Email" class="input-custome"  required/>
                         </div>
-                        
-                    </div>
-                    
-                    <div class="modal-upload-download">
+                        <div class="row ">
+                            <label class="form-label" for="phone">prix groupe National 1</label>
+                            <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
+                        </div>
+                        <div class="row ">
+                            <label class="form-label" for="phone">prix groupe National 2</label>
+                            <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" />
+                        </div>
+
+                        <div class="row ">
+                            <label class="form-label" for="decription">Mention</label>
+                            <input type="email" name="user[email]" id="decription" placeholder="Email" class="input-custome"  required/>
+                        </div>
 
                     </div>
-                    
 
-                    
 
+                </form>
+
+                
+                <div class="download-file">
+                    <button type="button" class="btn btn-popupclose upload_abort">Annuler</button>
+                    <button type="button" class="product-btn-add show_media_edit_container" style="display: none;">Suivant</button>
                 </div>
-           </div>     
-        </article>
+            </div>            
+        </div>
+
+    </article> #}
+
+
+    </article>
 </section>
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('product_price') }}
+{% endblock javascripts %}

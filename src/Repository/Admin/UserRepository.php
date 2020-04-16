@@ -112,50 +112,11 @@ class UserRepository extends ServiceEntityRepository
 
     }
 
-    public function getUserWithSitesById($id){
+    public function getUserWithSitesById(int $id): ?User {
         $user = $this->findOneById($id);
+        $this->getUserWithSites($user) ;
 
-        $userSites = $user->getSitesIds() ;
-
-        $allSitesNeededFilteredByCustomersArray=[];
-
-        foreach($userSites as $userSite){
-            $siteCustomer = $userSite->getCustomer();
-            $siteCustomerName = $siteCustomer->getName();
-
-            if( !array_key_exists( $siteCustomerName , $allSitesNeededFilteredByCustomersArray ) )$allSitesNeededFilteredByCustomersArray[ $siteCustomerName ] = [] ;
-            $allSitesNeededFilteredByCustomersArray[ $siteCustomerName ][] = $userSite->getSiteId();
-
-        }
-
-        $adminManager = $this->_registry->getManager('default');
-        $customerRepo = $adminManager->getRepository(Customer::class) ;
-
-        $allCustomers = $customerRepo->findBy(['name' => array_keys($allSitesNeededFilteredByCustomersArray)]);
-        $allCustomersIndexedByName = [];
-
-        foreach($allCustomers as $customer){
-            $allCustomersIndexedByName[ $customer->getName() ] = $customer ;
-        }
-        foreach( $allSitesNeededFilteredByCustomersArray as $enseigne => $site ){
-
-            if (!array_key_exists($enseigne,$allCustomersIndexedByName) || ! $allCustomersIndexedByName[$enseigne] instanceof Customer){
-                continue ;
-            }
-
-            $enseigneEntity = $allCustomersIndexedByName[ $enseigne ];
-            $adminManager = $this->_registry->getManager($enseigne);
-            $siteRepo  = $adminManager->getRepository(Site::class );
-            $userSites = $siteRepo->findBy(['id'=> $site]);
-
-            foreach($userSites as $userSite){
-
-                $userSite->setCustomer($enseigneEntity);
-                $user->addSite($userSite);
-                dd($user);
-            }
-        }
-
+        return $user ;
     }
 
 

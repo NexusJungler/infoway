@@ -54,25 +54,36 @@
     .add-popup {
         position: absolute;
         height: 70%;
-        width: auto;
+        width: 100%;
         background: rgba(0, 0, 0, 0.7);
         align-items: center;
         pointer-events: none;
         opacity: 0;
-        top: -130px;
-        left: -152px;
+        top: 0px;
+        left: 0px;
         z-index:10000;
         // transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
         &.is-open {
             opacity: 1;
             pointer-events: auto;
             .modal {
-                // transform: translate(0px, 0px);
-                width: 92%;
-                height: 100%;
-                top: 13%;
-                left: 8%;
+                width: 100%;
+                height: 84%;
+                top: 77px;
+                left: 0%;
             }
+        }
+    }
+
+    .is-open {
+        opacity: 1;
+        pointer-events: auto;
+        .modal {
+            // transform: translate(0px, 0px);
+            width: 92%;
+            height: 100%;
+            top: 13%;
+            left: 8%;
         }
     }
 }

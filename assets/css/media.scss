@@ -46,6 +46,19 @@
         overflow: hidden;
         box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
         padding: 0;
+
+        .fas.fa-times {
+            color: red;
+        }
+
+        .fas.fa-check {
+            color: green;
+        }
+
+        .fas.fa-trash-alt {
+
+        }
+
         .header-modal{
             background: #4D646D 0% 0% no-repeat padding-box;
             color: white;
@@ -80,16 +93,17 @@
           }
         }
 
-        .download-file{
+        /*.download-file{
             display: none;
-        }
+        }*/
 
         .table{
             .table-custome{
                 border-radius: 0;
                 .thead-content{
                     color: black;
-                    background: #F6F6F6 0% 0% no-repeat padding-box;
+                    text-align: center;
+                    //background: #F6F6F6 0% 0% no-repeat padding-box;
                     &::after{
                         border-radius: 0;
                         background: #F6F6F6 0% 0% no-repeat padding-box;
@@ -109,6 +123,11 @@
                         border: 0;
                         td{
                             border: 0;
+
+                            .remove_file_from_list {
+                                color: red;
+                                cursor: pointer;
+                            }
                         }
                     }
                 }

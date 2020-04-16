@@ -63,7 +63,7 @@ class AppController extends AbstractController
 
     }
 
-    /** Produicts **/ 
+    /** Page Produits **/
 
     /**
      * @Route(path="/products", name="app:products")
@@ -85,6 +85,62 @@ class AppController extends AbstractController
             'customer' => $customer
         ]);
     }
+
+    /**
+     * @Route(path="/create-product", name="app:create-product")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function create_product(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("products/create_product.html.twig", [
+            'customer' => $customer
+        ]);
+    }
+
+    /**
+     * @Route(path="/categories", name="app:categories")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function categories(Request $request): Response
+    {
+        
+        return $this->render("products/categories.html.twig", [
+        ]);
+    }
+
+    /**
+     * @Route(path="/prix", name="app:prix")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function prix(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("products/price.html.twig", [
+            'customer' => $customer
+        ]);
+    }
+
 
 
     /**
@@ -108,7 +164,7 @@ class AppController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route(path="/programming", name="app:programming")
      *
      * @param Request $request
@@ -129,7 +185,7 @@ class AppController extends AbstractController
         ]);
 
     }
-    
+
     /**
      * @Route(path="/media", name="app:media")
      *
@@ -182,9 +238,9 @@ class AppController extends AbstractController
      */
     public function createUser(Request $request): Response
     {
-    
+
         return $this->render("settings/create-user.html.twig", [
-           
+
         ]);
 
     }
@@ -197,9 +253,9 @@ class AppController extends AbstractController
      */
     public function settinguser(Request $request): Response
     {
-    
+
         return $this->render("settings/setting-user.html.twig", [
-           
+
         ]);
 
     }
@@ -212,14 +268,14 @@ class AppController extends AbstractController
      */
     public function enseigne(Request $request): Response
     {
-    
+
         return $this->render("settings/enseigne.html.twig", [
-           
+
         ]);
 
     }
 
-    
+
     /**
      * @Route(path="/managementtags", name="app:managementtags")
      *
@@ -228,9 +284,9 @@ class AppController extends AbstractController
      */
     public function managementtags(Request $request): Response
     {
-    
+
         return $this->render("settings/management-tags.html.twig", [
-           
+
         ]);
 
     }
@@ -245,14 +301,12 @@ class AppController extends AbstractController
      */
     public function image(Request $request): Response
     {
-    
+
         return $this->render("image/media-image.html.twig", [
-           
+
         ]);
 
     }
 
-
-   
 
 }

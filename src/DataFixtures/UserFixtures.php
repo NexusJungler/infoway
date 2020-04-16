@@ -52,7 +52,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             ->setLastName('toto')
             ->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'toto'
+                'totoRtyu3$'
             ))
             ->setPhoneNumber('0143256232')
             ->setActivated(0)

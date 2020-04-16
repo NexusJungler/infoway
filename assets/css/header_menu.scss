@@ -320,20 +320,6 @@
     margin-top: 1em;
 }
 
-.popup-add{
-    position: absolute;
-    height: 70%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    align-items: center;
-    pointer-events: none;
-    opacity: 0;
-    top:rem(151px);
-    left: 0;
-    z-index:10000;
-    transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
-}
-
 
 /* MEDIA QUERY */
 

@@ -4,13 +4,11 @@ namespace App\DataFixtures;
 
 
 
-use App\Entity\Admin\Action;
 use App\Entity\Admin\Country;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Feature;
 use App\Entity\Admin\Permission;
-use App\Entity\Admin\Role;
-use App\Entity\Admin\Subject;
+use \App\Entity\Customer\Role;
 use App\Entity\Admin\TimeZone;
 use App\Entity\Admin\User;
 use App\Service\TokenGeneratorService;
@@ -52,12 +50,10 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
         /***      Datas creation start      ***/
 
-        $this->loadRoles($manager);
         $this->loadTimeZones($manager);
         $this->loadCountries($manager);
         $this->loadCustomers($manager);
-        //$this->loadUsers($manager);
-        //$this->loadPermissions($manager);
+        $this->loadUsers($manager);
 
         /***      Datas creation end      ***/
 
@@ -180,160 +176,6 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
     }
 
-
-    // Backup, Don't remove this
-    /*
-    private function loadPermissions(\Doctrine\Persistence\ObjectManager &$manager)
-    {
-
-        $roleGod = $this->getPersistedEntity($manager, ['className' => Role::class, 'property' => 'name', 'value' => 'God']);
-        $roleSuperAdmin = $this->getPersistedEntity($manager, ['className' => Role::class, 'property' => 'name', 'value' => 'Super Admin']);
-        $roleAdmin = $this->getPersistedEntity($manager, ['className' => Role::class, 'property' => 'name', 'value' => 'Admin']);
-        $roleUser = $this->getPersistedEntity($manager, ['className' => Role::class, 'property' => 'name', 'value' => 'User']);
-
-        $features = [
-            0 => [ 'name' => 'Template', 'branch' => null,
-                'permissions' => [
-                    [ 'action' => 'accéder', 'subject' => 'stage 1', 'roles' => [ $roleGod, $roleSuperAdmin ] ],
-                    [ 'action' => 'accéder', 'subject' => 'stage 2', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin ] ],
-                    [ 'action' => 'accéder', 'subject' => 'stage 3', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'accéder', 'subject' => 'template', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'créer', 'subject' => 'template', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'editer', 'subject' => 'template', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'supprimer', 'subject' => 'template', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'importer', 'subject' => 'template', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'dupliquer', 'subject' => 'template', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                ]
-            ],
-
-            1 => [ 'name' => 'Programmation', 'branch' => null,
-                'permissions' => [
-                    [ 'action' => 'afficher', 'subject' => 'Programmation', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'créer', 'subject' => 'Programmation', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'editer', 'subject' => 'Programmation', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'supprimer', 'subject' => 'Programmation', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'dupliquer', 'subject' => 'Programmation', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                ]
-            ],
-
-            2 => [ 'name' => 'Incruste', 'branch' => null,
-                'permissions' => [
-                    [ 'action' => 'afficher', 'subject' => 'Incruste', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'créer', 'subject' => 'Incruste', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'editer', 'subject' => 'Incruste', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'supprimer', 'subject' => 'Incruste', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'importer', 'subject' => 'Incruste', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'dupliquer', 'subject' => 'Incruste', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                ]
-            ],
-
-            3 => [ 'name' => 'Priceboard', 'branch' => null,
-                'permissions' => [
-                    [ 'action' => 'accéder', 'subject' => 'Priceboard', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'créer', 'subject' => 'Priceboard', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'editer', 'subject' => 'Priceboard', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'supprimer', 'subject' => 'Priceboard', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'importer', 'subject' => 'Priceboard', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'dupliquer', 'subject' => 'Priceboard', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                ]
-            ],
-
-            4 => [ 'name' => 'Tag', 'branch' => null,
-                'permissions' => [
-                    [ 'action' => 'créer', 'subject' => 'Tag', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'editer', 'subject' => 'Tag', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'supprimer', 'subject' => 'Tag', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'dupliquer', 'subject' => 'Tag', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                ]
-            ],
-
-            5 => [ 'name' => 'Configuration', 'branch' => null,
-                'permissions' => [
-                    [ 'action' => 'accéder', 'subject' => 'Configuration', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'créer', 'subject' => 'Configuration', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'editer', 'subject' => 'Configuration', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'supprimer', 'subject' => 'Configuration', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                    [ 'action' => 'dupliquer', 'subject' => 'Configuration', 'roles' => [ $roleGod, $roleSuperAdmin, $roleAdmin, $roleUser ] ],
-                ]
-            ],
-
-        ];
-
-        //$permissions = [];
-
-        foreach ($features as $index => $appFeature)
-        {
-
-            $feature = new Feature();
-
-            $feature->setName(ucfirst($appFeature['name']))
-                ->setBranch(ucfirst($appFeature['branch']));
-
-            foreach ($appFeature['permissions'] as $featurePermission)
-            {
-
-                $permission = new Permission();
-                //$permission->setFeature($feature);
-
-                $action = $this->getPersistedEntity($manager, ['className' => Action::class, 'property' => 'name', 'value' => ucfirst($featurePermission['action'])]);
-                $action = $action ?? new Action();
-
-                $subject = $this->getPersistedEntity($manager, ['className' => Subject::class, 'property' => 'name', 'value' => ucfirst($featurePermission['subject'])]);
-                $subject = $subject ?? new Subject();
-
-                $action->setName(ucfirst($featurePermission['action']));
-                $subject->setName(ucfirst($featurePermission['subject']));
-
-
-                foreach ($featurePermission['roles'] as $role)
-                {
-                    if($role === null)
-                        throw new \Exception(sprintf("Internal Error : attempt to add role on permission but role is null ! Check this feature roles : '%' ", $appFeature['name']));
-
-                    // $permission->addRole() will call $role->addPermission()
-                    $permission->addRole($role);
-                }
-
-
-                // $action->addPermission will call permission->setAction(, so we don't need to use permission->setAction() here
-                // $subject->addPermission will call permission->setSubject(, so we don't need to use permission->setAction() here
-                $action->addPermission($permission);
-                $subject->addPermission($permission);
-
-                $feature->addPermission($permission);
-
-                $manager->persist($action);
-                $manager->persist($subject);
-                $manager->persist($feature);
-                $manager->persist($permission);
-
-            }
-
-
-        }
-
-    }*/
-
-    private function loadRoles(\Doctrine\Persistence\ObjectManager &$manager) {
-
-        $rolesNames = [
-            'God', 'Super Admin', 'Admin', 'User'
-        ];
-
-        foreach ($rolesNames as $roleName) {
-
-            $role = new Role();
-            $role->setName($roleName);
-
-            $roles[] = $role;
-
-            $manager->persist($role);
-
-        }
-
-    }
-
-
     private function loadTimeZones(\Doctrine\Persistence\ObjectManager &$manager) {
 
         $timezones = [
@@ -412,7 +254,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
         {
 
             $customer = new Customer();
-            $customer->setName( ($i === 1) ? "Quick" : $this->__faker->company )
+            $customer->setName( ($i === 1) ? "Kfc" : $this->__faker->company )
                 ->setAddress($this->__faker->address)
                 ->setPostalCode($this->__faker->postcode)
                 ->setCity($this->__faker->city)
@@ -434,29 +276,29 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
         $tokenGeneratorService = new TokenGeneratorService();
 
-        $customer = $this->getPersistedEntity($manager, ['className' => Customer::class, 'property' => 'name', 'value' => 'Quick']);
+        $customer = $this->getPersistedEntity($manager, ['className' => Customer::class, 'property' => 'name', 'value' => 'Kfc']);
 
         for ($i = 1; $i <= 5; $i++)
         {
 
-            // role = Admin (if $i is pair), User (if $i is odd)
-            $role = ($i % 2 === 0) ? $this->getPersistedEntity($manager, ['className' => Role::class, 'property' => 'name', 'value' => 'Admin']) : $this->getPersistedEntity($manager, ['className' => Role::class, 'property' => 'name', 'value' => 'User']);
+            $role = new Role();
+            $role->setName("role " . $i)
+                 ->setLevel($i);
 
             $user = new User();
             $user->setFirstName($this->__faker->firstName)
                 ->setLastName($this->__faker->lastName)
-                ->setUsername($this->__faker->userName)
                 ->setPassword($this->__encoder->encodePassword($user, $this->__faker->password))
                 ->setEmail($this->__faker->email)
                 ->setPhoneNumber($this->__faker->phoneNumber)
-                ->setRegistrationToken($this->__encoder->encodePassword($user, $tokenGeneratorService->generate(15)))
+                ->setAccountConfirmationToken($tokenGeneratorService->generate(15))
                 ->setPasswordResetToken(null)
-                ->setRole($role)
-                //->setCustomer($customer)
-                ->setCompanyPiece(1);
+                ->addRole($role, $customer)
+                ->addCustomer($customer);
 
             $customer->addUser($user);
 
+            $manager->persist($role);
             $manager->persist($user);
 
         }

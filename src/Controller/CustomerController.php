@@ -100,7 +100,7 @@ class CustomerController extends AbstractController
 
         }
 
-        return $this->render('customer/customer.createCustomer.twig', [
+        return $this->render('customer/create_customer.twig', [
             'form' => $form->createView(),
             'contacts' => $contacts ?? []
         ]);
@@ -156,7 +156,7 @@ class CustomerController extends AbstractController
 
         }
 
-        return $this->render('customer/customer.editCustomer.twig', [
+        return $this->render('customer/edit_customer.twig', [
             'form' => $form->createView(),
             'contacts' => $contacts ?? $customer->getContacts()->getValues(),
             'logoCustomer' => $customer->getLogo(),

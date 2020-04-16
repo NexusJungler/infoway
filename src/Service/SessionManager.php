@@ -44,8 +44,7 @@ class SessionManager
     public function remove(string $name): self
     {
         if(is_null($this->get($name)))
-            return $this;
-            //throw new NoSuchIndexException(sprintf("Error ! Cause : session variable '%s' not found !", $name));
+            throw new NoSuchIndexException(sprintf("Error ! Cause : session variable '%s' not found !", $name));
 
         $this->__session->remove($name);
 
