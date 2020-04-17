@@ -1,8 +1,8 @@
 monolog:
     handlers:
-        cron: # cron log config
+        command: # custom console commands log config
             type: stream
-            path:  "%kernel.logs_dir%/%kernel.environment%_cron.log"
+            path:  "%kernel.logs_dir%/%kernel.environment%_command.log"
             level: debug
             channels: ["!event"]
         

@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\Cron;
+namespace App\Command;
 
 
 use App\Service\FfmpegSchedule;
+use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
@@ -16,7 +17,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 date_default_timezone_set('Europe/Paris');
 
-class EncodeCron extends Command
+/**
+ * Class FfmpegLauncher
+ * @package App\Command
+ *
+ * This file will be execute by CRON (script .bat) which will call symfony console command (see property $defaultName for command name)
+ *
+ */
+class FfmpegLauncher extends Command
 {
 
     use LockableTrait;
@@ -26,9 +34,9 @@ class EncodeCron extends Command
     protected static $defaultName = 'cron:encode-file';
 
     /**
-     * @var EntityManagerInterface
+     * @var ManagerRegistry
      */
-    private EntityManagerInterface $entityManager;
+    private ManagerRegistry $managerRegistry;
 
     /**
      * @var ParameterBagInterface
@@ -39,21 +47,21 @@ class EncodeCron extends Command
      * @var LoggerInterface
      */
     private LoggerInterface $logger;
-
+    /**
+     * @var FfmpegSchedule
+     */
+    private FfmpegSchedule $ffmpegSchedule;
 
     /**
-     * EncodeCron constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param ParameterBagInterface $parameterBag
-     * @param LoggerInterface $cronLogger @see : https://symfony.com/doc/current/logging/channels_handlers.html#how-to-autowire-logger-channels
+     * @param FfmpegSchedule $ffmpegSchedule
+     * @param LoggerInterface $commandLogger for write in log file (var/log/dev|prod_command.log) @see : https://symfony.com/doc/current/logging/channels_handlers.html#how-to-autowire-logger-channels
      */
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger)
+    public function __construct(FfmpegSchedule $ffmpegSchedule, LoggerInterface $commandLogger)
     {
 
-        $this->entityManager = $entityManager;
-        $this->parameterBag = $parameterBag;
-        $this->logger = $cronLogger;
+        $this->ffmpegSchedule = $ffmpegSchedule;
+        $this->logger = $commandLogger;
 
         parent::__construct();
     }
@@ -93,28 +101,7 @@ class EncodeCron extends Command
 
         $this->logger->info(sprintf("Log[%s] -- %s : Encode cron start !", __CLASS__, date('d/m/Y - G:i:s')));
 
-        $ffmpegSchedule = new FfmpegSchedule($this->entityManager, $this->parameterBag, $this->logger);
-
-        $output->writeln($ffmpegSchedule->runTasks());
-
-
-
-        // outputs multiple lines to the console (adding "\n" at the end of each line)
-        /*$output->writeln([
-            'User Creator',
-            '============',
-            '',
-        ]);*/
-
-        // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
-        // that generates and returns the messages with the 'yield' PHP keyword
-        // $output->writeln($this->someMethod());
-
-        // outputs a message followed by a "\n"
-        // $output->writeln('Whoa!');
-
-        // outputs a message without adding a "\n" at the end of the line
-        // $output->writeln('');
+        $this->ffmpegSchedule->runTasks();
 
         $this->release();
 

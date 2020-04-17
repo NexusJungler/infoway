@@ -7,20 +7,25 @@ namespace App\Service;
 use App\Entity\Admin\Country;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
+use App\Entity\Customer\Media;
+use App\Entity\Customer\Synchro;
 use App\Repository\Admin\FfmpegTasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use \Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
+use App\Service\UploadCron;
+use \Doctrine\Persistence\ObjectManager;
+use \Doctrine\Persistence\ManagerRegistry;
 
 class FfmpegSchedule
 {
 
     /**
-     * @var EntityManagerInterface
+     * @var ObjectManager
      */
-    private EntityManagerInterface $entityManager;
+    private ObjectManager $entityManager;
 
     /**
      * @var FfmpegTasksRepository
@@ -42,14 +47,33 @@ class FfmpegSchedule
      */
     private LoggerInterface $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger)
+    /**
+     * @var ParameterBagInterface
+     */
+    private ParameterBagInterface $parameterBag;
+    /**
+     * @var ManagerRegistry
+     */
+    private ManagerRegistry $managerRegistry;
+
+    /**
+     *
+     * @param ManagerRegistry $managerRegistry If you give ManagerRegistry (Doctrine), this class can access all app EntityManager
+     * @param ParameterBagInterface $parameterBag
+     * @param LoggerInterface $cronLogger
+     */
+    public function __construct(ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger)
     {
-        $this->entityManager = $entityManager;
+        $this->managerRegistry = $managerRegistry;
+        $this->entityManager = $managerRegistry->getManager('default');
+        $this->parameterBag = $parameterBag;
         $this->logger = $cronLogger;
-        $this->ffmpegRepo = $entityManager->getRepository(FfmpegTasks::class);
-        $config_file = file_get_contents($parameterBag->get('configDirectory') . 'sys_flags.yml');
-        $this->conf = Yaml::parse($config_file);
+        $this->ffmpegRepo = $this->entityManager->getRepository(FfmpegTasks::class);
+        //$config_file = file_get_contents(__DIR__ . '/../config/sys_flags.yml');
+        $config_file = file_get_contents($this->parameterBag->get('config_dir') . '\\sys_flags.yml' );
+        $this->conf = Yaml::parse( $config_file );
         $this->customers = $this->getDataSheetClients();
+        //dd($this->customers);
     }
 
 
@@ -89,11 +113,12 @@ class FfmpegSchedule
         if(!$this->taskIsRunning())
         {
 
-            $this->logger->error(sprintf("Log[%s] -- %s : A new Ffmpeg task start now !", __CLASS__, date('d/m/Y - G:i:s')));
+            //$this->logger->error(sprintf("Log[%s] -- %s : A new Ffmpeg task start now !", __CLASS__, date('d/m/Y - G:i:s')));
 
             // Au début du traitement, mise à jour du fichier de configuration: FFMPEG -> 1
             $this->conf['ffmpeg'] = 1;
-            file_put_contents(__DIR__ . '/../config/sys_flags.yml', Yaml::dump($this->conf));
+            //file_put_contents(__DIR__ . '/../config/sys_flags.yml', Yaml::dump($this->conf));
+            file_put_contents($this->parameterBag->get('config_dir') . '/sys_flags.yml', Yaml::dump($this->conf));
 
             // On récupère toutes les tâches de traitement en attente et on les exécute l'une après l'autre
             $tasks = $this->getTasks();
@@ -102,13 +127,17 @@ class FfmpegSchedule
             {
                 $customer_id = $task->getCustomer()->getId();
                 // dump($task);
-                $base = $this->customers[$customer_id]['base'];
-                $customer_name = $this->customers[$customer_id]['enseigne'];
+                //$base = $this->customers[$customer_id]['base'];
+                //$customer_name = $this->customers[$customer_id]['enseigne'];
+                $customer_name = $task->getCustomer()->getName();
 
-                if($task['mediatype'] == 'sync') {
-                    $rep_sync = new synchro_rep($base);
-                    $path = 'D:/node_file_system/' . $customer_name . '/synchros/' . $task['filename'];
-                    $temp_folder = 'C:/inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
+                if($task->getMediatype() == 'sync') {
+                    //$rep_sync = new synchro_rep($base);
+                    $rep_sync = $this->entityManager->getRepository(Synchro::class);
+                    //$path = 'D:/node_file_system/' . $customer_name . '/synchros/' . $task->getFilename();
+                    $path = $this->parameterBag->get('project_dir') . '/../node_file_system/' . $customer_name . '/synchros/' . $task->getFilename();
+                    //$temp_folder = 'D:/inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
+                    $temp_folder = $this->parameterBag->get('project_dir') . '../inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
 
                     if (file_exists($path)) {
                         $real_file_extension = $this->getRealFileExtension($path);
@@ -140,7 +169,7 @@ class FfmpegSchedule
                             continue;
                         }
 
-                        $encoding = new EncodageHandler($customer_name, $video, 'sync');
+                        $encoding = new UploadCron($customer_name, $video, 'sync', $this->managerRegistry, $this->parameterBag);
                         foreach($encoding->getErrors() as $error) {
                             $all_sync_errors[] = $error;
                         }
@@ -148,32 +177,37 @@ class FfmpegSchedule
                     }
                     $error_string = implode(' || ', $all_sync_errors);
                     if($error_string != '') {
-                        $this->pushError($task['id'], $error_string);
+                        $this->pushError($task, $error_string);
                     }
                     // Add new entity synchro & Erase uploaded zip file
-                    $new_sync = $rep_sync->insertSynchro(substr($task['filename'], 0, -4), count($list), $encoding->getSyncOrientation(), 'plein-écran');
+                    $new_sync = $rep_sync->insertSynchro(substr($task->getFilename(), 0, -4), count($list), $encoding->getSyncOrientation(), 'plein-écran');
                     $rep_sync->saveSyncMedias($new_sync, $sorted_medias);
                     unlink($path);
-                    $this->updateTask($task['id'], 'finished');
+                    $this->updateTask($task, 'finished');
                 } else {
-                    $this->updateTask($task['id'], 'started');
-                    $encoding = new UploadCron($customer_name, $task['filename'], $task['mediatype']);
+                    $this->updateTask($task, 'started');
+                    $encoding = new UploadCron($customer_name, $task->getFilename(), $task->getMediatype(), $this->managerRegistry, $this->parameterBag);
                     $errors = $encoding->getErrors();
                     $error_string = implode(' || ', $errors);
                     if($error_string != '') {
-                        $this->pushError($task['id'], $error_string);
+                        $this->pushError($task, $error_string);
                     }
-                    $this->updateTask($task['id'], 'finished');
+                    $this->updateTask($task, 'finished');
                     // $this->killTask($task['id']);
                 }
             }
 
             // A la fin du traitement, mise à jour du fichier de configuration: FFMPEG -> 0
             $this->conf['ffmpeg'] = 0;
-            file_put_contents(__DIR__ . '/../config/sys_flags.yml', Yaml::dump($this->conf));
-            file_put_contents(__DIR__ . '/../log/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
+            file_put_contents($this->parameterBag->get('config_dir') . '/sys_flags.yml', Yaml::dump($this->conf));
+            //file_put_contents( __DIR__ . '/../log/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
+            file_put_contents( $this->parameterBag->get('logs_dir') . '/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
 
-            $this->logger->error(sprintf("Log[%s] -- %s : A Ffmpeg task is finish !", __CLASS__, date('d/m/Y - G:i:s')));
+            if(empty($tasks))
+                $this->logger->info(sprintf("Log[%s] -- %s : All Ffmpeg task is done !", __CLASS__, date('d/m/Y - G:i:s')));
+
+            else
+                $this->logger->info(sprintf("Log[%s] -- %s : A Ffmpeg task is finish !", __CLASS__, date('d/m/Y - G:i:s')));
 
         }
 
@@ -196,6 +230,11 @@ class FfmpegSchedule
         $this->entityManager->flush();
     }
 
+    /**
+     * @param FfmpegTasks $task
+     * @param string $fieldToUpdate
+     * @throws Exception
+     */
     public function updateTask(FfmpegTasks $task, string $fieldToUpdate)
     {
 
@@ -230,6 +269,9 @@ class FfmpegSchedule
 
     }
 
+    /**
+     * @return array
+     */
     private function getDataSheetClients()
     {
         /*$result = [];
@@ -246,14 +288,31 @@ class FfmpegSchedule
             $result[$key] = $client;
         }
         return $result;*/
-        return [];
+
+        $result = [];
+        $customers = $this->entityManager->getRepository(Customer::class)->findAll();
+
+        foreach ($customers as $customer)
+        {
+            $key = $customer->getId();
+            $result[$key] = $customer;
+        }
+
+        return $result;
     }
 
+    /**
+     * @return bool
+     */
     private function taskIsRunning()
     {
         return $this->conf['ffmpeg'] == 1;
     }
 
+    /**
+     * @param FfmpegTasks $task
+     * @param string $error
+     */
     private function pushError(FfmpegTasks $task, string $error)
     {
 
@@ -277,11 +336,11 @@ class FfmpegSchedule
     {
 
         return $this->ffmpegRepo->createQueryBuilder('f')
-                                ->andWhere('f.started != null')
-                                ->andWhere('f.finished = null')
+                                ->andWhere('f.started is NULL')
+                                ->andWhere('f.finished is NULL')
                                 ->orderBy('f.registered', 'ASC')
                                 ->getQuery()
-                                ->getArrayResult();
+                                ->getResult();
 
     }
 

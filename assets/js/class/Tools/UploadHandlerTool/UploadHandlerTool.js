@@ -112,7 +112,7 @@ class UploadHandlerTool extends Tool
 
     isFileExtensionIsAccepted(mime_type)
     {
-        if(this.__authorizedFiles !== [])
+        if(this.__authorizedFiles.length > 0)
             return this.__authorizedFiles.indexOf(mime_type) !== -1;
 
         return true;

@@ -4,17 +4,21 @@
 namespace App\Controller;
 
 
+use App\Entity\Admin\Customer;
+use App\Entity\Customer\Media;
+use App\Entity\Customer\Synchro;
 use App\Repository\Admin\CustomerRepository;
 use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
 use App\Service\SessionManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class MediaController extends AbstractController
 {
@@ -26,7 +30,7 @@ class MediaController extends AbstractController
     public function showMediatheque(Request $request, string $media)
     {
 
-        if($media === "video" or $media === "video_sync" or $media === "video_thematics")
+        if($media === "video" or $media === "video_synchro" or $media === "video_thematic")
             $media_displayed = "video";
 
         else
@@ -44,7 +48,7 @@ class MediaController extends AbstractController
      * Return an json response which will contain files authorised extensions for upload
      *
      * @Route(path="/get/{file_type}/authorized/extensions", name="media::getFilesAuthorized", methods={"GET"},
-     *     requirements={"file_type": "[a-z]+"})
+     *     requirements={"file_type": "[a-z_]+"})
      * @param string $file_type
      * @return JsonResponse
      */
@@ -61,69 +65,50 @@ class MediaController extends AbstractController
 
         return new JsonResponse( $fileAuthorizedInfos );
 
-        /*return new JsonResponse( [
-            'images' => [
-                'jpeg', 'png', 'zip'
-            ],
-            'videos' => [
-
-            ]
-        ] );*/
-
     }
 
 
     /**
      * @Route(path="/upload/media", name="media::uploadMedia", methods={"POST"})
      * @param Request $request
+     * @param ParameterBagInterface $parameterBag
+     * @param LoggerInterface $cronLogger
      * @return Response
      * @throws \Exception
      */
-    public function uploadMedia(Request $request, EntityManagerInterface $entityManager, CustomerRepository $customerRepository, ParameterBagInterface $parameterBag): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger): Response
     {
 
-        if($request->request->get('media_type') === "video_sync")
-            $type = "synchros";
+        if($request->request->get('media_type') === "video_synchro")
+            $type = "synchro";
 
-        elseif($request->request->get('media_type') === "video_thematics")
+        elseif($request->request->get('media_type') === "video_thematic")
             $type = "thematics";
 
         else
             $type = "medias";
 
-        $file = $_FILES['file'];
-
-        $customer = $customerRepository->findOneByName('kfc'); // dynamic session variable (will change each time user select customer in select)
-
         $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync'];
 
         $mediaType = $options[$type];
 
-        // D:/main/data_CUSTOMER/PLAYER INFOWAY WEB/IMAGES/PRODUITS FIXES/PLEIN ECRAN/HIGH
-        // D:/main/data_CUSTOMER/PLAYER INFOWAY WEB/VIDÉOS/HIGH
+        $file = $_FILES['file'];
 
-        $root = 'C:\main\\data_';
-        $path = $root . strtoupper($customer->getName()) . '\\' . $mediaType . '\\' . $file['name'];
+        $customer = $customerRepository->findOneByName('kfc'); // dynamic session variable (will change each time user select customer in select)
 
-        // insertion du fichier dans ffmpeg_tasks
+        $root = 'C:/laragon/www/infowaydev/node_file_system/';
+        $path = $root . $customer->getName() . '/' . $mediaType . '/' . $file['name'];
 
-
-        // si video, encodage puis ajout dans la mediatheque
-        // sinon ajout dans la mediathe
-
-        //move_uploaded_file($_FILES['file']['tmp_name'], $this->getParameter('uploadDirectory') . $this->getUser()->getCustomers() . $_FILES['file']['name']);
-        //move_uploaded_file($_FILES['file']['tmp_name'], $this->getParameter('uploadDirectory') . $_FILES['file']['name']);
-
-        //$path = $this->getParameter('uploadDirectory');
+        // debug
+        // comment this at the end
+        move_uploaded_file($file['tmp_name'], $path);
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $path);
         $filetype = strstr($mimeType, '/', true);
 
-        $encoding = new FfmpegSchedule($entityManager, $parameterBag);
-        //$customer_id = $encoding->getCustomerId($_POST['customer']); // à implanter dans la classe courante (private)
-        $encoding->pushTask($customer, $file['name'], $filetype, $mediaType);
-        $encoding->runTasks();
+        $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $cronLogger);
+        $ffmpegSchedule->pushTask($customer, $file['name'], $filetype, $mediaType);
 
         return new Response("ok");
         //dd($request->files);
@@ -141,7 +126,7 @@ class MediaController extends AbstractController
 
         $response = 1; // false
 
-        if(file_exists($this->getParameter('uploadDirectory') . $request->request->get('file')))
+        if(file_exists($this->getParameter('upload_dir') . '/' . $request->request->get('file')))
             $response = 0; // true
 
         return new Response($response);

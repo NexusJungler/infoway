@@ -1067,7 +1067,7 @@ class UserController extends AbstractController
         // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
         elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
         {
-            $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+            $error = "Le mot de passe doit contenir minimum 8 caractères avec 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial !";
         }
 
         return $error;
