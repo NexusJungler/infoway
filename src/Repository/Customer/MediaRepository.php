@@ -20,13 +20,11 @@ use PDO;
  */
 class MediaRepository extends ServiceEntityRepository implements RepositoryInterface
 {
-    private $base;
 
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Media::class);
 
-        $this->base = null;
         //$this->__rsm = new ResultSetMapping();
     }
 
@@ -36,20 +34,6 @@ class MediaRepository extends ServiceEntityRepository implements RepositoryInter
         $this->_em = $entityManager;
 
         return $this;
-    }
-
-    public function setBase(string $base)
-    {
-        $this->base = $base;
-    }
-
-    public function getBase(){
-
-        if($this->base === null)
-            throw new Exception("You must initialize MediaRepository::base before using it !");
-
-        //utilise pour priceboard pizzatime
-        return $this->base;
     }
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
@@ -117,7 +101,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     public function getPriceCategory($cat_id) {
         $sql = '
                 SELECT CAT_menu, CAT_solo, CAT_petite, CAT_moyenne, CAT_grande, CAT_sans_giant, CAT_avec_giant
-                FROM ' . $this->getBase() . '.qui_categorie
+                FROM qui_categorie
                 WHERE CAT_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -131,7 +115,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         $sql = '
                 SELECT label_prix_1, label_prix_2, label_prix_3, label_prix_4, label_prix_5, label_prix_6, label_prix_7
-                FROM ' . $this->getBase() . '.qui_categorie
+                FROM qui_categorie
                 WHERE CAT_nom = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -332,7 +316,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $fields = implode("','", $values);
         $fields = "'" . $fields . "'";
         $sql = '
-                INSERT INTO ' . $this->getBase() . '.video
+                INSERT INTO video
                 VALUES (' . $fields . ')';
         $query = $this->_em->getConnection()->prepare($sql);
         $result = $query->execute();
@@ -348,7 +332,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT CAT_id, CAT_nom
-                    FROM ' . $this->getBase() . '.qui_categorie ORDER BY CAT_nom
+                    FROM qui_categorie ORDER BY CAT_nom
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
@@ -360,7 +344,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT qui_produit.PRO_id, qui_produit.PRO_nom, qui_produit.PRO_desc, qui_produit.PRO_nom_usuel
-                    FROM ' . $this->getBase() . '.qui_produit
+                    FROM qui_produit
                     WHERE qui_produit.PRO_CAT_id = ? ORDER BY `PRO_nom`
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -374,7 +358,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT PRO_nom
-                    FROM ' . $this->getBase() . '.qui_produit
+                    FROM qui_produit
                     WHERE qui_produit.PRO_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -389,7 +373,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT CAT_nom
-                    FROM ' . $this->getBase() . '.qui_categorie
+                    FROM qui_categorie
                     WHERE CAT_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -402,7 +386,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT PRO_menu, PRO_solo, PRO_petite, PRO_moyenne, PRO_grande, PRO_sans_giant, PRO_avec_giant
-                    FROM ' . $this->getBase() . '.qui_produit
+                    FROM qui_produit
                     WHERE PRO_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -420,7 +404,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT DISTINCT media
-                    FROM ' . $this->getBase() . '.partnership
+                    FROM partnership
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
@@ -441,7 +425,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     public function getProductsPriceBoard($resto) {
         $sql = '
                     SELECT PRE_PRO_id, PRE_desc, PRE_rupture
-                    FROM ' . $this->getBase() . '.qui_produit_resto
+                    FROM qui_produit_resto
                     WHERE PRE_RES_id = ? AND (PRE_priceboard_j = 1 OR PRE_priceboard_n = 1)
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -454,7 +438,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT PRO_CAT_id, PRO_solo, PRO_menu, PRO_petite, PRO_moyenne
-                    FROM ' . $this->getBase() . '.qui_produit
+                    FROM qui_produit
                     WHERE PRO_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -467,7 +451,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT PRO_CAT_id, PRO_solo, PRO_menu, PRO_petite, PRO_moyenne, PRO_grande, PRO_sans_giant, PRO_avec_giant
-                    FROM ' . $this->getBase() . '.qui_produit
+                    FROM qui_produit
                     WHERE PRO_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -479,7 +463,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     public function getPricesold($resto, $product) {
         $sql = '
                     SELECT PRI_champs, PRI_jour, PRI_nuit, PRI_national
-                    FROM ' . $this->getBase() . '.qui_prix
+                    FROM qui_prix
                     WHERE PRI_RES_id = ? AND PRI_PRO_id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -494,7 +478,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         $sql = '
                     SELECT PRI_champs, PRI_jour, PRI_nuit, PRI_national
-                    FROM ' . $this->getBase() . '.qui_prix
+                    FROM qui_prix
                     WHERE PRI_RES_id = ? AND PRI_PRO_id = ? AND PRI_date = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -505,7 +489,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
             $result=array();
             $sql_groupe = '
 		            SELECT RES_grpprix
-                    FROM ' . $this->getBase() . '.qui_restaurant
+                    FROM qui_restaurant
                     WHERE RES_id = ?
                 ';
             $query_groupe = $this->_em->getConnection()->prepare($sql_groupe);
@@ -521,7 +505,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
                 $sql_gr_prix = '
 						SELECT '.$type.'_jour,'.$type.'_nuit
-						FROM ' . $this->getBase() . '.qui_groupe_prix_valeurs
+						FROM qui_groupe_prix_valeurs
 						WHERE id_groupe_prix = :groupe_prix AND id_produit = :productId AND date = :date_actuelle
 					';
                 $query = $this->_em->getConnection()->prepare($sql_gr_prix);
@@ -537,7 +521,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     public function getCurrentDate() {
         $sql = '
                     SELECT DISTINCT PRO_date
-                    FROM ' . $this->getBase() . '.qui_produit
+                    FROM qui_produit
 
                 ';
 
@@ -551,7 +535,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     public function resolution_verify($media) {
         $sql = '
                     SELECT filetype
-                    FROM ' . $this->getBase() . '.media
+                    FROM media
                     WHERE id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -559,7 +543,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $type = $query->fetchColumn();
         $sql = '
                     SELECT ratio, height, width
-                    FROM ' . $this->getBase() . '.' . $type . '
+                    FROM ' . $type . '
                     WHERE media = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -572,7 +556,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     {
         $sql = '
                     SELECT filename
-                    FROM ' . $this->getBase() . '.media
+                    FROM media
                     WHERE id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -598,13 +582,13 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
     public function eraseMedia($id, $type) {
         $sql = '
-                    DELETE FROM ' . $this->getBase() . '.media
+                    DELETE FROM media
                     WHERE id = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $result1 = $query->execute(array($id));
         $sql = '
-                    DELETE FROM ' . $this->getBase() . '.' . $type . '
+                    DELETE FROM ' . $type . '
                     WHERE media = ?
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
@@ -651,21 +635,21 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
     public function removeUpload($id) {
 
 
-        $sql= "DELETE FROM " . $this->getBase() . ".template_contents WHERE id = :id";
+        $sql= "DELETE FROM template_contents WHERE id = :id";
 
         $query = $this->_em->getConnection()->prepare($sql);
 
         $result=$query->execute(array('id' => $id));
         // dump($result);
 
-        $sql = "DELETE FROM " . $this->getBase() . ".media WHERE id = :id";
+        $sql = "DELETE FROM media WHERE id = :id";
         $query = $this->_em->getConnection()->prepare($sql);
         $result = $query->execute(array('id' => $id));
         // dump($result);
     }
 
     public function getProgByPlaylist($playlist) {
-        $sql = "SELECT * FROM " . $this->getBase() . ".programmation INNER JOIN $this->base.main_schedule ON main_schedule.id = programmation.schedule WHERE playlist = :playlist";
+        $sql = "SELECT * FROM programmation INNER JOIN main_schedule ON main_schedule.id = programmation.schedule WHERE playlist = :playlist";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(['playlist' => $playlist]);
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
@@ -700,9 +684,9 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $result = ['playlists' => '', 'schedules' => ''];
         $sql = "
                     SELECT playlist, name
-                    FROM " . $this->getBase() . ".screen_playlist
-                    INNER JOIN " . $this->getBase() . ".screen_content ON screen_content.screen = screen_playlist.id
-                    INNER JOIN " . $this->getBase() . ".playlists ON screen_playlist.playlist = playlists.id
+                    FROM screen_playlist
+                    INNER JOIN screen_content ON screen_content.screen = screen_playlist.id
+                    INNER JOIN playlists ON screen_playlist.playlist = playlists.id
                     WHERE content = :media
                 ";
         $query = $this->_em->getConnection()->prepare($sql);
@@ -799,7 +783,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         $sql = '
                 SELECT PRO_menu, PRO_solo, PRO_petite, PRO_moyenne, PRO_grande, PRO_sans_giant, PRO_avec_giant
-                FROM ' . $this->getBase() . '.qui_produit
+                FROM qui_produit
                 WHERE PRO_id = :prd
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
