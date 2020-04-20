@@ -63,16 +63,16 @@ class TestController extends AbstractController
         $allCustomersIndexedByName = [];
 
         //on place les objets enseignes recuperés depuis la base dans un nouveau tableau qui contiendra leur nom en tant que clé.
-       foreach($allCustomers as $customer){
-           $allCustomersIndexedByName[$customer->getName()] = $customer ;
-       }
+        foreach($allCustomers as $customer){
+            $allCustomersIndexedByName[$customer->getName()] = $customer ;
+        }
 
-       //boucle sur le premier tableau qui contient les sites
+        //boucle sur le premier tableau qui contient les sites
         foreach( $allSitesNeededFilteredByCustomersArray as $enseigne => $site ){
 
             //si on trouve pas le nom de l enseigne en cour dans les clés de  tableau des enseignes recuperé depuis la base ou que  la valeur attribuée n est pas de type Customer on passe à l'iteration suviante
             if (!array_key_exists($enseigne,$allCustomersIndexedByName) || ! $allCustomersIndexedByName[$enseigne] instanceof Customer){
-              continue ;
+                continue ;
             }
 
             //on store l'objet customer dans une variable

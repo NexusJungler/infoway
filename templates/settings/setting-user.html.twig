@@ -1,89 +1,91 @@
 {% extends 'setting.html.twig' %}
 
-{# {% block stylesheets %}
+{% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('create-user') }}
-{% endblock %} #}
+    {{ encore_entry_link_tags('settings-user') }}
+{% endblock %}
 
 {% block maincontent %}
-<section id="wrapper_tabcontent">
 
-    <article id="setting-user" class="tab-content current">
+    <section class="wrapper_tabcontent">
 
-        <div class="tab-content-title">
-            <h3 class="title">Utilisateur</h3>
-            <p> DEl&CIA</p>
-        </div>
+        <article id="setting-user" class="tab-content current">
 
-        <form action="" method="post" name="user">
+            <div class="tab-content-title">
+                <h3 class="title">Utilisateur</h3>
+                {# <p> DEl&CIA</p> #}
+            </div>
 
-            <article class="display setting-display ">
-                <div class="display-content">
-                    <div class="display-btn">
-                        <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+            <form action="" method="post" name="user">
+
+                <article class="display setting-display ">
+                    <div class="display-content">
+                        <div class="display-btn">
+                            <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                        </div>
                     </div>
-                </div>
-            </article > 
+                </article > 
 
-            <article class="setting-user-table">
-                <div class="table">
-
-                    <table class="table-custome" >
-                        <thead  class="table-info thead-content">
-                            <tr>
-                                <th>Nom</th>    
-                                <th>Prenom</th>
-                                <th>Email</th> 
-                                <th>Téléphone</th>
-                                <th>Nbre Sites</th>
-                                <th></th>  
-                            </tr>
-                        </thead>
-
-                        <tbody class="tbody tbody-content scrollbar-table">
-                        {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
-                            {%  for  userInCustomer in usersInCustomer  %}
+                <article class="setting-user-table">
+                    <div class="table">
+                        <table class="table-custome" >
+                            <thead  class="table-info thead-content">
                                 <tr>
-                                    <td>{#
-                                        #}{% if  userInCustomer.firstName is defined %}{#
-                                        #}{{ userInCustomer.firstName }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>{#
-                                        #}{% if  userInCustomer.lastName is defined %}{#
-                                        #}{{ userInCustomer.lastName }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>{#
-                                        #}{% if  userInCustomer.email is defined %}{#
-                                        #}{{ userInCustomer.email }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>{#
-                                        #}{% if  userInCustomer.phoneNumber is defined %}{#
-                                        #}{{ userInCustomer.phoneNumber }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
-                                    <td>
-                                        {#
-                                        #}{% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}{#
-                                        #}{{ userInCustomer.sitesIds | length }}{#
-                                        #}{%  endif %}{#
-                                    #}</td>
+                                    <th>Nom</th>    
+                                    <th>Prenom</th>
+                                    <th>Email</th> 
+                                    <th>Téléphone</th>
+                                    <th>Nbre Sites</th>
+                                    <th></th>  
+                                    <th></th> 
+                                </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content scrollbar-table">
+                            {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
+                                {%  for  userInCustomer in usersInCustomer  %}
+
+                                    <tr>
+                                        <td>{#
+                                            #}{% if  userInCustomer.firstName is defined %}{#
+                                            #}{{ userInCustomer.firstName }}{#
+                                            #}{%  endif %}{#
+                                        #}</td>
+                                        <td>{#
+                                            #}{% if  userInCustomer.lastName is defined %}{#
+                                            #}{{ userInCustomer.lastName }}{#
+                                            #}{%  endif %}{#
+                                        #}</td>
+                                        <td>{#
+                                            #}{% if  userInCustomer.email is defined %}{#
+                                            #}{{ userInCustomer.email }}{#
+                                            #}{%  endif %}{#
+                                        #}</td>
+                                        <td>{#
+                                            #}{% if  userInCustomer.phoneNumber is defined %}{#
+                                            #}{{ userInCustomer.phoneNumber }}{#
+                                            #}{%  endif %}{#
+                                        #}</td>
+                                        <td>
+                                            {% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}
+                                            {{ userInCustomer.sitesIds | length }}
+                                            {%  endif %}
+                                        </td>
+                                        <td>
+                                            {% if  userInCustomer.Id is defined %}
+                                                <a class="btn"  href="{{path('user::edit',{ id:userInCustomer.Id }) }}" role="button"><i class="fas fa-plus"></i>Modifier</a>
+                                            {%  endif %}
+                                        </td>
                                     </tr>
-                            {% endfor  %}
-                        {%  endif  %}{#
-                        #}</tbody>
-                    </table>
+                                {% endfor  %}
+                            {%  endif  %}{#
+                            #}</tbody>
+                        </table>
+                    </div> 
+                </article>
+                
+            </form>
 
-                </div> 
-            </article>
+        </article> 
 
-        </form>
-
-    </article> 
-
-</section >
-
-
+    </section >
 {% endblock %}

@@ -20,6 +20,7 @@ import {Table} from "./class/Table/Table";
 import {Navbar} from "./class/Navbar/Navbar";
 
 import {Form} from "./class/Form/Form";
+import ToolBox from "./class/Tools/ToolBox/ToolBox";
 
 //require('../js/fontawesome/js/all')
 
@@ -28,7 +29,6 @@ global.$ = global.jQuery = $;
 
 //jqueryValidate
 require('../js/jqueryValidate/jquery.validate.js');
-
 
 // Tabs Menu
 let tab_menu = new Tabmenu();
@@ -51,3 +51,9 @@ form.FormValidate();
 
 const clock= new ClockManager();
 clock.enable();
+
+const toolBox = new ToolBox();
+toolBox.activeTool("CustomerCreatorHandler")
+       .activeTool("UploadHandlerTool")
+;
+

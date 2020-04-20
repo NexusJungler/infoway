@@ -44,5 +44,22 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         $manager->flush();
 
 
+        $user = new User();
+
+        $user
+            ->setPerimeter($perimeter)
+            ->setFirstName('Toto')
+            ->setLastName('toto')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'totoRtyu3$'
+            ))
+            ->setPhoneNumber('0143256232')
+            ->setActivated(0)
+            ->setEmail('cbaby@infoway.fr');
+        $manager->persist($user);
+        $manager->flush();
+
+
     }
 }

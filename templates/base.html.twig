@@ -10,6 +10,7 @@
             <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
             <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
             <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+            <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
             {{ encore_entry_link_tags('app') }}
         {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
@@ -24,7 +25,7 @@
         {% block header %}
             <header class="header">
                 <div class="logo__infoway">
-                    <img src="{{ asset('build/images/infoway.png') }}" alt="logo infoway">
+                    <img src="{{ asset('/build/images/infoway.png') }}" alt="logo infoway">
                 </div>
                 <div class="menu-wrap">
                     <input type="checkbox" class="toggler" />
@@ -34,7 +35,7 @@
                     <div class="header__block--left">
                         <div class="header__gradient-left">
                             <div class="logo__enseigne">
-                                <img src="{{ asset('build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
+                                <img src="{{ asset('/build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
                             <div class="all__enseigne">
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
@@ -55,7 +56,7 @@
 
                     <div class="header__gradient-center">
                         <div class="update">
-                            <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
+                            <img src="{{ asset('/build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
                             <div class="all__enseigne-site">
                                 <form class="enseigne-site">
                                     <select name="enseigne-site" id="enseigne-site">

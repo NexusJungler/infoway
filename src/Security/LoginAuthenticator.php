@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Entity\Admin\Perimeter;
 use App\Entity\Admin\User;
+use App\Service\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,6 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-use App\Service\SessionManager;
 
 class LoginAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -30,7 +29,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
-    private $lastRegisteredUser ;
+    private $lastRegisteredUser;
 
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -43,16 +42,16 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
+        return 'user::login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
+            'email' => $request->request->get('user')['email'],
+            'password' => $request->request->get('user')['password'],
+            'csrf_token' => $request->request->get('user')['csrf_token'],
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
@@ -84,7 +83,6 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -102,18 +100,18 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         $userRepo->getUserWithSites($this->lastRegisteredUser);
 
 
-       $sessionManager = new SessionManager(new Session()) ;
+        $sessionManager = new SessionManager(new Session()) ;
 
-       if($sessionManager->get('user') !== null ) $sessionManager->remove('user');
+        if($sessionManager->get('user') !== null ) $sessionManager->remove('user');
 
         $sessionManager->set('user',$this->lastRegisteredUser);
 
-      //  $userFromDatabase=$sessionManager->get('user');
+        //  $userFromDatabase=$sessionManager->get('user');
         return new RedirectResponse($this->urlGenerator->generate('app'));
     }
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('app_login');
+        return $this->urlGenerator->generate('user::login');
     }
 }

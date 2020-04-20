@@ -1,6 +1,6 @@
 /*****************************************************  tab menu *****************************************************************/
 
-#wrapper{
+.wrapper{
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -87,7 +87,7 @@ ul.tabs li.current::after{
 
 /*****************************************************  page marque  *****************************************************************/
 
-#wrapper_tabcontent{
+.wrapper_tabcontent{
     background-color: #ffffff;
     padding: 0 2rem  2rem ;
 }

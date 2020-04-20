@@ -32,7 +32,7 @@ class UserRepository extends ServiceEntityRepository
 
         $this->_registry = $registry;
 
-      //  $this->__searchRecursiveService = new ArraySearchRecursiveService();
+        $this->__searchRecursiveService = new ArraySearchRecursiveService();
     }
 
 
@@ -119,6 +119,8 @@ class UserRepository extends ServiceEntityRepository
         return $user ;
     }
 
+
+
     public function setEntityManager(ObjectManager $entityManager)
     {
         $this->_em = $entityManager;
@@ -137,6 +139,15 @@ class UserRepository extends ServiceEntityRepository
         return $this->reformatPermissions($user->getRole()->getPermissions()->getValues(), $onlyIds);
     }
 
+    public function getUsersByCustomer(Customer $customer)
+    {
+        return $this->createQueryBuilder('u')
+             ->select('u')
+             ->where(':customer MEMBER OF u.customers')
+             ->setParameter('customer', $customer)
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * Reformat permissions array to :

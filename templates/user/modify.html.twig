@@ -1,335 +1,192 @@
 {% extends 'setting.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('create-user') }}
 {% endblock %}
+
 {%  block maincontent %}
-    <article id="tab-create-user" class="tab-content tab-create current">
+    <section class="wrapper_tabcontent">
 
-        <div class="tab-content-title">
-            <h3 class="title">Créer un Utilisateur</h3>
-        </div>
+        <article id="setting-user" class=" tab-create tab-create-user">
 
+            <div class="tab-content-title">
+                <h3 class="title">Modifier un utilisateur</h3>
+            </div>
 
-        {# <form action="{{ path('user:createUser') }}" method="post" name="user"> #}
-        <form action="{{ path('users::edit::process') }}" method="post" name="user" id="create-user">
+            <form action="{{ path('users::edit::process') }}" method="post" name="user" id="create-user">
 
-            <article class="display setting-display ">
-                <div class="display-content">
-                    <div class="display-btn">
-                        <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Créer</button>
-                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
-                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                {# <article class="display setting-display ">
+                    <div class="display-content">
+                        <div class="display-btn">
+                            <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Créer</button>
+                            <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                            <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                            <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                        </div>
                     </div>
-                </div>
-            </article >
+                </article > #}
 
-
-            <div class="form-content">
-
-                <div class="row">
+                <div class="form-content">
                     <div class="hidden-row">
                         <input type="number" name="user[user]"  class="input-custome" value="{{userToModify.id}}" hidden />
                     </div>
                     <div class="row">
-                        <label class="form-label" for="fristname">Nom</label>
-                        <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" value="{{ userToModify is defined and userToModify.lastName is defined  ? userToModify.lastName : '' }}" required/>
+                        
+                        <div class="row">
+                            <label class="form-label">Prenom</label>
+                            <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" value="{{ userToModify is defined and userToModify.firstName is defined  ? userToModify.firstName : '' }}" required/>
+                        </div>
+                        <div class="row">
+                            <label class="form-label" for="fristname">Nom</label>
+                            <input type="text" name="user[fristname]"  placeholder="Nom" class="input-custome" value="{{ userToModify is defined and userToModify.lastName is defined  ? userToModify.lastName : '' }}" required/>
+                        </div>
                     </div>
+                    <div class="row col-email">
+                        <label class="form-label" for="email">Login/Mail</label>
+                        <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  value="{{ userToModify is defined and userToModify.email is defined  ? userToModify.email : '' }}" required/>
+                    </div>
+                    <div class="row col-phone">
+                        <label class="form-label" for="phone">Téléphone</label>
+                        <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" value="{{ userToModify is defined and userToModify.phoneNumber is defined  ? userToModify.phoneNumber : '' }}" />
+                    </div>
+                </div>
+
+                <p class="message-error"></p>
+
+                <div class="form-content form-content-chkbox">
                     <div class="row">
-                        <label class="form-label">Prenom</label>
-                        <input type="text"  name="user[lastname]"   placeholder="Prenom" class="input-custome" value="{{ userToModify is defined and userToModify.firstName is defined  ? userToModify.firstName : '' }}" required/>
-                    </div>
-                </div>
-
-                <div class="row col-email">
-                    <label class="form-label" for="email">Email</label>
-                    <input type="email" name="user[email]" id="email" placeholder="Email" class="input-custome"  value="{{ userToModify is defined and userToModify.email is defined  ? userToModify.email : '' }}" required/>
-                </div>
-                <div class="row col-phone">
-                    <label class="form-label" for="phone">Téléphone</label>
-                    <input type="tel" name="user[phone]" placeholder="Numero de téléphone" class="input-custome" value="{{ userToModify is defined and userToModify.phoneNumber is defined  ? userToModify.phoneNumber : '' }}" />
-                </div>
-
-            </div>
-            <p class="message-error"></p>
-
-            <div class="form-content form-content-chkbox">
-                <div class="row">
-                    <label class="form-label" for="phone">Périmètres :</label>
-                    <div class="row row-chkbox">
-                        {% if givablePerimeters is defined and givablePerimeters is iterable %}
-                            {% for  perimeter in givablePerimeters %}
-                                {% if perimeter.name is defined and perimeter.level is defined %}
-
-                                    <label class="container-chkbox">{{ perimeter.name }}
-                                        <input type="radio" name="user[perimeter]" value="{{ perimeter.id }}" {{ userToModify is defined and userToModify.perimeter is defined and userToModify.perimeter.id is defined and perimeter.id == userToModify.perimeter.id ? 'checked' : '' }}>
-                                        <span class="checkmark-chkbox"></span>
-                                    </label>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    {#            <div class="row row-chkbox">#}
-                    {#                <label class="container-chkbox">Infoway#}
-                    {#                    <input type="radio" name="Perimeters" value"infoway">#}
-                    {#                    <span class="checkmark-chkbox"></span>#}
-                    {#                </label>#}
-                    {#                <label class="container-chkbox">Multi-Enseigne#}
-                    {#                    <input type="radio" name="Perimeters" value="multi enseigne" >#}
-                    {#                    <span class="checkmark-chkbox"></span>#}
-                    {#                </label>#}
-                    {#                <label class="container-chkbox">Enseigne#}
-                    {#                    <input type="radio" name="Perimeters"  value="enseigne" >#}
-                    {#                    <span class="checkmark-chkbox"></span>#}
-                    {#                </label>#}
-                    {#                <label class="container-chkbox">Multi-Site#}
-                    {#                    <input type="radio" name="Perimeters"  value="multi site" >#}
-                    {#                    <span class="checkmark-chkbox"></span>#}
-                    {#                </label>#}
-                    {#                <label class="container-chkbox">Local#}
-                    {#                    <input type="radio" name="Perimeters"  value="local" >#}
-                    {#                    <span class="checkmark-chkbox"></span>#}
-                    {#                </label>#}
-
-                    {#            </div>#}
-                </div>
-            </div>
-
-            <div class="form-content-table">
-                <div class="content-table-left">
-                    <p class="table-titel">Enseigne</p>
-                    <div class="table">
-                        <table class="table-custome row-chkbox" >
-                            <thead  class="table-info thead-content ">
-                            <tr>
-                                <th>
-                                    <label class="container-chkbox">Tous
-                                        <input type="checkbox" name="selectenseigne" value="tous" id="selectAll" >
-                                        <span class="checkmark-chkbox"></span>
-                                    </label>
-                                </th>
-                                <th>Role</th>
-                                <th>Affichies sites</th>
-                            </tr>
-                            </thead>
-                            <tbody class="tbody tbody-content scrollbar-table">
-
-                            {% if givableRoles is defined and  givableRoles is iterable %}
-
-                                {% for givableRoleInfosByCustomer in givableRoles %}
-
-                                    {% set  givableRolesCustomer  = givableRoleInfosByCustomer ['customer'] %}
-                                    {% set  givableRoles  = givableRoleInfosByCustomer ['roles'] %}
-
-                                    {% if  givableRolesCustomer.name is defined  and givableRolesCustomer.id is defined  %}
-                                        {%  set userToModifyRoleInCustomer = userToModifyRoles[givableRolesCustomer.id] is defined and userToModifyRoles[givableRolesCustomer.id]['role'] is defined ? userToModifyRoles[givableRolesCustomer.id]['role'] : null  %}
-                                        <tr class="input1">
-                                            <td>
-                                                <label class="container-chkbox">{{ givableRolesCustomer.name }}
-                                                    <input type="checkbox" name="showenseignesites[]"  class="input1" value={{ givableRolesCustomer.id }}>
-                                                    <span class="checkmark-chkbox"></span>
-                                                </label>
-                                            </td>
-                                            <td >
-                                                <div class="select" >
-                                                    <select class="select-list" name={{"user[roles][enseigne][" ~ givableRolesCustomer.id ~ "]"  }}>
-                                                        <option>Choisir rôle </option>
-                                                        {% if givableRoles is defined and  givableRoles  is iterable %}
-
-
-                                                            {% for givableRole in givableRoles  %}
-                                                                {% if  givableRole.name is defined and  givableRole.id is defined  %}
-                                                                    <option value={{ givableRole.id }} {{ userToModifyRoleInCustomer is same as( givableRole.id )  ? 'selected' : ''}} >{{ givableRole.name }}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        {% endif  %}
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <button class="btn-display-teach" type="button">voir</button>
-                                            </td>
-                                        </tr>
+                        <label class="form-label" for="phone">Périmètres :</label>
+                        <div class="row row-chkbox">
+                            {% if givablePerimeters is defined and givablePerimeters is iterable %}
+                                {% for  perimeter in givablePerimeters %}
+                                    {% if perimeter.name is defined and perimeter.level is defined %}
+                                        <label class="container-chkbox">{{ perimeter.name }}
+                                            <input type="radio" name="user[perimeter]" value="{{ perimeter.id }}" {{ userToModify is defined and userToModify.perimeter is defined and userToModify.perimeter.id is defined and perimeter.id == userToModify.perimeter.id ? 'checked' : '' }}>
+                                            <span class="checkmark-chkbox"></span>
+                                        </label>
                                     {% endif %}
                                 {% endfor %}
-                            {% endif  %}
-                            {#                    <tr class="input1">#}
-                            {#                        <td>#}
-                            {#                            <label class="container-chkbox">Burger King#}
-                            {#                                <input type="checkbox" name="selectenseigne"  class="input1" value="burger king">#}
-                            {#                                <span class="checkmark-chkbox"></span>#}
-                            {#                            </label>#}
-                            {#                        </td>#}
-                            {#                        <td >#}
-                            {#                            <div class="select" >#}
-                            {#                                <select class="select-list" name="selectrole">#}
-                            {#                                    <option>Choisir rôle </option>#}
-                            {#                                    <option value="admin">Admin</option>#}
-                            {#                                    <option value="siege">Siege</option>#}
-                            {#                                    <option value="directeur">Directeur</option>#}
-                            {#                                    <option value="manager">Manager</option>#}
-                            {#                                </select>#}
-                            {#                            </div>#}
-                            {#                        </td>#}
-                            {#                        <td>#}
-                            {#                            <button class="btn-display-teach" type="button">voir</button>#}
-                            {#                        </td>#}
-                            {#                    </tr>#}
-                            {#                    <tr>#}
-                            {#                        <td>#}
-                            {#                            <label class="container-chkbox">KFC#}
-                            {#                                <input type="checkbox" name="selectenseigne" value="kfc" >#}
-                            {#                                <span class="checkmark-chkbox"></span>#}
-                            {#                            </label>#}
-                            {#                        </td>#}
-                            {#                        <td>#}
-                            {#                            <div class="select" >#}
-                            {#                                <select class="select-list">#}
-                            {#                                    <option>Choisir rôle </option>#}
-                            {#                                    <option value="admin">Admin</option>#}
-                            {#                                    <option value="siege">Siege</option>#}
-                            {#                                    <option value="directeur">Directeur</option>#}
-                            {#                                    <option value="manager">Manager</option>#}
-                            {#                                </select>#}
-                            {#                            </div>#}
-                            {#                        </td>#}
-                            {#                        <td> <button class="btn-display-teach" type="button">voir</button></td>#}
-                            {#                    </tr>#}
-                            {#                    <tr>#}
-                            {#                        <td>#}
-                            {#                            <label class="container-chkbox">Quick#}
-                            {#                                <input type="checkbox" name="selectenseigne" value="quick" >#}
-                            {#                                <span class="checkmark-chkbox"></span>#}
-                            {#                            </label>#}
-                            {#                        </td>#}
-                            {#                        <td>#}
-                            {#                            <div class="select" >#}
-                            {#                                <select class="select-list">#}
-                            {#                                    <option>Choisir rôle </option>#}
-                            {#                                    <option value="admin">Admin</option>#}
-                            {#                                    <option value="siege">Siege</option>#}
-                            {#                                    <option value="directeur">Directeur</option>#}
-                            {#                                    <option value="manager">Manager</option>#}
-                            {#                                </select>#}
-                            {#                            </div>#}
-                            {#                        </td>#}
-                            {#                        <td> <button class="btn-display-teach" type="button">voir</button></td>#}
-                            {#                    </tr>#}
-                            </tbody>
-                        </table>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
 
-                <div  class="content-table-right">
-                    <p class="table-titel">Site</p>
-
-                    {#            {{ dump(givableSites) }}#}
-                    <div class="table">
-                        <table class="table-custome row-chkbox" >
-                            <thead  class="table-info thead-content">
-                            <tr>
-                                <th>
-                                    <label class="container-chkbox">Tous
-                                        <input type="radio" name="select-site" class="selectAll" >
-                                        <span class="checkmark-chkbox"></span>
-                                    </label>
-                                <th>Identifiants</th>
-                                <th>Adresse</th>
-                            </tr>
-                            </thead>
-                            <div class="div-tbody">
-
+                <div class="form-content-table">
+                    <div class="content-table-left">
+                        <p class="table-titel">Enseigne</p>
+                        <div class="table">
+                            <table class="table-custome row-chkbox" >
+                                <thead  class="table-info thead-content ">
+                                    <tr>
+                                        <th>
+                                            <label class="container-chkbox">Tous
+                                                <input type="checkbox" name="selectenseigne" value="tous" id="selectAll" >
+                                                <span class="checkmark-chkbox"></span>
+                                            </label>
+                                        </th>
+                                        <th>Role</th>
+                                        <th>Affichies sites</th>
+                                    </tr>
+                                </thead>
                                 <tbody class="tbody tbody-content scrollbar-table">
-                                {%  if  givableSites is defined and givableSites is iterable %}
-                                    {% for customer in  givableSites %}
-                                        {% if customer.id is defined and customer.sites is defined and customer.sites is iterable %}
-                                            {% for  site in customer.sites %}
-                                                {% if site.id is defined and site.name is defined and site.adress is defined  %}
-                                                    <tr>
-                                                        <td>
-                                                            <label class="container-chkbox">{{site.name}}
+                                    {% if givableRoles is defined and  givableRoles is iterable %}
 
-                                                                <input type="checkbox" name={{  "user[sites][enseigne][" ~  customer.id  ~ "][]" }} value="{{ site.id }}" {{ userToModifySites[ customer.id ] is defined and userToModifySites[ customer.id ][site.id] is defined ? 'checked' : '' }}>
-                                                                {#                                              <input type="number" name="selected-site" value="{{ site.id }}">#}
-                                                                <span class="checkmark-chkbox"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>Bobigny</td>
-                                                        <td>{{site.adress}} </td>
-                                                    </tr>
-                                                {% endif %}
-                                            {% endfor  %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
+                                        {% for givableRoleInfosByCustomer in givableRoles %}
+
+                                            {% set  givableRolesCustomer  = givableRoleInfosByCustomer ['customer'] %}
+                                            {% set  givableRoles  = givableRoleInfosByCustomer ['roles'] %}
+
+                                            {% if  givableRolesCustomer.name is defined  and givableRolesCustomer.id is defined  %}
+                                                {%  set userToModifyRoleInCustomer = userToModifyRoles[givableRolesCustomer.id] is defined and userToModifyRoles[givableRolesCustomer.id]['role'] is defined ? userToModifyRoles[givableRolesCustomer.id]['role'] : null  %}
+                                                <tr class="input{{ givableRolesCustomer.id }}">
+                                                    <td>
+                                                        <label class="container-chkbox">{{ givableRolesCustomer.name }}
+                                                            <input type="checkbox" name="showenseignesites[]"  class="input{{ givableRolesCustomer.id }}" value={{ givableRolesCustomer.id }}>
+                                                            <span class="checkmark-chkbox"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td >
+                                                        <div class="select" >
+                                                            <select class="select-list" name={{"user[roles][enseigne][" ~ givableRolesCustomer.id ~ "]"  }}>
+                                                                <option>Choisir rôle </option>
+                                                                {% if givableRoles is defined and  givableRoles  is iterable %}
+
+
+                                                                    {% for givableRole in givableRoles  %}
+                                                                        {% if  givableRole.name is defined and  givableRole.id is defined  %}
+                                                                            <option value={{ givableRole.id }} {{ userToModifyRoleInCustomer is same as( givableRole.id )  ? 'selected' : ''}} >{{ givableRole.name }}</option>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif  %}
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn-display-teach" type="button" data-list-enseigne="{{ givableRolesCustomer.name }}">voir</button>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif  %}
                                 </tbody>
-
-                            </div>
-                        </table>
-                    </div>
-                    {#            <div class="table">#}
-                    {#                <table class="table-custome row-chkbox" >#}
-                    {#                    <thead  class="table-info thead-content">#}
-                    {#                    <tr>#}
-                    {#                        <th>#}
-                    {#                            <label class="container-chkbox">Tous#}
-                    {#                                <input type="radio" name="select-site" class="selectAll" >#}
-                    {#                                <span class="checkmark-chkbox"></span>#}
-                    {#                            </label>#}
-                    {#                        <th>Identifiants</th>#}
-                    {#                        <th>Adresse</th>#}
-                    {#                    </tr>#}
-                    {#                    </thead>#}
-                    {#                    <div class="div-tbody">#}
-
-                    {#                        <tbody class="tbody tbody-content scrollbar-table">#}
-                    {#                        <tr>#}
-                    {#                            <td>#}
-                    {#                                <label class="container-chkbox">AnseVata#}
-                    {#                                    <input type="radio" name="select-site"  >#}
-                    {#                                    <span class="checkmark-chkbox"></span>#}
-                    {#                                </label>#}
-                    {#                            </td>#}
-                    {#                            <td>Bobigny</td>#}
-                    {#                            <td>25 rue st charles 06000 AMIENS  </td>#}
-                    {#                        </tr>#}
-                    {#                        <tr>#}
-                    {#                            <td>#}
-                    {#                                <label class="container-chkbox">AnseVata#}
-                    {#                                    <input type="radio" name="select-site"  >#}
-                    {#                                    <span class="checkmark-chkbox"></span>#}
-                    {#                                </label>#}
-                    {#                            </td>#}
-                    {#                            <td>Bobigny</td>#}
-                    {#                            <td>25 rue st charles 06000 AMIENS  </td>#}
-                    {#                        </tr>#}
-                    {#                        <tr>#}
-                    {#                            <td>#}
-                    {#                                <label class="container-chkbox">AnseVata#}
-                    {#                                    <input type="radio" name="select-site"  >#}
-                    {#                                    <span class="checkmark-chkbox"></span>#}
-                    {#                                </label>#}
-                    {#                            </td>#}
-                    {#                            <td>Bobigny</td>#}
-                    {#                            <td>25 rue st charles 06000 AMIENS  </td>#}
-                    {#                        </tr>#}
-                    {#                        </tbody>#}
-
-                    {#                    </div>#}
-                    {#                </table>#}
-                    {#            </div>#}
-                    {#        </div>#}
-
-                    {#    </div>#}
-
-                    <div class="form-content-btn">
-                        <button name="btn-user-valide" class="btn btn-user-valide">Valide</button>
+                            </table>
+                        </div>
                     </div>
 
+                    <div  class="content-table-right">
+                        <p class="table-titel">Site</p>
+                        <div class="table">
+                            <table class="table-custome row-chkbox" >
+                                <thead  class="table-info thead-content">
+                                <tr>
+                                    <th>
+                                        <label class="container-chkbox">Tous
+                                            <input type="radio" name="select-site" class="selectAll" >
+                                            <span class="checkmark-chkbox"></span>
+                                        </label>
+                                    <th>Identifiants</th>
+                                    <th>Adresse</th>
+                                </tr>
+                                </thead>
+                                <div class="div-tbody">
 
-        </form>
-    </article>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                    {%  if  givableSites is defined and givableSites is iterable %}
+                                        {% for customer in  givableSites %}
+                                            {% if customer.id is defined and customer.sites is defined and customer.sites is iterable %}
+                                                {% for  site in customer.sites %}
+                                                    {% if site.id is defined and site.name is defined and site.adress is defined  %}
+                                                        <tr  class="{{customer.name}}" >
+                                                            <td>
+                                                                <label class="container-chkbox">{{site.name}}
+                                                                    <input type="radio" name={{  "user[sites][enseigne][" ~  customer.id  ~ "][]" }} value="{{ site.id }}" {{ userToModifySites[ customer.id ] is defined and userToModifySites[ customer.id ][site.id] is defined ? 'checked' : '' }}>
+                                                                    <span class="checkmark-chkbox"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>Bobigny</td>
+                                                            <td>{{site.adress}} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endfor  %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-content-btn">
+                    <button name="btn-user-valide" class="btn btn-user-valide">Valide</button>
+                </div>
+
+            </form>
+        </article>
+
+    </section>    
 {%  endblock %}
 

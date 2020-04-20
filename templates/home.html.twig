@@ -2,12 +2,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <main class="main home">
+    <main class="main">
 
         <div class="main-content">
 
             <section class="jumbotron">
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue {{ user.name}}' } %}
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Bienvenue ' ~ user.firstName } %}
             </section>
         
             <div class="home-information">

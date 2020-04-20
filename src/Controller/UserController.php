@@ -4,49 +4,63 @@
 namespace App\Controller;
 
 
+use App\Entity\Admin\Action;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Perimeter;
+use App\Entity\Admin\Permission;
+use App\Entity\Admin\Subject;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserRoles;
 use App\Entity\Admin\UserSites;
-use App\Entity\Customer\Site;
+use App\Entity\Customer\Role;
+use App\Form\UserType;
+use App\Repository\Admin\UserRepository;
 use App\Service\ArrayHandler;
+use App\Service\EmailSenderService;
+use App\Service\EmailVerificator;
+use App\Service\PermissionsHandler;
 use App\Service\SessionManager;
+use App\Service\TokenGeneratorService;
 use App\Service\UserHandler;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use PhpParser\Error;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
-use App\Entity\Customer\Role ;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 //Controlleur gerant la partie utilisateur
 class UserController extends AbstractController
 {
+
 
     private $passwordEncoder;
     private ObjectManager $__manager;
     private SessionManager $sessionManager ;
 
     //attribution du service Session Manager et de l encoder des password
- public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-{
-    $this->sessionManager =  new SessionManager( new Session() );
-    $this->passwordEncoder = $passwordEncoder;
-}
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->sessionManager =  new SessionManager( new Session() );
+        $this->passwordEncoder = $passwordEncoder;
+    }
 
 
 
     /**
      * @Route(path="/users/create", name="user::create",methods="GET|POST")
      * @return Response
-     */
+     **/
+
     //methode  gerant la partie creation utilisateur
     public function userCreate(UserHandler $userHandlerService): Response
     {
@@ -149,8 +163,8 @@ class UserController extends AbstractController
         $perimeterRepo = $em->getRepository(Perimeter::class);
 
         /** _____________________________ PARTIE USER ________________________________________ */
-      $creatorUser = $userHandlerService->getUserFromSession() ;
-            if( ! $creatorUser instanceof User ) throw new \Error('Impossible to find CreatorInformations') ;
+        $creatorUser = $userHandlerService->getUserFromSession() ;
+        if( ! $creatorUser instanceof User ) throw new \Error('Impossible to find CreatorInformations') ;
 
 
         $creatorUserFromDbWithSites = $userRepo->getUserWithSitesById( $creatorUser->getId() ) ;
@@ -160,7 +174,7 @@ class UserController extends AbstractController
         $userToModifyFromDb = $userRepo->findOneById($id) ;
         if( ! $userToModifyFromDb instanceof User ) throw new \Error('Impossible to find User to Modify') ;
 
-                        //Recuperation de l user en base
+        //Recuperation de l user en base
 
 
         /** _____________________________ PARTIE PERIMETRE ________________________________________ */
@@ -227,14 +241,14 @@ class UserController extends AbstractController
         $givableSites = $creatorUserFromDbWithSites->getSites();
 
 
-            return $this->render("user/modify.html.twig", [
-                'userToModify' => $userToModifyFromDb ,
-                'givablePerimeters' => $givablePerimeters ,
-                'givableRoles'   => $givablesRoles ,
-                'userToModifyRoles'=> $userToModifyRoles,
-                'userToModifySites' => $userToModifySites ,
-                'givableSites'      => $givableSites
-            ]);
+        return $this->render("user/modify.html.twig", [
+            'userToModify' => $userToModifyFromDb ,
+            'givablePerimeters' => $givablePerimeters ,
+            'givableRoles'   => $givablesRoles ,
+            'userToModifyRoles'=> $userToModifyRoles,
+            'userToModifySites' => $userToModifySites ,
+            'givableSites'      => $givableSites
+        ]);
 
     }
 
@@ -247,12 +261,12 @@ class UserController extends AbstractController
     public function userView(Request $request): Response
     {
         //Recuperation de l entité manager pour la conenction admin
-       $em =  $this->getDoctrine()->getManager();
-       //Recuperation du repository de l entité Customer correspondant à l'enseigne
-       $customerRepo = $em->getRepository(Customer::class);
+        $em =  $this->getDoctrine()->getManager();
+        //Recuperation du repository de l entité Customer correspondant à l'enseigne
+        $customerRepo = $em->getRepository(Customer::class);
 
-       $currentCustomer = $customerRepo->findOneByName('kfc');
-       $usersInCustomer = $currentCustomer->getUsers() ;
+        $currentCustomer = $customerRepo->findOneByName('kfc');
+        $usersInCustomer = $currentCustomer->getUsers() ;
 
         return $this->render("settings/setting-user.html.twig", [
             'usersInCustomer' => $usersInCustomer
@@ -288,9 +302,9 @@ class UserController extends AbstractController
 
         //Recuperation du repo User
         $userRepo = $em->getRepository(User::class) ;
-       $userRoleRepo = $em->getRepository(UserRoles::class) ;
-       $userSiteRepo = $em->getRepository(UserSites::class) ;
-       $perimeterRepo = $em->getRepository(Perimeter::class) ;
+        $userRoleRepo = $em->getRepository(UserRoles::class) ;
+        $userSiteRepo = $em->getRepository(UserSites::class) ;
+        $perimeterRepo = $em->getRepository(Perimeter::class) ;
 
 
         if(! $userCreatorFromSession instanceof  User ) throw new Error('Impossible to find user creator informations') ;
@@ -345,7 +359,7 @@ class UserController extends AbstractController
             $currentCustomer = $allRolesToImportsByCustomer['enseigne'] ;
             $currentCustomerRoles = $allRolesToImportsByCustomer['roles'] ;
 
-           $customerRoles =  $userRoleRepo->getRolesInCustomer($currentCustomer ,  $currentCustomerRoles ) ;
+            $customerRoles =  $userRoleRepo->getRolesInCustomer($currentCustomer ,  $currentCustomerRoles ) ;
 
             $allRoleImported[ $customerRoles['customer']->getId() ] = [
                 'customer'   => $customerRoles['customer'],
@@ -385,7 +399,7 @@ class UserController extends AbstractController
         }
 
 
-       $roleRemovedEnseigneIds = array_diff(array_keys($handledUserRolesEntryFiltredByCustomerId), array_keys($userToModifyFormDatas[ 'roles' ]['enseigne'] ));
+        $roleRemovedEnseigneIds = array_diff(array_keys($handledUserRolesEntryFiltredByCustomerId), array_keys($userToModifyFormDatas[ 'roles' ]['enseigne'] ));
 
 
         foreach($roleRemovedEnseigneIds as $roleRemovedEnseigneId){
@@ -421,15 +435,15 @@ class UserController extends AbstractController
                 foreach( $siteIdInEnseigne as $userToModifySiteId) {
 
                     // On verifit bien que le createur possede bien le site qu 'il souhaite transmettre en verifiant que l id du site qu il veut donner est bien presant dans le tableau de ses sites
-                   if( ! isset ( $userCreatorSiteEntries [ $userToModifySiteId ] ) ) throw new Error('one or more site selected cannot be attributed by the creator') ;
-                   if( isset( $userToModifySiteEntries[ $userToModifySiteId] ) ) continue ;
+                    if( ! isset ( $userCreatorSiteEntries [ $userToModifySiteId ] ) ) throw new Error('one or more site selected cannot be attributed by the creator') ;
+                    if( isset( $userToModifySiteEntries[ $userToModifySiteId] ) ) continue ;
 
-                        //Si oui on cree l entité  qui correspondra a l entree dans la table de relation de la base admin qui precisera l id et le nom du customer correspondant a l entree du site souhaitant etre donné dans la base correspondante.
-                        $creatorSiteEntry = $userCreatorSiteEntries [ $userToModifySiteId ] ;
-                        $newUserSiteEntry  = new UserSites();
-                        $newUserSiteEntry->setCustomer( $creatorSiteEntry->getCustomer() ) ;
-                        $newUserSiteEntry->setSiteId( $creatorSiteEntry->getSiteId() );
-                        $userToModifyFromDb->addSitesId($newUserSiteEntry);
+                    //Si oui on cree l entité  qui correspondra a l entree dans la table de relation de la base admin qui precisera l id et le nom du customer correspondant a l entree du site souhaitant etre donné dans la base correspondante.
+                    $creatorSiteEntry = $userCreatorSiteEntries [ $userToModifySiteId ] ;
+                    $newUserSiteEntry  = new UserSites();
+                    $newUserSiteEntry->setCustomer( $creatorSiteEntry->getCustomer() ) ;
+                    $newUserSiteEntry->setSiteId( $creatorSiteEntry->getSiteId() );
+                    $userToModifyFromDb->addSitesId($newUserSiteEntry);
 
                 }
 
@@ -453,7 +467,7 @@ class UserController extends AbstractController
             }
         }
 
-      //  dd($userToModifyFromDb);
+        //  dd($userToModifyFromDb);
         $em->persist($userToModifyFromDb);
         $em->flush();
 
@@ -606,7 +620,7 @@ class UserController extends AbstractController
                 //On recupere le tableau contenant les sites possedés par le createur
                 $userSiteEntries = $userSitesWithCustomerIdAsKey[ $siteEnseigneId ] ;
 
-               //On boucle sur le tableau des ids des sites souhaitant etre transmis a l user créé (renseignés dans le formulaire)
+                //On boucle sur le tableau des ids des sites souhaitant etre transmis a l user créé (renseignés dans le formulaire)
                 foreach( $siteIdInEnseigne as $newUserSiteId) {
                     // On verifit bien que le createur possede bien le site qu 'il souhaite transmettre en verifiant que l id du site qu il veut donner est bien presant dans le tableau de ses sites
                     if(! isset($userSiteEntries [ $newUserSiteId ])) throw new Error('You re not allowed to attributes some site') ;
@@ -628,7 +642,7 @@ class UserController extends AbstractController
 
         //On persiste l object contenant le nouvel user et on flush . l user est créé!!
         $em->persist($newUserEntity);
-       // dd($em);
+        // dd($em);
         $em->flush();
 
         return $this->redirectToRoute('users:view') ;
@@ -652,6 +666,39 @@ class UserController extends AbstractController
     }
 
 
+
+    /**
+     * @Route(path="/login", name="user::login",methods="GET|POST")
+     * @param AuthenticationUtils $authenticationUtils
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
+    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
+    {
+        if ($this->getUser()) {
+             return $this->redirectToRoute('app::home');
+         }
+
+        // get the login error if there is one
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        if(!is_null($error))
+            // translate error
+            // (translate can be found in translations/messages.fr.yaml, language can be found in config/packages/translation.yaml)
+            $error = $translator->trans($error->getMessageKey());
+
+        return $this->render('user/user_login.html.twig', [
+            'page_title' => 'Connexion',
+            'form_title' => 'Connexion',
+            'last_username' => $lastUsername,
+            'error' => $error
+        ]);
+    }
+
+
     /**
      * @Route("path=/logout", name="user::logout")
      * This method can be blank - it will be intercepted by the logout key on your firewall (see : config/packages/security.yaml)
@@ -661,227 +708,484 @@ class UserController extends AbstractController
 
     /**
      *
-     * @Route(path="/password/forget", name="user::password_forget", methods="GET")
+     * @Route(path="/password/forget", name="user::passwordForget", methods={"GET", "POST"})
      *
      * @param Request $request
      * @return Response
      * @throws Exception
      */
-	public function passwordForget(Request $request): Response
+	public function passwordForget(Request $request, EmailVerificator $emailVerificator, EmailSenderService $emailSenderService, UserRepository $userRepository): Response
     {
-        return $this->render("security/resetPassword.html.twig");
+
+        if($request->isMethod('POST'))
+        {
+
+            $emailNotFound = false;
+            $emailIsSend = false;
+
+            if(!is_null($request->request->get('user')))
+            {
+
+                $userInfo = $request->request->get('user');
+
+                if(array_key_exists('email', $userInfo) AND $emailVerificator->isValidEmail($userInfo['email']))
+                {
+                    $user = $userRepository->findOneByEmail($userInfo['email']);
+
+                    if($user)
+                    {
+                        $this->sendPasswordResetEmail($emailSenderService, $user);
+                        $emailIsSend = true;
+                    }
+                    else
+                        $emailNotFound = true;
+
+                    dump($userInfo, $user);
+                }
+                else
+                    $emailNotFound = true;
+
+            }
+            else
+                $emailNotFound = true;
+
+            $error = ($emailNotFound === true) ? "Cette adresse email n'est pas valide" : null;
+
+        }
+
+        return $this->render("user/user_login.html.twig", [
+            'page_title' => 'Mot de passe oublié',
+            'form_title' => 'Mot de passe oublié ?',
+            'form_subtitle' => 'Veuillez renseignez votre email',
+            'emailIsSend' => $emailIsSend ?? false,
+            'error' => $error ?? null
+        ]);
     }
 
 
-//    /**
-//     * @Route(path="/send/password/reset/email", name="user::send_password_reset_email", methods="POST")
-//     *
-//     * @param Request $request
-//     * @param EmailSenderService $mailer
-//     * @return Response
-//     * @throws Exception
-//     */
-//	public function sendPasswordResetEmail(Request $request, EmailSenderService $mailer, TokenGeneratorService $tokenGeneratorService): Response
-//    {
-//
-//        if(is_null($request->request->get('username')))
-//        {
-//            throw new Exception("Missing 'username' parameter !");
-//        }
-//
-//        $user = $this->getDoctrine()->getRepository(User::class)->findOneByUsername($request->request->get('username'));
-//
-//        if (!$user) {
-//            throw new Exception("User not found !");
-//        }
-//
-//        $token = $tokenGeneratorService->generate(64);
-//
-//        $userEmail = $user->getEmail();
-//
-//        $user->setUserPassword("")
-//             ->setPasswordResetToken($token);
-//
-//        // maj de la base de donnée
-//        $this->getDoctrine()->getManager()->flush();
-//
-//
-//        $mailer->sendEmail(
-//                        "cbaby@infoway.fr", $userEmail,
-//                        "cbaby@infoway.fr", "Reset my password", $this->renderView(
-//                        "security/resetPasswordEmail.html.twig", [
-//                        'token' => $token,
-//                        'username' => strtoupper($user->getUsername())
-//                        ]
-//                    ), 'text/html'
-//                );
-//
-//        // message flash dans la session
-//        (new Session())->getFlashBag()->add("message", "Merci de vérifier votre boîte mail, un mail contenant le lien pour réinitialiser votre mot de passe vous a été envoyé !");
-//
-//        return $this->redirectToRoute("user::password_forget");
-//
-//    }
-//
-//
-//    /**
-//     * Renvoie une vue permettant de reinitialisser son mot de passe
-//     *
-//     * @Route(path="/reset/password/{password_reset_token}", name="user::reset_password", methods="GET|POST")
-//     *
-//     * @param Request $request
-//     * @param UserPasswordEncoderInterface $passwordEncoder
-//     * @param User $user
-//     * @return Response
-//     * @throws Exception
-//     */
-//	public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, User $user): Response
-//    {
-//
-//        if($request->isMethod("POST"))
-//        {
-//            if(!empty($request->request->get("new_password")))
-//            {
-//
-//                // on rajoute le token dans le champ "password_reset_token"
-//                $user->setPassword($passwordEncoder->encodePassword($user, $request->get("new_password")));
-//
-//                // le token a été utilisé, on peut le supprimer
-//                $user->setPasswordResetToken("");
-//
-//                // on mets à jour la base de donnée
-//                $this->getDoctrine()->getManager()->flush();
-//
-//                // message flash dans la session
-//                (new Session())->getFlashBag()->add("message", "Votre mot de passe a bien été modifié ! Vous pouvez vous connecter <a href='". $this->generateUrl("user::login") ."'>içi</a>");
-//            }
-//            else
-//            {
-//                throw new Exception("Missing new_password parameter !");
-//            }
-//        }
-//
-//        return $this->render("security/resetPassword.html.twig");
-//
-//    }
-//
-//    /**
-//     * @Route(path="/registration/confirm/{registration_token}", name="user::registration_confirmation", methods="GET|POST")
-//     *
-//     * @param User $user
-//     * @return Response
-//     */
-//     public function registrationConfirm(User $user): Response
-//     {
-//
-//         // uncomment this if you want delete registration token on account confirmation
-//        /*$user->setRegistrationToken("");
-//
-//        $this->getDoctrine()->getManager()->flush();*/
-//
-//        return $this->render("security/confirmInscription.html.twig");
-//
-//     }
-//
-//
-//    /**
-//     * @Route(path="/users/list", name="user::showAllUsers")
-//     * @return Response
-//     */
-//    public function showAllUsers()
-//    {
-//
-//        $this->__manager = $this->getDoctrine()->getManager('default');
-//
-//        return $this->render(
-//            'user/user.showAll.html.twig', [
-//            'users' => $this->__manager->getRepository(User::class)->findAll()
-//        ]);
-//
-//    }
-//
-//
-//    /**
-//     * @Route(path="/user/{id}/permissions", name="user::showUserPermissions")
-//     * @return Response
-//     */
-//    public function showUserPermissions(User $user)
-//    {
-//
-//        $this->__manager = $this->getDoctrine()->getManager('default');
-//
-//        $permissionsHandler = new PermissionsHandler($this->__manager);
-//
-//        $userPermissions = $permissionsHandler->getUserPermissions($user, true);
-//        $userRolePermissions = $permissionsHandler->getUserRolePermissions($user, false);
-//
-//        $actions = $this->__manager->getRepository(Action::class)->findAll();
-//
-//        //dd($userRolePermissions, $userPermissions);
-//
-//        dump($userRolePermissions, $userPermissions);
-//
-//        return $this->render('user/user.editPermissions.html.twig', [
-//            'user' => (object) ['id' => $user->getId(), 'username' => $user->getUsername(), 'role' => $user->getRole()->getName()],
-//            'userPermissions' => $userPermissions,
-//            'rolePermissions' => $userRolePermissions,
-//            'actions' => $actions
-//        ]);
-//
-//    }
-//
-//
-//    /**
-//     * @Route(path="/edit/user/{id}/permissions", name="user::editUserPermissions", methods="POST")
-//     */
-//    public function editUserPermissions(User $user, Request $request)
-//    {
-//
-//        if($request->request->get('permissions') === null)
-//            throw new Exception(sprintf("Internal Error : Missing or invalid '%s' parameter !",'permissions'));
-//
-//        $permissions = json_decode($request->request->get('permissions'));
-//
-//        // before update
-//        //dump(sizeof($user->getPermissions()->getValues()));
-//
-//        $updateState = $this->updateUserPermissions($user, $permissions);
-//
-//        // after update
-//        //dd(sizeof($user->getPermissions()->getValues()));
-//
-//        return new JsonResponse([
-//            'status' => 200,
-//            'message' => "200 OK"
-//        ]);
-//
-//    }
-//
-//
-//    private function updateUserPermissions(User $user, array $permissions)
-//    {
-//
-//        $userPermissionsDefaultSize = sizeof($user->getPermissions()->getValues());
-//
-//        foreach ($permissions as $permission_json)
-//        {
-//
-//            $permission = $this->getDoctrine()->getManager('default')->getRepository(Permission::class)->findOneById($permission_json->__id);
-//
-//            if(!$permission_json->__state AND $user->getPermissions()->contains($permission))
-//                $user->removePermission($permission);
-//
-//            elseif ($permission_json->__state AND !$user->getPermissions()->contains($permission))
-//                $user->addPermission($permission);
-//
-//        }
-//
-//        if(($userPermissionsDefaultSize !== $user->getPermissions()->getValues()) )
-//            $this->getDoctrine()->getManager('default')->flush();
-//
-//        return true;
-//
-//    }
+    /**
+     * Renvoie une vue permettant de reinitialisser son mot de passe
+     *
+     * @Route(path="/reset/password/{password_reset_token}", name="user::resetPassword", methods="GET|POST")
+     *
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param EmailSenderService $emailSenderService
+     * @param EntityManagerInterface $entityManager
+     * @param UserRepository $userRepository
+     * @param string $password_reset_token
+     * @return Response
+     * @throws Exception
+     */
+	public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, EmailSenderService $emailSenderService, EntityManagerInterface $entityManager, UserRepository $userRepository, string $password_reset_token): Response
+    {
+
+        $user = $userRepository->findOneByPasswordResetToken($password_reset_token);
+
+        if($request->isMethod('POST'))
+        {
+
+            $userInfo = $request->request->get('user');
+            //dd($userInfo);
+
+            if($user)
+            {
+
+                if($userInfo['password'] !== $userInfo['password_confirm'])
+                {
+                    $error = "Les 2 mots de passe doivent être identique !";
+                }
+
+                // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+                elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
+                {
+                    $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+                }
+
+                else
+                {
+
+                    $this->updateUserPassword($user,$userInfo['password'], $passwordEncoder, true);
+
+                    $entityManager->flush();
+
+                    $passwordWasUpdated = true;
+                    //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
+                }
+
+            }
+
+            else
+            {
+                $tokenIsInvalid = true;
+                $error = "Désolé, ce lien n'est plus valide ! Cliquez <a href='" . $this->generateUrl('user::passwordForget') . "'>ici</a> pour saisir votre email afin de recevoir un nouveau lien pour réinitialiser votre mot de passe.";
+            }
+
+
+
+        }
+        else
+        {
+
+            // token not found or token is not valid
+            // send a new email which will contain new token
+            if(!$user OR !$this->userPasswordResetTokenIsValid($user))
+            {
+                $tokenIsInvalid = true;
+
+
+                if($user)
+                {
+                    $this->sendPasswordResetEmail($emailSenderService, $user);
+                    $error = "Désolé, ce lien n'est plus valide ! Si votre email est correcte, vous allez recevoir un nouveau lien dans quelques minutes.";
+                }
+
+                else
+                {
+                    $userNotFound = true;
+                    $error = "Désolé, ce lien n'est plus valide ! Cliquez <a href='" . $this->generateUrl('user::passwordForget') . "'>ici</a> pour saisir votre email afin de recevoir un nouveau lien pour réinitialiser votre mot de passe.";
+                }
+
+            }
+
+            dump($user);
+
+        }
+
+        return $this->render('user/user_login.html.twig', [
+            'page_title' => 'Réinitialisation du Mot de passe',
+            'form_title' => 'Réinitialisation du mot de passe',
+            'error' => $error ?? "",
+            'tokenIsInvalid' => $tokenIsInvalid ?? false,
+            'passwordWasUpdated' => $passwordWasUpdated ?? false,
+            'userNotFound' => $userNotFound ?? null
+        ]);
+      
+    }
+
+
+    /**
+     * @Route(path="/users/list", name="user::showAllUsers")
+     * @return Response
+     */
+    public function showAllUsers()
+    {
+
+        $this->__manager = $this->getDoctrine()->getManager('default');
+
+        return $this->render(
+            'user/user_show_all.html.twig', [
+            'users' => $this->__manager->getRepository(User::class)->findAll()
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/user/{id}/permissions", name="user::showUserPermissions")
+     * @return Response
+     */
+    public function showUserPermissions(User $user)
+    {
+
+        $this->__manager = $this->getDoctrine()->getManager('default');
+
+        $permissionsHandler = new PermissionsHandler($this->__manager);
+
+        $userPermissions = $permissionsHandler->getUserPermissions($user, true);
+        $userRolePermissions = $permissionsHandler->getUserRolePermissions($user, false);
+
+        $actions = $this->__manager->getRepository(Action::class)->findAll();
+
+        //dd($userRolePermissions, $userPermissions);
+
+        dump($userRolePermissions, $userPermissions);
+
+        return $this->render('user/user_edit_permissions.html.twig', [
+            'user' => (object) ['id' => $user->getId(), 'username' => $user->getUsername(), 'role' => $user->getRole()->getName()],
+            'userPermissions' => $userPermissions,
+            'rolePermissions' => $userRolePermissions,
+            'actions' => $actions
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/edit/user/{id}/permissions", name="user::editUserPermissions", methods="POST")
+     */
+    public function editUserPermissions(User $user, Request $request)
+    {
+
+        if($request->request->get('permissions') === null)
+            throw new Exception(sprintf("Internal Error : Missing or invalid '%s' parameter !",'permissions'));
+
+        $permissions = json_decode($request->request->get('permissions'));
+
+        // before update
+        //dump(sizeof($user->getPermissions()->getValues()));
+
+        $updateState = $this->updateUserPermissions($user, $permissions);
+
+        // after update
+        //dd(sizeof($user->getPermissions()->getValues()));
+
+        return new JsonResponse([
+            'status' => 200,
+            'message' => "200 OK"
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/create/user", name="user::createUser", methods={"POST"})
+     * @param Request $request
+     * @param TokenGeneratorService $tokenGeneratorService
+     * @param EmailVerificator $emailVerificator
+     * @param EmailSenderService $emailSenderService
+     * @throws Exception
+     */
+    public function createUser(Request $request, TokenGeneratorService $tokenGeneratorService, EmailVerificator $emailVerificator, EmailSenderService $emailSenderService)
+    {
+
+        $userInfo = $request->request->get('user');
+
+        dd($request->request);
+
+        // verification des données et insertions de l'utilisateurs en bdd
+
+        if(array_key_exists('email', $userInfo) AND $emailVerificator->isValidEmail($userInfo['email']))
+        {
+
+            $this->sendAccountConfirmationEmail($emailSenderService, $user);
+
+
+            // meessage flash de confirmation de création de l'utilisateur ( et envoie de l'email ?)
+            //$this->addFlash('message', "");
+
+
+        }
+        else
+            throw new \Exception(sprintf("Internal Error : user email is not valid or not found !"));
+
+        dd($request->request->get('user'));
+
+    }
+
+
+    /**
+     * @Route(path="/user/account/confirmation/{account_confirmation_token}", name="user::accountConfirmation", methods={"GET", "POST"},
+     *     requirements={"account_confirmation_token": "\w+"})
+     */
+    public function accountConfirmation(Request $request, string $account_confirmation_token, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    {
+
+        $user = $userRepository->findOneByAccountConfirmationToken($account_confirmation_token);
+
+        if($request->isMethod('POST') AND $user)
+        {
+
+            $userInfo = $request->request->get('user');
+
+            $error = $this->isUserPasswordIsValid($userInfo);
+
+            if($error === null)
+            {
+
+                $this->updateUserPassword($user, $userInfo['password'], $passwordEncoder);
+
+                $entityManager->flush();
+
+                $this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
+            }
+
+        }
+        else
+        {
+
+            if(!$user OR $user->getActivated() === true)
+            {
+                $error = true;
+            }
+
+        }
+
+        return $this->render('user/user_login.html.twig', [
+            'error' => $error ?? false,
+            'tokenIsValid' => $tokenIsValid,
+            'page_title' => 'Confirmation de votre compte',
+            'form_title' => 'Confirmation de votre compte',
+            'form_subtitle' => 'Choissisze votre mot de passe',
+        ]);
+
+    }
+
+
+    /**
+     * @Route(path="/cancel/password/reset/request/{password_reset_token}", name="user::cancelPasswordResetRequest")
+     */
+    public function cancelPasswordResetRequest(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, string $password_reset_token)
+    {
+
+        $tokenIsInvalid = true;
+        $user = $userRepository->findOneByPasswordResetToken($password_reset_token);
+
+        if($user)
+        {
+            $user->setPasswordResetToken(null)
+                 ->setRequestedPasswordAt(null);
+
+            $entityManager->flush();
+
+            $tokenIsInvalid = false;
+        }
+
+        return $this->render('user/cancel_password_reset_request.html.twig', [
+            'tokenIsInvalid' => $tokenIsInvalid
+        ]);
+
+    }
+
+
+    /**
+     * Réalise les vérifications de conformité du mot de passe de l'utilisateur
+     *
+     * @param $userInfo
+     * @return string|null
+     */
+    private function isUserPasswordIsValid($userInfo)
+    {
+
+        $error = null;
+
+        if($userInfo['password'] !== $userInfo['password_confirm'])
+        {
+            $error = "Les 2 mots de passe doivent être identique !";
+        }
+
+        // if password don't respect this rule : Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+        elseif(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $userInfo['password']))
+        {
+            $error = "Le mot de passe doit contenir minimum 8 caractères, 1 minuscules, 1 majuscules, 1 chiffres et 1 caractère speciale !";
+        }
+
+        return $error;
+
+    }
+
+
+    /**
+     * @param User $user
+     * @param array $permissions
+     * @return bool
+     */
+    private function updateUserPermissions(User $user, array $permissions)
+    {
+
+        $userPermissionsDefaultSize = sizeof($user->getPermissions()->getValues());
+
+        foreach ($permissions as $permission_json)
+        {
+
+            $permission = $this->getDoctrine()->getManager('default')->getRepository(Permission::class)->findOneById($permission_json->__id);
+
+            if(!$permission_json->__state AND $user->getPermissions()->contains($permission))
+                $user->removePermission($permission);
+
+            elseif ($permission_json->__state AND !$user->getPermissions()->contains($permission))
+                $user->addPermission($permission);
+
+        }
+
+        if(($userPermissionsDefaultSize !== $user->getPermissions()->getValues()) )
+            $this->getDoctrine()->getManager('default')->flush();
+
+        return true;
+
+    }
+
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws Exception
+     */
+    private function userPasswordResetTokenIsValid(User $user): bool
+    {
+        $date_diff = intval( (date_diff($user->getRequestedPasswordAt(), new \DateTime()))->format('%h') );
+
+        return $date_diff <= intval($this->getParameter('passwordResetTokenTimer'));
+    }
+
+
+    /**
+     * @param EmailSenderService $emailSenderService
+     * @param User $user
+     * @throws Exception
+     */
+    private function sendPasswordResetEmail(EmailSenderService $emailSenderService, User $user)
+    {
+
+        $tokenGenerator = new TokenGeneratorService();
+        $token = $tokenGenerator->generate(64);
+
+        $user->setPasswordResetToken($token)
+            ->setRequestedPasswordAt(new \DateTime());
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $emailSenderService->sendEmail($user->getEmail(), 'Modification du mot de passe' ,$this->renderView(
+            "emails/email_reset_password.html.twig", [
+            'password_reset_token' => $token,
+            'user' => $user->getLastName() . ' ' . $user->getFirstName()
+        ]),'text/html');
+
+    }
+
+
+    private function sendAccountConfirmationEmail(EmailSenderService $emailSenderService, User $user)
+    {
+
+        $tokenGeneratorService = new TokenGeneratorService();
+
+        $emailSenderService->sendEmail($user->getEmail(), 'Inscription Confirmation',$this->renderView(
+            "emails/email_account_confirmation.twig", [
+            'account_confirmation_token' => $tokenGeneratorService->generate(64),
+            'user' => $user->getLastName() . ' ' . $user->getFirstName()
+        ]),'text/html');
+
+    }
+
+
+    /**
+     * @param User $user
+     * @param string $password
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param bool $isPasswordForget
+     * @throws Exception
+     */
+    private function updateUserPassword(User $user, string $password, UserPasswordEncoderInterface $passwordEncoder, bool $isPasswordForget = false)
+    {
+
+        $user->setPassword($passwordEncoder->encodePassword($user, $password));
+
+        if($isPasswordForget)
+        {
+            $user->setPasswordResetToken(null)
+                ->setRequestedPasswordAt(null);
+        }
+        else
+        {
+            $user->setAccountConfirmationToken(null)
+                 ->setActivated(true)
+                 ->setAccountConfirmedAt(new \DateTime());
+        }
+        //$this->getDoctrine()->getManager('default')->flush();
+
+        //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
+
+    }
 
 
 }

@@ -3,13 +3,13 @@
 
 namespace App\Entity\Admin;
 
+
 use App\Entity\Customer\Site;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use \App\Entity\Customer\Role ;
-
+use \App\Entity\Customer\Role;
 
 
 /**
@@ -44,9 +44,13 @@ class User implements UserInterface
      */
     private $phoneNumber;
 
+    /**
+     * @ORM\Column(name="account_confirmation_token", type="string", length=255, nullable=true)
+     */
+    private $accountConfirmationToken;
 
     /**
-     * @ORM\Column(name="password_reset_tocket",type="string", length=255, nullable=true)
+     * @ORM\Column(name="password_reset_token",type="string", length=255, nullable=true)
      */
     private $passwordResetToken;
 
@@ -61,12 +65,17 @@ class User implements UserInterface
     private $createdAt;
 
     /**
+     * @ORM\Column(name="account_confirmed_at",type="datetime", length=255, nullable=true)
+     */
+    private $accountConfirmedAt;
+
+    /**
      * @ORM\Column(type="boolean", length=1)
      */
     private $activated;
 
     /**
-     * Many Users have Many Customers.
+     * Many Users have Many Groups.
      * @ORM\ManyToMany(targetEntity="Customer", inversedBy="users")
      * @ORM\JoinTable(name="users_customers")
      */
@@ -74,7 +83,7 @@ class User implements UserInterface
 
     /**
      * One user has many roles. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
      */
     private $userRoles;
 
@@ -85,7 +94,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * One user has many roles. This is the inverse side.
+     * Many Users have Many Groups.
      * @ORM\OneToMany(targetEntity="UserPermission", mappedBy="user")
      */
     private $permissions;
@@ -93,8 +102,7 @@ class User implements UserInterface
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user", cascade={"persist","remove"})
-     *
+     * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user")
      */
     private $sitesIds;
 
@@ -123,6 +131,7 @@ class User implements UserInterface
         $this->setCreatedAt(new \DateTime());
         $this->setActivated(0);
         $this->userRoles = new ArrayCollection();
+        $this->roles = new ArrayCollection();
 
     }
 
@@ -430,6 +439,30 @@ class User implements UserInterface
     public function setPerimeter(?Perimeter $perimeter): self
     {
         $this->perimeter = $perimeter;
+
+        return $this;
+    }
+
+    public function getAccountConfirmationToken(): ?string
+    {
+        return $this->accountConfirmationToken;
+    }
+
+    public function setAccountConfirmationToken(?string $accountConfirmationToken): self
+    {
+        $this->accountConfirmationToken = $accountConfirmationToken;
+
+        return $this;
+    }
+
+    public function getAccountConfirmedAt(): ?\DateTimeInterface
+    {
+        return $this->accountConfirmedAt;
+    }
+
+    public function setAccountConfirmedAt(\DateTimeInterface $accountConfirmedAt): self
+    {
+        $this->accountConfirmedAt = $accountConfirmedAt;
 
         return $this;
     }

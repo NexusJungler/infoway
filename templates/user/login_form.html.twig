@@ -1,0 +1,19 @@
+<div class="form-group form_item_container">
+    <input type="email" id="inputEmail" name="user[email]" {% if error is defined and error is not empty %} class="invalid" {% endif %} placeholder="Email" {% if last_username is defined %} value="{{ last_username }}" {% endif %} required>
+</div>
+
+<div class="form-group form_item_container">
+    <input type="password" id="user_password" name="user[password]" {% if error is defined and error is not empty %} class="invalid" {% endif %} placeholder="Mot de passe" required>
+</div>
+
+<div class="form-group form_submit_container form_item_container">
+    <button type="submit">Valider</button>
+</div>
+
+<div class="form-group from-group-memoriser ">
+    <input type="checkbox" name="user[_remember_me]"><span class="memoriser">Mémoriser</span>
+</div>
+
+<div class="form-group from-group-forget-pw">
+    <a href="{{ path('user::passwordForget') }}" class="forget_password_link">Mot de passe oublié ?</a>
+</div>

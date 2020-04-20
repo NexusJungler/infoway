@@ -1,0 +1,31 @@
+{% extends 'products.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('product-price') }}
+{% endblock %}
+
+{% block maincontent %}
+
+<section class="wrapper_tabcontent">
+    <article id="tab-products" class="tab-content current prouct-price-content">
+
+        <article class="display product-display ">
+            <div class="display-content">
+
+                <article class="display-btn">
+                    <p>Prodits : </p>
+                    <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
+                    <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                    <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                    <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
+                    <button type="button" class="tags-table">TAG</button>
+                </article>
+
+            </div>
+        </article >
+
+    </article>
+</section>
+
+{% endblock %}

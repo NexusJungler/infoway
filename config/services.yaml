@@ -7,9 +7,21 @@ parameters:
     doctrine_file_path: '%kernel.project_dir%/config/packages/doctrine.yaml'
     env_file_path: '%kernel.project_dir%/.env'
     logoDirectory: '%kernel.project_dir%/public/logo/'
+    uploadDirectory: '%kernel.project_dir%/public/upload/'
+    uploadAuthorizedMimeTypes:
+        image:
+            - jpeg
+            - png
+        video:
+            -
+        
     logoAuthorizedMimeTypes:
         - png
         - jpeg
+        
+    passwordResetTokenTimer: 1 # 1h
+    mailer_user: noreply@infoway.fr
+    mailer_password: Annesivy1974
 
 services:
     # default configuration for services in *this* file

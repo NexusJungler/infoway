@@ -47,13 +47,13 @@ class Form  {
         $('#create-user').validate({
             rules:{
                 Perimeters:{ required: true },
-                selectenseigne:{ required: true },
+                showenseignesites:{ required: true },
             },
             messages:{
                 Perimeters:{
                     required:"Veuillez sélectionner perimeters <br/>"
                 },
-                selectenseigne:{
+                showenseignesites:{
                     required:"Veuillez sélectionne une enseigne <br/>"
                 }
             },

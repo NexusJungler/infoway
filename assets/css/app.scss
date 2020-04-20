@@ -81,13 +81,13 @@ img {
 @import 'settings.scss';
 @import 'settings/create.scss';
 // @import 'settings/create_user.scss';
-@import 'settings/setting_user.scss';
+// @import 'settings/settings_user.scss';
 
 /** PROGRAMMING **/
 // @import 'programming.scss';
 
 /** MEDIA **/
-// @import 'media.scss';
+@import 'media.scss';
 
 /** INFO **/
 // @import 'info.scss';
