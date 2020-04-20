@@ -1,3 +1,2 @@
-import '../../css/product.scss';
-
+import '../css/products.scss';
 

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200413155608 extends AbstractMigration
+final class Version20200420124514 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -26,6 +26,7 @@ final class Version20200413155608 extends AbstractMigration
         $this->addSql('CREATE TABLE Country (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_9CCEF0FA5E237E06 (name), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE Customer (id INT AUTO_INCREMENT NOT NULL, country_id INT DEFAULT NULL, timezone_id INT DEFAULT NULL, name VARCHAR(60) NOT NULL, logo VARCHAR(60) NOT NULL, address VARCHAR(255) DEFAULT NULL, postal_code VARCHAR(60) DEFAULT NULL, city VARCHAR(255) NOT NULL, phone_number VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, UNIQUE INDEX UNIQ_784FEC5F5E237E06 (name), UNIQUE INDEX UNIQ_784FEC5FE48E9A13 (logo), INDEX IDX_784FEC5FF92F3E70 (country_id), INDEX IDX_784FEC5F3FE997DE (timezone_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE feature (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(60) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE ffmpeg_tasks (id INT AUTO_INCREMENT NOT NULL, customer_id INT NOT NULL, file_name VARCHAR(100) NOT NULL, file_type VARCHAR(15) NOT NULL, media_type VARCHAR(4) NOT NULL, registered DATETIME DEFAULT NULL, started DATETIME DEFAULT NULL, finished DATETIME DEFAULT NULL, errors LONGTEXT DEFAULT NULL, INDEX IDX_6DD9EBF59395C3F3 (customer_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE Perimeter (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, level INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE permission (id INT AUTO_INCREMENT NOT NULL, feature_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, INDEX IDX_E04992AA60E4B879 (feature_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE timezone (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_3701B2975E237E06 (name), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -37,6 +38,7 @@ final class Version20200413155608 extends AbstractMigration
         $this->addSql('ALTER TABLE Contact ADD CONSTRAINT FK_83DFDFA49395C3F3 FOREIGN KEY (customer_id) REFERENCES Customer (id)');
         $this->addSql('ALTER TABLE Customer ADD CONSTRAINT FK_784FEC5FF92F3E70 FOREIGN KEY (country_id) REFERENCES Country (id)');
         $this->addSql('ALTER TABLE Customer ADD CONSTRAINT FK_784FEC5F3FE997DE FOREIGN KEY (timezone_id) REFERENCES timezone (id)');
+        $this->addSql('ALTER TABLE ffmpeg_tasks ADD CONSTRAINT FK_6DD9EBF59395C3F3 FOREIGN KEY (customer_id) REFERENCES Customer (id)');
         $this->addSql('ALTER TABLE permission ADD CONSTRAINT FK_E04992AA60E4B879 FOREIGN KEY (feature_id) REFERENCES feature (id)');
         $this->addSql('ALTER TABLE User ADD CONSTRAINT FK_2DA1797777570A4C FOREIGN KEY (perimeter_id) REFERENCES Perimeter (id)');
         $this->addSql('ALTER TABLE users_customers ADD CONSTRAINT FK_42E34C0A76ED395 FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE');
@@ -45,9 +47,9 @@ final class Version20200413155608 extends AbstractMigration
         $this->addSql('ALTER TABLE users_permissions ADD CONSTRAINT FK_DA58F09DFED90CCA FOREIGN KEY (permission_id) REFERENCES permission (id)');
         $this->addSql('ALTER TABLE users_permissions ADD CONSTRAINT FK_DA58F09D9395C3F3 FOREIGN KEY (customer_id) REFERENCES Customer (id)');
         $this->addSql('ALTER TABLE users_permissions ADD CONSTRAINT FK_DA58F09D60E4B879 FOREIGN KEY (feature_id) REFERENCES feature (id)');
-        $this->addSql('ALTER TABLE user_roles ADD CONSTRAINT FK_54FCD59FA76ED395 FOREIGN KEY (user_id) REFERENCES User (id)');
+        $this->addSql('ALTER TABLE user_roles ADD CONSTRAINT FK_54FCD59FA76ED395 FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_roles ADD CONSTRAINT FK_54FCD59F9395C3F3 FOREIGN KEY (customer_id) REFERENCES Customer (id)');
-        $this->addSql('ALTER TABLE user_site ADD CONSTRAINT FK_13C2452DA76ED395 FOREIGN KEY (user_id) REFERENCES User (id)');
+        $this->addSql('ALTER TABLE user_site ADD CONSTRAINT FK_13C2452DA76ED395 FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_site ADD CONSTRAINT FK_13C2452D9395C3F3 FOREIGN KEY (customer_id) REFERENCES Customer (id)');
     }
 
@@ -58,6 +60,7 @@ final class Version20200413155608 extends AbstractMigration
 
         $this->addSql('ALTER TABLE Customer DROP FOREIGN KEY FK_784FEC5FF92F3E70');
         $this->addSql('ALTER TABLE Contact DROP FOREIGN KEY FK_83DFDFA49395C3F3');
+        $this->addSql('ALTER TABLE ffmpeg_tasks DROP FOREIGN KEY FK_6DD9EBF59395C3F3');
         $this->addSql('ALTER TABLE users_customers DROP FOREIGN KEY FK_42E34C09395C3F3');
         $this->addSql('ALTER TABLE users_permissions DROP FOREIGN KEY FK_DA58F09D9395C3F3');
         $this->addSql('ALTER TABLE user_roles DROP FOREIGN KEY FK_54FCD59F9395C3F3');
@@ -75,6 +78,7 @@ final class Version20200413155608 extends AbstractMigration
         $this->addSql('DROP TABLE Country');
         $this->addSql('DROP TABLE Customer');
         $this->addSql('DROP TABLE feature');
+        $this->addSql('DROP TABLE ffmpeg_tasks');
         $this->addSql('DROP TABLE Perimeter');
         $this->addSql('DROP TABLE permission');
         $this->addSql('DROP TABLE timezone');

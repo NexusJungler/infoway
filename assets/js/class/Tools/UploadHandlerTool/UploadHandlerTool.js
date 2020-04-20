@@ -8,9 +8,14 @@ class UploadHandlerTool extends Tool
     {
         super();
         this.__name = "UploadHandlerTool";
+        this.__allowed_file_types = ['image/bmp', 'image/x-windows-bmp', 'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/svg+xml', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime', 'video/x-quicktime'],
+        this.__total_files_allowed = 50;
+        this.__max_file_size = 524288000;
         this.__authorizedFiles = null;
         this.__filesToUpload = [];
         this.__mediaType = null;
+        this.__authorized_char_regex = /^[a-zA-Z0-9_.-\s*]*$/;
+        this.__errors = [];
     }
 
 
@@ -162,6 +167,9 @@ class UploadHandlerTool extends Tool
                     let fileMimeType = file.type;
                     //let fileExtension = fileName.split('.').pop();
                     let fileIsAccepted = this.isFileExtensionIsAccepted(fileMimeType);
+                    let fileSize = file.size;
+
+                    console.log(file); debugger
 
                     // don't duplicate file in upload list
                     if( $(`.upload-info table tbody tr[data-file='${fileName}']`).length < 1 )
@@ -181,6 +189,12 @@ class UploadHandlerTool extends Tool
 
                         else if(!fileIsAccepted)
                             html += `<td><span style='color: red;'>Ce type de fichier n'est pas accepté ! Il ne sera pas uploadé</span></td>`;
+
+                        else if(fileSize > this.__max_file_size)
+                            html += `<td><span style='color: red;'>Vous avez selectionné un fichier volumineux. Le temps de chargement pour un tel volume de données peut prendre un temps conséquent en fonction de votre connexion</span></td>`;
+
+                        else if(!this.__authorized_char_regex.test(fileName))
+                            html += `<td><span style='color: red;'>Le nom de ce fichier comporte un ou plusieurs caractère(s) non autorisé !</span></td>`;
 
                         else
                             html += `<td></td>`;

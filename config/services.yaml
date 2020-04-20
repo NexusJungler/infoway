@@ -24,24 +24,36 @@ parameters:
                 - image/jpeg
                 - image/png
                 - image/bmp
-                
+                - image/gif
+                - image/x-windows-bmp,
+                - image/pjpeg,
+                - image/svg+xml
+
             extension:
                 - .jpg
                 - .jpeg
                 - .png
                 - .bmp
-            
+                - .gif
+
         video:
             mime_type:
-                -
+                - video/* # aucune limitation
+                #- video/mp4,
+                #- video/avi,
+                #- video/x-matroska,
+                #- video/3gpp,
+                #- video/quicktime,
+                #- video/x-quicktime
             
             extension:
-                - video/* # aucune limitation
-                - application/vnd.openxmlformats-officedocument.presentationml.presentation # .pptx
+                -
+
             
         powerpoint:
             mime_type:
                 - application/vnd.ms-powerpoint # .ppt
+                - application/vnd.openxmlformats-officedocument.presentationml.presentation # .pptx
                 
             extension:
                 - .ppt

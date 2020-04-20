@@ -61,7 +61,7 @@ class UploadCron
 
         //$this->repository = new media_rep($this->getCustomerBase($customer));
         $this->repository = $this->entityManager->getRepository(Media::class);
-        $this->repository->setBase($this->getCustomerBase($this->customer));
+        //$this->repository->setBase($this->getCustomerBase($this->customer));
 
         $options = ['diff' => 'medias', 'them' => 'thematics', 'sync' => 'synchros'];
         $authorized_files = ['mp4', 'x-matroska', 'avi', 'x-quicktime', 'quicktime', 'bmp', 'png', 'jpg', 'jpeg'];
