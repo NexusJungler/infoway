@@ -584,8 +584,7 @@ class UserController extends AbstractController
             $newUserRoleToAddToModifiedUser->setCustomer($useCreatorRolesEntryFiltredByCustomerId[$userToCreateRoleEnseigneId]->getCustomer()) ;
             $newUserRoleToAddToModifiedUser->setRoleId( $roleToAddToModifyUser->getId() ) ;
             $newUserRoleToAddToModifiedUser->setUser($newUserEntity);
-
-            $handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId]->setRoleId($roleToAddToModifyUser->getId());
+            $newUserEntity->addUserRole($newUserRoleToAddToModifiedUser);
 
         }
 
@@ -610,7 +609,8 @@ class UserController extends AbstractController
                //On boucle sur le tableau des ids des sites souhaitant etre transmis a l user créé (renseignés dans le formulaire)
                 foreach( $siteIdInEnseigne as $newUserSiteId) {
                     // On verifit bien que le createur possede bien le site qu 'il souhaite transmettre en verifiant que l id du site qu il veut donner est bien presant dans le tableau de ses sites
-                    if(isset ( $userSiteEntries [ $newUserSiteId ]) ){
+                    if(! isset($userSiteEntries [ $newUserSiteId ])) throw new Error('You re not allowed to attributes some site') ;
+
                         //Si oui on cree l entité  qui correspondra a l entree dans la table de relation de la base admin qui precisera l id et le nom du customer correspondant a l entree du site souhaitant etre donné dans la base correspondante.
                         $creatorSiteEntry = $userSiteEntries [ $newUserSiteId ] ;
                         $newUserSiteEntry  = new UserSites();
@@ -619,7 +619,7 @@ class UserController extends AbstractController
                         $em->persist($newUserSiteEntry);
 
                         $newUserEntity->addSitesId($newUserSiteEntry);
-                    }
+
 
                 }
 
