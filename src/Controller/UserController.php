@@ -172,6 +172,10 @@ class UserController extends AbstractController
 
 
         $userToModifyFromDb = $userRepo->findOneById($id) ;
+        foreach($userToModifyFromDb->getCustomers() as $customer){
+            dump($customer);
+        }
+        dd($userToModifyFromDb);
         if( ! $userToModifyFromDb instanceof User ) throw new \Error('Impossible to find User to Modify') ;
 
         //Recuperation de l user en base
@@ -386,15 +390,17 @@ class UserController extends AbstractController
             if($userCreatorRoleForTHisCustomer->getLevel() > $roleToAddToModifyUser->getLevel() ) throw new Error('Creator not allowed to choose this role') ;
 
 
+
             if(! isset($handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId] ) ){
                 $handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId] = $newUserRoleToAddToModifiedUser = new UserRoles();
                 $newUserRoleToAddToModifiedUser->setCustomer($useCreatorRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId]->getCustomer()) ;
-                $newUserRoleToAddToModifiedUser->setRoleId( $roleToAddToModifyUser->getId() ) ;
-                $newUserRoleToAddToModifiedUser->setUser($userToModifyFromDb);
+           //     $newUserRoleToAddToModifiedUser->setRoleId( $roleToAddToModifyUser->getId() ) ;
+                $userToModifyFromDb->addUserRole($newUserRoleToAddToModifiedUser) ;
             }
 
 
             $handledUserRolesEntryFiltredByCustomerId[$userToModifyRoleEnseigneId]->setRoleId($roleToAddToModifyUser->getId());
+
 
         }
 

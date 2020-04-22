@@ -29,9 +29,6 @@ class CustomerCreationType extends AbstractType
                 ->add('address', TextType::class, [
 
                 ])
-                ->add('phoneNumber', TextType::class, [
-
-                ])
                 ->add('logoFile', FileType::class, [
                     'label' => 'Uploader un logo',
 

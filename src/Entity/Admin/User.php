@@ -83,7 +83,7 @@ class User implements UserInterface
 
     /**
      * One user has many roles. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserRoles", mappedBy="user", cascade={"persist"})
      */
     private $userRoles;
 
@@ -102,7 +102,7 @@ class User implements UserInterface
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user", cascade={"persist"})
      */
     private $sitesIds;
 
