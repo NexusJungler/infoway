@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CriterionList{% endblock %}
+
+{% block body %}
+    <h1>CriterionList</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ criterion_list.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ criterion_list.name }}</td>
+            </tr>
+            <tr>
+                <th>Multiple</th>
+                <td>{{ criterion_list.multiple ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ criterion_list.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('customer_criterion_list_index') }}">back to list</a>
+
+    <a href="{{ path('customer_criterion_list_edit', {'id': criterion_list.id}) }}">edit</a>
+
+    {{ include('customer_criterion_list/_delete_form.html.twig') }}
+{% endblock %}

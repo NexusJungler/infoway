@@ -53,7 +53,7 @@ Encore
     .addEntry('product_price', './assets/js/product/product_price.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
-    .splitEntryChunks()
+    .ssymfony server:stplitEntryChunks()
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
