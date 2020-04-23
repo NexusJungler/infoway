@@ -25,6 +25,13 @@ class Tag
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $color;
+
+
+
     public function getId(): ?int
     {
         return $this->id;

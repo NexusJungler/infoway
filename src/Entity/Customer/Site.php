@@ -68,13 +68,23 @@ class Site
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="Criterion", mappedBy="sites")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="sites")
+     * @ORM\JoinTable(name="sites_criterions")
+     *
      */
     private $criterions;
+
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
+     * @ORM\JoinTable(name="sites_tags")
+     */
+    private $tags;
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int

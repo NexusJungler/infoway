@@ -20,12 +20,21 @@ class Product
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="Criterion", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products")
+     * @ORM\JoinTable(name="products_criterions")
      */
     private $criterions;
 
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
+     * @ORM\JoinTable(name="products_tags")
+     */
+    private $tags;
+
     public function __construct() {
         $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int

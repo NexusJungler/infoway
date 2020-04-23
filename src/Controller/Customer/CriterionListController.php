@@ -33,13 +33,10 @@ class CriterionListController extends AbstractController
     public function new(Request $request): Response
     {
         $criterionList = new CriterionList();
-        $critere1 = new Criterion() ;
-        $critere2 = new Criterion() ;
-        $critere3 = new Criterion() ;
 
-        $criterionList->addCriterion($critere1);
-        $criterionList->addCriterion($critere2);
-        $criterionList->addCriterion($critere3);
+
+        $criterionList->addCriterion( new Criterion() );
+        $criterionList->addCriterion( new Criterion() );
 
         $form = $this->createForm(CriterionListType::class, $criterionList);
 
@@ -48,10 +45,21 @@ class CriterionListController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $criterionPositionInlist = 0 ;
             foreach($criterionList->getCriterions() as $criterion){
-                if ( $criterion->getName() === null ) $criterionList->removeCriterion($criterion) ;
+                if ( $criterion->getName() === null ) {
+                    $criterionList->removeCriterion($criterion) ;
+                } else{
+                    $criterionPositionInlist ++ ;
+                    $criterion->setPosition( $criterionPositionInlist ) ;
+
+                }
+
             }
+
+            $nbOfCriterionToAddInBase = count ( $criterionList->getCriterions()  ) ;
+            if( $nbOfCriterionToAddInBase < 2 ) throw new \Error('Minimum 2 criterions unreached') ;
+
 
             $entityManager = $this->getDoctrine()->getManager('kfc');
             $entityManager->persist($criterionList);

@@ -28,6 +28,11 @@ class Criterion
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="CriterionList", inversedBy="criterions")
@@ -36,20 +41,21 @@ class Criterion
     private $list;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", inversedBy="criterions")
-     * @ORM\JoinTable(name="criterions_products")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions")
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Site", inversedBy="criterions")
-     * @ORM\JoinTable(name="criterions_sites")
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions")
      */
     private $sites;
+
+
 
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->position = 1 ;
     }
 
     public function getId(): ?int
@@ -142,6 +148,18 @@ class Criterion
     public function setList(?CriterionList $list): self
     {
         $this->list = $list;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }
