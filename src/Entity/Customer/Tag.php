@@ -35,8 +35,20 @@ class Tag
      */
     private $color;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags")
+     */
+    private $products;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="sites")
+     */
+    private $sites;
 
+    public function __construct() {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +86,62 @@ class Tag
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            $product->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Site[]
+     */
+    public function getSites(): Collection
+    {
+        return $this->sites;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->addSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site)) {
+            $this->sites->removeElement($site);
+            $site->removeSite($this);
+        }
 
         return $this;
     }

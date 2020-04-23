@@ -15,6 +15,7 @@ class TagType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('color')
+            ->add('sites')
         ;
     }
 
