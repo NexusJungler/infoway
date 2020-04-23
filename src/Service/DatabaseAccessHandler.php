@@ -19,15 +19,23 @@ class DatabaseAccessHandler
 
     private EntityManagerInterface $__entityManager;
 
-    private ResultSetMapping $__rsm;
+    private string $__dsn;
+
+    private string $__serverVersion;
 
     private ArraySearchRecursiveService $__arraySearchRecursive;
 
-    public function __construct(ParameterBagInterface $parameterBagInterface, EntityManagerInterface $entityManager)
+    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $entityManager)
     {
-        $this->__parameterBag = $parameterBagInterface;
+        $this->__parameterBag = $parameterBag;
         $this->__entityManager = $entityManager;
-        $this->__rsm = new ResultSetMapping();
+
+        // if database info is registered as parameter (services.yaml)
+        //$this->__dsn = $parameterBag->get('db_driver') . "://" . $parameterBag->get('db_user') . ":" . $parameterBag->get('db_password') . "@" . $parameterBag->get('db_host') . ":" . $parameterBag->get('db_port');
+        //$this->__serverVersion = $parameterBag->get('db_version');
+
+        $this->__dsn = "mysql://root:root@localhost:3306";
+        $this->__serverVersion = "5.7";
         $this->__arraySearchRecursive = new ArraySearchRecursiveService();
     }
 
@@ -59,24 +67,37 @@ class DatabaseAccessHandler
     {
 
         $envVariables = DotEnvParser::envToArray($this->__parameterBag->get('env_file_path'));
-
         $databaseAccessUrlName = 'DATABASE_'. strtoupper($databaseName) . '_URL';
 
         if(!array_key_exists($databaseAccessUrlName, $envVariables))
         {
 
-            $databaseAccessUrlName  = $databaseAccessUrlName. "=mysql://root:root@localhost:3306/" . $databaseName . "?serverVersion=5.7";
+            // check if the first character is number
+            // if yes, change it, because of .env don't accept that in first position of variable name
+            if(is_numeric($databaseName[0]) !== false)
+            {
+
+                if(!$this->replaceNumberByCardinal($databaseName[0]))
+                    throw new \Exception(sprintf("Error : Attempt to get cardinal value of '%s' but its cardinal value cannot be found !", $databaseName[0]));
+
+                $temp = $this->replaceNumberByCardinal(intval($databaseName[0])) . substr($databaseName, 1);
+
+                $url = strtoupper($temp . '_DATABASE_URL') . "=" . $this->__dsn . "/" . $databaseName . "?serverVersion=" . $this->__serverVersion;
+            }
+
+            else
+                $url = strtoupper($databaseName . '_DATABASE_URL') . "=" . $this->__dsn . "/" . $databaseName . "?serverVersion=" . $this->__serverVersion;
 
             $file_content = file_get_contents($this->__parameterBag->get('env_file_path'));
 
-            $file_content .= PHP_EOL . $databaseAccessUrlName;
+            $file_content .= PHP_EOL . $url;
 
             if(!is_writable($this->__parameterBag->get('env_file_path')))
                 throw new CannotWriteFileException(sprintf("Error : The '%s' file is not writable !", $this->__parameterBag->get('env_file_path')));
 
             file_put_contents($this->__parameterBag->get('env_file_path'), $file_content);
 
-            $this->addConnexionInDoctrineFile($databaseName, 'DATABASE_'. strtoupper($databaseName) . '_URL');
+            $this->addConnexionInDoctrineFile($databaseName, $databaseAccessUrlName);
 
         }
 
