@@ -21,8 +21,8 @@
                 <td>{{ tag.name }}</td>
                 <td>{{ tag.color }}</td>
                 <td>
-                    <a href="{{ path('customer_tag_show', {'id': tag.id}) }}">show</a>
-                    <a href="{{ path('customer_tag_edit', {'id': tag.id}) }}">edit</a>
+                    <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
+                    <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('customer_tag_new') }}">Create new</a>
+    <a href="{{ path('tags_new') }}">Create new</a>
 {% endblock %}

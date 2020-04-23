@@ -26,6 +26,11 @@ class Tag
     private $name;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $color;
@@ -45,6 +50,18 @@ class Tag
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

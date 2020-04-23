@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Customer;
+namespace App\Controller;
 
 use App\Entity\Customer\Tag;
 use App\Form\Customer\TagType;
@@ -20,7 +20,7 @@ class TagController extends AbstractController
      */
     public function index(TagsRepository $tagsRepository): Response
     {
-        return $this->render('customer/tag/index.html.twig', [
+        return $this->render('tags/index.html.twig', [
             'tags' => $tagsRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class TagController extends AbstractController
             return $this->redirectToRoute('tags_index');
         }
 
-        return $this->render('customer/tag/new.html.twig', [
+        return $this->render('tags/new.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class TagController extends AbstractController
      */
     public function show(Tag $tag): Response
     {
-        return $this->render('customer/tag/show.html.twig', [
+        return $this->render('tags/show.html.twig', [
             'tag' => $tag,
         ]);
     }
@@ -72,7 +72,7 @@ class TagController extends AbstractController
             return $this->redirectToRoute('tags_index');
         }
 
-        return $this->render('customer/tag/edit.html.twig', [
+        return $this->render('tags/edit.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);
