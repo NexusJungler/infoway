@@ -66,6 +66,13 @@ class Site
 
     private $customer ;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Devise")
+     * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
+     */
+    private $devise;
+
     /**
      * Many Groups have Many Users.
      * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="sites")
@@ -81,6 +88,8 @@ class Site
      *
      */
     private $tags;
+
+
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -251,6 +260,18 @@ class Site
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
+
+        return $this;
+    }
+
+    public function getDeviseId(): ?int
+    {
+        return $this->deviseId;
+    }
+
+    public function setDeviseId(int $deviseId): self
+    {
+        $this->deviseId = $deviseId;
 
         return $this;
     }
