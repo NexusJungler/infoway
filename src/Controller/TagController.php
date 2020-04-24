@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\User;
+use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
 use App\Form\Customer\TagType;
 use App\Repository\Customer\TagsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +60,14 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $sitesSelected = $tag->getSites() ;
+
+            foreach($sitesSelected as $siteSelected){
+                if ( ! in_array ($siteSelected , $sitesPossessedByCustomer) ) throw new \Error('One site is not possessed ByUser, impossible to affect tag') ;
+            }
+            if( $sitesSelected->count() < 1 ) throw new \Error('You need to affect minimum one site to the tag created') ;
+
             $customerManager->persist($tag);
             $customerManager->flush();
 
@@ -83,14 +93,34 @@ class TagController extends AbstractController
     /**
      * @Route("/{id}/edit", name="tags_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Tag $tag): Response
+    public function edit(Request $request, Tag $tag, SessionInterface $session): Response
     {
 
-        $form = $this->createForm(TagType::class, $tag);
+        $currentCustomer = $session->get('current_customer') ;
+        $currentUser = $session->get('user') ;
+
+        if( ! $currentCustomer instanceof Customer ) throw new \Error('invalid Customer') ;
+        if( ! $currentUser instanceof User ) throw new \Error('invalid User') ;
+
+        $customerManager = $this->getDoctrine()->getManager($currentCustomer->getName()) ;
+        $customerSiteRepo = $customerManager->getRepository(Site::class) ;
+
+        $sitesAffectedToTag  =  $tag->getSites()->getValues();
+        $datasToPassToTagForm = ['sites' => $sitesAffectedToTag ] ;
+
+        $form = $this->createForm(TagType::class, $tag, $datasToPassToTagForm );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            $sitesSelected = $tag->getSites() ;
+
+            foreach($sitesSelected as $siteSelected){
+                if ( ! in_array ($siteSelected , $sitesAffectedToTag) ) throw new \Error('One site was not affected , impossible to modify tag') ;
+            }
+            if( $sitesSelected->count() < 1 ) throw new \Error('You need to affect minimum one site to the tag created') ;
+
+            $customerManager->flush();
 
             return $this->redirectToRoute('tags_index');
         }

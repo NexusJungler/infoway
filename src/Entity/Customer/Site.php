@@ -47,7 +47,7 @@ class Site
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private $observations;
 
     /**
      * @ORM\Column(name="country_id",type="integer", nullable=true)
@@ -153,17 +153,6 @@ class Site
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getCountryId(): ?int
     {

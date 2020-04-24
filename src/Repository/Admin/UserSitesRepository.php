@@ -7,6 +7,8 @@ use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
@@ -47,6 +49,38 @@ class UserSitesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function getSitesByIdsAndCustomerName(Collection $sites , Customer $customer, User $user){
+
+        $sitesEntities = $sites->filter( function( $site ) {
+            return $site instanceof Site ;
+        }) ;
+        $sitesIds = $sitesEntities->map( function( $site ){
+            return $site->getId() ;
+        } ) ;
+
+//        $siteIds->filter( function() )
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.siteId IN (:siteIds)')
+            ->andWhere('u.customer = :customer')
+            ->andWhere('u.user = :user')
+            ->setParameter('siteIds', $sitesIds->toArray())
+            ->setParameter('customer',$customer)
+            ->setParameter('user',$user)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getSitesIdsByIdsAndCustomerName(Collection $sites , Customer $customer, User $user){
+
+    $siteEntries = $this->getSitesByIdsAndCustomerName($sites, $customer, $user ) ;
+
+    return array_map( function( $siteEntry ){
+        return $siteEntry->getSiteId() ;
+    }, $siteEntries) ;
+
     }
     // /**
     //  * @return UserSites[] Returns an array of UserSites objects
