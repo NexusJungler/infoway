@@ -132,6 +132,7 @@ class User implements UserInterface
         $this->setActivated(0);
         $this->userRoles = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->userSites = new ArrayCollection();
 
     }
 
@@ -492,6 +493,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userRole->getUser() === $this) {
                 $userRole->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserSites[]
+     */
+    public function getUserSites(): Collection
+    {
+        return $this->userSites;
+    }
+
+    public function addUserSite(UserSites $userSite): self
+    {
+        if (!$this->userSites->contains($userSite)) {
+            $this->userSites[] = $userSite;
+            $userSite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserSite(UserSites $userSite): self
+    {
+        if ($this->userSites->contains($userSite)) {
+            $this->userSites->removeElement($userSite);
+            // set the owning side to null (unless already changed)
+            if ($userSite->getUser() === $this) {
+                $userSite->setUser(null);
             }
         }
 

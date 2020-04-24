@@ -276,6 +276,30 @@ class Site
         return $this;
     }
 
+    public function getObservations(): ?string
+    {
+        return $this->observations;
+    }
+
+    public function setObservations(?string $observations): self
+    {
+        $this->observations = $observations;
+
+        return $this;
+    }
+
+    public function getDevise(): ?Devise
+    {
+        return $this->devise;
+    }
+
+    public function setDevise(?Devise $devise): self
+    {
+        $this->devise = $devise;
+
+        return $this;
+    }
+
 
 
 
