@@ -104,7 +104,7 @@ class User implements UserInterface
      * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="UserSites", mappedBy="user", cascade={"persist"})
      */
-    private $sitesIds;
+    private $userSites;
 
     private $sites;
 

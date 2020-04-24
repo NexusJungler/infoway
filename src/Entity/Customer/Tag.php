@@ -36,12 +36,12 @@ class Tag
     private $color;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags", cascade={"persist"})
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Site", mappedBy="sites")
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="tags", cascade={"persist"})
      */
     private $sites;
 
@@ -128,9 +128,10 @@ class Tag
 
     public function addSite(Site $site): self
     {
+
         if (!$this->sites->contains($site)) {
             $this->sites[] = $site;
-            $site->addSite($this);
+            $site->addTag($this);
         }
 
         return $this;
@@ -140,10 +141,13 @@ class Tag
     {
         if ($this->sites->contains($site)) {
             $this->sites->removeElement($site);
-            $site->removeSite($this);
+            $site->removeTag($this);
         }
 
         return $this;
     }
+
+
+
 
 }

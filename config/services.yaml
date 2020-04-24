@@ -67,3 +67,5 @@ services:
                 #                entity_manager: custom
                 # method attribute is optional
               method: initializeSites
+
+    Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'

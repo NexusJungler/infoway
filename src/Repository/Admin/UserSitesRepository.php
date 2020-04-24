@@ -3,6 +3,7 @@
 namespace App\Repository\Admin;
 
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -35,6 +36,17 @@ class UserSitesRepository extends ServiceEntityRepository
 
         return ['customer' => $customer , 'sites' => $allSitesReceived] ;
 
+    }
+
+    public function getSitesByUserAndCustomer(User $user, Customer $customer){
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.user = :user')
+            ->andWhere('u.customer = :customer')
+            ->setParameter('user', $user->getId())
+            ->setParameter('customer', $customer->getId())
+            ->getQuery()
+            ->getResult()
+            ;
     }
     // /**
     //  * @return UserSites[] Returns an array of UserSites objects

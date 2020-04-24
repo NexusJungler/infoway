@@ -76,8 +76,9 @@ class Site
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="sites",cascade={"persist"})
      * @ORM\JoinTable(name="sites_tags")
+     *
      */
     private $tags;
 
@@ -248,6 +249,7 @@ class Site
 
     public function addTag(Tag $tag): self
     {
+
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
         }

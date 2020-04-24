@@ -18,7 +18,7 @@ class CriterionListType extends AbstractType
             ->add('name')
             ->add('multiple')
             ->add('description')
-            ->add('criterions', CollectionType::class, array(
+            ->add('tags', CollectionType::class, array(
                 'entry_type' => CriterionType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

@@ -2,12 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin\Customer;
+use App\Entity\Admin\User;
+use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
 use App\Form\Customer\TagType;
 use App\Repository\Customer\TagsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,16 +35,31 @@ class TagController extends AbstractController
     /**
      * @Route("/new", name="tags_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SessionInterface $session, Profiler $profiler): Response
     {
-        $tag = new Tag();
-        $form = $this->createForm(TagType::class, $tag);
+
+        $tag = new Tag() ;
+        $currentCustomer = $session->get('current_customer') ;
+        $currentUser = $session->get('user') ;
+
+
+        if( ! $currentCustomer instanceof Customer ) throw new \Error('invalid Customer') ;
+        if( ! $currentUser instanceof User ) throw new \Error('invalid User') ;
+
+        $customerManager = $this->getDoctrine()->getManager($currentCustomer->getName()) ;
+        $customerSiteRepo = $customerManager->getRepository(Site::class) ;
+
+
+        $sitesPossessedByCustomer =  $customerSiteRepo->getSitesByUserAndCustomer($currentUser,$currentCustomer) ;
+        $datasToPassToTagForm = ['sites' =>$sitesPossessedByCustomer ] ;
+
+        $form = $this->createForm(TagType::class, $tag , ['sites' => $datasToPassToTagForm]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($tag);
-            $entityManager->flush();
+            $customerManager->persist($tag);
+            $customerManager->flush();
 
             return $this->redirectToRoute('tags_index');
         }
@@ -63,6 +85,7 @@ class TagController extends AbstractController
      */
     public function edit(Request $request, Tag $tag): Response
     {
+
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
 

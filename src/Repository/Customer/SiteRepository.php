@@ -2,7 +2,12 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Admin\Customer;
+use App\Entity\Admin\User;
+use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
+use App\Repository\Admin\UserSitesRepository;
+use Cassandra\Custom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -14,11 +19,26 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class SiteRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private UserSitesRepository $userSiteRepo ;
+
+    public function __construct(ManagerRegistry $registry, UserSitesRepository $userSiteRepo)
     {
+
+        $this->userSiteRepo = $userSiteRepo ;
         parent::__construct($registry, Site::class);
     }
 
+    public function getSitesByUserAndCustomer(User $user, Customer $customer){
+
+        $userSiteEntriesForCustomer = $this->userSiteRepo->getSitesByUserAndCustomer($user, $customer) ;
+
+        $siteIdsInCustomer = array_map(function(UserSites $siteEntry){
+            return $siteEntry->getSiteId() ;
+        }, $userSiteEntriesForCustomer) ;
+
+        return $this->findBy(['id' => $siteIdsInCustomer]) ;
+
+    }
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */
