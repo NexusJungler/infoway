@@ -8,14 +8,58 @@ class UploadHandlerTool extends Tool
     {
         super();
         this.__name = "UploadHandlerTool";
-        this.__allowed_file_types = ['image/bmp', 'image/x-windows-bmp', 'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/svg+xml', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime', 'video/x-quicktime'],
+
+        // W3C authors recommend to specify both MIME-types and corresponding extensions in input type file "accept" attribute
+        // @see : https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
+        this.__authorizedFiles = {
+
+            image: [
+                'image/jpg', 'image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/x-windows-bmp', 'image/pjpeg', 'image/svg+xml',
+                '.jpg', '.jpeg', '.png', '.bmp', '.gif',
+            ],
+
+            video: [
+                'video/*', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime', 'video/x-quicktime'
+            ],
+
+            powerpoint: [
+                'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'ppt', 'pptx'
+            ],
+
+            pdf: [
+               'pdf', 'application/pdf'
+            ],
+
+            word: [
+                'application/msword', '.doc', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'
+            ],
+
+        };
+
+        this.__uploadMediaType = $('.main-media').data('media_displayed');
+
         this.__total_files_allowed = 50;
         this.__max_file_size = 524288000;
-        this.__authorizedFiles = null;
         this.__filesToUpload = [];
-        this.__mediaType = null;
         this.__authorized_char_regex = /^[a-zA-Z0-9_.-\s*]*$/;
         this.__errors = [];
+    }
+
+
+    onPageLoadAddFilterOnFileInput(active)
+    {
+
+        if(active)
+        {
+            $( () => {
+
+                $(".uploadbtn").attr("accept", this.__authorizedFiles[this.__uploadMediaType]);
+
+            } )
+        }
+
+        return this;
+
     }
 
 
@@ -70,84 +114,32 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
-    onPageLoadGetFilesAuthorizedExtensions(active)
-    {
-
-        // if tool is actived
-        if(active)
-        {
-
-            this.__mediaType = $('.main-media').data('media_displayed');
-
-            $.ajax({
-               type: 'get',
-               url: `/get/${this.__mediaType}/authorized/extensions`,
-            })
-
-                .done( (extensions) => {
-
-                    console.table(extensions);
-                    
-                    if(Object.keys(extensions).length > 0)
-                    {
-                        this.__authorizedFiles = extensions.mime_type.join(', ');
-                        $("input[type='file']#uploadmedia").attr('accept', extensions.mime_type.join(', ') + ', ' + extensions.extension.join(', '));
-                    }
-
-                    else
-                    {
-                        this.__authorizedFiles = [];
-                        $("input[type='file']#uploadmedia").attr('accept', '*/*');
-                    }
-
-
-
-                } )
-
-                .fail( (errorType, errorStatus, errorThrown) => {
-
-                    throw new Error(errorType);
-
-                } );
-        }
-
-        return this;
-
-    }
-
     isFileExtensionIsAccepted(mime_type)
     {
-        if(this.__authorizedFiles.length > 0)
-            return this.__authorizedFiles.indexOf(mime_type) !== -1;
-
-        return true;
+        // search mime_type in authorized extension using upload current tab (image, video, video synchro, ...)
+        return this.__authorizedFiles[this.__uploadMediaType].indexOf(mime_type) !== -1;
     }
 
     isFileIsAlreadyUploaded(file)
     {
-        return false;
-        /*return new Promise( (resolve, reject) => {
+
+        return new Promise( (resolve, reject) => {
 
             $.ajax({
                 type: 'post',
                 url: '/file/is/uploaded',
-                data: { file: file },
-                async: false
+                data: { file: file }
             })
 
-                .done( (response) => {
+            .done( (response) => {
+                resolve(parseInt(response) === 0);
+            } )
 
-                    resolve(parseInt(response) === 0) ;
+            .fail( (errorType, errorStatus, errorThrown) => {
+                reject(new Error(errorType));
+            } );
 
-                } )
-
-                .fail( (errorType, errorStatus, errorThrown) => {
-
-                    reject(new Error(errorType)) ;
-
-                } );
-
-        } );*/
+        } );
 
     }
 
@@ -174,7 +166,6 @@ class UploadHandlerTool extends Tool
                     // don't duplicate file in upload list
                     if( $(`.upload-info table tbody tr[data-file='${fileName}']`).length < 1 )
                     {
-                        //console.log("azaz2222222222222"); debugger
 
                         const fileIsAlreadyUploaded = await this.isFileIsAlreadyUploaded(fileName);
 
@@ -205,7 +196,7 @@ class UploadHandlerTool extends Tool
                         if(fileIsAccepted && !fileIsAlreadyUploaded)
                         {
 
-                            this.__filesToUpload.push( {index: index, name: fileName, file: file, media_type: this.__mediaType} );
+                            this.__filesToUpload.push( {index: index, name: fileName, file: file, media_type: this.__uploadMediaType} );
 
                             $("<tr>", {
                                 id: `upload_${index}`
@@ -403,9 +394,9 @@ class UploadHandlerTool extends Tool
     enable()
     {
         super.enable();
-        this.onClickOnUploadButtonShowModal(true)
+        this.onPageLoadAddFilterOnFileInput(true)
+            .onClickOnUploadButtonShowModal(true)
             .onClickOnModalCloseButtonsCloseModal(true)
-            .onPageLoadGetFilesAuthorizedExtensions(true)
             .onFileSelectAddFileInList(true)
             .onClickOnStartUploadButtonStartUpload(true)
             .onClickOnNextButtonShowMediaInfosEditContainer(true)
@@ -417,9 +408,9 @@ class UploadHandlerTool extends Tool
     {
         super.disable();
         // call function with 'false' for remove events (if event was applied on DOM element by function)
-        this.onClickOnUploadButtonShowModal(false)
+        this.onPageLoadAddFilterOnFileInput(false)
+            .onClickOnUploadButtonShowModal(false)
             .onClickOnModalCloseButtonsCloseModal(false)
-            .onPageLoadGetFilesAuthorizedExtensions(false)
             .onFileSelectAddFileInList(false)
             .onClickOnStartUploadButtonStartUpload(false)
             .onClickOnNextButtonShowMediaInfosEditContainer(false)

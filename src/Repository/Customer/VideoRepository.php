@@ -3,10 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Video;
-use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,19 +12,11 @@ use Doctrine\Persistence\ObjectManager;
  * @method Video[]    findAll()
  * @method Video[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VideoRepository extends ServiceEntityRepository implements RepositoryInterface
+class VideoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Video::class);
-    }
-
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**

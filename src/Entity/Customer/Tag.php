@@ -25,6 +25,16 @@ class Tag
      */
     private $name;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Media", mappedBy="tags")
+     */
+    private $media;
+
+    public function __construct()
+    {
+        $this->media = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,6 +48,34 @@ class Tag
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            $medium->removeTag($this);
+        }
 
         return $this;
     }

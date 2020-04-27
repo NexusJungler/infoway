@@ -2,20 +2,20 @@
 
 namespace App\Entity\Customer;
 
-use App\Entity\Customer\Image;
-use App\Entity\Customer\Video;
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
-
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video" })
  */
 class Media
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,12 +26,7 @@ class Media
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $fileName;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $type;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,88 +34,70 @@ class Media
     private $size;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at", options={"default": "CURRENT_TIMESTAMP"})
      */
-    private $uploaded_at;
+    private $createdAt;
 
     /**
-     * NOTE:
-     *      This is not a mapped field of entity metadata, just a simple property that will not stored in db
-     *
-     *      'mapping' is referencing to data in vich config file (config/packages/vich_uploader.yaml)
-     *
-     *      'fileNameProperty' is referencing to this entity property that will contain the name of the uploaded file
-     *
-     *       'size' is referencing to this entity property that will contain the size of the uploaded file
-     *
-     *       'mimeType' is referencing to this entity property that will contain the type of the uploaded file
-     *
-     * @Vich\UploadableField(mapping="mediaFile", fileNameProperty="fileName", size="size", mimeType="type")
-     *
-     * @var File
+     * @ORM\Column(type="datetime", name="diffusion_start" ,nullable=false)
      */
-    private $mediaFile;
+    private $diffusionStart;
 
     /**
-     * @ORM\OneToOne(targetEntity="Video", mappedBy="media", cascade={"persist", "remove"})
+     * @ORM\Column(type="datetime", name="diffusion_end" ,nullable=true)
      */
-    private $video;
+    private $diffusionEnd;
 
     /**
-     * @ORM\OneToOne(targetEntity="Image", mappedBy="media", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", name="ratio", length=255)
      */
-    private $image;
+    private $ratio;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $extension;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $height;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $width;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media")
+     */
+    private $tags;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Product", inversedBy="media")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+        $this->tags = new ArrayCollection();
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFileName(): ?string
+    public function getName(): ?string
     {
-        return $this->fileName;
+        return $this->name;
     }
 
-    public function setFileName(string $fileName): self
+    public function setName(string $name): self
     {
-        $this->fileName = $fileName;
-
-        return $this;
-    }
-
-
-    public function getMediaFile(): File
-    {
-        return $this->mediaFile;
-    }
-
-
-    public function setMediaFile(File $mediaFile): self
-    {
-        $this->mediaFile = $mediaFile;
-
-        if($this->mediaFile instanceof UploadedFile)
-        {
-
-            $this->uploaded_at = new \DateTime('now');
-            $this->setSize($mediaFile->getSize());
-
-            $type = explode('/', $mediaFile->getMimeType())[0];
-            $this->setType($type);
-        }
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
+        $this->name = $name;
 
         return $this;
     }
@@ -137,47 +114,137 @@ class Media
         return $this;
     }
 
-    public function getUploadedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->uploaded_at;
+        return $this->createdAt;
     }
 
-    public function setUploadedAt(\DateTimeInterface $uploaded_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->uploaded_at = $uploaded_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getVideo(): ?Video
+    public function getDiffusionStart(): ?\DateTimeInterface
     {
-        return $this->video;
+        return $this->diffusionStart;
     }
 
-    public function setVideo(Video $video): self
+    public function setDiffusionStart(?\DateTimeInterface $diffusionStart): self
     {
-        $this->video = $video;
+        $this->diffusionStart = $diffusionStart;
 
-        // set the owning side of the relation if necessary
-        if ($video->getMedia() !== $this) {
-            $video->setMedia($this);
+        return $this;
+    }
+
+    public function getDiffusionEnd(): ?\DateTimeInterface
+    {
+        return $this->diffusionEnd;
+    }
+
+    public function setDiffusionEnd(?\DateTimeInterface $diffusionEnd): self
+    {
+        $this->diffusionEnd = $diffusionEnd;
+
+        return $this;
+    }
+
+    public function getRatio(): ?string
+    {
+        return $this->ratio;
+    }
+
+    public function setRatio(string $ratio): self
+    {
+        $this->ratio = $ratio;
+
+        return $this;
+    }
+
+    public function getExtension(): ?string
+    {
+        return $this->extension;
+    }
+
+    public function setExtension(string $extension): self
+    {
+        $this->extension = $extension;
+
+        return $this;
+    }
+
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(int $height): self
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    public function setWidth(int $width): self
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
         }
 
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function removeTag(Tag $tag): self
     {
-        return $this->image;
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
+
+        return $this;
     }
 
-    public function setImage(Image $image): self
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
     {
-        $this->image = $image;
+        return $this->products;
+    }
 
-        // set the owning side of the relation if necessary
-        if ($image->getMedia() !== $this) {
-            $image->setMedia($this);
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
         }
 
         return $this;

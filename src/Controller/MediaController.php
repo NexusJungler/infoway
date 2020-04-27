@@ -8,6 +8,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Synchro;
 use App\Repository\Admin\CustomerRepository;
+use App\Repository\Customer\MediaRepository;
 use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
 use App\Service\SessionManager;
@@ -40,30 +41,6 @@ class MediaController extends AbstractController
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $media_displayed // will be used by js for get authorized extensions for upload
         ]);
-
-    }
-
-
-    /**
-     * Return an json response which will contain files authorised extensions for upload
-     *
-     * @Route(path="/get/{file_type}/authorized/extensions", name="media::getFilesAuthorized", methods={"GET"},
-     *     requirements={"file_type": "[a-z_]+"})
-     * @param string $file_type
-     * @return JsonResponse
-     */
-    public function getFilesAuthorized(string $file_type): JsonResponse
-    {
-
-        $fileAuthorizedInfos = [];
-
-        if(array_key_exists($file_type, $this->getParameter('uploadAuthorizedMimeTypes')))
-            //$fileExtensions['mime_types'] = $this->getParameter('uploadAuthorizedMimeTypes')[$file_type];
-            $fileAuthorizedInfos = $this->getParameter('uploadAuthorizedMimeTypes')[$file_type];
-
-        dump($this->getParameter('uploadAuthorizedMimeTypes'), array_key_exists($file_type, $this->getParameter('uploadAuthorizedMimeTypes')), $fileAuthorizedInfos);
-
-        return new JsonResponse( $fileAuthorizedInfos );
 
     }
 
@@ -120,16 +97,13 @@ class MediaController extends AbstractController
      * Return true (0) if file already exist in upload directory else false (1)
      *
      * @Route(path="/file/is/uploaded", name="media::fileIsAlreadyUploaded", methods={"POST"})
+     * @param Request $request
+     * @param MediaRepository $mediaRepository
+     * @return Response
      */
-    public function fileIsAlreadyUploaded(Request $request): Response
+    public function fileIsAlreadyUploaded(Request $request, MediaRepository $mediaRepository): Response
     {
-
-        $response = 1; // false
-
-        if(file_exists($this->getParameter('upload_dir') . '/' . $request->request->get('file')))
-            $response = 0; // true
-
-        return new Response($response);
+        return new Response( (!$mediaRepository->findOneByName($request->request->get('file'))) ? 1 : 0 );
     }
 
 
