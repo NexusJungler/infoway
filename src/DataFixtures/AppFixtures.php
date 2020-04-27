@@ -53,7 +53,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
         $this->loadTimeZones($manager);
         $this->loadCountries($manager);
         $this->loadCustomers($manager);
-        $this->loadUsers($manager);
+        //$this->loadUsers($manager);
 
         /***      Datas creation end      ***/
 

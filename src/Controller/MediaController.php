@@ -71,7 +71,7 @@ class MediaController extends AbstractController
 
         $file = $_FILES['file'];
 
-        $customer = $customerRepository->findOneByName('kfc'); // dynamic session variable (will change each time user select customer in select)
+        $customer = $customerRepository->findOneByName('Kfc'); // dynamic session variable (will change each time user select customer in select)
 
         $root = 'C:/laragon/www/infowaydev/node_file_system/';
         $path = $root . $customer->getName() . '/' . $mediaType . '/' . $file['name'];
@@ -94,7 +94,7 @@ class MediaController extends AbstractController
 
 
     /**
-     * Return true (0) if file already exist in upload directory else false (1)
+     * Return true (0) if file already exist in db else false (1)
      *
      * @Route(path="/file/is/uploaded", name="media::fileIsAlreadyUploaded", methods={"POST"})
      * @param Request $request
