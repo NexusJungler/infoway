@@ -285,7 +285,7 @@ class AppController extends AbstractController
     public function managementtags(Request $request): Response
     {
 
-        return $this->render("settings/management-tags.html.twig", [
+        return $this->render("Tags/show.html.twig", [
 
         ]);
 

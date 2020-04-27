@@ -1,37 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends 'setting.html.twig' %}
 
 {% block title %}Tag index{% endblock %}
 
-{% block body %}
-    <h1>Tag index</h1>
+{% block maincontent %}
+    <section class="wrapper_tabcontent">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Color</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tag in tags %}
-            <tr>
-                <td>{{ tag.id }}</td>
-                <td>{{ tag.name }}</td>
-                <td>{{ tag.color }}</td>
-                <td>
-                    <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
-                    <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <article id="setting-tags" class="tab-content current tags">
 
-    <a href="{{ path('tags_new') }}">Create new</a>
+            <article class="tab-content-title">
+                <h3 class="title">Gestion des TAGS</h3>
+                <p>SUPER WILD COFFEE</p>
+            </article>
+
+            <article class="display setting-display ">
+                <div class="display-content">
+                    <div class="display-btn">
+                        <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                    </div>
+                </div>
+            </article> 
+
+            <article class="content-tags table"> 
+                <table class="table-custome">
+                    <thead class="table-info thead-info">
+                        <tr>
+                            <th>Critères</th>
+                            <th>Description du critère</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody tbody-content scrollbar-table">
+                    {% for tag in tags %}
+                        <tr class="tags-poster">
+                            <td>{{ tag.id }}</td>
+                            <td>
+                                <label class="container-input">
+                                    <input type="radio" name="tags1">
+                                    <span class="container-rdo-tags"></span>
+                                </label>
+                                <p class="container-tags">{{ tag.name }} </p></td>
+                            <td>{{ tag.color }}</td>
+                            <td>
+                                <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
+                                <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            <article>
+
+
+      
+
+        </article>
+        
+    </section>
+    
 {% endblock %}

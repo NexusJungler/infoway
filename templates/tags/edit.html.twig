@@ -1,8 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'setting.html.twig' %}
 
-{% block title %}Edit Tag{% endblock %}
+{% block title %}New Tag{% endblock %}
 
-{% block body %}
+{% block maincontent %}
+
+<section class="wrapper_tabcontent">
+
+        <article id="setting-tags" class="tab-content current">
+        </article>
+        
     <h1>Edit Tag</h1>
 
     {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
@@ -10,4 +16,7 @@
     <a href="{{ path('tags_index') }}">back to list</a>
 
     {{ include('tags/_delete_form.html.twig') }}
+
+<section>        
+    
 {% endblock %}
