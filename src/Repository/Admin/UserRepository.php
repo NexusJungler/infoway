@@ -43,8 +43,15 @@ class UserRepository extends ServiceEntityRepository
         $customerRoleRepo = $customerEM->getRepository(Role::class) ;
 
         $allRolesAvailablesInCustomer = $customerRoleRepo->findAll() ;
+        $allRolesAvailableInCustomerWithIdAsKey = [] ;
+
+        foreach($allRolesAvailablesInCustomer as $roleAvailableInCustomer){
+
+            $allRolesAvailableInCustomerWithIdAsKey[ $roleAvailableInCustomer->getId() ] = $roleAvailableInCustomer ;
+        }
 
         $userRoleIdInCustomer = $user->getUserRoles()->filter(function(UserRoles $userRole) use ( $customer ) {
+
             return $userRole->getCustomer()->getName() === $customer->getName() ;
         }) ;
 
@@ -52,19 +59,26 @@ class UserRepository extends ServiceEntityRepository
         $userRoleIdInCustomer = $userRoleIdInCustomer[ 0 ] ;
 
         $userRoleInCustomer = array_filter( $allRolesAvailablesInCustomer, function( Role $roleAvailableInCustomer ) use ( $userRoleIdInCustomer){
+
             return $roleAvailableInCustomer->getId() === $userRoleIdInCustomer->getRoleId() ;
         } ) ;
+
         if( count( $userRoleInCustomer ) <  1 ) throw new \Error('Impossible to get Role in Role List in Customer ') ;
         $userRoleInCustomer = $userRoleInCustomer[0] ;
 
         $allRoleWithLevelBellowUser = array_filter( $allRolesAvailablesInCustomer , function( $roleAvailableInCustomer ) use ( $userRoleInCustomer ) {
+
             return $roleAvailableInCustomer->getLevel() > $userRoleInCustomer->getLevel() ;
         }) ;
+
+
         $allRolesIdsWithLevelBellowUser = array_map( function( $roleWithLevelBellowUser ){
+
             return $roleWithLevelBellowUser->getId() ;
         } , $allRoleWithLevelBellowUser ) ;
 
-        return $this->createQueryBuilder('u')
+
+        $usersWithRoleBellowInDb = $this->createQueryBuilder('u')
             ->leftJoin('u.userRoles', 'ur')
             ->andWhere('ur.roleId IN (:rolesId)' )
             ->andWhere('ur.customer = :customer')
@@ -72,6 +86,26 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('customer', $customer)
             ->getQuery()
             ->getResult() ;
+
+
+        foreach($usersWithRoleBellowInDb as $userWithRoleBellowInDb){
+
+            foreach( $userWithRoleBellowInDb->getUserRoles() as $userRoleEntry){
+
+                if ( $userRoleEntry->getCustomer()->getId() === $customer->getId() ) {
+
+                    if( isset( $allRolesAvailableInCustomerWithIdAsKey[$userRoleEntry->getRoleId()] ) ){
+
+                        $rolePossessedByUser = $allRolesAvailableInCustomerWithIdAsKey[ $userRoleEntry->getRoleId() ] ;
+                        $userWithRoleBellowInDb->addRole( $rolePossessedByUser , $customer ) ;
+                    }
+                }
+            }
+
+        }
+
+
+        return $usersWithRoleBellowInDb ;
     }
     //Methode de recuperaton d un user present  recupere de la base admin avec ses sites recupere dans chaque base correspondante
     public function getUserWithSites(User $user){

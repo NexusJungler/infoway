@@ -9,6 +9,7 @@ use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Devise;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
+use App\Repository\Admin\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,10 +18,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SiteType extends AbstractType
 {
+    private $userRepository;
+
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $customer = $options['customer'] ;
         $creator =  $options['creator'] ;
+
 
         $builder
             ->add('name')
@@ -48,9 +58,7 @@ class SiteType extends AbstractType
                     // looks for choices from this entity
                     'class' => User::class,
                     'choice_label' => 'first_name',
-                    'query_builder' => function( EntityRepository $userRepo ) use ( $customer, $creator ){
-                        $userRepo->getUsersWithRoleBellowUserByCustomer($customer, $creator);
-                    },
+                    'choices' =>  $this->userRepository->getUsersWithRoleBellowUserByCustomer($customer, $creator) ,
                     'multiple' => true,
                     'expanded' => true,
                     'by_reference' => false
