@@ -1,4 +1,24 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{#    {{ form_widget(form) }}#}
+
+{#{{ form_label(form.users) }}#}
+{#{{ form_errors(form.users) }}#}
+
+{#{{ dump(form.users.vars) }}#}
+{#{% for userField in form.users %}#}
+{#    {{ dump(userField.vars) }}#}
+{#    <li>#}
+{#        {{ form_errors(emailField) }}#}
+{#        {{ form_widget(emailField) }}#}
+{#    </li>#}
+{#{% endfor %}#}
+{#<ul>#}
+{#    {% for userField in form.users %}#}
+{#        <li>#}
+{#            {{ form_errors(userField) }}#}
+{#            {{ form_widget(userField) }}#}
+{#        </li>#}
+{#    {% endfor %}#}
+{#</ul>#}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

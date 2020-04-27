@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer\Site;
-use App\Form\Customer\SiteType;
+use App\Form\SiteType;
 use App\Repository\Customer\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,11 +42,11 @@ class SiteController extends AbstractController
         ] ;
 
         $form = $this->createForm(SiteType::class, $site, $datasToPassToSiteForm ) ;
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            dd($site);
 
             $entityManager->persist($site);
             $entityManager->flush();

@@ -50,12 +50,17 @@ class Criterion
      */
     private $sites;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $selected;
 
 
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->position = 1 ;
+        $this->selected = false ;
     }
 
     public function getId(): ?int
@@ -163,4 +168,17 @@ class Criterion
 
         return $this;
     }
+
+    public function getSelected(): ?bool
+    {
+        return $this->selected;
+    }
+
+    public function setSelected(bool $selected): self
+    {
+        $this->selected = $selected;
+
+        return $this;
+    }
+
 }
