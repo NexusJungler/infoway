@@ -39,6 +39,10 @@ class SiteRepository extends ServiceEntityRepository
         return $this->findBy(['id' => $siteIdsInCustomer]) ;
 
     }
+
+    public function getTimeZoneByTimeZoneId(){
+
+    }
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

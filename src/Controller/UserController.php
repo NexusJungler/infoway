@@ -102,29 +102,29 @@ class UserController extends AbstractController
         //On recupere les roles de l utilisateur depuis la session
         $creatorUserRoles = $creatorUser->getRoles();
 
+
+
         //Boucle sur les roles afin de recuperer tous les roles que le createur pourra donner a l utilisateur qu il cree. La fonction a été créé de manniere a ne pas crasher si un des roles recuperés depuis la session est non conforme . Il ne sera simplement pas traité
-        foreach( $creatorUserRoles as $creatorUserRoleByCustomer ) {
+        foreach( $creatorUserRoles as $customerRole ) {
 
             //On recupere d'abord l objet customer stockant les relations roles avec les bases appartenant au customer. Ceux ci sont filtré selon le customer auquel ils appartiennent.
-            if( $creatorUserRoleByCustomer instanceof Customer ) {
+            if( $customerRole instanceof Role ) {
+                $roleCustomer = $customerRole->getCustomer() ;
                 //On recupere le role pour l enseigne traité et on controle son type .
-                $customerRole = $creatorUserRoleByCustomer->getRole() ;
-                if( $customerRole instanceof Role ) {
                     $allManagers = $this->getDoctrine()->getManagers() ;
-                    if( isset ( $allManagers[ $creatorUserRoleByCustomer->getName() ] ) ){
-                        $currentEm =  $allManagers[ $creatorUserRoleByCustomer->getName() ] ;
+                    if( isset ( $allManagers[ $roleCustomer->getName() ] ) ){
+                        $currentEm =  $allManagers[ $roleCustomer->getName() ] ;
                         $roleRepo = $currentEm->getRepository(Role::class);
 
                         //On recupere tous les roles ayant un level egal ou superieur a celui du createur et on verifie bien qu on a recu un tableau et pas une valeur null.
                         $givableRolesFrombase  = $roleRepo->getRolesByLevelBellow($customerRole->getLevel());
 
                         //Si la valeur n est pas null on l ajoute aux roles ajoutables par le createur.
-                        if( is_array( $givableRolesFrombase ) ) $givablesRoles[ $creatorUserRoleByCustomer->getId() ] = [
-                            'customer' => $creatorUserRoleByCustomer ,
+                        if( is_array( $givableRolesFrombase ) ) $givablesRoles[ $roleCustomer->getId() ] = [
+                            'customer' => $roleCustomer ,
                             'roles' => $givableRolesFrombase
                         ];
                     }
-                }
             }
         }
 
@@ -175,7 +175,6 @@ class UserController extends AbstractController
         foreach($userToModifyFromDb->getCustomers() as $customer){
             dump($customer);
         }
-        dd($userToModifyFromDb);
         if( ! $userToModifyFromDb instanceof User ) throw new \Error('Impossible to find User to Modify') ;
 
         //Recuperation de l user en base
@@ -197,28 +196,26 @@ class UserController extends AbstractController
         $creatorUserRoles = $creatorUser->getRoles();
 
         //Boucle sur les roles afin de recuperer tous les roles que le createur pourra donner a l utilisateur qu il cree. La fonction a été créé de manniere a ne pas crasher si un des roles recuperés depuis la session est non conforme . Il ne sera simplement pas traité
-        foreach( $creatorUserRoles as $creatorUserRoleByCustomer ) {
+        foreach( $creatorUserRoles as $customerRole ) {
 
             //On recupere d'abord l objet customer stockant les relations roles avec les bases appartenant au customer. Ceux ci sont filtré selon le customer auquel ils appartiennent.
-            if( $creatorUserRoleByCustomer instanceof Customer ) {
+            if( $customerRole instanceof Role ) {
                 //On recupere le role pour l enseigne traité et on controle son type .
-                $customerRole = $creatorUserRoleByCustomer->getRole() ;
-                if( $customerRole instanceof Role ) {
+                $roleCustomer = $customerRole->getCustomer() ;
                     $allManagers = $this->getDoctrine()->getManagers() ;
-                    if( isset ( $allManagers[ $creatorUserRoleByCustomer->getName() ] ) ){
-                        $currentEm =  $allManagers[ $creatorUserRoleByCustomer->getName() ] ;
+                    if( isset ( $allManagers[ $roleCustomer->getName() ] ) ){
+                        $currentEm =  $allManagers[ $roleCustomer->getName() ] ;
                         $roleRepo = $currentEm->getRepository(Role::class);
 
                         //On recupere tous les roles ayant un level egal ou superieur a celui du createur et on verifie bien qu on a recu un tableau et pas une valeur null.
                         $givableRolesFrombase  = $roleRepo->getRolesByLevelBellow($customerRole->getLevel());
 
                         //Si la valeur n est pas null on l ajoute aux roles ajoutables par le createur.
-                        if( is_array( $givableRolesFrombase ) ) $givablesRoles[ $creatorUserRoleByCustomer->getId() ] = [
-                            'customer' => $creatorUserRoleByCustomer ,
+                        if( is_array( $givableRolesFrombase ) ) $givablesRoles[ $roleCustomer->getId() ] = [
+                            'customer' => $roleCustomer ,
                             'roles' => $givableRolesFrombase
                         ];
                     }
-                }
             }
         }
 
@@ -232,7 +229,7 @@ class UserController extends AbstractController
 
 
         /** _____________________________ PARTIE SITE ________________________________________ **/
-        $userToModifySitesFromDb = $userToModifyFromDb->getSitesIds() ;
+        $userToModifySitesFromDb = $userToModifyFromDb->getUserSites() ;
 
         //Creation du tableau des sites indexés par le nom de leur enseigne
         foreach( $userToModifySitesFromDb as $userToModifySite ) {
@@ -270,7 +267,9 @@ class UserController extends AbstractController
         $customerRepo = $em->getRepository(Customer::class);
 
         $currentCustomer = $customerRepo->findOneByName('kfc');
+
         $usersInCustomer = $currentCustomer->getUsers() ;
+
 
         return $this->render("settings/setting-user.html.twig", [
             'usersInCustomer' => $usersInCustomer
@@ -420,10 +419,10 @@ class UserController extends AbstractController
         $userSitesWithCustomerIdAsKey= [] ;
         $userToModifySitesEntryFiltredByCustomerId =[] ;
 
-        foreach($userCreatorFromDb->getSitesIds() as $siteEntry){
+        foreach($userCreatorFromDb->getUserSites() as $siteEntry){
             $userSitesWithCustomerIdAsKey [ $siteEntry->getCustomer()->getId() ][$siteEntry->getSiteId()] = $siteEntry;
         }
-        foreach($userToModifyFromDb->getSitesIds() as $siteEntry){
+        foreach($userToModifyFromDb->getUserSites() as $siteEntry){
             $userToModifySitesEntryFiltredByCustomerId [ $siteEntry->getCustomer()->getId() ][$siteEntry->getSiteId()] = $siteEntry;
         }
 
@@ -449,7 +448,7 @@ class UserController extends AbstractController
                     $newUserSiteEntry  = new UserSites();
                     $newUserSiteEntry->setCustomer( $creatorSiteEntry->getCustomer() ) ;
                     $newUserSiteEntry->setSiteId( $creatorSiteEntry->getSiteId() );
-                    $userToModifyFromDb->addSitesId($newUserSiteEntry);
+                    $userToModifyFromDb->addUserSite($newUserSiteEntry);
 
                 }
 
@@ -467,7 +466,7 @@ class UserController extends AbstractController
             }
             foreach($customerSites as  $siteId => $userSiteEntry) {
                 if( !in_array($siteId, $userToModifyFormDatas[ 'sites' ][ 'enseigne' ][ $customer ]) ) {
-                    $userToModifyFromDb->removeSitesId($userSiteEntry);
+                    $userToModifyFromDb->removeUserSite($userSiteEntry);
                     $em->remove($userSiteEntry);
                 }
             }
@@ -614,7 +613,7 @@ class UserController extends AbstractController
 
         //Creation dun tableau contenant les sites possedé par le createur classé par enseignes afin de pouvoir effectuer une seule connection dans chaque  base enseigne pour la gestion des sites
         $userSitesWithCustomerIdAsKey= [] ;
-        foreach($userCreatorFromDb->getSitesIds() as $siteEntry){
+        foreach($userCreatorFromDb->getUserSites() as $siteEntry){
             $userSitesWithCustomerIdAsKey [ $siteEntry->getCustomer()->getId() ][$siteEntry->getSiteId()] = $siteEntry;
         }
 
@@ -638,7 +637,9 @@ class UserController extends AbstractController
                         $newUserSiteEntry->setSiteId( $creatorSiteEntry->getSiteId() );
                         $em->persist($newUserSiteEntry);
 
-                        $newUserEntity->addSitesId($newUserSiteEntry);
+
+
+                        $newUserEntity->addUserSite($newUserSiteEntry);
 
 
                 }

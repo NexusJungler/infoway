@@ -2,6 +2,7 @@
 
 namespace App\Entity\Customer;
 
+use App\Entity\Admin\Customer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,6 +36,8 @@ class Role
      * @ORM\Column(type="integer" , nullable=false)
      */
     private $level;
+
+    private ?Customer $customer ;
 
     public function __construct()
     {
@@ -101,5 +104,21 @@ class Role
         $this->level = $level;
 
         return $this;
+    }
+
+    /**
+     * @return Customer|null
+     */
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
+
+        return $this ;
     }
 }

@@ -8,6 +8,7 @@ use App\Repository\Customer\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,14 +29,25 @@ class SiteController extends AbstractController
     /**
      * @Route("/new", name="sites_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SessionInterface $session): Response
     {
         $site = new Site();
-        $form = $this->createForm(SiteType::class, $site);
+
+        $currentCustomer = $session->get('current_customer') ;
+        $creator = $session->get('user') ;
+
+        $datasToPassToSiteForm = [
+            'customer' => $currentCustomer,
+            'creator' => $creator
+        ] ;
+
+        $form = $this->createForm(SiteType::class, $site, $datasToPassToSiteForm ) ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            dd($site);
+
             $entityManager->persist($site);
             $entityManager->flush();
 

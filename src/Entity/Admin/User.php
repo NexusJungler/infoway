@@ -146,11 +146,12 @@ class User implements UserInterface
         return $this->roles;
     }
 
-    public function addRole(Role $role,$customer): self
+    public function addRole(Role $role,Customer $customer): self
     {
-        $customer->setRole( $role );
-        if( !in_array( $customer, $this->roles) ){
-            $this->roles[] = $customer ;
+
+        $role->setCustomer($customer) ;
+        if( !in_array( $role, $this->roles) ){
+            $this->roles[ $customer->getName() ] = $role ;
         }
 
         return $this;
@@ -360,39 +361,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|UserSites[]
-     */
-    public function getSitesIds(): Collection
-    {
-        return $this->sitesIds;
-    }
 
-    public function addSitesId(UserSites $sitesId): self
-    {
-        if (!$this->sitesIds->contains($sitesId)) {
-
-            $this->addCustomer($sitesId->getCustomer());
-            $this->sitesIds[] = $sitesId;
-            $sitesId->setUser($this);
-
-        }
-
-        return $this;
-    }
-
-    public function removeSitesId(UserSites $sitesId): self
-    {
-        if ($this->sitesIds->contains($sitesId)) {
-            $this->sitesIds->removeElement($sitesId);
-            // set the owning side to null (unless already changed)
-            if ($sitesId->getUser() === $this) {
-                $sitesId->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return ArrayCollection
@@ -510,17 +479,19 @@ class User implements UserInterface
     public function addUserSite(UserSites $userSite): self
     {
         if (!$this->userSites->contains($userSite)) {
+            $this->addCustomer($userSite->getCustomer());
             $this->userSites[] = $userSite;
             $userSite->setUser($this);
         }
-
         return $this;
     }
 
     public function removeUserSite(UserSites $userSite): self
     {
         if ($this->userSites->contains($userSite)) {
+
             $this->userSites->removeElement($userSite);
+            $this->removeCustomer($userSite->getCustomer());
             // set the owning side to null (unless already changed)
             if ($userSite->getUser() === $this) {
                 $userSite->setUser(null);

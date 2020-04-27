@@ -2,7 +2,9 @@
 
 namespace App\Entity\Customer;
 
+use App\Entity\Admin\Country;
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\TimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,15 +51,20 @@ class Site
      */
     private $observations;
 
+
     /**
      * @ORM\Column(name="country_id",type="integer", nullable=true)
      */
     private $countryId;
 
+    private $country;
+
     /**
      * @ORM\Column(name="timezone_id",type="integer", nullable=true)
      */
     private $timezoneId;
+
+    private $timezone;
 
     /**
      * @ORM\Column(name="customer_id",type="integer")
@@ -89,6 +96,7 @@ class Site
      */
     private $tags;
 
+    private $users ;
 
 
     public function __construct() {
@@ -114,6 +122,7 @@ class Site
         return $this;
     }
 
+
     public function getAdress(): ?string
     {
         return $this->adress;
@@ -137,6 +146,7 @@ class Site
 
         return $this;
     }
+
 
     public function getCity(): ?string
     {
@@ -162,6 +172,17 @@ class Site
         return $this;
     }
 
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
+        $this->countryId = $country->getId() ;
+        return $this;
+    }
 
     public function getCountryId(): ?int
     {
@@ -171,6 +192,20 @@ class Site
     public function setCountryId(?int $countryId): self
     {
         $this->countryId = $countryId;
+
+        return $this;
+    }
+
+    public function getTimezone(): ?TimeZone
+    {
+        return $this->timezone;
+    }
+
+
+    public function setTimezone(TimeZone $timezone): self
+    {
+        $this->timezone = $timezone;
+        $this->timezoneId = $timezone->getId() ;
 
         return $this;
     }
@@ -264,18 +299,6 @@ class Site
         return $this;
     }
 
-    public function getDeviseId(): ?int
-    {
-        return $this->deviseId;
-    }
-
-    public function setDeviseId(int $deviseId): self
-    {
-        $this->deviseId = $deviseId;
-
-        return $this;
-    }
-
     public function getObservations(): ?string
     {
         return $this->observations;
@@ -300,7 +323,20 @@ class Site
         return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
 
-
+    /**
+     * @param ArrayCollection $users
+     */
+    public function setUsers(ArrayCollection $users): void
+    {
+        $this->users = $users;
+    }
 
 }
