@@ -57,11 +57,14 @@ class SiteType extends AbstractType
                 [
                     // looks for choices from this entity
                     'class' => User::class,
-                    'choice_label' => 'first_name',
+//                    'choice_label' =>  function (User $user) {
+//                        return '<p>'.$user->getFirstName() .' ' . $user->getLastName().'</p>';
+//                    },
                     'choices' =>  $this->userRepository->getUsersWithRoleBellowUserByCustomer($customer, $creator) ,
                     'multiple' => true,
                     'expanded' => true,
-                    'by_reference' => false
+                    'by_reference' => false,
+                    'mapped' => false
                 ])
             ->add('criterions',EntityType::class ,
                 [

@@ -13,6 +13,7 @@ class CriterionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('selected')
             ->add('name', TextType::class)
             ->add('description')
         ;

@@ -38,6 +38,8 @@ class CriterionList
      * @ORM\OneToMany(targetEntity="Criterion", mappedBy="list", cascade={"persist"})
      */
     private $criterions;
+
+
     // ...
 
     public function __construct() {

@@ -42,6 +42,7 @@ class SiteController extends AbstractController
         ] ;
 
         $form = $this->createForm(SiteType::class, $site, $datasToPassToSiteForm ) ;
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
