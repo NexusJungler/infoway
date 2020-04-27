@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Admin\Customer;
 use App\Entity\Admin\User;
 use App\Service\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -103,8 +104,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         $sessionManager = new SessionManager(new Session()) ;
 
         if($sessionManager->get('user') !== null ) $sessionManager->remove('user');
+        if($sessionManager->get('current_customer') !== null ) $sessionManager->remove('current_customer');
 
         $sessionManager->set('user',$this->lastRegisteredUser);
+        $sessionManager->set('current_customer', $this->entityManager->getRepository(Customer::class)->findOneBy(['name' => 'kfc'])) ;
 
         //  $userFromDatabase=$sessionManager->get('user');
         return new RedirectResponse($this->urlGenerator->generate('app'));

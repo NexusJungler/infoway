@@ -5,13 +5,11 @@ namespace App\Entity\Customer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\TagsRepository")
- * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\CriterionRepository")
  */
-class Tag
+class Criterion
 {
     /**
      * @ORM\Id()
@@ -21,7 +19,7 @@ class Tag
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
@@ -31,24 +29,35 @@ class Tag
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="integer")
      */
-    private $color;
+    private $position;
+
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="CriterionList", inversedBy="criterions")
+     * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
+     */
+    private $list;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions")
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Site", mappedBy="tags", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions")
      */
     private $sites;
+
+
 
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->position = 1 ;
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,18 +75,6 @@ class Tag
         return $this;
     }
 
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(string $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -89,6 +86,7 @@ class Tag
 
         return $this;
     }
+
 
     /**
      * @return Collection|Product[]
@@ -102,7 +100,6 @@ class Tag
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->addTag($this);
         }
 
         return $this;
@@ -112,7 +109,6 @@ class Tag
     {
         if ($this->products->contains($product)) {
             $this->products->removeElement($product);
-            $product->removeTag($this);
         }
 
         return $this;
@@ -128,10 +124,8 @@ class Tag
 
     public function addSite(Site $site): self
     {
-
         if (!$this->sites->contains($site)) {
             $this->sites[] = $site;
-            $site->addTag($this);
         }
 
         return $this;
@@ -141,13 +135,32 @@ class Tag
     {
         if ($this->sites->contains($site)) {
             $this->sites->removeElement($site);
-            $site->removeTag($this);
         }
 
         return $this;
     }
 
+    public function getList(): ?CriterionList
+    {
+        return $this->list;
+    }
 
+    public function setList(?CriterionList $list): self
+    {
+        $this->list = $list;
 
+        return $this;
+    }
 
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
 }

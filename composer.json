@@ -24,6 +24,7 @@
         "symfony/process": "4.3.*",
         "symfony/security-bundle": "4.3.*",
         "symfony/security-csrf": "4.3.*",
+        "symfony/serializer": "4.3.*",
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.4",
         "symfony/translation": "4.3.*",
@@ -38,7 +39,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/profiler-pack": "*",
+        "symfony/profiler-pack": "^1.0",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*"
     },

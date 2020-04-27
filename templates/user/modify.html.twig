@@ -102,12 +102,12 @@
                                                 <tr class="input{{ givableRolesCustomer.id }}">
                                                     <td>
                                                         <label class="container-chkbox">{{ givableRolesCustomer.name }}
-                                                            <input type="checkbox" name="showenseignesites[]"  class="input{{ givableRolesCustomer.id }}" value={{ givableRolesCustomer.id }}>
+                                                            <input type="checkbox" name="showenseignesites[]"  class="input{{ givableRolesCustomer.id }}" value="{{ givableRolesCustomer.id }}" {% if (userToModifyRoleInCustomer ) is not  same as ( null ) %} checked {% endif %}>
                                                             <span class="checkmark-chkbox"></span>
                                                         </label>
                                                     </td>
                                                     <td >
-                                                        <div class="select" >
+                                                        <div class="select{% if (userToModifyRoleInCustomer ) is not  same as ( null ) %} select-active {% endif %}" >
                                                             <select class="select-list" name={{"user[roles][enseigne][" ~ givableRolesCustomer.id ~ "]"  }}>
                                                                 <option>Choisir rôle </option>
                                                                 {% if givableRoles is defined and  givableRoles  is iterable %}
@@ -160,7 +160,7 @@
                                                         <tr  class="{{customer.name}}" >
                                                             <td>
                                                                 <label class="container-chkbox">{{site.name}}
-                                                                    <input type="radio" name={{  "user[sites][enseigne][" ~  customer.id  ~ "][]" }} value="{{ site.id }}" {{ userToModifySites[ customer.id ] is defined and userToModifySites[ customer.id ][site.id] is defined ? 'checked' : '' }}>
+                                                                    <input type="checkbox" name={{  "user[sites][enseigne][" ~  customer.id  ~ "][]" }} value="{{ site.id }}" {{ userToModifySites[ customer.id ] is defined and userToModifySites[ customer.id ][site.id] is defined ? 'checked' : '' }}>
                                                                     <span class="checkmark-chkbox"></span>
                                                                 </label>
                                                             </td>

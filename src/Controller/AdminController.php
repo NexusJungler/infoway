@@ -31,6 +31,7 @@ class AdminController extends AbstractController
 
         if($form->isSubmitted() AND $form->isValid())
         {
+            dd($request);
 
             if(!$databaseHandler->databaseExist($customer->getName()))
             {
@@ -53,7 +54,7 @@ class AdminController extends AbstractController
 
         }
 
-        return $this->render('admin/admin.createCustomer.twig', [
+        return $this->render('customer/create_customer.html.twig', [
             'form' => $form->createView()
         ]);
 
