@@ -69,7 +69,7 @@ class CriterionListController extends AbstractController
         }
 
         return $this->render('criterion_list/new.html.twig', [
-            'criterion_list' => $criterionList,
+            'criterion_lists' => $criterionList,
             'form' => $form->createView(),
         ]);
     }
