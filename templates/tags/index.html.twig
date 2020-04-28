@@ -8,26 +8,17 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th></th>
                 <th>Name</th>
-                <th>Color</th>
-                <th>actions</th>
+                <th>Description</th>
             </tr>
         </thead>
         <tbody>
         {% for tag in tags %}
             <tr>
-                <td>{{ tag.id }}</td>
+                <td><input type="checkbox"></td>
                 <td>{{ tag.name }}</td>
-                <td>{{ tag.color }}</td>
-                <td>
-                    <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
-                    <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
+                <td>{{ tag.description }}</td>
             </tr>
         {% endfor %}
         </tbody>
