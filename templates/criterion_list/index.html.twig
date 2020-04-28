@@ -9,32 +9,27 @@
 <ul>
     {%  for criterion_list in criterion_lists  %}
         <li>
-            <table>
-                <thead>
-                <tr>
-                    <th>
-                        <input type="checkbox"/>
-                        <span>{{ criterion_list.name }}</span>
-                        <p>{{ criterion_list.description }}</p>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Critère</td>
-                    <td>Description du critère</td>
-                </tr>
-                <tr>
-                    <td><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
-                </tr>
-                {% for criterion in criterion_list.criterions %}
-                <tr>
-                    <td><input type="checkbox"><span>{{ criterion.name }}</span></td>
-                    <td><p>{{ criterion.description }}</p></td>
-                </tr>
+            <div>
+                    <input type="checkbox"/>
+                    <span>{{ criterion_list.name }}</span>
+                    <p>{{ criterion_list.description }}</p>
+            </div>
+            <div>
+                    <h3>Critère</h3>
+                    <p>Description du critère</p>
+            </div>
+                <div><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</p></div>
+            <div>
+                <ul>
+                    {% for criterion in criterion_list.criterions %}
+                    <li>
+                        <td><input type="checkbox"><span>{{ criterion.name }}</span></td>
+                        <td><p>{{ criterion.description }}</p></td>
+                    </li>
                 {% endfor %}
-                </tbody>
-            </table>
+                </ul>
+            </div>
+
         </li>
 {#        {{ dump(criterion_list) }}#}
     {% endfor %}
