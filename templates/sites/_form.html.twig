@@ -1,26 +1,35 @@
 {{ form_start(form) }}
-
-{{ dump(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.adress) }}
+{{ form_row(form.postalCode) }}
+{{ form_row(form.city) }}
+{{ form_row(form.phoneNumber) }}
+{{ form_row(form.observations) }}
+{{ form_row(form.country) }}
+{{ form_row(form.devise) }}
+{{ form_row(form.timezone) }}
 
 <table>
-    <tbody>
-    <tr>
-        <td>Name</td>
-        <td>Firstname</td>
-        <td>Adress</td>
-    </tr>
-    <tr>
 
-        {% for userField in form.users %}
+    {% for user in form.users %}
+
+        {% set currentUser =  form.users.vars.choices[user.vars.value].data %}
+        <tr>
+
+        <td>
+            {{ form_errors(user) }}
+            {{ form_widget(user) }}
+
+        </td>
             <td>
-                userField.name
-                userField.firstName
-                userField.adress
+                {{ currentUser.firstName ~' '~ currentUser.lastName }}
             </td>
-        {% endfor %}
-    </tr>
-    </tbody>
-</table>
+            <td>
+                {{ currentUser.roles[currentCustomer.name].name }}
+            </td>
+        </tr>
+    {% endfor %}
 
+</table>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
