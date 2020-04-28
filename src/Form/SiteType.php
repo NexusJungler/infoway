@@ -10,6 +10,7 @@ use App\Entity\Customer\Devise;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
 use App\Repository\Admin\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -57,14 +58,13 @@ class SiteType extends AbstractType
                 [
                     // looks for choices from this entity
                     'class' => User::class,
-//                    'choice_label' =>  function (User $user) {
-//                        return '<p>'.$user->getFirstName() .' ' . $user->getLastName().'</p>';
-//                    },
+                    'choice_label' =>  function (User $user) {
+                        return $user->getFirstName() .' ' . $user->getLastName();
+                    },
                     'choices' =>  $this->userRepository->getUsersWithRoleBellowUserByCustomer($customer, $creator) ,
                     'multiple' => true,
                     'expanded' => true,
-                    'by_reference' => false,
-                    'mapped' => false
+                    'by_reference' => false
                 ])
             ->add('criterions',EntityType::class ,
                 [
