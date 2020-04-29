@@ -15,19 +15,23 @@ class UploadHandlerTool extends Tool
 
             image: [
                 'image/jpg', 'image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/x-windows-bmp', 'image/pjpeg', 'image/svg+xml',
-                '.jpg', '.jpeg', '.png', '.bmp', '.gif',
+                '.jpg', '.jpeg', '.png', '.bmp', '.gif', '.svg',
             ],
 
             video: [
-                'video/*', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime', 'video/x-quicktime'
+                'video/*', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime', '.mp4', '.avi', '.3gp'
+            ],
+
+            audio: [
+                'audio/3gpp', '.3gp', 'audio/mpeg', '.mp3'
             ],
 
             powerpoint: [
-                'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'ppt', 'pptx'
+                'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', '.ppt', '.pptx'
             ],
 
             pdf: [
-               'pdf', 'application/pdf'
+               '.pdf', 'application/pdf'
             ],
 
             word: [
@@ -36,13 +40,35 @@ class UploadHandlerTool extends Tool
 
         };
 
+        this.__errors = {
+
+            bad_extension: "Erreur : ce type de fichier n'est pas accepté",
+
+            bad_resolution: "Erreur : cette résolution n'est pas accepté",
+
+            corrupt_file: "Erreur : fichier corrompu",
+
+            duplicate_file: "Ce nom est déjà utilisé !",
+
+            invalid_error: "Ce champ contient des caractères non autorisés !",
+
+            empty_error: "Ce champ ne peut pas être vide",
+
+            too_short_error: "Ce champ doit contenir au moins 5 caractères !",
+
+            uploaded_file_not_found_error: "Erreur interne : Le fichier n'existe plus sur le serveur !",
+
+        };
+
+        this.__dataCheckingErrors = "";
+
         this.__uploadMediaType = $('.main-media').data('media_displayed');
 
         this.__total_files_allowed = 50;
         this.__max_file_size = 524288000;
         this.__filesToUpload = [];
         this.__authorized_char_regex = /^[a-zA-Z0-9_.-\s*]*$/;
-        this.__errors = [];
+        this.__uploadAuthorized = false;
     }
 
 
@@ -61,7 +87,6 @@ class UploadHandlerTool extends Tool
         return this;
 
     }
-
 
     onClickOnUploadButtonShowModal(active)
     {
@@ -92,7 +117,7 @@ class UploadHandlerTool extends Tool
                 $('.add-popup').removeClass('is-open');
                 $("#uploadmedia").val("");
 
-                $("table tbody").empty();
+                $(".tbody").empty();
 
                 $(".model-upload-file .start_upload_button").fadeOut();
 
@@ -114,7 +139,7 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
-    isFileExtensionIsAccepted(mime_type)
+    isFileMimeTypeIsAccepted(mime_type)
     {
         // search mime_type in authorized extension using upload current tab (image, video, video synchro, ...)
         return this.__authorizedFiles[this.__uploadMediaType].indexOf(mime_type) !== -1;
@@ -143,6 +168,19 @@ class UploadHandlerTool extends Tool
 
     }
 
+    fileNameContainMultipleDot(fileName)
+    {
+        // si le nom de fichier comporte plusieurs extensions
+        var dotCount = 0;
+        var pos = fileName.indexOf(".");
+        while (pos !== -1) {
+            dotCount++;
+            pos = fileName.indexOf(".", pos+1);
+        }
+
+        return dotCount > 1;
+    }
+
     onFileSelectAddFileInList(active)
     {
 
@@ -156,36 +194,61 @@ class UploadHandlerTool extends Tool
                 filesSelected.forEach( async (file, index) => {
                     //console.log(filesSelected); debugger
                     let fileName = file.name;
-                    let fileMimeType = file.type;
-                    //let fileExtension = fileName.split('.').pop();
-                    let fileIsAccepted = this.isFileExtensionIsAccepted(fileMimeType);
-                    let fileSize = file.size;
 
-                    console.log(file); debugger
+                    console.log(file); //debugger
 
                     // don't duplicate file in upload list
                     if( $(`.upload-info table tbody tr[data-file='${fileName}']`).length < 1 )
                     {
 
-                        const fileIsAlreadyUploaded = await this.isFileIsAlreadyUploaded(fileName);
+                        const fileNameContainMultipleDot = this.fileNameContainMultipleDot(fileName);
+                        const fileExtension = (!fileNameContainMultipleDot) ? '.' + fileName.split('.').pop() : '';
+                        const fileIsAlreadyUploaded = await this.isFileIsAlreadyUploaded(fileName.replace(fileExtension, ''));
+                        const fileMimeType = file.type;
+
+                        console.log(fileNameContainMultipleDot, fileMimeType, fileExtension); //debugger
+
+                        // sometime file mimetype was empt
+                        // in this case, use extension for check if file can be upload
+                        const fileExtensionIsAccepted = this.isFileMimeTypeIsAccepted( (fileMimeType !== "") ? fileMimeType : fileExtension );
+                        const fileSize = file.size;
+                        let fileIsAccepted = true;
 
                         let newUploadFileItem = $("<tr>", {
-                            class: (!fileIsAccepted || fileIsAlreadyUploaded) ? 'invalid_upload_item' : 'upload_item'
+                            class: (!fileExtensionIsAccepted || fileIsAlreadyUploaded || fileNameContainMultipleDot) ? 'invalid_upload_item' : 'valid_upload_item'
                         }).attr("data-file", fileName);
 
                         let html = `<td>${fileName}</td>`;
 
                         if(fileIsAlreadyUploaded)
-                            html += `<td><span style='color: red;'>Un fichier portant le même nom a déjà été uploadé ! Il ne sera pas uploadé</span></td>`;
+                        {
+                            html += `<td><span class="error">Un fichier portant le même nom a déjà été uploadé ! Il ne sera pas uploadé</span></td>`;
+                            fileIsAccepted = false;
+                        }
 
-                        else if(!fileIsAccepted)
-                            html += `<td><span style='color: red;'>Ce type de fichier n'est pas accepté ! Il ne sera pas uploadé</span></td>`;
+                        else if(!fileExtensionIsAccepted)
+                        {
+                            html += `<td><span class="error">Ce type de fichier n'est pas accepté ! Il ne sera pas uploadé</span></td>`;
+                            fileIsAccepted = false;
+                        }
 
                         else if(fileSize > this.__max_file_size)
-                            html += `<td><span style='color: red;'>Vous avez selectionné un fichier volumineux. Le temps de chargement pour un tel volume de données peut prendre un temps conséquent en fonction de votre connexion</span></td>`;
+                        {
+                            html += `<td><span class="error">Vous avez selectionné un fichier volumineux. Le temps de chargement pour un tel volume de données peut prendre un temps conséquent en fonction de votre connexion</span></td>`;
+                            fileIsAccepted = true;
+                        }
 
                         else if(!this.__authorized_char_regex.test(fileName))
-                            html += `<td><span style='color: red;'>Le nom de ce fichier comporte un ou plusieurs caractère(s) non autorisé !</span></td>`;
+                        {
+                            html += `<td><span class="error">Le nom de ce fichier comporte un ou plusieurs caractère(s) non autorisé !</span></td>`;
+                            fileIsAccepted = false;
+                        }
+
+                        else if(fileNameContainMultipleDot)
+                        {
+                            html += `<td><span class="error">Le nom de ce fichier comporte plusieurs extensions !</span></td>`;
+                            fileIsAccepted = false;
+                        }
 
                         else
                             html += `<td></td>`;
@@ -212,15 +275,32 @@ class UploadHandlerTool extends Tool
 
                         newUploadFileItem.appendTo( $(".upload-info table tbody") );
 
-                        if($(".upload-info table tbody tr.upload_item").length > 0)
-                            $(".model-upload-file .start_upload_button").fadeIn();
+                        if($(".upload-info table tbody tr.valid_upload_item").length > this.__total_files_allowed)
+                        {
+                            this.__uploadAuthorized = false;
+                            $('.start-upload-container .error_over-max-file').text(`Vous avez sélectionné ${$(".upload-info table tbody tr.valid_upload_item").length} fichiers, le maximum autorisé est de ${this.__total_files_allowed} !"`)
+                                                                             .fadeIn();
+                            $(".model-upload-file .start_upload_button").fadeOut();
+                        }
+
+                        else if($(".upload-info table tbody tr.valid_upload_item").length < 1)
+                        {
+                            this.__uploadAuthorized = false;
+                            $(".model-upload-file .start_upload_button").fadeOut();
+                        }
 
                         else
-                            $(".model-upload-file .start_upload_button").fadeOut();
+                        {
+                            this.__uploadAuthorized = true;
+                            $('.start-upload-container .error_over-max-file').empty().fadeOut();
+                            $(".model-upload-file .start_upload_button").fadeIn();
+                        }
 
                     }
 
                 } );
+
+
 
                 uploadButton.val("");
 
@@ -236,7 +316,6 @@ class UploadHandlerTool extends Tool
 
         return this;
     }
-
 
     onClickOnRemoveFileButtonRemoveFileFromList(active)
     {
@@ -279,22 +358,25 @@ class UploadHandlerTool extends Tool
 
                 //$(".files_selection").fadeOut();
 
-                $(".files_selection").fadeOut();
-                $(".files_selection table tbody").empty();
-                $(".upload-title").text("Traitement de la file en cours, veuillez patienter merci");
-                $(".on_progress").fadeIn();
+                if(this.__uploadAuthorized)
+                {
 
-                // pause de 10s, sans ça le telechargement est lancé et fini avant que le contenu de la popup ne soit affiché
-                // vraiment nécessaire ???
-                setTimeout( () => {
+                    let uploadFinished = 0;
+
+                    $(".files_selection").fadeOut();
+                    $(".files_selection table tbody").empty();
+                    $(".upload-title").text("Traitement de la file en cours, veuillez patienter merci");
+                    $(".on_progress").fadeIn();
 
                     // for each file in upload list
-                    for (let i = 0; i < this.__filesToUpload.length; i++)
-                    {
+                    $.each( this.__filesToUpload, (index, fileToUpload) => {
 
-                        const fileToUpload = this.__filesToUpload[i];
+                        $(`.on_progress #upload_${fileToUpload.index} .upload_state`).html("Téléchargement en cours ...");
 
-                        $(`form.upload_form[data-target=${fileToUpload.index}]`).on("submit", e => {
+                        const form = $(`form.upload_form[data-target=${fileToUpload.index}]`);
+                        const uploadState = $(`.on_progress #upload_${fileToUpload.index} .upload_state`);
+
+                        form.on("submit", e => {
 
                             e.preventDefault();
 
@@ -303,57 +385,88 @@ class UploadHandlerTool extends Tool
                             formData.append('file', fileToUpload.file);
                             formData.append('media_type', fileToUpload.media_type); // will be saved in Request->request->parameters['media_type']
 
-                            const xhr = new XMLHttpRequest();
+                            setTimeout( () => {
+                                jQuery.ajax({
+                                    url: "/upload/media",
+                                    type: "POST",
+                                    data: formData,
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    xhr: function () {
+                                        //upload Progress
+                                        let xhr = jQuery.ajaxSettings.xhr();
+                                        if (xhr.upload) {
+                                            xhr.upload.addEventListener('progress', function (event) {
+                                                var percent = 0;
+                                                var position = event.loaded || event.position;
+                                                var total = event.total;
+                                                if (event.lengthComputable) {
+                                                    percent = Math.ceil(position / total * 100);
+                                                }
+                                                //update progressbar
+                                                $(`.on_progress #upload_${fileToUpload.index} progress`).addClass("on_upload").attr("value", percent);
+                                                uploadState.html(`Téléchargement en cours ... (${percent}%)`);
+                                                //jQuery('#progress' + (index + 1) + ' .progress-bar').css("left", +percent + "%");
 
-                            // on upload progress
-                            xhr.upload.addEventListener("progress", e => {
+                                                if(percent === 100)
+                                                    uploadState.html("Finalisation ...");
 
-                                const percent =  e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+                                                //jQuery('#progress' + (index + 1) + ' .status').text(percent + "%");
+                                            }, true);
+                                        }
 
-                                let progressBarWith = Math.round( percent.toFixed(2) );
+                                        return xhr;
+                                    },
+                                    mimeType: "multipart/form-data",
+                                    success: (response) => {
+                                        uploadState.html("Téléchargement terminé ! <i class='fas fa-check'></i>");
+                                        $(`.on_progress #upload_${fileToUpload.index} progress`).removeClass("on_upload");
+                                        uploadFinished++;
 
-                                $(`.on_progress #upload_${fileToUpload.index} progress`).addClass("on_upload")
-                                                                                        .attr("value", progressBarWith);
+                                        if(uploadFinished === this.__filesToUpload.length)
+                                        {
+                                            //this.__filesToUpload = [];
+                                            if($(`.on_progress .on_progress`).length === 0)
+                                            {
+                                                $('button.upload_abort').fadeOut();
+                                                $(".on_progress .show_media_edit_container").fadeIn();
+                                            }
 
-                                if(progressBarWith === 100)
-                                    $(`.on_progress #upload_${fileToUpload.index} .upload_state`).html("Traitement en cours ...</i>");
+                                            $(".upload-title").text("Traitement de la file terminé");
 
-                                console.log(progressBarWith);
+                                        }
+                                    },
+                                    error: (response, status, error) => {
 
-                            });
+                                        // @TODO: if bad resolution, say : "Media supprimé car non conforme ..."
 
-                            // on upload end
-                            xhr.addEventListener("load", e => {
+                                        if(response.responseText === "513 Bad Resolution")
+                                            uploadState.html(`${this.__errors.bad_resolution} <i class='fas fa-times'></i>`);
 
-                                console.log(e);
+                                        else if(response.responseText === "515 Duplicate File")
+                                            uploadState.html(`${this.__errors.duplicate_file} <i class='fas fa-times'></i>`);
 
-                                $(`.on_progress #upload_${fileToUpload.index} progress`).removeClass("on_upload")
-                                                                                        .addClass("upload_finish");
+                                        else if(response.responseText === "516 Invalid Filename")
+                                            uploadState.html(`${this.__errors.invalid_error} <i class='fas fa-times'></i>`);
 
-                                $(`.on_progress #upload_${fileToUpload.index} .upload_state`).html("Téléchargement réussi <i class='fas fa-check'></i>");
+                                        else if(response.responseText === "517 Empty Filename")
+                                            uploadState.html(`${this.__errors.empty_error} <i class='fas fa-times'></i>`);
 
-                                if(typeof this.__filesToUpload[i + 1] === "undefined")
-                                    if( $(".on_progress .on_upload").length < 1 )
-                                        $(".on_progress .show_media_edit_container").fadeIn();
-
-                                    else
-                                        $(".on_progress .show_media_edit_container").fadeOut();
-
-                            })
-
-
-                            // send data
-                            xhr.open("POST", "/upload/media");
-                            $(`.on_progress #upload_${fileToUpload.index} .upload_state`).html("Téléchargement en cours ...");
-                            xhr.send(formData);
+                                        else
+                                        $(`.on_progress #upload_${fileToUpload.index} .upload_state`).html("Téléchargement annulé suite à une erreur interne ! <i class='fas fa-times'></i>");
+                                        console.log(response.responseText); debugger
+                                    }
+                                });
+                            }, 500);
 
                         });
 
-                        $(`form.upload_form[data-target=${fileToUpload.index}]`).submit();
+                        form.submit();
 
-                    }
+                    } )
 
-                }, 1000);
+                }
 
             })
         }
@@ -365,6 +478,44 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
+    checkMediaNameValidity(mediaName)
+    {
+        const input = $('<input>', {
+            type: 'text',
+            value: mediaName
+        });
+
+        return this.checkFormInputValidity(input);
+
+    }
+
+    checkFormInputValidity(input)
+    {
+
+        let inputIsValid = true;
+        this.__dataCheckingErrors = "";
+
+        if(input.val() === "")
+        {
+            inputIsValid = false;
+            this.__dataCheckingErrors += this.__errors.empty_error + '<br>';
+        }
+
+        if( input.val().match(/(\w)*\.(\w)*/) && input.attr('type') === "text" )
+        {
+            inputIsValid = false;
+            this.__dataCheckingErrors += this.__errors.invalid_error + '<br>';
+        }
+
+        if( input.val().length < 5 && input.attr('type') === "text" )
+        {
+            inputIsValid = false;
+            this.__dataCheckingErrors += this.__errors.too_short_error + '<br>';
+        }
+
+        return inputIsValid;
+
+    }
 
     onClickOnNextButtonShowMediaInfosEditContainer(active)
     {
@@ -376,6 +527,65 @@ class UploadHandlerTool extends Tool
                 //$(".files_selection").fadeOut();
                 $(".on_progress").fadeOut();
                 $(".on_progress table tbody").empty();
+
+                $.each( this.__filesToUpload, (index, fileToUpload) => {
+
+                    const file = fileToUpload.file;
+                    const fileExtension = file.name.split('.').pop();
+                    const fileName = file.name.split('.')[0];
+
+                    const img = new Image();
+                    img.src = window.URL.createObjectURL(file);
+
+                    const fileNameIsValid = this.checkMediaNameValidity(fileName);
+                    //console.log(fileNameIsValid); debugger
+                    let html = `<form class="tr" method="post"> 
+
+                                    <div class="td"><img class="preview" src="${img.src}" alt="${file.name}" /></div>
+                                    
+                                    <div class="td">
+                                        <span>${fileExtension}</span> <br>
+                                        <span>${img.width}*${img.height}px</span> <br>
+                                        <span>__RESOLUTION__</span>
+                                    </div>
+                                    
+                                    <div class="td">
+                                        <div class="hidden">
+                                            <input type="hidden" name="files[${index}][extension]" value="${fileExtension}">
+                                            <input type="hidden" name="files[${index}][old-name]" value="${fileName}">
+                                        </div>
+                                        
+                                        <div>
+                                            <span class="error ${ !fileNameIsValid ? '' : 'hidden'}"> ${ !fileNameIsValid ? this.__dataCheckingErrors : '' } </span> <br>
+                                            <input type="text" name="files[${index}][name]" class="form_input fileName ${ !fileNameIsValid ? 'invalid' : ''}" placeholder="Nom du fichier" value="${fileName}" required="required">
+                                        </div>
+                                      
+                                    </div>
+                                    
+                                    <div class="td media-diff-date-container">
+                                        <button type="button" id="files[${index}]" data-media="files[${index}]" class="add-diff-date">Définir la période de diffusion</button>
+                                    </div>
+                                    
+                                    <div class="td">
+                                        <button class="associate-tag">Associer TAGS</button>
+                                    </div>
+                                    
+                                    <div class="td">
+                                        <button class="associate-product">Associer produit</button>
+                                    </div>
+                                    
+                                    <div class="td">
+                                        <div> 
+                                            <label><input type="radio" name="files[${index}][add-price-incruste]" value="yes" required="required">Oui</label>
+                                            <label><input type="radio" name="files[${index}][add-price-incruste]" value="no" required="required" checked>Non</label> </div>
+                                        </div>
+                                    
+                                </form>`;
+
+                    $(html).appendTo( $(".edit_media_info .tbody") )
+
+                } )
+
                 $(".upload-title").text("Médias à caractériser");
                 $(".edit_media_info").fadeIn();
 
@@ -390,6 +600,183 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
+    onClickOnAddDiffusionDateShowInput(active)
+    {
+
+        if(active)
+        {
+
+            $(".edit_media_info .tbody").on("click.onClickOnAddDiffusionDateShowInput", ".add-diff-date", e => {
+
+                $(e.currentTarget).fadeOut();
+
+                let date = new Date();
+                date.setMonth( date.getMonth() + 1 );
+                const minDate = `${date.getFullYear()}-${(date.getMonth() < 10) ? '0' + date.getMonth() : date.getMonth()}-${date.getDate()}`;
+
+                let html = `<button type="button" class="remove-diffusion-date">Supprimer la periode de diffusion</button> <br>
+                            <label for="${e.currentTarget.id}[diffusion-start-date]">Du</label><input type="date" min="${minDate}" class="form_input" id="${ e.currentTarget.id }[diffusion-start-date]" name="${ $(e.currentTarget).data('media') }[diffusion-start-date]" required="required"> <br>
+                            <label for="${e.currentTarget.id}[diffusion-end-date]">Au</label><input type="date" min="${minDate}" class="form_input" id="${ e.currentTarget.id }[diffusion-end-date]" name="${ $(e.currentTarget).data('media') }[diffusion-end-date]" required="required">`;
+
+                $(e.currentTarget).parent().html( html );
+
+            })
+        }
+        else
+        {
+            $('.add-diff-date').off("click.onClickOnAddDiffusionDateShowInput");
+        }
+
+        return this;
+    }
+
+    onClickOnRemoveDiffusionDateButton(active)
+    {
+
+        if(active)
+        {
+            $(".edit_media_info .tbody").on("click.onClickOnRemoveDiffusionDateButton", ".remove-diffusion-date", e => {
+
+                $(e.currentTarget).parent().html( `<button class="add-diff-date">Définir la période de diffusion</button>` );
+
+            })
+        }
+        else
+        {
+            $('.media-diff-date-container').off("click.onClickOnRemoveDiffusionDateButton", ".remove-diffusion-date");
+        }
+
+        return this;
+    }
+
+    onClickOnSaveButtonSendMediaInfo(active)
+    {
+
+        if(active)
+        {
+            $('.save-media-modif').on('click.onClickOnSaveButtonSendMediaInfo', e => {
+
+                $('.edit_media_info .tbody form').each( (index, form) => {
+
+                    $(form).on("submit", e => {
+
+                        e.preventDefault();
+
+                        jQuery.ajax({
+                            type: 'post',
+                            url: '/edit/media',
+                            data: $(e.currentTarget).serialize(),
+                            success: (response) => {
+                                console.log(response); debugger
+                            },
+                            error: (response, status, error) => {
+
+                                if(response.responseText === "404 File Not Found")
+                                {
+                                    $(form).find('.form_input').parent().find("span.error").text( this.__errors.uploaded_file_not_found_error );
+                                    $(form).find('.form_input').addClass('invalid');
+                                }
+
+                                if(response.responseText === "515 Duplicate File")
+                                {
+                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.duplicate_file );
+                                    $(form).find('.form_input.fileName').addClass('invalid');
+                                }
+
+                                else if(response.responseText === "516 Invalid Filename")
+                                {
+                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.invalid_error );
+                                    $(form).find('.form_input.fileName').addClass('invalid');
+                                }
+
+                                else if(response.responseText === "517 Empty Filename")
+                                {
+                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.empty_error );
+                                    $(form).find('.form_input.fileName').addClass('invalid');
+                                }
+
+                                else if(response.responseText === "518 Too short Filename")
+                                {
+                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.too_short_error );
+                                    $(form).find('.form_input.fileName').addClass('invalid');
+                                }
+
+                                else
+                                    console.log(response.responseText); debugger
+                            },
+                        });
+
+                    });
+
+                    let formIsValid = false;
+                    
+                    $(form).find('.form_input[required="required"]').each( (index, input) => {
+
+                        const inputIsValid = this.checkFormInputValidity( $(input) );
+
+                        if(!inputIsValid)
+                        {
+                            $(input).parent().find("span.error").html( this.__dataCheckingErrors ).removeClass("hidden");
+                            $(input).addClass('invalid');
+                        }
+
+                        else
+                        {
+                            formIsValid = true;
+                            $(input).parent().find("span.error").html("").addClass("hidden");
+                            $(input).removeClass('invalid');
+                        }
+
+                    } );
+
+                    if( formIsValid )
+                        $(form).submit();
+
+                } )
+
+            })
+        }
+        else
+        {
+            $('.save-media-modif').off('click.onClickOnSaveButtonSendMediaInfo');
+        }
+
+        return this;
+    }
+
+    onTypingFileNewNameCheckValidity(active)
+    {
+
+        if(active)
+        {
+            $(".edit_media_info .tbody").on("input.onTypingFileNewNameCheckValidity", ".form_input.fileName", e => {
+
+                const input = $(e.currentTarget);
+                const nameIsValid = this.checkMediaNameValidity(input.val());
+
+                if(!nameIsValid)
+                {
+                    //console.log(this.__dataCheckingErrors); debugger
+                    input.parent().find("span.error").html( this.__dataCheckingErrors ).removeClass("hidden");
+                    input.addClass('invalid');
+                }
+
+                else
+                {
+                    input.parent().find("span.error").html("").addClass("hidden");
+                    input.removeClass('invalid');
+                }
+
+            })
+        }
+
+        else
+        {
+            $(".edit_media_info .tbody").off("input.onTypingFileNewNameCheckValidity", ".form_input.fileName");
+        }
+
+        return this;
+    }
 
     enable()
     {
@@ -401,6 +788,10 @@ class UploadHandlerTool extends Tool
             .onClickOnStartUploadButtonStartUpload(true)
             .onClickOnNextButtonShowMediaInfosEditContainer(true)
             .onClickOnRemoveFileButtonRemoveFileFromList(true)
+            .onClickOnSaveButtonSendMediaInfo(true)
+            .onClickOnAddDiffusionDateShowInput(true)
+            .onClickOnRemoveDiffusionDateButton(true)
+            .onTypingFileNewNameCheckValidity(true)
         ;
     }
 
@@ -415,6 +806,10 @@ class UploadHandlerTool extends Tool
             .onClickOnStartUploadButtonStartUpload(false)
             .onClickOnNextButtonShowMediaInfosEditContainer(false)
             .onClickOnRemoveFileButtonRemoveFileFromList(false)
+            .onClickOnSaveButtonSendMediaInfo(false)
+            .onClickOnAddDiffusionDateShowInput(false)
+            .onClickOnRemoveDiffusionDateButton(false)
+            .onTypingFileNewNameCheckValidity(false)
         ;
     }
 

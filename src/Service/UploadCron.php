@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Video;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -26,9 +27,11 @@ class UploadCron
     private $extension;
     private $destfolder;
     //private $srcfolder = 'D:/node_file_system/';
-    private $srcfolder = 'C:/laragon/www/infowaydev/node_file_system/';
+    private $srcfolder;
     private $repository;
     private $syncOri;
+    private $fileDiffusionStart;
+    private $fileDiffusionEnd;
 
     /**
      * @var ObjectManager
@@ -49,15 +52,18 @@ class UploadCron
      * @param ManagerRegistry $managerRegistry If you give ManagerRegistry (Doctrine), this class can access all app EntityManager
      * @param ParameterBagInterface $parameterBag for access parameter (which is defined in config/services.yaml)
      */
-    public function __construct($customer_name, $filename, $mediatype, ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag)
+    public function __construct(array $taskInfo, ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
-        $this->customer = $customer_name;
+        $this->customer = $taskInfo['customerName'];
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
-        $this->mediatype = $mediatype;
+        $this->mediatype = $taskInfo['mediaType'];
+        $this->fileDiffusionStart = $taskInfo['diffusionStart'];
+        $this->fileDiffusionEnd = $taskInfo['diffusionEnd'];
+        $filename = $taskInfo['fileName'];
 
         // get dynamically the right EntityManager based on customer name
-        $this->entityManager = $managerRegistry->getManager($this->customer);
+        $this->entityManager = $managerRegistry->getManager(strtolower($this->customer));
 
         //$this->repository = new media_rep($this->getCustomerBase($customer));
         $this->repository = $this->entityManager->getRepository(Media::class);
@@ -65,14 +71,16 @@ class UploadCron
 
         $options = ['diff' => 'medias', 'them' => 'thematics', 'sync' => 'synchros'];
         $authorized_files = ['mp4', 'x-matroska', 'avi', 'x-quicktime', 'quicktime', 'bmp', 'png', 'jpg', 'jpeg'];
-        $type_dir = $options[$mediatype];
+        $type_dir = $options[$this->mediatype];
+
+        $this->srcfolder = $this->parameterBag->get('project_dir') . '/../node_file_system';
 
         if($this->mediatype != 'sync') {
-            $this->srcfolder .= $this->customer . '/' . $type_dir . '/';
+            $this->srcfolder .= '/' . $this->customer . '/' . $type_dir . '/';
             $this->destfolder = $this->customer_dir . 'medias/';
         } else {
             //$this->srcfolder = 'C:/inetpub/wwwroot/admin/node_JS/node_ftp_server/temp/';
-            $this->srcfolder = $this->parameterBag->get('project_dir') . '/../inetpub/wwwroot/admin/node_JS/node_ftp_server/temp/';
+            $this->srcfolder .= '/../inetpub/wwwroot/admin/node_JS/node_ftp_server/temp/';
             //$this->destfolder = 'C:/inetpub/wwwroot/upload/' . $customer . '/';
             $this->destfolder = $this->parameterBag->get('project_dir') . '/../inetpub/wwwroot/upload/' . $this->customer . '/';
             $authorized_files = ['mp4', 'x-matroska', 'avi', 'x-quicktime', 'quicktime'];
@@ -89,7 +97,6 @@ class UploadCron
         $this->extension = substr($filename, $last_dot_pos+1);
         $this->filename = substr($filename, 0, $last_dot_pos);
 
-
         if (file_exists($path)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimeType = finfo_file($finfo, $path);
@@ -104,7 +111,7 @@ class UploadCron
                 $this->process($path);
             }
         } else {
-            //dd($path);
+            dd($path);
             $this->errors[] = 'file not found!';
             return;
         }
@@ -115,10 +122,12 @@ class UploadCron
     private function process($media){
 
         $valid_ext = ''; $complete = false;
+
         switch($this->mediatype) {
             case 'diff':
                 if ($this->filetype == 'image') {
                     $complete = $this->imageResize($media);
+                    $complete = true;
                     $valid_ext = 'png';
                     $old_path = $this->customer_dir . 'IMAGES/PRODUITS FIXES/PLEIN ECRAN/';
                 }
@@ -430,6 +439,7 @@ class UploadCron
                 if ($width == 1920 && $height == 1080) {
                     $max_size = false;
                     // On copie simplement la vidéo sans la réencoder dans les répertoires Tizen et LFD!
+                    //dd($video, $this->destfolder . 'high/' . $this->filename . '.mp4');
                     copy($video, $this->destfolder . 'high/' . $this->filename . '.mp4');
                     if($this->mediatype != 'sync') {
                         copy($video, $old_path . 'HIGH/' . $this->filename . '.mp4');
@@ -546,8 +556,14 @@ class UploadCron
                     // file_put_contents(__DIR__ . '/../log/upload.log', 'FTP://La video ' . $this->filename . '.mp4 de format high et se trouvant dans ' . $this->destfolder . 'high/ a ete recopiee dans le repertoire ' . $old_path . ' avec le nom ' . $this->filename . '.mp4' . PHP_EOL, FILE_APPEND);
                 }
                 if($HD) {
-                    // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
-                    copy($video, $this->destfolder . 'video/HD/' . $this->filename . '.mp4');
+
+                    // if end with video/
+                    if (substr($this->destfolder, -strlen('video/')) === 'video/')
+                        copy($video, $this->destfolder . 'HD/' . $this->filename . '.mp4');
+
+                    else
+                        // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
+                        copy($video, $this->destfolder . 'video/HD/' . $this->filename . '.mp4');
                 }
             }
         }
@@ -732,6 +748,7 @@ class UploadCron
         $newThematic = null;
         //$newTemplateContent = new TemplateContents();
 
+
         if ($this->filetype == 'video') {
             $newVideo = new Video();
             /* Création librairie php-ffmpeg en passant par la ligne de commande pour éviter les problèmes d'incompatibilité */
@@ -805,30 +822,29 @@ class UploadCron
                     /*$newTemplateContent->setName($file);
                     $newTemplateContent->setContentType('video');
                     $this->fileID = $this->repository->insert($newTemplateContent);
-                    $templateContentId = $this->fileID;
+                    $templateContentId = $this->fileID;*/
 
-                    $newMedia->setType($this->mediatype);
-                    $newMedia->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo');
-                    $newMedia->setDate(date('Y-m-d'));
-                    $newMedia->setId($this->fileID);
-                    $newMedia->setFilename($file);
-                    $this->fileID = $this->repository->insert($newMedia,$this->fileID);
+                    //$newMedia->setType($this->mediatype);
+                    $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
+                             ->setType($this->mediatype)
+                             ->setCreatedAt(new DateTime())
+                             ->setDiffusionStart($this->fileDiffusionStart)
+                             ->setDiffusionEnd($this->fileDiffusionEnd)
+                             ->setHeight($data['height'])
+                             ->setWidth($data['width'])
+                             ->setName($file)
+                             ->setExtension($ext)
+                             ->setFormat($data['major_brand'])
+                             ->setRatio($ratio)
+                             ->setSampleSize($data['bits_per_raw_sample'] . ' bits')
+                             ->setEncoder($data['encoder'])
+                             ->setVideoCodec($data['codec_long_name'])
+                             ->setVideoCodecLevel($level)
+                             ->setVideoFrequence(substr($data['avg_frame_rate'], 0, -2) . ' img/s')
+                             ->setVideoFrame($data['nb_frames'])
+                             ->setVideoDebit((int)($data['bit_rate'] / 1000) . ' kbit/s')
+                             ->setDuration(round($data['duration'], 2) . ' secondes');
 
-                    $newVideo->setMedia($this->fileID);
-                    $newVideo->setId($templateContentId);
-                    $newVideo->setExtension($ext);
-                    $newVideo->setFormat($data['major_brand']);
-                    $newVideo->setRatio($ratio);
-                    $newVideo->setHeight($data['height']);
-                    $newVideo->setWidth($data['width']);
-                    $newVideo->setSampleSize($data['bits_per_raw_sample'] . ' bits');
-                    $newVideo->setEncoder($data['encoder']);
-                    $newVideo->setVideoCodec($data['codec_long_name']);
-                    $newVideo->setVideoCodecLevel($level);
-                    $newVideo->setVideoFrequence(substr($data['avg_frame_rate'], 0, -2) . ' img/s');
-                    $newVideo->setVideoFrames($data['nb_frames']);
-                    $newVideo->setVideoDebit((int)($data['bit_rate'] / 1000) . ' kbit/s');
-                    $newVideo->setDuration(round($data['duration'], 2) . ' secondes');*/
                 } else {
                     $newThematic = [
                         'filename' => $file,
@@ -853,22 +869,22 @@ class UploadCron
 
                 if ($audio != null) {
                     $data = $infofile['audio'];
-                    /*if ($this->mediatype != 'them') {
+                    if ($this->mediatype != 'them') {
                         $newVideo->setAudioCodec($data['codec_long_name']);
                         $newVideo->setAudioDebit((int)($data['bit_rate'] / 1000) . ' kbit/s');
                         $newVideo->setAudioFrequence($data['sample_rate'] . ' Hz');
                         $newVideo->setAudioChannel($data['channels']);
-                        $newVideo->setAudioFrames($data['nb_frames']);
+                        $newVideo->setAudioFrame($data['nb_frames']);
                     } else {
                         $newThematic['audioCodec'] = $data['codec_long_name'];
                         $newThematic['audioDebit'] = (int)($data['bit_rate'] / 1000) . ' kbit/s';
                         $newThematic['audioFrequence'] = $data['sample_rate'] . ' Hz';
                         $newThematic['audioChannel'] = $data['channels'];
                         $newThematic['audioFrames'] = $data['nb_frames'];
-                    }*/
+                    }
                 }
                 if ($this->mediatype != 'them') {
-                    //$this->error = $this->repository->insert($newVideo);
+                    $this->error = $this->repository->insert($newVideo);
                 } else {
                     $th_rep = new theme_rep();
                     $this->fileID = $th_rep->saveVideoThematic($newThematic);
@@ -877,31 +893,24 @@ class UploadCron
         }
 
         if($this->filetype == 'image') {
-            /*$newImg = new Image();
-            $templateContentId = false;
-            $newTemplateContent = new TemplateContents();
-            $newTemplateContent->setName($this->filename);
-            $newTemplateContent->setContentType('image');
-            $this->fileID = $this->repository->insert($newTemplateContent);
-            $templateContentId = $this->fileID;
+            $newImg = new Image();
 
             list($width, $height) = getimagesize($src);
             $ratio = $this->EstablishFormat($width, $height);
-            $newMedia->setFilename($this->filename);
-            $newMedia->setType($this->mediatype);
-            $newMedia->setId($this->fileID);
-            $newMedia->setSize(round(filesize($src)/(1024*1024), 2) . ' Mo');
-            $newMedia->setDate(date('Y-m-d'));
-            $this->fileID = $this->repository->insert($newMedia,$this->fileID);
+            $newImg->setName($this->filename)
+                   ->setType($this->mediatype)
+                   ->setRatio($ratio)
+                   ->setExtension($this->extension)
+                   ->setWidth($width)
+                   ->setHeight($height)
+                   ->setSize(round(filesize($src)/(1024*1024), 2) . ' Mo')
+                   ->setCreatedAt(new DateTime())
+                   ->setDiffusionStart($this->fileDiffusionStart)
+                   ->setDiffusionEnd($this->fileDiffusionEnd);
 
-            $newImg->setMedia($this->fileID);
-            $newImg->setExtension($this->extension);
-            $newImg->setRatio($ratio);
-            $newImg->setHeight($height);
-            $newImg->setWidth($width);
-            $newImg->setId($templateContentId);
-            $this->repository->insert($newImg, $this->fileID);*/
+            $this->repository->insert($newImg);
         }
+
     }
 
     public function EstablishFormat($width, $height) {
@@ -909,16 +918,16 @@ class UploadCron
 
         switch ($ratio) {
             case 16 / 9:
-                $format = 'plein-écran horizontal (16/9)';
+                $format = '16/9';
                 break;
             case 9 / 16:
-                $format = 'plein-écran vertical (9/16)';
+                $format = '9/16';
                 break;
             case 9 / 8;
-                $format = 'demi-écran vertical (9/8)';     // modif
+                $format = '9/8';     // modif
                 break;
             case 8 / 9:
-                $format = 'demi-écran horizontal (8/9)';       // modif
+                $format = '8/9';       // modif
                 break;
             default:
                 $format = 'non supporté!';

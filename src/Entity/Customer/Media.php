@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorColumn(name="media_type", type="string")
  * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video" })
  */
 class Media
@@ -39,12 +39,12 @@ class Media
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", name="diffusion_start" ,nullable=false)
+     * @ORM\Column(type="datetime", name="diffusion_start" ,nullable=false, options={"default": "CURRENT_TIMESTAMP"})
      */
     private $diffusionStart;
 
     /**
-     * @ORM\Column(type="datetime", name="diffusion_end" ,nullable=true)
+     * @ORM\Column(type="datetime", name="diffusion_end" ,nullable=false)
      */
     private $diffusionEnd;
 
@@ -77,6 +77,11 @@ class Media
      * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Product", inversedBy="media")
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $type;
 
     public function __construct()
     {
@@ -246,6 +251,18 @@ class Media
         if ($this->products->contains($product)) {
             $this->products->removeElement($product);
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

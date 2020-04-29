@@ -44,6 +44,16 @@ class FfmpegTasks
     private $registered;
 
     /**
+     * @ORM\Column(type="datetime", name="file_diffusion_start" ,nullable=false, options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $fileDiffusionStart;
+
+    /**
+     * @ORM\Column(type="datetime", name="file_diffusion_end" ,nullable=false)
+     */
+    private $fileDiffusionEnd;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $started;
@@ -119,6 +129,30 @@ class FfmpegTasks
     public function setRegistered(?\DateTimeInterface $registered): self
     {
         $this->registered = $registered;
+
+        return $this;
+    }
+
+    public function getFileDiffusionStart(): ?\DateTimeInterface
+    {
+        return $this->fileDiffusionStart;
+    }
+
+    public function setFileDiffusionStart(?\DateTimeInterface $diffusionStart): self
+    {
+        $this->fileDiffusionStart = $diffusionStart;
+
+        return $this;
+    }
+
+    public function getFileDiffusionEnd(): ?\DateTimeInterface
+    {
+        return $this->fileDiffusionEnd;
+    }
+
+    public function setFileDiffusionEnd(?\DateTimeInterface $diffusionEnd): self
+    {
+        $this->fileDiffusionEnd = $diffusionEnd;
 
         return $this;
     }

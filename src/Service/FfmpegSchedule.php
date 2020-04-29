@@ -80,25 +80,29 @@ class FfmpegSchedule
     /**
      * Register a new ffmpeg task in db
      *
-     * @param Customer $customer
-     * @param string $fileName
-     * @param string $fileType
-     * @param string $mediaType
-     * @throws \Exception
+     * @param array $fileInfo
+     * @throws Exception
      */
-    public function pushTask(Customer $customer, string $fileName, string $fileType, string $mediaType)
+    public function pushTask(array $fileInfo)
     {
 
-        if(strlen($mediaType) > 4)
+        if(strlen($fileInfo['mediaType']) > 4)
             throw new \Exception(sprintf("Error ! mediaType maxlength is 4 but argument given length is over than it !"));
+
+        $customer = $fileInfo['customer'];
+        $fileName = $fileInfo['fileName'];
+        $fileType = $fileInfo['fileType'];
+        $mediaType = $fileInfo['mediaType'];
+        $diffusionStartDate = $fileInfo['diffusionStart'];
+        $diffusionEndDate = $fileInfo['diffusionEnd'];
 
         $ffmpeg_task = new FfmpegTasks();
         $ffmpeg_task->setFilename($fileName)
                     ->setFiletype($fileType)
                     ->setMediatype($mediaType)
-                    ->setRegistered(new \DateTime())
-                    //->setCustomer($customer)
-        ;
+                    ->setFileDiffusionStart( $diffusionStartDate )
+                    ->setFileDiffusionEnd( $diffusionEndDate )
+                    ->setRegistered(new \DateTime());
 
         $customer->addUploadTask($ffmpeg_task);
 
@@ -169,7 +173,15 @@ class FfmpegSchedule
                             continue;
                         }
 
-                        $encoding = new UploadCron($customer_name, $video, 'sync', $this->managerRegistry, $this->parameterBag);
+                        $taskInfo = [
+                            'fileName' => $video,
+                            'customerName' => $customer_name,
+                            'mediaType' => 'sync',
+                            'diffusionStart' => $task->getFileDiffusionStart(),
+                            'diffusionEnd' => $task->getFileDiffusionEnd()
+                        ];
+
+                        $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
                         foreach($encoding->getErrors() as $error) {
                             $all_sync_errors[] = $error;
                         }
@@ -186,7 +198,14 @@ class FfmpegSchedule
                     $this->updateTask($task, 'finished');
                 } else {
                     $this->updateTask($task, 'started');
-                    $encoding = new UploadCron($customer_name, $task->getFilename(), $task->getMediatype(), $this->managerRegistry, $this->parameterBag);
+                    $taskInfo = [
+                        'fileName' => $task->getFilename(),
+                        'customerName' => $customer_name,
+                        'mediaType' => $task->getMediatype(),
+                        'diffusionStart' => $task->getFileDiffusionStart(),
+                        'diffusionEnd' => $task->getFileDiffusionEnd()
+                    ];
+                    $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
                     $errors = $encoding->getErrors();
                     $error_string = implode(' || ', $errors);
                     if($error_string != '') {

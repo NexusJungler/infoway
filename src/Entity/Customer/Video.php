@@ -17,12 +17,6 @@ class Video extends Media
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media", inversedBy="video", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $media;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $format;
@@ -95,18 +89,6 @@ class Video extends Media
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getMedia(): ?Media
-    {
-        return $this->media;
-    }
-
-    public function setMedia(Media $media): self
-    {
-        $this->media = $media;
-
-        return $this;
     }
 
     public function getFormat(): ?string

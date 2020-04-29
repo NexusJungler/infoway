@@ -13,12 +13,27 @@ parameters:
     upload_dir: '%kernel.project_dir%/public/upload'
     sys_path:
         #datas: "D:/main"
-        datas: "C:/laragon/www/infowaydev/main"
+        datas: "C:/laragon/www/infoway/main"
 
-    logoAuthorizedMimeTypes:
-        - png
+    authorizedExtensions:
+        - jpg
         - jpeg
-        
+        - png
+        - bmp
+        - gif
+        - svg
+        - mp4
+        - avi
+        - 3gp
+        - mp3
+        - ppt
+        - pptx
+        - pdf
+        - doc
+        - docx
+
+
+
     passwordResetTokenTimer: 1 # 1h
     mailer_user: noreply@infoway.fr
     mailer_password: Annesivy1974
