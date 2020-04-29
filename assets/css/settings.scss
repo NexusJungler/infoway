@@ -387,3 +387,96 @@
         }
     }
 }
+
+.create-criteres{
+    .form-content{
+        padding: 0;
+        .row{
+            padding: 15px 25px;
+            .input-custome{
+                height: 30px;
+            }
+            .form-label{
+                padding-top: 0.3rem;
+                color: #283338;
+            }
+            &:first-child{
+                padding: 15px 10px 0px 10px;
+                background: #C0CCD1 0% 0% no-repeat padding-box;
+                
+                .row{
+                    &:first-child{
+                        width: 30%;
+                    }
+                    &:last-child{
+                        width: 70%;
+                        .form-label{
+                            width: 20%;
+                        }
+                        .input-custome{
+                            width: 100%;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        .row-multiple{
+            margin-top: 10px;
+            .form-label{
+                width: 17%;
+            }
+            .input-custome{
+                width: 250px;
+            }
+        }
+        .content-criteres{
+            margin-bottom: 50px;
+            .title{
+                width: 20%;
+                text-align: right;
+            }    
+            .content-criteres-bloc{
+                height: 160px;
+                max-height: 250px;
+                scroll-behavior: auto;
+                .row-criteres{    
+                    display: flex;
+                    padding: 15px 25px;
+                    .selected{
+                        label{
+                            width: 125px;
+                            display: inline-block;
+                            font: 18px 'Barlow';
+                            color: #899CA4;
+                        }
+                    }
+                    .input-custome{
+                        width: 250px;
+                        margin: 0px 40px 0 20px;
+                    }
+                    .input-custome-desc {
+                        width: 660px;
+                    }
+                    
+                }
+            }
+
+            .btn-add{
+                width: 28.5%;
+                text-align: right;
+                .btn{
+                    width: 250px;
+                }
+            }
+
+        }
+    
+        .btn-save{
+            background: #E3E3E3 0% 0% no-repeat padding-box;
+            padding: 10px;
+            text-align: center;
+        }
+
+    }
+}

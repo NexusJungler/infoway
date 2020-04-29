@@ -45,6 +45,7 @@ class CriterionListController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // dd($request->request);
             $criterionPositionInlist = 0 ;
             foreach($criterionList->getCriterions() as $criterion){
                 if ( $criterion->getName() === null ) {

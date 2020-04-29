@@ -57,3 +57,9 @@ toolBox.activeTool("CustomerCreatorHandler")
        .activeTool("UploadHandlerTool")
 ;
 
+let i = 2;
+$(".btn-add .btn-add-critiere").click(function(){
+       i++;
+       $('.content-criteres-bloc').append('<div class="row-criteres"> <div class="selected"><label for="criterion_list_criterions_'+i+'_selected">choix n°'+i+'</label><input type="checkbox" id="criterion_list_criterions_'+i+'_selected" name="criterion_list[criterions]['+i+'][selected]" class="checkbox-custome" value="'+i+'"></div><div><label for="criterion_list_criterions_'+i+'_name"> </label><input type="text" id="criterion_list_criterions_'+i+'_name" name="criterion_list[criterions]['+i+'][name]" class="input-custome"></div><div><label for="criterion_list_criterions_'+i+'_description">Description</label><input type="text" id="criterion_list_criterions_'+i+'_description" name="criterion_list[criterions]['+i+'][description]" class="input-custome input-custome-desc "></div></div>')
+})
+

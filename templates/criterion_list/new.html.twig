@@ -1,11 +1,25 @@
-{% extends 'base.html.twig' %}
+{% block title %}Gestion des Critéres{% endblock %}
 
-{% block title %}New CriterionList{% endblock %}
+{% extends 'setting.html.twig' %}
 
-{% block body %}
-    <h1>Create new CriterionList</h1>
+{% block settingtitle %}
+     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critéres', 'showSecondTitles': true } %}
+{% endblock %}
 
-    {{ include('criterion_list/_form.html.twig') }}
+{% block maincontent %}
+    <section class="wrapper_tabcontent">
 
-    <a href="{{ path('criterion_list_index') }}">back to list</a>
+        <div id="setting-criteres" class="tab-content current create-criteres">
+        
+            <div class="tab-content-title">
+                <h3 class="title">Créer liste de Critéres</h3>
+            </div>
+            
+            {{ include('criterion_list/_form.html.twig') }}
+
+            <a href="{{ path('criterion_list_index') }}">back to list</a>
+        </div>
+        
+    <section>
+
 {% endblock %}

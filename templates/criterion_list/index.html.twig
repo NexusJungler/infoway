@@ -1,67 +1,80 @@
-{% extends 'base.html.twig' %}
+{% block title %}Gestion des Critéres{% endblock %}
 
-{% block title %}CriterionList index{% endblock %}
+{% extends 'setting.html.twig' %}
 
-{% block body %}
-<main class="main main_setting">
-        <div class="main-content">
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('criterion') }}
+{% endblock %} #}
 
-            <section class="jumbotron">
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'showSecondTitles': true } %}
-                
-                <article class="wrapper">
-                    <div class="wrapper-content">
-                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
-                        <ul class="tabs">
-                            <a href="{{ path('app:enseigne') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
-                            <a href="{{ path('users:view') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
-                            <a href="{{ path('criterion') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'criterion' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
-                            <a href="{{ path('tags_index') }}"><li class="tablinks  {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
-                        </ul>
-                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
+{% block settingtitle %}
+     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critéres', 'showSecondTitles': true } %}
+{% endblock %}
+
+{% block maincontent %}
+    <section class="wrapper_tabcontent">
+
+        <div id="setting-criteres" class="tab-content current">
+            <article>
+            </article>
+
+
+            <article class="tab-content-title">
+                <h3 class="title">Gestion des Critéres</h3>
+                <p>SUPER WILD COFFEE</p>
+            </article>
+
+            <article class="display setting-display ">
+                <div class="display-content">
+                    <div class="display-btn">
+                        <a href="{{ path('criterion_list_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
                     </div>
-                </article>
+                </div>
+            </article>
 
-            </section>
+            <article class="content-tags table"> 
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Multiple</th>
+                            <th>Description</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for criterion_list in criterion_lists %}
+                    	
+                        <tr>
+                            <td>{{ criterion_list.id }}</td>
+                            <td>{{ criterion_list.name }}</td>
+                            <td>{{ criterion_list.multiple ? 'Yes' : 'No' }}</td>
+                            <td>{{ criterion_list.description }}</td>
+                            <td>
+                                <a href="{{ path('criterion_list_show', {'id': criterion_list.id}) }}">show</a>
+                                <a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                    {% endfor %}
 
-            <section>
-                {% block  maincontent %}
-                    <h1>CriterionList index</h1>
+                    </tbody>
+                </table>
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Multiple</th>
-                                    <th>Description</th>
-                                    <th>actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for criterion_list in criterion_lists %}
-                                <tr>
-                                    <td>{{ criterion_list.id }}</td>
-                                    <td>{{ criterion_list.name }}</td>
-                                    <td>{{ criterion_list.multiple ? 'Yes' : 'No' }}</td>
-                                    <td>{{ criterion_list.description }}</td>
-                                    <td>
-                                        <a href="{{ path('criterion_list_show', {'id': criterion_list.id}) }}">show</a>
-                                        <a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a>
-                                    </td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="5">no records found</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                {% endblock %}
-            </section>
+    
+            <article>
 
-        </div>
-        <a href="{{ path('criterion_list_new') }}">Create new</a>
-    </main>
+            
+
+        <div>
+
+    <section>
 
 {% endblock %}

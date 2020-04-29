@@ -47,6 +47,7 @@ Encore
     
     //settings
     .addEntry('settings-user', './assets/js/settings/settings_user.js')
+    // .addEntry('criterion', './assets/js/settings/criterion.js')
 
     // Product
     .addEntry('product', './assets/js/product.js')

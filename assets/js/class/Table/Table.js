@@ -90,29 +90,17 @@ class Table  {
 
     table() {	
         
-        
-        
-        // popup
-
-        // $(".add-table").click(function(){
-        //     $('.add-popup').show();
-        // });
-
-        // $('.btn-popupclose').click(function(){
-        //     $('.add-popup').hide();
-        // });
-
-        /*$('.add-table').click(function () {
+        $('.add-table').click(function () {
             $('.add-popup').addClass('is-open');
             return false;
           });
         
         $('.btn-popupclose').click(function () {
             $('.add-popup').removeClass('is-open');
-        });*/
-
-
-          
+        });
+        
+        
+        // popup
 
         // let tableId= [
         //     "f-name",

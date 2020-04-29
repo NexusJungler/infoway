@@ -1,5 +1,9 @@
 {% extends 'setting.html.twig' %}
 
+{% block settingtitle %}
+     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
+{% endblock %}
+
 {% block maincontent %}
 <section id="wrapper_tabcontent">
     <article id="setting-enseigne" class="tab-content current">
