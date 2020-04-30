@@ -57,6 +57,7 @@ class SiteController extends AbstractController
         return $this->render('sites/new.html.twig', [
             'site' => $site,
             'form' => $form->createView(),
+            'currentCustomer' => $currentCustomer
         ]);
     }
 

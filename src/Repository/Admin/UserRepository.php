@@ -104,7 +104,6 @@ class UserRepository extends ServiceEntityRepository
 
         }
 
-
         return $usersWithRoleBellowInDb ;
     }
     //Methode de recuperaton d un user present  recupere de la base admin avec ses sites recupere dans chaque base correspondante

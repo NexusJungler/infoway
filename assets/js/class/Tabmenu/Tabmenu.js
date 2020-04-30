@@ -29,6 +29,17 @@ constructor() {
       $(".tbody-content ."+tab_list_enseigne).addClass('current');
     })
 
+    $(".tab-content-criteres .modified-criterion").click(function(){
+
+      $.each($(".row-criterion input[type='checkbox']:checked"), function(){
+        var id_criterion = $(this).attr('data-criterion');
+        
+        console.log(id_criterion);
+      })
+    })
+    
+
+
 
     /**  media test **/
 
@@ -120,6 +131,7 @@ constructor() {
           $(".nav-prev").show();
         }
       });
+      
     console.log( 'init-scroll: ' + $(".nav-next").scrollLeft() );
     $(".nav-next").on("click", function(){
       $(".wrapper-content").animate( { scrollLeft: '+=460' }, 200);

@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\TagsList;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
+use App\Form\Customer\TagListType;
 use App\Form\Customer\TagType;
 use App\Repository\Customer\TagsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -40,10 +42,12 @@ class TagController extends AbstractController
     public function new(Request $request, SessionInterface $session, Profiler $profiler): Response
     {
 
-        $tag = new Tag() ;
+        $tagsList = new TagsList() ;
         $currentCustomer = $session->get('current_customer') ;
         $currentUser = $session->get('user') ;
 
+        $tagExemple = new Tag() ;
+        $tagsList->addTag( $tagExemple ) ;
 
         if( ! $currentCustomer instanceof Customer ) throw new \Error('invalid Customer') ;
         if( ! $currentUser instanceof User ) throw new \Error('invalid User') ;
@@ -55,27 +59,30 @@ class TagController extends AbstractController
         $sitesPossessedByCustomer =  $customerSiteRepo->getSitesByUserAndCustomer($currentUser,$currentCustomer) ;
         $datasToPassToTagForm = ['sites' =>$sitesPossessedByCustomer ] ;
 
-        $form = $this->createForm(TagType::class, $tag , ['sites' => $datasToPassToTagForm]);
+        $form = $this->createForm(TagListType::class, $tagsList , ['sites' => $datasToPassToTagForm]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $sitesSelected = $tag->getSites() ;
+            $sitesSelected = $tagsList->getSites() ;
 
             foreach($sitesSelected as $siteSelected){
                 if ( ! in_array ($siteSelected , $sitesPossessedByCustomer) ) throw new \Error('One site is not possessed ByUser, impossible to affect tag') ;
             }
             if( $sitesSelected->count() < 1 ) throw new \Error('You need to affect minimum one site to the tag created') ;
+            if( $tagsList->getTags()->count() < 1 ) throw new \Error('no tags created') ;
 
-            $customerManager->persist($tag);
+            foreach( $tagsList->getTags() as $tag ){
+                $customerManager->persist( $tag );
+            }
             $customerManager->flush();
 
             return $this->redirectToRoute('tags_index');
         }
 
         return $this->render('tags/new.html.twig', [
-            'tag' => $tag,
+            'tagsList' => $tagsList,
             'form' => $form->createView(),
         ]);
     }
