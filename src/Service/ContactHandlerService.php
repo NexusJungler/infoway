@@ -24,7 +24,7 @@ class ContactHandlerService {
 
 
     public function isFirstNameValid( $firstName , ?CustomerError $errorParent = null) : bool{
-        if(!  is_string($firstName) ){
+        if(  is_string($firstName) ){
             return true;
         }else{
             $error = new InvalidContactFirstNameError() ;

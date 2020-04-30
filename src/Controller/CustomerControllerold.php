@@ -37,6 +37,7 @@ class CustomerControllerold extends AbstractController
         if($form->isSubmitted() AND $form->isValid())
         {
 
+            dd($form);
             $logoFile = $form->get('logoFile')->getData();
 
             if($logoFile)
@@ -51,9 +52,8 @@ class CustomerControllerold extends AbstractController
                     );
                 }
                 catch (FileException $e) {
-                    dd($e->getMessage());
+//                    dd($e->getMessage());
                 }
-
                 $customer->setLogo($newFileName);
 
             }

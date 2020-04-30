@@ -51,7 +51,7 @@ class Customer
 
     /**
      * One Customer has One Cart.
-     * @ORM\OneToOne(targetEntity="Contact", mappedBy="customer")
+     * @ORM\OneToOne(targetEntity="Contact", mappedBy="customer", cascade={"persist"})
      */
     private $contact;
 

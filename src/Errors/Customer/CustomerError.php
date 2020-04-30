@@ -2,6 +2,8 @@
 
 namespace App\Errors;
 
+use App\Entity\Admin\Customer;
+
 class CustomerError {
 
     private ?string $message = null ;
@@ -15,7 +17,8 @@ class CustomerError {
     public function __construct(?string $message = null)
     {
         $this->message = $message;
-        if(!$this->column !== null && $this->message !== null ) $this->errorValue  = [$this->column => $this->message ] ;
+        if($this->column !== null && $this->message !== null ) $this->errorValue  = [$this->column => $this->message ] ;
+
     }
 
 
@@ -36,8 +39,8 @@ class CustomerError {
 class InvalidCustomerNameError extends CustomerError {
     public function __construct()
     {
-        parent::__construct('Le nom choisi est invalide') ;
         $this->column = 'name' ;
+        parent::__construct('Le nom choisi est invalide') ;
     }
 
 } ;
@@ -45,35 +48,68 @@ class InvalidCustomerNameError extends CustomerError {
 class InvalidCustomerSitesError extends CustomerError {
     public function __construct()
     {
-        parent::__construct('Impossible de reconnaitre les sites selectionnés') ;
         $this->column = 'sites' ;
+        parent::__construct('Impossible de reconnaitre les sites selectionnés') ;
     }
 
 } ;
 
-class InvalidCustomerLogo  extends ContactError {
+class InvalidCustomerLogo  extends CustomerError {
     public function __construct()
     {
-        parent::__construct("Veuillez entrer un logo valide") ;
         $this->column = 'logo' ;
+        parent::__construct("Veuillez entrer un logo valide") ;
     }
 
 } ;
 
-class InvalidCustomerUsers extends ContactError {
+class InvalidCustomerUsers extends CustomerError {
     public function __construct()
     {
-        parent::__construct("Impossible de reconnaitre les users selectionnés") ;
         $this->column = 'users' ;
+        parent::__construct("Impossible de reconnaitre les users selectionnés") ;
     }
 
 } ;
 
-class InvalidCustomerContact extends ContactError {
+class InvalidCustomerContact extends CustomerError {
     public function __construct()
     {
-        parent::__construct("Veuillez entrer un contact valide") ;
         $this->column = 'contact' ;
+        parent::__construct("Veuillez entrer un contact valide") ;
     }
 
 } ;
+
+class ExistingCustomerError extends CustomerError {
+    public function __construct()
+    {
+        $this->column = 'name' ;
+        parent::__construct("Un client portant le même nom existe déja ") ;
+    }
+}
+
+class ExistingDatabaseError extends CustomerError {
+    public function __construct()
+    {
+        $this->column = 'name' ;
+        parent::__construct("Impossible de saisir ce nom, veuillez en choisir un autre") ;
+
+    }
+}
+
+class CustomerCreationGeneralError extends CustomerError {
+    public function __construct()
+    {
+        $this->column = 'name' ;
+        parent::__construct("Une erreur est survenu lors de la tentative de création du client. Veuillez reessayer ") ;
+
+    }
+}
+class CustomerDatabaseCreationError extends CustomerCreationGeneralError {
+    public function __construct()
+    {
+        parent::__construct() ;
+
+    }
+}

@@ -44,7 +44,7 @@ class DatabaseAccessHandler
         $statement->execute();
         $databaseNames = $statement->fetchAll();
 
-        return $this->__arraySearchRecursive->search($databaseName, $databaseNames) !== false;
+        return $this->__arraySearchRecursive->search($databaseName, $databaseNames) ;
     }
 
 
@@ -103,9 +103,9 @@ class DatabaseAccessHandler
             ];
         }
 
-        if(!array_key_exists(ucfirst($databaseName), array_keys($doctrineConfig['doctrine']['orm']['entity_managers'])))
+        if(!array_key_exists(strtolower($databaseName), array_keys($doctrineConfig['doctrine']['orm']['entity_managers'])))
         {
-            $doctrineConfig['doctrine']['orm']['entity_managers'][ucfirst($databaseName)] = [
+            $doctrineConfig['doctrine']['orm']['entity_managers'][strtolower($databaseName)] = [
                 'connection' => $databaseName,
                 'mappings' => [
                     $databaseName => [

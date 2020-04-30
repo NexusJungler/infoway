@@ -9,6 +9,7 @@ use App\Service\ContactHandlerService;
 use App\Service\CustomerHandlerService;
 use App\Service\DatabaseAccessHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,19 +40,14 @@ class CustomerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $datasValid = $customerHandler->areCustomerDatasValid($customer);
-            return $this->redirectToRoute('admin_customers_new');
+            if  (   !$customerHandler->areCustomerDatasValid($customer)
+                ||  $customerHandler->isCustomerWithNameEnteredAlreadyExist($customer)
+                ||  !$customerHandler->handleCustomerLogoFromForm( $customer, $form )
+                ||  !$customerHandler->createCustomerDatabase( $customer )
+                ||  !$customerHandler->insertCustomerInDb($customer)
 
-            $entityManager = $this->getDoctrine()->getManager();
+                )   return $this->redirectToRoute('admin_customers_new');
 
-            if ( $customerService->isCustomerExist( $customer->getName() ) ) throw new \Error('existing Customer') ;
-            if ( $databaseHandler->databaseExist( $customer->getName() ) )throw new \Error('existing database') ;
-
-
-
-
-            $entityManager->persist($customer);
-            $entityManager->flush();
 
             return $this->redirectToRoute('admin_customers_index');
         }

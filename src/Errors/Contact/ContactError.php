@@ -30,8 +30,8 @@ class ContactError {
 class InvalidContactFirstNameError extends ContactError {
     public function __construct()
     {
-        parent::__construct('firstName need to be a string') ;
         $this->column = 'firstName' ;
+        parent::__construct('firstName need to be a string') ;
     }
 
 } ;
@@ -39,8 +39,8 @@ class InvalidContactFirstNameError extends ContactError {
 class InvalidContactLastNameError extends ContactError {
     public function __construct()
     {
-        parent::__construct('lastName need to be a string') ;
         $this->column = 'lastName' ;
+        parent::__construct('lastName need to be a string') ;
     }
 
 } ;
@@ -48,8 +48,8 @@ class InvalidContactLastNameError extends ContactError {
 class InvalidEmailError extends ContactError {
     public function __construct()
     {
-        parent::__construct("Veuillez entrer un email valide") ;
         $this->column = 'email' ;
+        parent::__construct("Veuillez entrer un email valide") ;
     }
 
 } ;
@@ -57,8 +57,8 @@ class InvalidEmailError extends ContactError {
 class InvalidPhoneError extends ContactError {
     public function __construct()
     {
-        parent::__construct("Veuillez entrer un telephone valide") ;
         $this->column = 'phone' ;
+        parent::__construct("Veuillez entrer un telephone valide") ;
     }
 
 } ;
@@ -66,8 +66,8 @@ class InvalidPhoneError extends ContactError {
 class InvalidPositionError extends ContactError {
     public function __construct()
     {
-        parent::__construct("Veuillez entrer un poste valide") ;
         $this->column = 'position' ;
+        parent::__construct("Veuillez entrer un poste valide") ;
     }
 
 } ;
