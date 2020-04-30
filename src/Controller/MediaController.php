@@ -8,6 +8,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Synchro;
 use App\Repository\Admin\CustomerRepository;
+use App\Repository\Admin\FfmpegTasksRepository;
 use App\Repository\Customer\MediaRepository;
 use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
@@ -22,6 +23,7 @@ use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class MediaController extends AbstractController
 {
@@ -55,7 +57,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, MediaRepository $mediaRepository, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, MediaRepository $mediaRepository, ParameterBagInterface $parameterBag, SerializerInterface $serializer): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -105,40 +107,19 @@ class MediaController extends AbstractController
         $mimeType = finfo_file($finfo, $path);
         $filetype = strstr($mimeType, '/', true);
 
-        if(!isset($file['diffusion-start-date']) OR empty($file['diffusion-start-date']))
-            // now
-            $diffusionStartDate = new DateTime();
-
-        else
-            // create date with user choice
-            $diffusionStartDate = new DateTime($file['diffusion-start-date']);
-
-        if(!isset($file['diffusion-end-date']) OR empty($file['diffusion-end-date']))
-        {
-            // now
-            $diffusionEndDate = new DateTime();
-            // add 30 year
-            $diffusionEndDate->modify('+30 year');
-        }
-        else
-            // create date with user choice
-            $diffusionEndDate = new DateTime($file['diffusion-end-date']);
-
         $fileName = pathinfo($file['name'])['filename'] . '.' . pathinfo($file['name'])['extension'];
 
         $fileInfo = [
             'fileName' => $fileName,
             'customer' => $customer,
             'fileType' => $filetype,
-            'mediaType' => $mediaType,
-            'diffusionStart' => $diffusionStartDate,
-            'diffusionEnd' => $diffusionEndDate,
-            'containIncruste' => ( $file['add-price-incruste'] === 'yes' ) ? true : false,
+            'type' => $mediaType,
+            'extension' => $real_file_extension,
         ];
 
         // register Ffmpeg task
         // a CRON will be encode media after
-        $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $cronLogger);
+        $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $serializer);
         $ffmpegSchedule->pushTask($fileInfo);
 
         return new Response("200 OK", Response::HTTP_OK);
@@ -169,7 +150,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function editMedia(Request $request, MediaRepository $mediaRepository, CustomerRepository $customerRepository, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger)
+    public function editMedia(Request $request, MediaRepository $mediaRepository, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository)
     {
 
         $customer = $customerRepository->findOneByName('Kfc'); // dynamic session variable (will change each time user select customer in select)
@@ -189,9 +170,7 @@ class MediaController extends AbstractController
             else if(strlen($file['name']) < 5)
                 return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-            else if(!$mediaRepository->findOneByName($file['old-name']))
-                return new Response("404 File Not Found", Response::HTTP_INTERNAL_SERVER_ERROR);
-
+            // @TODO: update Ffmpeg task
             else
             {
 
@@ -213,29 +192,58 @@ class MediaController extends AbstractController
                 $root = $this->getParameter('project_dir') . '/../node_file_system/';
                 $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
 
+                if(!isset($file['diffusion-start-date']) OR empty($file['diffusion-start-date']))
+                    // now
+                    $diffusionStartDate = new DateTime();
+
+                else
+                    // create date with user choice
+                    $diffusionStartDate = new DateTime($file['diffusion-start-date']);
+
+                if(!isset($file['diffusion-end-date']) OR empty($file['diffusion-end-date']))
+                {
+                    // now
+                    $diffusionEndDate = new DateTime();
+                    // add 30 year
+                    $diffusionEndDate->modify('+30 year');
+                }
+                else
+                    // create date with user choice
+                    $diffusionEndDate = new DateTime($file['diffusion-end-date']);
+
+                if($diffusionEndDate < $diffusionStartDate)
+                    throw new Exception("Date de fin ne peut pas être inférieur à la date de début");
+
+                $task = $ffmpegTasksRepository->findOneBy(['finished' => null, 'filename' => $file['old-name'].".".$file['extension']]);
+                if(!$task)
+                    throw new Exception(sprintf("No Task found with filename '%s' which is not finished !", $file['old-name'].".".$file['extension']));
+
+                $mediaInfo = $task->getMedia();
+                $mediaInfo['name'] = $file['name'];
+                $mediaInfo['diffusionStart'] = $diffusionStartDate;
+                $mediaInfo['diffusionEnd'] = $diffusionEndDate;
+                // @TODO: insert tags and products if exist
+                //$mediaInfo['tags'] = $tags;
+                //$mediaInfo['products'] = $products;
+
+                $task->setMedia($mediaInfo);
+
                 // if user change file name
                 // rename uploaded file
                 if($file['name'] !== $file['old-name'])
                 {
+
+                    $task->setFilename($fileName);
+
                     rename($root . $customer->getName() . '/' . $mediaType . '/' . $file['old-name'] .'.' . $file['extension'], $path);
 
                     // debug
                     // comment this at the end
                     copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
+
                 }
 
-                // @TODO: update media
-                // find media (with name ? id ?)
-                // if not exist => media is not encoded
-                // in this case, insert ?
-
-                $media = $mediaRepository->findOneByName($file['old-name']);
-
-
-                $mediaInfo = [
-
-                ];
-
+                $this->getDoctrine()->getManager('default')->flush();
 
             }
 

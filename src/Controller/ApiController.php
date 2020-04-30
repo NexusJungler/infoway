@@ -5,7 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\User;
-use App\Normalizer\ApiNormalizer;
+//use App\Normalizer\ApiNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

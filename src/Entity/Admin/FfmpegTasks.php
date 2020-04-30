@@ -44,16 +44,6 @@ class FfmpegTasks
     private $registered;
 
     /**
-     * @ORM\Column(type="datetime", name="file_diffusion_start" ,nullable=false, options={"default": "CURRENT_TIMESTAMP"})
-     */
-    private $fileDiffusionStart;
-
-    /**
-     * @ORM\Column(type="datetime", name="file_diffusion_end" ,nullable=false)
-     */
-    private $fileDiffusionEnd;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $started;
@@ -67,6 +57,11 @@ class FfmpegTasks
      * @ORM\Column(type="text", nullable=true)
      */
     private $errors;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $media = [];
 
     public function getId(): ?int
     {
@@ -133,30 +128,6 @@ class FfmpegTasks
         return $this;
     }
 
-    public function getFileDiffusionStart(): ?\DateTimeInterface
-    {
-        return $this->fileDiffusionStart;
-    }
-
-    public function setFileDiffusionStart(?\DateTimeInterface $diffusionStart): self
-    {
-        $this->fileDiffusionStart = $diffusionStart;
-
-        return $this;
-    }
-
-    public function getFileDiffusionEnd(): ?\DateTimeInterface
-    {
-        return $this->fileDiffusionEnd;
-    }
-
-    public function setFileDiffusionEnd(?\DateTimeInterface $diffusionEnd): self
-    {
-        $this->fileDiffusionEnd = $diffusionEnd;
-
-        return $this;
-    }
-
     public function getStarted(): ?\DateTimeInterface
     {
         return $this->started;
@@ -192,4 +163,17 @@ class FfmpegTasks
 
         return $this;
     }
+
+    public function getMedia(): ?array
+    {
+        return $this->media;
+    }
+
+    public function setMedia(array $media): self
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
 }

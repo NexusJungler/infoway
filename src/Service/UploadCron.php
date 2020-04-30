@@ -9,6 +9,7 @@ use App\Entity\Customer\Media;
 use App\Entity\Customer\Video;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
 use \Doctrine\Persistence\ObjectManager;
@@ -58,8 +59,14 @@ class UploadCron
         $this->customer = $taskInfo['customerName'];
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
         $this->mediatype = $taskInfo['mediaType'];
-        $this->fileDiffusionStart = $taskInfo['diffusionStart'];
-        $this->fileDiffusionEnd = $taskInfo['diffusionEnd'];
+        $this->fileUploadDate = $taskInfo['uploadDate'];
+
+        $this->fileDiffusionStart = new DateTime();
+
+        $diffusionEndDate = new DateTime();
+        $diffusionEndDate->modify('+30 year');
+        $this->fileDiffusionEnd = $diffusionEndDate;
+
         $filename = $taskInfo['fileName'];
 
         // get dynamically the right EntityManager based on customer name
@@ -94,8 +101,10 @@ class UploadCron
         $path = $this->srcfolder . $filename;
 
         $last_dot_pos = strrpos($filename, '.');
-        $this->extension = substr($filename, $last_dot_pos+1);
+        //$this->extension = substr($filename, $last_dot_pos+1);
+        $this->extension = $taskInfo['extension'];
         $this->filename = substr($filename, 0, $last_dot_pos);
+        //$this->originalFileName = $filename;
 
         if (file_exists($path)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -748,167 +757,184 @@ class UploadCron
         $newThematic = null;
         //$newTemplateContent = new TemplateContents();
 
+        try
+        {
 
-        if ($this->filetype == 'video') {
-            $newVideo = new Video();
-            /* Création librairie php-ffmpeg en passant par la ligne de commande pour éviter les problèmes d'incompatibilité */
-            //$path_to_json = 'C:\inetpub\wwwroot\tmp\infofile.json';
-            $path_to_json = $this->parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
-            exec('ffprobe -v quiet -print_format json -show_format -show_streams "' . $src . '" > "' . $path_to_json . '"', $output, $error);
+            if ($this->filetype == 'video') {
+                $newVideo = new Video();
+                /* Création librairie php-ffmpeg en passant par la ligne de commande pour éviter les problèmes d'incompatibilité */
+                //$path_to_json = 'C:\inetpub\wwwroot\tmp\infofile.json';
+                $path_to_json = $this->parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
+                exec('ffprobe -v quiet -print_format json -show_format -show_streams "' . $src . '" > "' . $path_to_json . '"', $output, $error);
 
-            if (!$error) {
-                $datafile = file_get_contents($path_to_json);
-                $flux = (array)json_decode($datafile);
-            } else {
-                return false;
-            }
-            $video = $audio = $format = [];
-            if (isset($flux['streams'][0])) {
-                $video = $flux['streams'][0];
-            }
-            if (isset($flux['streams'][1])) {
-                $audio = $flux['streams'][1];
-            }
-            if (isset($flux['format'])) {
-                $format = $flux['format'];
-            }
-            $filter = array('codec_long_name', 'width', 'height', 'bit_rate', 'bits_per_raw_sample', 'nb_frames', 'creation_time', 'encoder', 'duration', 'level', 'avg_frame_rate', 'filename', 'format_long_name', 'size', 'major_brand', 'sample_rate', 'channels');
-
-            foreach ($video as $key => $value) {
-                if (in_array($key, $filter)) {
-                    $infofile['video'][$key] = $value;
-                }
-                if ($key == 'tags') {
-                    foreach ($value as $label => $info) {
-                        if (in_array($label, $filter)) {
-                            $infofile['video'][$label] = $info;
-                        }
-                    }
-                }
-            }
-            foreach ($format as $key => $value) {
-                if (in_array($key, $filter)) {
-                    $infofile['video'][$key] = $value;
-                }
-                if ($key == 'tags') {
-                    foreach ($value as $label => $info) {
-                        if (in_array($label, $filter)) {
-                            $infofile['video'][$label] = $info;
-                        }
-                    }
-                }
-            }
-
-            foreach ($audio as $key => $value) {
-                if (in_array($key, $filter)) {
-                    $infofile['audio'][$key] = $value;
-                }
-            }
-            unset($infofile['audio']['avg_frame_rate'], $infofile['audio']['duration']);
-            $ratio = $this->EstablishFormat($infofile['video']['width'], $infofile['video']['height']);
-
-            /* Instanciation de la classe video */
-            if ($video != null) {
-                $data = $infofile['video'];
-                $filepath = explode('/', $data['filename']);
-                $splash = explode('.', end($filepath)); // Attention aux fichiers avec plusieurs points dans le nom => passer par strrpos !
-                $file = $splash[0];
-                $ext = $splash[1];
-                $level_array = str_split($data['level']);
-                $level = implode('.', $level_array);
-
-                if ($this->mediatype != 'them') {
-
-                    /*$newTemplateContent->setName($file);
-                    $newTemplateContent->setContentType('video');
-                    $this->fileID = $this->repository->insert($newTemplateContent);
-                    $templateContentId = $this->fileID;*/
-
-                    //$newMedia->setType($this->mediatype);
-                    $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
-                             ->setType($this->mediatype)
-                             ->setCreatedAt(new DateTime())
-                             ->setDiffusionStart($this->fileDiffusionStart)
-                             ->setDiffusionEnd($this->fileDiffusionEnd)
-                             ->setHeight($data['height'])
-                             ->setWidth($data['width'])
-                             ->setName($file)
-                             ->setExtension($ext)
-                             ->setFormat($data['major_brand'])
-                             ->setRatio($ratio)
-                             ->setSampleSize($data['bits_per_raw_sample'] . ' bits')
-                             ->setEncoder($data['encoder'])
-                             ->setVideoCodec($data['codec_long_name'])
-                             ->setVideoCodecLevel($level)
-                             ->setVideoFrequence(substr($data['avg_frame_rate'], 0, -2) . ' img/s')
-                             ->setVideoFrame($data['nb_frames'])
-                             ->setVideoDebit((int)($data['bit_rate'] / 1000) . ' kbit/s')
-                             ->setDuration(round($data['duration'], 2) . ' secondes');
-
+                if (!$error) {
+                    $datafile = file_get_contents($path_to_json);
+                    $flux = (array)json_decode($datafile);
                 } else {
-                    $newThematic = [
-                        'filename' => $file,
-                        'extension' => $ext,
-                        'size' => round($data['size'] / (1024 * 1024), 2),
-                        'format' => $data['major_brand'],
-                        'ratio' => $ratio,
-                        'height' => $data['height'],
-                        'width' => $data['width'],
-                        'sampleSize' => $data['bits_per_raw_sample'] . ' bits',
-                        'encoder' => $data['encoder'],
-                        'videoCodec' => $data['codec_long_name'],
-                        'videoCodecLevel' => $level,
-                        'videoFrequence' => substr($data['avg_frame_rate'], 0, -2) . ' img/s',
-                        'videoFrames' => $data['nb_frames'],
-                        'videoDebit'=> (int)($data['bit_rate'] / 1000) . ' kbit/s',
-                        'duration' => round($data['duration'], 2),
-                        'theme' => null,
-                        'date' => date('Y-m-d')
-                    ];
+                    return false;
+                }
+                $video = $audio = $format = [];
+                if (isset($flux['streams'][0])) {
+                    $video = $flux['streams'][0];
+                }
+                if (isset($flux['streams'][1])) {
+                    $audio = $flux['streams'][1];
+                }
+                if (isset($flux['format'])) {
+                    $format = $flux['format'];
+                }
+                $filter = array('codec_long_name', 'width', 'height', 'bit_rate', 'bits_per_raw_sample', 'nb_frames', 'creation_time', 'encoder', 'duration', 'level', 'avg_frame_rate', 'filename', 'format_long_name', 'size', 'major_brand', 'sample_rate', 'channels');
+
+                foreach ($video as $key => $value) {
+                    if (in_array($key, $filter)) {
+                        $infofile['video'][$key] = $value;
+                    }
+                    if ($key == 'tags') {
+                        foreach ($value as $label => $info) {
+                            if (in_array($label, $filter)) {
+                                $infofile['video'][$label] = $info;
+                            }
+                        }
+                    }
+                }
+                foreach ($format as $key => $value) {
+                    if (in_array($key, $filter)) {
+                        $infofile['video'][$key] = $value;
+                    }
+                    if ($key == 'tags') {
+                        foreach ($value as $label => $info) {
+                            if (in_array($label, $filter)) {
+                                $infofile['video'][$label] = $info;
+                            }
+                        }
+                    }
                 }
 
-                if ($audio != null) {
-                    $data = $infofile['audio'];
+                foreach ($audio as $key => $value) {
+                    if (in_array($key, $filter)) {
+                        $infofile['audio'][$key] = $value;
+                    }
+                }
+                unset($infofile['audio']['avg_frame_rate'], $infofile['audio']['duration']);
+                $ratio = $this->EstablishFormat($infofile['video']['width'], $infofile['video']['height']);
+
+                /* Instanciation de la classe video */
+                if ($video != null) {
+                    $data = $infofile['video'];
+                    $filepath = explode('/', $data['filename']);
+                    $splash = explode('.', end($filepath)); // Attention aux fichiers avec plusieurs points dans le nom => passer par strrpos !
+                    $file = $splash[0];
+                    $ext = $splash[1];
+                    $level_array = str_split($data['level']);
+                    $level = implode('.', $level_array);
+
                     if ($this->mediatype != 'them') {
-                        $newVideo->setAudioCodec($data['codec_long_name']);
-                        $newVideo->setAudioDebit((int)($data['bit_rate'] / 1000) . ' kbit/s');
-                        $newVideo->setAudioFrequence($data['sample_rate'] . ' Hz');
-                        $newVideo->setAudioChannel($data['channels']);
-                        $newVideo->setAudioFrame($data['nb_frames']);
+
+                        /*$newTemplateContent->setName($file);
+                        $newTemplateContent->setContentType('video');
+                        $this->fileID = $this->repository->insert($newTemplateContent);
+                        $templateContentId = $this->fileID;*/
+
+                        //$newMedia->setType($this->mediatype);
+                        $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
+                            ->setType($this->mediatype)
+                            ->setCreatedAt(new DateTime())
+                            ->setDiffusionStart($this->fileDiffusionStart)
+                            ->setDiffusionEnd($this->fileDiffusionEnd)
+                            ->setHeight($data['height'])
+                            ->setWidth($data['width'])
+                            ->setName($file)
+                            ->setExtension($ext)
+                            ->setFormat($data['major_brand'])
+                            ->setRatio($ratio)
+                            ->setSampleSize($data['bits_per_raw_sample'] . ' bits')
+                            ->setEncoder($data['encoder'])
+                            ->setVideoCodec($data['codec_long_name'])
+                            ->setVideoCodecLevel($level)
+                            ->setVideoFrequence(substr($data['avg_frame_rate'], 0, -2) . ' img/s')
+                            ->setVideoFrame($data['nb_frames'])
+                            ->setVideoDebit((int)($data['bit_rate'] / 1000) . ' kbit/s')
+                            ->setDuration(round($data['duration'], 2) . ' secondes');
+
                     } else {
-                        $newThematic['audioCodec'] = $data['codec_long_name'];
-                        $newThematic['audioDebit'] = (int)($data['bit_rate'] / 1000) . ' kbit/s';
-                        $newThematic['audioFrequence'] = $data['sample_rate'] . ' Hz';
-                        $newThematic['audioChannel'] = $data['channels'];
-                        $newThematic['audioFrames'] = $data['nb_frames'];
+                        $newThematic = [
+                            'filename' => $file,
+                            'extension' => $ext,
+                            'size' => round($data['size'] / (1024 * 1024), 2),
+                            'format' => $data['major_brand'],
+                            'ratio' => $ratio,
+                            'height' => $data['height'],
+                            'width' => $data['width'],
+                            'sampleSize' => $data['bits_per_raw_sample'] . ' bits',
+                            'encoder' => $data['encoder'],
+                            'videoCodec' => $data['codec_long_name'],
+                            'videoCodecLevel' => $level,
+                            'videoFrequence' => substr($data['avg_frame_rate'], 0, -2) . ' img/s',
+                            'videoFrames' => $data['nb_frames'],
+                            'videoDebit'=> (int)($data['bit_rate'] / 1000) . ' kbit/s',
+                            'duration' => round($data['duration'], 2),
+                            'theme' => null,
+                            'date' => date('Y-m-d')
+                        ];
+                    }
+
+                    if ($audio != null) {
+                        $data = $infofile['audio'];
+                        if ($this->mediatype != 'them') {
+                            $newVideo->setAudioCodec($data['codec_long_name']);
+                            $newVideo->setAudioDebit((int)($data['bit_rate'] / 1000) . ' kbit/s');
+                            $newVideo->setAudioFrequence($data['sample_rate'] . ' Hz');
+                            $newVideo->setAudioChannel($data['channels']);
+                            $newVideo->setAudioFrame($data['nb_frames']);
+                        } else {
+                            $newThematic['audioCodec'] = $data['codec_long_name'];
+                            $newThematic['audioDebit'] = (int)($data['bit_rate'] / 1000) . ' kbit/s';
+                            $newThematic['audioFrequence'] = $data['sample_rate'] . ' Hz';
+                            $newThematic['audioChannel'] = $data['channels'];
+                            $newThematic['audioFrames'] = $data['nb_frames'];
+                        }
+                    }
+                    if ($this->mediatype != 'them') {
+                        $this->error = $this->repository->insert($newVideo);
+                    } else {
+                        $th_rep = new theme_rep();
+                        $this->fileID = $th_rep->saveVideoThematic($newThematic);
                     }
                 }
-                if ($this->mediatype != 'them') {
-                    $this->error = $this->repository->insert($newVideo);
-                } else {
-                    $th_rep = new theme_rep();
-                    $this->fileID = $th_rep->saveVideoThematic($newThematic);
-                }
             }
+
+            if($this->filetype == 'image') {
+
+                $newImg = new Image();
+
+                list($width, $height) = getimagesize($src);
+                $ratio = $this->EstablishFormat($width, $height);
+                $newImg->setName($this->filename)
+                       ->setType($this->mediatype)
+                       ->setRatio($ratio)
+                       ->setExtension($this->extension)
+                       ->setWidth($width)
+                       ->setHeight($height)
+                       ->setSize(round(filesize($src)/(1024*1024), 2) . ' Mo')
+                       ->setCreatedAt(new DateTime())
+                       ->setDiffusionStart($this->fileDiffusionStart)
+                       ->setDiffusionEnd($this->fileDiffusionEnd);
+
+                try
+                {
+                    $this->repository->insert($newImg);
+                }
+                catch (Exception $e)
+                {
+                    throw new Exception($e->getMessage());
+                }
+
+            }
+
         }
-
-        if($this->filetype == 'image') {
-            $newImg = new Image();
-
-            list($width, $height) = getimagesize($src);
-            $ratio = $this->EstablishFormat($width, $height);
-            $newImg->setName($this->filename)
-                   ->setType($this->mediatype)
-                   ->setRatio($ratio)
-                   ->setExtension($this->extension)
-                   ->setWidth($width)
-                   ->setHeight($height)
-                   ->setSize(round(filesize($src)/(1024*1024), 2) . ' Mo')
-                   ->setCreatedAt(new DateTime())
-                   ->setDiffusionStart($this->fileDiffusionStart)
-                   ->setDiffusionEnd($this->fileDiffusionEnd);
-
-            $this->repository->insert($newImg);
+        catch (Exception $e)
+        {
+            throw new Exception(sprintf("Internal Error : impossible to insert media ! Cause : '%s'", $e->getMessage()));
         }
 
     }

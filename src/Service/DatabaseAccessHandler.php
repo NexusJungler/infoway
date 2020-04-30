@@ -59,6 +59,7 @@ class DatabaseAccessHandler
     public function createDatabase(string $databaseName): bool
     {
         $statement = $this->__entityManager->getConnection()->prepare("CREATE DATABASE " . $databaseName);
+
         return $statement->execute(); // TRUE on success or FALSE on failure
     }
 
@@ -144,6 +145,10 @@ class DatabaseAccessHandler
             throw new CannotWriteFileException(sprintf("Internal Error : '%s' file is not writable !", $this->__parameterBag->get('doctrine_file_path')));
 
         file_put_contents($this->__parameterBag->get('doctrine_file_path'), Yaml::dump($doctrineConfig,10));
+
+        // @TODO: ajout des tables
+        //exec("php bin/console doctrine:migrations:diff --em=[$databaseName] --configuration=/config/doctrine_migrations_customer.yaml");
+        //exec("php bin/console doctrine:migrations:migrate --em=[$databaseName] --configuration=/config/doctrine_migrations_customer.yaml");
 
         return true;
 

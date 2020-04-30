@@ -7,13 +7,16 @@ namespace App\Service;
 use App\Entity\Admin\Country;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
+use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Synchro;
+use App\Entity\Customer\Video;
 use App\Repository\Admin\FfmpegTasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use \Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Yaml\Yaml;
 use App\Service\UploadCron;
 use \Doctrine\Persistence\ObjectManager;
@@ -62,18 +65,17 @@ class FfmpegSchedule
      * @param ParameterBagInterface $parameterBag
      * @param LoggerInterface $cronLogger
      */
-    public function __construct(ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag, LoggerInterface $cronLogger)
+    public function __construct(ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag, SerializerInterface $serializer)
     {
         $this->managerRegistry = $managerRegistry;
         $this->entityManager = $managerRegistry->getManager('default');
         $this->parameterBag = $parameterBag;
-        $this->logger = $cronLogger;
         $this->ffmpegRepo = $this->entityManager->getRepository(FfmpegTasks::class);
         //$config_file = file_get_contents(__DIR__ . '/../config/sys_flags.yml');
         $config_file = file_get_contents($this->parameterBag->get('config_dir') . '\\sys_flags.yml' );
         $this->conf = Yaml::parse( $config_file );
         $this->customers = $this->getDataSheetClients();
-        //dd($this->customers);
+        $this->serializer = $serializer;
     }
 
 
@@ -86,22 +88,38 @@ class FfmpegSchedule
     public function pushTask(array $fileInfo)
     {
 
-        if(strlen($fileInfo['mediaType']) > 4)
-            throw new \Exception(sprintf("Error ! mediaType maxlength is 4 but argument given length is over than it !"));
+        if(strlen($fileInfo['type']) > 4)
+            throw new \Exception(sprintf("Error ! media type maxlength is 4 but argument given length is over than it !"));
 
         $customer = $fileInfo['customer'];
         $fileName = $fileInfo['fileName'];
+        // image, video
         $fileType = $fileInfo['fileType'];
-        $mediaType = $fileInfo['mediaType'];
-        $diffusionStartDate = $fileInfo['diffusionStart'];
-        $diffusionEndDate = $fileInfo['diffusionEnd'];
+        // diff, them, sync ...
+        $type = $fileInfo['type'];
+        $extension = $fileInfo['extension'];
+
+        if($fileType === 'image')
+            $media = new Image();
+
+        else if($fileType === 'video')
+            $media = new Video();
+
+        // need new Entity (e.g : for powerpoint, word, ...)
+        else
+            throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
+
+        $media->setName( str_replace( '.' . $extension, null, $fileName) )
+              ->setExtension($extension)
+              ->setType($type);
+
+        $media = json_decode($this->serializer->serialize($media, 'json'), true);
 
         $ffmpeg_task = new FfmpegTasks();
         $ffmpeg_task->setFilename($fileName)
                     ->setFiletype($fileType)
-                    ->setMediatype($mediaType)
-                    ->setFileDiffusionStart( $diffusionStartDate )
-                    ->setFileDiffusionEnd( $diffusionEndDate )
+                    ->setMediatype($type)
+                    ->setMedia( $media )
                     ->setRegistered(new \DateTime());
 
         $customer->addUploadTask($ffmpeg_task);
@@ -116,7 +134,7 @@ class FfmpegSchedule
 
         if(!$this->taskIsRunning())
         {
-
+            $arraySearch = new ArraySearchRecursiveService();
             //$this->logger->error(sprintf("Log[%s] -- %s : A new Ffmpeg task start now !", __CLASS__, date('d/m/Y - G:i:s')));
 
             // Au début du traitement, mise à jour du fichier de configuration: FFMPEG -> 1
@@ -129,11 +147,15 @@ class FfmpegSchedule
 
             foreach ($tasks as $task)
             {
-                $customer_id = $task->getCustomer()->getId();
+                //C:\Program Files\Fresco Logic\Fresco Logic USB Display Driver\
+
+                //$customer_id = $task->getCustomer()->getId();
                 // dump($task);
                 //$base = $this->customers[$customer_id]['base'];
                 //$customer_name = $this->customers[$customer_id]['enseigne'];
                 $customer_name = $task->getCustomer()->getName();
+
+                $taskMediaInfo = $task->getMedia();
 
                 if($task->getMediatype() == 'sync') {
                     //$rep_sync = new synchro_rep($base);
@@ -177,8 +199,8 @@ class FfmpegSchedule
                             'fileName' => $video,
                             'customerName' => $customer_name,
                             'mediaType' => 'sync',
-                            'diffusionStart' => $task->getFileDiffusionStart(),
-                            'diffusionEnd' => $task->getFileDiffusionEnd()
+                            'uploadDate' => $taskMediaInfo['createdAt'],
+                            'extension' => $taskMediaInfo['extension'],
                         ];
 
                         $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
@@ -202,8 +224,8 @@ class FfmpegSchedule
                         'fileName' => $task->getFilename(),
                         'customerName' => $customer_name,
                         'mediaType' => $task->getMediatype(),
-                        'diffusionStart' => $task->getFileDiffusionStart(),
-                        'diffusionEnd' => $task->getFileDiffusionEnd()
+                        'uploadDate' => $taskMediaInfo['createdAt'],
+                        'extension' => $taskMediaInfo['extension'],
                     ];
                     $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
                     $errors = $encoding->getErrors();
@@ -222,16 +244,7 @@ class FfmpegSchedule
             //file_put_contents( __DIR__ . '/../log/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
             file_put_contents( $this->parameterBag->get('logs_dir') . '/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
 
-            if(empty($tasks))
-                $this->logger->info(sprintf("Log[%s] -- %s : All Ffmpeg task is done !", __CLASS__, date('d/m/Y - G:i:s')));
-
-            else
-                $this->logger->info(sprintf("Log[%s] -- %s : A Ffmpeg task is finish !", __CLASS__, date('d/m/Y - G:i:s')));
-
         }
-
-        else
-            $this->logger->error(sprintf("Log[%s] -- %s : An Ffmpeg task is already running !", __CLASS__, date('d/m/Y - G:i:s')));
 
     }
 
@@ -242,9 +255,6 @@ class FfmpegSchedule
      */
     public function removeTask(FfmpegTasks $task)
     {
-
-        //$task = $this->ffmpegRepo->findOneById($id);
-
         $this->entityManager->remove($task);
         $this->entityManager->flush();
     }
@@ -256,20 +266,6 @@ class FfmpegSchedule
      */
     public function updateTask(FfmpegTasks $task, string $fieldToUpdate)
     {
-
-        /*$task = $this->ffmpegRepo->findOneById($id);
-
-        if(!$task)
-            throw new Exception(sprintf("Internal Error: Cannot found FfmpegTasks instance with id '%d'", $id));
-
-        elseif(!property_exists($task, $fieldToUpdate))
-            throw new Exception(sprintf("Internal Error: '%s' doesn't have '%s' property !", FfmpegTasks::class, $fieldToUpdate));
-
-        elseif(!method_exists($task, 'set' . ucfirst($fieldToUpdate)))
-            throw new Exception(sprintf("Internal Error: '%s' doesn't have '%s' method !", FfmpegTasks::class, 'set' . ucfirst($fieldToUpdate)));
-
-        else
-            call_user_func_array([$task, 'set' . ucfirst($fieldToUpdate)], [new \DateTime()]);*/
 
         // on peut directement utiliser les setters (setRegistered, setStarted, setFinished)
         // mais de cette façon le code est dynamique
@@ -385,6 +381,13 @@ class FfmpegSchedule
             (is_dir("$dir/$file")) ? deldir("$dir/$file") : unlink("$dir/$file");
         }
         return rmdir($dir);
+    }
+
+    private function arrayToMedia(array $array)
+    {
+
+
+
     }
 
 }

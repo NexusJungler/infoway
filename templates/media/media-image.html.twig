@@ -69,8 +69,17 @@
 
                         <div class="upload-file">
                             <form id="uploadForm">
-                                <label for="uploadmedia">selectionner vos fichiers</label>
-                                <input type="file" id="uploadmedia" class="uploadbtn" name="uploadmedia" multiple>
+
+                                <div class="box__input dragndrop_download_input_container">
+                                    <span>Déposez votre ou vos fichiers ici</span> <br>
+                                    <img src="{{ asset('/build/images/download_icon.png') }}" alt="download icon">
+                                </div>
+
+                                <div class="basic_download_input_container">
+                                    <label for="uploadmedia">Sélectionner vos fichiers</label>
+                                    <input type="file" id="uploadmedia" class="uploadbtn" name="uploadmedia" multiple>
+                                </div>
+
                             </form>
                         </div>
 
@@ -101,7 +110,7 @@
                         
                     </div>
                     
-                    <div class="modal-upload-download on_progress" style="display: none">
+                    <div class="modal-upload-download" style="display: none">
 
                         <div class="upload_list_container">
                             <table class="upload_list">
