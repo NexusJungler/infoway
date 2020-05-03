@@ -53,6 +53,9 @@ Encore
     .addEntry('product', './assets/js/product.js')
     .addEntry('product_price', './assets/js/product/product_price.js')
 
+    .addEntry('show_factories', './assets/js/show_factories.js')
+
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

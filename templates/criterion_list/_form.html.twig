@@ -23,7 +23,7 @@
             </div>
             <div class="content-criteres-bloc">
                 {% for criterion in form.criterions  %}   
-                    <div class="row-criteres">
+                    <div class="row-criteres" id="row{{loop.index}}">
                         {# {{ form_widget(criterion) }} #}
                         <div class="selected">
                             {{ form_label(criterion.selected , "choix n°" ~ loop.index ) }}
@@ -38,7 +38,7 @@
                             {{ form_widget(criterion.description) }}
                         </div>
                         <div>
-                            <button type="button" class="btn delete-row">X</button>
+                            <button type="button" id="row{{loop.index}}" class="btn delete-row">X</button>
                         </div>
                         
                     </div>
@@ -46,13 +46,12 @@
             </div> 
 
             <div class="btn-add">
-                <button class="btn btn-add-critiere" >Ajouter un critère</button>
+                <button type="button" class="btn btn-add-critiere" >Ajouter un critère</button>
             </div>
         </div>
-
     
         <div class="btn-save">
-            <button class="btn ">{{ button_label|default('Enregister la liste') }}</button>
+            <button class="btn" type="submit" >{{ button_label|default('Enregister la liste') }}</button>
         </div>
 
     {{ form_end(form) }}

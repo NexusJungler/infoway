@@ -2,11 +2,10 @@
 
 {% block title %}Tag index{% endblock %}
 
-<<<<<<< HEAD
 {% block maincontent %}
     <section class="wrapper_tabcontent">
 
-        <article id="setting-tags" class="tab-content current tags">
+        <div id="setting-tags" class="tab-content current tags">
 
             <article class="tab-content-title">
                 <h3 class="title">Gestion des TAGS</h3>
@@ -35,14 +34,13 @@
                     <tbody class="tbody tbody-content scrollbar-table">
                     {% for tag in tags %}
                         <tr class="tags-poster">
-                            <td>{{ tag.id }}</td>
                             <td>
                                 <label class="container-input">
-                                    <input type="radio" name="tags1">
+                                    <input type="radio" name="tags{{ tag.id }}" id="{{ tag.id }}">
                                     <span class="container-rdo-tags"></span>
                                 </label>
                                 <p class="container-tags">{{ tag.name }} </p></td>
-                            <td>{{ tag.color }}</td>
+                            <td class="container-tags-desc">{{ tag.description }}</td>
                             <td>
                                 <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
                                 <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
@@ -57,36 +55,7 @@
                 </table>
             <article>
 
-
-      
-
-        </article>
+        </div>
         
     </section>
-    
-=======
-{% block body %}
-    <h1>Tag index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tag in tags %}
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>{{ tag.name }}</td>
-                <td>{{ tag.description }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('tags_new') }}">Create new</a>
->>>>>>> 5ff48f9032a02cb773f6f97b011c392dcb613805
 {% endblock %}

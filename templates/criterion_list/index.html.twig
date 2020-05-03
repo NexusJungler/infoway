@@ -35,7 +35,7 @@
                 <ul>
                     {%  for criterion_list in criterion_lists  %}
                         <li class="row-criterion">
-
+                            {{dump(criterion_lists)}}
                             <div class="bloc-criterion-title">
                                 <input type="checkbox" id="{{criterion_list.id}}" />
                                 <label class="title">{{ criterion_list.name }}</label>
@@ -57,10 +57,9 @@
                                     {% for criterion in criterion_list.criterions %}
                                         
                                         <tr class='tr-custome'>
-                                            <td><input type="checkbox" id="{{criterion_list.id}}" data-criterion="{{criterion_list.id}}" ><label class="cercle">{{ criterion.name }}</label></td>
+                                            <td><input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  ><label class="cercle">{{ criterion.name }}</label></td>
                                             <td><p class="cercle-desc">{{ criterion.description }}</p></td>
                                             <td><a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a></td>
-                                            
                                         </tr>
                                     {% endfor %}
                                 </tbody>

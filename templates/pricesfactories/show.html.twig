@@ -1,0 +1,124 @@
+{% extends 'products.html.twig' %}
+
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('product_price') }}
+{% endblock %} #}
+
+
+{% block maincontent %}
+    <section class="wrapper_tabcontent">
+        <article id="tab-products" class="tab-content current group-price-content">
+
+            <article class="display product-display ">
+
+            <div class="display-content">
+
+                <article class="display-content-columns">
+
+                    <div class="display-content-poste">
+                        <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                        <div class="display-content-down">
+                            <div class="product-select-col">
+                                <label class="mutliselect-chkbox"> Tags optionnels
+                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                    <span class="mutliselect-check"></span>
+                                </label>
+                            </div>
+                            <div class="product-select-col">
+                                <label class="mutliselect-chkbox"> Type de prix
+                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                    <span class="mutliselect-check"></span>
+                                </label>
+                            </div>
+                            <div class="product-select-col">
+                                <label class="mutliselect-chkbox"> Prix Compagnie MEDIUM
+                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                    <span class="mutliselect-check"></span>
+                                </label>
+                            </div>
+                            <div class="product-select-col">
+                                <label class="mutliselect-chkbox"> Prix Compagnie PREMIUM
+                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                    <span class="mutliselect-check"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+                <article class="display-btn">
+                    <a class="btn" href="" role="button"><i class="fas fa-plus"></i>modification a date </a>
+
+                    <p>Group : </p>
+                    <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Type de prix</a>
+                    <a class="btn" href="{{ path('pricesfactory::create') }}" role="button"><i class="fas fa-plus"></i>Ajouter</a>
+                    {# <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button> #}
+                    <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                    <button type="button" class="btn modified-table" id="edit"><i class="far fa-edit"></i>Modifier</button>
+                    <button type="button" class="btn delete-table" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                    <button type="button" class="tags-table">TAG</button>
+                </article>
+
+            </div>
+
+        </article >
+
+
+        
+
+
+    <div id="" class="debug">
+        <button id="add_date">Gestion des dates</button>
+        <form method="post" action="{{ path('pricesfactories::delete') }}">
+            <table id="list">
+                <thead>
+                <tr>
+                    <th>sélection</th>
+                    <th>nom</th>
+                    <th>liste des sites</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for factory in factories %}
+
+                    <tr>
+                        <td><input type="checkbox" name="factories[{{ factory.id }}]" class="factory"></td>
+                        <td>{{ factory.name }}</td>
+                        <td class="site">
+                            {% for site in factory.sites %}
+                                <p>
+                                    <span>{{ site.name }}</span>
+                                    <input type="checkbox" name="sites[{{ site.id }}]" class="site">
+                                </p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        <button id="display_prices">Afficher les prix</button>
+        <section id="display_prices">
+            <form method="post" action="{{ path('pricesfactories::saveprices') }}">
+                <table></table>
+                <button id="prices_validate">Valider les modifications</button>
+            </form>
+        </section>
+    </div>
+
+    <div id="crud">
+        <button><a href="{{ path('pricesfactory::create') }}">Ajouter</a></button>
+        <button id="edit">Modifier</button>
+        <button id="delete">Supprimer</button>
+    </div>
+</article>
+    </section>
+
+    
+    {% block javascripts %}
+        {{ encore_entry_script_tags('show_factories') }}
+    {% endblock javascripts %}
+
+{% endblock %}

@@ -105,6 +105,9 @@ class CriterionListController extends AbstractController
         ]);
     }
 
+    
+
+
     /**
      * @Route("/{id}", name="criterion_list_delete", methods={"DELETE"})
      */

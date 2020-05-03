@@ -29,14 +29,8 @@ constructor() {
       $(".tbody-content ."+tab_list_enseigne).addClass('current');
     })
 
-    $(".tab-content-criteres .modified-criterion").click(function(){
 
-      $.each($(".row-criterion input[type='checkbox']:checked"), function(){
-        var id_criterion = $(this).attr('data-criterion');
-        
-        console.log(id_criterion);
-      })
-    })
+    
     
 
 
