@@ -9,30 +9,7 @@
         <ul>
             {%  for criterion_list in criterion_lists  %}
                 <li>
-                    <div>
-                        <input type="checkbox"/>
-                        <span>{{ criterion_list.name }}</span>
-                        <p>{{ criterion_list.description }}</p>
-                    </div>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th><h3>Critère</h3></th>
-                            <th><p>Description du critère</p></th>
-                        </tr>
-                        <tr>
-                            <th><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for criterion in criterion_list.criterions %}
-                            <tr>
-                                <td><input type="checkbox"><span>{{ criterion.name }}</span></td>
-                                <td><p>{{ criterion.description }}</p></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    {{ include('criterion_list/_criterion_list.html.twig') }}
                 </li>
                 {#        {{ dump(criterion_list) }}#}
             {% endfor %}
