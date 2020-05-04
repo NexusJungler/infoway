@@ -9,14 +9,14 @@
 
     {% for site in form.sites %}
         {%  set currentSite =  form.sites.vars.choices[site.vars.value].data %}
-        {{ form_row(site ,  {'attr': {'checked': currentSite not in availablesSites }}  ) }}
+        {{ form_row(site ,  {'attr': {'checked': currentSite  in availablesSites }}  ) }}
     {% endfor  %}
 
     {%  if form.products | length < 1  %}  {{ form_row(form.products) }} {% endif %}
 
     {% for product in form.products %}
         {%  set currentProduct =  form.products.vars.choices[product.vars.value].data %}
-        {{ form_row(product ,  {'attr': {'checked': currentProduct not in availablesProducts }}  ) }}
+        {{ form_row(product ,  {'attr': {'checked': currentProduct  in availablesProducts }}  ) }}
     {% endfor  %}
 
 

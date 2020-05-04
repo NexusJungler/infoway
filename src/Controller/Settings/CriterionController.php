@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Settings;
 
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Product;
