@@ -7,9 +7,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\CriterionListRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\CriterionsListRepository")
+ * @ORM\Table(name="criterions_lists")
  */
-class CriterionList
+class CriterionsList
 {
     /**
      * @ORM\Id()
@@ -117,4 +118,6 @@ class CriterionList
 
         return $this;
     }
+
+
 }

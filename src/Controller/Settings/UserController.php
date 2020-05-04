@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Settings;
 
 
 use App\Entity\Admin\Action;
@@ -133,7 +133,7 @@ class UserController extends AbstractController
         //On les place dans la variable contenant tous les sites qu il pourra donner a l utilisateur qu il cree
         $givableSites = $creatorUser->getSites() ; ;
 
-        return $this->render('user/create.html.twig', [
+        return $this->render('settings/user/create.html.twig', [
             'givablePerimeters' => $givablePerimeters ,
             'givableSites'   => $givableSites ,
             'givableRoles'   => $givablesRoles
@@ -242,7 +242,7 @@ class UserController extends AbstractController
         $givableSites = $creatorUserFromDbWithSites->getSites();
 
 
-        return $this->render("user/modify.html.twig", [
+        return $this->render("settings/user/modify.html.twig", [
             'userToModify' => $userToModifyFromDb ,
             'givablePerimeters' => $givablePerimeters ,
             'givableRoles'   => $givablesRoles ,
@@ -683,7 +683,7 @@ class UserController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
     {
         if ($this->getUser()) {
-             return $this->redirectToRoute('app::home');
+             return $this->redirectToRoute('home');
          }
 
         // get the login error if there is one

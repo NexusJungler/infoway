@@ -3,41 +3,43 @@
 namespace App\Controller\Settings;
 
 use App\Entity\Customer\Criterion;
-use App\Entity\Customer\CriterionList;
-use App\Form\Customer\CriterionListType;
-use App\Repository\Customer\CriterionListRepository;
+use App\Entity\Customer\CriterionsList;
+use App\Form\Customer\CriterionsListType;
+use App\Repository\Customer\CriterionsListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/criterion/list")
+ * @Route("/criterions_lists")
  */
-class CriterionListController extends AbstractController
+class CriterionsListController extends AbstractController
 {
     /**
-     * @Route("/", name="criterion_list_index", methods={"GET"})
+     * @Route("/", name="criterions_lists_index", methods={"GET"})
+     * @param CriterionsListRepository $criterionCategoryRepository
+     * @return Response
      */
-    public function index(CriterionListRepository $criterionCategoryRepository): Response
+    public function index(CriterionsListRepository $criterionCategoryRepository): Response
     {
-        return $this->render('criterion_list/index.html.twig', [
-            'criterion_lists' => $criterionCategoryRepository->findAll(),
+        return $this->render('settings/criterions_lists/index.html.twig', [
+            'criterions_lists' => $criterionCategoryRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="criterion_list_new", methods={"GET","POST"})
+     * @Route("/new", name="criterions_lists_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        $criterionList = new CriterionList();
+        $criterionList = new CriterionsList();
 
 
         $criterionList->addCriterion( new Criterion() );
         $criterionList->addCriterion( new Criterion() );
 
-        $form = $this->createForm(CriterionListType::class, $criterionList);
+        $form = $this->createForm(CriterionsListType::class, $criterionList);
 
 
 
@@ -64,49 +66,49 @@ class CriterionListController extends AbstractController
             $entityManager->persist($criterionList);
             $entityManager->flush();
 
-            return $this->redirectToRoute('criterion_list_index');
+            return $this->redirectToRoute('criterions_lists_index');
         }
 
-        return $this->render('criterion_list/new.html.twig', [
-            'criterion_lists' => $criterionList,
+        return $this->render('settings/criterions_lists/new.html.twig', [
+            'criterions_list' => $criterionList,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="criterion_list_show", methods={"GET"})
+     * @Route("/{id}", name="criterions_lists_show", methods={"GET"})
      */
-    public function show(CriterionList $criterionList): Response
+    public function show(CriterionsList $criterionList): Response
     {
-        return $this->render('criterion_list/show.html.twig', [
-            'criterion_list' => $criterionList,
+        return $this->render('settings/criterions_lists/show.html.twig', [
+            'criterions_list' => $criterionList,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="criterion_list_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="criterions_lists_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, CriterionList $criterionList): Response
+    public function edit(Request $request, CriterionsList $criterionList): Response
     {
-        $form = $this->createForm(CriterionListType::class, $criterionList);
+        $form = $this->createForm(CriterionsListType::class, $criterionList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('criterion_list_index');
+            return $this->redirectToRoute('criterions_lists_index');
         }
 
-        return $this->render('criterion_list/edit.html.twig', [
-            'criterion_list' => $criterionList,
+        return $this->render('settings/criterions_lists/edit.html.twig', [
+            'criterions_list' => $criterionList,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="criterion_list_delete", methods={"DELETE"})
+     * @Route("/{id}", name="criterions_lists_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, CriterionList $criterionList): Response
+    public function delete(Request $request, CriterionsList $criterionList): Response
     {
         if ($this->isCsrfTokenValid('delete'.$criterionList->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -114,6 +116,6 @@ class CriterionListController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('criterion_list_index');
+        return $this->redirectToRoute('criterions_lists_index');
     }
 }

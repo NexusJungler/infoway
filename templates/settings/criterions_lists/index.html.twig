@@ -4,12 +4,12 @@
 
 {% block body %}
     <h1>CriterionList index</h1>
-    <a href="{{ path('criterion_list_new') }}">Create new</a>
+    <a href="{{ path('criterions_lists_new') }}">Create new</a>
     <form>
         <ul>
-            {%  for criterion_list in criterion_lists  %}
+            {%  for criterions_list in criterions_lists  %}
                 <li>
-                    {{ include('criterion_list/_criterion_list.html.twig') }}
+                    {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
                 </li>
                 {#        {{ dump(criterion_list) }}#}
             {% endfor %}

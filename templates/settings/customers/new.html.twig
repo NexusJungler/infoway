@@ -11,7 +11,7 @@
         {{ dump('ici') }}
     {% endif %}
 
-    {{ include('customers/_form.html.twig') }}
+    {{ include('settings/customers/_form.html.twig') }}
 
-    <a href="{{ path('admin_customers_index') }}0">back to list</a>
+    <a href="{{ path('customers_index') }}0">back to list</a>
 {% endblock %}

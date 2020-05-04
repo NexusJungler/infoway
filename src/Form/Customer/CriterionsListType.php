@@ -2,7 +2,7 @@
 
 namespace App\Form\Customer;
 
-use App\Entity\Customer\CriterionList;
+use App\Entity\Customer\CriterionsList;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CriterionListType extends AbstractType
+class CriterionsListType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -36,7 +36,7 @@ class CriterionListType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CriterionList::class,
+            'data_class' => CriterionsList::class,
         ]);
     }
 }

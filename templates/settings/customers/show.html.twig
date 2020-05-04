@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_customers_index') }}">back to list</a>
+    <a href="{{ path('customers_index') }}">back to list</a>
 
-    <a href="{{ path('admin_customers_edit', {'id': customer.id}) }}">edit</a>
+    <a href="{{ path('customers_edit', {'id': customer.id}) }}">edit</a>
 
-    {{ include('admin_customers/_delete_form.html.twig') }}
+    {{ include('settings/customers/_delete_form.html.twig') }}
 {% endblock %}

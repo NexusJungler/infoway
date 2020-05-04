@@ -31,7 +31,7 @@ class TagController extends AbstractController
      */
     public function index(TagsRepository $tagsRepository): Response
     {
-        return $this->render('tags/index.html.twig', [
+        return $this->render('settings/tags/index.html.twig', [
             'tags' => $tagsRepository->findAll(),
         ]);
     }
@@ -81,7 +81,7 @@ class TagController extends AbstractController
             return $this->redirectToRoute('tags_index');
         }
 
-        return $this->render('tags/new.html.twig', [
+        return $this->render('settings/tags/new.html.twig', [
             'tagsList' => $tagsList,
             'form' => $form->createView(),
         ]);
@@ -92,7 +92,7 @@ class TagController extends AbstractController
      */
     public function show(Tag $tag): Response
     {
-        return $this->render('tags/show.html.twig', [
+        return $this->render('settings/tags/show.html.twig', [
             'tag' => $tag,
         ]);
     }
@@ -132,7 +132,7 @@ class TagController extends AbstractController
             return $this->redirectToRoute('tags_index');
         }
 
-        return $this->render('tags/edit.html.twig', [
+        return $this->render('settings/tags/edit.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);

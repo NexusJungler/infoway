@@ -2,22 +2,16 @@
 
 namespace App\Repository\Customer;
 
-use App\Entity\Customer\CriterionCategory;
-use App\Entity\Customer\CriterionList;
+use App\Entity\Customer\CriterionsList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
-/**
- * @method CriterionCategory|null find($id, $lockMode = null, $lockVersion = null)
- * @method CriterionCategory|null findOneBy(array $criteria, array $orderBy = null)
- * @method CriterionCategory[]    findAll()
- * @method CriterionCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class CriterionListRepository extends ServiceEntityRepository
+
+class CriterionsListRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CriterionList::class);
+        parent::__construct($registry, CriterionsList::class);
     }
 
     // /**

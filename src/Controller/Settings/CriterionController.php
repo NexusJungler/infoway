@@ -23,10 +23,12 @@ class CriterionController extends AbstractController
 
     /**
      * @Route("/{id}", name="criterions_show", methods={"GET"})
+     * @param Criterion $criterion
+     * @return Response
      */
     public function show(Criterion $criterion): Response
     {
-        return $this->render('customer/criterion/show.html.twig', [
+        return $this->render('settings/criterions/show.html.twig', [
             'criterion' => $criterion,
         ]);
     }
@@ -64,7 +66,7 @@ class CriterionController extends AbstractController
             return $this->redirectToRoute('criterions_show', ['id' => $criterion->getId()]);
         }
 
-        return $this->render('criterions/edit.html.twig', [
+        return $this->render('settings/criterions/edit.html.twig', [
             'criterion' => $criterion,
             'form' => $form->createView(),
             'availablesSites' => $availablesSites,

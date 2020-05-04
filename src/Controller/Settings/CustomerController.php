@@ -15,22 +15,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/customers")
+ * @Route("/customers")
  */
 class CustomerController extends AbstractController
 {
     /**
-     * @Route("/", name="admin_customers_index", methods={"GET"})
+     * @Route("/", name="customers_index", methods={"GET"})
      */
     public function index(CustomerRepository $customerRepository): Response
     {
-        return $this->render('customers/index.html.twig', [
+        return $this->render('settings/customers/index.html.twig', [
             'customers' => $customerRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="admin_customers_new", methods={"GET","POST"})
+     * @Route("/new", name="customers_new", methods={"GET","POST"})
      */
     public function new(Request $request, CustomerHandlerService $customerHandler, DatabaseAccessHandler $databaseHandler): Response
     {
@@ -46,30 +46,30 @@ class CustomerController extends AbstractController
                 ||  !$customerHandler->createCustomerDatabase( $customer )
                 ||  !$customerHandler->insertCustomerInDb($customer)
 
-                )   return $this->redirectToRoute('admin_customers_new');
+                )   return $this->redirectToRoute('customers_new');
 
 
-            return $this->redirectToRoute('admin_customers_index');
+            return $this->redirectToRoute('customers_index');
         }
 
-        return $this->render('customers/new.html.twig', [
+        return $this->render('settings/customers/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="admin_customers_show", methods={"GET"})
+     * @Route("/{id}", name="customers_show", methods={"GET"})
      */
     public function show(Customer $customer): Response
     {
-        return $this->render('customers/show.html.twig', [
+        return $this->render('settings/customers/show.html.twig', [
             'customer' => $customer,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_customers_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="customers_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Customer $customer): Response
     {
@@ -79,17 +79,17 @@ class CustomerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_customers_index');
+            return $this->redirectToRoute('customers_index');
         }
 
-        return $this->render('customers/edit.html.twig', [
+        return $this->render('settings/customers/edit.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="admin_customers_delete", methods={"DELETE"})
+     * @Route("/{id}", name="customers_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Customer $customer): Response
     {
@@ -99,6 +99,6 @@ class CustomerController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_customers_index');
+        return $this->redirectToRoute('customers_index');
     }
 }

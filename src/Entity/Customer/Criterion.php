@@ -35,7 +35,7 @@ class Criterion
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="CriterionList", inversedBy="criterions")
+     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions")
      * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
      */
     private $list;
@@ -145,12 +145,12 @@ class Criterion
         return $this;
     }
 
-    public function getList(): ?CriterionList
+    public function getList(): ?CriterionsList
     {
         return $this->list;
     }
 
-    public function setList(?CriterionList $list): self
+    public function setList(?CriterionsList $list): self
     {
         $this->list = $list;
 

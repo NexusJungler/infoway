@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Errors;
+namespace App\Errors\Contact;
 
 class ContactError {
 
