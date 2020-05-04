@@ -36,28 +36,12 @@ class Customer
     //Cette propriete sert a contenir tous les sites qu un user possede, contenu dans l objet Customer representant l enseigne contenant le site. Cela permettra d avoir un objet user qui contiendra des enseignes qui contiendront des sites
     private $sites ;
 
-    //Cette propriete sert a contenir le role appartenant a un user stocké dans l enseigne auquel il appartient
-    private $role;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $logo;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $address;
-
-    /**
-     * @ORM\Column(type="string", length=60, nullable=true)
-     */
-    private $postal_code;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $city;
 
     /**
      * Many Customers have Many Users.
@@ -65,27 +49,13 @@ class Customer
      */
     private $users;
 
-
     /**
-     * Une enseigne se situe dans un pays qui quant a lui peut apparaitre dans plusieurs enseignes
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * One Customer has One Cart.
+     * @ORM\OneToOne(targetEntity="Contact", mappedBy="customer", cascade={"persist"})
      */
-    private $country;
+    private $contact;
 
 
-    /**
-     * Une enseigne possede une timezone qui quant a elle peut apparaitre dans plusieurs enseignes
-     * @ORM\ManyToOne(targetEntity="TimeZone")
-     * @ORM\JoinColumn(name="timezone_id", referencedColumnName="id")
-     */
-    private $timeZone;
-
-
-    /**
-     * @ORM\Column(type="text", name="description")
-     */
-    private $description;
 
 
     public function __construct()
@@ -287,6 +257,24 @@ class Customer
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getContact(): ?Contact
+    {
+        return $this->contact;
+    }
+
+    public function setContact(?Contact $contact): self
+    {
+        $this->contact = $contact;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCustomer = null === $contact ? null : $this;
+        if ($contact->getCustomer() !== $newCustomer) {
+            $contact->setCustomer($newCustomer);
+        }
 
         return $this;
     }

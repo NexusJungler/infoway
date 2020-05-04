@@ -3,7 +3,6 @@
 
 namespace App\Form\Customer;
 
-use App\Entity\Customer\Criterion;
 use App\Entity\Customer\CriterionList;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +25,7 @@ class CriterionListType extends AbstractType
             ])
             ->add('description')
             ->add('criterions', CollectionType::class, array(
-                'entry_type' => CriterionType::class,
+                'entry_type' => CriterionInListType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'required' => false

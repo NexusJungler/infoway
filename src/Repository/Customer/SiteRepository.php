@@ -5,6 +5,7 @@ namespace App\Repository\Customer;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Site;
 use App\Repository\Admin\UserSitesRepository;
 use Cassandra\Custom;
@@ -38,6 +39,25 @@ class SiteRepository extends ServiceEntityRepository
 
         return $this->findBy(['id' => $siteIdsInCustomer]) ;
 
+    }
+
+    public function getSitesWhereIdNotIn(array $ids){
+
+        return  $this->createQueryBuilder('s')
+            ->where('s.id NOT IN ( :ids )')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllSitesWhereCriterionNotAppear(Criterion $criterion){
+
+        $criterionSitesIds = $criterion->getSites()->filter(function(Site $site){
+            return $site->getId() ;
+        });
+
+        return $criterionSitesIds->count() <1 ? $this->findAll() : $this->getSitesWhereIdNotIn($criterionSitesIds->getValues() );
     }
 
     public function getTimeZoneByTimeZoneId(){

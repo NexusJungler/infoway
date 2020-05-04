@@ -1,189 +1,104 @@
 <?php
 
-
 namespace App\Controller;
 
-
-use App\Form\CustomerCreationType;
-use App\Repository\Admin\UserRepository;
-use App\Service\{ArraySearchRecursiveService, DatabaseAccessHandler, PermissionsHandler};
-use App\Entity\Admin\{Contact, Customer};
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Admin\Customer;
+use App\Form\Admin\CustomerType;
+use App\Repository\Admin\CustomerRepository;
+use App\Service\ContactHandlerService;
+use App\Service\CustomerHandlerService;
+use App\Service\DatabaseAccessHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\{File\Exception\FileException, Request, Response};
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/admin/customers")
+ */
 class CustomerController extends AbstractController
 {
+    /**
+     * @Route("/", name="admin_customers_index", methods={"GET"})
+     */
+    public function index(CustomerRepository $customerRepository): Response
+    {
+        return $this->render('customers/index.html.twig', [
+            'customers' => $customerRepository->findAll(),
+        ]);
+    }
 
     /**
-     * @Route(path="/create/customer", name="customer::createCustomer", methods={"GET", "POST"})
-     * @param Request $request
-     * @param DatabaseAccessHandler $databaseHandler
-     * @param PermissionsHandler $permissionsHandler
-     * @return Response
-     * @throws \Exception
+     * @Route("/new", name="admin_customers_new", methods={"GET","POST"})
      */
-    public function createCustomer(Request $request, DatabaseAccessHandler $databaseHandler, PermissionsHandler $permissionsHandler, UserRepository $userRepository): Response
+    public function new(Request $request, CustomerHandlerService $customerHandler, DatabaseAccessHandler $databaseHandler): Response
     {
-
         $customer = new Customer();
-        $form = $this->createForm(CustomerCreationType::class, $customer);
+        $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-        $adminEm = $this->getDoctrine()->getManager('default');
-        $error = false;
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        if($form->isSubmitted() AND $form->isValid())
-        {
+            if  (   !$customerHandler->areCustomerDatasValid($customer)
+                ||  $customerHandler->isCustomerWithNameEnteredAlreadyExist($customer)
+                ||  !$customerHandler->handleCustomerLogoFromForm( $customer, $form )
+                ||  !$customerHandler->createCustomerDatabase( $customer )
+                ||  !$customerHandler->insertCustomerInDb($customer)
 
-            $logoFile = $form->get('logoFile')->getData();
+                )   return $this->redirectToRoute('admin_customers_new');
 
-            if($logoFile)
-            {
 
-                $newFileName = $customer->getName().'.'.$logoFile->guessExtension();
-
-                try {
-                    $logoFile->move(
-                        $this->getParameter('logoDirectory'),
-                        $newFileName
-                    );
-                }
-                catch (FileException $e) {
-                    dd($e->getMessage());
-                }
-
-                $customer->setLogo($newFileName);
-
-            }
-
-            if(!$databaseHandler->databaseExist($customer->getName()))
-            {
-                if($databaseHandler->createDatabase($customer->getName()))
-                {
-                    $databaseHandler->registerDatabaseConnexion($customer->getName());
-
-                    // si on ajoute le select pour lier le customer à un utilisatuer dès sa création
-                    // recupère le ou les utilisateur(s) selectionné(s)
-                    $admins = $customer->getUsers()->getValues();
-                    $permissionsHandler->createNewDatabaseAccessPermission($customer->getName(), $admins);
-                }
-                else
-                    throw new \Exception(sprintf("Internal Error : Cannot create database '%s'", $customer->getName()));
-
-            }
-
-            if($request->request->get('contacts'))
-            {
-
-                $contacts = $request->request->get('contacts');
-
-                if($this->allRequiredContactsDataExist($contacts))
-                {
-                    // if new contact was added, repo will added in $customer
-                    $adminEm->getRepository(Customer::class)->addNewContact($contacts, $customer);
-                }
-                else
-                {
-                    $error = true;
-                    $this->addFlash('error', 'Merci de renseigner tout les infos de vos contacts !');
-                }
-
-            }
-
-            if(!$error)
-            {
-                $adminEm->persist($customer);
-                $adminEm->flush();
-            }
-
+            return $this->redirectToRoute('admin_customers_index');
         }
 
-        return $this->render('customer/create_customer.twig', [
+        return $this->render('customers/new.html.twig', [
+            'customer' => $customer,
             'form' => $form->createView(),
-            'contacts' => $contacts ?? []
         ]);
-
     }
-
 
     /**
-     * @Route(path="/edit/customer/{id}", name="customer::editCustomer", methods={"GET", "POST"})
-     * @param Request $request
-     * @param Customer $customer
-     * @return Response
+     * @Route("/{id}", name="admin_customers_show", methods={"GET"})
      */
-    public function editCustomer(Request $request, Customer $customer)
+    public function show(Customer $customer): Response
     {
+        return $this->render('customers/show.html.twig', [
+            'customer' => $customer,
+        ]);
+    }
 
-        $form = $this->createForm(CustomerCreationType::class, $customer);
+    /**
+     * @Route("/{id}/edit", name="admin_customers_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Customer $customer): Response
+    {
+        $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-        $adminEm = $this->getDoctrine()->getManager('default');
-        $error = false;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-        if($form->isSubmitted() AND $form->isValid())
-        {
-            //dd($request->request);
-            if($request->request->get('contacts'))
-            {
-
-                $contacts = $request->request->get('contacts');
-
-                if($this->allRequiredContactsDataExist($contacts))
-                {
-                    $customerRepo = $adminEm->getRepository(Customer::class);
-
-                    // if new contact was added, repo will added in $customer
-                    $customerRepo->addNewContact($contacts, $customer);
-
-                    // if contact was removed, repo will remove it from $customer
-                    $customerRepo->removeUnnecessaryContact($contacts,$customer);
-                }
-                else
-                {
-                    $error = true;
-                    $this->addFlash('error', 'Merci de renseigner tout les infos de vos contacts !');
-                }
-
-            }
-            else
-                $customer->removeAllContacts();
-
-            if(!$error)
-                $adminEm->flush();
-
+            return $this->redirectToRoute('admin_customers_index');
         }
 
-        return $this->render('customer/edit_customer.twig', [
+        return $this->render('customers/edit.html.twig', [
+            'customer' => $customer,
             'form' => $form->createView(),
-            'contacts' => $contacts ?? $customer->getContacts()->getValues(),
-            'logoCustomer' => $customer->getLogo(),
         ]);
-
     }
 
-
-    private function allRequiredContactsDataExist(array $contacts): bool
+    /**
+     * @Route("/{id}", name="admin_customers_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Customer $customer): Response
     {
-
-        foreach ($contacts as $contact)
-        {
-            if(!array_key_exists('lastname', $contact) OR !array_key_exists('firstname', $contact) OR !array_key_exists('email', $contact)
-                OR !array_key_exists('phonenumber', $contact) OR !array_key_exists('status', $contact))
-                return false;
-
-
-            elseif(empty($contact['lastname']) OR empty($contact['firstname']) OR empty($contact['email'])
-                OR !filter_var($contact['email'], FILTER_VALIDATE_EMAIL) OR empty($contact['phonenumber'])
-                    OR empty($contact['status']))
-                return false;
-
+        if ($this->isCsrfTokenValid('delete'.$customer->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($customer);
+            $entityManager->flush();
         }
 
-        return true;
+        return $this->redirectToRoute('admin_customers_index');
     }
-    
-
 }

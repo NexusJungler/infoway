@@ -2,7 +2,9 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\Site;
 use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -22,11 +24,30 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
     }
 
 
+    public function getAllProductsWhereCriterionDoesNotAppear(Criterion $criterion){
+
+        $criterionProductsIds = $criterion->getProducts()->filter(function(Site $site){
+            return $site->getId() ;
+        });
+
+        return $criterionProductsIds->count() <1 ? $this->findAll() : $this->getProductsWhereIdNotIn($criterionProductsIds->getValues() );
+    }
+
     public function setEntityManager(ObjectManager $entityManager): self
     {
         $this->_em = $entityManager;
 
         return $this;
+    }
+
+    public function getProductsWhereIdNotIn(array $ids){
+
+        return  $this->createQueryBuilder('p')
+            ->where('p.id NOT IN ( :ids )')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     // /**

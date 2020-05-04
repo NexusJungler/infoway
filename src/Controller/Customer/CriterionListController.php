@@ -5,7 +5,6 @@ namespace App\Controller\Customer;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\CriterionList;
 use App\Form\Customer\CriterionListType;
-use App\Repository\Customer\CriterionCategoryRepository;
 use App\Repository\Customer\CriterionListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
