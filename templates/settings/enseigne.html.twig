@@ -1,208 +1,95 @@
-{% extends 'setting.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block settingtitle %}
-     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
-{% endblock %}
+{% block title %}Tag index{% endblock %}
 
-{% block maincontent %}
-<section id="wrapper_tabcontent">
-    <article id="setting-enseigne" class="tab-content current">
+{% block body %}
+    <main class="main main_setting">
+        <div class="main-content">
 
-        <div class="tab-content-title">
-            <h3>Enseigne</h3>
-            <p>Super Wild Coffee</p>
+            <section class="jumbotron">
+
+               {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                <article class="wrapper">
+                    <div class="wrapper-content">
+                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+                        <ul class="tabs">
+                            <a href="{{ path('app:enseigne') }}"><li class=" {% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
+                            <a href="{{ path('users:view') }}"><li class=" {% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
+                            <a href="{{ path('criterion_list_index') }}"><li class="{% if app.request.attributes.get('_route') == 'criterion_list_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
+                            <a href="{{ path('tags_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
+                        </ul>
+                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </article>
+                
+            </section>
+
+            <section>
+
+               {% block maincontent %}
+    <section class="wrapper_tabcontent">
+
+        <div id="setting-tags" class="tab-content current tags">
+
+            <article class="tab-content-title">
+                <h3 class="title">Gestion des TAGS</h3>
+                <p>SUPER WILD COFFEE</p>
+            </article>
+
+            <article class="display setting-display ">
+                <div class="display-content">
+                    <div class="display-btn">
+                        <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                    </div>
+                </div>
+            </article> 
+
+            <article class="content-tags table"> 
+                <table class="table-custome">
+                    <thead class="table-info thead-info">
+                        <tr>
+                            <th>Critères</th>
+                            <th>Description du critère</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody tbody-content scrollbar-table">
+                    {% for tag in tags %}
+                        <tr class="tags-poster">
+                            <td>
+                                <label class="container-input">
+                                    <input type="radio" name="tags{{ tag.id }}" id="{{ tag.id }}">
+                                    <span class="container-rdo-tags"></span>
+                                </label>
+                                <p class="container-tags">{{ tag.name }} </p></td>
+                            <td class="container-tags-desc">{{ tag.description }}</td>
+                            <td>
+                                <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
+                                <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            <article>
+
         </div>
-
-                    <div class="tab-content-bloc" >
-                        <div class="tab-content-bloc-left" >
-                            <form action="">
-                                <div class="bloc-societe">
-
-                                    <div class="bloc-societe-form">
-
-                                        <div class="row">
-                                            <label class="label-custome">Nom de la Societé</label>
-                                            {# {% macro input(name, value, type = "text") %}
-                                                <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  />
-                                            {% endmacro %} #}
-                                            <input type="text" class="input-custome" id="nom_societe" name="nom_societe"  value="text"/>
-                                        </div>
-                                        
-                                        <div class="row-flex">
-                                            <label class="label-custome">Nom</label>
-                                            <select name="marque-select " class="marque-select select-custome">
-
-                                            </select>
-                                        </div>
-
-                                        <div class="custom-file row">
-                                            <div class="file-width"></div>
-                                            <label for="file" class="label-file">Modifier logo</label>
-                                            <input type="file" name="file" >
-                                        </div>
-                    
-                                        
-                        
-                                        
-                                        
-                                        <div class="row btn-statut ">
-                                            <p>Modifier son Statut</p>
-                                            <button class="btn-right"><i class="fas fa-angle-right"></i></button>
-                                        </div>
-                                        
-                                    </div>
-                                
-                                    <div class="bloc-societe-img">
-                                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
-                                        <img src="{{ asset('build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
-                                    </div>
-
-                                </div>
-                                <div class="tab-content-btn">
-                                    <button name="btn-mofifier" class="btn">Modifier</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="tab-content-bloc-right">    
-                            <form action="" >
-                                <div class="bloc-group-top">
-                                    <div class="inputRdo">
-                                        <div class="rdo-cree">
-                                            <input id="cree" name="cree" type="radio" checked/>
-                                            <label for="cree"> Je crée un grope de site : </label>
-                                        </div>
-                                        <div class="rdo-rajoute">
-                                            <input id="rajoute" name="cree" type="radio"/>
-                                            <label for="rajoute">Je rajoute des sites à un groupe : </label>
-                                        </div>
-                                    </div>  
-                                </div>
-
-                                <div class="bloc-group-center">
-                                    <div class="bloc-societe-form" >
-                                        <div class="row">
-                                            <label class="label-custome ">Nom du groupe</label>
-                                            {# {% macro input(name, value, type = "text") %}
-                                                <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}"  />
-                                                <input type="text" id="nom_groupe" name="nom_groupe" />
-                                                <input type="submit" value="ok" class="form-btn-sumbit">
-                                            {% endmacro %} #}
-                                            <input type="text"  class="input-custome" id="nom_groupe" name="nom_groupe" value="exemple : Régime B "/>
-                                            <input type="submit" value="ok" class="form-btn-sumbit">
-                                        </div>
-                                        <div class="row-flex">
-                                            <label class="label-custome ">Importer liste</label>
-                                            <div class="custom-file form-file">
-                                                <div class="file-width"></div>
-                                                <label for="file" class="label-file">Télécharger Modéle vierge</label>
-                                                <input type="file" name="file" >
-                                            </div>
-                                        </div>
-
-                                        <div class="custom-file row">
-                                            <div class="file-width"></div>
-                                            <label for="file" class="label-file">Charger liste sites</label>
-                                            <input type="file" name="file" >
-                                            <input type="submit" value="ok"  class="form-btn-sumbit">
-                                        </div>
-                                    </div> 
-                                </div>
-                                <div class="bloc-group-bottom">
-                                    <div class="row-flex">
-
-                                        <div class="col">
-                                            <p class="">Type de group</p>
-                                        </div>
-
-                                        <div class="rdo-square col">
-                                            <div >
-                                                <input type="radio"  id="text" name="test" value="cree" checked/>
-                                                <label for="text"><span></span>Critère exclusif</label>
-                                            </div>
-                                            <div class="rounded">
-                                                <span class="mini-circle"></span>
-                                                <p>Région B</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="rdo-square col">
-                                            <div>
-                                                <input type="radio" id="text2" name="test" value="rajoute" />
-                                                <label for="text2"><span></span>Critère optionnel</label> 
-                                            </div> 
-                                            <div class="rounded">
-                                                <span class="mini-circle"></span>
-                                                <p>--------</p>
-                                            </div> 
-                                        </div>
-
-                                        <div class="col">
-                                            <div class="row-flex">
-                                                <button name="btn-liste" class="mini-btn-right"><i class="fas fa-angle-right"></i></button>
-                                                <p>Choisir dans liste </p>
-                                            </div>
-                                            
-                                            <div class="rounded">
-                                                <span class="mini-circle"></span>
-                                                <p>Gouter</p>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-content-btn">
-                                        <button name="btn-cree" class="btn">Créer group</button>
-                                    </div>
-                            </form>       
-                        </div>
-                    </div>
-                    <div >
-                        <table class="table-custome">
-                            <thead  class="table-info">
-                                <tr>
-                                    <th>6 Marque</th>
-                                    <th>Critère exclusif</th>
-                                    <th>Critère optionnels</th>
-                                    <th>Administrateurs</th>
-                                    <th>Statut</th>
-                                    <th>Nbre de sites</th>
-                                </tr>
-                            </thead>
-                            
-                                <tr>
-                                    <td>Race</td>
-                                    <td>Jack Russell</td>
-                                    <td>Poodle</td>
-                                    <td>Streetdog</td>
-                                    <td>Cocker Spaniel</td>
-                                    <td>Cocker Spaniel</td>
-                                </tr>
-                                <tr>
-                                    <td>Race</td>
-                                    <td>Jack Russell</td>
-                                    <td>Poodle</td>
-                                    <td>Streetdog</td>
-                                    <td>Cocker Spaniel</td>
-                                    <td>Cocker Spaniel</td>
-                                </tr>
-                                <tr>
-                                    <td>Race</td>
-                                    <td>Jack Russell</td>
-                                    <td>Poodle</td>
-                                    <td>Streetdog</td>
-                                    <td>Cocker Spaniel</td>
-                                    <td>Cocker Spaniel</td>
-                                </tr>
-                                <tr>
-                                    <td>Race</td>
-                                    <td>Jack Russell</td>
-                                    <td>Poodle</td>
-                                    <td>Streetdog</td>
-                                    <td>Cocker Spaniel</td>
-                                    <td>Cocker Spaniel</td>
-                                </tr>
-                        </table>    
-                    </div>
-    </article>    
-</section>       
+        
+    </section>
 {% endblock %}
+                
+            </section>
+
+        </div>
+    </main>
+{% endblock %}
+

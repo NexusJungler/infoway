@@ -1,75 +1,109 @@
 {% block title %}Gestion des Critéres{% endblock %}
 
-{% extends 'setting.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {# {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('criterion') }}
 {% endblock %} #}
 
-{% block settingtitle %}
-     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critéres', 'showSecondTitles': true } %}
-{% endblock %}
+{% block body %}
+    <main class="main main_setting">
+        <div class="main-content">
 
-{% block maincontent %}
-    <section class="wrapper_tabcontent">
-        <div id="setting-criteres" class="tab-content current tab-content-criteres">
+            <section class="jumbotron">
 
-            <article class="tab-content-title">
-                <h3 class="title">Gestion des Critéres</h3>
-                <p>SUPER WILD COFFEE</p>
-            </article>
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Tags', 'showSecondTitles': true } %}
+                {% endblock %}
 
-            <article class="display setting-display ">
-                <div class="display-content">
-                    <div class="display-btn">
-                        <a href="{{ path('criterion_list_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
-                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                        <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Modifier</button>
-                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                <article class="wrapper">
+                    <div class="wrapper-content">
+                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+                        <ul class="tabs">
+                            <a href="{{ path('app:enseigne') }}"><li class="{% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
+                            <a href="{{ path('users:view') }}"><li class=" {% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
+                            <a href="{{ path('criterion_list_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'criterion_list_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
+                            <a href="{{ path('tags_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
+                        </ul>
+                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
                     </div>
-                </div>
-            </article>
+                </article>
+                
+            </section>
 
-            <article class="content-criterion table"> 
-                <ul>
-                    {%  for criterion_list in criterion_lists  %}
-                        <li class="row-criterion">
-                            {{dump(criterion_lists)}}
-                            <div class="bloc-criterion-title">
-                                <input type="checkbox" id="{{criterion_list.id}}" />
-                                <label class="title">{{ criterion_list.name }}</label>
-                                <p>{{ criterion_list.description }}</p>
-                            </div>
+            <section>
 
-                            <table class="table-custome">
-                                <thead class="thead-info">
-                                    <tr>
-                                        <th><h3>Critère</h3></th>
-                                        <th><p>Description du critère</p></th>
-                                    </tr>
-                                </thead>
+                {% block maincontent %}
+                    <section class="wrapper_tabcontent">
+                        <div id="setting-criteres" class="tab-content current tab-content-criteres">
 
-                                <tbody class="tbody tbody-content scrollbar-table">
-                                    <tr>
-                                        <td><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
-                                    </tr>
-                                    {% for criterion in criterion_list.criterions %}
-                                        
-                                        <tr class='tr-custome'>
-                                            <td><input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  ><label class="cercle">{{ criterion.name }}</label></td>
-                                            <td><p class="cercle-desc">{{ criterion.description }}</p></td>
-                                            <td><a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a></td>
-                                        </tr>
+                            <article class="tab-content-title">
+                                <h3 class="title">Gestion des Critéres</h3>
+                                <p>SUPER WILD COFFEE</p>
+                            </article>
+
+                            <article class="display setting-display ">
+                                <div class="display-content">
+                                    <div class="display-btn">
+                                        <a href="{{ path('criterion_list_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                        <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Modifier</button>
+                                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="content-criterion table"> 
+                                <ul>
+                                    {%  for criterion_list in criterion_lists  %}
+                                        <li class="row-criterion">
+                                            <div class="bloc-criterion-title">
+                                                <input type="checkbox" id="{{criterion_list.id}}" />
+                                                <label class="title">{{ criterion_list.name }}</label>
+                                                <p>{{ criterion_list.description }}</p>
+                                            </div>
+
+                                            <table class="table-custome">
+                                                <thead class="thead-info">
+                                                    <tr>
+                                                        <th><h3>Critère</h3></th>
+                                                        <th><p>Description du critère</p></th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody class="tbody tbody-content scrollbar-table">
+                                                    <tr>
+                                                        <td><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
+                                                    </tr>
+                                                    {% for criterion in criterion_list.criterions %}
+                                                        
+                                                        <tr class='tr-custome'>
+                                                            <td><input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  ><label class="cercle">{{ criterion.name }}</label></td>
+                                                            <td><p class="cercle-desc">{{ criterion.description }}</p></td>
+                                                            <td><a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a></td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+
+                                        </li>
                                     {% endfor %}
-                                </tbody>
-                            </table>
+                                </ul>
+                            <article>
 
-                        </li>
-                    {% endfor %}
-                </ul>
-            <article>
+                        <div>
+                    <section>
+                {% endblock %}
+                
+            </section>
 
-        <div>
-    <section>
+        </div>
+
+    </main>
 {% endblock %}
+
+
+
+
+
