@@ -41,6 +41,14 @@ class SiteRepository extends ServiceEntityRepository
 
     }
 
+    public function getAllSitesIds() : array {
+
+        return array_map(
+            function( Site $site ){ return $site->getId() ; }
+            ,  $this->findAll() ) ;
+
+    }
+
     public function getSitesWhereIdNotIn(array $ids){
 
         return  $this->createQueryBuilder('s')

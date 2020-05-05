@@ -50,6 +50,14 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
             ;
     }
 
+    public function getAllProductsIds() : array {
+
+        return array_map(
+            function( Product $product ){ return $product->getId() ; }
+            ,  $this->findAll() ) ;
+
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

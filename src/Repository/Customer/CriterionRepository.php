@@ -19,6 +19,17 @@ class CriterionRepository extends ServiceEntityRepository
         parent::__construct($registry, Criterion::class);
     }
 
+    public function getAnotherCriterionWithSameName( Criterion $criterion ) : ?Criterion{
+        return  $this->createQueryBuilder('c')
+            ->where('c.id !=  :id')
+            ->andWhere('c.name = :name')
+            ->setParameter('id', $criterion->getId() )
+            ->setParameter('name' , $criterion->getName() )
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Cristerion[] Returns an array of Cristerion objects
     //  */

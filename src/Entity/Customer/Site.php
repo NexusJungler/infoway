@@ -82,7 +82,7 @@ class Site
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="sites")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="sites",cascade={"persist"})
      * @ORM\JoinTable(name="sites_criterions")
      *
      */

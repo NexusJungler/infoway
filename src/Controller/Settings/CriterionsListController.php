@@ -6,9 +6,11 @@ use App\Entity\Customer\Criterion;
 use App\Entity\Customer\CriterionsList;
 use App\Form\Customer\CriterionsListType;
 use App\Repository\Customer\CriterionsListRepository;
+use App\Service\CriterionsListHandlerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,8 +33,15 @@ class CriterionsListController extends AbstractController
     /**
      * @Route("/new", name="criterions_lists_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SessionInterface $session, CriterionsListHandlerService $criterionsListsHandler ): Response
     {
+
+        $currentCustomer = $session->get( 'current_customer' ) ;
+        $currentEM = $this->getDoctrine()->getManager( $currentCustomer->getName() ) ;
+
+
+        $criterionsListsHandler->setWorkingEntityManager( $currentEM ) ;
+
         $criterionList = new CriterionsList();
 
 
@@ -42,29 +51,18 @@ class CriterionsListController extends AbstractController
         $form = $this->createForm(CriterionsListType::class, $criterionList);
 
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $criterionPositionInlist = 0 ;
-            foreach($criterionList->getCriterions() as $criterion){
-                if ( $criterion->getName() === null ) {
-                    $criterionList->removeCriterion($criterion) ;
-                } else{
-                    $criterionPositionInlist ++ ;
-                    $criterion->setPosition( $criterionPositionInlist ) ;
 
-                }
+            if (
+                    $criterionsListsHandler->isCriterionsListNameAlreadyExistInDb( $criterionList )
+                ||  ! $criterionsListsHandler->handleCriterionsInList( $criterionList )
+                ||  ! $criterionsListsHandler->isMinimumCriterionsInListLimitIsReached( $criterionList )
+            ) return $this->redirectToRoute( 'criterions_lists_new' ) ;
 
-            }
-
-            $nbOfCriterionToAddInBase = count ( $criterionList->getCriterions()  ) ;
-            if( $nbOfCriterionToAddInBase < 2 ) throw new \Error('Minimum 2 criterions unreached') ;
-
-
-            $entityManager = $this->getDoctrine()->getManager('kfc');
-            $entityManager->persist($criterionList);
-            $entityManager->flush();
+            $currentEM->persist($criterionList);
+            $currentEM->flush();
 
             return $this->redirectToRoute('criterions_lists_index');
         }

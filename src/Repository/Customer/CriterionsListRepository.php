@@ -14,6 +14,21 @@ class CriterionsListRepository extends ServiceEntityRepository
         parent::__construct($registry, CriterionsList::class);
     }
 
+
+    public function getAllsCriterionsListsFromDB()
+    {
+        return $this->createQueryBuilder('c')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function getAllsCriterionsListsNamesFromDB()
+    {
+        return array_map( function( CriterionsList $criterionsList ) {
+            return $criterionsList->getName() ;
+        }, $this->getAllsCriterionsListsFromDB() );
+    }
+
     // /**
     //  * @return CriterionCategory[] Returns an array of CriterionCategory objects
     //  */

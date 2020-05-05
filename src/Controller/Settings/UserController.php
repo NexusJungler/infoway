@@ -697,7 +697,7 @@ class UserController extends AbstractController
             // (translate can be found in translations/messages.fr.yaml, language can be found in config/packages/translation.yaml)
             $error = $translator->trans($error->getMessageKey());
 
-        return $this->render('user/user_login.html.twig', [
+        return $this->render('settings/user/user_login.html.twig', [
             'page_title' => 'Connexion',
             'form_title' => 'Connexion',
             'last_username' => $lastUsername,

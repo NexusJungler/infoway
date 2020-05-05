@@ -41,12 +41,12 @@ class Criterion
     private $list;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions",cascade={"persist"})
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions", cascade={"persist"} )
      */
     private $sites;
 
@@ -101,14 +101,6 @@ class Criterion
         return $this->products;
     }
 
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-        }
-
-        return $this;
-    }
 
     public function removeProduct(Product $product): self
     {
@@ -127,14 +119,6 @@ class Criterion
         return $this->sites;
     }
 
-    public function addSite(Site $site): self
-    {
-        if (!$this->sites->contains($site)) {
-            $this->sites[] = $site;
-        }
-
-        return $this;
-    }
 
     public function removeSite(Site $site): self
     {
@@ -177,6 +161,26 @@ class Criterion
     public function setSelected(bool $selected): self
     {
         $this->selected = $selected;
+
+        return $this;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->addCriterion($this);
+        }
 
         return $this;
     }

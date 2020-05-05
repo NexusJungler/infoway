@@ -7,11 +7,13 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\Site;
 use App\Form\Customer\CriterionType;
 use App\Repository\Customer\CriterionRepository;
+use App\Service\CriterionsHandler;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -36,7 +38,7 @@ class CriterionController extends AbstractController
     /**
      * @Route("/{id}/edit", name="criterions_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Criterion $criterion, SessionInterface $session): Response
+    public function edit(Request $request, Criterion $criterion, SessionInterface $session, CriterionsHandler $criterionHandler, Profiler $profiler): Response
     {
         $customerEM = $this->getDoctrine()->getManager('kfc') ;
 
@@ -61,7 +63,26 @@ class CriterionController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            $currentCustomer = $session->get( 'current_customer' ) ;
+            $currentEM = $this->getDoctrine()->getManager( $currentCustomer->getName() ) ;
+
+            $criterionHandler->setWorkingEntityManager( $currentEM ) ;
+
+//            dd( $criterionHandler->isCriterionNameAlreadyExistInDb( $criterion ) );
+            if (
+                    $criterionHandler->isCriterionNameAlreadyExistInDb( $criterion , true )
+                || !  $criterionHandler->isAllSitesSelectedExistsInDB( $criterion )
+                || ! $criterionHandler->isAllProductsSelectedExistsInDB( $criterion )
+            ){
+
+               return  $this->redirectToRoute('criterions_edit', ['id' => $criterion->getId()]) ;
+            }
+
+
+            $currentEM->persist( $criterion );
+            $currentEM->flush();
+
 
             return $this->redirectToRoute('criterions_show', ['id' => $criterion->getId()]);
         }

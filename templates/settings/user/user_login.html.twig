@@ -61,15 +61,15 @@
                 {% endif %}
 
                 {% if app.request.attributes.get('_route') is same as('user::login') %}
-                    {% include "user/login_form.html.twig" %}
+                    {% include "settings/user/login_form.html.twig" %}
                 {% endif %}
 
                 {% if app.request.attributes.get('_route') is same as('user::passwordForget') %}
-                    {% include "user/password_forget_form.html.twig" %}
+                    {% include "settings/user/password_forget_form.html.twig" %}
                 {% endif %}
 
                 {% if app.request.attributes.get('_route') is same as('user::resetPassword') or app.request.attributes.get('_route') is same as('user::accountConfirmation') %}
-                    {% include "user/password_reset_form.html.twig" %}
+                    {% include "settings/user/password_reset_form.html.twig" %}
                 {% endif %}
 
                 <div class="form-group form_item_container">
