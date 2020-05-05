@@ -1,6 +1,7 @@
 import CustomerCreatorHandler from "../CustomerCreatorHandler/CustomerCreatorHandler";
 import UploadHandlerTool from "../UploadHandlerTool/UploadHandlerTool";
 import {ClockManager} from "../../Managers/ClockManager/ClockManager";
+import ProductAssociationHandlerTool from "../ProductAssociationHandler/ProductAssociationHandlerTool";
 
 class ToolBox
 {
@@ -16,6 +17,7 @@ class ToolBox
         this.__tools = [
             new CustomerCreatorHandler(),
             new UploadHandlerTool(),
+            new ProductAssociationHandlerTool()
         ];
     }
 
@@ -26,7 +28,10 @@ class ToolBox
             throw new Error("Invalid 'toolName' form ToolBox::loadTool()");
 
         if(this.toolIsRegistered(toolName))
+        {
+            this.__tools[ this.getToolIndex(toolName) ].setToolBox(this);
             this.__tools[ this.getToolIndex(toolName) ].enable();
+        }
 
         else
             throw new Error(`'${toolName}' tool is not registered !`);

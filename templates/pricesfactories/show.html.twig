@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="" class="debug">
+        <button id="add_date">Gestion des dates</button>
+        <form method="post" action="{{ path('pricesfactories::delete') }}">
+            <table id="list">
+                <thead>
+                <tr>
+                    <th>sélection</th>
+                    <th>nom</th>
+                    <th>liste des sites</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for factory in factories %}
+                    <tr>
+                        <td><input type="checkbox" name="factories[{{ factory.id }}]" class="factory"></td>
+                        <td>{{ factory.name }}</td>
+                        <td class="site">
+                            {% for site in factory.sites %}
+                                <p>
+                                    <span>{{ site.name }}</span>
+                                    <input type="checkbox" name="sites[{{ site.id }}]" class="site">
+                                </p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        <button id="display_prices">Afficher les prix</button>
+        <section id="display_prices">
+            <form method="post" action="{{ path('pricesfactories::saveprices') }}">
+                <table></table>
+                <button id="prices_validate">Valider les modifications</button>
+            </form>
+        </section>
+    </div>
+
+    <div id="crud">
+        <button><a href="{{ path('pricesfactory::create') }}">Ajouter</a></button>
+        <button id="edit">Modifier</button>
+        <button id="delete">Supprimer</button>
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('show_factories') }}
+    {% endblock javascripts %}
+
+{% endblock %}

@@ -38,10 +38,10 @@
                             <div class="all__enseigne">
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
-                                    <option value="">AREAS</option>
-                                        {# {% for customer in customer %}
-                                            <option value="{{customer}}">{{customer}}</option>
-                                        {% endfor %} #}
+                                        <option value="">Sélectionner l'enseigne</option>
+                                        {% for name in app.session.get('customerNames') %}
+                                            <option value="{{name}}">{{name}}</option>
+                                        {% endfor %}
                                     </select>
                                     <p class="number__enseigne"><span >25</span> enseignes</p>
                                     <div>

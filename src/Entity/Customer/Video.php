@@ -86,10 +86,6 @@ class Video extends Media
      */
     private $duration;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getFormat(): ?string
     {

@@ -15,3 +15,5 @@
 > 517 Empty Filename : Filename is empty
 
 > 518 Too short Filename : Filename is too short
+
+> 519 Invalid diffusion date : Diffusion end date > Diffusion start date

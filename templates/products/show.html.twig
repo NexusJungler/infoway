@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="" class="debug">
+        <select id="category">
+            <option>TOUTES</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <form method="post" action="{{ path('products::delete') }}">
+            <table id="list">
+                <thead>
+                    <tr>
+                        <th>sélection</th>
+                        <th>nom</th>
+                        <th>catégorie</th>
+                        <th>type de prix</th>
+                        <th>quantité</th>
+                        <th>description</th>
+                        <th>mention</th>
+                        <th>début de diffusion</th>
+                        <th>fin de diffusion</th>
+                        <th>tags</th>
+                        <th>représentation graphique</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td><input type="checkbox" name="products[{{ product.id }}]"></td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category.name }}</td>
+                        <td>{{ product.priceType.name }}</td>
+                        <td>{{ product.amount }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.note }}</td>
+                        <td>{{ product.start |date('Y-m-d') }}</td>
+                        <td>{{ product.end |date('Y-m-d') }}</td>
+                        <td class="tag">
+                            {% for tag in product.tags %}
+                                <span>{{ tag.name }}</span>
+                            {% endfor %}
+                        </td>
+                        <td><img src="/images/oeil.png" alt="logo"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <button><a href="{{ path('product::create') }}">Ajouter</a></button>
+        <button><a id="edit" href="{{ path('product::edit', {'product': 1}) }}">Modifier</a></button>
+        <button><a id="edit" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>
+        <button id="delete">Supprimer</button>
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('show_products') }}
+    {% endblock javascripts %}
+
+{% endblock %}

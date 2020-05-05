@@ -59,3 +59,17 @@ toolBox.activeTool("CustomerCreatorHandler")
        .activeTool("UploadHandlerTool")
 ;
 
+$(".enseigne select#enseigne").on("change", e => {
+
+    const selectedCustomer = $(e.currentTarget).val();
+
+    if(selectedCustomer !== "")
+    {
+        $.ajax({
+            url: "/update/user/current/customer",
+            type: "POST",
+            data: { 'customer': selectedCustomer },
+        })
+    }
+
+})

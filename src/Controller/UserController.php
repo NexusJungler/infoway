@@ -14,6 +14,7 @@ use App\Entity\Admin\UserRoles;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Role;
 use App\Form\UserType;
+use App\Repository\Admin\CustomerRepository;
 use App\Repository\Admin\UserRepository;
 use App\Service\ArrayHandler;
 use App\Service\EmailSenderService;
@@ -258,14 +259,14 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function userView(Request $request): Response
+    public function userView(Request $request, SessionManager $sessionManager): Response
     {
         //Recuperation de l entité manager pour la conenction admin
         $em =  $this->getDoctrine()->getManager();
         //Recuperation du repository de l entité Customer correspondant à l'enseigne
         $customerRepo = $em->getRepository(Customer::class);
 
-        $currentCustomer = $customerRepo->findOneByName('kfc');
+        $currentCustomer = $customerRepo->findOneByName(strtolower( $sessionManager->get('userCurrentCustomer') ));
         $usersInCustomer = $currentCustomer->getUsers() ;
 
         return $this->render("settings/setting-user.html.twig", [
@@ -1187,5 +1188,23 @@ class UserController extends AbstractController
 
     }
 
+    /**
+     * @Route(path="/update/user/current/customer", name="user::updateUserCurrentCustomer", methods={"POST"})
+     */
+    public function updateUserCurrentCustomer(Request $request, SessionManager $sessionManager, CustomerRepository $customerRepository)
+    {
+
+        if(!$request->request->get('customer'))
+            throw new Exception("Missing 'customer' parameter in POST data !");
+
+        $customer = $customerRepository->findOneByName($request->request->get('customer'));
+        if(!$customer)
+            throw new Exception(sprintf("Internal Error : no customer found with the name '%s'", $request->request->get('customer')));
+
+        ($sessionManager->get('userCurrentCustomer') === null) ? $sessionManager->set('userCurrentCustomer', $customer->getName()) : $sessionManager->replace('userCurrentCustomer', $customer->getName());
+
+        return new Response("200 OK");
+
+    }
 
 }

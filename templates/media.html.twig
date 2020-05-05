@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mediatheque') }}
+{% endblock %}
+
 {% block body %}
-    <main class="main main-media" {% if media_displayed is defined %} data-media_displayed="{{ media_displayed }}" {% endif %}>
+    <main class="main main-media" {% if media_displayed is defined and uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %} data-media_displayed="{{ media_displayed }}" {% endif %}>
         <div class="main-content">
 
             <section class="jumbotron">
@@ -32,3 +37,8 @@
     </main>
     
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mediatheque') }}
+{% endblock javascripts %}

@@ -153,7 +153,7 @@ class FfmpegSchedule
                 // dump($task);
                 //$base = $this->customers[$customer_id]['base'];
                 //$customer_name = $this->customers[$customer_id]['enseigne'];
-                $customer_name = $task->getCustomer()->getName();
+                $customer_name = strtolower( $task->getCustomer()->getName() );
 
                 $taskMediaInfo = $task->getMedia();
 
@@ -381,13 +381,6 @@ class FfmpegSchedule
             (is_dir("$dir/$file")) ? deldir("$dir/$file") : unlink("$dir/$file");
         }
         return rmdir($dir);
-    }
-
-    private function arrayToMedia(array $array)
-    {
-
-
-
     }
 
 }

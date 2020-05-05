@@ -16,9 +16,5 @@ class Image extends Media
      */
     private $id;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
 }

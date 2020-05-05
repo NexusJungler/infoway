@@ -1,3 +1,4 @@
+import ToolBox from "./ToolBox/ToolBox";
 
 class Tool {
 
@@ -5,6 +6,7 @@ class Tool {
     {
         this.__name = null;
         this.__isActived = false;
+        this.__toolbox = null;
     }
 
     getName()
@@ -21,6 +23,23 @@ class Tool {
         this.__name = name;
 
         return this;
+    }
+
+    setToolBox(toolBox)
+    {
+
+        if( !(toolBox instanceof ToolBox) )
+            throw new Error("Invalid 'toolBox' parameter for Tool::setToolBox()");
+
+        this.__toolbox = toolBox;
+        console.log(`ToolBox is now added in '${this.__name}' !`);
+
+        return this;
+    }
+
+    getToolBox()
+    {
+        return this.__toolbox;
     }
 
     toolIsActived()

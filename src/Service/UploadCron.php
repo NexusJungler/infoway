@@ -104,7 +104,6 @@ class UploadCron
         //$this->extension = substr($filename, $last_dot_pos+1);
         $this->extension = $taskInfo['extension'];
         $this->filename = substr($filename, 0, $last_dot_pos);
-        //$this->originalFileName = $filename;
 
         if (file_exists($path)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -120,7 +119,7 @@ class UploadCron
                 $this->process($path);
             }
         } else {
-            dd($path);
+            dd("path not found : " .  $path);
             $this->errors[] = 'file not found!';
             return;
         }
@@ -132,11 +131,11 @@ class UploadCron
 
         $valid_ext = ''; $complete = false;
 
+        //dump($this->mediatype);
         switch($this->mediatype) {
             case 'diff':
                 if ($this->filetype == 'image') {
                     $complete = $this->imageResize($media);
-                    $complete = true;
                     $valid_ext = 'png';
                     $old_path = $this->customer_dir . 'IMAGES/PRODUITS FIXES/PLEIN ECRAN/';
                 }
@@ -147,14 +146,20 @@ class UploadCron
                 }
 
                 if($complete) { // Attention, le retour des fonctions videoEncoding() et imageResize() n'est pas toujours une variable booléenne !!
-
+                    //dump('148');
                     // On récupère les informations du nouveau média et on l'insère en base
                     $this->retrieveInfo($media);
 
                     // On remplace le nom original des différentes résolutions créées par l'id du media
                     $sizes = ['low', 'medium', 'high', 'HD'];
                     foreach ($sizes as $size) {
-                        $dir_ref = $this->destfolder . "/$size/" . $this->filename . '.' . $valid_ext;
+                        if (substr($this->destfolder, -strlen('medias/')) === 'medias/')
+                            $dir_ref = $this->destfolder . "$size/" . $this->filename . '.' . $valid_ext;
+
+                        else
+                            $dir_ref = $this->destfolder . "/$size/" . $this->filename . '.' . $valid_ext;
+
+
                         if(file_exists($dir_ref)) {
                             rename($dir_ref, $this->destfolder . "/$size/" . $this->fileID . '.' . $valid_ext);
                             if($size == 'high') {
@@ -711,8 +716,9 @@ class UploadCron
                 }
                 // case média diffusable
                 if($this->mediatype == 'diff') {
-                    // unlink($img);   [fonction déjà impléméntée si return false]
-                    return false; // On exclut l'insertion en base
+                    // unlink($img);   [fonction déjà implementé si return false]
+                    //return false; // On exclut l'insertion en base
+                    return true;
                 }
                 break;
         }
@@ -755,8 +761,8 @@ class UploadCron
         $infofile = array();
         $newMedia = new Media();
         $newThematic = null;
-        //$newTemplateContent = new TemplateContents();
 
+        //dd('hi !');
         try
         {
 
@@ -895,7 +901,8 @@ class UploadCron
                         }
                     }
                     if ($this->mediatype != 'them') {
-                        $this->error = $this->repository->insert($newVideo);
+                        $this->fileID = $this->error = $this->repository->insert($newVideo);
+                        //$this->fileID = $this->repository->insert($newVideo);
                     } else {
                         $th_rep = new theme_rep();
                         $this->fileID = $th_rep->saveVideoThematic($newThematic);
@@ -919,10 +926,10 @@ class UploadCron
                        ->setCreatedAt(new DateTime())
                        ->setDiffusionStart($this->fileDiffusionStart)
                        ->setDiffusionEnd($this->fileDiffusionEnd);
-
+                //dd($newImg);
                 try
                 {
-                    $this->repository->insert($newImg);
+                    $this->fileID = $this->repository->insert($newImg);
                 }
                 catch (Exception $e)
                 {

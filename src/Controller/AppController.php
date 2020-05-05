@@ -3,8 +3,11 @@
 
 namespace App\Controller;
 
+use App\Repository\Admin\CustomerRepository;
+use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{ Request, Response };
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
@@ -18,7 +21,7 @@ class AppController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function homePage(Request $request): Response
+    public function homePage(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
     {
 
 //        if($this->getUser() === null)
@@ -40,10 +43,14 @@ class AppController extends AbstractController
             'clock_format' => 24
         ];
 
+        ($sessionManager->get('customerNames') === null) ?
+            $sessionManager->set('customerNames', $customerRepository->findAllNames()) :
+            $sessionManager->replace('customerNames', $customerRepository->findAllNames());
+
         //dump($location);
 
         return $this->render("home/zone-diffusion.html.twig", [
-            'customer' => $customer,
+            //'customerNames' => $customerRepository->findAllNames(),
             'location' => $location
         ]);
     }

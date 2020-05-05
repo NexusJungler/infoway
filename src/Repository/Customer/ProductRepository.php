@@ -9,18 +9,17 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * @method Product|null find($id, $lockMode = null, $lockVersion = null)
- * @method Product|null findOneBy(array $criteria, array $orderBy = null)
- * @method Product[]    findAll()
- * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method product|null find($id, $lockMode = null, $lockVersion = null)
+ * @method product|null findOneBy(array $criteria, array $orderBy = null)
+ * @method product[]    findAll()
+ * @method product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ProductRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Product::class);
+        parent::__construct($registry, product::class);
     }
-
 
     public function setEntityManager(ObjectManager $entityManager): self
     {
@@ -29,8 +28,22 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
         return $this;
     }
 
+    public function findProductWithTags($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.tags', 't')
+            ->where('p.id = :id')
+            ->setParameter('id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    // Eureka --> Surcharger la Méthode findAll() pour contrôler le lazy load !!
+
     // /**
-    //  * @return Product[] Returns an array of Product objects
+    //  * @return product[] Returns an array of product objects
     //  */
     /*
     public function findByExampleField($value)
@@ -47,7 +60,7 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
     */
 
     /*
-    public function findOneBySomeField($value): ?Product
+    public function findOneBySomeField($value): ?product
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

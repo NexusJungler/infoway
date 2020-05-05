@@ -48,6 +48,10 @@
         box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
         padding: 0;
 
+        .hidden {
+            display: none;
+        }
+
         .dragndrop_download_input_container {
             border: 2px dashed gray;
             height: 135px;
@@ -63,6 +67,11 @@
                 width: 74px;
                 height: 74px;
             }
+        }
+
+        .preview {
+            width: 172px;
+            height: 97px;
         }
 
         span.error {
@@ -216,4 +225,128 @@
 
 
     }
+
+    .associate_product-popup {
+        height: 785px;
+        width: 1600px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -12%;
+        z-index: 30;
+
+        &.hidden {
+           display: none;
+        }
+
+        .modal {
+            color: #FFF;
+            margin-top: 5%;
+
+            .header-modal {
+                height: 8%;
+                width: 100%;
+                background-color: #4D646D;
+                border: 1px solid #707070;
+                display: flex;
+                flex-direction: row;
+
+                .modal-title-container {
+                    height: 100% !important;
+                    width: 97%;
+                    text-align: left;
+                    display: flex;
+                    align-items: center;
+
+                    .title {
+                        font-size: 37px;
+                        padding-left: 2%;
+                    }
+                }
+
+                .close-modal-container {
+                    height: 100%;
+                    width: 3%;
+                    text-align: right;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .close {
+                        background: #F57171 0% 0% no-repeat padding-box;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .modal-body {
+
+                .body-top {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 2%;
+
+                    .filter-left {
+                        width: 80%;
+                        text-align: left;
+                    }
+
+                    .filter-right {
+                        width: 20%;
+                        text-align: right;
+                    }
+
+                }
+
+                .body-middle {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 2%;
+
+                    table {
+                        width: 100%;
+
+                        thead {
+                            background: #899CA4 0% 0% no-repeat padding-box;
+                            border: 1px solid #899CA4;
+                            color: #FFF;
+                        }
+
+                        tbody {
+                            color: #000;
+
+                            tr {
+
+                                td {
+                                    &:first-child {
+                                        text-align: center;
+                                    }
+                                }
+
+                                text-align: left;
+                            }
+                        }
+                    }
+
+                    .product-choice-list {
+                        width: 80%;
+                    }
+
+                    .product-associated-list {
+                        width: 20%;
+                        padding-left: 2%;
+                    }
+
+                }
+
+                .body-bottom {
+
+                }
+
+            }
+
+        }
+    }
+
 }

@@ -188,7 +188,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         $this->_em->persist($dataObject);
         $this->_em->flush();
-        return true;
+        return $dataObject->getId();
 
         /*$methods = get_class_methods($dataObject);
         //conversion camel case en snake case

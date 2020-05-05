@@ -13,7 +13,7 @@ parameters:
     upload_dir: '%kernel.project_dir%/public/upload'
     sys_path:
         #datas: "D:/main"
-        datas: "C:/laragon/www/infoway/main"
+        datas: "%kernel.project_dir%/../main"
 
     authorizedExtensions:
         - jpg

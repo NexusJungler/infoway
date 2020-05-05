@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -22,7 +23,7 @@ class SettingController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function settings(Request $request): Response
+    public function settings(Request $request, SessionManager $sessionManager): Response
     {
         $customer = [
             'ARES',
@@ -35,7 +36,7 @@ class SettingController extends AbstractController
 
         $subdivision = new CompanyPiece();
         $permission = 1;
-        $currentUserDatabaseManager = 'kfc'; // must be dynamic
+        $currentUserDatabaseManager = strtolower( $sessionManager->get('userCurrentCustomer') ); // must be dynamic
 
         $adminEm = $this->getDoctrine()->getManager();
         $customerEm = $this->getDoctrine()->getManager($currentUserDatabaseManager);

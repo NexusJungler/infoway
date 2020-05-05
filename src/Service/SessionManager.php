@@ -52,18 +52,26 @@ class SessionManager
 
     }
 
-    public function replace(string $name, array $values): self
+    public function replace(string $name, $values): self
     {
 
         if(is_null($this->get($name)))
             throw new NoSuchIndexException(sprintf("Error ! Cause : session variable '%s' not found !", $name));
 
+        // if session variable is array
         if(is_array($this->get($name)))
+        {
             $values = $this->addMissingKeysInArray($name, $values);
 
-        $this->__session->replace([
-            $name => $values
-        ]);
+            $this->__session->replace([
+                $name => $values
+            ]);
+        }
+        else
+        {
+            $this->remove($name);
+            $this->set($name, $values);
+        }
 
         //dd($this->get($name), $values);
 

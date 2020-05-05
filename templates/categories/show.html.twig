@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="" class="debug">
+        <form method="post" action="{{ path('categories::delete') }}">
+            <table id="list">
+                <thead>
+                <tr>
+                    <th>sélection</th>
+                    <th>nom</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td><input type="checkbox" name="categories[{{ category.id }}]"></td>
+                        <td>{{ category.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <button><a href="{{ path('category::create') }}">Ajouter</a></button>
+        <button><a id="edit" href="{{ path('category::edit', {'category': 1}) }}">Modifier</a></button>
+        <button id="delete">Supprimer</button>
+    </div>
+
+    {% block javascripts %}
+      {#  {{ encore_entry_script_tags('show_categories') }} #}
+    {% endblock javascripts %}
+
+{% endblock %}
