@@ -4,6 +4,7 @@ namespace App\Form\Customer;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\TagsList;
+use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
@@ -21,9 +22,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagListType extends AbstractType
 {
+    private User $_user ;
+    private Customer $_customer ;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->user =
 
         $builder
             ->add('tags', CollectionType::class,[
@@ -45,10 +49,10 @@ class TagListType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => TagsList::class,
-            'sites' => new ArrayCollection()
         ]);
         $resolver->setRequired([
-            'sites'
+            'user' ,
+            'customer'
         ]);
     }
 }

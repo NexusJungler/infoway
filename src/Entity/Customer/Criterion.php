@@ -92,6 +92,11 @@ class Criterion
         return $this;
     }
 
+//    /** @ORM\PostLoad */
+//    public function doStuffOnPostLoad()
+//    {
+//        dd('test');
+//    }
 
     /**
      * @return Collection|Product[]

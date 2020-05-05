@@ -4,13 +4,13 @@ namespace App\Service;
 
 
 use App\Entity\Admin\Contact;
-use App\Errors\ContactError;
-use App\Errors\CustomerError;
-use App\Errors\InvalidContactFirstNameError;
-use App\Errors\InvalidContactLastNameError;
-use App\Errors\InvalidEmailError;
-use App\Errors\InvalidPhoneError;
-use App\Errors\InvalidPositionError;
+use App\Errors\Contact\ContactError;
+use App\Errors\Customer\CustomerError;
+use App\Errors\Contact\InvalidContactFirstNameError;
+use App\Errors\Contact\InvalidContactLastNameError;
+use App\Errors\Contact\InvalidEmailError;
+use App\Errors\Contact\InvalidPhoneError;
+use App\Errors\Contact\InvalidPositionError;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

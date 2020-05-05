@@ -5,7 +5,6 @@
 {% block body %}
     <h1>Edit Criterion</h1>
 
-    {{ dump(app.flashes('error')) }}
         {% set criterions_list = criterion.list %}
         {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
     {{ include('settings/criterions/_form.html.twig', {'button_label': 'Update'}) }}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Errors\Customer;
+namespace App\Errors\CriterionsList;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Customer\CriterionsList;
