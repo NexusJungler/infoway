@@ -27,7 +27,9 @@ class TagListType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->user =
+
+        $this->_user = $options[ 'user' ] ;
+        $this->_customer = $options[ 'customer' ] ;
 
         $builder
             ->add('tags', CollectionType::class,[
@@ -37,7 +39,9 @@ class TagListType extends AbstractType
             ->add('sites', EntityType::class, [
             'class' => Site::class,
             'choice_label' => 'name',
-            'choices' => $options['sites'],
+            'query_builder' => function(SiteRepository $siteRepository ){
+                $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
+            },
             'multiple' => true,
             'expanded' => true,
             'by_reference' => false

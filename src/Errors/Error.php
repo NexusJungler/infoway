@@ -5,9 +5,10 @@ namespace App\Errors;
 
 class Error {
 
-    private ?string $message = null ;
+    protected ?string $message = null ;
     protected ?string $column = null ;
     protected array $errorValue = [] ;
+    protected string $name ;
 
     /**
      * ContactError constructor.
@@ -26,11 +27,11 @@ class Error {
     }
 
     public function addChildError(Error $childError){
-        $this->errorValue = $childError->errorToArray() ;
+        $this->errorValue = [ $this->column => $childError->errorToArray() ];
     }
 
     public function errorToArray(){
-        return [$this->column => $this->errorValue ] ;
+        return [$this->name => $this->errorValue ] ;
     }
 }
 

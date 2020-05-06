@@ -11,9 +11,11 @@ use App\Entity\Customer\Tag;
 use App\Form\Customer\TagListType;
 use App\Form\Customer\TagType;
 use App\Repository\Customer\TagsRepository;
+use App\Service\TagsHandler;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\ChoiceList\LazyChoiceList;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -39,7 +41,7 @@ class TagController extends AbstractController
     /**
      * @Route("/new", name="tags_new", methods={"GET","POST"})
      */
-    public function new(Request $request, SessionInterface $session, Profiler $profiler): Response
+    public function new(Request $request, SessionInterface $session, Profiler $profiler, TagsHandler $tagsHandler): Response
     {
 
         $tagsList = new TagsList() ;
@@ -53,25 +55,21 @@ class TagController extends AbstractController
         if( ! $currentUser instanceof User ) throw new \Error('invalid User') ;
 
         $customerManager = $this->getDoctrine()->getManager($currentCustomer->getName()) ;
-        $customerSiteRepo = $customerManager->getRepository(Site::class) ;
 
+        $datasToPassToTagForm = ['user' => $currentUser, 'customer' => $currentCustomer ] ;
 
-        $sitesPossessedByCustomer =  $customerSiteRepo->getSitesByUserAndCustomer($currentUser,$currentCustomer) ;
-        $datasToPassToTagForm = ['sites' =>$sitesPossessedByCustomer ] ;
-
-        $form = $this->createForm(TagListType::class, $tagsList , ['sites' => $datasToPassToTagForm]);
+        $form = $this->createForm(TagListType::class, $tagsList , $datasToPassToTagForm);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $sitesSelected = $tagsList->getSites() ;
+            if(
+                    ! $tagsHandler->isAllSitesSelectedArePossessedByUser( $tagsList->getSites(), $currentUser, $currentCustomer )
+                ||  ! $tagsHandler->isMinimumSitesSelectionIsReached( $tagsList )
+                ||  $tagsHandler->isTagsListEmpty( $tagsList )
+            ) return $this->redirectToRoute('tags_new') ;
 
-            foreach($sitesSelected as $siteSelected){
-                if ( ! in_array ($siteSelected , $sitesPossessedByCustomer) ) throw new \Error('One site is not possessed ByUser, impossible to affect tag') ;
-            }
-            if( $sitesSelected->count() < 1 ) throw new \Error('You need to affect minimum one site to the tag created') ;
-            if( $tagsList->getTags()->count() < 1 ) throw new \Error('no tags created') ;
 
             foreach( $tagsList->getTags() as $tag ){
                 $customerManager->persist( $tag );
@@ -113,7 +111,7 @@ class TagController extends AbstractController
         $customerSiteRepo = $customerManager->getRepository(Site::class) ;
 
         $sitesAffectedToTag  =  $tag->getSites()->getValues();
-        $datasToPassToTagForm = ['sites' => $sitesAffectedToTag ] ;
+        $datasToPassToTagForm = ['user' => $currentUser, 'customer' => $currentCustomer ] ;
 
         $form = $this->createForm(TagType::class, $tag, $datasToPassToTagForm );
         $form->handleRequest($request);
