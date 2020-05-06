@@ -2,7 +2,7 @@
 
 namespace App\Errors\TagsList;
 
-class NoTagToInsertError extends TagListsError {
+class NoTagToInsertError extends TagsListError {
 public function __construct()
 {
 $this->column = 'tags' ;

@@ -1,7 +1,7 @@
 <?php
 namespace App\Errors\TagsList;
 
-class MinimumSitesNotReached extends TagListsError {
+class MinimumSitesNotReached extends TagsListError {
 
     public function __construct(int $minimumSitesInTags)
     {

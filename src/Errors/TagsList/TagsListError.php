@@ -6,7 +6,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Customer\CriterionsList;
 use App\Errors\Error;
 
-class TagListsError extends Error
+class TagsListError extends Error
 {
 
     /**

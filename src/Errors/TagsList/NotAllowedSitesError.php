@@ -2,7 +2,7 @@
 
 namespace App\Errors\TagsList;
 
-class NotAllowedSitesError extends TagListsError {
+class NotAllowedSitesError extends TagsListError {
 public function __construct()
 {
 $this->column = 'sites' ;

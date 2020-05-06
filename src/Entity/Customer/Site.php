@@ -98,11 +98,29 @@ class Site
 
     private $users ;
 
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="PricesGroup", inversedBy="sites")
+     * @ORM\JoinColumn(name="prices_group_id", referencedColumnName="id")
+     */
+    private $pricesGroup;
+
+
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Price")
+     * @ORM\JoinTable(name="sites_prices",
+     *      joinColumns={@ORM\JoinColumn(name="site_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="price_id", referencedColumnName="id")}
+     *      )
+     */
+    private $prices;
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->prices = new ArrayCollection() ;
     }
 
     public function getId(): ?int
@@ -337,6 +355,44 @@ class Site
     public function setUsers(ArrayCollection $users): void
     {
         $this->users = $users;
+    }
+
+    public function getPricesGroup(): ?PricesGroup
+    {
+        return $this->pricesGroup;
+    }
+
+    public function setPricesGroup(?PricesGroup $pricesGroup): self
+    {
+        $this->pricesGroup = $pricesGroup;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Price[]
+     */
+    public function getPrices(): Collection
+    {
+        return $this->prices;
+    }
+
+    public function addPrice(Price $price): self
+    {
+        if (!$this->prices->contains($price)) {
+            $this->prices[] = $price;
+        }
+
+        return $this;
+    }
+
+    public function removePrice(Price $price): self
+    {
+        if ($this->prices->contains($price)) {
+            $this->prices->removeElement($price);
+        }
+
+        return $this;
     }
 
 }
