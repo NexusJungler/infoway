@@ -125,7 +125,7 @@ class MediaController extends AbstractController
 
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
-
+dd("12");
         move_uploaded_file($file['tmp_name'], $path);
 
         // debug
@@ -205,7 +205,7 @@ class MediaController extends AbstractController
         else
             $output = 1;
 
-        return new Response( 1 );
+        return new Response( $output );
     }
 
     /**

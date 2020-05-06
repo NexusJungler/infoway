@@ -440,7 +440,10 @@ class UploadHandlerTool extends Tool
 
                         const form = $(`form.upload_form[data-target=${fileToUpload.index}]`);
                         let formData = new FormData(form[0]);
-                        formData.append('file', fileToUpload.file)
+                        formData.append('file', fileToUpload.file);
+
+                        const fileExtension = fileToUpload.file.name.split('.').pop();
+                        const fileName = fileToUpload.file.name.replace( '.' + fileExtension , '');
 
                         const uploadState = $(`.modal-upload-download #upload_${fileToUpload.index} .upload_state`);
 
@@ -456,9 +459,9 @@ class UploadHandlerTool extends Tool
                                 let xhr = jQuery.ajaxSettings.xhr();
                                 if (xhr.upload) {
                                     xhr.upload.addEventListener('progress', function (event) {
-                                        var percent = 0;
-                                        var position = event.loaded || event.position;
-                                        var total = event.total;
+                                        let percent = 0;
+                                        let position = event.loaded || event.position;
+                                        let total = event.total;
                                         if (event.lengthComputable) {
                                             percent = Math.ceil(position / total * 100);
                                         }
@@ -483,29 +486,52 @@ class UploadHandlerTool extends Tool
                                 $(`.modal-upload-download #upload_${fileToUpload.index} progress`).removeClass("on_upload");
                                 uploadFinished++;
 
-                                var list = $('.medias');
+                                let list = $('.medias-list-to-upload');
 
 
                                 // Try to find the counter of the list or use the length of the list
-                                var counter = list.data('widget-counter') || list.children().length;
+                                let counter = list.data('widget-counter') || list.children().length;
 
                                 // grab the prototype template
-                                var newWidget = list.attr('data-prototype');
+                                let newWidget = list.attr('data-prototype');
                                 //console.log(newWidget); debugger
                                 // replace the "__name__" used in the id and name of the prototype
                                 // with a number that's unique to your emails
                                 // end name attribute looks like name="contact[emails][2]"
                                 newWidget = newWidget.replace(/__name__/g, counter);
+
+                                // create a new list element and add it to the list
+                                let newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+
+                                // put data in input
+                                newElem.find('.media_name').val(fileName);
+
+                                let now = new Date();
+                                let month = (now.getMonth() + 1);
+                                let day = now.getDate();
+                                let year = now.getFullYear();
+
+                                newElem.find(`.media_diffusion_date_start #medias_list_medias_${counter}_diffusionStart_day option[value='${day}']`).attr('selected', true);
+                                newElem.find(`.media_diffusion_date_start #medias_list_medias_${counter}_diffusionStart_month option[value='${month}']`).attr('selected', true);
+
+                                // rebuild year field
+                                // par defaut symfony construit le select avec un interval : année - 5 < année < année + 5
+                                newElem.find(`.media_diffusion_date_start #medias_list_medias_${counter}_diffusionStart_year`).html(this.rebuildYearFieldContent(counter, {type: 'start', choice: year}));
+
+                                newElem.find(`.media_diffusion_date_end #medias_list_medias_${counter}_diffusionEnd_day option[value='${day}']`).attr('selected', true);
+                                newElem.find(`.media_diffusion_date_end #medias_list_medias_${counter}_diffusionEnd_month option[value='${month}']`).attr('selected', true);
+
+                                // on modifie l'interval pour avoir : année < année < année +30
+                                newElem.find(`.media_diffusion_date_end #medias_list_medias_${counter}_diffusionEnd_year`).html(this.rebuildYearFieldContent(counter, {type: 'end', choice: year + 30}));
+
+                                //console.log(newElem); debugger
+                                newElem.appendTo(list);
+                                //console.log(list); debugger
+
                                 // Increase the counter
                                 counter++;
                                 // And store it, the length cannot be used if deleting widgets is allowed
                                 list.data('widget-counter', counter);
-
-                                // create a new list element and add it to the list
-                                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-                                //console.log(newElem); debugger
-                                newElem.appendTo(list);
-                                //console.log(list); debugger
 
                                 if(uploadFinished === this.__filesToUpload.length)
                                 {
@@ -556,6 +582,28 @@ class UploadHandlerTool extends Tool
         }
 
         return this;
+    }
+
+    rebuildYearFieldContent(index, dateData)
+    {
+
+        let now = new Date();
+
+        // -5 year, utile ??
+        // pour pouvoir laisser le choix de selectionner une date passée (dans le cas de la date de debut de diffusion)
+        let startYear = (dateData.type === 'end') ? now.getFullYear() : now.getFullYear() - 5;
+
+        // +30 par defaut
+        // pour simuler qu'un média à une date de diffusion "illimité"
+        let endYear = startYear + 30;
+        let options = '';
+
+        for (let i = startYear; i <= endYear; i++)
+        {
+            options += `<option value="${ i }" ${ (i === dateData.choice) ? 'selected' : '' }>${ i }</option>`;
+        }
+
+        return options;
     }
 
     checkMediaNameValidity(mediaName)
@@ -886,6 +934,9 @@ class UploadHandlerTool extends Tool
 
                 } )
 
+                // @TODO: reformatage des données avant envoie
+                $('.medias-list-to-upload')
+
             })
         }
         else
@@ -917,6 +968,8 @@ class UploadHandlerTool extends Tool
                 {
                     input.parent().find("span.error").html("").addClass("hidden");
                     input.removeClass('invalid');
+
+                    // @TODO: update hidden media list
                 }
 
             })

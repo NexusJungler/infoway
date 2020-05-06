@@ -329,13 +329,27 @@
                         }
                     }
 
-                    .product-choice-list {
+                    .product-choice-list-container {
                         width: 80%;
                     }
 
-                    .product-associated-list {
+                    .product-associated-list-container {
                         width: 20%;
                         padding-left: 2%;
+                        
+                        table {
+                            
+                            tbody {
+                                
+                                tr {
+                                    .remove-item {
+                                        cursor: pointer;
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
                     }
 
                 }

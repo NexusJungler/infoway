@@ -127,7 +127,7 @@
 
                                         <div class="hidden">
                                             {{ form_start(form) }}
-                                                <ul class="medias" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
+                                                <ul class="medias-list-to-upload" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
                                             {{ form_end(form) }}
                                         </div>
 
@@ -193,8 +193,8 @@
 
                             <div class="body-top">
                                 <div class="filter-left filter-by-category">
-                                    <select name="product-category-choice" id="">
-                                        <option value="">Sélectionner une catégorie</option>
+                                    <select class="product-category-choice">
+                                        <option value="">Tout afficher</option>
                                         {% for categorie in categories %}
                                             <option value="{{ categorie.id }}">{{ categorie.name }}</option>
                                         {% endfor %}
@@ -208,21 +208,21 @@
 
                             <div class="body-middle">
 
-                                <section class="product-choice-list">
+                                <section class="product-choice-list-container">
 
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="select_all"></th>
+                                                <th><input type="checkbox" class="select_all_products"></th>
                                                 <th>Nom du produit</th>
                                                 <th>Description</th>
                                                 <th>TAGS</th>
                                             </tr>
                                         </thead>
 
-                                        <tbody>
+                                        <tbody class="product-choice-list">
                                             {% for product in products %}
-                                                <tr data-product="{{ product.id }}">
+                                                <tr data-product="{{ product.id }}" data-category="{{ product.category.id }}">
                                                     <td><input type="checkbox" class="choice_product" name="choice_product_{{ loop.index }}" data-product="{{ product.name }}"></td>
                                                     <td>{{ product.name }}</td>
                                                     <td>{{ product.description }}</td>
@@ -238,17 +238,18 @@
 
                                 </section>
 
-                                <section class="product-associated-list">
+                                <section class="product-associated-list-container">
 
                                     <table>
 
                                         <thead>
                                             <tr>
                                                 <th>Produits associés</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
 
-                                        <tbody>
+                                        <tbody class="product-associated-list">
 
                                         </tbody>
 

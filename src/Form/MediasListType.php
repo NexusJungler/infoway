@@ -16,7 +16,7 @@ class MediasListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('medias', CollectionType::class, [
-            //'label' => false,
+            'label' => false,
             'required' => false,
             'entry_type' => MediaType::class,
             'allow_add' => true,
