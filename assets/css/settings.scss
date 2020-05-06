@@ -334,68 +334,9 @@
 
 /** cree user **/
 
-
-.tags{
-    .content-tags{
-        margin-top: 60px;
-        width: 1000px;
-        height: 460px;
-        .tags-poster{
-            padding: 20px 10px 30px;
-            text-align: center;
-            height: 100%;
-            .container-tags{
-                position: relative;
-                display: block;
-                height: 25px;
-                padding: 3px 14px 3px 19px;
-                // background-color: #EAF1F2 0% 0% no-repeat padding-box;
-                background: #F6F0D5 0% 0% no-repeat padding-box;
-                box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
-                border: 0.0625rem solid #FFFFFF;
-                border-radius: 1.375rem rem(11px)  rem(11px)  1.375rem ;
-                font: rem(14px) 'Barlow', medium;
-                text-align: center;
-                color: #283338;;
-                width: 40%;
-                justify-content: center;
-                display: inline-block;
-                &::before {
-                    content: '';
-                    position: absolute;
-                    left: 4px;
-                    top: 3px;
-                    width: 15px;
-                    height: 15px;
-                    background: #e8e4e4 0% 0% no-repeat padding-box;
-                    box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
-                    border: 0.0625rem solid #FFFFFF;
-                    opacity: 1;
-                    border-radius: 50%;
-                    margin-right: 0.6rem;
-                }
-            }
-            .delete-tags{
-                position: absolute;
-                top: 4px;
-                right: 88px;
-                background-color: transparent;
-                border: 0;
-                font-size: 16px;
-            }
-            
-        }
-
-        .container-tags-desc{
-            background: #FFFFFF 0% 0% no-repeat padding-box;
-            border: 1px solid #899CA4;
-            border-radius: 9px;
-        }
-    }
-}
-
 .create-criteres{
     .form-content{
+        margin: 1rem 0 0 0 ;
         padding: 0;
         .row{
             padding: 15px 25px;
@@ -431,7 +372,7 @@
         .row-multiple{
             margin-top: 10px;
             .form-label{
-                width: 17%;
+                width: 22%;
             }
             .input-custome{
                 width: 250px;
@@ -463,11 +404,17 @@
                     }
                     .input-custome{
                         width: 250px;
+                        height: 30px;
                         margin: 0px 40px 0 20px;
                     }
                     .input-custome-desc {
                         width: 100%;
                         height: 30px;
+                        padding: 0.3em 0.3rem 0.3rem 1rem;
+                        border: 0.06rem solid #C0CCD1;
+                        border-radius: 0.4rem;
+                        margin-right: 40px;
+                        font: 16px 'Barlow';
                     }
                     
                 }
@@ -492,140 +439,6 @@
     }
 }
 
-// page gestion des crieters
-// page management of crieters
 
-.tab-content-criteres{
-
-    .content-criterion{
-        margin-top: 40px;
-        ul{
-
-            .row-criterion{
-                margin-bottom: 20px;
-                width: 990px;
-                .bloc-criterion-title{
-                    padding: 7px 10px;
-                    display: flex;
-                    background: #A4B4BB 0% 0% no-repeat padding-box;
-                    box-shadow: 0px 3px 6px #00000029;
-                    border: 1px solid #4D646D;
-                    height: 45px;
-                    input{
-                        margin-right: 20px;
-                    }
-                    .title{
-                        font: rem(21px) 'Barlow', medium;
-                        letter-spacing: 0px;
-                        color: #FFFFFF;
-                        margin-right: 10px;
-                        &::after {
-                            content: '';
-                            border-left: 0.15rem solid #FFFFFF;
-                            position: relative;
-                            margin: 0.5rem 1rem;
-                            height: 1.5rem;
-                        }
-                    }
-                }
-            }
-
-
-        }
-        
-    }
-
-    // TABLEAU
-    .table{
-        .table-custome{
-            border-radius: 0;
-            border: 1px solid #899CA4;
-            border-top: 0;
-            .thead-info{
-                width: 100%;
-                background: #E3E3E3 0% 0% no-repeat padding-box;
-                border: 0;
-                border-bottom: 1px solid #899CA4;
-                &::after{
-                    display: none;
-                }
-                th{
-                    color: #4D646D;
-                    &:first-child{
-                        text-align: center;
-                        width: 26%;
-                    }
-                    &:last-child{
-                        text-align: left;
-                        width: 80%;
-                    }
-                }
-            }
-            .tbody-content{
-                background: #F6F6F6 0% 0% no-repeat padding-box;
-                border: 0;
-                margin-bottom:30px;
-                padding: 20px 60px ;
-                height: 250px;
-                tr{
-                    &:first-child{
-                        text-align: right;
-                        span{
-                            width: 197px;
-                            height: 29px;
-                            padding-left: 20px;
-                            display: inline-flex;
-                            background: #FFFFFF 0% 0% no-repeat padding-box;
-                            border: 1px solid #C0CCD1;
-                            border-radius: 6px;
-                        }
-                    }
-                    &:nth-child(2n+2){
-                        background: #F6F6F6 0% 0% no-repeat padding-box;
-                    }
-                    &:last-child{
-                        margin-bottom: 20px;
-                    }
-                    td{
-                        border: 0;
-                        padding: 10px 30px ;
-                        .cercle{
-                            font: rem(14px) 'Barlow', medium;
-                            background: #EAF1F2 0% 0% no-repeat padding-box;
-                            box-shadow: 2px 2px 2px #00000029;
-                            border-radius: 5px;
-                            border: 1px solid #4D646D;
-                            padding: 2px 5px;
-                            width: 110px;
-                            height: 25px;
-                            display: inline-flex;
-                        }
-                        .cercle-desc{
-                            // width: 660px;
-                            height: 30px;
-                            background: #FFFFFF 0% 0% no-repeat padding-box;
-                            border: 1px solid #899CA4;
-                            border-radius: 9px;
-                            padding: 2px 5px;
-                        }
-
-                        input{
-                            margin-left: 60px;
-                        }
-                    }
-                }
-
-                .tr-custome{
-                    td{
-                        &:first-child{
-                            width: 20%;
-                        }
-                    }
-                }
-            } 
-        }
-    }
-
-}
 
 

@@ -8,7 +8,7 @@
             </div>
             <div class="row ">
                 {{ form_label(form.description, 'description de la liste :',  {'label_attr': {'class': 'form-label'}} )  }}
-                {{ form_widget(form.description, {'attr': {'class': 'input-custome',' placeholder' : 'Type de produits par conviction religieuse',}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'input-custome',' placeholder' : 'Type de produits par conviction religieuse'} } ) }}
             </div>
         </div>
 
@@ -23,19 +23,21 @@
             </div>
             <div class="content-criteres-bloc">
                 {% for criterion in form.criterions  %}   
-                    <div class="row-criteres" id="row{{loop.index}}">
+                    <div class="row-criteres " id="row{{loop.index}}">
                         {# {{ form_widget(criterion) }} #}
                         <div class="selected">
                             {{ form_label(criterion.selected , "choix n°" ~ loop.index ) }}
-                            {{ form_widget(criterion.selected)  }}
+                            <label class="container-input">
+                                {{ form_widget(criterion.selected) }}
+                                <span class="container-rdo"></span>
+                            </label>
+                            
                         </div>
                         <div>
-                            {{ form_label(criterion.name)  }}
-                            {{ form_widget(criterion.name)  }}
+                            {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' '}})  }}
                         </div>
-                        <div>
-                            {{ form_label(criterion.description)  }}
-                            {{ form_widget(criterion.description) }}
+                        <div class="form-desc">
+                            {{ form_widget(criterion.description, {'attr': {'class': 'input-custome-desc',' placeholder' : 'Type de produits par conviction religieuse'}}) }}
                         </div>
                         <div>
                             <button type="button" id="row{{loop.index}}" class="btn delete-row">X</button>

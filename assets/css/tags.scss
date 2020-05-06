@@ -1,0 +1,179 @@
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+/*** PAGE TAGS ***/
+
+.main-tags{
+    .display{
+        padding-top: 20px;
+        &::after{
+            top: 2.3125rem;
+            left: 0%;
+        }
+    }
+
+    // TABLEAU
+    .content-tags{
+        .table-custome{
+            border-radius: 0;
+            .thead-info{
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                border: 1px solid #899CA4;
+                width: 100%;
+                &::after{
+                    display: none;
+                }
+                th{
+                    color: #4D646D;
+                    &:first-child{
+                        text-align: center;
+                        width: 26%;
+                    }
+                    &:last-child{
+                        text-align: left;
+                        width: 80%;
+                    }
+                }
+                
+            }
+            .tbody-content{
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+                border: 0;
+                margin-bottom:30px;
+                padding: 20px 60px ;
+                height: 400px;
+                tr{
+                    margin: 20px 0;
+                    &:nth-child(2n+2){
+                        background: #F6F6F6 0% 0% no-repeat padding-box;
+                    }
+                    td{
+                        border: 0;
+                        padding: 0;
+                        text-align: left;
+                        &:first-child{
+                            width: 19%;
+                        }
+                        .cercle-desc{
+                            // width: 660px;
+                            height: 30px;
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #899CA4;
+                            border-radius: 9px;
+                            padding: 0px 5px 0 10px;
+                        }
+
+                        input{
+                            margin-left: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+  
+    .tags{
+        padding-left: 35px;
+        .content-tags{
+            margin-top: 110px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1000px;
+            height: 460px;
+            .tags-poster{
+                padding: 20px 10px 30px;
+                text-align: center;
+                height: 100%;
+                .container-tags{
+                    position: relative;
+                    display: block;
+                    height: 25px;
+                    padding: 3px 14px 3px 19px;
+                    // background-color: #EAF1F2 0% 0% no-repeat padding-box;
+                    background: #F6F0D5 0% 0% no-repeat padding-box;
+                    box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
+                    border: 0.0625rem solid #FFFFFF;
+                    border-radius: 1.375rem rem(11px)  rem(11px)  1.375rem ;
+                    font: rem(14px) 'Barlow', medium;
+                    text-align: center;
+                    color: #283338;;
+                    width: 40%;
+                    justify-content: center;
+                    display: inline-block;
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 4px;
+                        top: 3px;
+                        width: 15px;
+                        height: 15px;
+                        background: #e8e4e4 0% 0% no-repeat padding-box;
+                        box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
+                        border: 0.0625rem solid #FFFFFF;
+                        opacity: 1;
+                        border-radius: 50%;
+                        margin-right: 0.6rem;
+                    }
+                }
+                .delete-tags{
+                    position: absolute;
+                    top: 4px;
+                    right: 88px;
+                    background-color: transparent;
+                    border: 0;
+                    font-size: 16px;
+                }
+                
+            }
+        }
+    }
+}
+
+.create-tags{
+    margin-left: 3%;
+}
+
+#tag_list_tags_0{
+     display: flex;
+    div{
+        &:nth-child(1){
+            label{
+                display: none;
+            }
+            input{
+                border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                margin: 30px 0;
+            }
+        }
+        &:nth-child(2){
+            margin-right: 60px;
+            label{
+                margin-right: 20px;
+            }
+            input{
+                border: 1px solid black;
+                border-radius: 9px;
+                width: 106px;
+                height: 29px;
+            }
+        }
+        &:nth-child(3){
+            label{
+                display: none;
+            }
+            textarea{
+                border-radius: 9px;
+                width: 500px;
+                height: 29px;
+            }
+        }
+    }
+    
+}

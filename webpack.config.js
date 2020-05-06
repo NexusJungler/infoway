@@ -55,6 +55,8 @@ Encore
 
     .addEntry('show_factories', './assets/js/show_factories.js')
 
+    // TAGS
+    .addEntry('tags', './assets/js/tags.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

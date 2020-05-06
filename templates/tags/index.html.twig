@@ -2,8 +2,13 @@
 
 {% block title %}Tag index{% endblock %}
 
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('tags') }}
+{% endblock %} #}
+
 {% block body %}
-    <main class="main main_setting">
+    <main class="main main-tags">
         <div class="main-content">
 
             <section class="jumbotron">
@@ -27,72 +32,69 @@
                 
             </section>
 
-            <section>
+            {% block maincontent %}
+                <section class="wrapper_tabcontent wrapper-tags">
+                    <div id="setting-tags" class="tab-content current tags">
 
-               {% block maincontent %}
-    <section class="wrapper_tabcontent">
+                        <article class="tab-content-title">
+                            <h3 class="title">Gestion des TAGS</h3>
+                            <p>SUPER WILD COFFEE</p>
+                        </article>
 
-        <div id="setting-tags" class="tab-content current tags">
+                        <article class="display setting-display ">
+                            <div class="display-content">
+                                <div class="display-btn">
+                                    <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                                    <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn modified-tags"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+                            </div>
+                        </article> 
 
-            <article class="tab-content-title">
-                <h3 class="title">Gestion des TAGS</h3>
-                <p>SUPER WILD COFFEE</p>
-            </article>
+                        <article class="content-tags table"> 
+                            <table class="table-custome">
+                                <thead class="table-info thead-info">
+                                    <tr>
+                                        <th>Critères</th>
+                                        <th>Description du critère</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody tbody-content scrollbar-table">
+                                {% for tag in tags %}
+                                    <tr class="tags-poster">
+                                        <td>
+                                            <label class="container-input">
+                                                <input type="radio" name="tags{{ tag.id }}" id="{{ tag.id }}">
+                                                <span class="container-rdo-tags"></span>
+                                            </label>
+                                            <p class="container-tags">{{ tag.name }} </p></td>
+                                        <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
+                                        <td>
+                                            <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
+                                            <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        <article>
 
-            <article class="display setting-display ">
-                <div class="display-content">
-                    <div class="display-btn">
-                        <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
-                        <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
-                        <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
                     </div>
-                </div>
-            </article> 
-
-            <article class="content-tags table"> 
-                <table class="table-custome">
-                    <thead class="table-info thead-info">
-                        <tr>
-                            <th>Critères</th>
-                            <th>Description du critère</th>
-                        </tr>
-                    </thead>
-                    <tbody class="tbody tbody-content scrollbar-table">
-                    {% for tag in tags %}
-                        <tr class="tags-poster">
-                            <td>
-                                <label class="container-input">
-                                    <input type="radio" name="tags{{ tag.id }}" id="{{ tag.id }}">
-                                    <span class="container-rdo-tags"></span>
-                                </label>
-                                <p class="container-tags">{{ tag.name }} </p></td>
-                            <td class="container-tags-desc">{{ tag.description }}</td>
-                            <td>
-                                <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
-                                <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="4">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <a href="{{ path('tags_new') }}">Create new</a>
-            <article>
-
-        </div>
-        
-    </section>
-{% endblock %}
+                </section>
+            {% endblock %}
                 
-            </section>
-
         </div>
     </main>
 {% endblock %}
 
 
 
+{# {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{#{{ encore_entry_script_tags('modal_message') }}#}
+{# {% endblock javascripts %} #} 

@@ -1,5 +1,21 @@
+
 {{ form_start(form) }}
+    <div class="row ">
     {# {{ form_widget(form) }} #}
-    {{ form_widget(form)|e }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {% for tag in form.tags %}
+        <div class="row">
+            {{ form_widget(tag.color, {'attr': {'class': ''} }) }}
+        </div>                          
+        
+    {% endfor %}
+        
+    </div>
+    <div>
+        <h2>TAGS affectés au site : </h2> 
+    </div>
+    <div class="row ">
+        {{ form_widget(form.sites, {'attr': {'class': 'input-custome'} }) }}
+    </div>
+
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

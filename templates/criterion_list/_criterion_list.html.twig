@@ -1,26 +1,27 @@
 <div>
-    <div>
-        <input type="checkbox"/>
-        <span>{{ criterion_list.name }}</span>
+    <div class="bloc-criterion-title">
+        <input type="checkbox" id="{{criterion_list.id}}" />
+        <label class="title">{{ criterion_list.name }}</label>
         <p>{{ criterion_list.description }}</p>
     </div>
-    <table>
-        <thead>
-        <tr>
-            <th><h3>Critère</h3></th>
-            <th><p>Description du critère</p></th>
-        </tr>
-        <tr>
-            <th><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for criterion in criterion_list.criterions %}
+    <table class="table-custome">
+        <thead class="thead-info">
             <tr>
-                <td><input type="checkbox"><span>{{ criterion.name }}</span></td>
-                <td><p>{{ criterion.description }}</p></td>
+                <th><h3>Critère</h3></th>
+                <th><p>Description du critère</p></th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody class="tbody tbody-content scrollbar-table">
+            <tr>
+                <td><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
+            </tr>
+            {% for criterion in criterion_list.criterions %}                          
+                <tr class='tr-custome'>
+                    <td><input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  ><label class="cercle">{{ criterion.name }}</label></td>
+                    <td><p class="cercle-desc">{{ criterion.description }}</p></td>
+                    <td><a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a></td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

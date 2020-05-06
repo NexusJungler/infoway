@@ -26,7 +26,11 @@ class TagType extends AbstractType
        $builder
            ->add('color', ColorType::class)
             ->add('name')
-            ->add('description')
+            ->add('description', null , [
+                'attr' => [
+                    'class' => 'form-label'
+                ]
+            ])
 //            ->add('sites', EntityType::class, [
 //                'class' => Site::class,
 //                'choice_label' => 'name',

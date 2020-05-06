@@ -61,34 +61,5 @@
 
 
 
-#table{
-    margin-top: 2rem;
-    table{
-        .table-info{
-         
-            th{
-                
-            }
-        }
-        tbody{
-            tr{
-                background: #DCECEF 0% 0% no-repeat padding-box;
-                .th{
-                    font: rem(18px) 'Barlow', medium;
-                    letter-spacing: 0;
-                    color: #FFFFFF;
-                }
-            }
-    } 
-    
-        
-          
-        &.desc::after {
-            content: '(desc)';
-        }
-    
-        &.asc::after {
-            content: '(asc)';
-        }
-    }
-}
+
+

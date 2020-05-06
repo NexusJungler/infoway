@@ -14,21 +14,12 @@
             <section class="jumbotron">
 
                 {% block settingtitle %}
-                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Tags', 'showSecondTitles': true } %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critères', 'showSecondTitles': true } %}
                 {% endblock %}
 
-                <article class="wrapper">
-                    <div class="wrapper-content">
-                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
-                        <ul class="tabs">
-                            <a href="{{ path('app:enseigne') }}"><li class="{% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
-                            <a href="{{ path('users:view') }}"><li class=" {% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
-                            <a href="{{ path('criterion_list_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'criterion_list_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
-                            <a href="{{ path('tags_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
-                        </ul>
-                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                </article>
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper-settings.html.twig'  %}
+                {% endblock %}
                 
             </section>
 
@@ -58,77 +49,7 @@
                                 <ul>
                                     {%  for criterion_list in criterion_lists  %}
                                         <li class="row-criterion">
-                                            <div class="bloc-criterion-title">
-                                                <input type="checkbox" id="{{criterion_list.id}}" />
-                                                <label class="title">{{ criterion_list.name }}</label>
-                                                <p>{{ criterion_list.description }}</p>
-                                            </div>
-    <h1>CriterionList index</h1>
-    <a href="{{ path('criterion_list_new') }}">Create new</a>
-    <form>
-        <ul>
-            {%  for criterion_list in criterion_lists  %}
-                <li>
-                    {{ include('criterion_list/_criterion_list.html.twig') }}
-                </li>
-                {#        {{ dump(criterion_list) }}#}
-            {% endfor %}
-        </ul>
-
-        {#    <table class="table">#}
-        {#        <thead>#}
-        {#            <tr>#}
-        {#                <th>Id</th>#}
-        {#                <th>Name</th>#}
-        {#                <th>Multiple</th>#}
-        {#                <th>Description</th>#}
-        {#                <th>actions</th>#}
-        {#            </tr>#}
-        {#        </thead>#}
-        {#        <tbody>#}
-        {#        {% for criterion_list in criterion_lists %}#}
-        {#            <tr>#}
-        {#                <td>{{ criterion_list.id }}</td>#}
-        {#                <td>{{ criterion_list.name }}</td>#}
-        {#                <td>{{ criterion_list.multiple ? 'Yes' : 'No' }}</td>#}
-        {#                <td>{{ criterion_list.description }}</td>#}
-        {#                <td>#}
-        {#                    <a href="{{ path('criterion_list_show', {'id': criterion_list.id}) }}">show</a>#}
-        {#                    <a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a>#}
-        {#                </td>#}
-        {#            </tr>#}
-        {#        {% else %}#}
-        {#            <tr>#}
-        {#                <td colspan="5">no records found</td>#}
-        {#            </tr>#}
-        {#        {% endfor %}#}
-        {#        </tbody>#}
-        {#    </table>#}
-    </form>
-
-                                            <table class="table-custome">
-                                                <thead class="thead-info">
-                                                    <tr>
-                                                        <th><h3>Critère</h3></th>
-                                                        <th><p>Description du critère</p></th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody class="tbody tbody-content scrollbar-table">
-                                                    <tr>
-                                                        <td><p>Pour les sites affectation à choix : <span>{{criterion_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
-                                                    </tr>
-                                                    {% for criterion in criterion_list.criterions %}
-                                                        
-                                                        <tr class='tr-custome'>
-                                                            <td><input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  ><label class="cercle">{{ criterion.name }}</label></td>
-                                                            <td><p class="cercle-desc">{{ criterion.description }}</p></td>
-                                                            <td><a href="{{ path('criterion_list_edit', {'id': criterion_list.id}) }}">edit</a></td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-
+                                            {{ include('criterion_list/_criterion_list.html.twig') }}
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -141,7 +62,6 @@
             </section>
 
         </div>
-
     </main>
 {% endblock %}
 

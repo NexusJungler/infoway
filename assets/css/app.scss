@@ -80,11 +80,13 @@ img {
 /** SETTINGS **/
 @import 'settings.scss';
 @import 'settings/create.scss';
-// @import 'settings/create_user.scss';
+
+
+@import 'tags.scss';
 // @import 'settings/settings_user.scss';
 
 /** PROGRAMMING **/
-// @import 'programming.scss';
+@import 'critiers.scss';
 
 /** MEDIA **/
 @import 'media.scss';

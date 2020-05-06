@@ -1,22 +1,56 @@
-{% extends 'setting.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}New Tag{% endblock %}
 
-{% block maincontent %}
+{% block body %}
+ <main class="main main-tags">
+        <div class="main-content">
 
-<section class="wrapper_tabcontent">
+            <section class="jumbotron">
 
-        <article id="setting-tags" class="tab-content current">
-        </article>
-        
-    <h1>Edit Tag</h1>
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Tags', 'showSecondTitles': true } %}
+                {% endblock %}
 
-    {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
+                <article class="wrapper">
+                    <div class="wrapper-content">
+                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+                        <ul class="tabs">
+                            <a href="{{ path('app:enseigne') }}"><li class="{% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
+                            <a href="{{ path('users:view') }}"><li class="{% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
+                            <a href="{{ path('criterion_list_index') }}"><li class="{% if app.request.attributes.get('_route') == 'criterion_list_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
+                            <a href="{{ path('tags_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
+                        </ul>
+                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </article>
+                
+            </section>
 
-    <a href="{{ path('tags_index') }}">back to list</a>
+            {% block maincontent %}
+                <section class="wrapper_tabcontent wrapper-tags">
+                    <div id="setting-tags" class="tab-content current tags">
 
-    {{ include('tags/_delete_form.html.twig') }}
+                        <article class="tab-content-title">
+                            <h3 class="title">Modifier TAG</h3>
+                            <p>SUPER WILD COFFEE</p>
+                        </article>
 
-<section>        
-    
+                        
+                        <h1>Edit Tag</h1>
+
+                        {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
+
+                        <a href="{{ path('tags_index') }}">back to list</a>
+
+                        {{ include('tags/_delete_form.html.twig') }}
+                        
+
+                    </div>
+                </section>
+            {% endblock %}
+                
+        </div>
+    </main>
+
 {% endblock %}

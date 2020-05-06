@@ -1,0 +1,156 @@
+@import 'custome/input-rdo.scss';
+
+
+// page gestion des crieters
+// page management of crieters
+
+.tab-content-criteres{
+
+    .content-criterion{
+        margin-top: 40px;
+        ul{
+
+            .row-criterion{
+                margin-bottom: 20px;
+                width: 990px;
+                .bloc-criterion-title{
+                    padding: 7px 10px;
+                    display: flex;
+                    background: #A4B4BB 0% 0% no-repeat padding-box;
+                    box-shadow: 0px 3px 6px #00000029;
+                    border: 1px solid #4D646D;
+                    height: 45px;
+                    input{
+                        margin-right: 20px;
+                    }
+                    .title{
+                        font: rem(21px) 'Barlow', medium;
+                        letter-spacing: 0px;
+                        color: #FFFFFF;
+                        margin-right: 10px;
+                        &::after {
+                            content: '';
+                            border-left: 0.15rem solid #FFFFFF;
+                            position: relative;
+                            margin: 0.5rem 1rem;
+                            height: 1.5rem;
+                        }
+                    }
+                }
+            }
+
+
+        }
+        
+    }
+
+    // TABLEAU
+    .table{
+        .table-custome{
+            border-radius: 0;
+            border: 1px solid #899CA4;
+            border-top: 0;
+            .thead-info{
+                width: 100%;
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                border: 0;
+                border-bottom: 1px solid #899CA4;
+                &::after{
+                    display: none;
+                }
+                th{
+                    color: #4D646D;
+                    &:first-child{
+                        text-align: center;
+                        width: 26%;
+                    }
+                    &:last-child{
+                        text-align: left;
+                        width: 80%;
+                    }
+                }
+            }
+            .tbody-content{
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+                border: 0;
+                margin-bottom:30px;
+                padding: 20px 60px ;
+                height: 250px;
+                tr{
+                    &:first-child{
+                        text-align: right;
+                        span{
+                            width: 197px;
+                            height: 29px;
+                            padding-left: 20px;
+                            display: inline-flex;
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #C0CCD1;
+                            border-radius: 6px;
+                        }
+                    }
+                    &:nth-child(2n+2){
+                        background: #F6F6F6 0% 0% no-repeat padding-box;
+                    }
+                    &:last-child{
+                        margin-bottom: 20px;
+                    }
+                    td{
+                        border: 0;
+                        padding: 10px 30px ;
+                        .cercle{
+                            font: rem(14px) 'Barlow', medium;
+                            background: #EAF1F2 0% 0% no-repeat padding-box;
+                            box-shadow: 2px 2px 2px #00000029;
+                            border-radius: 5px;
+                            border: 1px solid #4D646D;
+                            padding: 2px 5px;
+                            width: 110px;
+                            height: 25px;
+                            display: inline-flex;
+                        }
+                        .cercle-desc{
+                            // width: 660px;
+                            height: 30px;
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #899CA4;
+                            border-radius: 9px;
+                            padding: 2px 5px;
+                        }
+
+                        input{
+                            margin-left: 60px;
+                        }
+                    }
+                }
+
+                .tr-custome{
+                    td{
+                        &:first-child{
+                            width: 20%;
+                        }
+                    }
+                }
+            } 
+        }
+    }
+
+}
+
+// .tab-content-criteres-form{
+//     margin-left: 20px;
+// }
+.content-criteres-bloc {
+    .container-input{
+        .container-rdo{
+            top: 4px;
+            height: 19px;
+            width: 19px;
+            &:after{
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+}
+

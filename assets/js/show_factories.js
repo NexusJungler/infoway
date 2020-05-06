@@ -1,3 +1,6 @@
+// import style css
+import "../css/groupe-prix.scss";
+
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
@@ -36,15 +39,15 @@ let display_main_prices = function () {
             colspan = ' colspan="' + nbr_dates + '"';
         }
 
-        view.head += '<tr><th' + rowspan + '>Produit</th>';
+        view.head += '<tr><th' + rowspan + ' >Produit</th>';
+        view.head += '<th' + rowspan + '>Form.</th>';
         view.head += '<th' + rowspan + '>Catégorie</th>';
-        view.head += '<th' + rowspan + '>Quantité</th>';
-        view.head += '<th' + rowspan + '>Type de prix</th>';
-        view.head += '<th' + rowspan + '>Tags</th>';
+        view.head += '<th' + rowspan + '>Type</th>';
+        view.head += '<th' + rowspan + '>TAGS</th>';
 
         $.each(factories, function(i, factory){
             // let nbr_cells = Object.keys(factory.prices).length;
-            view.head += '<th' + colspan + '>' + factory.name + '</th>';
+            view.head += '<th' + colspan + ' class="group-prix" >' + factory.name + '</th>';
         });
         view.head += '</tr>';
 
@@ -52,7 +55,7 @@ let display_main_prices = function () {
             view.head += '<tr>';
             $.each(factories, function(i, factory) {
                 for(const date in factory.prices) {
-                    view.head += '<td>' + date + '</td>';
+                    view.head += '<td class="'+factory.id+'">' + date + '</td>';
                 }
             });
             view.head += '</tr>';
@@ -62,8 +65,8 @@ let display_main_prices = function () {
             if (products.hasOwnProperty(product_id)) {
                 let product = products[product_id];
                 view.body += '<tr><td>' + product.name + '</td>';
+                view.body += '<td>' + product.amount+ '</td>';
                 view.body += '<td>' + product.category + '</td>';
-                view.body += '<td>' + product.amount + '</td>';
                 view.body += '<td>' + product.pricetype + '</td><td>';
                 $.each(product.tags, function(j, tag){
                     view.body += '<span>' + tag + '</span>';
@@ -87,7 +90,7 @@ let display_main_prices = function () {
                                 price_value = memory[factory.id][product_id];
                             }
                         }
-                        view.body += '<td><input' + price_id_injection + ' type="text" name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
+                        view.body += '<td '+ price_id_injection +' ><input type="text" name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
 
                         if(typeof memory[factory.id] === 'undefined') {
                             memory[factory.id] = {};
@@ -102,6 +105,7 @@ let display_main_prices = function () {
 
         $('#display_prices table').html(view.head + view.body);
         $('#display_prices').css('display', 'block');
+
     });
 };
 
@@ -247,4 +251,26 @@ $(function() {
         nbr_dates++;
     });
 
+    
+      
+
+    // $("#display_prices ").each(".group-prix" ,function() {
+    //     //On change la couleur de fond au hasard
+    //     $(this).css("background-color", '#'+(Math.random({hue:'red'})*0xFFFFFF<<0).toString(16));
+    // })
+
 });
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+    $(".group-prix").each(function(){
+        $(this).css("background-color", getRandomColor());
+    })
+    

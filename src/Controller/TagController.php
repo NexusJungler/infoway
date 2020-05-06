@@ -41,7 +41,7 @@ class TagController extends AbstractController
      */
     public function new(Request $request, SessionInterface $session, Profiler $profiler): Response
     {
-
+        
         $tagsList = new TagsList() ;
         $currentCustomer = $session->get('current_customer') ;
         $currentUser = $session->get('user') ;
@@ -58,7 +58,7 @@ class TagController extends AbstractController
 
         $sitesPossessedByCustomer =  $customerSiteRepo->getSitesByUserAndCustomer($currentUser,$currentCustomer) ;
         $datasToPassToTagForm = ['sites' =>$sitesPossessedByCustomer ] ;
-
+        
         $form = $this->createForm(TagListType::class, $tagsList , ['sites' => $datasToPassToTagForm]);
 
         $form->handleRequest($request);
@@ -80,12 +80,13 @@ class TagController extends AbstractController
 
             return $this->redirectToRoute('tags_index');
         }
-
+        
         return $this->render('tags/new.html.twig', [
             'tagsList' => $tagsList,
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="tags_show", methods={"GET"})
