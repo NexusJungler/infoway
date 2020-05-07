@@ -338,8 +338,13 @@ class MediaController extends AbstractController
                 $root = $this->getParameter('project_dir') . '/../node_file_system/';
                 $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
 
-                // @TODO: check data (@see: https://www.php.net/manual/en/function.checkdate.php)
+                // check date (@see: https://www.php.net/manual/en/function.checkdate.php)
                 // if date is not return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                if(!checkdate($mediaInfos['diffusionStart']['month'] ,$mediaInfos['diffusionStart']['day'] ,$mediaInfos['diffusionStart']['year']))
+                    throw new Exception("Date de début de diffusion non valide !");
+
+                if(!checkdate($mediaInfos['diffusionEnd']['month'] ,$mediaInfos['diffusionEnd']['day'] ,$mediaInfos['diffusionEnd']['year']))
+                    throw new Exception("Date de fin de diffusion non valide !");
 
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
                 $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
