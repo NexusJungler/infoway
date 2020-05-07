@@ -180,44 +180,32 @@
             .media_list_container {
                 overflow: auto;
                 width: 100%;
-                height: 595px;
-            }
+                height: 560px;
 
-            .table {
-                display: table;
-                border-collapse: separate;
-                border-spacing: 2px;
+                table {
 
-                .thead {
-                    display: table-header-group;
-                    color: #4D646D;
-                    font-weight: bold;
-                }
+                    .hidden {
+                        display: none;
+                    }
 
-                .tbody {
-                    display:table-row-group;
-                }
+                    thead {
+                        color: #4D646D;
+                    }
 
-                .tr {
-                    display:table-row;
+                    tbody {
 
-                    .td {
-                        display:table-cell;
-                        border:1px solid black;
-                        padding:1px;
+                        tr {
 
-                        .hidden {
-                            display: none;
-                        }
-
-                        .form_input.invalid {
-                            border: 1px solid red
+                            td {
+                                .form_input.invalid {
+                                    border: 1px solid red
+                                }
+                            }
                         }
 
                     }
+
                 }
-
-
 
             }
 

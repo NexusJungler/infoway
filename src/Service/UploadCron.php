@@ -914,6 +914,8 @@ class UploadCron
 
                 $newImg = new Image();
 
+                $size =  ( round(filesize($src)/(1024*1024), 2) > 0.00) ? round(filesize($src)/(1024*1024), 2) . ' Mo' : round(filesize($src), 2) . ' o';
+
                 list($width, $height) = getimagesize($src);
                 $ratio = $this->EstablishFormat($width, $height);
                 $newImg->setName($this->filename)
@@ -922,7 +924,7 @@ class UploadCron
                        ->setExtension($this->extension)
                        ->setWidth($width)
                        ->setHeight($height)
-                       ->setSize(round(filesize($src)/(1024*1024), 2) . ' Mo')
+                       ->setSize($size)
                        ->setCreatedAt(new DateTime())
                        ->setDiffusionStart($this->fileDiffusionStart)
                        ->setDiffusionEnd($this->fileDiffusionEnd);

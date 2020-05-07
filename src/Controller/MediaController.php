@@ -5,12 +5,14 @@ namespace App\Controller;
 
 
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Synchro;
+use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Form\MediasListType;
 use App\Repository\Admin\CustomerRepository;
@@ -23,6 +25,7 @@ use App\Service\UploadCron;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +37,16 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class MediaController extends AbstractController
 {
+
+    /**
+     * @var SerializerInterface
+     */
+    private SerializerInterface $serializer;
+
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
 
     /**
      * @Route(path="/mediatheque/{media}", name="media::showMediatheque", methods={"GET"},
@@ -55,7 +68,12 @@ class MediaController extends AbstractController
         $uploadIsAuthorizedOnPage = ($media_displayed !== 'template' AND $media_displayed !== 'incruste');
 
         $mediaList = new MediasList();
-        $form = $this->createForm(MediasListType::class, $mediaList);
+        $form = $this->createForm(MediasListType::class, $mediaList, [
+            'action' => $this->generateUrl('media::editMedia'),
+            'attr' => [
+                'id' => 'medias_list_form'
+            ]
+        ]);
 
         /*$form->handleRequest($request);
 
@@ -83,7 +101,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag, SerializerInterface $serializer): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -125,14 +143,14 @@ class MediaController extends AbstractController
 
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
-dd("12");
+
         move_uploaded_file($file['tmp_name'], $path);
 
         // debug
         // comment this at the end
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
 
-        // @TODO: if is image, insert immediately
+        // if is image, insert immediately
         if($splash[0] === 'image')
         {
 
@@ -171,7 +189,7 @@ dd("12");
 
             // register Ffmpeg task
             // a CRON will do task after
-            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $serializer);
+            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $this->serializer);
             $ffmpegSchedule->pushTask($fileInfo);
 
         }
@@ -271,31 +289,34 @@ dd("12");
     /**
      * @Route(path="/edit/media", name="media::editMedia", methods={"POST"})
      * @param Request $request
-     * @param MediaRepository $mediaRepository
+     * @param CustomerRepository $customerRepository
+     * @param FfmpegTasksRepository $ffmpegTasksRepository
+     * @param SessionManager $sessionManager
      * @return Response
      * @throws Exception
      */
-    public function editMedia(Request $request, MediaRepository $mediaRepository, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager)
+    public function editMedia(Request $request, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager)
     {
 
-        $customer = $sessionManager->get('userCurrentCustomer'); // dynamic session variable (will change each time user select customer in select)
+        $customer = $customerRepository->findOneByName( strtolower( $sessionManager->get('userCurrentCustomer') ) ); // dynamic session variable (will change each time user select customer in select)
+        $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) );
+        //dd($request->request, $customer);
 
-        foreach ($request->request->get('files') as $file)
+        foreach ($request->request->get('medias_list')['medias'] as $mediaInfos)
         {
 
-            if($mediaRepository->findOneByName($file['name']))
-                return new Response("515 Duplicate File", Response::HTTP_INTERNAL_SERVER_ERROR);
+            /*if($mediaRepository->findOneByName($media['name']))
+                return new Response("515 Duplicate File", Response::HTTP_INTERNAL_SERVER_ERROR);*/
 
-            else if(preg_match("/(\w)*\.(\w)*/", $file['name']))
+            if(preg_match("/(\w)*\.(\w)*/", $mediaInfos['name']))
                 return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-            else if($file['name'] === "" or $file['name'] === null)
+            else if($mediaInfos['name'] === "" or $mediaInfos['name'] === null)
                 return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-            else if(strlen($file['name']) < 5)
+            else if(strlen($mediaInfos['name']) < 5)
                 return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-            // @TODO: update Ffmpeg task
             else
             {
 
@@ -312,69 +333,112 @@ dd("12");
 
                 $mediaType = $options[$type];
 
-                $fileName = $file['name'] . '.' . $file['extension'];
+                $fileName = $mediaInfos['name'] . '.' . $mediaInfos['extension'];
 
                 $root = $this->getParameter('project_dir') . '/../node_file_system/';
                 $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
 
-                if(!isset($file['diffusionStartDate']) OR empty($file['diffusionStartDate']))
-                    // now
-                    $diffusionStartDate = new DateTime();
+                // @TODO: check data (@see: https://www.php.net/manual/en/function.checkdate.php)
+                // if date is not return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-                else
-                    // create date with user choice
-                    $diffusionStartDate = new DateTime($file['diffusionStartDate']);
-
-                if(!isset($file['diffusionEndDate']) OR empty($file['diffusionEndDate']))
-                {
-                    // now
-                    $diffusionEndDate = new DateTime();
-                    // add 30 year
-                    $diffusionEndDate->modify('+30 year');
-                }
-                else
-                    // create date with user choice
-                    $diffusionEndDate = new DateTime($file['diffusionEndDate']);
+                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
+                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
 
                 if($diffusionEndDate < $diffusionStartDate)
-                    return  new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                    return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-                $task = $ffmpegTasksRepository->findOneBy(['finished' => null, 'filename' => $file['oldName'].".".$file['extension']]);
-                if(!$task)
-                    throw new Exception(sprintf("No Task found with filename '%s' which is not finished !", $file['oldName'].".".$file['extension']));
+                $task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension']]);
 
-                $mediaInfo = $task->getMedia();
-                $mediaInfo['name'] = $file['name'];
-                $mediaInfo['diffusionStart'] = $diffusionStartDate;
-                $mediaInfo['diffusionEnd'] = $diffusionEndDate;
-                // @TODO: insert tags and products if exist
-                //$mediaInfo['tags'] = $tags;
-                //$mediaInfo['products'] = $products;
+                // si aucune task n'est trouvé et que ce n'est pas une image qui a été edité (donc c'est une video)
+                if(!$task && $mediaInfos['mediaType'] !== 'image')
+                    throw new Exception(sprintf("No Task found with filename '%s' !", $mediaInfos['oldName'].".".$mediaInfos['extension']));
 
-                $task->setMedia($mediaInfo);
+                $media = $manager->getRepository(Media::class)->findOneByName( $mediaInfos['oldName'] );
 
-                // if user change file name
-                // rename uploaded file
-                if($file['name'] !== $file['oldName'])
+                if(!$media)
                 {
+                    $media = new Video();
 
-                    $task->setFilename($fileName);
+                    $media->setName( $mediaInfos['name'] );
+                }
+                else
+                    $media->setName( ($media->getName() !== $mediaInfos['name']) ? $mediaInfos['name'] : $media->getName() );
 
-                    rename($root . $customer->getName() . '/' . $mediaType . '/' . $file['oldName'] .'.' . $file['extension'], $path);
+                $media->setDiffusionStart($diffusionStartDate)
+                      ->setDiffusionEnd($diffusionEndDate);
 
-                    // debug
-                    // comment this at the end
-                    copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
+                if(array_key_exists('tags', $mediaInfos))
+                {
+                    foreach ($mediaInfos['tags'] as $k => $tagId)
+                    {
+                        $tag = $manager->getRepository(Tag::class)->find($tagId);
+                        if(!$tag)
+                            throw new Exception(sprintf("No Tag found with id : '%d'", $tagId));
 
+                        $media->addTag($tag);
+                    }
                 }
 
-                $this->getDoctrine()->getManager('default')->flush();
+                if(array_key_exists('products', $mediaInfos))
+                {
+                    foreach ($mediaInfos['products'] as $k => $productId)
+                    {
+                        $product = $manager->getRepository(Product::class)->find($productId);
+                        if(!$product)
+                            throw new Exception(sprintf("No Product found with id : '%d'", $productId));
+
+                        $media->addProduct($product);
+                    }
+                }
+
+                if(!$task)
+                    $manager->flush();
+
+                else
+                {
+
+                    $media = json_decode($this->serializer->serialize($media, 'json'), true);
+
+                    $task->setMedia($media);
+
+                    // if user change file name
+                    // rename uploaded file
+                    if($mediaInfos['name'] !== $mediaInfos['oldName'])
+                    {
+
+                        $task->setFilename( $mediaInfos['name'] . '.' . $mediaInfos['extension'] );
+
+                        rename($root . $customer->getName() . '/' . $mediaType . '/' . $mediaInfos['oldName'] .'.' . $mediaInfos['extension'], $path);
+
+                        // debug
+                        // comment this at the end
+                        copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
+
+                    }
+
+                    $this->getDoctrine()->getManager('default')->flush();
+
+                }
 
             }
 
         }
 
         return new Response("200 OK", Response::HTTP_OK);
+    }
+
+    private function updateTask(FfmpegTasks $task, Media $media)
+    {
+
+        $mediaName = $media->getName() . '.' . $media->getExtension();
+
+        $media = json_decode($this->serializer->serialize($media, 'json'), true);
+
+        $task->setFilename(( $task->getFilename() !== $mediaName ) ? $mediaName : $task->getFilename())
+            ->setMedia($media);
+
+        $this->getDoctrine()->getManager('default')->flush();
+
     }
 
 }

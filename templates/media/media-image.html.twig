@@ -56,7 +56,7 @@
 
             {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
 
-                <article class="add-popup">
+                <article class="add-popup upload_popup">
                     <div class="modal">
 
                         <div class="header-modal">
@@ -125,12 +125,6 @@
                                     </thead>
                                     <tbody class="tbody-content tbody">
 
-                                        <div class="hidden">
-                                            {{ form_start(form) }}
-                                                <ul class="medias-list-to-upload" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
-                                            {{ form_end(form) }}
-                                        </div>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -146,25 +140,31 @@
 
                             <div class="media_list_container">
 
-                                <div class="table media_list">
-
-                                    <div class="thead">
-                                        <div class="tr">
-                                            <div class="td">Médias</div>
-                                            <div class="td">Caractéristiques</div>
-                                            <div class="td">Nom</div>
-                                            <div class="td">Date de diffusion</div>
-                                            <div class="td">Affecter TAGS</div>
-                                            <div class="td">Associer produits</div>
-                                            <div class="td">Incruste de prix</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="tbody">
-
-                                    </div>
-
+                                <div class="hidden">
+                                    {{ form_start(form) }}
+                                    <ul class="medias_collection" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
+                                    {{ form_end(form) }}
                                 </div>
+
+                                <table class="media_list">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Médias</th>
+                                            <th>Caractéristiques</th>
+                                            <th>Nom</th>
+                                            <th>Date de diffusion</th>
+                                            <th>Affecter TAGS</th>
+                                            <th>Associer produits</th>
+                                            <th>Incruste de prix</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    </tbody>
+
+                                </table>
                             </div>
 
                             <div>
@@ -182,7 +182,7 @@
                     <div class="modal">
                         <div class="header-modal">
                             <div class="modal-title-container">
-                                <p class="title">Associer des produits au média : <span class="media-name"></span></p>
+                                <p class="title">Associer des produits au média : <span class="media_name"></span></p>
                             </div>
                             <div class="close-modal-container">
                                 <button type="button" class="btn close">X</button>

@@ -9,7 +9,7 @@ class ProductAssociationHandlerTool extends Tool
         this.__name = "ProductAssociationHandlerTool";
         this.__$productList = $('.associate_product-popup .product-choice-list');
         this.__$associatedList = $('.associate_product-popup .product-associated-list');
-        this.__$hiddenMediasInfosContainer = $('.medias-list-to-upload');
+        this.__$mediasCollection = $('.medias_collection');
         this.__$location = $('.associate_product-popup');
     }
 
@@ -31,6 +31,54 @@ class ProductAssociationHandlerTool extends Tool
         this.__$associatedList.find(`tr[data-product="${ item }"]`).remove();
     }
 
+    onClickOnProductAssociationButtonShowModal(active)
+    {
+
+        if(active)
+        {
+            $('.modal').on("click.onClickOnAssociationButtonShowModal", ".associate-product", e => {
+
+                // reset
+                this.__$productList.find('.choice_product').prop('checked', false);
+                this.__$location.find('.select_all_products').prop('checked', false);
+                this.__$associatedList.empty();
+
+                // @TODO: check if media is already associated with product (in this case, update popup)
+
+                $('.add-popup').css({ 'z-index': '-30' });
+                $(".associate_product-popup .modal-title-container span.media_name").text( $(e.currentTarget).data('media') );
+                $(".associate_product-popup").fadeIn();
+
+            })
+        }
+        else
+        {
+            $('.modal').off("click.onClickOnAssociationButtonShowModal", ".associate-product");
+        }
+
+        return this;
+    }
+
+    onClickOnProductAssociationModalCloseButton(active)
+    {
+
+        if(active)
+        {
+            $('.associate_product-popup .close').on('click.', e => {
+
+                $('.add-popup').css({ 'z-index': '' });
+                $(".associate_product-popup").fadeOut();
+
+            })
+        }
+        else
+        {
+            $('.associate_product-popup .close').off('click.');
+        }
+
+        return this;
+    }
+
     onClickOnValidationButtonAddProductInAssociateList(active)
     {
 
@@ -38,7 +86,22 @@ class ProductAssociationHandlerTool extends Tool
         {
             this.__$location.find('.validation-btn').on('click.onClickOnValidationButtonAddProductInAssociateList', e => {
 
-                // @TODO: update media hidden datas
+                let currentMediaName = this.__$location.find('.modal-title-container span.media_name').text();
+                let mediaIndex = this.__$mediasCollection.find(`.media_name[value='${ currentMediaName }']`).data('index');
+
+                // update media hidden datas
+                $(`#medias_list_medias_${mediaIndex}_products input[type='checkbox']`).prop('checked', false)
+
+                this.__$associatedList.find('tr').each( (index, item) => {
+
+                    $(`#medias_list_medias_${mediaIndex}_products label`).each( (index2, label) => {
+
+                        if( $(label).text() === $(item).data('product') )
+                            $(label).prev("input[type='checkbox']").prop('checked', true);
+
+                    } )
+
+                } )
 
             })
         }
@@ -172,6 +235,8 @@ class ProductAssociationHandlerTool extends Tool
             .onClickOnSelectAllButtonSelectAllProducts(true)
             .onClickOnAddProductInListCheckbox(true)
             .onCategorySelectionAddFilterOnProductList(true)
+            .onClickOnProductAssociationButtonShowModal(true)
+            .onClickOnProductAssociationModalCloseButton(true)
         ;
     }
 
@@ -182,6 +247,8 @@ class ProductAssociationHandlerTool extends Tool
             .onClickOnSelectAllButtonSelectAllProducts(false)
             .onClickOnAddProductInListCheckbox(false)
             .onCategorySelectionAddFilterOnProductList(false)
+            .onClickOnProductAssociationButtonShowModal(false)
+            .onClickOnProductAssociationModalCloseButton(false)
         ;
     }
 

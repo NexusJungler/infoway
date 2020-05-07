@@ -6,7 +6,7 @@ class Tool {
     {
         this.__name = null;
         this.__isActived = false;
-        this.__toolbox = null;
+        this.__toolBox = null;
     }
 
     getName()
@@ -31,7 +31,7 @@ class Tool {
         if( !(toolBox instanceof ToolBox) )
             throw new Error("Invalid 'toolBox' parameter for Tool::setToolBox()");
 
-        this.__toolbox = toolBox;
+        this.__toolBox = toolBox;
         console.log(`ToolBox is now added in '${this.__name}' !`);
 
         return this;
@@ -39,7 +39,7 @@ class Tool {
 
     getToolBox()
     {
-        return this.__toolbox;
+        return this.__toolBox;
     }
 
     toolIsActived()

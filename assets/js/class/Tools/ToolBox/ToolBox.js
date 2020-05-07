@@ -12,6 +12,14 @@ class ToolBox
         this.registerTools();
     }
 
+    getTool(toolName)
+    {
+        if(!this.toolIsRegistered(toolName))
+            throw new Error(`'${toolName}' tool is not registered !`);
+
+        return this.__tools[ this.getToolIndex(toolName) ];
+    }
+
     registerTools()
     {
         this.__tools = [
