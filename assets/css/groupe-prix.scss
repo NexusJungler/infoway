@@ -53,7 +53,8 @@ $main-color2: $nth2 !default;
         .table-gp-prix-left{
             margin-right: 50px;
             .table-custome{
-                width: 800px;
+                width: 100%;
+                max-width: 100%;
                 margin-top: 10px;
                 margin-bottom: 50px;
                 .thead-info{
@@ -141,7 +142,8 @@ $main-color2: $nth2 !default;
             }
             
             .table-custome{
-                width: 700px;
+                width: 90%;
+                max-width: 100%;
                 margin-top: 10px;
                 margin-bottom: 50px;
                 border: 1px solid #899CA4;
@@ -216,7 +218,7 @@ $main-color2: $nth2 !default;
 
     .container-input{
         .container-rdo{
-            top: 5px;
+            top: -13px;
             height: 18px;
             width: 18px;
             &::after{
@@ -231,6 +233,7 @@ $main-color2: $nth2 !default;
   
 #display_prices{
     margin-top: 20px;
+
     table{
         table-layout: fixed;
         width: 100%;
@@ -267,6 +270,7 @@ $main-color2: $nth2 !default;
                 }
             }
             td{
+                font: 17px 'segoe UI';
                 padding: 5px;
                 height: 22px;
                 text-align: center;
@@ -282,16 +286,23 @@ $main-color2: $nth2 !default;
                 
                 &:nth-child(n+6){
                     background: #FEEDED 0% 0% no-repeat padding-box;
-                    .changed{
+                    &.changed{
                         background: #F57171 0% 0% no-repeat padding-box;
                     }
                 }
+                
                 // &:nth-child(odd){
                 //     background: #E9F5F8 0% 0% no-repeat padding-box;
                 //     .changed{
                 //         background: #9FD4E0 0% 0% no-repeat padding-box;
                 //     }
                 // }
+            }
+            &:nth-child(2){
+                td{
+                    background: #E06A6B 0% 0% no-repeat padding-box;
+
+                }
             }
             &:nth-child(3n+1){
                 border: 1px solid #4D646D;
@@ -302,6 +313,7 @@ $main-color2: $nth2 !default;
                 background: #DCECEF 0% 0% no-repeat padding-box;
             }
             &:first-child{
+                border-radius: 0.5rem 0 0 0;
                 position: relative;
                 background: #899CA4 0% 0% no-repeat padding-box;
                 border-top: 1px solid #4D646D;

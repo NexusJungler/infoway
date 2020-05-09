@@ -10,6 +10,8 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use App\Service\FlashBagHandler;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CriterionsListHandlerService
 {
@@ -23,12 +25,14 @@ class CriterionsListHandlerService
     private ?Customer $_currentCustomer = null ;
     private $_allCriterionsListsNamesFromDB = [] ;
     private $_registry ;
-    public function __construct(EntityManager $em, FlashBagHandler $flashBagHandler, DatabaseAccessHandler $databaseHandler, Registry $registry )
+    public function __construct(EntityManagerInterface $em, FlashBagHandler $flashBagHandler, DatabaseAccessHandler $databaseHandler, ManagerRegistry $registry )
     {
-        $this->_em = $em;
+        
+        $this->_em = $registry->getManager('kfc');
         $this->_minimumCriterionsInlist = 2 ;
         $this->_registry = $registry ;
         $this->_criterionsListsRepo = $this->_em->getRepository(CriterionsList::class);
+        
         $this->_flashBagHandler = $flashBagHandler;
         $this->_databaseHandler = $databaseHandler;
     }

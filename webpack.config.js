@@ -58,6 +58,9 @@ Encore
     // TAGS
     .addEntry('tags', './assets/js/tags.js')
 
+    .addEntry('criterion', './assets/js/criterion.js')
+
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

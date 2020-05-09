@@ -335,6 +335,7 @@
 /** cree user **/
 
 .create-criteres{
+    
     .form-content{
         margin: 1rem 0 0 0 ;
         padding: 0;
@@ -372,7 +373,7 @@
         .row-multiple{
             margin-top: 10px;
             .form-label{
-                width: 22%;
+                width: 17%;
             }
             .input-custome{
                 width: 250px;
@@ -381,11 +382,11 @@
         .content-criteres{
             margin-bottom: 50px;
             .title{
-                width: 20%;
+                width: 30%;
                 text-align: right;
             }    
             .content-criteres-bloc{
-                height: 180px;
+                height: 140px;
                 max-height: 250px;
                 overflow: auto;
                 .row-criteres{    
@@ -396,7 +397,7 @@
                     }
                     .selected{
                         label{
-                            width: 125px;
+                            width: 85px;
                             display: inline-block;
                             font: 18px 'Barlow';
                             color: #899CA4;
@@ -404,19 +405,36 @@
                     }
                     .input-custome{
                         width: 250px;
-                        height: 30px;
+                        height: 25px;
                         margin: 0px 40px 0 20px;
                     }
                     .input-custome-desc {
-                        width: 100%;
-                        height: 30px;
-                        padding: 0.3em 0.3rem 0.3rem 1rem;
+                        width: 650px;
+                        max-width: 100%;
+                        height: 25px;
+                        padding: 0em 0rem 0rem 1rem;
                         border: 0.06rem solid #C0CCD1;
                         border-radius: 0.4rem;
                         margin-right: 40px;
                         font: 16px 'Barlow';
                     }
                     
+                }
+                .delete-row{
+                    width: 23px;
+                    height: 23px;
+                    background: #BFCCD1;
+                    padding: 0rem 0rem 0.2rem;
+                    font-size: 17px;
+                    border: 0;
+                }
+            }
+            .container-input{
+                .container-rdo{
+                    top: 4px;
+                    left: 25px;
+                    height: 16px;
+                    width: 16px;
                 }
             }
 

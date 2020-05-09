@@ -1,45 +1,57 @@
+import "../css/critiers.scss";
+// import "../css/settings/critiers.scss";
+
+const $ = require('jquery');
+global.$ = global.jQuery = $;
 
 // checked input modification
-
 $(".tab-content-criteres .modified-criterion").click(function(){
 
     $.each($(".row-criterion input[type='checkbox']:checked"), function(){
-        var id_criterion = $(this).attr('data-criterion');
-        
-        console.log(id_criterion);
+           var id_criterion = $(this).attr('data-criterion');
+           
+           window.location.href= "/criterions/"+ id_criterion +"/edit"
+           console.log(id_criterion);
     })
 })
+
 
 let i = 2;
 $(".form-content .btn-add .btn-add-critiere").click(function(){
        i++;
        var html = "";
        html += "<div class='row-criteres' id='row"+i+"'> <div class='selected'> ";
-       html += "<label for='criterion_list_criterions_"+i+"_selected'> choix n°"+i+" </label><input type='checkbox' id='criterion_list_criterions_"+i+"_selected' name='criterion_list[criterions]['+i+'][selected]' class='checkbox-custome' value="+i+"></div> ";
-       html += "<div><label for='criterion_list_criterions_"+i+"_name'> </label><input type='text' id='criterion_list_criterions_"+i+"_name' name='criterion_list[criterions]["+i+"][name]' class='input-custome'></div>";
-       html += "<div><label for='criterion_list_criterions_"+i+"_description'>Description</label><input type='text' id='criterion_list_criterions_"+i+"_description' name='criterion_list[criterions]["+i+"][description]' class='input-custome input-custome-desc'></div>";
-       html += "<div><button type='button' id='"+i+"' class='delete-row btn'>X</button></div></div>";
+       html += "<label for='criterion_list_criterions_"+i+"_selected'> choix n°"+i+" </label><label class='container-input'><input type='checkbox' id='criterion_list_criterions_"+i+"_selected' name='criterion_list[criterions]['+i+'][selected]' class='checkbox-custome' value="+i+"><span class='container-rdo'></span></label></div> ";
+       html += "<div><input type='text' id='criterion_list_criterions_"+i+"_name' name='criterion_list[criterions]["+i+"][name]' class='input-custome'></div>";
+       html += "<div><textarea type='text' id='criterion_list_criterions_"+i+"_description' name='criterion_list[criterions]["+i+"][description]' class='input-custome-desc'></textarea></div>";
+       html += "<div><button type='button' id='row"+i+"' class='delete-row btn'>X</button></div></div>";
        
        $('.content-criteres-bloc').append(html);
        
 });
 
-$(".content-criteres .delete-row").click(function(){
-       var button_id = $(this).attr("id");
-       console.log(button_id);
-       $('#row'+button_id+'').remove();   
+
+//delete 
+$(".content-criteres-bloc").on("click", ".delete-row", function(){
+    var button_id = $(this).attr("id");
+    console.log(button_id);
+    $('#'+button_id+'').remove();   
 });
 
 
-$(".tab-content-criteres .modified-criterion").click(function(){
+$(".row-criterion .chkbox-critere").change( function(){
+    
+    var nb_input = $(".row-criterion input[type='checkbox']:checked").length;
+    $(".modified-criterion").removeClass("hide-btn");
 
-       $.each($(".row-criterion input[type='checkbox']:checked"), function(){
-         var id_criterion = $(this).attr('data-criterion');
-         
-         console.log(id_criterion);
-       })
-     })
-     
+    if( nb_input > 1 || nb_input < 1 ){
+           $(".modified-criterion").prop('disabled', true)
+           $(".modified-criterion").addClass("hide-btn");
+    }else{
+           $(".modified-criterion").prop('disabled', false)
+           $(".modified-criterion").removeClass("hide-btn");
+    }
+})
 
 // $(".delete-row").click(function(){
 //        var count_input = $(".content-criteres-bloc").find('input[type="checkbox"]').length;

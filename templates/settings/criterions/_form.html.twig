@@ -1,16 +1,47 @@
 {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.selected) }}
 
+    <div class="row">
+        <label class="container-input">
+            <input type="checkbox" id="1">
+            <span class="container-rdo-tags"></span>
+        </label>
+        {{ form_widget(form.selected) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+    </div>
+    <div class="select">
+        <div class="select-product">
+        </div>
 
+        <div class="select-site">
+            <div class="select-site-title">
+                <h2>Affecté aux <span>SITES :</span></h2>
+            </div>
+            <div class="block-select-site">
+                <div class="block-select-site-title" >
+                    <p>Sites</p>
+                    <p>Ajouter sites: <button type="button"> Sites</button></p>
+                </div>
+                <div >
+                    {%  if form.sites|length < 1  %}  {{ form_row(form.sites) }} {% endif %}
 
-    {%  if form.sites|length < 1  %}  {{ form_row(form.sites) }} {% endif %}
+                    {% for site in form.sites %}
+                        {%  set currentSite =  form.sites.vars.choices[site.vars.value].data %}
+                        {{ form_row(site ,  {'attr': {'checked': currentSite not in availablesSites }}  ) }}
+                    {% endfor  %}
+                    
+                </div>
+               
+            </div>
+     
+            
+        </div>
+    </div>
 
-    {% for site in form.sites %}
-        {%  set currentSite =  form.sites.vars.choices[site.vars.value].data %}
-        {{ form_row(site ,  {'attr': {'checked': currentSite not in availablesSites }}  ) }}
-    {% endfor  %}
+    
+
+    
+    
 
     {%  if form.products | length < 1  %}  {{ form_row(form.products) }} {% endif %}
 
@@ -20,5 +51,5 @@
     {% endfor  %}
 
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn">{{ button_label|default('Enregister') }}</button>
 {{ form_end(form) }}

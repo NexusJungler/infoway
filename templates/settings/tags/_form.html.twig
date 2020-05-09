@@ -3,8 +3,10 @@
     <div class="row ">
     {# {{ form_widget(form) }} #}
     {% for tag in form.tags %}
+    
         <div class="row">
             {{ form_widget(tag.color, {'attr': {'class': ''} }) }}
+            {{ form_widget(tag) }} 
         </div>                          
         
     {% endfor %}
