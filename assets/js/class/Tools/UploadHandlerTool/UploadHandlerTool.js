@@ -118,7 +118,9 @@ class UploadHandlerTool extends Tool
 
                 $(".tbody").empty();
 
+                $('.download-file button.upload_abort').fadeIn();
                 $(".model-upload-file .start_upload_button").fadeOut();
+                $(".show_media_edit_container").fadeOut();
 
                 $(".upload-title").text("Préparation de l'Upload");
                 $(".files_selection").fadeIn();
@@ -259,7 +261,7 @@ class UploadHandlerTool extends Tool
             html += `<td><i class="${ (!fileIsAccepted) ? 'fas fa-times' : 'fas fa-check' }"></i></td>
                                  <td><i data-target="${fileName}" class="fas fa-trash-alt remove_file_from_list"></i></td>`;
 
-            if(fileIsAccepted && !fileIsAlreadyUploaded)
+            if(fileIsAccepted)
             {
 
                 this.__filesToUpload.push( {index: index, name: fileName, file: item, media_type: this.__uploadMediaType} );
@@ -539,14 +541,10 @@ class UploadHandlerTool extends Tool
                                 if( $('.medias-list-to-upload').find(`.media_name[value='${ fileName }']`).length === 0 )
                                     this.addNewItemInMediaCollection( {fileName: fileName, fileExtension: fileExtension} );
 
-                                if(uploadFinished === this.__filesToUpload.length)
+                                if(uploadFinished === this.__filesToUpload.length && $(`.modal-upload-download .on_progress`).length === 0)
                                 {
-                                    if($(`.modal-upload-download .on_progress`).length === 0)
-                                    {
-                                        $('.download-file button.upload_abort').fadeOut();
-                                        $(".modal-upload-download .show_media_edit_container").fadeIn();
-                                    }
-
+                                    $('.download-file button.upload_abort').fadeOut();
+                                    $(".modal-upload-download .show_media_edit_container").fadeIn();
                                     $(".upload-title").text("Traitement de la file terminé");
 
                                 }
@@ -700,7 +698,7 @@ class UploadHandlerTool extends Tool
                         const i = ( this.__$mediasCollection.find('li').length > 0 ) ? this.__$mediasCollection.find('li').length - 1 : 0;
 
                         //console.log(fileNameIsValid); debugger
-                        let html = `<tr data-index="media_${ i }"> 
+                        let html = `<tr data-index="${ i }"> 
 
                                         <td> 
                                             ${ preview }
@@ -810,33 +808,6 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
-    mediaCharacteristicDataIsValid()
-    {
-
-        let formIsValid = false;
-
-        this.__$location.find('.media_list .form_input').each( (index, input) => {
-
-            const inputIsValid = this.checkFormInputValidity( $(input) );
-
-            if(!inputIsValid)
-            {
-                $(input).parent().find("span.error").html( this.__dataCheckingErrors ).removeClass("hidden");
-                $(input).addClass('invalid');
-            }
-
-            else
-            {
-                formIsValid = true;
-                $(input).parent().find("span.error").html("").addClass("hidden");
-                $(input).removeClass('invalid');
-            }
-
-        } );
-
-        return formIsValid;
-    }
-
     onClickOnSaveButtonSendMediaInfo(active)
     {
 
@@ -844,7 +815,7 @@ class UploadHandlerTool extends Tool
         {
             $('.save-media-modif').on('click.onClickOnSaveButtonSendMediaInfo', e => {
 
-                if( this.__$location.find('.media_list tbody form.input.invalid').length === 0 && this.mediaCharacteristicDataIsValid())
+                if( this.__$location.find('.media_list tbody form.input.invalid').length === 0)
                 {
 
                     $.ajax({
@@ -852,61 +823,71 @@ class UploadHandlerTool extends Tool
                         url: '/edit/media',
                         data: this.__$location.find('form#medias_list_form').serialize(),
                         success: (response) => {
-                            console.log(response); debugger
+
+                            this.__$location.find(`.media_list tbody tr .media-name-container .form_input.fileName`).each( (index, input) => {
+
+                                let newOldName = $(input).val();
+                                let hiddenElementIndex = $(input).parents('tr').data('index');
+
+                                this.__$mediasCollection.find(`#medias_list_medias_${ hiddenElementIndex }_oldName`).attr('value', newOldName);
+
+                            } )
+
                         },
                         error: (response) => {
 
                             let error = response.responseJSON;
                             let subject = error.subject;
-                            console.log(response);
-                            console.log(error);
-                            console.log(subject);
-                            console.log((error.text === "518 Too short Filename")); debugger
 
-                            if(error.text === "515 Duplicate File")
+                            switch (error.text)
                             {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.duplicate_file );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
-                            }
 
-                            if(error.text === "516 Invalid Filename")
-                            {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.invalid_error );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
-                            }
+                                case "515 Duplicate File":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).text( this.__errors.duplicate_file );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container .form_input.fileName`).addClass('invalid');
+                                    break;
 
-                            if(error.text === "517 Empty Filename")
-                            {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.empty_error );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
-                            }
+                                case "516 Invalid Filename":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).text( this.__errors.invalid_error );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container .form_input.fileName`).addClass('invalid');
+                                    break;
 
-                            if(error.text === "518 Too short Filename")
-                            {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.too_short_error );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
-                            }
+                                case "517 Empty Filename":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).text( this.__errors.empty_error );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container .form_input.fileName`).addClass('invalid');
+                                    break;
 
-                            if(error.text === "519 Invalid diffusion date")
-                            {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_date );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .diffusionDates`).addClass('invalid');
-                            }
+                                case "518 Too short Filename":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).text( this.__errors.too_short_error );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container .form_input.fileName`).addClass('invalid');
+                                    break;
 
-                            if(error.text === "519.1 Invalid diffusion start date")
-                            {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_start_date );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .diffusionDates.start`).addClass('invalid');
-                            }
+                                case "519 Invalid diffusion date":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_date );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container .diffusionDates`).addClass('invalid');
+                                    break;
 
-                            if(error.text === "519.2 Invalid diffusion end date")
-                            {
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_end_date );
-                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container .diffusionDates.end`).addClass('invalid');
-                            }
+                                case "519.1 Invalid diffusion start date":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_start_date );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-name-container .diffusionDates.start`).addClass('invalid');
+                                    break;
 
-                            else
-                                console.log(error.text); debugger
+                                case "519.2 Invalid diffusion end date":
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_end_date );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container span.error`).removeClass( 'hidden' );
+                                    this.__$location.find(`.media_list tbody tr[data-index='${ subject }'] .media-diff-date-container .diffusionDates.end`).addClass('invalid');
+                                    break;
+
+                                default:
+                                    console.log(error.text); debugger
+
+                            }
 
                         },
                     });

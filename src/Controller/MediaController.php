@@ -321,21 +321,21 @@ class MediaController extends AbstractController
             if(preg_match("/(\w)*\.(\w)*/", $mediaInfos['name']))
             {
                 // return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
-                $error = [ 'text' => '516 Invalid Filename', 'subject' => 'media_' . $index ];
+                $error = [ 'text' => '516 Invalid Filename', 'subject' => $index ];
                 break;
             }
 
             else if($mediaInfos['name'] === "" or $mediaInfos['name'] === null)
             {
                 // return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
-                $error = [ 'text' => '517 Empty Filename', 'subject' => 'media_' . $index ];
+                $error = [ 'text' => '517 Empty Filename', 'subject' => $index ];
                 break;
             }
 
-            else if(strlen($mediaInfos['name']) > 3)
+            else if(strlen($mediaInfos['name']) < 5)
             {
                 // return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
-                $error = [ 'text' => '518 Too short Filename', 'subject' => 'media_' . $index ];
+                $error = [ 'text' => '518 Too short Filename', 'subject' => $index ];
                 break;
             }
 
@@ -364,12 +364,12 @@ class MediaController extends AbstractController
                 // if date is not return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
                 if(!checkdate($mediaInfos['diffusionStart']['month'] ,$mediaInfos['diffusionStart']['day'] ,$mediaInfos['diffusionStart']['year']))
                 {
-                    $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => 'media_' . $index ];
+                    $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
                 }
 
                 if(!checkdate($mediaInfos['diffusionEnd']['month'] ,$mediaInfos['diffusionEnd']['day'] ,$mediaInfos['diffusionEnd']['year']))
                 {
-                    $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => 'media_' . $index ];
+                    $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
                 }
 
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
@@ -377,7 +377,7 @@ class MediaController extends AbstractController
 
                 if($diffusionEndDate < $diffusionStartDate)
                 {
-                    $error = [ 'text' => '519 Invalid diffusion date', 'subject' => 'media_' . $index ];
+                    $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
                 }
 
                 $task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension']]);
@@ -395,10 +395,26 @@ class MediaController extends AbstractController
                     $media->setName( $mediaInfos['name'] );
                 }
                 else
+                {
                     $media->setName( ($media->getName() !== $mediaInfos['name']) ? $mediaInfos['name'] : $media->getName() );
+                }
 
                 $media->setDiffusionStart($diffusionStartDate)
                       ->setDiffusionEnd($diffusionEndDate);
+
+                // if user change file name
+                // rename uploaded file
+                if($mediaInfos['name'] !== $mediaInfos['oldName'] && file_exists($root . $customer->getName() . '/' . $mediaType . '/' . $mediaInfos['oldName'] .'.' . $mediaInfos['extension']))
+                {
+
+                    rename($root . $customer->getName() . '/' . $mediaType . '/' . $mediaInfos['oldName'] .'.' . $mediaInfos['extension'], $path);
+
+                    // debug
+                    // comment this at the end
+                    copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
+
+                }
+
 
                 if(array_key_exists('tags', $mediaInfos))
                 {
@@ -432,22 +448,8 @@ class MediaController extends AbstractController
 
                     $media = json_decode($this->serializer->serialize($media, 'json'), true);
 
-                    $task->setMedia($media);
-
-                    // if user change file name
-                    // rename uploaded file
-                    if($mediaInfos['name'] !== $mediaInfos['oldName'])
-                    {
-
-                        $task->setFilename( $mediaInfos['name'] . '.' . $mediaInfos['extension'] );
-
-                        rename($root . $customer->getName() . '/' . $mediaType . '/' . $mediaInfos['oldName'] .'.' . $mediaInfos['extension'], $path);
-
-                        // debug
-                        // comment this at the end
-                        copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
-
-                    }
+                    $task->setFilename( $mediaInfos['name'] . '.' . $mediaInfos['extension'] )
+                         ->setMedia($media);
 
                     $this->getDoctrine()->getManager('default')->flush();
 
