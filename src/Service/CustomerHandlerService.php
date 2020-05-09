@@ -3,12 +3,12 @@ namespace App\Service;
 
 use App\Entity\Admin\Contact;
 use App\Entity\Admin\Customer;
-use App\Errors\CustomerDatabaseCreationError;
-use App\Errors\CustomerError;
-use App\Errors\ExistingCustomerError;
-use App\Errors\ExistingDatabaseError;
-use App\Errors\InvalidCustomerLogo;
-use App\Errors\InvalidCustomerNameError;
+use App\Errors\Customer\CustomerDatabaseCreationError;
+use App\Errors\Customer\CustomerError;
+use App\Errors\Customer\ExistingCustomerError;
+use App\Errors\Customer\ExistingDatabaseError;
+use App\Errors\Customer\InvalidCustomerLogo;
+use App\Errors\Customer\InvalidCustomerNameError;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
@@ -85,7 +85,9 @@ class CustomerHandlerService {
         if      ( $this->isDatabaseWithCustomerEnteredNameAlreadyExist($customer) ) return false;
 
         elseif  (   ! $this->_databaseHandler->registerDatabaseConnexion( $customer->getName() )
-                ||  ! $this->_databaseHandler->createDatabase( $customer->getName() )   )
+                ||  ! $this->_databaseHandler->createDatabase( $customer->getName() )
+                ||  ! $this->_databaseHandler->hydrateDb($customer->getName())
+        )
         {
             $error = new CustomerDatabaseCreationError() ;
             $this->_flashBagHandler->getFlashBag()->set('error',$error->errorToArray() ) ;

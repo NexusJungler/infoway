@@ -23,12 +23,15 @@ class DatabaseAccessHandler
 
     private ArraySearchRecursiveService $__arraySearchRecursive;
 
-    public function __construct(ParameterBagInterface $parameterBagInterface, EntityManagerInterface $entityManager)
+    private string $_project_dir;
+
+    public function __construct(ParameterBagInterface $parameterBagInterface, EntityManagerInterface $entityManager, string $project_dir)
     {
         $this->__parameterBag = $parameterBagInterface;
         $this->__entityManager = $entityManager;
         $this->__rsm = new ResultSetMapping();
         $this->__arraySearchRecursive = new ArraySearchRecursiveService();
+        $this->_project_dir = $project_dir ;
     }
 
 
@@ -52,6 +55,14 @@ class DatabaseAccessHandler
     {
         $statement = $this->__entityManager->getConnection()->prepare("CREATE DATABASE " . $databaseName);
         return $statement->execute(); // TRUE on success or FALSE on failure
+    }
+
+    public function hydrateDb($databaseName){
+        exec( "cd $this->_project_dir/bin  && php console doctrine:schema:update -f --dump-sql --em=$databaseName", $output) ;
+
+        $success  = strpos(json_encode( $output ) ,'[OK] Database schema updated successfully!'  ) ;
+
+        return $success ;
     }
 
 

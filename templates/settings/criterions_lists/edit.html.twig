@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CriterionList{% endblock %}
+
+{% block body %}
+    <h1>Edit CriterionList</h1>
+
+    {{ include('settings/criterions_lists/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('criterions_lists_index') }}">back to list</a>
+
+    {{ include('settings/criterions_lists/_delete_form.html.twig') }}
+{% endblock %}

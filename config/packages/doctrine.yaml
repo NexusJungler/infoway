@@ -12,16 +12,8 @@ doctrine:
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-            quick:
-                url: '%env(resolve:DATABASE_QUICK_URL)%'
-                driver: pdo_mysql
-                server_version: '5.7'
-                charset: utf8mb4
-            areas_test:
-                url: '%env(resolve:DATABASE_AREAS_TEST_URL)%'
-                driver: pdo_mysql
-                server_version: '5.7'
-                charset: utf8mb4
+
+
     orm:
         default_entity_manager: default
         entity_managers:
@@ -43,21 +35,3 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity/Customer'
                         prefix: App\Entity\Customer
                         alias: Kfc
-            quick:
-                connection: quick
-                mappings:
-                    quick:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Customer'
-                        prefix: App\Entity\Customer
-                        alias: Quick
-            areas_test:
-                connection: areas_test
-                mappings:
-                    areas_test:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Customer'
-                        prefix: App\Entity\Customer
-                        alias: Areas_test

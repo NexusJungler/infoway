@@ -35,18 +35,18 @@ class Criterion
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="CriterionList", inversedBy="criterions")
+     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions")
      * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
      */
     private $list;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions",cascade={"persist"})
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions", cascade={"persist"} )
      */
     private $sites;
 
@@ -92,6 +92,11 @@ class Criterion
         return $this;
     }
 
+//    /** @ORM\PostLoad */
+//    public function doStuffOnPostLoad()
+//    {
+//        dd('test');
+//    }
 
     /**
      * @return Collection|Product[]
@@ -101,14 +106,6 @@ class Criterion
         return $this->products;
     }
 
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-        }
-
-        return $this;
-    }
 
     public function removeProduct(Product $product): self
     {
@@ -127,14 +124,6 @@ class Criterion
         return $this->sites;
     }
 
-    public function addSite(Site $site): self
-    {
-        if (!$this->sites->contains($site)) {
-            $this->sites[] = $site;
-        }
-
-        return $this;
-    }
 
     public function removeSite(Site $site): self
     {
@@ -145,12 +134,12 @@ class Criterion
         return $this;
     }
 
-    public function getList(): ?CriterionList
+    public function getList(): ?CriterionsList
     {
         return $this->list;
     }
 
-    public function setList(?CriterionList $list): self
+    public function setList(?CriterionsList $list): self
     {
         $this->list = $list;
 
@@ -177,6 +166,26 @@ class Criterion
     public function setSelected(bool $selected): self
     {
         $this->selected = $selected;
+
+        return $this;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->addCriterion($this);
+        }
 
         return $this;
     }

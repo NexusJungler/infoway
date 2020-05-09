@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Customer{% endblock %}
+
+{% block body %}
+    <h1>Create new Customer</h1>
+    {% set errors = app.session.flashbag.get('error') %}
+
+    {{ dump(errors) }}
+    {% if  errors['contact'] is defined and errors['contact']['firstName'] is defined  %}
+        {{ dump('ici') }}
+    {% endif %}
+
+    {{ include('settings/customers/_form.html.twig') }}
+
+    <a href="{{ path('customers_index') }}0">back to list</a>
+{% endblock %}

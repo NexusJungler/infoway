@@ -2,6 +2,7 @@
 namespace App\Service;
 
 
+use App\Errors\Error;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,5 +22,10 @@ class FlashBagHandler {
     public function getFlashBag() : FlashBagInterface {
         return $this->flashbag ;
     }
+
+    public function addErrorInFlashbag(Error $error) : void {
+        $this->getFlashBag()->set('error', $error->errorToArray() ) ;
+    }
+
 
 }

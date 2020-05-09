@@ -1,0 +1,37 @@
+<div class="content-criterion table">
+    <div class="bloc-criterion-title">
+        <label class="container-input">
+            <input type="checkbox" id="{{criterions_list.id}}" />
+            <span class="container-rdo-tags"></span>
+        </label>
+        <p class="title">{{ criterions_list.name }}</p>
+        <p class="desc">{{ criterions_list.description }}</p>
+    </div>
+    <table class="table-custome">
+        <thead class="thead-info">
+            <tr>
+                <th><h3>Critère</h3></th>
+                <th><p>Description du critère</p></th>
+            </tr>
+        </thead>
+        <tbody class="tbody tbody-content scrollbar-table">
+
+            <tr>
+                <td><p>Pour les sites affectation à choix : <span>{{criterions_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
+            </tr>
+            {% for criterion in criterions_list.criterions %}                          
+                <tr class='tr-custome'>
+                    <td>
+                        <label class="container-input">
+                            <input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  >
+                            <span class="container-rdo-tags"></span>
+                        </label>
+                        <p class="cercle">{{ criterion.name }}</p>
+                    </td>
+                    <td><p class="cercle-desc">{{ criterion.description }}</p></td>
+                    {# <td><a href="{{ path('criterions_lists_edit', {'id': criterions_list.id}) }}">edit</a></td> #}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
