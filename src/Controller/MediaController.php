@@ -63,6 +63,7 @@ class MediaController extends AbstractController
 
         $products = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Product::class)->findAll();
         $categories = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Category::class)->findAll();
+        $tags = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Tag::class)->findAll();
 
         // upload is not accessible in 'template' and 'incrustations' tab
         $uploadIsAuthorizedOnPage = ($media_displayed !== 'template' AND $media_displayed !== 'incruste');
@@ -87,6 +88,7 @@ class MediaController extends AbstractController
             'uploadIsAuthorizedOnPage' => $uploadIsAuthorizedOnPage,
             'products' => $products,
             'categories' => $categories,
+            'tags' => $tags,
             'form' => $form->createView(),
         ]);
 
@@ -101,7 +103,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -126,8 +128,8 @@ class MediaController extends AbstractController
         $filetype = strstr($mimeType, '/', true);
 
         $customerName = strtolower( $sessionManager->get('userCurrentCustomer') );
-
-        $mediaRepository = $this->getDoctrine()->getManager( $customerName )->getRepository(Media::class);
+        $manager = $this->getDoctrine()->getManager( $customerName );
+        $mediaRepository = $manager->getRepository(Media::class);
 
         if(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
             return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -140,6 +142,9 @@ class MediaController extends AbstractController
 
         else if($file['name'] === "" or $file['name'] === null)
             return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        else if(strlen(pathinfo($file['name'])['filename']) < 5)
+            return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
@@ -168,6 +173,8 @@ class MediaController extends AbstractController
             if( $cron->getErrors() !== [] )
                 throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
 
+            $id = $mediaRepository->findOneByName( str_replace('.'.$real_file_extension, '', $file['name']) )->getId();
+
         }
 
         else
@@ -192,9 +199,11 @@ class MediaController extends AbstractController
             $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $this->serializer);
             $ffmpegSchedule->pushTask($fileInfo);
 
+            $id = $ffmpegTasksRepository->findOneByFilename( $fileName )->getId();
+
         }
 
-        return new Response("200 OK", Response::HTTP_OK);
+        return new Response($id, Response::HTTP_OK);
         //dd($request->files);
 
     }
@@ -300,22 +309,35 @@ class MediaController extends AbstractController
 
         $customer = $customerRepository->findOneByName( strtolower( $sessionManager->get('userCurrentCustomer') ) ); // dynamic session variable (will change each time user select customer in select)
         $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) );
+
+
         //dd($request->request, $customer);
 
-        foreach ($request->request->get('medias_list')['medias'] as $mediaInfos)
+        $error = [  ];
+
+        foreach ($request->request->get('medias_list')['medias'] as $index => $mediaInfos)
         {
 
-            /*if($mediaRepository->findOneByName($media['name']))
-                return new Response("515 Duplicate File", Response::HTTP_INTERNAL_SERVER_ERROR);*/
-
             if(preg_match("/(\w)*\.(\w)*/", $mediaInfos['name']))
-                return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            {
+                // return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+                $error = [ 'text' => '516 Invalid Filename', 'subject' => 'media_' . $index ];
+                break;
+            }
 
             else if($mediaInfos['name'] === "" or $mediaInfos['name'] === null)
-                return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            {
+                // return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+                $error = [ 'text' => '517 Empty Filename', 'subject' => 'media_' . $index ];
+                break;
+            }
 
-            else if(strlen($mediaInfos['name']) < 5)
-                return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            else if(strlen($mediaInfos['name']) > 3)
+            {
+                // return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+                $error = [ 'text' => '518 Too short Filename', 'subject' => 'media_' . $index ];
+                break;
+            }
 
             else
             {
@@ -341,16 +363,22 @@ class MediaController extends AbstractController
                 // check date (@see: https://www.php.net/manual/en/function.checkdate.php)
                 // if date is not return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
                 if(!checkdate($mediaInfos['diffusionStart']['month'] ,$mediaInfos['diffusionStart']['day'] ,$mediaInfos['diffusionStart']['year']))
-                    throw new Exception("Date de début de diffusion non valide !");
+                {
+                    $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => 'media_' . $index ];
+                }
 
                 if(!checkdate($mediaInfos['diffusionEnd']['month'] ,$mediaInfos['diffusionEnd']['day'] ,$mediaInfos['diffusionEnd']['year']))
-                    throw new Exception("Date de fin de diffusion non valide !");
+                {
+                    $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => 'media_' . $index ];
+                }
 
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
                 $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
 
                 if($diffusionEndDate < $diffusionStartDate)
-                    return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                {
+                    $error = [ 'text' => '519 Invalid diffusion date', 'subject' => 'media_' . $index ];
+                }
 
                 $task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension']]);
 
@@ -429,7 +457,7 @@ class MediaController extends AbstractController
 
         }
 
-        return new Response("200 OK", Response::HTTP_OK);
+        return new JsonResponse( ($error === []) ? '200 OK' : $error , ($error === []) ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function updateTask(FfmpegTasks $task, Media $media)

@@ -178,9 +178,9 @@
                 </article>
                 </article>
 
-                <article class="associate_product-popup hidden">
+                <article class="associate_product-popup association-popup hidden">
                     <div class="modal">
-                        <div class="header-modal">
+                        <div class="modal-header">
                             <div class="modal-title-container">
                                 <p class="title">Associer des produits au média : <span class="media_name"></span></p>
                             </div>
@@ -222,9 +222,9 @@
 
                                         <tbody class="product-choice-list">
                                             {% for product in products %}
-                                                <tr data-product="{{ product.id }}" data-category="{{ product.category.id }}">
-                                                    <td><input type="checkbox" class="choice_product" name="choice_product_{{ loop.index }}" data-product="{{ product.name }}"></td>
-                                                    <td>{{ product.name }}</td>
+                                                <tr data-product_id="{{ product.id }}" data-category="{{ product.category.id }}">
+                                                    <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
+                                                    <td class="product_name">{{ product.name }}</td>
                                                     <td>{{ product.description }}</td>
                                                     <td>
                                                         {% for tag in product.tags %}
@@ -244,7 +244,7 @@
 
                                         <thead>
                                             <tr>
-                                                <th>Produits associés</th>
+                                                <th>Produits à associer</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -262,7 +262,7 @@
                             <div class="body-bottom">
 
                                 <div class="cancel-btn-container">
-                                    <button type="button" class="cancel-btn close">Annuler</button>
+                                    <button type="button" class="cancel close">Annuler</button>
                                 </div>
 
                                 <div class="validation-btn-container">
@@ -274,6 +274,59 @@
                         </div>
 
                     </div>
+                </article>
+
+                <article class="associate_tag-popup association-popup hidden">
+
+                    <div class="modal">
+                        <div class="modal-header">
+                            <div class="modal-title-container">
+                                <p>TAGS à affecter à : <span class="media_name"></span></p>
+                            </div>
+                            <div class="close-modal-container">
+                                <button type="button" class="btn close">X</button>
+                            </div>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="body-middle">
+
+                                <div class="tags-list-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th><button type="button" class="create-tag-button">Créer TAG</button></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tags-list">
+                                        {% for tag in tags %}
+                                            <tr data-tag_id="{{ tag.id }}">
+                                                <td><input type="checkbox" class="choice_tag"></td>
+                                                <td class="tag-name"><p>{{ tag.name }}</p></td>
+                                                <td><p>{{ tag.description }}</p></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="body-bottom">
+
+                                <div class="validation-btn-container">
+                                    <button type="button" class="validation-btn">Affecter au produit</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </article>
 
             {% endif %}

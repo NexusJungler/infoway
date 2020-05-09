@@ -1,7 +1,8 @@
 import CustomerCreatorHandler from "../CustomerCreatorHandler/CustomerCreatorHandler";
 import UploadHandlerTool from "../UploadHandlerTool/UploadHandlerTool";
 import {ClockManager} from "../../Managers/ClockManager/ClockManager";
-import ProductAssociationHandlerTool from "../ProductAssociationHandler/ProductAssociationHandlerTool";
+import MediaProductAssociationHandlerTool from "../ProductAssociationHandler/MediaProductAssociationHandlerTool";
+import MediaTagAssociationHandlerTool from "../TagAssociationHandler/MediaTagAssociationHandlerTool";
 
 class ToolBox
 {
@@ -25,7 +26,8 @@ class ToolBox
         this.__tools = [
             new CustomerCreatorHandler(),
             new UploadHandlerTool(),
-            new ProductAssociationHandlerTool()
+            new MediaProductAssociationHandlerTool(),
+            new MediaTagAssociationHandlerTool(),
         ];
     }
 

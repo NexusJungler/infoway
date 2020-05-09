@@ -183,7 +183,7 @@
                 height: 560px;
 
                 table {
-
+                    width: 100%;
                     .hidden {
                         display: none;
                     }
@@ -214,9 +214,8 @@
 
     }
 
-    .associate_product-popup {
-        height: 785px;
-        width: 1600px;
+    .association-popup {
+
         position: absolute;
         display: flex;
         justify-content: center;
@@ -225,14 +224,15 @@
         z-index: 30;
 
         &.hidden {
-           display: none;
+            display: none;
         }
 
         .modal {
+
             color: #FFF;
             margin-top: 5%;
 
-            .header-modal {
+            .modal-header {
                 height: 8%;
                 width: 100%;
                 background-color: #4D646D;
@@ -241,7 +241,7 @@
                 flex-direction: row;
 
                 .modal-title-container {
-                    height: 100% !important;
+                    height: 100%;
                     width: 97%;
                     text-align: left;
                     display: flex;
@@ -267,6 +267,17 @@
                     }
                 }
             }
+
+        }
+
+    }
+
+    .associate_product-popup {
+
+        height: 785px;
+        width: 1600px;
+
+        .modal {
 
             .modal-body {
 
@@ -346,6 +357,52 @@
 
                 }
 
+            }
+
+        }
+    }
+
+    .associate_tag-popup {
+        height: 105%;
+        width: 30%;
+        margin-top: -5%;
+        left: 35%;
+
+        .modal {
+
+            .modal-header {
+
+                .modal-title-container {
+                    width: 100%;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+                .close-modal-container {
+                    height: 100%;
+                    width: 3%;
+                    text-align: right;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .close {
+                        background: #F57171 0% 0% no-repeat padding-box;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .modal-body {
+                height: 100%;
+                width: 100%;
+                color: #000;
+
+                .tags-list-container {
+                    padding: 5%;
+                }
             }
 
         }

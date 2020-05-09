@@ -7,7 +7,8 @@ class UploadHandlerTool extends Tool
     constructor()
     {
         super();
-        this.__name = "UploadHandlerTool";
+        //this.__name = "UploadHandlerTool";
+        this.__name = this.constructor.name;
 
         // W3C authors recommend to specify both MIME-types and corresponding extensions in input type file "accept" attribute
         // @see : https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
@@ -59,6 +60,10 @@ class UploadHandlerTool extends Tool
             uploaded_file_not_found_error: "Erreur interne : Le fichier n'existe plus sur le serveur !",
 
             invalid_diffusion_date: "La date de fin de diffusion doit être supérieur à la date de début !",
+
+            invalid_diffusion_start_date: "La date de début de diffusion n'est pas valide !",
+
+            invalid_diffusion_end_date: "La date de fin de diffusion n'est pas valide !",
 
         };
 
@@ -181,8 +186,10 @@ class UploadHandlerTool extends Tool
     {
 
         let fileName = item.name;
+        let fileNameWithoutExtension = fileName.replace( '.' + fileName.split('.').pop(), '' )
 
         console.log(item); //debugger
+        console.log(fileNameWithoutExtension); //debugger
 
         let index = $(`.upload-info table tbody tr`).length + 1;
 
@@ -205,27 +212,33 @@ class UploadHandlerTool extends Tool
             let fileIsAccepted = true;
 
             let newUploadFileItem = $("<tr>", {
-                class: (!fileExtensionIsAccepted || fileIsAlreadyUploaded || fileNameContainMultipleDot) ? 'invalid_upload_item' : 'valid_upload_item'
+                class: (!fileExtensionIsAccepted || fileIsAlreadyUploaded || fileNameContainMultipleDot || (fileNameWithoutExtension.length < 5) ) ? 'invalid_upload_item' : 'valid_upload_item'
             }).attr("data-file", fileName);
 
             let html = `<td>${fileName}</td>`;
 
             if(!fileExtensionIsAccepted)
             {
-                html += `<td><span class="error">Ce type de fichier n'est pas accepté ! Il ne sera pas uploadé</span></td>`;
+                html += `<td><span class="error">Ce type de fichier n'est pas accepté !</span></td>`;
                 fileIsAccepted = false;
             }
 
             else if(fileIsAlreadyUploaded)
             {
-                html += `<td><span class="error">Un fichier portant le même nom a déjà été uploadé ! Il ne sera pas uploadé</span></td>`;
+                html += `<td><span class="error">Un fichier portant le même nom a déjà été uploadé !</span></td>`;
+                fileIsAccepted = false;
+            }
+
+            else if(fileNameWithoutExtension.length < 5)
+            {
+                html += `<td><span class="error">Le nom de votre fichier doit contenir au moins 5 caractères !</span></td>`;
                 fileIsAccepted = false;
             }
 
             else if(fileSize > this.__max_file_size)
             {
                 html += `<td><span class="error">Vous avez selectionné un fichier volumineux. Le temps de chargement pour un tel volume de données peut prendre un temps conséquent en fonction de votre connexion</span></td>`;
-                fileIsAccepted = true;
+                fileIsAccepted = true; // on permet le telechargement des fichiers volimineux
             }
 
             else if(!this.__authorized_char_regex.test(fileName))
@@ -420,7 +433,7 @@ class UploadHandlerTool extends Tool
 
         // create a new list element and add it to the list
         let newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-        newElem.attr( 'data-index', 'media_' + counter );
+        newElem.attr( 'data-index', counter );
 
         // put data in input
         //newElem.find('.media_name').val(fileName);
@@ -555,6 +568,9 @@ class UploadHandlerTool extends Tool
 
                                 else if(response.responseText === "517 Empty Filename")
                                     uploadState.html(`${this.__errors.empty_error} <i class='fas fa-times'></i>`);
+
+                                else if(response.responseText === "518 Too short Filename")
+                                    uploadState.html(`${this.__errors.too_short_error} <i class='fas fa-times'></i>`);
 
                                 else
                                     $(`.modal-upload-download #upload_${fileToUpload.index} .upload_state`).html("Téléchargement annulé suite à une erreur interne ! <i class='fas fa-times'></i>");
@@ -696,7 +712,7 @@ class UploadHandlerTool extends Tool
                                             <span>__RESOLUTION__</span>
                                         </td>
                                         
-                                        <td>
+                                        <td class="media-name-container">
                                             <span class="error ${ !fileNameIsValid ? '' : 'hidden'}"> ${ !fileNameIsValid ? this.__dataCheckingErrors : '' } </span> <br>
                                             <input type="text" name="files[${index}][name]" class="form_input fileName ${ !fileNameIsValid ? 'invalid' : ''}" placeholder="Nom du fichier" value="${fileName}" required="required">
                                         </td>
@@ -706,11 +722,13 @@ class UploadHandlerTool extends Tool
                                         </td>
                                         
                                         <td>
-                                            <button type="button" class="associate-tag">Associer TAGS</button>
+                                            <button type="button" class="associate-tag association-btn" data-media="${ fileName }">Associer TAGS</button>
+                                            <div class="associated-tags-container"></div>
                                         </td>
                                         
                                         <td>
-                                            <button type="button" class="associate-product" data-media="${ fileName }">Associer produit</button>
+                                            <button type="button" class="associate-product association-btn" data-media="${ fileName }">Associer produit</button>
+                                            <div class="associated-products-container"></div>
                                         </td>
                                         
                                         <td>
@@ -836,93 +854,64 @@ class UploadHandlerTool extends Tool
                         success: (response) => {
                             console.log(response); debugger
                         },
-                        error: (response, status, error) => {
-                            console.log(response.responseText); debugger
+                        error: (response) => {
+
+                            let error = response.responseJSON;
+                            let subject = error.subject;
+                            console.log(response);
+                            console.log(error);
+                            console.log(subject);
+                            console.log((error.text === "518 Too short Filename")); debugger
+
+                            if(error.text === "515 Duplicate File")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.duplicate_file );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
+                            }
+
+                            if(error.text === "516 Invalid Filename")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.invalid_error );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
+                            }
+
+                            if(error.text === "517 Empty Filename")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.empty_error );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
+                            }
+
+                            if(error.text === "518 Too short Filename")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container span.error`).text( this.__errors.too_short_error );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .form_input.fileName`).addClass('invalid');
+                            }
+
+                            if(error.text === "519 Invalid diffusion date")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_date );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .diffusionDates`).addClass('invalid');
+                            }
+
+                            if(error.text === "519.1 Invalid diffusion start date")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_start_date );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-name-container .diffusionDates.start`).addClass('invalid');
+                            }
+
+                            if(error.text === "519.2 Invalid diffusion end date")
+                            {
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container span.error`).text( this.__errors.invalid_diffusion_end_date );
+                                this.__$location.find(`.media_list tbody tr.${ subject } .media-diff-date-container .diffusionDates.end`).addClass('invalid');
+                            }
+
+                            else
+                                console.log(error.text); debugger
+
                         },
                     });
 
                 }
-
-
-
-                /*$('.edit_media_info .tbody form').each( (index, form) => {
-
-                    $(form).on("submit", e => {
-
-                        e.preventDefault();
-
-                        jQuery.ajax({
-                            type: 'post',
-                            url: '/edit/media',
-                            data: $(e.currentTarget).serialize(),
-                            success: (response) => {
-                                $(form).find('.form_input.oldName').val($(form).find('.form_input.fileName').val())
-                                console.log(response); debugger
-                            },
-                            error: (response, status, error) => {
-
-                                if(response.responseText === "515 Duplicate File")
-                                {
-                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.duplicate_file );
-                                    $(form).find('.form_input.fileName').addClass('invalid');
-                                }
-
-                                else if(response.responseText === "516 Invalid Filename")
-                                {
-                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.invalid_error );
-                                    $(form).find('.form_input.fileName').addClass('invalid');
-                                }
-
-                                else if(response.responseText === "517 Empty Filename")
-                                {
-                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.empty_error );
-                                    $(form).find('.form_input.fileName').addClass('invalid');
-                                }
-
-                                else if(response.responseText === "518 Too short Filename")
-                                {
-                                    $(form).find('.form_input.fileName').parent().find("span.error").text( this.__errors.too_short_error );
-                                    $(form).find('.form_input.fileName').addClass('invalid');
-                                }
-
-                                else if(response.responseText === "519 Invalid diffusion date")
-                                {
-                                    $(form).find('.form_input.diffusionDates').parent().find("span.error").text( this.__errors.invalid_diffusion_date );
-                                    $(form).find('.form_input.diffusionDates').addClass('invalid');
-                                }
-
-                                else
-                                    console.log(response.responseText); debugger
-                            },
-                        });
-
-                    });
-
-                    let formIsValid = false;
-                    
-                    $(form).find('.form_input[required="required"]').each( (index, input) => {
-
-                        const inputIsValid = this.checkFormInputValidity( $(input) );
-
-                        if(!inputIsValid)
-                        {
-                            $(input).parent().find("span.error").html( this.__dataCheckingErrors ).removeClass("hidden");
-                            $(input).addClass('invalid');
-                        }
-
-                        else
-                        {
-                            formIsValid = true;
-                            $(input).parent().find("span.error").html("").addClass("hidden");
-                            $(input).removeClass('invalid');
-                        }
-
-                    } );
-
-                    if( formIsValid )
-                        $(form).submit();
-
-                } )*/
 
             })
         }
@@ -959,6 +948,8 @@ class UploadHandlerTool extends Tool
                     // update hidden media list
                     let index = input.parents('tr').data('index');
                     this.__$mediasCollection.find(`li[data-index='${ index }'] .media_name`).attr('value', input.val() );
+
+                    input.parents('tr').find('.association-btn').attr('data-media', input.val())
 
                 }
 
