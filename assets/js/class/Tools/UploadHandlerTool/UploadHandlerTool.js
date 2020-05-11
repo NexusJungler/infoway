@@ -430,7 +430,6 @@ class UploadHandlerTool extends Tool
         newWidget = newWidget.replace(/__name__/g, counter);
         newWidget = newWidget.replace(/__MEDIA_ID__/g, item.id);
         newWidget = newWidget.replace(/__MEDIA_NAME__/g, item.fileName);
-        newWidget = newWidget.replace(/__MEDIA_OLD_NAME__/g, item.fileName);
         newWidget = newWidget.replace(/__MEDIA_TYPE__/g, this.__uploadMediaType);
         newWidget = newWidget.replace(/__MEDIA_EXTENSION__/g, item.fileExtension);
 
@@ -680,9 +679,9 @@ class UploadHandlerTool extends Tool
                         img.src = window.URL.createObjectURL(file);
 
                         // @TODO: recupérer les miniatures des medias
-                        let preview = `<img class="preview" src="/build/images/not_ready.png" alt="/build/images/not_ready.png" />`;
+                        let preview = `<img class="preview" src="${ this.__uploadMediaType === 'image' ? '/miniatures/kfc/154.png' : '/build/images/not_ready.png' }" alt="${ this.__uploadMediaType === 'image' ? '/miniatures/kfc/154.png' : 'en attente de traitement' }" />`;
                         /*
-
+                        // C:\laragon\www\infoway\new_app/../main/data_kfc/PLAYER INFOWAY WEB/medias/image//low/Calque 4.png
                         const mediaProcessStatus = await this.getMediaProcessStatus(file.name);
                         const mediaMiniaturePath = await this.getMediaMiniaturePath(fileName);
                         console.log(mediaMiniaturePath);
@@ -825,14 +824,7 @@ class UploadHandlerTool extends Tool
                         data: this.__$location.find('form#medias_list_form').serialize(),
                         success: (response) => {
 
-                            this.__$location.find(`.media_list tbody tr .media-name-container .form_input.fileName`).each( (index, input) => {
 
-                                let newOldName = $(input).val();
-                                let hiddenElementIndex = $(input).parents('tr').data('index');
-
-                                this.__$mediasCollection.find(`#medias_list_medias_${ hiddenElementIndex }_oldName`).attr('value', newOldName);
-
-                            } )
 
                         },
                         error: (response) => {

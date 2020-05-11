@@ -49,7 +49,7 @@ class MediaController extends AbstractController
      */
     private  $serializer;
 
-    public function __construct()
+    public function __construct(SerializerInterface $serializer)
     {
 
         $circularReferenceHandlingContext = [
@@ -60,6 +60,7 @@ class MediaController extends AbstractController
         $encoder =  new JsonEncoder();
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
         $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
+        //$this->serializer = $serializer;
 
     }
 
@@ -163,6 +164,12 @@ class MediaController extends AbstractController
         // debug
         // comment this at the end
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
+        $sizes = ['low', 'medium', 'high', 'HD'];
+        foreach ($sizes as $size) {
+
+            copy($path, $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/image/' .$size .'/' . $file['name']);
+        }
+        // end debug
 
         // if is image, insert immediately
         if($splash[0] === 'image')
@@ -174,6 +181,8 @@ class MediaController extends AbstractController
                 'mediaType' => $mediaType,
                 'uploadDate' => new DateTime(),
                 'extension' => $real_file_extension,
+                'mediaProducts' => [],
+                'mediaTags' => [],
             ];
 
             // don't duplicate code !!
@@ -205,7 +214,7 @@ class MediaController extends AbstractController
 
             // register Ffmpeg task
             // a CRON will do task after
-            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $sessionManager);
+            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
         }
@@ -232,9 +241,13 @@ class MediaController extends AbstractController
         $explode = explode('.', $request->request->get('file'));
         $fileNameWithoutExtension = $explode[0];
 
+        $task = $tasksRepository->findOneBy(['filename' => $fileNameWithExtension, 'finished' => null]);
+
         // if file is in Media or if file is in FfmpegTasks but not already
-        if($mediaRepository->findOneByName($fileNameWithoutExtension) OR $tasksRepository->findOneBy(['filename' => $fileNameWithExtension, 'finished' => null]))
+        if($mediaRepository->findOneByName($fileNameWithoutExtension) OR $task)
+        {
             $output = 0;
+        }
 
         else
             $output = 1;
@@ -266,38 +279,6 @@ class MediaController extends AbstractController
 
         else
             return new Response("Finished");
-
-    }
-
-
-    /**
-     * @Route(path="/get/file/miniature/path", name="media::getMediaMiniaturePath", methods={"POST"})
-     */
-    public function getMediaMiniaturePath(Request $request, SessionManager $sessionManager)
-    {
-
-        $manager = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
-        $mediaRepository = $manager->getRepository(Media::class);
-        $media = $mediaRepository->findOneByName($request->request->get('file'));
-
-        if(!$media)
-            return new Response("404 File Not Found", Response::HTTP_INTERNAL_SERVER_ERROR);
-
-        else
-        {
-
-            if( $media instanceof Video )
-                $mediaType = "video";
-
-            else
-                $mediaType = "IMAGES";
-
-            $path = $this->getParameter('project_dir') . "/../main/data_" . strtolower( $sessionManager->get('userCurrentCustomer') ) . "/PLAYER INFOWAY WEB/medias/" . $mediaType . "/low/" . $media->getId() . "." . $media->getExtension();
-            //$path = "http://127.0.0.1:8000/../main/data_" . strtolower( $sessionManager->get('userCurrentCustomer') ) . "/PLAYER INFOWAY WEB/medias/" . $mediaType . "/low/" . $media->getId() . "." . $media->getExtension();
-
-            return new Response($path);
-
-        }
 
     }
 
@@ -372,11 +353,13 @@ class MediaController extends AbstractController
                 if(!checkdate($mediaInfos['diffusionStart']['month'] ,$mediaInfos['diffusionStart']['day'] ,$mediaInfos['diffusionStart']['year']))
                 {
                     $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
+                    break;
                 }
 
                 if(!checkdate($mediaInfos['diffusionEnd']['month'] ,$mediaInfos['diffusionEnd']['day'] ,$mediaInfos['diffusionEnd']['year']))
                 {
                     $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
+                    break;
                 }
 
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
@@ -392,9 +375,9 @@ class MediaController extends AbstractController
 
                 // si aucune task n'est trouvé et que ce n'est pas une image qui a été edité (donc c'est une video)
                 if(!$task AND $mediaInfos['mediaType'] !== 'image')
-                    throw new Exception(sprintf("No Task found with filename '%s' !", $mediaInfos['oldName'].".".$mediaInfos['extension']));
+                    throw new Exception(sprintf("No Task found with id '%d' !", $mediaInfos['id']));
 
-                $media = ($task AND $task->getFinished() !== null) ? $manager->getRepository(Media::class)->findOneByName( $mediaInfos['oldName'] ) : $manager->getRepository(Media::class)->find( $mediaInfos['id'] );
+                $media = $manager->getRepository(Media::class)->find( $mediaInfos['id'] );
 
                 if(!$media)
                 {
@@ -413,10 +396,10 @@ class MediaController extends AbstractController
 
                 // if user change file name
                 // rename uploaded file
-                if($mediaInfos['name'] !== $mediaInfos['oldName'] && file_exists($root . $customer->getName() . '/' . $mediaType . '/' . $mediaInfos['oldName'] .'.' . $mediaInfos['extension']))
+                if($media && $mediaInfos['name'] !== $media->getName() && file_exists($root . $customer->getName() . '/' . $mediaType . '/' . $media->getName() .'.' . $mediaInfos['extension']))
                 {
 
-                    rename($root . $customer->getName() . '/' . $mediaType . '/' . $mediaInfos['oldName'] .'.' . $mediaInfos['extension'], $path);
+                    rename($root . $customer->getName() . '/' . $mediaType . '/' . $media->getName() .'.' . $mediaInfos['extension'], $path);
 
                     // debug
                     // comment this at the end
@@ -424,9 +407,9 @@ class MediaController extends AbstractController
 
                 }
 
-
                 if(array_key_exists('tags', $mediaInfos))
                 {
+                    $media->getTags()->clear();
                     foreach ($mediaInfos['tags'] as $k => $tagId)
                     {
                         $tag = $manager->getRepository(Tag::class)->find($tagId);
@@ -439,6 +422,7 @@ class MediaController extends AbstractController
 
                 if(array_key_exists('products', $mediaInfos))
                 {
+                    $media->getProducts()->clear();
                     foreach ($mediaInfos['products'] as $k => $productId)
                     {
                         $product = $manager->getRepository(Product::class)->find($productId);

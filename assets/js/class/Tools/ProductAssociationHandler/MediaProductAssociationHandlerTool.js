@@ -102,7 +102,6 @@ class MediaProductAssociationHandlerTool extends Tool
 
                 $('.add-popup').css({ 'z-index': '' });
                 this.__$location.fadeOut();
-                this.__mediasAssociationInfo = [];
 
                 // reset
                 this.__$productList.find('.choice_product').prop('checked', false);

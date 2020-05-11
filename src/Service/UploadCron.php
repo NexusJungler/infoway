@@ -60,8 +60,8 @@ class UploadCron
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
         $this->mediatype = $taskInfo['mediaType'];
         $this->fileUploadDate = $taskInfo['uploadDate'];
-        $this->mediaProducts = $taskInfo['mediaProducts'];
-        $this->mediaTags = $taskInfo['mediaTags'];
+        $this->mediaProducts = $taskInfo['mediaProducts'] ?? [];
+        $this->mediaTags = $taskInfo['mediaTags'] ?? [];
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -155,12 +155,8 @@ class UploadCron
                     // On remplace le nom original des différentes résolutions créées par l'id du media
                     $sizes = ['low', 'medium', 'high', 'HD'];
                     foreach ($sizes as $size) {
-                        if (substr($this->destfolder, -strlen('medias/')) === 'medias/')
-                            $dir_ref = $this->destfolder . "$size/" . $this->filename . '.' . $valid_ext;
 
-                        else
-                            $dir_ref = $this->destfolder . "/$size/" . $this->filename . '.' . $valid_ext;
-
+                        $dir_ref = $this->destfolder . "$size/" . $this->filename . '.' . $valid_ext;
 
                         if(file_exists($dir_ref)) {
                             rename($dir_ref, $this->destfolder . "/$size/" . $this->fileID . '.' . $valid_ext);

@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Admin\Country;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
+use App\Entity\Customer\Category;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
@@ -14,16 +15,20 @@ use App\Entity\Customer\Synchro;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Repository\Admin\FfmpegTasksRepository;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\EntityManagerInterface;
 use \Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Yaml\Yaml;
 use App\Service\UploadCron;
 use \Doctrine\Persistence\ObjectManager;
@@ -84,15 +89,18 @@ class FfmpegSchedule
         $this->conf = Yaml::parse( $config_file );
         $this->customers = $this->getDataSheetClients();
 
+
         $circularReferenceHandlingContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
                 return $object->getId();
             },
         ];
         $encoder =  new JsonEncoder();
+
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
-        $dateNormalizer = new DateTimeNormalizer();
-        $this->serializer = new Serializer( [ $normalizer, $dateNormalizer ] , [ $encoder ] );
+
+        $this->serializer = new Serializer( [new DateTimeNormalizer(), $normalizer ] , [ $encoder ] );
+
     }
 
 
@@ -132,6 +140,11 @@ class FfmpegSchedule
 
         $media = json_decode($this->serializer->serialize($media, 'json'), true);
 
+        foreach ($media['products'] as $product) {
+            $product['start'] = $product['start']['timestamp'];
+            $product['end'] = $product['end']['timestamp'];
+        }
+
         $ffmpeg_task = new FfmpegTasks();
         $ffmpeg_task->setFilename($fileName)
                     ->setFiletype($fileType)
@@ -167,23 +180,23 @@ class FfmpegSchedule
             foreach ($tasks as $task)
             {
 
-                //$customer_id = $task->getCustomer()->getId();
-                // dump($task);
-                //$base = $this->customers[$customer_id]['base'];
-                //$customer_name = $this->customers[$customer_id]['enseigne'];
+
                 $customer_name = strtolower( $task->getCustomer()->getName() );
 
                 $customerManager = $this->managerRegistry->getManager(strtolower( $task->getCustomer()->getName() ));
 
                 $taskMediaInfo = $task->getMedia();
                 foreach ($taskMediaInfo['products'] as $k => $v) {
-                    // @TODO : deserialize products, don't do query
+
                     $taskMediaInfo['products'][$k] = $customerManager->getRepository(Product::class)->find($v['id']);
+                    //$taskMediaInfo['products'][$k] = $this->serializer->deserialize($v, Product::class, 'json');
+                    //dd($taskMediaInfo['products'][$k]);
                 }
 
                 foreach ($taskMediaInfo['tags'] as $k => $v) {
-                    // @TODO : deserialize products, don't do query
+
                     $taskMediaInfo['tags'][$k] = $customerManager->getRepository(Tag::class)->find($v['id']);
+
                 }
 
                 if($task->getMediatype() == 'sync') {

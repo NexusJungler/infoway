@@ -37,14 +37,6 @@ class MediaType extends AbstractType
                 ]
             ])
 
-            ->add('oldName', TextType::class, [
-                'label' => 'Ancien nom',
-                'attr' => [
-                    'class' => 'media_old_name',
-                    'value' => '__MEDIA_OLD_NAME__',
-                ]
-            ])
-
             ->add('mediaType', TextType::class, [
                 'label' => 'Type du media',
                 'attr' => [

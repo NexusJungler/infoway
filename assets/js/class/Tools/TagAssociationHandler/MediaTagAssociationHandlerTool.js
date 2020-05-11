@@ -59,7 +59,7 @@ class MediaTagAssociationHandlerTool extends Tool
 
                 $('.add-popup').css({ 'z-index': '' });
                 $(".associate_tag-popup").fadeOut();
-                this.__mediasAssociationInfo = [];
+
 
                 // reset
                 this.__$location.find('.modal-body .choice_tag').prop('checked', false);
