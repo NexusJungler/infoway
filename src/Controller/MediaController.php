@@ -34,6 +34,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 
 class MediaController extends AbstractController
 {
@@ -41,11 +47,20 @@ class MediaController extends AbstractController
     /**
      * @var SerializerInterface
      */
-    private SerializerInterface $serializer;
+    private  $serializer;
 
-    public function __construct(SerializerInterface $serializer)
+    public function __construct()
     {
-        $this->serializer = $serializer;
+
+        $circularReferenceHandlingContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
+        $encoder =  new JsonEncoder();
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
+        $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
+
     }
 
     /**
@@ -61,9 +76,10 @@ class MediaController extends AbstractController
         else
             $media_displayed = $media;
 
-        $products = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Product::class)->findAll();
-        $categories = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Category::class)->findAll();
-        $tags = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Tag::class)->findAll();
+        $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) );
+        $products = $manager->getRepository(Product::class)->findAll();
+        $categories = $manager->getRepository(Category::class)->findAll();
+        $tags = $manager->getRepository(Tag::class)->findAll();
 
         // upload is not accessible in 'template' and 'incrustations' tab
         $uploadIsAuthorizedOnPage = ($media_displayed !== 'template' AND $media_displayed !== 'incruste');
@@ -75,13 +91,6 @@ class MediaController extends AbstractController
                 'id' => 'medias_list_form'
             ]
         ]);
-
-        /*$form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            dd($form);
-        }*/
 
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $media_displayed, // will be used by js for get authorized extensions for upload
@@ -196,10 +205,8 @@ class MediaController extends AbstractController
 
             // register Ffmpeg task
             // a CRON will do task after
-            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $this->serializer);
-            $ffmpegSchedule->pushTask($fileInfo);
-
-            $id = $ffmpegTasksRepository->findOneByFilename( $fileName )->getId();
+            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag, $sessionManager);
+            $id = $ffmpegSchedule->pushTask($fileInfo);
 
         }
 
@@ -380,13 +387,14 @@ class MediaController extends AbstractController
                     $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
                 }
 
-                $task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension']]);
+                //$task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension'], 'registered' => new DateTime()]);
+                $task = $ffmpegTasksRepository->find($mediaInfos['id']);
 
                 // si aucune task n'est trouvé et que ce n'est pas une image qui a été edité (donc c'est une video)
-                if(!$task && $mediaInfos['mediaType'] !== 'image')
+                if(!$task AND $mediaInfos['mediaType'] !== 'image')
                     throw new Exception(sprintf("No Task found with filename '%s' !", $mediaInfos['oldName'].".".$mediaInfos['extension']));
 
-                $media = $manager->getRepository(Media::class)->findOneByName( $mediaInfos['oldName'] );
+                $media = ($task AND $task->getFinished() !== null) ? $manager->getRepository(Media::class)->findOneByName( $mediaInfos['oldName'] ) : $manager->getRepository(Media::class)->find( $mediaInfos['id'] );
 
                 if(!$media)
                 {
@@ -397,6 +405,7 @@ class MediaController extends AbstractController
                 else
                 {
                     $media->setName( ($media->getName() !== $mediaInfos['name']) ? $mediaInfos['name'] : $media->getName() );
+                    $task = null;
                 }
 
                 $media->setDiffusionStart($diffusionStartDate)
@@ -460,20 +469,6 @@ class MediaController extends AbstractController
         }
 
         return new JsonResponse( ($error === []) ? '200 OK' : $error , ($error === []) ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    private function updateTask(FfmpegTasks $task, Media $media)
-    {
-
-        $mediaName = $media->getName() . '.' . $media->getExtension();
-
-        $media = json_decode($this->serializer->serialize($media, 'json'), true);
-
-        $task->setFilename(( $task->getFilename() !== $mediaName ) ? $mediaName : $task->getFilename())
-            ->setMedia($media);
-
-        $this->getDoctrine()->getManager('default')->flush();
-
     }
 
 }

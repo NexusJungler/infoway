@@ -21,7 +21,15 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('name', TextType::class, [
+        $builder->add('id', TextType::class, [
+                'label' => 'Id',
+                'attr' => [
+                    'class' => 'media_id',
+                    'value' => '__MEDIA_ID__',
+                ]
+            ])
+
+            ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
                     'class' => 'media_name',

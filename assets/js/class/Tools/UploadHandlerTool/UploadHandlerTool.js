@@ -428,6 +428,7 @@ class UploadHandlerTool extends Tool
         // with a number that's unique to your emails
         // end name attribute looks like name="contact[emails][2]"
         newWidget = newWidget.replace(/__name__/g, counter);
+        newWidget = newWidget.replace(/__MEDIA_ID__/g, item.id);
         newWidget = newWidget.replace(/__MEDIA_NAME__/g, item.fileName);
         newWidget = newWidget.replace(/__MEDIA_OLD_NAME__/g, item.fileName);
         newWidget = newWidget.replace(/__MEDIA_TYPE__/g, this.__uploadMediaType);
@@ -532,14 +533,14 @@ class UploadHandlerTool extends Tool
                                 return xhr;
                             },
                             mimeType: "multipart/form-data",
-                            success: (response) => {
+                            success: (id) => {
 
                                 uploadState.html("Téléchargement terminé ! <i class='fas fa-check'></i>");
                                 $(`.modal-upload-download #upload_${fileToUpload.index} progress`).removeClass("on_upload");
                                 uploadFinished++;
 
                                 if( $('.medias-list-to-upload').find(`.media_name[value='${ fileName }']`).length === 0 )
-                                    this.addNewItemInMediaCollection( {fileName: fileName, fileExtension: fileExtension} );
+                                    this.addNewItemInMediaCollection( {id: id, fileName: fileName, fileExtension: fileExtension} );
 
                                 if(uploadFinished === this.__filesToUpload.length && $(`.modal-upload-download .on_progress`).length === 0)
                                 {
@@ -960,31 +961,33 @@ class UploadHandlerTool extends Tool
                 const year = explode[0];
 
                 let index = $(e.currentTarget).parents('tr').data('index');
-                //console.log(index); //debugger
+                console.log(index); //debugger
 
                 const collectionItem = this.__$mediasCollection.find(`li[data-index='${ index }'] `);
 
+                console.log(day, month, year); //debugger
+
                 if( $(e.currentTarget).hasClass('start') )
                 {
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionStart_day option:selected`).attr('selected', false);
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionStart_day option[value='${day}']`).attr('selected', true);
+                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index }_diffusionStart_day option:selected`).attr('selected', false);
+                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index }_diffusionStart_day option[value='${day}']`).attr('selected', true);
 
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionStart_month option:selected`).attr('selected', false);
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionStart_month option[value='${month}']`).attr('selected', true);
+                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index }_diffusionStart_month option:selected`).attr('selected', false);
+                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index }_diffusionStart_month option[value='${month}']`).attr('selected', true);
 
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionStart_year option:selected`).attr('selected', false);
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionStart_year option[value='${year}']`).attr('selected', true);
+                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index }_diffusionStart_year option:selected`).attr('selected', false);
+                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index }_diffusionStart_year option[value='${year}']`).attr('selected', true);
                 }
                 else if( $(e.currentTarget).hasClass('end') )
                 {
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionEnd_day option:selected`).attr('selected', false);
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionEnd_day option[value='${day}']`).attr('selected', true);
+                    collectionItem.find(`.media_diffusion_date_end #medias_list_medias_${ index }_diffusionEnd_day option:selected`).attr('selected', false);
+                    collectionItem.find(`.media_diffusion_date_end #medias_list_medias_${ index }_diffusionEnd_day option[value='${day}']`).attr('selected', true);
 
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionEnd_month option:selected`).attr('selected', false);
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionEnd_month option[value='${month}']`).attr('selected', true);
+                    collectionItem.find(`.media_diffusion_date_end #medias_list_medias_${ index }_diffusionEnd_month option:selected`).attr('selected', false);
+                    collectionItem.find(`.media_diffusion_date_end #medias_list_medias_${ index }_diffusionEnd_month option[value='${month}']`).attr('selected', true);
 
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionEnd_year option:selected`).attr('selected', false);
-                    collectionItem.find(`.media_diffusion_date_start #medias_list_medias_${ index.replace('media_', '') }_diffusionEnd_year option[value='${year}']`).attr('selected', true);
+                    collectionItem.find(`.media_diffusion_date_end #medias_list_medias_${ index }_diffusionEnd_year option:selected`).attr('selected', false);
+                    collectionItem.find(`.media_diffusion_date_end #medias_list_medias_${ index }_diffusionEnd_year option[value='${year}']`).attr('selected', true);
                 }
 
             })

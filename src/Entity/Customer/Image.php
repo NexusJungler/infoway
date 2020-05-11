@@ -14,7 +14,7 @@ class Image extends Media
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    //private $id;
 
 
 }

@@ -3,6 +3,8 @@
 namespace App\Entity\Customer;
 
 use App\Entity\Admin\Customer;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +65,16 @@ class Site
     private $customerId;
 
     private $customer ;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="sites", cascade={"persist"})
+     */
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -188,7 +200,34 @@ class Site
         $this->customer = $customer;
     }
 
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
 
+    public function addTag(Tag $tag): self
+    {
+
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            $tag->removeSite($this);
+        }
+
+        return $this;
+    }
 
 
 }

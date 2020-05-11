@@ -9,14 +9,21 @@ use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
+use App\Entity\Customer\Product;
 use App\Entity\Customer\Synchro;
+use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Repository\Admin\FfmpegTasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use \Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Yaml\Yaml;
 use App\Service\UploadCron;
 use \Doctrine\Persistence\ObjectManager;
@@ -65,8 +72,9 @@ class FfmpegSchedule
      * @param ParameterBagInterface $parameterBag
      * @param LoggerInterface $cronLogger
      */
-    public function __construct(ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag, SerializerInterface $serializer)
+    public function __construct(ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag)
     {
+
         $this->managerRegistry = $managerRegistry;
         $this->entityManager = $managerRegistry->getManager('default');
         $this->parameterBag = $parameterBag;
@@ -75,7 +83,16 @@ class FfmpegSchedule
         $config_file = file_get_contents($this->parameterBag->get('config_dir') . '\\sys_flags.yml' );
         $this->conf = Yaml::parse( $config_file );
         $this->customers = $this->getDataSheetClients();
-        $this->serializer = $serializer;
+
+        $circularReferenceHandlingContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
+        $encoder =  new JsonEncoder();
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
+        $dateNormalizer = new DateTimeNormalizer();
+        $this->serializer = new Serializer( [ $normalizer, $dateNormalizer ] , [ $encoder ] );
     }
 
 
@@ -127,6 +144,8 @@ class FfmpegSchedule
         $this->entityManager->persist($ffmpeg_task);
         $this->entityManager->flush();
 
+        return $ffmpeg_task->getId();
+
     }
 
     public function runTasks()
@@ -147,7 +166,6 @@ class FfmpegSchedule
 
             foreach ($tasks as $task)
             {
-                //C:\Program Files\Fresco Logic\Fresco Logic USB Display Driver\
 
                 //$customer_id = $task->getCustomer()->getId();
                 // dump($task);
@@ -155,7 +173,18 @@ class FfmpegSchedule
                 //$customer_name = $this->customers[$customer_id]['enseigne'];
                 $customer_name = strtolower( $task->getCustomer()->getName() );
 
+                $customerManager = $this->managerRegistry->getManager(strtolower( $task->getCustomer()->getName() ));
+
                 $taskMediaInfo = $task->getMedia();
+                foreach ($taskMediaInfo['products'] as $k => $v) {
+                    // @TODO : deserialize products, don't do query
+                    $taskMediaInfo['products'][$k] = $customerManager->getRepository(Product::class)->find($v['id']);
+                }
+
+                foreach ($taskMediaInfo['tags'] as $k => $v) {
+                    // @TODO : deserialize products, don't do query
+                    $taskMediaInfo['tags'][$k] = $customerManager->getRepository(Tag::class)->find($v['id']);
+                }
 
                 if($task->getMediatype() == 'sync') {
                     //$rep_sync = new synchro_rep($base);
@@ -201,6 +230,8 @@ class FfmpegSchedule
                             'mediaType' => 'sync',
                             'uploadDate' => $taskMediaInfo['createdAt'],
                             'extension' => $taskMediaInfo['extension'],
+                            'mediaProducts' => $taskMediaInfo['products'],
+                            'mediaTags' => $taskMediaInfo['tags'],
                         ];
 
                         $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
@@ -226,6 +257,8 @@ class FfmpegSchedule
                         'mediaType' => $task->getMediatype(),
                         'uploadDate' => $taskMediaInfo['createdAt'],
                         'extension' => $taskMediaInfo['extension'],
+                        'mediaProducts' => $taskMediaInfo['products'],
+                        'mediaTags' => $taskMediaInfo['tags'],
                     ];
                     $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
                     $errors = $encoding->getErrors();

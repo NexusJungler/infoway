@@ -14,7 +14,7 @@ class Video extends Media
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    //private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -254,4 +254,5 @@ class Video extends Media
 
         return $this;
     }
+
 }

@@ -41,12 +41,12 @@ class Media
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", name="diffusion_start" ,nullable=false, options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="date", name="diffusion_start" ,nullable=false)
      */
     private $diffusionStart;
 
     /**
-     * @ORM\Column(type="datetime", name="diffusion_end" ,nullable=false)
+     * @ORM\Column(type="date", name="diffusion_end" ,nullable=false)
      */
     private $diffusionEnd;
 

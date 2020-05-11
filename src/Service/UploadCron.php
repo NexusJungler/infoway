@@ -60,6 +60,8 @@ class UploadCron
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
         $this->mediatype = $taskInfo['mediaType'];
         $this->fileUploadDate = $taskInfo['uploadDate'];
+        $this->mediaProducts = $taskInfo['mediaProducts'];
+        $this->mediaTags = $taskInfo['mediaTags'];
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -768,6 +770,17 @@ class UploadCron
 
             if ($this->filetype == 'video') {
                 $newVideo = new Video();
+
+                foreach ($this->mediaProducts as $mediaProduct)
+                {
+                    $newVideo->addProduct($mediaProduct);
+                }
+
+                foreach ($this->mediaTags as $mediaTag)
+                {
+                    $newVideo->addTag($mediaTag);
+                }
+
                 /* Création librairie php-ffmpeg en passant par la ligne de commande pour éviter les problèmes d'incompatibilité */
                 //$path_to_json = 'C:\inetpub\wwwroot\tmp\infofile.json';
                 $path_to_json = $this->parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
@@ -913,6 +926,16 @@ class UploadCron
             if($this->filetype == 'image') {
 
                 $newImg = new Image();
+
+                foreach ($this->mediaProducts as $mediaProduct)
+                {
+                    $newImg->addProduct($mediaProduct);
+                }
+
+                foreach ($this->mediaTags as $mediaTag)
+                {
+                    $newImg->addTag($mediaTag);
+                }
 
                 $size =  ( round(filesize($src)/(1024*1024), 2) > 0.00) ? round(filesize($src)/(1024*1024), 2) . ' Mo' : round(filesize($src), 2) . ' o';
 
