@@ -1,23 +1,69 @@
 
 {{ form_start(form) }}
     <div class="row ">
-    {# {{ form_widget(form) }} #}
-    {% for tag in form.tags %}
-    
-        <div class="row">
-            {{ form_widget(tag.color, {'attr': {'class': ''} }) }}
-            {{ form_widget(tag) }} 
-        </div>                          
-        
-    {% endfor %}
+        <table class="table-tags">
+            <thead>
+                <tr>
+                    <th><span class="cercle-color"></span></th>
+                    <th>TAG créé</th>
+                    <th>Description</th>   
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in form.tags %}
+                    <tr>
+                        <td>
+                            {{ form_widget(tag.color, {'attr': {'class': 'tags-color'} }) }}
+                        </td>
+                        <td>
+                            {{ form_widget(tag.name, {'attr': {'class': 'tags-input'} }) }} 
+                        </td>
+                        <td>
+                            {{ form_widget(tag.description, {'attr': {'class': 'tags-desc'} }) }} 
+                        </td>
+                    </tr>                               
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bloc-site">
+        <div class="content-site">
+            <h2>TAGS affectés au site : </h2> 
+            <input type="search" id="site-search" name="q" aria-label="Search">
+        </div>
         
     </div>
     <div>
-        <h2>TAGS affectés au site : </h2> 
-    </div>
-    <div class="row ">
-        {{ form_widget(form.sites, {'attr': {'class': 'input-custome'} }) }}
+        <table class="table-site">
+             <thead>
+                <tr>
+                    <th>
+                        <label class="container-input">
+                            <input type="checkbox"> Site
+                            <span class="container-rdo"></span>
+                        </label>
+                    </th>
+                    <th>Adresses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {# {% for site in form.sites %} #}
+                    <tr>
+                        <td class="">
+                            {{ form_widget(form.sites, {'attr': {'class': ''} }) }}
+                        </td>
+                        <td>
+                            Adresses
+                        </td>
+                    </tr>            
+                {# {% endfor %} #}
+            </tbody>
+        </table>
     </div>
 
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    <div class="btn-tag-enregistrer">
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    
 {{ form_end(form) }}

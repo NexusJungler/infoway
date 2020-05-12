@@ -22,9 +22,18 @@
                 <section class="wrapper_tabcontent">
                     <div id="setting-tags" class="tab-content current create-tags">
 
+                        <div class="bloc-create-tags" >
+                            <div class='row'>
+                                <label>Nom : </label>
+                                <input type="text" id="tag_list_tags_name" name="" required="required" maxlength="255" class="tags-input" >
+                                <textarea id="tag_list_tags_description" name="" required="required" class="tags-desc"></textarea>
+                                <button type="button" class="btn">Créer TAG</button>
+                            </div>
+                        </div>
+
                         {{ include('settings/tags/_form.html.twig') }}
 
-                        <a href="{{ path('tags_index') }}">back to list</a>
+                        {# <a href="{{ path('tags_index') }}">back to list</a> #}
                         
                     </div>   
                 <section> 

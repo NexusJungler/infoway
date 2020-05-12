@@ -10,7 +10,6 @@ let factories = [];
 let selectedSites = [];
 let selectedFactories = [];
 let updatedPrices = {};
-let col_table = 1 ;
 
 let display_local_prices = function () {
     $.post('ajax/localprices', {sites: selectedSites}, function(response){
@@ -40,11 +39,11 @@ let display_main_prices = function () {
             colspan = ' colspan="' + nbr_dates + '"';
         }
 
-        view.head += '<tr><th' + rowspan + ' >Produit</th>';
-        view.head += '<th' + rowspan + '>Form.</th>';
-        view.head += '<th' + rowspan + '>Catégorie</th>';
-        view.head += '<th' + rowspan + '>Type</th>';
-        view.head += '<th' + rowspan + '>TAGS</th>';
+        view.head += '<tr><th' + rowspan + ' ><p class="th-title"> Produit </p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">Form.</p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">Catégorie</p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">Type</p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">TAGS</p></th>';
 
         $.each(factories, function(i, factory){
             // let nbr_cells = Object.keys(factory.prices).length;
@@ -56,9 +55,8 @@ let display_main_prices = function () {
             
             view.head += '<tr>';
             $.each(factories, function(i, factory) {
-                col_table++;
                 for(const date in factory.prices) {
-                    view.head += '<td class="col'+col_table+'">' + date + '</td>';
+                    view.head += '<td class="col'+i+'">' + date + '</td>';
                 }
             });
             view.head += '</tr>';
@@ -67,12 +65,12 @@ let display_main_prices = function () {
         for(const product_id in products) {
             if (products.hasOwnProperty(product_id)) {
                 let product = products[product_id];
-                view.body += '<tr class=""><td>' + product.name + '</td>';
+                view.body += '<tr><td>' + product.name + '</td>';
                 view.body += '<td>' + product.amount+ '</td>';
                 view.body += '<td>' + product.category + '</td>';
                 view.body += '<td>' + product.pricetype + '</td><td>';
                 $.each(product.tags, function(j, tag){
-                    view.body += '<span>' + tag + '</span>';
+                    view.body += '<span class="container-tags">' + tag + '</span>';
                 });
                 view.body += '</td>';
 
@@ -86,14 +84,14 @@ let display_main_prices = function () {
                             price_value = prices[product_id].day;
                             price_id_injection = ' data-price="' + prices[product_id].price  + '"';
                             if(date !== 'actuelle') {
-                                price_id_injection = ' class="changed" data-change="' + prices[product_id].change  + '"';
+                                price_id_injection = ' class="changed col-td'+j+'" data-change="' + prices[product_id].change  + '"';
                             }
                         } else {
                             if (typeof memory[factory.id][product_id] !== 'undefined') {
                                 price_value = memory[factory.id][product_id];
                             }
                         }
-                        view.body += '<td '+ price_id_injection +' ><input'+ price_id_injection +' type="text"  name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
+                        view.body += '<td '+ price_id_injection +' class="col-td'+j+'" ><input'+ price_id_injection +' type="text"  name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
 
                         if(typeof memory[factory.id] === 'undefined') {
                             memory[factory.id] = {};

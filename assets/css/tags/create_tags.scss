@@ -1,0 +1,148 @@
+@import '../custome/input-rdo.scss';
+
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+.border-input{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: rem(1px) solid #C0CCD1;
+    border-radius: 9px;
+    height: 30px;
+}
+
+.create-tags{
+    width: 1000px;
+    margin: 20px auto;
+    border: 1px solid #899CA4;
+    border-radius: 7px 7px 0px 0px;
+    .row{
+        display: flex;
+        .tags-color{
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+        }
+        .tags-input{
+            @extend .border-input;
+            width: 110px;
+            max-width: 100%;
+        }
+        .tags-desc{
+            @extend .border-input;
+            width: 530px;
+            max-width: 100%;
+        }
+    }
+
+    .bloc-create-tags{
+        background: #C0CCD1 0% 0% no-repeat padding-box;
+        border-bottom: 1px solid #899CA4;
+        border-radius: 7px 7px 0px 0px;
+        padding: 40px 36px ;
+        .row{
+            .tags-input{
+                margin-left: 45px;
+            }
+            .tags-desc{
+                margin-left: 20px;
+                margin-right: 15px;
+            }
+        }
+    }
+
+    .table-tags{
+        width: 100%;
+        thead{
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            th{
+                padding: 10px;
+                &:nth-child(1){
+                    width: 10%;
+                }
+                &:nth-child(2){
+                    width: 15%;
+                }
+                &:nth-child(3){
+                    text-align: left;
+                }
+            }
+        }
+        tbody{
+            background: #EBEBEB 0% 0% no-repeat padding-box;
+            tr{  height: 53px;}
+            td{
+                &:nth-child(1){
+                    width: 10%;
+                    text-align: center;
+                }
+                &:nth-child(2){
+                    width: 15%;
+                    text-align: center;
+                }
+                &:nth-child(3){
+                    textarea{
+                        position: relative;
+                        top: 10px;
+                    }
+                }
+            }
+        
+        }
+    }
+    .bloc-site{
+        margin: 50px auto 20px;
+        .content-site{
+            display: flex;
+            text-align: center;
+        }
+    }
+
+    .table-site{
+        width: 100%;
+        margin-bottom: 20px;
+        .container-input{
+            .container-rdo{
+                top: 5px;
+                left: 95px;
+                width: 17px;
+                height: 17px;
+            } 
+        } 
+        thead{
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            th{
+                padding: 10px;
+                &:nth-child(1){
+                    width: 30%;
+                }
+                &:nth-child(2){
+                    text-align: left;
+                }
+               
+            }
+        }
+        tbody{
+            background: #EBEBEB 0% 0% no-repeat padding-box;
+            max-height: 400px;
+            tr{  height: 53px;}
+            td{
+                padding: 10px;
+                &:nth-child(1){
+                    width: 30%;
+                    text-align: center;
+                }
+                &:nth-child(2){
+                    
+                }
+            }
+        
+        }
+    }
+    .btn-tag-enregistrer{
+        padding: 10px;
+        text-align: center;
+    }
+}

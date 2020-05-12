@@ -1,5 +1,6 @@
 // import style css
 import "../css/tags.scss";
+import "../css/tags/create_tags.scss";
 
 // jquery 
 const $ = require('jquery');
