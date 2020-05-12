@@ -114,13 +114,30 @@ class Site
      *      inverseJoinColumns={@ORM\JoinColumn(name="price_id", referencedColumnName="id")}
      *      )
      */
-    private $prices;
+    private $prices ;
+
+    private bool $nightProgrammingActivated = false ;
+
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\OneToOne(targetEntity="NightProgramming")
+     * @ORM\JoinColumn(name="night_programming_id", referencedColumnName="id")
+     */
+    private $nightProgramming;
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="Screen", mappedBy="site")
+     */
+    private $screens;
+
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new ArrayCollection() ;
+        $this->screens = new ArrayCollection() ;
     }
 
     public function getId(): ?int
@@ -259,6 +276,7 @@ class Site
 
     public function setCustomer(Customer $customer): void
     {
+        $this->setCustomerId( $customer->getId() ) ;
         $this->customer = $customer;
     }
 
@@ -394,5 +412,36 @@ class Site
 
         return $this;
     }
+
+
+    public function getNightProgramming(): ?NightProgramming
+    {
+        return $this->nightProgramming;
+    }
+
+    public function setNightProgramming(?NightProgramming $nightProgramming): self
+    {
+        $this->nightProgramming = $nightProgramming;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNightProgrammingActivated(): bool
+    {
+        return $this->nightProgrammingActivated;
+    }
+
+    /**
+     * @param bool $nightProgrammingActivated
+     */
+    public function setNightProgrammingActivated(bool $nightProgrammingActivated): void
+    {
+        $this->nightProgrammingActivated = $nightProgrammingActivated;
+    }
+
+
 
 }
