@@ -29,11 +29,17 @@
             @extend .border-input;
             width: 110px;
             max-width: 100%;
+            padding: 6px 10px;
+            font:  16px 'Barlow' Medium;
+
         }
         .tags-desc{
             @extend .border-input;
             width: 530px;
             max-width: 100%;
+            padding: 6px 10px;
+            font:  16px 'Barlow' Medium ;
+
         }
     }
 

@@ -1,20 +1,37 @@
 // import style css
 import "../css/tags.scss";
 import "../css/tags/create_tags.scss";
+import "../css/tags/list_tags.scss";
 
 // jquery 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
+
 $(".tab-content-criteres .modified-tags").click(function(){
 
     $.each($(".row-criterion input[type='checkbox']:checked"), function(){
-           var id_criterion = $(this).attr('data-criterion');
+           var id_tag = $(this).attr('data-tag');
            
-           window.location.href= "/tags/"+ id_criterion +"/edit"
+           window.location.href= "/tags/"+ id_tag +"/edit"
            console.log(id_criterion);
     })
 })
+
+$(".tags-poster .chkbox-tag").change( function(){
+    
+    var nb_input = $(".tags-poster input[type='checkbox']:checked").length;
+    $(".modified-tag").removeClass("hide-btn");
+
+    if( nb_input > 1 || nb_input < 1 ){
+           $(".modified-tag").prop('disabled', true)
+           $(".modified-tag").addClass("hide-btn");
+    }else{
+           $(".modified-tag").prop('disabled', false)
+           $(".modified-tag").removeClass("hide-btn");
+    }
+})
+
 
 // var $collectionHolder;
 

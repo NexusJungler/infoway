@@ -1,0 +1,153 @@
+@import '../custome/input-rdo.scss';
+
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+.main-tags{
+    .display{
+        padding-top: 20px;
+        &::after{
+            top: 2.3125rem;
+            left: 0%;
+        }
+        .display-btn{
+            .hide-btn{
+                pointer-events: none;
+                background: #ABBBC0;
+            }
+        }
+    }
+
+    // Tableau TagsList
+    .content-tags{
+        .table-custome{
+            border-radius: 0;
+            .thead-info{
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                border: 1px solid #899CA4;
+                width: 100%;
+                &::after{
+                    display: none;
+                }
+                th{
+                    color: #4D646D;
+                    &:first-child{
+                        text-align: center;
+                        width: 26%;
+                    }
+                    &:last-child{
+                        text-align: left;
+                        width: 80%;
+                    }
+                }
+                
+            }
+            .tbody-content{
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+                border: 0;
+                margin-bottom:30px;
+                padding: 20px 60px ;
+                height: 400px;
+                tr{
+                    margin: 20px 0;
+                    &:nth-child(2n+2){
+                        background: #F6F6F6 0% 0% no-repeat padding-box;
+                    }
+                    td{
+                        border: 0;
+                        padding: 0;
+                        text-align: center;
+                        &:first-child{
+                            width: 19%; 
+                        }
+                        &:nth-child(2){
+                           text-align: left; 
+                        }
+                        .cercle-desc{
+                            height: 30px;
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #899CA4;
+                            border-radius: 9px;
+                            padding: 0px 5px 0 10px;
+                        }
+
+                        input{
+                            margin-left: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Style Tags
+
+    .tags{
+        padding-left: 35px;
+        .content-tags{
+            margin-top: 110px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1000px;
+            height: 460px;
+            .tags-poster{
+                padding: 20px 10px 30px;
+                text-align: center;
+                height: 100%;
+                .container-input{
+                    .container-rdo-tags {
+                        position: absolute;
+                        top: 9px;
+                        left: 42px;
+                        height: 16px;
+                        width: 16px;
+                        background-color: white;
+                        border-radius: 3px;
+                        border: 1px solid #4D646D;
+                    }
+                }
+                .container-tags{
+                    position: relative;
+                    display: block;
+                    height: 25px;
+                    padding: 3px 14px 3px 19px;
+                    background: #F6F6F6 0% 0% no-repeat padding-box;
+                    border: 1px solid #4D646D;
+                    border-radius: 1.375rem rem(11px)  rem(11px)  1.375rem ;
+                    font: rem(14px) 'Barlow', medium;
+                    text-align: center;
+                    color: #283338;;
+                    width: 40%;
+                    justify-content: center;
+                    display: inline-block;
+                    .mini-cercle{
+                        position: absolute;
+                        left: 4px;
+                        top: 3px;
+                        width: 17px;
+                        height: 17px;
+                        background: #e8e4e4 0% 0% no-repeat padding-box;
+                        border: 1px solid #707070;
+                        border-radius: 50%;
+                        margin-right: 0.6rem;
+                    }
+                }
+
+                .delete-tags{
+                    position: absolute;
+                    top: 4px;
+                    right: 88px;
+                    background-color: transparent;
+                    border: 0;
+                    font-size: 16px;
+                }
+                
+            }
+        }
+    }
+
+
+}    

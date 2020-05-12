@@ -3,7 +3,7 @@
 {% block title %}Tag index{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
+    {{ parent()}}
     {{ encore_entry_link_tags('tags') }}
 {% endblock %}
 
@@ -45,7 +45,7 @@
                             <div class="display-content">
                                 <div class="display-btn">
                                     <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
-                                    <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
                                     <button type="button" class="btn modified-tags"><i class="far fa-edit"></i>Modifier</button>
                                     <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
                                 </div>
@@ -61,25 +61,25 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tbody tbody-content scrollbar-table">
-                                {% for tag in tags %}
-                                    <tr class="tags-poster">
-                                        <td>
-                                            <label class="container-input">
-                                                <input type="radio" name="tags{{ tag.id }}" id="{{ tag.id }}">
-                                                <span class="container-rdo-tags"></span>
-                                            </label>
-                                            <p class="container-tags">{{ tag.name }} </p></td>
-                                        <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
-                                        <td>
-                                            <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
-                                            <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    <tr>
-                                        <td colspan="4">no records found</td>
-                                    </tr>
-                                {% endfor %}
+                                    {% for tag in tags %}
+                                        <tr class="tags-poster">
+                                            <td>
+                                                <label class="container-input">
+                                                    <input type="checkbox" name="tags{{ tag.id }}" class="chkbox-tag" id="{{ tag.id }}" data-tag="{{tag.id}}">
+                                                    <span class="container-rdo-tags"></span>
+                                                </label>
+                                                <p class="container-tags"><span class="mini-cercle"  style="background: {{tag.color}};"></span>{{ tag.name }} </p></td>
+                                            <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
+                                            <td>
+                                                <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
+                                                <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="4">no records found</td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         <article>
@@ -92,8 +92,7 @@
     </main>
 {% endblock %}
 
-
-
-{# {% block javascripts %}
+{% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('tags') }}
-{# {% endblock javascripts %} #} 
+{% endblock javascripts %} 
