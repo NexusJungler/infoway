@@ -35,16 +35,20 @@ class TagListType extends AbstractType
             ->add('tags', CollectionType::class,[
                 // each entry in the array will be an "email" field
                 'entry_type' => TagType::class,
+                'entry_options'  => [
+                    'customer' => $this->_customer ,
+                    'user' => $this->_user
+                ]
             ])
             ->add('sites', EntityType::class, [
-            'class' => Site::class,
-            'choice_label' => 'name',
-            'query_builder' => function(SiteRepository $siteRepository ){
-                $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
-            },
-            'multiple' => true,
-            'expanded' => true,
-            'by_reference' => false
+                'class' => Site::class,
+                'choice_label' => 'name',
+                'query_builder' => function(SiteRepository $siteRepository ){
+                    $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
     ])
         ;
     }
