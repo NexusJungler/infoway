@@ -442,6 +442,37 @@ class Site
         $this->nightProgrammingActivated = $nightProgrammingActivated;
     }
 
+    /**
+     * @return Collection|Screen[]
+     */
+    public function getScreens(): Collection
+    {
+        return $this->screens;
+    }
+
+    public function addScreen(Screen $screen): self
+    {
+        if (!$this->screens->contains($screen)) {
+            $this->screens[] = $screen;
+            $screen->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScreen(Screen $screen): self
+    {
+        if ($this->screens->contains($screen)) {
+            $this->screens->removeElement($screen);
+            // set the owning side to null (unless already changed)
+            if ($screen->getSite() === $this) {
+                $screen->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }

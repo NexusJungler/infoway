@@ -34,11 +34,19 @@ services:
             $logoDir : '%logoDirectory%'
             $project_dir : '%project_dir%'
 
+
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Repository/Customer/CustomerRepository.php}'
+
+    App\Repository\Customer\CustomerRepository:
+
+        autowire: true
+        arguments:
+            $entityClass: null
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\TagsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\TagRepository")
  * @UniqueEntity(fields="name",message="Ce nom est déjà utilisé")
  */
 class Tag
@@ -45,9 +45,23 @@ class Tag
      */
     private $sites;
 
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="DisplayMould", mappedBy="tags")
+     */
+    private $displayMoulds;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="ScreenDisplay", mappedBy="tags")
+     */
+    private $screenDisplays;
+
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->displayMoulds = new ArrayCollection() ;
+        $this->screenDisplays = new ArrayCollection() ;
     }
     public function getId(): ?int
     {
@@ -142,6 +156,62 @@ class Tag
         if ($this->sites->contains($site)) {
             $this->sites->removeElement($site);
             $site->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DisplayMould[]
+     */
+    public function getDisplayMoulds(): Collection
+    {
+        return $this->displayMoulds;
+    }
+
+    public function addDisplayMould(DisplayMould $displayMould): self
+    {
+        if (!$this->displayMoulds->contains($displayMould)) {
+            $this->displayMoulds[] = $displayMould;
+            $displayMould->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisplayMould(DisplayMould $displayMould): self
+    {
+        if ($this->displayMoulds->contains($displayMould)) {
+            $this->displayMoulds->removeElement($displayMould);
+            $displayMould->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScreenDisplay[]
+     */
+    public function getScreenDisplays(): Collection
+    {
+        return $this->screenDisplays;
+    }
+
+    public function addScreenDisplay(ScreenDisplay $screenDisplay): self
+    {
+        if (!$this->screenDisplays->contains($screenDisplay)) {
+            $this->screenDisplays[] = $screenDisplay;
+            $screenDisplay->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScreenDisplay(ScreenDisplay $screenDisplay): self
+    {
+        if ($this->screenDisplays->contains($screenDisplay)) {
+            $this->screenDisplays->removeElement($screenDisplay);
+            $screenDisplay->removeTag($this);
         }
 
         return $this;

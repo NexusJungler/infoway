@@ -51,6 +51,18 @@ class Criterion
     private $sites;
 
     /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="DisplayMould", mappedBy="criterions")
+     */
+    private $displayMoulds;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="ScreenDisplay", mappedBy="criterions")
+     */
+    private $screenDisplays;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $selected;
@@ -61,6 +73,8 @@ class Criterion
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->position = 1 ;
         $this->selected = false ;
+        $this->displayMoulds = new ArrayCollection() ;
+        $this->screenDisplays = new ArrayCollection() ;
     }
 
     public function getId(): ?int
@@ -185,6 +199,62 @@ class Criterion
         if (!$this->sites->contains($site)) {
             $this->sites[] = $site;
             $site->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DisplayMould[]
+     */
+    public function getDisplayMoulds(): Collection
+    {
+        return $this->displayMoulds;
+    }
+
+    public function addDisplayMould(DisplayMould $displayMould): self
+    {
+        if (!$this->displayMoulds->contains($displayMould)) {
+            $this->displayMoulds[] = $displayMould;
+            $displayMould->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisplayMould(DisplayMould $displayMould): self
+    {
+        if ($this->displayMoulds->contains($displayMould)) {
+            $this->displayMoulds->removeElement($displayMould);
+            $displayMould->removeCriterion($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScreenDisplay[]
+     */
+    public function getScreenDisplays(): Collection
+    {
+        return $this->screenDisplays;
+    }
+
+    public function addScreenDisplay(ScreenDisplay $screenDisplay): self
+    {
+        if (!$this->screenDisplays->contains($screenDisplay)) {
+            $this->screenDisplays[] = $screenDisplay;
+            $screenDisplay->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScreenDisplay(ScreenDisplay $screenDisplay): self
+    {
+        if ($this->screenDisplays->contains($screenDisplay)) {
+            $this->screenDisplays->removeElement($screenDisplay);
+            $screenDisplay->removeCriterion($this);
         }
 
         return $this;

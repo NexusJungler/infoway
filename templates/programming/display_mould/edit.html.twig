@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DisplayMould{% endblock %}
+
+{% block body %}
+    <h1>Edit DisplayMould</h1>
+
+    {{ include('programming/display_mould/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('programming_display_mould_index') }}">back to list</a>
+
+    {{ include('programming/display_mould/_delete_form.html.twig') }}
+{% endblock %}

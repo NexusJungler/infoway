@@ -12,8 +12,11 @@ doctrine:
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-
-
+            test:
+                url: '%env(resolve:DATABASE_TEST_URL)%'
+                driver: pdo_mysql
+                server_version: '5.7'
+                charset: utf8mb4
     orm:
         default_entity_manager: default
         entity_managers:
@@ -35,3 +38,12 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity/Customer'
                         prefix: App\Entity\Customer
                         alias: Kfc
+            test:
+                connection: test
+                mappings:
+                    test:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Customer'
+                        prefix: App\Entity\Customer
+                        alias: Test

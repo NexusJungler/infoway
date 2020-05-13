@@ -33,6 +33,13 @@ class TagController extends AbstractController
      */
     public function index(TagsRepository $tagsRepository): Response
     {
+       $test =  $this->getDoctrine()->ge;
+
+
+       $repo = $test->getRepository(Tag::class);
+
+       dd($repo);
+       dd($repo->findById());
         return $this->render('settings/tags/index.html.twig', [
             'tags' => $tagsRepository->findAll(),
         ]);
@@ -109,6 +116,7 @@ class TagController extends AbstractController
 
         $customerManager = $this->getDoctrine()->getManager($currentCustomer->getName()) ;
         $customerSiteRepo = $customerManager->getRepository(Site::class) ;
+
 
         $sitesAffectedToTag  =  $tag->getSites()->getValues();
         $datasToPassToTagForm = ['user' => $currentUser, 'customer' => $currentCustomer ] ;

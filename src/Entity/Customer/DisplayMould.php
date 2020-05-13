@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\ScreenDisplayRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\DisplayMouldRepository")
  */
-class ScreenDisplay
+class DisplayMould
 {
     /**
      * @ORM\Id()
@@ -24,47 +24,46 @@ class ScreenDisplay
     private $name;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $screensNumber;
+
+    /**
      * Many User have Many Phonenumbers.
      * @ORM\ManyToMany(targetEntity="Playlist")
-     * @ORM\JoinTable(name="screen_displays_playlists",
-     *      joinColumns={@ORM\JoinColumn(name="screen_display_id", referencedColumnName="id")},
+     * @ORM\JoinTable(name="moulds_playlists",
+     *      joinColumns={@ORM\JoinColumn(name="mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id", unique=true)}
      *      )
      */
     private $playlists;
 
     /**
-     * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplayMould", inversedBy="generatedScreenDisplays")
-     * @ORM\JoinColumn(name="mould_id", referencedColumnName="id")
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="ScreenDisplay", mappedBy="mould")
      */
-    private $mould;
+    private $generatedScreenDisplays;
 
     /**
      * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="screenDisplays")
+     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="moulds")
      * @ORM\JoinColumn(name="display_space_id", referencedColumnName="id")
      */
     private $displaySpace;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="screenDisplays")
-     * @ORM\JoinTable(name="screen_displays_criterions")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="displayMoulds")
+     * @ORM\JoinTable(name="display_moulds_criterions")
      */
     private $criterions;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="screenDisplays")
-     * @ORM\JoinTable(name="screen_displays_tags")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="displayMoulds")
+     * @ORM\JoinTable(name="display_moulds_tags")
      */
     private $tags;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $screensQuantity;
 
     /**
      * @ORM\Column(type="datetime")
@@ -79,19 +78,21 @@ class ScreenDisplay
     /**
      * Many User have Many Phonenumbers.
      * @ORM\ManyToMany(targetEntity="TimeSlot")
-     * @ORM\JoinTable(name="screen_displays_timeslots",
-     *      joinColumns={@ORM\JoinColumn(name="screen_display_id", referencedColumnName="id")},
+     * @ORM\JoinTable(name="display_moulds_timeslots",
+     *      joinColumns={@ORM\JoinColumn(name="display_mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="time_slot_id", referencedColumnName="id", unique=true)}
      *      )
      */
     private $timeSlots ;
 
 
-    public function __construct()
-    {
+    private ?DisplayMould $model = null;
+
+    public function __construct() {
+        $this->criterions = new ArrayCollection() ;
+        $this->tags = new ArrayCollection() ;
         $this->playlists = new ArrayCollection();
-        $this->criterions = new ArrayCollection();
-        $this->tags = new ArrayCollection();
+        $this->generatedScreenDisplays = new ArrayCollection();
         $this->timeSlots = new ArrayCollection() ;
     }
 
@@ -113,18 +114,20 @@ class ScreenDisplay
         return $this;
     }
 
-
-    public function getScreensQuantity(): ?int
+    public function getScreensNumber(): ?int
     {
-        return $this->screensQuantity;
+        return $this->screensNumber;
     }
 
-    public function setScreensQuantity(int $screensQuantity): self
+    public function setScreensNumber(int $screensNumber): self
     {
-        $this->screensQuantity = $screensQuantity;
+        $this->screensNumber = $screensNumber;
 
         return $this;
     }
+
+
+
 
     public function getStartAt(): ?\DateTimeInterface
     {
@@ -176,14 +179,33 @@ class ScreenDisplay
         return $this;
     }
 
-    public function getMould(): ?DisplayMould
+    /**
+     * @return Collection|ScreenDisplay[]
+     */
+    public function getGeneratedScreenDisplays(): Collection
     {
-        return $this->mould;
+        return $this->generatedScreenDisplays;
     }
 
-    public function setMould(?DisplayMould $mould): self
+    public function addGeneratedScreenDisplay(ScreenDisplay $generatedScreenDisplay): self
     {
-        $this->mould = $mould;
+        if (!$this->generatedScreenDisplays->contains($generatedScreenDisplay)) {
+            $this->generatedScreenDisplays[] = $generatedScreenDisplay;
+            $generatedScreenDisplay->setMould($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGeneratedScreenDisplay(ScreenDisplay $generatedScreenDisplay): self
+    {
+        if ($this->generatedScreenDisplays->contains($generatedScreenDisplay)) {
+            $this->generatedScreenDisplays->removeElement($generatedScreenDisplay);
+            // set the owning side to null (unless already changed)
+            if ($generatedScreenDisplay->getMould() === $this) {
+                $generatedScreenDisplay->setMould(null);
+            }
+        }
 
         return $this;
     }
@@ -253,6 +275,23 @@ class ScreenDisplay
     }
 
     /**
+     * @return DisplayMould|null
+     */
+    public function getModel(): ?DisplayMould
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param DisplayMould|null $model
+     */
+    public function setModel(?DisplayMould $model): self
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    /**
      * @return Collection|TimeSlot[]
      */
     public function getTimeSlots(): Collection
@@ -277,4 +316,6 @@ class ScreenDisplay
 
         return $this;
     }
+
+
 }

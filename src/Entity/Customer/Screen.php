@@ -99,4 +99,28 @@ class Screen
 
         return $this;
     }
+
+    public function getMajFirmwareAllowed(): ?bool
+    {
+        return $this->majFirmwareAllowed;
+    }
+
+    public function setMajFirmwareAllowed(bool $majFirmwareAllowed): self
+    {
+        $this->majFirmwareAllowed = $majFirmwareAllowed;
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
 }
