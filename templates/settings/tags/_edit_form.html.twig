@@ -1,0 +1,54 @@
+{{ form_start(form) }}
+    <div class="row ">
+    {{dump(form.color)}}
+        <div class="content-tags row">
+        {# {% for color in form.color %}
+         {{ form_widget(color.data, {'attr': {'class': 'tags-color'} }) }}
+        {% endfor %} #}
+            {{ form_widget(form.color, {'attr': {'class': 'tags-color'} }) }}
+            
+            {{ form_widget(form.name, {'attr': {'class': 'tags-input'} }) }} 
+            {{ form_widget(form.description, {'attr': {'class': 'tags-desc'} }) }}
+        </div>
+    </div>
+
+    <div class="bloc-site">
+        <div class="content-site">
+            <h2 class="title-site">TAGS affectés au site : </h2> 
+            <input type="search" id="site-search" name="q" aria-label="Search" placeholder="Rechercher un élément..." >
+        </div>
+        
+    </div>
+    <div>
+        <table class="table-site">
+             <thead>
+                <tr>
+                    <th>
+                        <label class="container-input">
+                            <input type="checkbox"> Site
+                            <span class="container-rdo"></span>
+                        </label>
+                    </th>
+                    <th>Adresses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {# {% for site in form.sites %} #}
+                    <tr>
+                        <td class="">
+                            {{ form_widget(form.sites, {'attr': {'class': ''} }) }}
+                        </td>
+                        <td>
+                            Adresses
+                        </td>
+                    </tr>            
+                {# {% endfor %} #}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-tag-enregistrer">
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    
+{{ form_end(form) }}

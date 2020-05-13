@@ -2,36 +2,42 @@
 import "../css/tags.scss";
 import "../css/tags/create_tags.scss";
 import "../css/tags/list_tags.scss";
+import "../css/tags/edit_tags.scss";
 
 // jquery 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
 
-$(".tab-content-criteres .modified-tags").click(function(){
+$(".tags .modified-tag").click(function(){
 
-    $.each($(".row-criterion input[type='checkbox']:checked"), function(){
-           var id_tag = $(this).attr('data-tag');
-           
-           window.location.href= "/tags/"+ id_tag +"/edit"
-           console.log(id_criterion);
+    $.each($(".tags-poster input[type='checkbox']:checked"), function(){
+        var id_tag = $(this).attr('data-tag');
+        
+        window.location.href= "/tags/"+ id_tag +"/edit"
+        console.log(id_tag);
     })
 })
 
-$(".tags-poster .chkbox-tag").change( function(){
-    
-    var nb_input = $(".tags-poster input[type='checkbox']:checked").length;
+$(".content-tags .tags-poster .chkbox-tag").change( function(){
+    let nb_input = $(".tags-poster input[type='checkbox']:checked").length;
     $(".modified-tag").removeClass("hide-btn");
 
     if( nb_input > 1 || nb_input < 1 ){
-           $(".modified-tag").prop('disabled', true)
-           $(".modified-tag").addClass("hide-btn");
+        $(".modified-tag").prop('disabled', true)
+        $(".modified-tag").addClass("hide-btn");
     }else{
-           $(".modified-tag").prop('disabled', false)
-           $(".modified-tag").removeClass("hide-btn");
+        $(".modified-tag").prop('disabled', false)
+        $(".modified-tag").removeClass("hide-btn");
     }
 })
 
+//delete 
+$(".content-criteres-bloc").on("click", ".delete-row", function(){
+    var button_id = $(this).attr("id");
+    console.log(button_id);
+    $('#'+button_id+'').remove();   
+});
 
 // var $collectionHolder;
 

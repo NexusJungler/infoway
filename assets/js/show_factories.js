@@ -1,5 +1,6 @@
 // import style css
 import "../css/groupe-prix.scss";
+import "../css/products/date/date.scss";
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;

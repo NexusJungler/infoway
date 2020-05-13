@@ -1,9 +1,9 @@
 .display{
-    padding-top: rem(58px);
+    padding-top: rem(15px);
     position: relative;
     &::after {
         content: '';
-        top: rem(5px);
+        top: rem(1px);
         left: 1%;
         width: 99%;
         border: rem(1px) solid #4D646D;
@@ -12,6 +12,7 @@
     }
     .display-content{
         display: flex;
+        margin-bottom: 40px;
         .display-content-columns{
             display: flex;
             .drop-btn{
@@ -91,6 +92,9 @@
             margin-right: rem(10px);
             &:hover{
                 background: transparent linear-gradient(180deg, #395C65 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+            }
+            i{
+                margin-right: 10px;
             }
         }
         svg{

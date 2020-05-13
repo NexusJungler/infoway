@@ -45,6 +45,7 @@ $(".row-criterion .chkbox-critere").change( function(){
     $(".modified-criterion").removeClass("hide-btn");
 
     if( nb_input > 1 || nb_input < 1 ){
+           
            $(".modified-criterion").prop('disabled', true)
            $(".modified-criterion").addClass("hide-btn");
     }else{

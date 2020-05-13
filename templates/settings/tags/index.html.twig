@@ -46,7 +46,7 @@
                                 <div class="display-btn">
                                     <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
                                     <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                    <button type="button" class="btn modified-tags"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>
                                     <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
                                 </div>
                             </div>
@@ -62,13 +62,17 @@
                                 </thead>
                                 <tbody class="tbody tbody-content scrollbar-table">
                                     {% for tag in tags %}
-                                        <tr class="tags-poster">
+                                        <tr class="tags-poster" id="col-tag{{loop.index}}">
                                             <td>
                                                 <label class="container-input">
                                                     <input type="checkbox" name="tags{{ tag.id }}" class="chkbox-tag" id="{{ tag.id }}" data-tag="{{tag.id}}">
                                                     <span class="container-rdo-tags"></span>
                                                 </label>
-                                                <p class="container-tags"><span class="mini-cercle"  style="background: {{tag.color}};"></span>{{ tag.name }} </p></td>
+                                                <p class="container-tags">
+                                                    <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }} 
+                                                    <button type="button" id="col-tag{{loop.index}}">x</button>
+                                                </p>
+                                            </td>
                                             <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
                                             <td>
                                                 <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>

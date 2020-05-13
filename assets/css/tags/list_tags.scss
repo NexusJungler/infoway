@@ -10,7 +10,7 @@
     .display{
         padding-top: 20px;
         &::after{
-            top: 2.3125rem;
+            // top: 2.3125rem;
             left: 0%;
         }
         .display-btn{
@@ -100,7 +100,7 @@
                 .container-input{
                     .container-rdo-tags {
                         position: absolute;
-                        top: 9px;
+                        top: 6px;
                         left: 42px;
                         height: 16px;
                         width: 16px;

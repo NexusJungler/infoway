@@ -308,5 +308,20 @@ class AppController extends AbstractController
 
     }
 
+    /**
+     * @Route(path="/create-date", name="app:date")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function date(Request $request): Response
+    {
+
+        return $this->render("pricesfactories/create-date.html.twig", [
+
+        ]);
+
+    }
+
 
 }

@@ -5,7 +5,6 @@
     {{ encore_entry_link_tags('show_factories') }}
 {% endblock %}
 
-
 {% block maincontent %}
     <section class="wrapper_tabcontent">
         <article id="tab-products" class="tab-content current group-price-content">
@@ -49,7 +48,7 @@
                     </article>
 
                     <article id="crud" class="display-btn">
-                        <a class="btn" href="" role="button"><i class="fas fa-plus"></i>modification a date </a>
+                        <a class="btn" href="{{ path('app:date') }}" role="button">modification a date</a>
 
                         <p>Groupe : </p>
                         <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Type de prix</a>
@@ -64,7 +63,7 @@
 
             </article >
 
-            <button id="add_date">Gestion des dates</button>
+            {# <button id="add_date">Gestion des dates</button> #}
 
             <article id="" class="">
                 <div class="table table-gp-prix">
@@ -97,12 +96,7 @@
                                         <td>EURO</td>
                                         <td><i class="fa fa-download" aria-hidden="true"></i></td>
                                         <td class="site">
-                                            {% for site in factory.sites %}
-                                                <p>
-                                                    <span>{{ site.name }}</span>
-                                                    <input type="checkbox" name="sites[{{ site.id }}]" class="site">
-                                                </p>
-                                            {% endfor %}
+                                            <button type="bitton" class="btn"><i class="fas fa-arrow-right"></i></button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -121,8 +115,6 @@
                                     <tr>
                                         <th>nom des sites</th>
                                         <th>Ville</th>
-                                        <th>Télécharger Prix</th>
-
                                     </tr>
                                 </thead>
                                 <tbody class="tbody tbody-content">
@@ -134,7 +126,7 @@
                                                 </p>
                                             </td>
                                             <td>Dumbea</td>
-                                            <td><i class="fa fa-download" aria-hidden="true"></i></td>
+                                            
                                         </tr>
                                         <tr>
                                             <td class="site">
@@ -144,7 +136,7 @@
                                                 </p>
                                             </td>
                                             <td>Dumbea</td>
-                                            <td><i class="fa fa-download" aria-hidden="true"></i></td>
+                                            
                                         </tr>
                                         <tr>
                                             <td class="site">
@@ -154,7 +146,7 @@
                                                 </p>
                                             </td>
                                             <td>Dumbea</td>
-                                            <td><i class="fa fa-download" aria-hidden="true"></i></td>
+                                            
                                         </tr>
                                 </tbody>
                             </table>

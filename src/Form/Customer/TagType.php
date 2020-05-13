@@ -3,6 +3,7 @@
 namespace App\Form\Customer;
 
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
@@ -20,25 +21,29 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TagType extends AbstractType
 {
 
+    private User $_user ;
+    private Customer $_customer ;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $this->_user = $options[ 'user' ] ;
+        $this->_customer = $options[ 'customer' ] ;
 
        $builder
            ->add('color', ColorType::class)
             ->add('name')
-            ->add('description', null , [
-                'attr' => [
-                    'class' => 'form-label'
-                ]
-            ])
-//            ->add('sites', EntityType::class, [
-//                'class' => Site::class,
-//                'choice_label' => 'name',
-//                'choices' => $options['sites'],
-//                'multiple' => true,
-//                'expanded' => true,
-//                'by_reference' => false
-//            ])
+            ->add('description')
+           ->add('sites', EntityType::class, [
+               'class' => Site::class,
+               'choice_label' => 'name',
+               'query_builder' => function(SiteRepository $siteRepository ){
+                   $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
+               },
+               'multiple' => true,
+               'expanded' => true,
+               'by_reference' => false
+           ])
         ;
     }
 
@@ -46,10 +51,10 @@ class TagType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Tag::class,
-            'sites' => []
         ]);
         $resolver->setRequired([
-            'sites'
+            'customer',
+            'user'
         ]);
     }
 }

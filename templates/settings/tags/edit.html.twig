@@ -7,8 +7,7 @@
         <div class="main-content">
 
             <section class="jumbotron">
-            {{ include('settings/tags/_form.html.twig', {'button_label': 'Update'}) }}
-
+            
                 {% block settingtitle %}
                     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Tags', 'showSecondTitles': true } %}
                 {% endblock %}
@@ -19,7 +18,7 @@
                         <ul class="tabs">
                             <a href="{{ path('app:enseigne') }}"><li class="{% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
                             <a href="{{ path('users:view') }}"><li class="{% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
-                            <a href="{{ path('criterion_list_index') }}"><li class="{% if app.request.attributes.get('_route') == 'criterion_list_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
+                            <a href="{{ path('criterions_lists_index') }}"><li class="{% if app.request.attributes.get('_route') == 'criterion_list_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
                             <a href="{{ path('tags_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
                         </ul>
                         <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
@@ -30,22 +29,28 @@
 
             {% block maincontent %}
                 <section class="wrapper_tabcontent wrapper-tags">
-                    <div id="setting-tags" class="tab-content current tags">
+                    <div id="setting-tags" class="tab-content current edit-tags">
 
                         <article class="tab-content-title">
                             <h3 class="title">Modifier TAG</h3>
-                            <p>SUPER WILD COFFEE</p>
                         </article>
 
-                        
-                        <h1>Edit Tag</h1>
+                        <article class="display setting-display ">
+                            <div class="display-content">
+                                <div class="display-btn">
+                                    <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                                    <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+                            </div>
+                        </article>
 
+                        {{ include('settings/tags/_edit_form.html.twig', {'button_label': 'Update'}) }}
                         {# {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
 
-                        <a href="{{ path('tags_index') }}">back to list</a>
-
-                        {{ include('tags/_delete_form.html.twig') }} #}
-                        
+                        <a href="{{ path('tags_index') }}">back to list</a>#}
+                        {{ include('settings/tags/_delete_form.html.twig') }}
 
                     </div>
                 </section>
@@ -54,5 +59,5 @@
         </div>
     </main>
 
-    {{ include('settings/tags/_delete_form.html.twig') }}
+    
 {% endblock %}

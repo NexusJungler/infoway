@@ -1,6 +1,7 @@
 
 {{ form_start(form) }}
-    <div class="row ">
+
+    <div class="row">
         <table class="table-tags">
             <thead>
                 <tr>
@@ -28,36 +29,40 @@
     </div>
 
     <div class="bloc-site">
+    
         <div class="content-site">
-            <h2 class="title-site">TAGS affectés au site : </h2> 
-            <input type="search" id="site-search" name="q" aria-label="Search" placeholder="Rechercher un élément..." >
+            <div class="row">
+                <h2 class="title-site">TAGS affectés au site : </h2> 
+                <input type="search" class="search" id="site-search" name="q" aria-label="Search" placeholder="Rechercher un élément..." >
+            </div>
         </div>
-        
-    </div>
-    <div>
-        <table class="table-site">
+
+        <div class="table-site">
+        <table >
              <thead>
                 <tr>
                     <th>
                         <label class="container-input">
-                            <input type="checkbox"> Site
+                            <input type="checkbox"> Site <i class="fas fa-angle-down"></i>
                             <span class="container-rdo"></span>
                         </label>
                     </th>
-                    <th>Adresses</th>
+                    <th>Adresses <i class="fas fa-angle-down"></i></th>
                 </tr>
             </thead>
             <tbody>
-                {# {% for site in form.sites %} #}
+                {% for site in form.sites %}
+                {{dump(site)}}
                     <tr>
                         <td class="">
-                            {{ form_widget(form.sites, {'attr': {'class': ''} }) }}
+                            {{ form_row(site, {'attr': {'class': ''} }) }}
+                            {# {{ form_label(site.label, {'attr': {'class': ''} }) }} #}
                         </td>
                         <td>
                             Adresses
                         </td>
                     </tr>            
-                {# {% endfor %} #}
+                {% endfor %}
             </tbody>
         </table>
     </div>

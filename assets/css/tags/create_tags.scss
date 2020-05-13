@@ -14,16 +14,32 @@
 }
 
 .create-tags{
-    width: 1000px;
-    margin: 20px auto;
-    border: 1px solid #899CA4;
-    border-radius: 7px 7px 0px 0px;
+    margin-left: 2.5%;
+    .content-tags{
+        width: 1000px;
+        margin: 30px auto;
+        border: 1px solid #899CA4;
+        border-radius: 7px 7px 0px 0px;
+    }
+    
     .row{
         display: flex;
         .tags-color{
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            position: relative;
+            top: 5px;
+            left: 20px;
+            width: 24px;
+            height: 23px;
+            border: none;
+            border-radius: 50px;
+            background: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: solid 1px #000; /*change color of the swatch border here*/
+            border-radius: 40px;
         }
         .tags-input{
             @extend .border-input;
@@ -101,14 +117,29 @@
     .bloc-site{
         margin: 50px auto 20px;
         .content-site{
+            margin-left: 250px;
+            margin-bottom: 50px;
             display: flex;
-            text-align: center;
+            .title-site{
+                margin-right: 20px;
+                font:  22px "Segoe UI" ;
+            }
+            .search{
+                width: 270px;
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                border: 1px solid #4D646D;
+                border-radius: 9px;
+                padding: 6px;
+            }
         }
     }
 
     .table-site{
-        width: 100%;
-        margin-bottom: 20px;
+        table{
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
         .container-input{
             .container-rdo{
                 top: 5px;
@@ -131,8 +162,10 @@
             }
         }
         tbody{
-            background: #EBEBEB 0% 0% no-repeat padding-box;
+            background: #F6F6F6 0% 0% no-repeat padding-box;
             max-height: 400px;
+            height: 400px;
+            // display: block;
             tr{  height: 53px;}
             td{
                 padding: 10px;

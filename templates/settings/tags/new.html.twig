@@ -22,16 +22,22 @@
                 <section class="wrapper_tabcontent">
                     <div id="setting-tags" class="tab-content current create-tags">
 
-                        <div class="bloc-create-tags" >
-                            <div class='row'>
-                                <label>Nom : </label>
-                                <input type="text" id="tag_list_tags_name" name="" required="required" maxlength="255" class="tags-input" placeholder="PROMO">
-                                <textarea id="tag_list_tags_description" name="" required="required" class="tags-desc" placeholder="Produits promotionnel du 21 mai"></textarea>
-                                <button type="button" class="btn">Créer TAG</button>
-                            </div>
-                        </div>
+                        <article class="tab-content-title">
+                            <h3 class="title">Créer TAGS</h3>
+                        </article>
 
-                        {{ include('settings/tags/_form.html.twig') }}
+                        <div class="content-tags">
+                            <div class="bloc-create-tags" >
+                                <div class='row'>
+                                    <label>Nom : </label>
+                                    <input type="text" id="tag_list_tags_name" name="" required="required" maxlength="255" class="tags-input" placeholder="PROMO">
+                                    <textarea id="tag_list_tags_description" name="" required="required" class="tags-desc" placeholder="Produits promotionnel du 21 mai"></textarea>
+                                    <button type="button" class="btn">Créer TAG</button>
+                                </div>
+                            </div>
+
+                            {{ include('settings/tags/_form.html.twig') }}
+                        </div>
 
                         {# <a href="{{ path('tags_index') }}">back to list</a> #}
                         

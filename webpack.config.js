@@ -52,6 +52,9 @@ Encore
     // Product
     .addEntry('product', './assets/js/product.js')
     .addEntry('product_price', './assets/js/product/product_price.js')
+    .addEntry('date', './assets/js/date.js')
+
+
 
     .addEntry('show_factories', './assets/js/show_factories.js')
 
@@ -59,6 +62,9 @@ Encore
     .addEntry('tags', './assets/js/tags.js')
 
     .addEntry('criterion', './assets/js/criterion.js')
+
+
+    
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

@@ -1,0 +1,48 @@
+@import '../custome/input-rdo.scss';
+
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+.border-input{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: rem(1px) solid #C0CCD1;
+    border-radius: 9px;
+    height: 30px;
+}
+
+.edit-tags{
+    .content-tags{
+        margin-top: 30px;
+        background: #B1C1C8 0% 0% no-repeat padding-box;
+        border: 1px solid #707070;
+        height: 100px;
+        padding: 25px 45px;
+        .tags-color{
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            margin-right: 30px;
+        }
+        .tags-input{
+            @extend .border-input;
+            width: 110px;
+            max-width: 100%;
+            padding: 6px 10px;
+            font:  16px 'Barlow';
+            margin-right: 45px;
+
+        }
+        .tags-desc{
+            @extend .border-input;
+            width: 1000px;
+            max-width: 100%;
+            padding: 2px 10px;
+            font:  16px 'Barlow' ;
+            top: 11px;
+            position: relative;
+        }
+    }
+}

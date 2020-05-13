@@ -38,7 +38,13 @@ $main-color2: $nth2 !default;
 }
 
 .group-price-content{
-
+    .display{
+        padding-top: 2.5rem;
+        .display-content {
+            display: flex;
+            margin-bottom: 6px;
+        }
+    }
 
     .table-gp-prix{
         display: flex;
