@@ -17,3 +17,5 @@
 > 518 Too short Filename : Filename is too short
 
 > 519 Invalid diffusion date : Diffusion end date > Diffusion start date
+
+> 520 Encode error : An error while media encoding

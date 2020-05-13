@@ -1201,8 +1201,8 @@ class UserController extends AbstractController
         if(!$customer)
             throw new Exception(sprintf("Internal Error : no customer found with the name '%s'", $request->request->get('customer')));
 
-        ($sessionManager->get('userCurrentCustomer') === null) ? $sessionManager->set('userCurrentCustomer', $customer->getName()) : $sessionManager->replace('userCurrentCustomer', $customer->getName());
-
+        ($sessionManager->get('current_customer') === null) ? $sessionManager->set('current_customer', $customer) : $sessionManager->replace('current_customer', $customer);
+        //dd($sessionManager->get('current_customer'));
         return new Response("200 OK");
 
     }

@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method Synchro|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,8 +23,18 @@ class SynchroRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Synchro::class);
+        $singleton = false;
+        if($this->base != null) {
+            $singleton = true;
+        }
     }
 
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
+    }
 
     /**
      * @param array $data

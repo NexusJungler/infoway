@@ -118,46 +118,24 @@ class FfmpegSchedule
 
         $customer = $fileInfo['customer'];
         $fileName = $fileInfo['fileName'];
-        // image, video
+        // image, video, etc
         $fileType = $fileInfo['fileType'];
         // diff, them, sync ...
         $type = $fileInfo['type'];
-        $extension = $fileInfo['extension'];
 
-        if($fileType === 'image')
-            $media = new Image();
-
-        else if($fileType === 'video')
-            $media = new Video();
-
-        // need new Entity (e.g : for powerpoint, word, ...)
-        else
-            throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
-
-        $media->setName( str_replace( '.' . $extension, null, $fileName) )
-              ->setExtension($extension)
-              ->setType($type);
-
-        $media = json_decode($this->serializer->serialize($media, 'json'), true);
-
-        foreach ($media['products'] as $product) {
-            $product['start'] = $product['start']['timestamp'];
-            $product['end'] = $product['end']['timestamp'];
-        }
-
-        $ffmpeg_task = new FfmpegTasks();
-        $ffmpeg_task->setFilename($fileName)
+        $task = new FfmpegTasks();
+        $task->setFilename($fileName)
                     ->setFiletype($fileType)
                     ->setMediatype($type)
-                    ->setMedia( $media )
+                    ->setMedia( $fileInfo['media'] )
                     ->setRegistered(new \DateTime());
 
-        $customer->addUploadTask($ffmpeg_task);
+        $customer->addUploadTask($task);
 
-        $this->entityManager->persist($ffmpeg_task);
+        $this->entityManager->persist($task);
         $this->entityManager->flush();
 
-        return $ffmpeg_task->getId();
+        return $task->getId();
 
     }
 
@@ -166,7 +144,7 @@ class FfmpegSchedule
 
         if(!$this->taskIsRunning())
         {
-            $arraySearch = new ArraySearchRecursiveService();
+
             //$this->logger->error(sprintf("Log[%s] -- %s : A new Ffmpeg task start now !", __CLASS__, date('d/m/Y - G:i:s')));
 
             // Au début du traitement, mise à jour du fichier de configuration: FFMPEG -> 1
@@ -179,7 +157,6 @@ class FfmpegSchedule
 
             foreach ($tasks as $task)
             {
-
 
                 $customer_name = strtolower( $task->getCustomer()->getName() );
 
@@ -367,7 +344,7 @@ class FfmpegSchedule
      */
     private function taskIsRunning()
     {
-        return $this->conf['ffmpeg'] == 1;
+        return $this->conf['ffmpeg'] === 1;
     }
 
     /**

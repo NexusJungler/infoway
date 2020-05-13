@@ -6,6 +6,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Customer\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method Role|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,13 @@ class RoleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Role::class);
+    }
+
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
     }
 
     // /**

@@ -13,6 +13,7 @@ class MediaProductAssociationHandlerTool extends Tool
         this.__$mediasCollection = $('.medias_collection');
         this.__$location = $('.associate_product-popup');
         this.__currentMedia = null;
+        this.__currentPos = null;
         this.__mediasAssociationInfo = [];
     }
 
@@ -65,6 +66,7 @@ class MediaProductAssociationHandlerTool extends Tool
 
                 $('.add-popup').css({ 'z-index': '-30' });
                 this.__currentMedia = $(e.currentTarget).data('media');
+                this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
 
                 // check if media is already associated with product (in this case, update popup)
                 let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
@@ -133,14 +135,16 @@ class MediaProductAssociationHandlerTool extends Tool
                 let productsToMedia = [];
                 this.__$associatedList.find('tr').each( (index, element) => {
 
+                    $(`.edit_media_info #${this.__currentPos}`).addClass('unregistered');
+
                     productsToMedia.push( $(element).data('product_id') );
 
-                    if( $(`.edit_media_info .associated-products-container span[data-product='${ $(element).data('product_id') }']`).length === 0 )
+                    if( $(`.edit_media_info #${this.__currentPos} .associated-products-container span[data-product='${ $(element).data('product_id') }']`).length === 0 )
                     {
                         $(`<span>`, {
                             text: $(element).find('.product-name').text(),
                         }).attr('data-product', $(element).data('product_id'))
-                          .appendTo( $('.edit_media_info .associated-products-container') );
+                          .appendTo( $(`.edit_media_info #${this.__currentPos} .associated-products-container`) );
                     }
 
                 } );

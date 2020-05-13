@@ -5,6 +5,7 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\SynchroPlaylist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method SynchroPlaylist|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,13 @@ class SynchroPlaylistRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SynchroPlaylist::class);
+    }
+
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
     }
 
     // /**

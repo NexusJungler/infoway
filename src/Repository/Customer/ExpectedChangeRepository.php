@@ -5,6 +5,7 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\ExpectedChange;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method ExpectedChange|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,13 @@ class ExpectedChangeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExpectedChange::class);
+    }
+
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
     }
 
     // /**

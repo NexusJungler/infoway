@@ -14,7 +14,7 @@ use Doctrine\Persistence\ObjectManager;
  * @method productAllergens[]    findAll()
  * @method productAllergens[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductAllergensRepository extends ServiceEntityRepository implements RepositoryInterface
+class ProductAllergensRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

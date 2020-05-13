@@ -11,6 +11,7 @@ class MediaTagAssociationHandlerTool extends Tool
         this.__$location = $('.associate_tag-popup');
         this.__$tagsList = $('.tags-list');
         this.__currentMedia = null;
+        this.__currentPos = null;
         this.__mediasAssociationInfo = [];
     }
 
@@ -24,6 +25,7 @@ class MediaTagAssociationHandlerTool extends Tool
 
                 $('.add-popup').css({ 'z-index': '0' });
                 this.__currentMedia = $(e.currentTarget).data('media');
+                this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
 
                 // check if media is already associated with tag (in this case, update popup)
                 let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
@@ -89,21 +91,23 @@ class MediaTagAssociationHandlerTool extends Tool
                 let tagsToMedia = [];
                 this.__$tagsList.find('.choice_tag').each( (index, element) => {
 
+                    $(`.edit_media_info #${this.__currentPos}`).addClass('unregistered');
+
                     if( $(element).is(':checked') )
                     {
                         tagsToMedia.push( $(element).parents('tr').data('tag_id') );
 
-                        if( $(`.edit_media_info .associated-tags-container span[data-tag_id='${ $(element).parents('tr').data('tag_id') }']`).length === 0 )
+                        if( $(`.edit_media_info #${this.__currentPos} .associated-tags-container span[data-tag_id='${ $(element).parents('tr').data('tag_id') }']`).length === 0 )
                         {
                             $(`<span>`, {
                                 text: $(element).parents('tr').find('.tag-name').text(),
                             }).attr('data-tag_id', $(element).parents('tr').data('tag_id') )
-                                .appendTo( $('.edit_media_info .associated-tags-container') );
+                                .appendTo( $(`.edit_media_info #${this.__currentPos} .associated-tags-container`) );
                         }
                     }
                     else
                     {
-                        $(`.edit_media_info .associated-tags-container span[data-tag_id='${ $(element).parents('tr').data('tag_id') }']`).remove();
+                        $(`.edit_media_info #${this.__currentPos} .associated-tags-container span[data-tag_id='${ $(element).parents('tr').data('tag_id') }']`).remove();
                     }
 
 

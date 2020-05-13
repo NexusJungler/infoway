@@ -20,6 +20,7 @@ use App\Repository\Admin\FfmpegTasksRepository;
 use App\Repository\Customer\MediaRepository;
 use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
+use App\Service\MediaInfosHandler;
 use App\Service\SessionManager;
 use App\Service\UploadCron;
 use DateTime;
@@ -39,6 +40,10 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints\Json;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 
 class MediaController extends AbstractController
@@ -49,7 +54,7 @@ class MediaController extends AbstractController
      */
     private  $serializer;
 
-    public function __construct(SerializerInterface $serializer)
+    public function __construct()
     {
 
         $circularReferenceHandlingContext = [
@@ -60,7 +65,6 @@ class MediaController extends AbstractController
         $encoder =  new JsonEncoder();
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
         $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
-        //$this->serializer = $serializer;
 
     }
 
@@ -77,10 +81,11 @@ class MediaController extends AbstractController
         else
             $media_displayed = $media;
 
-        $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) );
-        $products = $manager->getRepository(Product::class)->findAll();
-        $categories = $manager->getRepository(Category::class)->findAll();
-        $tags = $manager->getRepository(Tag::class)->findAll();
+        $managerName = strtolower( $sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $managerName );
+        $products = $manager->getRepository(Product::class)->setEntityManager( $manager )->findAll();
+        $categories = $manager->getRepository(Category::class)->setEntityManager( $manager )->findAll();
+        $tags = $manager->getRepository(Tag::class)->setEntityManager( $manager )->findAll();
 
         // upload is not accessible in 'template' and 'incrustations' tab
         $uploadIsAuthorizedOnPage = ($media_displayed !== 'template' AND $media_displayed !== 'incruste');
@@ -108,12 +113,13 @@ class MediaController extends AbstractController
     /**
      * @Route(path="/upload/media", name="media::uploadMedia", methods={"POST"})
      * @param Request $request
+     * @param CustomerRepository $customerRepository
+     * @param SessionManager $sessionManager
      * @param ParameterBagInterface $parameterBag
-     * @param LoggerInterface $cronLogger
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -135,11 +141,11 @@ class MediaController extends AbstractController
         $mimeType = finfo_file($finfo, $file['tmp_name']);
         $splash = explode('/', $mimeType);
         $real_file_extension = $splash[1];
-        $filetype = strstr($mimeType, '/', true);
+        $fileType = strstr($mimeType, '/', true);
 
-        $customerName = strtolower( $sessionManager->get('userCurrentCustomer') );
+        $customerName = strtolower( $sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
-        $mediaRepository = $manager->getRepository(Media::class);
+        $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         if(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
             return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -153,8 +159,8 @@ class MediaController extends AbstractController
         else if($file['name'] === "" or $file['name'] === null)
             return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        else if(strlen(pathinfo($file['name'])['filename']) < 5)
-            return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+        /*else if(strlen(pathinfo($file['name'])['filename']) < 5)
+            return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);*/
 
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
@@ -166,10 +172,11 @@ class MediaController extends AbstractController
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
         $sizes = ['low', 'medium', 'high', 'HD'];
         foreach ($sizes as $size) {
-
             copy($path, $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/image/' .$size .'/' . $file['name']);
         }
         // end debug
+
+        $mediaInfosHandler = new MediaInfosHandler($parameterBag);
 
         // if is image, insert immediately
         if($splash[0] === 'image')
@@ -191,7 +198,24 @@ class MediaController extends AbstractController
             if( $cron->getErrors() !== [] )
                 throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
 
-            $id = $mediaRepository->findOneByName( str_replace('.'.$real_file_extension, '', $file['name']) )->getId();
+            $name = str_replace('.'.$real_file_extension, '', $file['name']);
+            $media = $mediaRepository->findOneByName( $name );
+            if(!$media)
+                throw new Exception(sprintf("No media found with name : '%s'", $name));
+
+            /*$dpi = $mediaInfosHandler->getImageDpi2($path);
+
+            dd($dpi);*/
+
+            $response = [
+                'id' => $media->getId(),
+                'extension' => $real_file_extension,
+                'height' => $media->getHeight(),
+                'width' => $media->getWidth(),
+                'dpi' => $dpi ?? null,
+                'type' => 'image',
+                'customer' => $customerName,
+            ];
 
         }
 
@@ -199,29 +223,124 @@ class MediaController extends AbstractController
         {
 
             $fileName = pathinfo($file['name'])['filename'] . '.' . pathinfo($file['name'])['extension'];
+            $customer = $customerRepository->findOneByName( $customerName );
+
+            if($fileType === 'image')
+                $media = new Image();
+
+            else if($fileType === 'video')
+                $media = new Video();
+
+            // need new Entity (e.g : for powerpoint, word, ...)
+            else
+                throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
+
+            // @TODO: les images et les vidéos sont mélangés, trouver une autre façon de savoir si c'est un media diff, thematics, sync, ...
+            $type = 'diff';
+
+            $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
+                  ->setExtension($real_file_extension)
+                  ->setType($type);
+
+            $media = json_decode($this->serializer->serialize($media, 'json'), true);
 
             $fileInfo = [
                 'fileName' => $fileName,
-                //'customer' => $sessionManager->get('userCurrentCustomer'),
+                //'customer' => $sessionManager->get('current_customer'),
 
                 // quand on stocke l'objet dans la session, on obtient une erreur lorsque l'on fait $customer->addUploadTask() dans FfmpegSchedule
                 // et lors du dump, on obtient un tableau vide avec le $customer->getUploadTasks()
-                'customer' => $customerRepository->findOneByName( $customerName ),
-                'fileType' => $filetype,
+                'customer' => $customer,
+                'fileType' => $fileType,
                 'type' => $mediaType,
                 'extension' => $real_file_extension,
+                'media' => $media
             ];
+
+            list($width, $height, $codec) = $mediaInfosHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
             // a CRON will do task after
             $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
+            $response = [
+                'id' => $id,
+                'extension' => $real_file_extension,
+                'height' => $height,
+                'width' => $width,
+                'codec' => $codec ?? null,
+                'type' => 'video',
+                'customer' => $customerName,
+                'mimeType' => $mimeType,
+            ];
+
         }
 
-        return new Response($id, Response::HTTP_OK);
-        //dd($request->files);
+        return new JsonResponse($response, Response::HTTP_OK);
 
+    }
+
+    /**
+     * @Route(path="/get/video/encoding/status", name="media::getMediaEncodingStatus", methods={"POST"})
+     */
+    public function getMediaEncodingStatus(Request $request, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager)
+    {
+
+        $task = $ffmpegTasksRepository->find($request->request->get('id'));
+        if(!$task)
+            throw new Exception(sprintf("No Ffmpeg task found with id : '%d'", $request->request->get('id')));
+
+        // finish with 0 errors
+        if($task->getFinished() !== null AND $task->getErrors() === null)
+        {
+
+            $customerName = strtolower( $sessionManager->get('current_customer')->getName() );
+            $manager = $this->getDoctrine()->getManager( $customerName );
+            $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
+
+            $media = $mediaRepository->findOneByName( $task->getMedia()['name'] );
+            if(!$media)
+                throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
+
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/" . $task->getFiletype() . "/" . $media->getId() . "." . $media->getExtension();
+            $mimeType = finfo_file($finfo, $path);
+
+            $response = [
+                'status' => 'Finished',
+                'id' => $media->getId(),
+                'extension' => $media->getExtension(),
+                'fileName' => $task->getFilename(),
+                'height' => $media->getHeight(),
+                'width' => $media->getWidth(),
+                'codec' => $media->getVideoCodec(),
+                'type' => 'video',
+                'customer' => $customerName,
+                'mimeType' => $mimeType,
+                'name' => $media->getName()
+            ];
+        }
+
+        // finish with 1 or more errors
+        elseif($task->getFinished() !== null AND $task->getErrors() !== null)
+            $response = ['type' => '520 Encode error', 'error' => $task->getErrors()];
+
+        // not finish
+        else
+            $response = ['status' => 'Running'];
+
+        return new JsonResponse($response , (array_key_exists('error', $response)) ? Response::HTTP_INTERNAL_SERVER_ERROR : Response::HTTP_OK);
+
+    }
+
+
+    /**
+     * @Route(path="/remove/media", name="media::removeMedia")
+     */
+    public function removeMedia(Request $request)
+    {
+        dd($request->request->get('file'));
     }
 
 
@@ -236,7 +355,9 @@ class MediaController extends AbstractController
     {
 
         $fileNameWithExtension = $request->request->get('file');
-        $mediaRepository = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) )->getRepository(Media::class);
+        $managerName = strtolower($sessionManager->get('current_customer')->getName());
+        $manager = $this->getDoctrine()->getManager($managerName);
+        $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         $explode = explode('.', $request->request->get('file'));
         $fileNameWithoutExtension = $explode[0];
@@ -255,33 +376,6 @@ class MediaController extends AbstractController
         return new Response( $output );
     }
 
-    /**
-     * Check uploaded file Ffmpeg task status
-     *
-     * @Route(path="/get/uploaded/file/process/status", name="media::getMediaFfmpegTaskStatus", methods={"POST"})
-     */
-    public function getMediaFfmpegTaskStatus(Request $request, FfmpegTasksRepository $tasksRepository, CustomerRepository $customerRepository, SessionManager $sessionManager)
-    {
-
-        $customer = $customerRepository->findOneByName($sessionManager->get('userCurrentCustomer'));
-        $task = $tasksRepository->findOneBy([ 'filename' => $request->request->get('file'), 'customer' => $customer ]);
-        if(!$task)
-            return new Response("404 Task not found", Response::HTTP_INTERNAL_SERVER_ERROR);
-
-        else if ($task->getStarted() === null)
-            return new Response("Not Started");
-
-        else if ($task->getFinished() === null)
-            return new Response("Not Finished");
-
-        else if ($task->getFinished() !== null AND $task->getErrors() !== null)
-            return new Response("Finished with errors");
-
-        else
-            return new Response("Finished");
-
-    }
-
 
     /**
      * @Route(path="/edit/media", name="media::editMedia", methods={"POST"})
@@ -295,11 +389,11 @@ class MediaController extends AbstractController
     public function editMedia(Request $request, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager)
     {
 
-        $customer = $customerRepository->findOneByName( strtolower( $sessionManager->get('userCurrentCustomer') ) ); // dynamic session variable (will change each time user select customer in select)
-        $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('userCurrentCustomer') ) );
+        $customer = $customerRepository->find( $sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
+        $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('current_customer')->getName() ) );
 
 
-        //dd($request->request, $customer);
+        dd($request->request, $customer);
 
         $error = [  ];
 
@@ -320,12 +414,12 @@ class MediaController extends AbstractController
                 break;
             }
 
-            else if(strlen($mediaInfos['name']) < 5)
+            /*else if(strlen($mediaInfos['name']) < 5)
             {
                 // return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
                 $error = [ 'text' => '518 Too short Filename', 'subject' => $index ];
                 break;
-            }
+            }*/
 
             else
             {
@@ -368,6 +462,7 @@ class MediaController extends AbstractController
                 if($diffusionEndDate < $diffusionStartDate)
                 {
                     $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
+                    break;
                 }
 
                 //$task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension'], 'registered' => new DateTime()]);
@@ -377,7 +472,7 @@ class MediaController extends AbstractController
                 if(!$task AND $mediaInfos['mediaType'] !== 'image')
                     throw new Exception(sprintf("No Task found with id '%d' !", $mediaInfos['id']));
 
-                $media = $manager->getRepository(Media::class)->find( $mediaInfos['id'] );
+                $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
 
                 if(!$media)
                 {
@@ -412,7 +507,7 @@ class MediaController extends AbstractController
                     $media->getTags()->clear();
                     foreach ($mediaInfos['tags'] as $k => $tagId)
                     {
-                        $tag = $manager->getRepository(Tag::class)->find($tagId);
+                        $tag = $manager->getRepository(Tag::class)->setEntityManager($manager)->find($tagId);
                         if(!$tag)
                             throw new Exception(sprintf("No Tag found with id : '%d'", $tagId));
 
@@ -425,7 +520,7 @@ class MediaController extends AbstractController
                     $media->getProducts()->clear();
                     foreach ($mediaInfos['products'] as $k => $productId)
                     {
-                        $product = $manager->getRepository(Product::class)->find($productId);
+                        $product = $manager->getRepository(Product::class)->setEntityManager($manager)->find($productId);
                         if(!$product)
                             throw new Exception(sprintf("No Product found with id : '%d'", $productId));
 
@@ -454,5 +549,7 @@ class MediaController extends AbstractController
 
         return new JsonResponse( ($error === []) ? '200 OK' : $error , ($error === []) ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
+
 
 }
