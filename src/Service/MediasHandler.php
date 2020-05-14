@@ -159,14 +159,23 @@ class MediasHandler
 
         exec($cmd, $data, $cmdResultStatus);
 
-        if($fileType === 'video' AND $cmdResultStatus !== 0)
+        if($fileType === 'video')
         {
+
+            if(filesize( $this->parameterBag->get('project_dir') . "/public/error.log" ) !== 0)
+                $output = true;
+
+            else
+                $output = $cmdResultStatus;
+
             // remove log file created by ffmpeg
             unlink($this->parameterBag->get('project_dir') . "/public/error.log");
-            return true;
-        }
 
-        return $cmdResultStatus !== 0;
+        }
+        else
+            $output = $cmdResultStatus;
+
+        return $output !== 0;
     }
 
 
