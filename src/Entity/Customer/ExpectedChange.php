@@ -3,7 +3,7 @@
 namespace App\Entity\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Admin\Entity;
+use ORM\Entity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\ExpectedChangeRepository")
@@ -21,6 +21,24 @@ class ExpectedChange
      * @ORM\Column(type="integer")
      */
     private $entity;
+
+    /**
+     * @return mixed
+     */
+    public function getEntityObject()
+    {
+        return $this->entityObject;
+    }
+
+    /**
+     * @param mixed $entityObject
+     */
+    public function setEntityObject($entityObject): void
+    {
+        $this->entityObject = $entityObject;
+    }
+
+    private $entityObject;
 
     /**
      * @ORM\Column(type="integer")

@@ -11,6 +11,7 @@ let factories = [];
 let selectedSites = [];
 let selectedFactories = [];
 let updatedPrices = {};
+let subheader_index = 2;
 
 let display_local_prices = function () {
     $.post('ajax/localprices', {sites: selectedSites}, function(response){
@@ -29,12 +30,15 @@ let display_main_prices = function () {
         nbr_dates = response.nbr_dates;
         factories = response.factories;
         products = response.products;
+        if(nbr_dates === 0) {
+            subheader_index = 1;
+        }
 
         let view = {head: '', body: ''};
         let rowspan = '';
         let colspan = '';
         let memory = {}; //previousPrices
-        
+
         if(nbr_dates > 1) {
             rowspan = ' rowspan="2"';
             colspan = ' colspan="' + nbr_dates + '"';
@@ -48,12 +52,11 @@ let display_main_prices = function () {
 
         $.each(factories, function(i, factory){
             // let nbr_cells = Object.keys(factory.prices).length;
-            view.head += '<th' + colspan + ' class="group-prix" >' + factory.name + '</th>';
+            view.head += '<th' + colspan + '>' + factory.name + '</th>';
         });
         view.head += '</tr>';
 
         if(nbr_dates > 1) {
-            
             view.head += '<tr>';
             $.each(factories, function(i, factory) {
                 for(const date in factory.prices) {
@@ -67,8 +70,8 @@ let display_main_prices = function () {
             if (products.hasOwnProperty(product_id)) {
                 let product = products[product_id];
                 view.body += '<tr><td>' + product.name + '</td>';
-                view.body += '<td>' + product.amount+ '</td>';
                 view.body += '<td>' + product.category + '</td>';
+                view.body += '<td>' + product.amount + '</td>';
                 view.body += '<td>' + product.pricetype + '</td><td>';
                 $.each(product.tags, function(j, tag){
                     view.body += '<span class="container-tags">' + tag + '</span>';
@@ -92,7 +95,7 @@ let display_main_prices = function () {
                                 price_value = memory[factory.id][product_id];
                             }
                         }
-                        view.body += '<td '+ price_id_injection +' class="col-td'+j+'" ><input'+ price_id_injection +' type="text"  name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
+                        view.body += '<td '+ price_id_injection +' class="col-td'+j+'" ><input' + price_id_injection + ' type="text" name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
 
                         if(typeof memory[factory.id] === 'undefined') {
                             memory[factory.id] = {};
@@ -107,7 +110,6 @@ let display_main_prices = function () {
 
         $('#display_prices table').html(view.head + view.body);
         $('#display_prices').css('display', 'block');
-
     });
 };
 
@@ -189,23 +191,32 @@ $(function() {
         }
 
         if(typeof $(this).data('change') !== 'undefined') {
-            if($(this).data('change') !== 'New') {
-                updatedPrices[factory][date][product]['change_id'] = $(this).data('change');
+            updatedPrices[factory][date][product]['change_id'] = $(this).data('change');
+            if ($(this).data('change') !== 'New') {
+
             }
+        }
 
-            let row = $(this).parents('tr');
-            // let row_index = $('#display_prices tr').index(row);
-            let col = $(this).parent();
-            let col_index = row.children().index(col);
+        // Récupération des coordonnées (x,y) de la sélection
+        let row = $(this).parents('tr');
+        // let row_index = $('#display_prices tr').index(row);
+        let col = $(this).parent();
+        let col_index = row.children().index(col);
 
+        let title = $('#display_prices tr:nth-child('+ subheader_index + ')').children(':nth-child(' + (col_index - 4) +')').html();
+        if(title === 'actuelle') {
+            updatedPrices[factory][date][product]['price_id'] = $(this).data('price');
+        } else {
+            // On modifie un prix à date
             let result = null; // correspondra aux nombres de cellules (td) qu'il faut remonter pour accéder aux prix de la factory (cellule immédiatement précédente non comprise)
             let title = '';
             let i = 5; // nombre de cellules correspondants aux informations du produit
             while (title !== 'actuelle') {
-                title = $('#display_prices tr:nth-child(2)').children(':nth-child(' + (col_index - i) + ')').html(); // Si aucune date future ==> sélection = tr:nth-child(1)
+                title = $('#display_prices tr:nth-child('+ subheader_index + ')').children(':nth-child(' + (col_index - i) + ')').html(); // Si aucune date future ==> sélection = tr:nth-child(1)
                 result = i - 5;
                 i++;
             }
+            // console.log(result);
             updatedPrices[factory][date][product]['price_id'] = row.children(':nth-child(' + (col_index - result) + ')').children().data('price');
         }
 
@@ -232,7 +243,7 @@ $(function() {
         // Ajout des nouvelles cellules de date dans le head
         $.each(factories, function(i, factory) {
             let target = $('#display_prices tr:nth-child(2)').children(':nth-child(' + (nbr_dates + i*nbr_dates + i) + ')');
-            $('<td class="col'+col_table+'">' + newDate + '</td>').insertAfter(target);
+            $('<td>' + newDate + '</td>').insertAfter(target);
         });
 
         // Ajout des nouvelles cellules du formulaire dans le body
@@ -253,26 +264,4 @@ $(function() {
         nbr_dates++;
     });
 
-    
-      
-
-    // $("#display_prices ").each(".group-prix" ,function() {
-    //     //On change la couleur de fond au hasard
-    //     $(this).css("background-color", '#'+(Math.random({hue:'red'})*0xFFFFFF<<0).toString(16));
-    // })
-
 });
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-    $(".group-prix").each(function(){
-        $(this).css("background-color", getRandomColor());
-    })
-    

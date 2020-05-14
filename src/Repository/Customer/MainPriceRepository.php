@@ -3,10 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\MainPrice;
-use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method MainPrice|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,18 +12,11 @@ use Doctrine\Persistence\ObjectManager;
  * @method MainPrice[]    findAll()
  * @method MainPrice[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MainPriceRepository extends ServiceEntityRepository implements RepositoryInterface
+class MainPriceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, MainPrice::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**
@@ -34,10 +25,10 @@ class MainPriceRepository extends ServiceEntityRepository implements RepositoryI
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -48,8 +39,8 @@ class MainPriceRepository extends ServiceEntityRepository implements RepositoryI
     /*
     public function findOneBySomeField($value): ?MainPrice
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

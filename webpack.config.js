@@ -46,6 +46,9 @@ Encore
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
     
     //settings
+        //Enseigne
+        .addEntry('enseigne', './assets/js/settings/enseigne.js')
+
     .addEntry('settings-user', './assets/js/settings/settings_user.js')
     // .addEntry('criterion', './assets/js/settings/criterion.js')
 

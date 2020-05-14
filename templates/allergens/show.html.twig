@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="" class="debug">
+        <form method="post" action="{{ path('allergens::delete') }}">
+            <table id="list">
+                <thead>
+                <tr>
+                    <th>Selection<th>
+                    <th>nom</th>
+                    <th>decription</th>
+                    <th>pictogramme</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for allergen in allergens %}
+                    <tr>
+                        <td><input type="checkbox" name="allergens[{{ allergen.id }}]"></td>
+                        <td>{{ allergen.name }}</td>
+                        <td>{{ allergen.description }}</td>
+                        <td>{{ allergen.pictogram }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <button><a href="{{ path('allergen::create') }}">Ajouter</a></button>
+        <button><a id="edit" href="{{ path('allergen::edit', {'allergen': 1}) }}">Modifier</a></button>
+        <button id="delete">Supprimer</button>
+    </div>
+
+    {% block javascripts %}
+    {#{{ encore_entry_script_tags('show_products') }} #}
+    {% endblock javascripts %}
+
+{% endblock %}

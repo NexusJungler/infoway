@@ -1,0 +1,18 @@
+
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+.enseigne{
+    margin-left: 2.5%;
+    .content-enseigne{
+        margin-top: 40px;
+    }
+    .content-import-enseigne{
+        width: 740px;
+        height: 185px;
+        border: 1px solid #899CA4;
+    }
+}

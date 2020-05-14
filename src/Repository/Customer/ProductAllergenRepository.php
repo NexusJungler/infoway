@@ -2,23 +2,23 @@
 
 namespace App\Repository\Customer;
 
-use App\Entity\Customer\Product;
+use App\Entity\Customer\ProductAllergen;
 use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * @method product|null find($id, $lockMode = null, $lockVersion = null)
- * @method product|null findOneBy(array $criteria, array $orderBy = null)
- * @method product[]    findAll()
- * @method product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method productAllergen|null find($id, $lockMode = null, $lockVersion = null)
+ * @method productAllergen|null findOneBy(array $criteria, array $orderBy = null)
+ * @method productAllergen[]    findAll()
+ * @method productAllergen[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository implements RepositoryInterface
+class ProductAllergenRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, product::class);
+        parent::__construct($registry, ProductAllergen::class);
     }
 
     public function setEntityManager(ObjectManager $entityManager): self
@@ -27,20 +27,6 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
 
         return $this;
     }
-
-    public function findProductWithTags($id)
-    {
-        return $this->createQueryBuilder('p')
-            ->leftJoin('p.tags', 't')
-            ->where('p.id = :id')
-            ->setParameter('id', $id)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
-    // Eureka --> Surcharger la Méthode findAll() pour contrôler le lazy load !!
 
     // /**
     //  * @return product[] Returns an array of product objects

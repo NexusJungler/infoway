@@ -1,7 +1,17 @@
 #setting-user{
+    margin-left: 2.5%;
     .setting-user-table{
         margin-top: 20px;
     }
+    
+    .tab-content-title{
+        h3{
+            &::after{
+                display: none;
+            }
+        }
+    }
+
     .table{
         .table-custome{
             .thead-content{

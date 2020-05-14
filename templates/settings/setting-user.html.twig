@@ -1,92 +1,112 @@
-{% extends 'setting.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('settings-user') }}
 {% endblock %}
 
-{% block maincontent %}
+{% block body %}
+    <main class="main main_setting">
+        <div class="main-content">
 
-    <section class="wrapper_tabcontent">
+            <section class="jumbotron">
 
-        <article id="setting-user" class="tab-content current">
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Utilisateur', 'showSecondTitles': true } %}
+                {% endblock %}
 
-            <div class="tab-content-title">
-                <h3 class="title">Utilisateur</h3>
-                {# <p> DEl&CIA</p> #}
-            </div>
-
-            <form action="" method="post" name="user">
-
-                <article class="display setting-display ">
-                    <div class="display-content">
-                        <div class="display-btn">
-                            <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
-                        </div>
-                    </div>
-                </article > 
-
-                <article class="setting-user-table">
-                    <div class="table">
-                        <table class="table-custome" >
-                            <thead  class="table-info thead-content">
-                                <tr>
-                                    <th>Nom</th>    
-                                    <th>Prenom</th>
-                                    <th>Email</th> 
-                                    <th>Téléphone</th>
-                                    <th>Nbre Sites</th>
-                                    <th></th>  
-                                    <th></th> 
-                                </tr>
-                            </thead>
-                            <tbody class="tbody tbody-content scrollbar-table">
-
-                            {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
-                                {%  for  userInCustomer in usersInCustomer  %}
-
-                                    <tr>
-                                        <td>{#
-                                            #}{% if  userInCustomer.firstName is defined %}{#
-                                            #}{{ userInCustomer.firstName }}{#
-                                            #}{%  endif %}{#
-                                        #}</td>
-                                        <td>{#
-                                            #}{% if  userInCustomer.lastName is defined %}{#
-                                            #}{{ userInCustomer.lastName }}{#
-                                            #}{%  endif %}{#
-                                        #}</td>
-                                        <td>{#
-                                            #}{% if  userInCustomer.email is defined %}{#
-                                            #}{{ userInCustomer.email }}{#
-                                            #}{%  endif %}{#
-                                        #}</td>
-                                        <td>{#
-                                            #}{% if  userInCustomer.phoneNumber is defined %}{#
-                                            #}{{ userInCustomer.phoneNumber }}{#
-                                            #}{%  endif %}{#
-                                        #}</td>
-                                        <td>
-                                            {% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}
-                                            {{ userInCustomer.sitesIds | length }}
-                                            {%  endif %}
-                                        </td>
-                                        <td>
-                                            {% if  userInCustomer.Id is defined %}
-                                                <a class="btn"  href="{{path('user::edit',{ id:userInCustomer.Id }) }}" role="button"><i class="fas fa-plus"></i>Modifier</a>
-                                            {%  endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor  %}
-                            {%  endif  %}{#
-                            #}</tbody>
-                        </table>
-                    </div> 
-                </article>
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper-settings.html.twig'  %}
+                {% endblock %}
                 
-            </form>
+            </section>
 
-        </article> 
+            <section class="wrapper_tabcontent">
 
-    </section >
+                <article id="setting-user" class="tab-content current constent-user">
+
+                    <div class="tab-content-title">
+                        <h3 class="title">Gestion Des Utilisateur</h3>
+                        {# <p> DEl&CIA</p> #}
+                    </div>
+
+                    <form action="" method="post" name="user">
+
+                        <article class="display setting-display ">
+                            <div class="display-content">
+                                <div class="display-btn">
+                                    <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
+                                    <button type="button" class="btn hide-btn "><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn "><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn " data-tablelistdelete="user"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+                            </div>
+                        </article > 
+
+                        <article class="setting-user-table">
+                            <div class="table">
+                                <table class="table-custome" >
+                                    <thead  class="table-info thead-content">
+                                        <tr>
+                                            <th>Nom</th>    
+                                            <th>Prenom</th>
+                                            <th>Email</th> 
+                                            <th>Téléphone</th>
+                                            <th>Nbre Sites</th>
+                                            <th></th>  
+                                            <th></th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+
+                                    {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
+                                        {%  for  userInCustomer in usersInCustomer  %}
+                                            <tr>
+                                                <td>{#
+                                                    #}{% if  userInCustomer.firstName is defined %}{#
+                                                    #}{{ userInCustomer.firstName }}{#
+                                                    #}{%  endif %}{#
+                                                #}</td>
+                                                <td>{#
+                                                    #}{% if  userInCustomer.lastName is defined %}{#
+                                                    #}{{ userInCustomer.lastName }}{#
+                                                    #}{%  endif %}{#
+                                                #}</td>
+                                                <td>{#
+                                                    #}{% if  userInCustomer.email is defined %}{#
+                                                    #}{{ userInCustomer.email }}{#
+                                                    #}{%  endif %}{#
+                                                #}</td>
+                                                <td>{#
+                                                    #}{% if  userInCustomer.phoneNumber is defined %}{#
+                                                    #}{{ userInCustomer.phoneNumber }}{#
+                                                    #}{%  endif %}{#
+                                                #}</td>
+                                                <td>
+                                                    {% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}
+                                                    {{ userInCustomer.sitesIds | length }}
+                                                    {%  endif %}
+                                                </td>
+                                                <td>
+                                                    {% if  userInCustomer.Id is defined %}
+                                                        <a class="btn"  href="{{path('user::edit',{ id:userInCustomer.Id }) }}" role="button"><i class="fas fa-plus"></i>Modifier</a>
+                                                    {%  endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor  %}
+                                    {%  endif  %}{#
+                                    #}</tbody>
+                                </table>
+                            </div> 
+                        </article>
+                        
+                    </form>
+
+                </article> 
+
+            </section >
+
+        </div>
+    </main>
+    
 {% endblock %}

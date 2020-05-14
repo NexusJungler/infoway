@@ -3,10 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\ExpectedChange;
-use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ExpectedChange|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,18 +12,11 @@ use Doctrine\Persistence\ObjectManager;
  * @method ExpectedChange[]    findAll()
  * @method ExpectedChange[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ExpectedChangeRepository extends ServiceEntityRepository implements RepositoryInterface
+class ExpectedChangeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExpectedChange::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**
@@ -34,10 +25,10 @@ class ExpectedChangeRepository extends ServiceEntityRepository implements Reposi
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -48,8 +39,8 @@ class ExpectedChangeRepository extends ServiceEntityRepository implements Reposi
     /*
     public function findOneBySomeField($value): ?ExpectedChange
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

@@ -2,16 +2,65 @@
 
 {% block title %}New Customer{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('enseigne') }}
+{% endblock %}
+
 {% block body %}
-    <h1>Create new Customer</h1>
-    {% set errors = app.session.flashbag.get('error') %}
+     <main class="main main_enseigne">
+        <div class="main-content">
 
-    {{ dump(errors) }}
-    {% if  errors['contact'] is defined and errors['contact']['firstName'] is defined  %}
-        {{ dump('ici') }}
-    {% endif %}
+            <section class="jumbotron">
 
-    {{ include('settings/customers/_form.html.twig') }}
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
+                {% endblock %}
 
-    <a href="{{ path('customers_index') }}0">back to list</a>
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper-settings.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+
+                <div id="setting-enseigne" class="tab-content current enseigne">
+
+                    <article class="tab-content-title">
+                        <h3 class="title">Enseigne</h3>
+                        <p>SUPER WILD COFFEE</p>
+                    </article>
+
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Enseigne</a>
+                                <button type="button" class="btn duplicate-enseigne hide-btn"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                <button type="button" class="btn modified-enseigne hide-btn"><i class="far fa-edit"></i>Modifier</button>
+                                <button type="button" class="btn delete-enseigne" data-tablelistdelete="enseigne"><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+                        </div>
+                    </article> 
+
+                    <article class="content-enseigne"> 
+                         {% set errors = app.session.flashbag.get('error') %}
+
+                        {# {{ dump(errors) }} #}
+                        {% if  errors['contact'] is defined and errors['contact']['firstName'] is defined  %}
+                            {{ dump('ici') }}
+                        {% endif %}
+
+                        {{ include('settings/customers/_form.html.twig') }}
+
+                        <a href="{{ path('customers_index') }}0">back to list</a>
+                    <article>
+
+                </div>
+                
+            </section>
+
+        </div>
+    </main>
+
 {% endblock %}

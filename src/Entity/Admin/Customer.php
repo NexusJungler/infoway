@@ -55,12 +55,6 @@ class Customer
      */
     private $contact;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $nationalPriceGroupId ;
-
-
 
     public function __construct()
     {
@@ -279,18 +273,6 @@ class Customer
         if ($contact->getCustomer() !== $newCustomer) {
             $contact->setCustomer($newCustomer);
         }
-
-        return $this;
-    }
-
-    public function getNationalPriceGroupId(): ?int
-    {
-        return $this->nationalPriceGroupId;
-    }
-
-    public function setNationalPriceGroupId(?int $nationalPriceGroupId): self
-    {
-        $this->nationalPriceGroupId = $nationalPriceGroupId;
 
         return $this;
     }

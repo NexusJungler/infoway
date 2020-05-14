@@ -124,11 +124,13 @@
 }
 
 .tab-content{
+
     display: none;
 }
 
 .tab-content.current{
     display: block;
+    margin-left: 2.5%;
 }
 
 /*****************************************************  WRAPPER CONTENT  *****************************************************************/

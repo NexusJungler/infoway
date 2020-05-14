@@ -2,7 +2,8 @@
 
 namespace App\Entity\Customer;
 
-// use App\Entity\Admin\Allergen;
+use App\Entity\Admin\Allergen;
+use App\Entity\Customer\ProductAllergen;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -46,13 +47,11 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Blank
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Blank
      */
     private $note;
 
@@ -87,16 +86,19 @@ class Product
      */
     private $criterions;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity="ProductAllergens", mappedBy="product")
-    //  */
-    // private $allergens;
-    
+    /**
+     * @ORM\OneToMany(targetEntity="ProductAllergen", mappedBy="product", cascade={"persist"})
+     */
+    private $product_allergens;
+
+    private $allergens;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->allergens = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criterions = new ArrayCollection();
+        $this->allergens = new ArrayCollection();
+        $this->product_allergens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,7 +153,7 @@ class Product
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -285,29 +287,66 @@ class Product
     }
 
     /**
+     * @return Collection|ProductAllergen[]
+     */
+    public function getProductAllergens(): Collection
+    {
+        return $this->product_allergens;
+    }
+
+    public function addProductAllergen(ProductAllergen $product_allergen): self
+    {
+        if (!$this->product_allergens->contains($product_allergen)) {
+            $this->product_allergens[] = $product_allergen;
+        }
+
+        return $this;
+    }
+
+    public function removeProductAllergen(ProductAllergen $allergen): self
+    {
+        if ($this->tags->contains($allergen)) {
+            $this->tags->removeElement($allergen);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Allergen[]
      */
-    // public function getAllergens(): Collection
-    // {
-    //     return $this->allergens;
-    // }
+    public function getAllergens(): Collection
+    {
+        return $this->allergens;
+    }
 
-    // public function addAllergen(Allergen $allergen): self
-    // {
-    //     if (!$this->allergens->contains($allergen)) {
-    //         $this->allergens[] = $allergen;
-    //     }
+    public function setAllergens(Collection $allergens): self
+    {
+        $this->allergens = $allergens;
+        return $this;
+    }
 
-    //     return $this;
-    // }
+    public function addAllergen(Allergen $allergen): self
+    {
+        if (!$this->allergens->contains($allergen)) {
+            $this->allergens[] = $allergen;
+            $new = new ProductAllergen();
+            $new->setAllergenId($allergen->getId())
+                ->setProduct($this);
+            $this->addProductAllergen($new);
+        }
 
-    // public function removeAllergen(Allergen $allergen): self
-    // {
-    //     if ($this->tags->contains($allergen)) {
-    //         $this->tags->removeElement($allergen);
-    //     }
+        return $this;
+    }
 
-    //     return $this;
-    // }
+    public function removeAllergen(Allergen $allergen): self
+    {
+        if ($this->tags->contains($allergen)) {
+            $this->tags->removeElement($allergen);
+        }
+
+        return $this;
+    }
+
 
 }

@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Produits {% endblock %}
+
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('show_factories') }}
+{% endblock %} #}
+
+{% block body %}
+    <main class="main main_setting">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS/PRIX', 'sousTitle': '', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {# {% block wrapper %}
+                    {% include 'wrapper/wrapper-settings.html.twig'  %}
+                {% endblock %} #}
+                
+            </section>
+
+            
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-content current produits">
+
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus">Ajouter</a></button>
+                                <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
+                                {#<button><a id="duplicate" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>#}
+                                <button type="button" class="btn" id="duplicate"><i class="fas fa-plus">Dupliquer</button>
+                                <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+                        </div>
+                    </article> 
+
+  
+                    <select id="category">
+                        <option>TOUTES</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <form method="post" action="{{ path('products::delete') }}" class="table">
+                        <table id="list" class="table-custome">
+                            <thead class="thead-info">
+                                <tr>
+                                    <th>sélection</th>
+                                    <th>nom</th>
+                                    <th>catégorie</th>
+                                    <th>type de prix</th>
+                                    <th>quantité</th>
+                                    <th>description</th>
+                                    <th>mention</th>
+                                    <th>début de diffusion</th>
+                                    <th>fin de diffusion</th>
+                                    <th>tags</th>
+                                    <th>représentation graphique</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content scrollbar-table">
+                            {% for product in products %}
+                                <tr>
+                                    <td><input type="checkbox" name="products[{{ product.id }}]"></td>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.category.name }}</td>
+                                    <td>{{ product.priceType.name }}</td>
+                                    <td>{{ product.amount }}</td>
+                                    <td>{{ product.description }}</td>
+                                    <td>{{ product.note }}</td>
+                                    <td>{{ product.start |date('Y-m-d') }}</td>
+                                    <td>{{ product.end |date('Y-m-d') }}</td>
+                                    <td class="tag">
+                                        {% for tag in product.tags %}
+                                            <span>{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td><img src="/images/oeil.png" alt="logo"></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </section>
+        </div>    
+    <main>
+    
+
+    
+
+    <div id="popup_properties">
+        <h1>Sélectionnez les éléments du produit à conserver</h1>
+        <form action="{{ path('product::duplicate', {'product': 3}) }}" method="post">
+            <table class="center">
+                <tr>
+                    <td><input type="checkbox" name="product[category]"></td>
+                    <td>Catégorie</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[priceType]"></td>
+                    <td>Type de prix</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[amount]"></td>
+                    <td>Quantié</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[description]"></td>
+                    <td>Description</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[note]">
+                    </td><td>Mention</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[start]"></td>
+                    <td>Début de validité</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[end]"></td>
+                    <td>Fin de validité</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[tags]"></td>
+                    <td>Tags</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[allergens]"></td>
+                    <td>Allergènes</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[logo]"></td>
+                    <td>Logo</td>
+                </tr>
+            </table>
+            <button id="properties_validate" type="submit">Valider</button>
+        </form>
+    </div>
+
+    {# {% block javascripts %}
+        {{ encore_entry_script_tags('show_products') }}
+    {% endblock javascripts %} #}
+
+{% endblock %}

@@ -108,13 +108,13 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
         $sessionManager->set('user',$this->lastRegisteredUser);
         $sessionManager->set('current_customer', $this->entityManager->getRepository(Customer::class)->findOneBy(['name' => 'kfc'])) ;
-
         //  $userFromDatabase=$sessionManager->get('user');
         return new RedirectResponse($this->urlGenerator->generate('app'));
     }
 
     protected function getLoginUrl()
     {
+        
         return $this->urlGenerator->generate('user::login');
     }
 }

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="debug">
+        <div class="form">
+            {{ form_start(form) }}
+                {{ form_row(form.category) }}
+                {{ form_row(form.priceType) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.amount) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.note) }}
+                {{ form_row(form.start) }}
+                {{ form_row(form.end) }}
+
+                <div class="ManyToMany">
+                    {{ form_row(form.tags) }}
+                </div>
+
+                <div class="ManyToMany">
+                    {{ form_row(form.allergens) }}
+                    {#
+                    <div>
+                        <label class="label-custome" for="allergens">Allergenes</label>
+                        <select id="allergens" name="allergens[]" multiple="multiple">
+                            {% for allergen in allergens %}
+                                {% set selected = '' %}
+                                {% if allergen in product_allergens %}
+                                    {% set selected = 'selected' %}
+                                {% endif %}
+                                <option value="{{ allergen.id }}" {{ selected }}>{{ allergen.name }}</option>
+                            {% endfor %}
+                        </select>+
+                    </div>
+                    #}
+                </div>
+
+                {{ form_row(form.logo) }}
+
+                {% if expected_change is defined %}
+                    <input type="hidden" name="expected_date" value="2020-05-10">
+                {% endif %}
+            {{ form_end(form) }}
+
+        </div>
+
+        <button>Modification à date</button>
+        {#{{ dump(expected_change_forms) }}#}
+        {% for date,value in expected_change_forms %}
+            <div class="form">
+                <h2>{{ date }}</h2>
+                {{ form_start(value, {'attr': {'name': 'ujgvjhvbjkh', 'action': path('expected_change::save', {'classname': 'product', 'id': app.request.attributes.get('_route_params')['product'] })}}) }}
+                {{ form_row(value.category) }}
+                {{ form_row(value.priceType) }}
+                {{ form_row(value.name) }}
+                {{ form_row(value.amount) }}
+                {{ form_row(value.description) }}
+                {{ form_row(value.note) }}
+                {{ form_row(value.start) }}
+                {{ form_row(value.end) }}
+
+                <div class="ManyToMany">
+                    {{ form_row(value.tags) }}
+                </div>
+
+                <div class="ManyToMany">
+                    {{ form_row(value.allergens) }}
+                </div>
+
+                {{ form_row(value.logo) }}
+                <input type="hidden" name="expected_date" value="{{ date }}">
+                <input type="hidden" name="expected_change" value="1">
+                {{ form_end(value) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+        <script>
+            $('.ManyToMany select').select2();
+        </script>
+        {#{{ encore_entry_script_tags('edit_product') }}#}
+    {% endblock javascripts %}
+{% endblock %}
