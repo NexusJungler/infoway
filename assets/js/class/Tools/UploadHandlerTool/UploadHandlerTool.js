@@ -28,11 +28,11 @@ class UploadHandlerTool extends Tool
 
         this.__errors = {
 
-            bad_extension: "Erreur : ce type de fichier n'est pas accepté",
+            bad_extension: "Ce type de fichier n'est pas accepté",
 
-            bad_resolution: "Erreur : cette résolution n'est pas accepté",
+            bad_resolution: "Cette résolution n'est pas accepté",
 
-            corrupt_file: "Erreur : fichier corrompu",
+            corrupt_file: "Fichier corrompu",
 
             duplicate_file: "Ce nom est déjà utilisé !",
 
@@ -42,7 +42,7 @@ class UploadHandlerTool extends Tool
 
             too_short_error: "Ce champ doit contenir au moins 5 caractères !",
 
-            uploaded_file_not_found_error: "Erreur interne : Le fichier n'existe plus sur le serveur !",
+            uploaded_file_not_found_error: "Le fichier n'existe plus sur le serveur ou a été déplacé !",
 
             invalid_diffusion_date: "La date de fin de diffusion doit être supérieur à la date de début !",
 
@@ -57,7 +57,7 @@ class UploadHandlerTool extends Tool
         this.__uploadMediaType = $('.main-media').data('media_displayed');
         if(this.__uploadMediaType === null)
         {
-            console.log("Error : cannot found data-media_displayed on element : .main-media !"); debugger
+            console.error("Error : cannot found data-media_displayed on element : .main-media !"); debugger
         }
 
         let type = (this.__uploadMediaType === 'image' || this.__uploadMediaType === 'video') ? 'image_video': this.__uploadMediaType;;
@@ -271,71 +271,19 @@ class UploadHandlerTool extends Tool
             newUploadItem += `<td><i class="${ (!fileIsAccepted) ? 'fas fa-times' : 'fas fa-check' }"></i></td>
                                  <td><i data-target="${fileName}" class="fas fa-trash-alt remove_file_from_list"></i></td>`;
 
-            if(fileIsAccepted)
-            {
-
-                let index = this.__filesToUpload.length;
-                ///console.log($(`.upload-file-list tr`)); debugger
-                //console.log(index); debugger
-                this.__filesToUpload.push( {index: index, name: fileName, file: item, media_type: this.__uploadMediaType, height: null, width: null, resolution: null, extension: null, dpi: null, codec: null} );
-                console.log(this.__filesToUpload); //debugger
-                const i = ( this.__$mediasCollection.find('li').length > 0 ) ? this.__$mediasCollection.find('li').length - 1 : 0;
-
-                let html = `<tr data-index="${ index }" id="upload_${index}">
-                                <td class="file-name-container">
-                                    <p>${fileName}</p>
-                                </td>
-                                <td class="file_progress_bar_container">
-                                    <progress class="progress_bar" id="progress_${index}" max="100" value="0"></progress>
-                                </td>
-                                
-                                <td class="preview-container">
-                                    <span class="upload_state"></span>
-                                </td>
-                                
-                                <td class="characteristic-container">
-                                    
-                                </td>
-                                
-                                <td class="edit-name-container">
-                                    
-                                </td>
-                                
-                                <td class="media-diff-date-container">
-                                    
-                                </td>
-                                        
-                                <td class="criterions-affectation-container">
-                                    
-                                </td>        
-                                        
-                                <td class="tags-affectation-container">
-                                    
-                                </td>
-                                        
-                                <td class="products-affectation-container">
-                                    
-                                </td>
-                                        
-                                <td class="contain-incrustations-container">
-                                    
-                                </td>
-                                
-                            </tr>`;
-
-                $(html).appendTo( $('.edit_media_info .tbody') );
-
-            }
-
             newUploadFileItem.html(newUploadItem);
 
             newUploadFileItem.appendTo( $(`.upload-file-list`) );
 
+            if(fileIsAccepted)
+                this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, file: item, media_type: this.__uploadMediaType, height: null, width: null, resolution: null, extension: null, dpi: null, codec: null} );
+
+            console.log(this.__filesToUpload); //debugger
+
             if($(".upload-file-list tr.valid_upload_item").length > this.__total_files_allowed)
             {
                 this.__uploadAuthorized = false;
-                $('.start-upload-container .error_over-max-file').text(`Vous avez sélectionné ${$(".upload-info table tbody tr.valid_upload_item").length} fichiers, le maximum autorisé est de ${this.__total_files_allowed} !"`)
-                    .fadeIn();
+                $('.start-upload-container .error_over-max-file').text(`Vous avez sélectionné ${$(".upload-info table tbody tr.valid_upload_item").length} fichiers, le maximum autorisé est de ${this.__total_files_allowed} !"`).fadeIn();
                 $(".model-upload-file .start_upload_button").fadeOut();
             }
 
@@ -449,6 +397,7 @@ class UploadHandlerTool extends Tool
 
                 // remove element from array
                 const index = this.__filesToUpload.findIndex( fileToUpload => fileToUpload.name === $(e.currentTarget).data('target') );
+
                 this.__filesToUpload.splice( index, 1 );
 
                 if( $(".upload-info table tbody tr").length < 1 )
@@ -466,6 +415,7 @@ class UploadHandlerTool extends Tool
 
     addNewItemInMediaCollection(item)
     {
+        console.log(item); //debugger
         if( $('.medias-list-to-upload').find(`.media_name[value='${ item.fileName }']`).length === 0 )
         {
             let list = this.__$mediasCollection;
@@ -521,15 +471,75 @@ class UploadHandlerTool extends Tool
         }
     }
 
+    buildUploadList()
+    {
+
+        $.each( this.__filesToUpload, (index, fileToUpload) => {
+
+            const i = ( this.__$mediasCollection.find('li').length > 0 ) ? this.__$mediasCollection.find('li').length - 1 : 0;
+
+            let html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered">
+                                <td class="file-name-container">
+                                    <i class="fas fa-trash-alt cancel-file-upload"></i>
+                                    <p>${fileToUpload.name}</p>
+                                </td>
+                                <td class="file_progress_bar_container">
+                                    <progress class="progress_bar" id="progress_${index}" max="100" value="0"></progress>
+                                </td>
+                                
+                                <td class="preview-container">
+                                    <span class="upload_state"></span>
+                                </td>
+                                
+                                <td class="characteristic-container">
+                                    
+                                </td>
+                                
+                                <td class="edit-name-container">
+                                    
+                                </td>
+                                
+                                <td class="media-diff-date-container">
+                                    
+                                </td>
+                                        
+                                <td class="criterions-affectation-container">
+                                    
+                                </td>        
+                                        
+                                <td class="tags-affectation-container">
+                                    
+                                </td>
+                                        
+                                <td class="products-affectation-container">
+                                    
+                                </td>
+                                        
+                                <td class="contain-incrustations-container">
+                                    
+                                </td>
+                                
+                            </tr>`;
+
+            $(html).appendTo( $('.edit_media_info .tbody') );
+
+        } )
+
+    }
+
     onClickOnStartUploadButtonStartUpload(active)
     {
 
         if (active)
         {
             $(".model-upload-file .start_upload_button").on("click.onClickOnStartUploadButtonStartUpload", e => {
-
+                console.log(this.__uploadAuthorized); debugger
                 if(this.__uploadAuthorized)
                 {
+
+                    this.buildUploadList();
+
+
 
                     let uploadFinished = 0;
 
@@ -539,6 +549,7 @@ class UploadHandlerTool extends Tool
                     $(".files_selection table tbody").empty();
                     $(".upload-title").text("Médias à caractériser");
                     //$(".modal-upload-download").fadeIn();
+                    let ajax = null;
 
                     // for each file in upload list
                     $.each( this.__filesToUpload, (index, fileToUpload) => {
@@ -553,7 +564,7 @@ class UploadHandlerTool extends Tool
                         const fileName = fileToUpload.file.name.replace( '.' + fileExtension , '');
 
 
-                        $.ajax({
+                        ajax = $.ajax({
                             url: "/upload/media",
                             type: "POST",
                             data: formData,
@@ -673,7 +684,7 @@ class UploadHandlerTool extends Tool
                                         if( $(`#upload_${fileToUpload.index} .file_progress_bar_container i`).length === 0 )
                                             $('<i>', { class: 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
 
-                                        this.addNewItemInMediaCollection( {id: videoEncodingStatus.id, fileName: videoEncodingStatus.fileName, extension: videoEncodingStatus.extension,} );
+                                        this.addNewItemInMediaCollection( {id: videoEncodingStatus.id, fileName: fileName, extension: videoEncodingStatus.extension,} );
 
                                         this.showMediaCharacteristic(videoInfos);
 
@@ -684,10 +695,14 @@ class UploadHandlerTool extends Tool
                             },
                             error: (response, status, error) => {
 
+                                //ajax.abort();
+
                                 //$(".modal-upload-download .show_media_edit_container").fadeOut();
                                 this.__filesToUpload.splice(index , 1);
                                 //$(`.modal-upload-download #upload_${fileToUpload.index} progress`).css({ 'color': 'red' });
 
+                                $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
+                                $(`#upload_${fileToUpload.index}`).removeClass("unregistered");
                                 $(`#upload_${fileToUpload.index}`).addClass('invalid-download');
                                 $('<i>', { class: 'fas fa-times' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) );
 
@@ -765,7 +780,7 @@ class UploadHandlerTool extends Tool
                 type: "POST",
                 data: {id: id},
                 success: (response) => {
-                    console.log(response);
+                    //console.log(response);
                     resolve(response);
 
                 },
@@ -791,23 +806,24 @@ class UploadHandlerTool extends Tool
         let preview = null;
 
         if(mediaInfos.type === 'image')
-            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.${mediaInfos.extension}" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.${mediaInfos.extension}" />
-                       <i class="fas fa-expand-alt expand-miniature" data-index="${mediaInfos.index}"></i> `;
+            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.${mediaInfos.extension}" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.${mediaInfos.extension}" />`;
 
         else
             preview = `<video class="preview" controls>
                             <source src="/miniatures/${mediaInfos.customer}/video/${mediaInfos.id}.${mediaInfos.extension}" type="${mediaInfos.mimeType}">
                        </video>`;
 
+        preview +=  `<i class="fas fa-expand-alt expand-miniature" data-index="${mediaInfos.index}"></i>`;
+
         $(preview).appendTo( $(`#upload_${mediaInfos.index} .preview-container`) );
 
         // @TODO: show characteristics
-        let characteristics = `<span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.type === 'image') ? mediaInfos.dpi :  mediaInfos.codec}</span>`;
+        let characteristics = `<span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.type === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>`;
         $(characteristics).appendTo( $(`#upload_${mediaInfos.index} .characteristic-container`) );
 
 
         // @TODO: show input for edit media name
-        let nameEditorInput = `<input type="text" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.name}" required>`;
+        let nameEditorInput = `<span class="error hidden"></span> <br> <input type="text" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.name}" required>`;
         $(nameEditorInput).appendTo( $(`#upload_${mediaInfos.index} .edit-name-container`) )
 
 
@@ -819,19 +835,22 @@ class UploadHandlerTool extends Tool
         let year = now.getFullYear();
 
         let mediaDiffusionDatesEditorInputs = `<div class="diff-start-container">
+                                                    <span class="error hidden"></span> <br> 
                                                     <label for="media_${mediaInfos.index}_diff_start">Du</label>
                                                     <input type="date" id="media_${mediaInfos.index}_diff_start" class="diffusion_dates start">
                                                </div>
 
                                                <div class="diff-end-container">
+                                                    <span class="error hidden"></span> <br> 
                                                     <label for="media_${mediaInfos.index}_diff_end">Au</label>
-                                                    <input type="date" id="media_${mediaInfos.index}_diff_end" class="diffusion_dates end" min="${year + 30}-${month}-${day}">
+                                                    <input type="date" id="media_${mediaInfos.index}_diff_end" class="diffusion_dates end" min="${year}-${month}-${day}">
                                                </div>`;
 
         $(mediaDiffusionDatesEditorInputs).appendTo( $(`#upload_${mediaInfos.index} .media-diff-date-container`) )
 
         // @TODO: show criteres association button
-        let criterionsAssociationButton = `<button type="button" class="associate-criterion" data-media="${mediaInfos.name}">Critères</button><div class="associated-criterions-container"></div>`;
+        //let criterionsAssociationButton = `<button type="button" class="associate-criterion" data-media="${mediaInfos.name}">Critères</button><div class="associated-criterions-container"></div>`;
+        let criterionsAssociationButton = `<div class="associated-criterions-container"></div>`;
         $(criterionsAssociationButton).appendTo( $(`#upload_${mediaInfos.index} .criterions-affectation-container`) );
 
         // @TODO: show tags association button
@@ -1252,8 +1271,6 @@ class UploadHandlerTool extends Tool
             .onClickOnNextButtonShowMediaInfosEditContainer(true)
             .onClickOnRemoveFileButtonRemoveFileFromList(true)
             .onClickOnSaveButtonSendMediaInfo(true)
-            .onClickOnAddDiffusionDateShowInput(true)
-            .onClickOnRemoveDiffusionDateButton(true)
             .onTypingFileNewNameCheckValidity(true)
             .onDiffusionDateChangeUpdateDateInCollection(true)
             .onClickOnExpandMiniatureButton(true)
@@ -1272,8 +1289,6 @@ class UploadHandlerTool extends Tool
             .onClickOnNextButtonShowMediaInfosEditContainer(false)
             .onClickOnRemoveFileButtonRemoveFileFromList(false)
             .onClickOnSaveButtonSendMediaInfo(false)
-            .onClickOnAddDiffusionDateShowInput(false)
-            .onClickOnRemoveDiffusionDateButton(false)
             .onTypingFileNewNameCheckValidity(false)
             .onDiffusionDateChangeUpdateDateInCollection(false)
             .onClickOnExpandMiniatureButton(false)

@@ -20,7 +20,7 @@ use App\Repository\Admin\FfmpegTasksRepository;
 use App\Repository\Customer\MediaRepository;
 use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
-use App\Service\MediaInfosHandler;
+use App\Service\MediasHandler;
 use App\Service\SessionManager;
 use App\Service\UploadCron;
 use DateTime;
@@ -119,7 +119,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag, MediasHandler $mediaInfosHandler): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -167,16 +167,20 @@ class MediaController extends AbstractController
 
         move_uploaded_file($file['tmp_name'], $path);
 
+        if($mediaInfosHandler->fileIsCorrupt($path, $fileType))
+        {
+            unlink($path);
+            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
         // debug
         // comment this at the end
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
         $sizes = ['low', 'medium', 'high', 'HD'];
         foreach ($sizes as $size) {
-            copy($path, $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/image/' .$size .'/' . $file['name']);
+            copy($path, $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $splash[0] . '/' .$size .'/' . $file['name']);
         }
         // end debug
-
-        $mediaInfosHandler = new MediaInfosHandler($parameterBag);
 
         // if is image, insert immediately
         if($splash[0] === 'image')
@@ -203,16 +207,14 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No media found with name : '%s'", $name));
 
-            /*$dpi = $mediaInfosHandler->getImageDpi2($path);
-
-            dd($dpi);*/
+            $dpi = $mediaInfosHandler->getImageDpi($path);
 
             $response = [
                 'id' => $media->getId(),
                 'extension' => $real_file_extension,
                 'height' => $media->getHeight(),
                 'width' => $media->getWidth(),
-                'dpi' => $dpi ?? null,
+                'dpi' => $dpi,
                 'type' => 'image',
                 'customer' => $customerName,
             ];
@@ -277,6 +279,8 @@ class MediaController extends AbstractController
 
         }
 
+        // @TODO: if resolution 16/9, add color red on resolution in popup when user click save, confirm(error..., continue ?)
+
         return new JsonResponse($response, Response::HTTP_OK);
 
     }
@@ -320,6 +324,7 @@ class MediaController extends AbstractController
                 'mimeType' => $mimeType,
                 'name' => $media->getName()
             ];
+
         }
 
         // finish with 1 or more errors
@@ -393,7 +398,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('current_customer')->getName() ) );
 
 
-        dd($request->request, $customer);
+        //dd($request->request, $customer);
 
         $error = [  ];
 
@@ -407,14 +412,14 @@ class MediaController extends AbstractController
                 break;
             }
 
-            else if($mediaInfos['name'] === "" or $mediaInfos['name'] === null)
+            elseif($mediaInfos['name'] === "" or $mediaInfos['name'] === null)
             {
                 // return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
                 $error = [ 'text' => '517 Empty Filename', 'subject' => $index ];
                 break;
             }
 
-            /*else if(strlen($mediaInfos['name']) < 5)
+            /*elseif(strlen($mediaInfos['name']) < 5)
             {
                 // return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
                 $error = [ 'text' => '518 Too short Filename', 'subject' => $index ];
@@ -423,6 +428,8 @@ class MediaController extends AbstractController
 
             else
             {
+
+                $mediaInfos['mediaType'] = 'video';
 
                 if($request->request->get('media_type') === "video_synchro")
                     $type = "synchro";
@@ -465,20 +472,22 @@ class MediaController extends AbstractController
                     break;
                 }
 
-                //$task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension'], 'registered' => new DateTime()]);
-                $task = $ffmpegTasksRepository->find($mediaInfos['id']);
-
-                // si aucune task n'est trouvé et que ce n'est pas une image qui a été edité (donc c'est une video)
-                if(!$task AND $mediaInfos['mediaType'] !== 'image')
-                    throw new Exception(sprintf("No Task found with id '%d' !", $mediaInfos['id']));
-
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
 
                 if(!$media)
                 {
+
+                    //$task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension'], 'registered' => new DateTime()]);
+                    $task = $ffmpegTasksRepository->find($mediaInfos['id']);
+
+                    // si aucune task n'est trouvé et que ce n'est pas une image qui a été edité (donc c'est une video)
+                    if(!$task AND $mediaInfos['mediaType'] === 'video')
+                        throw new Exception(sprintf("No Task found with id '%d' !", $mediaInfos['id']));
+
                     $media = new Video();
 
                     $media->setName( $mediaInfos['name'] );
+
                 }
                 else
                 {
@@ -539,7 +548,7 @@ class MediaController extends AbstractController
                     $task->setFilename( $mediaInfos['name'] . '.' . $mediaInfos['extension'] )
                          ->setMedia($media);
 
-                    $this->getDoctrine()->getManager('default')->flush();
+                    $this->getDoctrine()->getManager()->flush();
 
                 }
 

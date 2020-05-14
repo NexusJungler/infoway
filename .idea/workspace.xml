@@ -2,63 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/new_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/new_app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERROR_CODE_HELP.md" beforeDir="false" afterPath="$PROJECT_DIR$/ERROR_CODE_HELP.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/TagAssociationHandler/MediaTagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/TagAssociationHandler/MediaTagAssociationHandlerTool.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/MediasHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaCriterionAssociationHandler/MediaCriterionAssociationHandler.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sys_flags.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/sys_flags.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/AllergenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/AllergenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/ContactRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/ContactRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/CountryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/CountryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/CustomerRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/CustomerRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/EntityRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/EntityRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/FeatureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/FeatureRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/FfmpegTasksRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/FfmpegTasksRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/PerimeterRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/PerimeterRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/PermissionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/PermissionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/RoleRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/TimeZoneRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/TimeZoneRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserPermissionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserPermissionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserRolesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserRolesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserSitesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserSitesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CategoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CheckoutProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CheckoutProductRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CheckoutSystemRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CheckoutSystemRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DateRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DateRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ExpectedChangeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ExpectedChangeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ImageRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ImageRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MainPriceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MainPriceRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesFactoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesFactoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesTypeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesTypeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductAllergensRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductAllergensRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/RolePermissionsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/RolePermissionsRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/RoleRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SiteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SiteRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SynchroPlaylistRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SynchroPlaylistRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SynchroRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SynchroRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagCategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagCategoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/VideoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/VideoRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SearchRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SearchRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MediaInfosHandler.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UploadCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadCron.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/forms.fr.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/forms.fr.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/messages.fr.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/messages.fr.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,8 +23,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Yaml" />
         <option value="JavaScript File" />
+        <option value="Yaml" />
+        <option value="Twig" />
       </list>
     </option>
   </component>
@@ -272,7 +224,8 @@
       <workItem from="1589270297219" duration="25199000" />
       <workItem from="1589303877903" duration="1299000" />
       <workItem from="1589305219015" duration="5560000" />
-      <workItem from="1589356871443" duration="45269000" />
+      <workItem from="1589356871443" duration="45439000" />
+      <workItem from="1589439855385" duration="32470000" />
     </task>
     <servers />
   </component>
@@ -300,10 +253,10 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="767" y="-858" key="#com.intellij.ide.util.MemberChooser/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589297024146" />
-    <state x="810" y="-754" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1589282583234">
+    <state x="810" y="-1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1589480546562">
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
-    <state x="810" y="-754" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589282583234" />
+    <state x="810" y="-1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589480546562" />
     <state x="692" y="-785" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1589377580476">
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>

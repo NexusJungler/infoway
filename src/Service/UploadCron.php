@@ -45,6 +45,21 @@ class UploadCron
     private ParameterBagInterface $parameterBag;
 
     /**
+     * @var mixed
+     */
+    private $fileUploadDate;
+
+    /**
+     * @var array|mixed
+     */
+    private $mediaProducts;
+
+    /**
+     * @var array|mixed
+     */
+    private $mediaTags;
+
+    /**
      * UploadCron constructor.
      *
      * @param $customer_name
@@ -118,6 +133,14 @@ class UploadCron
                 $this->errors[] = 'permission denied - ' . $real_file_extension . ' bad extension';
                 return;
             } else {
+
+                if($this->filetype === 'image')
+                {
+                    $mediaHandler = new MediasHandler($parameterBag);
+                    $mediaHandler->changeImageDpi($path, $path,72);
+                    $mediaHandler->convertImageCMYKToRGB($path, $path);
+                }
+
                 $this->process($path);
             }
         } else {
