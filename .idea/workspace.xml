@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/MediasHandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaCriterionAssociationHandler/MediaCriterionAssociationHandler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/MediaInfosHandler.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UploadCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadCron.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MediasHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MediasHandler.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +219,9 @@
       <workItem from="1589303877903" duration="1299000" />
       <workItem from="1589305219015" duration="5560000" />
       <workItem from="1589356871443" duration="45439000" />
-      <workItem from="1589439855385" duration="32470000" />
+      <workItem from="1589439855385" duration="32922000" />
+      <workItem from="1589487704975" duration="41000" />
+      <workItem from="1589487779359" duration="2087000" />
     </task>
     <servers />
   </component>

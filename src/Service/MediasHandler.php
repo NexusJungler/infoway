@@ -151,14 +151,21 @@ class MediasHandler
     public function fileIsCorrupt(string $fileName, string $fileType)
     {
 
-        if($fileType === 'video')
+        if($fileType === 'image')
             $cmd = "magick identify -verbose \"" . $fileName . "\"";
 
         else
-            $cmd = "ffmpeg -v error -i \"" . $fileName . "\" -f null";
+            $cmd = "ffmpeg -v error -i \"" . $fileName . "\" -f null - 2>error.log";
 
         exec($cmd, $data, $cmdResultStatus);
-dd($cmdResultStatus);
+
+        if($fileType === 'video' AND $cmdResultStatus !== 0)
+        {
+            // remove log file created by ffmpeg
+            unlink($this->parameterBag->get('project_dir') . "/public/error.log");
+            return true;
+        }
+
         return $cmdResultStatus !== 0;
     }
 
