@@ -35,6 +35,11 @@ services:
             $project_dir : '%project_dir%'
 
 
+    session.flash_bag:
+        class: Symfony\Component\HttpFoundation\Session\Flash\AutoExpireFlashBag
+
+    App\Serializer\Normalizer\IgnoreNotAllowedNulledAttributeNormalizer:
+        tags: [serializer.normalizer]
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -80,5 +85,18 @@ services:
                 #                entity_manager: custom
                 # method attribute is optional
               method: initializeSites
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\EventListener\Customer\SiteListener:
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Customer\Site
+              entity_manager: kfc
+                #                # entity_manager attribute is optional
+
+                # method attribute is optional
+              method: initializeUsers
 
     Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'

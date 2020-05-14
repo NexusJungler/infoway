@@ -9,12 +9,17 @@ use App\Entity\Customer\TimeSlot;
 use App\Form\Customer\DisplayMouldType;
 use App\Form\Customer\DisplaySpaceType;
 use App\Repository\Customer\DisplaySpaceRepository;
+use App\Service\FlashBagHandler;
 use PhpParser\Error;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\Time;
 
 /**
@@ -62,9 +67,11 @@ class DisplaySpaceController extends AbstractController
     /**
      * @Route("/{id}", name="programming_display_space_show", methods={"GET", "POST"})
      */
-    public function show(DisplaySpace $displaySpace, Request $request): Response
+    public function show(DisplaySpace $displaySpace, Request $request, SerializerInterface $serializer, FlashBagHandler $flashBagHandler): Response
     {
 
+
+        $data = $serializer->serialize('test','json');
         $displayMould = new DisplayMould() ;
         $displayMould->setDisplaySpace( $displaySpace ) ;
 
@@ -84,9 +91,21 @@ class DisplaySpaceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($displayMould);
 
-            return $this->redirectToRoute('programming_display_space_index');
+            $handleCircularRefContext = [
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                    return $object->getId();
+                },
+            ];
+
+            $serializedDisplayMould = $serializer->serialize($displayMould,'json', $handleCircularRefContext ) ;
+            $flashBagHandler->getFlashBagContainer()->add('serializedDisplayMould',$serializedDisplayMould ) ;
+            //dd($flashBagHandler);
+//            $flashBagHandler->addFlashBag('serializedDisplayMould' , $serializedDisplayMould);
+
+
+
+            return $this->redirectToRoute('programming_display_mould_new');
         }
         return $this->render('programming/display_space/show.html.twig', [
             'display_space' => $displaySpace,

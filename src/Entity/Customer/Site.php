@@ -212,7 +212,7 @@ class Site
         return $this->country;
     }
 
-    public function setCountry(?Country $country): self
+    public function setCountry(Country $country): self
     {
         $this->country = $country;
         $this->countryId = $country->getId() ;

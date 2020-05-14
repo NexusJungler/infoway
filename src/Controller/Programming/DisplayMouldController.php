@@ -5,10 +5,15 @@ namespace App\Controller\Programming;
 use App\Entity\Customer\DisplayMould;
 use App\Form\Customer\DisplayMouldType;
 use App\Repository\Customer\DisplayMouldRepository;
+use App\Serializer\Normalizer\EmptyDateTimeNormalizer;
+use App\Service\FlashBagHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/programming/display-mould")
@@ -28,16 +33,31 @@ class DisplayMouldController extends AbstractController
     /**
      * @Route("/new", name="programming_display_mould_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FlashBagHandler $flashBagHandler, SerializerInterface $serializer): Response
     {
+
+        $ignoredAttributes = ['id'] ;
+        $serializedDisplayMould = $flashBagHandler->getOneFlashBagOrNul('serializedDisplayMould') ;
+
+        if( $serializedDisplayMould === null ) throw new \Error( 'invalid mould datas') ;
+
+
+        $test= $serializer->deserialize( $serializedDisplayMould ,DisplayMould::class,'json',[
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['id']
+        ]);
+        dd($test);
+        if( $flashBagHandler === null )
         $displayMould = new DisplayMould();
         $form = $this->createForm(DisplayMouldType::class, $displayMould);
         $form->handleRequest($request);
+
+        dd($form);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($displayMould);
             $entityManager->flush();
+
 
             return $this->redirectToRoute('programming_display_mould_index');
         }
