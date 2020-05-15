@@ -23,36 +23,42 @@ class TagType extends AbstractType
 
     private User $_user ;
     private Customer $_customer ;
+    private bool $_allowSiteChoice ;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $this->_user = $options[ 'user' ] ;
         $this->_customer = $options[ 'customer' ] ;
+        $this->_allowSiteChoice = $options[ 'allowSiteChoice' ] ;
 
-       $builder
-           ->add('color', ColorType::class)
+        $builder
+            ->add('color', ColorType::class)
             ->add('name')
-            ->add('description')
-           ->add('sites', EntityType::class, [
-               'class' => Site::class,
-               'choice_label' => 'name',
-               'query_builder' => function(SiteRepository $siteRepository ){
-                   $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
-               },
-               'multiple' => true,
-               'expanded' => true,
-               'by_reference' => false
-           ])
-        ;
+            ->add('description');
+        if ($this->_allowSiteChoice){
+            $builder
+                ->add('sites', EntityType::class, [
+                    'class' => Site::class,
+                    'choice_label' => 'name',
+                    'query_builder' => function(SiteRepository $siteRepository ){
+                        $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
+                    },
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Tag::class,
+            'allowSiteChoice' => true,
         ]);
         $resolver->setRequired([
+            'allowSiteChoice',
             'customer',
             'user'
         ]);
