@@ -19,3 +19,5 @@
 > 519 Invalid diffusion date : Diffusion end date > Diffusion start date
 
 > 520 Encode error : An error while media encoding
+
+> 521 Bad ratio : File don't have a standard ratio

@@ -134,10 +134,12 @@ class UploadCron
                 return;
             } else {
 
-                $this->process($path);
+                if(!$this->process($path))
+                {
+                    $this->errors[] = 'bad ratio';
+                }
             }
         } else {
-            dd("path not found : " .  $path);
             $this->errors[] = 'file not found!';
             return;
         }
@@ -170,12 +172,20 @@ class UploadCron
 
                     // On remplace le nom original des différentes résolutions créées par l'id du media
                     $sizes = ['low', 'medium', 'high', 'HD'];
+
+                    $mediasHandler = new MediasHandler($this->parameterBag);
+
                     foreach ($sizes as $size) {
 
                         $dir_ref = $this->destfolder . "$size/" . $this->filename . '.' . $valid_ext;
 
                         if(file_exists($dir_ref)) {
-                            rename($dir_ref, $this->destfolder . "/$size/" . $this->fileID . '.' . $valid_ext);
+                            $dest = $this->destfolder . "/$size/" . $this->fileID . '.' . $valid_ext;
+                            rename($dir_ref, $dest);
+
+                            $mediasHandler->changeImageDpi($dest, $dest,72);
+                            $mediasHandler->convertImageCMYKToRGB($dest, $dest);
+
                             if($size == 'high') {
                                 $this->repository->updateHigh($this->fileID);
                             }
@@ -572,6 +582,8 @@ class UploadCron
                 break;
         }
 
+
+
         if ($max_size) {
             // -preset medium, -compression_level, -crf 20 = Constante Rate Factor ??
             // -b:v 20M (pour les dias converties en vidéo) -g 2
@@ -731,8 +743,8 @@ class UploadCron
                 // case média diffusable
                 if($this->mediatype == 'diff') {
                     // unlink($img);   [fonction déjà implementé si return false]
-                    //return false; // On exclut l'insertion en base
-                    return true;
+                    return false; // On exclut l'insertion en base
+                    //return true;
                 }
                 break;
         }

@@ -52,6 +52,8 @@ class UploadHandlerTool extends Tool
 
             encode_error: "Erreur durant l'enodage du fichier",
 
+            bad_ratio: "Ce fichier ne possède pas un ratio valide",
+
         };
 
         this.__dataCheckingErrors = "";
@@ -737,6 +739,7 @@ class UploadHandlerTool extends Tool
 
                                     $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
                                     $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
+                                    $(`#upload_${fileToUpload.index}`).removeClass("valid-download");
 
                                     uploadFinished++;
 
@@ -786,6 +789,8 @@ class UploadHandlerTool extends Tool
                                         if(typeof videoEncodingResult.error === "undefined")
                                         {
 
+                                            $(`#upload_${fileToUpload.index}`).removeClass("valid-download");
+
                                             this.addNewItemInMediaCollection( {id: videoEncodingResult.id, fileName: fileName, extension: videoEncodingResult.extension,} );
 
                                             let videoInfos = {
@@ -815,6 +820,9 @@ class UploadHandlerTool extends Tool
                                     }
 
                                 }
+
+                                if($('.media_list tbody tr.valid-download').length > 0)
+                                    $('.edit_media_info .action-btn-container').fadeIn();
 
                             },
                             error: (response, status, error) => {
@@ -862,6 +870,10 @@ class UploadHandlerTool extends Tool
 
                                     case "518 Too short Filename":
                                         uploadState.html(`${this.__errors.too_short_error}`);
+                                        break;
+
+                                    case "521 Bad ratio":
+                                        uploadState.html(`${this.__errors.bad_ratio}`);
                                         break;
 
                                     default:
@@ -932,7 +944,7 @@ class UploadHandlerTool extends Tool
         let preview = null;
 
         if(mediaInfos.type === 'image')
-            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.${mediaInfos.extension}" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.${mediaInfos.extension}" />`;
+            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.png" />`;
 
         else
             preview = `<video class="preview" controls>

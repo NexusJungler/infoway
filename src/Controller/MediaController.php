@@ -143,16 +143,19 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
+        if($mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
+            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
             return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        else if($mediaRepository->findOneByName( pathinfo($file['name'])['filename'] ) )
+        elseif($mediaRepository->findOneByName( pathinfo($file['name'])['filename'] ) )
             return new Response("515 Duplicate File", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        else if(preg_match("/(\w)*\.(\w)*/", pathinfo($file['name'])['filename'] ))
+        elseif(preg_match("/(\w)*\.(\w)*/", pathinfo($file['name'])['filename'] ))
             return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        else if($file['name'] === "" or $file['name'] === null)
+        elseif($file['name'] === "" or $file['name'] === null)
             return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
 
         /*else if(strlen(pathinfo($file['name'])['filename']) < 5)
@@ -163,26 +166,7 @@ class MediaController extends AbstractController
 
         move_uploaded_file($file['tmp_name'], $path);
 
-        if($mediasHandler->fileIsCorrupt($path, $fileType))
-        {
-            unlink($path);
-            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
-        $sizes = ['low', 'medium', 'high', 'HD'];
-        foreach ($sizes as $size) {
-            $dest = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $splash[0] . '/' .$size .'/' . $file['name'];
-            copy($path, $dest);
-
-            if($splash[0] === 'image')
-            {
-                $mediasHandler->changeImageDpi($dest, $dest,72);
-                $mediasHandler->convertImageCMYKToRGB($dest, $dest);
-            }
-        }
-
 
         // if is image, insert immediately
         if($splash[0] === 'image')
@@ -202,18 +186,30 @@ class MediaController extends AbstractController
             // reuse this class
             $cron = new UploadCron($taskInfo, $this->getDoctrine(), $parameterBag);
             if( $cron->getErrors() !== [] )
-                throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
+            {
 
-            $name = str_replace('.'.$real_file_extension, '', $file['name']);
+                $errors = implode(' ; ', $cron->getErrors());
+
+                if($errors === "bad ratio")
+                    return new Response("521 Bad ratio", Response::HTTP_INTERNAL_SERVER_ERROR);
+
+                else
+                    throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
+
+            }
+
+            $name = explode('.',$file['name'])[0];
             $media = $mediaRepository->findOneByName( $name );
             if(!$media)
                 throw new Exception(sprintf("No media found with name : '%s'", $name));
 
-            $dpi = $mediasHandler->getImageDpi($path);
+            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/" . $media->getId() . ".png";
+
+            $dpi = $mediasHandler->getImageDpi($miniaturePath);
 
             $response = [
                 'id' => $media->getId(),
-                'extension' => $real_file_extension,
+                'extension' => $media->getExtension(),
                 'height' => $media->getHeight(),
                 'width' => $media->getWidth(),
                 'dpi' => $dpi,
