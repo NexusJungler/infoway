@@ -3,6 +3,7 @@
 namespace App\Entity\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\TimeSlotRepository")
@@ -18,11 +19,13 @@ class TimeSlot
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"mouldSerialization"})
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"mouldSerialization"})
      */
     private $endAt;
 

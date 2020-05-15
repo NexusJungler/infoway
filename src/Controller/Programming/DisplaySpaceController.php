@@ -98,7 +98,11 @@ class DisplaySpaceController extends AbstractController
                 },
             ];
 
-            $serializedDisplayMould = $serializer->serialize($displayMould,'json', $handleCircularRefContext ) ;
+
+            $serializedDisplayMould = $serializer->serialize($displayMould,'json' , $handleCircularRefContext) ;
+//            dd($serializedDisplayMould);
+
+
             $flashBagHandler->getFlashBagContainer()->add('serializedDisplayMould',$serializedDisplayMould ) ;
             //dd($flashBagHandler);
 //            $flashBagHandler->addFlashBag('serializedDisplayMould' , $serializedDisplayMould);

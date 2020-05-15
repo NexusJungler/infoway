@@ -5,6 +5,7 @@ namespace App\Entity\Customer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\DisplayMouldRepository")
@@ -15,16 +16,19 @@ class DisplayMould
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"mouldSerialization"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"mouldSerialization"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"mouldSerialization"})
      */
     private $screensNumber;
 
@@ -35,6 +39,7 @@ class DisplayMould
      *      joinColumns={@ORM\JoinColumn(name="mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id", unique=true)}
      *      )
+     *
      */
     private $playlists;
 
@@ -48,19 +53,21 @@ class DisplayMould
      * Many features have one product. This is the owning side.
      * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="moulds")
      * @ORM\JoinColumn(name="display_space_id", referencedColumnName="id")
+     * @Groups({"mouldSerialization"})
      */
     private $displaySpace;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="displayMoulds")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="displayMoulds" , cascade={"persist"} )
      * @ORM\JoinTable(name="display_moulds_criterions")
+     * @Groups({"mouldSerialization"})
      */
     private $criterions;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="displayMoulds")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="displayMoulds", cascade={"persist"} )
      * @ORM\JoinTable(name="display_moulds_tags")
      */
     private $tags;
@@ -82,6 +89,7 @@ class DisplayMould
      *      joinColumns={@ORM\JoinColumn(name="display_mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="time_slot_id", referencedColumnName="id", unique=true)}
      *      )
+     * @Groups({"mouldSerialization"})
      */
     private $timeSlots ;
 

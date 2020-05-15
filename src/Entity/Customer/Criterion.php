@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity\Customer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,11 +16,14 @@ class Criterion
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"mouldSerialization"})
+     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"mouldSerialization"})
      */
     private $name;
 
@@ -42,6 +46,7 @@ class Criterion
 
     /**
      * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions",cascade={"persist"})
+     * @Groups({"mouldSerialization"})
      */
     private $products;
 
@@ -53,6 +58,7 @@ class Criterion
     /**
      * Many Groups have Many Users.
      * @ORM\ManyToMany(targetEntity="DisplayMould", mappedBy="criterions")
+     * @Groups({"mouldSerialization"})
      */
     private $displayMoulds;
 
@@ -75,6 +81,12 @@ class Criterion
         $this->selected = false ;
         $this->displayMoulds = new ArrayCollection() ;
         $this->screenDisplays = new ArrayCollection() ;
+    }
+
+    public function setId( int $id ): self{
+        $this->id = $id ;
+
+        return $this;
     }
 
     public function getId(): ?int

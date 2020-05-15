@@ -6,13 +6,18 @@ use App\Entity\Customer\DisplayMould;
 use App\Form\Customer\DisplayMouldType;
 use App\Repository\Customer\DisplayMouldRepository;
 use App\Serializer\Normalizer\EmptyDateTimeNormalizer;
+use App\Serializer\Normalizer\IgnoreNotAllowedNulledAttributeNormalizer;
 use App\Service\FlashBagHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -36,26 +41,31 @@ class DisplayMouldController extends AbstractController
     public function new(Request $request, FlashBagHandler $flashBagHandler, SerializerInterface $serializer): Response
     {
 
-        $ignoredAttributes = ['id'] ;
+
         $serializedDisplayMould = $flashBagHandler->getOneFlashBagOrNul('serializedDisplayMould') ;
 
         if( $serializedDisplayMould === null ) throw new \Error( 'invalid mould datas') ;
 
 
-        $test= $serializer->deserialize( $serializedDisplayMould ,DisplayMould::class,'json',[
-            AbstractNormalizer::IGNORED_ATTRIBUTES => ['id']
-        ]);
-        dd($test);
-        if( $flashBagHandler === null )
-        $displayMould = new DisplayMould();
-        $form = $this->createForm(DisplayMouldType::class, $displayMould);
+        $displayMouldToCreate = $serializer->deserialize( $serializedDisplayMould ,DisplayMould::class,'json');
+//        dd($displayMouldToCreate);
+
+//        dd( $displayMouldToCreate ) ;
+        $entityManager = $this->getDoctrine()->getManager('kfc');
+        $entityManager->persist($displayMouldToCreate);
+
+
+        $optionsToPassToForm = [
+            'allowDisplaySpaceChoice' => false,
+        ];
+
+        $form = $this->createForm(DisplayMouldType::class, $displayMouldToCreate, $optionsToPassToForm );
         $form->handleRequest($request);
 
-        dd($form);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($displayMould);
+
+            $entityManager->persist($displayMouldToCreate);
             $entityManager->flush();
 
 
@@ -63,7 +73,7 @@ class DisplayMouldController extends AbstractController
         }
 
         return $this->render('programming/display_mould/new.html.twig', [
-            'display_mould' => $displayMould,
+            'display_mould' => $displayMouldToCreate,
             'form' => $form->createView(),
         ]);
     }
