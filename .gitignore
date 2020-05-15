@@ -17,7 +17,8 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-
+.env
+config/packages/doctrine.yaml
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
@@ -27,4 +28,5 @@
 /public/build/
 npm-debug.log
 yarn-error.log
+
 ###< symfony/webpack-encore-bundle ###
