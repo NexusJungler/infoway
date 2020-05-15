@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DisplaySpace index{% endblock %}
+
+{% block body %}
+    <h1>DisplaySpace index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for display_space in display_spaces %}
+            <tr>
+                <td>{{ display_space.id }}</td>
+                <td>{{ display_space.name }}</td>
+                <td>
+                    <a href="{{ path('programming_display_space_show', {'id': display_space.id}) }}">show</a>
+                    <a href="{{ path('programming_display_space_edit', {'id': display_space.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('programming_display_space_new') }}">Create new</a>
+{% endblock %}

@@ -7,13 +7,19 @@ use App\Entity\Admin\TimeZone;
 use App\Entity\Admin\User;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Devise;
+use App\Entity\Customer\PricesGroup;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
+use App\Form\Customer\NightProgrammingType;
 use App\Repository\Admin\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -84,6 +90,15 @@ class SiteType extends AbstractType
                     'expanded' => true,
                     'by_reference' => false
                 ])
+            ->add('pricesGroup',EntityType::class ,
+                [
+                    // looks for choices from this entity
+                    'class' => PricesGroup::class,
+                    'choice_label' => 'name',
+                    'by_reference' => false
+                ])
+         //   ->add('nightProgrammingActivated', CheckboxType::class,)
+         //   ->add('nightProgramming',NightProgrammingType::class)
 //            ->add('tags')
         ;
     }

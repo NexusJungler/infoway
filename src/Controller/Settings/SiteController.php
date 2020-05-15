@@ -2,6 +2,7 @@
 
 namespace App\Controller\Settings;
 
+use App\Entity\Admin\Customer;
 use App\Entity\Customer\Site;
 use App\Form\SiteType;
 use App\Repository\Customer\SiteRepository;
@@ -46,7 +47,10 @@ class SiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+
+            $site->setCustomer( $currentCustomer );
+
+            $entityManager = $this->getDoctrine()->getManager($currentCustomer->getName());
 
             $entityManager->persist($site);
             $entityManager->flush();

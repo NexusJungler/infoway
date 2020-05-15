@@ -39,6 +39,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function getUsersWithRoleBellowUserByCustomer(Customer $customer, User $user)
     {
+
         $customerEM = $this->_registry->getManager( $customer->getName() ) ;
         $customerRoleRepo = $customerEM->getRepository(Role::class) ;
 
