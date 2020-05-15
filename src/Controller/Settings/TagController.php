@@ -33,13 +33,9 @@ class TagController extends AbstractController
      */
     public function index(TagsRepository $tagsRepository): Response
     {
-       $test =  $this->getDoctrine()->ge;
+//       $test =  $this->getDoctrine()->ge;
 
 
-       $repo = $test->getRepository(Tag::class);
-
-       dd($repo);
-       dd($repo->findById());
         return $this->render('settings/tags/index.html.twig', [
             'tags' => $tagsRepository->findAll(),
         ]);
@@ -65,6 +61,8 @@ class TagController extends AbstractController
 
         $datasToPassToTagForm = ['user' => $currentUser, 'customer' => $currentCustomer ] ;
 
+//        dd($tagsList);
+
 
         $form = $this->createForm(TagListType::class, $tagsList , $datasToPassToTagForm);
 
@@ -80,6 +78,11 @@ class TagController extends AbstractController
 
 
             foreach( $tagsList->getTags() as $tag ){
+
+                foreach( $tagsList->getSites() as $site ){
+                    $tag->addSite($site) ;
+                }
+
                 $customerManager->persist( $tag );
             }
             $customerManager->flush();
@@ -124,6 +127,7 @@ class TagController extends AbstractController
 
         $form = $this->createForm(TagType::class, $tag, $datasToPassToTagForm );
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
