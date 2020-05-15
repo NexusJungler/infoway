@@ -32,9 +32,22 @@ class Product
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="Media", mappedBy="products")
+     */
+    private $medias;
+
+
     public function __construct() {
         $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->medias = new ArrayCollection() ;
     }
 
     public function getId(): ?int
@@ -92,6 +105,18 @@ class Product
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

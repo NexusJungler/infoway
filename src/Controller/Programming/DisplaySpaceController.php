@@ -67,7 +67,7 @@ class DisplaySpaceController extends AbstractController
     /**
      * @Route("/{id}", name="programming_display_space_show", methods={"GET", "POST"})
      */
-    public function show(DisplaySpace $displaySpace, Request $request, SerializerInterface $serializer, FlashBagHandler $flashBagHandler): Response
+    public function show(DisplaySpace $displaySpace, Request $request, SerializerInterface $serializer, FlashBagHandler $flashBagHandler, SessionInterface $session): Response
     {
 
 
@@ -103,6 +103,7 @@ class DisplaySpaceController extends AbstractController
 //            dd($serializedDisplayMould);
 
 
+            $session->set('serializedDisplayMould', $serializedDisplayMould) ;
             $flashBagHandler->getFlashBagContainer()->add('serializedDisplayMould',$serializedDisplayMould ) ;
             //dd($flashBagHandler);
 //            $flashBagHandler->addFlashBag('serializedDisplayMould' , $serializedDisplayMould);
