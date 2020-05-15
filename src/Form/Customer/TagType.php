@@ -23,7 +23,7 @@ class TagType extends AbstractType
 
     private User $_user ;
     private Customer $_customer ;
-    private bool $_allowSiteChoice ; 
+    private bool $_allowSiteChoice ;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,12 +32,12 @@ class TagType extends AbstractType
         $this->_customer = $options[ 'customer' ] ;
         $this->_allowSiteChoice = $options[ 'allowSiteChoice' ] ;
 
-       $builder
-           ->add('color', ColorType::class)
+        $builder
+            ->add('color', ColorType::class)
             ->add('name')
             ->add('description');
-            if ($this->_allowSiteChoice){
-                $builder
+        if ($this->_allowSiteChoice){
+            $builder
                 ->add('sites', EntityType::class, [
                     'class' => Site::class,
                     'choice_label' => 'name',
@@ -48,7 +48,7 @@ class TagType extends AbstractType
                     'expanded' => true,
                     'by_reference' => false
                 ]);
-            }
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

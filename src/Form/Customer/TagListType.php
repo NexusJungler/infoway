@@ -1,36 +1,20 @@
 <?php
 
+
 namespace App\Form\Customer;
 
-use App\Entity\Admin\Customer;
-use App\Entity\Admin\TagsList;
-use App\Entity\Admin\User;
-use App\Entity\Admin\UserSites;
-use App\Entity\Customer\Site;
-use App\Entity\Customer\Tag;
-use App\Repository\Customer\SiteRepository;
-use App\Service\SessionManager;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\Customer\CriterionsList;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagListType extends AbstractType
+class CriterionsListType extends AbstractType
 {
-    private User $_user ;
-    private Customer $_customer ;
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $this->_user = $options[ 'user' ] ;
-        $this->_customer = $options[ 'customer' ] ;
-
         $builder
             ->add('tags', CollectionType::class,[
                 // each entry in the array will be an "email" field
@@ -41,27 +25,21 @@ class TagListType extends AbstractType
                     'allowSiteChoice' => false
                 ]
             ])
-            ->add('sites', EntityType::class, [
-                'class' => Site::class,
-                'choice_label' => 'name',
-                'query_builder' => function(SiteRepository $siteRepository ){
-                    $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false,
-    ])
+            ->add('description')
+            ->add('criterions', CollectionType::class, array(
+                'entry_type' => CriterionInListType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false
+            ));
+
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => TagsList::class,
-        ]);
-        $resolver->setRequired([
-            'user' ,
-            'customer'
+            'data_class' => CriterionsList::class,
         ]);
     }
 }
