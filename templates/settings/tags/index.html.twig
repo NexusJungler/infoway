@@ -70,14 +70,14 @@
                                                 </label>
                                                 <p class="container-tags">
                                                     <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }} 
-                                                    <button type="button" id="col-tag{{loop.index}}">x</button>
+                                                    <button type="button" id="delete-tag{{loop.index}}" class="btn-delete-tag">x</button>
                                                 </p>
                                             </td>
                                             <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
-                                            <td>
+                                            {# <td>
                                                 <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
                                                 <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
-                                            </td>
+                                            </td> #}
                                         </tr>
                                     {% else %}
                                         <tr>

@@ -8,7 +8,7 @@
 {% endblock %} #}
 
 {% block body %}
-    <main class="main main_setting">
+    <main class="main main_produits">
         <div class="main-content">
 
             <section class="jumbotron">
@@ -31,10 +31,10 @@
                     <article class="display setting-display ">
                         <div class="display-content">
                             <div class="display-btn">
-                                <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus">Ajouter</a></button>
+                                <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
                                 <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
                                 {#<button><a id="duplicate" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>#}
-                                <button type="button" class="btn" id="duplicate"><i class="fas fa-plus">Dupliquer</button>
+                                <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
                                 <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
                             </div>
                         </div>
@@ -51,37 +51,54 @@
                         <table id="list" class="table-custome">
                             <thead class="thead-info">
                                 <tr>
-                                    <th>sélection</th>
-                                    <th>nom</th>
-                                    <th>catégorie</th>
-                                    <th>type de prix</th>
-                                    <th>quantité</th>
-                                    <th>description</th>
+                                    <th>
+                                        <label class="container-input">
+                                            <input type="checkbox" name="" class="chkbox-tag" id="" data-tag="">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </th>
+                                    <th>Diff.</th>
+                                    <th>Nom</th>
+                                    <th><i class="fas fa-pen"></i></th>
+                                    <th>Form.</th>
+                                    <th>Catégorie</th>
+                                    <th>Description</th>
                                     <th>mention</th>
-                                    <th>début de diffusion</th>
-                                    <th>fin de diffusion</th>
                                     <th>tags</th>
-                                    <th>représentation graphique</th>
+                                    <th>type de prix</th>
+                                    {# <th>début de diffusion</th> #}
+                                    <th>Date de fin</th>
+                                    <th>Visuel</th>
                                 </tr>
                             </thead>
                             <tbody class="tbody tbody-content scrollbar-table">
                             {% for product in products %}
                                 <tr>
-                                    <td><input type="checkbox" name="products[{{ product.id }}]"></td>
+                                    <td>
+                                        <label class="container-input">
+                                            <input type="checkbox" class="chkbox-produits" name="products[{{ product.id }}]">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </td>
+                                    <td><i class="fas fa-spinner"></i></td>
                                     <td>{{ product.name }}</td>
+                                    <td><i class="fas fa-pen"></i></td>
                                     <td>{{ product.category.name }}</td>
-                                    <td>{{ product.priceType.name }}</td>
+                                    
                                     <td>{{ product.amount }}</td>
                                     <td>{{ product.description }}</td>
                                     <td>{{ product.note }}</td>
-                                    <td>{{ product.start |date('Y-m-d') }}</td>
-                                    <td>{{ product.end |date('Y-m-d') }}</td>
                                     <td class="tag">
                                         {% for tag in product.tags %}
-                                            <span>{{ tag.name }}</span>
+                                        <p class="container-tags">
+                                            <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }} 
+                                        </p>
                                         {% endfor %}
                                     </td>
-                                    <td><img src="/images/oeil.png" alt="logo"></td>
+                                    <td>{{ product.priceType.name }}</td>
+                                    {# <td>{{ product.start |date('Y-m-d') }}</td> #}
+                                    <td>{{ product.end |date('d-m-Y') }}</td>
+                                    <td><i class="fas fa-eye"></i></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

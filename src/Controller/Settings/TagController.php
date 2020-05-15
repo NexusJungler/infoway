@@ -58,6 +58,7 @@ class TagController extends AbstractController
 
         $datasToPassToTagForm = ['user' => $currentUser, 'customer' => $currentCustomer ] ;
 
+
         $form = $this->createForm(TagListType::class, $tagsList , $datasToPassToTagForm);
 
         $form->handleRequest($request);
