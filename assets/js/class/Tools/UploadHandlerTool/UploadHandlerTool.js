@@ -50,6 +50,8 @@ class UploadHandlerTool extends Tool
 
             invalid_diffusion_end_date: "La date de fin de diffusion n'est pas valide !",
 
+            encode_error: "Erreur durant l'enodage du fichier",
+
         };
 
         this.__dataCheckingErrors = "";
@@ -57,10 +59,10 @@ class UploadHandlerTool extends Tool
         this.__uploadMediaType = $('.main-media').data('media_displayed');
         if(this.__uploadMediaType === null)
         {
-            console.error("Error : cannot found data-media_displayed on element : .main-media !"); debugger
+            console.error("Error : cannot found data-media_displayed on element : .main-media !"); //debugger
         }
 
-        let type = (this.__uploadMediaType === 'image' || this.__uploadMediaType === 'video') ? 'image_video': this.__uploadMediaType;;
+        let type = (this.__uploadMediaType === 'image' || this.__uploadMediaType === 'video') ? 'image_video': this.__uploadMediaType;
         $(".uploadbtn").attr("accept", this.__authorizedFiles[ type ]);
 
         this.__total_files_allowed = 50;
@@ -131,8 +133,6 @@ class UploadHandlerTool extends Tool
                     // if user choice "yes"
                     if(confirm("Vous n'avez pas enregistrés toutes vos modifications ! En fermant cet fênetre, vos perderez vos modifications non enregistrés. Etes-vous sûr de vouloir fermer cet fênetre ?"))
                     {
-                        // @TODO: abort download or send ajax to server for delete media which is not saved
-
                         this.closeModal();
                     }
                 }
@@ -174,7 +174,7 @@ class UploadHandlerTool extends Tool
             } )
 
             .fail( (errorType, errorStatus, errorThrown) => {
-                console.error(errorType.responseText); debugger
+                console.error(errorType.responseText); //debugger
                 resolve(true);
             } );
 
@@ -413,6 +413,120 @@ class UploadHandlerTool extends Tool
         return this;
     }
 
+    async cancelUploadedMedia(media)
+    {
+
+        return new Promise( (resolve, reject) => {
+
+            $.ajax({
+                url: "/remove/media",
+                type: "POST",
+                data: {media: media},
+                success: (response) => {
+                    console.log(response); //debugger
+                    resolve(true);
+
+                },
+                error: (response, status, error) => {
+
+                    console.error(response); //debugger
+                    resolve(false);
+
+                },
+            })
+
+        } );
+
+    }
+
+    onClickOnUploadCancelButton(active)
+    {
+        if(active)
+        {
+            this.__$location.on("click.onClickOnUploadCancelButton", ".cancel-upload", async (e) => {
+
+                if(!$(e.currentTarget).parents('tr').hasClass('invalid-download') && confirm("Etes-vous sûr de vouloir supprimer ce média ?"))
+                {
+
+                    const index = $(e.currentTarget).parents('tr').data('index');
+
+                    let mediaToDelete = this.__$mediasCollection.find(`li[data-index='${ index }'] .media_id`).attr('value');
+                    //console.log(mediaToDelete); debugger
+                    const mediaIsDeleted = await this.cancelUploadedMedia(mediaToDelete);
+                    if(mediaIsDeleted)
+                    {
+                        $(e.currentTarget).parents('tr').remove();
+                        this.__$mediasCollection.find(`li[data-index='${ index }']`).remove();
+
+                        if($('.media_list tbody tr').length === 0)
+                        {
+                            $('.edit_media_info .action-btn-container').fadeOut();
+                        }
+
+                    }
+
+                    else
+                        alert("Erreur interne durant la suppression du media");
+
+                }
+                else if($(e.currentTarget).parents('tr').hasClass('invalid-download'))
+                {
+                    $(e.currentTarget).parents('tr').remove();
+                }
+
+            })
+        }
+        else
+        {
+            this.__$location.off("click.onClickOnUploadCancelButton", ".cancel-upload");
+        }
+
+        return this;
+    }
+
+    onClickOnCancelAllUpload(active)
+    {
+
+        if(active)
+        {
+            this.__$location.find(".edit_media_info .cancel-all-upload").on("click.onClickOnCancelAllUpload", (e) => {
+
+                if(confirm("Etes-vous sûr de vouloir supprimer tout les médias ?"))
+                {
+
+                    this.__$mediasCollection.find('li').each( async(index, collectionItem) => {
+
+                        let mediaToDelete = $(collectionItem).find('.media_id').attr('value');
+                        //console.log(mediaToDelete); debugger
+                        const mediaIsDeleted = await this.cancelUploadedMedia(mediaToDelete);
+                        if(mediaIsDeleted)
+                        {
+                            $(`.edit_media_info tr[data-index='${$(collectionItem).data('index')}']`).remove();
+                            $(collectionItem).remove();
+
+                            if($('.media_list tbody tr').length === 0)
+                            {
+                                $('.edit_media_info .action-btn-container').fadeOut();
+                            }
+                        }
+
+                        else
+                            alert("Erreur interne durant la suppression du media");
+
+                    } )
+
+                }
+
+            })
+        }
+        else
+        {
+            this.__$location.find(".edit_media_info .cancel-all-upload").off("click.onClickOnCancelAllUpload")
+        }
+
+        return this;
+    }
+
     addNewItemInMediaCollection(item)
     {
         console.log(item); //debugger
@@ -421,7 +535,7 @@ class UploadHandlerTool extends Tool
             let list = this.__$mediasCollection;
             //console.log(item); debugger
             // Try to find the counter of the list or use the length of the list
-            let counter = list.data('widget-counter') || list.children().length;
+            let counter = list.children().length;
 
             // grab the prototype template
             let newWidget = list.attr('data-prototype');
@@ -476,12 +590,9 @@ class UploadHandlerTool extends Tool
 
         $.each( this.__filesToUpload, (index, fileToUpload) => {
 
-            const i = ( this.__$mediasCollection.find('li').length > 0 ) ? this.__$mediasCollection.find('li').length - 1 : 0;
-
             let html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered">
                                 <td class="file-name-container">
-                                    <i class="fas fa-trash-alt cancel-file-upload"></i>
-                                    <p>${fileToUpload.name}</p>
+                                    <p><i class="fas fa-trash-alt cancel-upload" style="display: none"></i>${fileToUpload.name}</p>
                                 </td>
                                 <td class="file_progress_bar_container">
                                     <progress class="progress_bar" id="progress_${index}" max="100" value="0"></progress>
@@ -533,13 +644,11 @@ class UploadHandlerTool extends Tool
         if (active)
         {
             $(".model-upload-file .start_upload_button").on("click.onClickOnStartUploadButtonStartUpload", e => {
-                console.log(this.__uploadAuthorized); debugger
+                console.log(this.__uploadAuthorized); //debugger
                 if(this.__uploadAuthorized)
                 {
 
                     this.buildUploadList();
-
-
 
                     let uploadFinished = 0;
 
@@ -559,6 +668,7 @@ class UploadHandlerTool extends Tool
                         uploadState.html("Téléchargement en cours ...");
                         let formData = new FormData();
                         formData.append('file', fileToUpload.file);
+                        formData.append('media_type', (this.__uploadMediaType === 'image' || this.__uploadMediaType === "video") ? 'image_video' : this.__uploadMediaType);
 
                         const fileExtension = fileToUpload.file.name.split('.').pop();
                         const fileName = fileToUpload.file.name.replace( '.' + fileExtension , '');
@@ -625,7 +735,9 @@ class UploadHandlerTool extends Tool
 
                                     uploadState.html("Téléchargement terminé !");
 
+                                    $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
                                     $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
+
                                     uploadFinished++;
 
                                     /*fileToUpload.extension = response.extension;
@@ -649,44 +761,56 @@ class UploadHandlerTool extends Tool
                                     uploadState.html("Encodage en cours ...");
 
                                     // check status every 10sec
-                                    let videoEncodingStatus = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
+                                    let videoEncodingResult = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
 
-                                    while (videoEncodingStatus.status !== 'Finished')
+                                    while (videoEncodingResult.status !== 'Finished')
                                     {
                                         // wait 10s before checking again
                                         this.sleep(10000);
-                                        videoEncodingStatus = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
+                                        videoEncodingResult = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
                                     }
 
                                     $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
                                     uploadFinished++;
 
-                                    console.log(videoEncodingStatus); //debugger
+                                    console.log(videoEncodingResult); //debugger
 
-                                    if(videoEncodingStatus.status === "Finished")
+                                    if(videoEncodingResult.status === "Finished")
                                     {
 
-                                        let videoInfos = {
-                                            id: videoEncodingStatus.id,
-                                            customer: videoEncodingStatus.customer,
-                                            index: fileToUpload.index,
-                                            type: videoEncodingStatus.type,
-                                            fileName: videoEncodingStatus.fileName,
-                                            name: videoEncodingStatus.name,
-                                            extension: videoEncodingStatus.extension,
-                                            height: videoEncodingStatus.height,
-                                            width: videoEncodingStatus.width,
-                                            dpi: videoEncodingStatus.dpi,
-                                            codec: videoEncodingStatus.codec,
-                                            mimeType: videoEncodingStatus.mimeType,
-                                        };
+                                        $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
 
                                         if( $(`#upload_${fileToUpload.index} .file_progress_bar_container i`).length === 0 )
-                                            $('<i>', { class: 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
+                                            $('<i>', { class: (typeof videoEncodingResult.error !== "undefined") ? 'fas fa-times' : 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
 
-                                        this.addNewItemInMediaCollection( {id: videoEncodingStatus.id, fileName: fileName, extension: videoEncodingStatus.extension,} );
+                                        if(typeof videoEncodingResult.error === "undefined")
+                                        {
 
-                                        this.showMediaCharacteristic(videoInfos);
+                                            this.addNewItemInMediaCollection( {id: videoEncodingResult.id, fileName: fileName, extension: videoEncodingResult.extension,} );
+
+                                            let videoInfos = {
+                                                id: videoEncodingResult.id,
+                                                customer: videoEncodingResult.customer,
+                                                index: fileToUpload.index,
+                                                type: videoEncodingResult.type,
+                                                fileName: videoEncodingResult.fileName,
+                                                name: videoEncodingResult.name,
+                                                extension: videoEncodingResult.extension,
+                                                height: videoEncodingResult.height,
+                                                width: videoEncodingResult.width,
+                                                dpi: videoEncodingResult.dpi,
+                                                codec: videoEncodingResult.codec,
+                                                mimeType: videoEncodingResult.mimeType,
+                                            };
+
+                                            this.showMediaCharacteristic(videoInfos);
+
+                                        }
+                                        else
+                                        {
+                                            $(`#upload_${fileToUpload.index}`).addClass('invalid-download');
+                                            uploadState.html(`${this.__errors.encode_error}`);
+                                        }
 
                                     }
 
@@ -696,6 +820,8 @@ class UploadHandlerTool extends Tool
                             error: (response, status, error) => {
 
                                 //ajax.abort();
+
+                                $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
 
                                 //$(".modal-upload-download .show_media_edit_container").fadeOut();
                                 this.__filesToUpload.splice(index , 1);
@@ -786,8 +912,8 @@ class UploadHandlerTool extends Tool
                 },
                 error: (response, status, error) => {
 
-                    console.error(response.responseText); debugger
-                    resolve({status: 'Running'});
+                    console.error(response); //debugger
+                    resolve(response);
 
                 },
             })
@@ -931,123 +1057,6 @@ class UploadHandlerTool extends Tool
 
     }
 
-    onClickOnNextButtonShowMediaInfosEditContainer(active)
-    {
-
-        if(active)
-        {
-            $(".show_media_edit_container").on("click.onClickOnNextButtonShowMediaInfosEditContainer", e => {
-
-                if(this.__filesToUpload.length > 0)
-                {
-
-                    //$(".files_selection").fadeOut();
-                    $(".modal-upload-download").fadeOut();
-                    $(".modal-upload-download table tbody").empty();
-
-                    $.each( this.__filesToUpload, async (index, fileToUpload) => {
-
-                        const file = fileToUpload.file;
-                        const fileExtension = file.name.split('.').pop();
-                        const fileName = file.name.split('.')[0];
-
-                        const fileMimeType = file.type;
-
-                        // @TODO: recupérer les miniatures des medias
-                        let preview = null;
-                        if( this.__uploadMediaType === 'image' )
-                            preview = `<img class="preview" src="/miniatures/kfc/154.png" alt="/miniatures/kfc/154.png" />`;
-
-                        else
-                            preview = `<video class="preview">
-
-                                        </video>`;
-
-                        /*
-                        // C:\laragon\www\infoway\new_app/../main/data_kfc/PLAYER INFOWAY WEB/medias/image/low/Calque 4.png
-                        const mediaProcessStatus = await this.getMediaProcessStatus(file.name);
-                        const mediaMiniaturePath = await this.getMediaMiniaturePath(fileName);
-                        console.log(mediaMiniaturePath);
-
-
-                        if(this.__uploadMediaType === 'image' || mediaProcessStatus !== 'Finished')
-                            preview = `<img class="preview" src="${ mediaProcessStatus === 'Finished' ? mediaMiniaturePath : '/build/images/not_ready.png' }" alt="${ mediaProcessStatus === 'Finished' ? mediaMiniaturePath : '/build/images/not_ready.png' }" />`;
-
-                        else
-                            preview = `<video class="preview" src="${ mediaMiniaturePath }" > <source src="${ mediaMiniaturePath }" type="${ fileMimeType }" /> </video>`;*/
-
-                        const fileNameIsValid = this.checkMediaNameValidity(fileName);
-
-                        const i = ( this.__$mediasCollection.find('li').length > 0 ) ? this.__$mediasCollection.find('li').length - 1 : 0;
-
-                        //console.log(fileNameIsValid); debugger
-                        let html = `<tr data-index="${ i }"> 
-
-                                        <td>
-                                            <div class="file-treatment-resume-container">
-                                                <span class="upload_state">En attente ...</span>
-                                                <progress class="progress_bar" id="progress_${index}" max="100" value="0"></progress>
-                                            </div>
-                                        </td>
-
-                                        <td> 
-                                            <div class="preview-container">
-                                                ${ preview }
-                                            </div>
-                                        </td>
-                                        
-                                        <td>
-                                            
-                                        </td>
-                                        
-                                        <td class="media-name-container">
-                                            <span class="error ${ !fileNameIsValid ? '' : 'hidden'}"> ${ !fileNameIsValid ? this.__dataCheckingErrors : '' } </span> <br>
-                                            <input type="text" name="files[${index}][name]" class="form_input fileName ${ !fileNameIsValid ? 'invalid' : ''}" placeholder="Nom du fichier" value="${fileName}" required="required">
-                                        </td>
-                                        
-                                        <td class="media-diff-date-container">
-                                            <button type="button" id="files[${index}]" data-media="files[${index}]" class="addDiffDate">Définir la période de diffusion</button>
-                                        </td>
-                                        
-                                        <td>
-                                            <button type="button" class="associate-tag association-btn" data-media="${ fileName }">Associer TAGS</button>
-                                            <div class="associated-tags-container"></div>
-                                        </td>
-                                        
-                                        <td>
-                                            <button type="button" class="associate-product association-btn" data-media="${ fileName }">Associer produit</button>
-                                            <div class="associated-products-container"></div>
-                                        </td>
-                                        
-                                        <td>
-                                            <div> 
-                                                <label><input type="radio" name="files[${index}][add-price-incruste]" value="yes" required="required">Oui</label>
-                                                <label><input type="radio" name="files[${index}][add-price-incruste]" value="no" required="required" checked>Non</label> 
-                                            </div>
-                                        </td>
-                                     
-                                    </tr>`;
-
-                        $(html).appendTo( $(".edit_media_info tbody") )
-
-                    } )
-
-                    $(".upload-title").text("Médias à caractériser");
-                    $(".edit_media_info").fadeIn();
-
-                }
-
-            })
-        }
-
-        else
-        {
-            $(".show_media_edit_container").off("click.onClickOnNextButtonShowMediaInfosEditContainer");
-        }
-
-        return this;
-    }
-
     onClickOnSaveButtonSendMediaInfo(active)
     {
 
@@ -1125,7 +1134,7 @@ class UploadHandlerTool extends Tool
                                     break;
 
                                 default:
-                                    console.log(error.text); debugger
+                                    console.error(error.text); //debugger
 
                             }
 
@@ -1153,6 +1162,8 @@ class UploadHandlerTool extends Tool
 
                 const input = $(e.currentTarget);
                 const nameIsValid = this.checkMediaNameValidity(input.val());
+
+                input.parents('tr').addClass('unregistered');
 
                 if(!nameIsValid)
                 {
@@ -1195,6 +1206,8 @@ class UploadHandlerTool extends Tool
             $(".edit_media_info tbody").on("change.onDiffusionDateChangeUpdateDateInCollection", ".diffusion_dates", e => {
 
                 //console.log( $(e.currentTarget).val() ); //debugger
+
+                $(e.currentTarget).parents('tr').addClass('unregistered');
 
                 const explode = $(e.currentTarget).val().split('-');
                 const day = explode[2].replace(/^0/,'');
@@ -1268,12 +1281,13 @@ class UploadHandlerTool extends Tool
             .onDragNDropFileAddFileList(true)
             .onFileSelectAddFileInList(true)
             .onClickOnStartUploadButtonStartUpload(true)
-            .onClickOnNextButtonShowMediaInfosEditContainer(true)
             .onClickOnRemoveFileButtonRemoveFileFromList(true)
             .onClickOnSaveButtonSendMediaInfo(true)
             .onTypingFileNewNameCheckValidity(true)
             .onDiffusionDateChangeUpdateDateInCollection(true)
             .onClickOnExpandMiniatureButton(true)
+            .onClickOnUploadCancelButton(true)
+            .onClickOnCancelAllUpload(true)
         ;
     }
 
@@ -1286,12 +1300,13 @@ class UploadHandlerTool extends Tool
             .onDragNDropFileAddFileList(false)
             .onFileSelectAddFileInList(false)
             .onClickOnStartUploadButtonStartUpload(false)
-            .onClickOnNextButtonShowMediaInfosEditContainer(false)
             .onClickOnRemoveFileButtonRemoveFileFromList(false)
             .onClickOnSaveButtonSendMediaInfo(false)
             .onTypingFileNewNameCheckValidity(false)
             .onDiffusionDateChangeUpdateDateInCollection(false)
             .onClickOnExpandMiniatureButton(false)
+            .onClickOnUploadCancelButton(false)
+            .onClickOnCancelAllUpload(false)
         ;
     }
 

@@ -76,7 +76,7 @@ class MediasHandler
      */
     public function getImageDpi(string $filename){
 
-        $cmd = "magick identify -quiet -format '%x' \"".$filename."\"";
+        $cmd = "magick identify -quiet -format %x \"".$filename."\"";
 
         exec($cmd, $data, $cmdResultStatus);
 
@@ -110,7 +110,7 @@ class MediasHandler
 
         if($this->getImageDpi($outputFileName) !== 72)
         {
-            $cmd = "magick convert \"" . $originalFileName . "\" -density " . $dpi . " \"" . $outputFileName . "\" 2>&1";
+            $cmd = "magick convert \"" . $originalFileName . "\" -density " . $dpi . " \"" . $outputFileName . "\"";
             exec($cmd, $data, $cmdResultStatus);
 
             if($cmdResultStatus === 1)
@@ -131,7 +131,7 @@ class MediasHandler
     public function convertImageCMYKToRGB(string $originalFileName, string $outputFileName)
     {
 
-        $cmd = "magick convert \"" . $originalFileName . "\" -colorspace rgb \"" . $outputFileName . "\" 2>&1";
+        $cmd = "magick convert \"" . $originalFileName . "\" -colorspace rgb \"" . $outputFileName . "\"";
         exec($cmd, $data, $cmdResultStatus);
 
         if($cmdResultStatus === 1)

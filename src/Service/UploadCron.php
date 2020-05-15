@@ -134,13 +134,6 @@ class UploadCron
                 return;
             } else {
 
-                if($this->filetype === 'image')
-                {
-                    $mediaHandler = new MediasHandler($parameterBag);
-                    $mediaHandler->changeImageDpi($path, $path,72);
-                    $mediaHandler->convertImageCMYKToRGB($path, $path);
-                }
-
                 $this->process($path);
             }
         } else {

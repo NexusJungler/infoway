@@ -75,11 +75,7 @@ class MediaController extends AbstractController
     public function showMediatheque(Request $request, string $media, SessionManager $sessionManager)
     {
 
-        if($media === "video" or $media === "video_synchro" or $media === "video_thematic")
-            $media_displayed = "video";
-
-        else
-            $media_displayed = $media;
+        $media_displayed = $media;
 
         $managerName = strtolower( $sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $managerName );
@@ -119,7 +115,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag, MediasHandler $mediaInfosHandler): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag, MediasHandler $mediasHandler): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -167,20 +163,26 @@ class MediaController extends AbstractController
 
         move_uploaded_file($file['tmp_name'], $path);
 
-        if($mediaInfosHandler->fileIsCorrupt($path, $fileType))
+        if($mediasHandler->fileIsCorrupt($path, $fileType))
         {
             unlink($path);
             return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        // debug
-        // comment this at the end
+
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
         $sizes = ['low', 'medium', 'high', 'HD'];
         foreach ($sizes as $size) {
-            copy($path, $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $splash[0] . '/' .$size .'/' . $file['name']);
+            $dest = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $splash[0] . '/' .$size .'/' . $file['name'];
+            copy($path, $dest);
+
+            if($splash[0] === 'image')
+            {
+                $mediasHandler->changeImageDpi($dest, $dest,72);
+                $mediasHandler->convertImageCMYKToRGB($dest, $dest);
+            }
         }
-        // end debug
+
 
         // if is image, insert immediately
         if($splash[0] === 'image')
@@ -207,7 +209,7 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No media found with name : '%s'", $name));
 
-            $dpi = $mediaInfosHandler->getImageDpi($path);
+            $dpi = $mediasHandler->getImageDpi($path);
 
             $response = [
                 'id' => $media->getId(),
@@ -237,12 +239,9 @@ class MediaController extends AbstractController
             else
                 throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
 
-            // @TODO: les images et les vidéos sont mélangés, trouver une autre façon de savoir si c'est un media diff, thematics, sync, ...
-            $type = 'diff';
-
             $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
                   ->setExtension($real_file_extension)
-                  ->setType($type);
+                  ->setType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
 
@@ -259,7 +258,7 @@ class MediaController extends AbstractController
                 'media' => $media
             ];
 
-            list($width, $height, $codec) = $mediaInfosHandler->getVideoDimensions($path);
+            list($width, $height, $codec) = $mediasHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
             // a CRON will do task after
@@ -329,7 +328,7 @@ class MediaController extends AbstractController
 
         // finish with 1 or more errors
         elseif($task->getFinished() !== null AND $task->getErrors() !== null)
-            $response = ['type' => '520 Encode error', 'error' => $task->getErrors()];
+            $response = ['status' => 'Finished', 'type' => '520 Encode error', 'error' => $task->getErrors()];
 
         // not finish
         else
@@ -341,11 +340,46 @@ class MediaController extends AbstractController
 
 
     /**
-     * @Route(path="/remove/media", name="media::removeMedia")
+     * @Route(path="/remove/media", name="media::removeMedia", methods={"POST"})
      */
-    public function removeMedia(Request $request)
+    public function removeMedia(Request $request, SessionManager $sessionManager)
     {
-        dd($request->request->get('file'));
+
+        $managerName = strtolower($sessionManager->get('current_customer')->getName());
+        $manager = $this->getDoctrine()->getManager($managerName);
+        $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
+
+        $id = $request->request->get('media');
+        //dd($id);
+        $media = $mediaRepository->find($id);
+
+        if(!$media)
+            throw new Exception(sprintf("No media found with id : '%s'", $id));
+
+        /*
+        // delete source
+        $root = $this->getParameter('project_dir') . '/../node_file_system/';
+        $path = $root . $managerName . '/' . $media->getType() . '/' . $media->getName() . '.' . $media->getExtension();
+        unlink($path);*/
+
+        if($media instanceof Video)
+            $mediaType = 'video';
+
+        else
+            $mediaType = 'image';
+
+        $sizes = ['low', 'medium', 'high', 'HD'];
+        foreach ($sizes as $size) {
+            $path = $this->getParameter('project_dir') .'/../main/data_' . $managerName . '/PLAYER INFOWAY WEB/medias/' . $mediaType . '/' .$size .'/' . $media->getId() . '.' . $media->getExtension();
+
+            if(file_exists($path))
+                unlink($path);
+        }
+
+        $manager->remove($media);
+        $manager->flush();
+
+        return new Response("200 OK");
     }
 
 
