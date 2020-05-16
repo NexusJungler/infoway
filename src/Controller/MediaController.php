@@ -30,7 +30,7 @@ use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response, Session\SessionInterface};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -49,12 +49,13 @@ use Symfony\Component\Process\Process;
 class MediaController extends AbstractController
 {
 
-    /**
-     * @var SerializerInterface
-     */
-    private  $serializer;
+    private SerializerInterface $serializer;
 
-    public function __construct()
+    private SessionManager $sessionManager;
+
+    private ParameterBagInterface $parameterBag;
+
+    public function __construct(SessionManager $sessionManager, ParameterBagInterface $parameterBag)
     {
 
         $circularReferenceHandlingContext = [
@@ -66,18 +67,21 @@ class MediaController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
         $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
 
+        $this->sessionManager = $sessionManager;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
-     * @Route(path="/mediatheque/{media}", name="media::showMediatheque", methods={"GET"},
+     * @Route(path="/mediatheque/{media}", name="media::showMediatheque", methods={"GET", "POST"},
      * requirements={"media": "[a-z_]+"})
+     * @throws Exception
      */
-    public function showMediatheque(Request $request, string $media, SessionManager $sessionManager)
+    public function showMediatheque(Request $request, string $media)
     {
 
         $media_displayed = $media;
 
-        $managerName = strtolower( $sessionManager->get('current_customer')->getName() );
+        $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $managerName );
         $products = $manager->getRepository(Product::class)->setEntityManager( $manager )->findAll();
         $categories = $manager->getRepository(Category::class)->setEntityManager( $manager )->findAll();
@@ -93,6 +97,13 @@ class MediaController extends AbstractController
                 'id' => 'medias_list_form'
             ]
         ]);
+
+        //$form->handleRequest($request);
+
+        if($request->isMethod('POST'))
+        {
+            return $this->saveMediaCharacteristic($request);
+        }
 
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $media_displayed, // will be used by js for get authorized extensions for upload
@@ -115,7 +126,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function uploadMedia(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag, MediasHandler $mediasHandler): Response
+    public function uploadMedia(Request $request, CustomerRepository $customerRepository): Response
     {
 
         if($request->request->get('media_type') === "video_synchro")
@@ -139,7 +150,9 @@ class MediaController extends AbstractController
         $real_file_extension = $splash[1];
         $fileType = strstr($mimeType, '/', true);
 
-        $customerName = strtolower( $sessionManager->get('current_customer')->getName() );
+        $mediasHandler = new MediasHandler($this->parameterBag);
+
+        $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -184,7 +197,7 @@ class MediaController extends AbstractController
 
             // don't duplicate code !!
             // reuse this class
-            $cron = new UploadCron($taskInfo, $this->getDoctrine(), $parameterBag);
+            $cron = new UploadCron($taskInfo, $this->getDoctrine(), $this->parameterBag);
             if( $cron->getErrors() !== [] )
             {
 
@@ -258,7 +271,7 @@ class MediaController extends AbstractController
 
             // register Ffmpeg task
             // a CRON will do task after
-            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $parameterBag);
+            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
             $response = [
@@ -283,7 +296,7 @@ class MediaController extends AbstractController
     /**
      * @Route(path="/get/video/encoding/status", name="media::getMediaEncodingStatus", methods={"POST"})
      */
-    public function getMediaEncodingStatus(Request $request, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager)
+    public function getMediaEncodingStatus(Request $request, FfmpegTasksRepository $ffmpegTasksRepository)
     {
 
         $task = $ffmpegTasksRepository->find($request->request->get('id'));
@@ -294,7 +307,7 @@ class MediaController extends AbstractController
         if($task->getFinished() !== null AND $task->getErrors() === null)
         {
 
-            $customerName = strtolower( $sessionManager->get('current_customer')->getName() );
+            $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
             $manager = $this->getDoctrine()->getManager( $customerName );
             $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -338,10 +351,10 @@ class MediaController extends AbstractController
     /**
      * @Route(path="/remove/media", name="media::removeMedia", methods={"POST"})
      */
-    public function removeMedia(Request $request, SessionManager $sessionManager)
+    public function removeMedia(Request $request)
     {
 
-        $managerName = strtolower($sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -386,11 +399,11 @@ class MediaController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function fileIsAlreadyUploaded(Request $request, FfmpegTasksRepository $tasksRepository, SessionManager $sessionManager): Response
+    public function fileIsAlreadyUploaded(Request $request, FfmpegTasksRepository $tasksRepository): Response
     {
 
         $fileNameWithExtension = $request->request->get('file');
-        $managerName = strtolower($sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -412,20 +425,15 @@ class MediaController extends AbstractController
     }
 
 
-    /**
-     * @Route(path="/edit/media", name="media::editMedia", methods={"POST"})
-     * @param Request $request
-     * @param CustomerRepository $customerRepository
-     * @param FfmpegTasksRepository $ffmpegTasksRepository
-     * @param SessionManager $sessionManager
-     * @return Response
-     * @throws Exception
-     */
-    public function editMedia(Request $request, CustomerRepository $customerRepository, FfmpegTasksRepository $ffmpegTasksRepository, SessionManager $sessionManager)
+
+    private function saveMediaCharacteristic(Request $request)
     {
 
-        $customer = $customerRepository->find( $sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
-        $manager = $this->getDoctrine()->getManager( strtolower( $sessionManager->get('current_customer')->getName() ) );
+        $ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);
+        $customerRepository = $this->getDoctrine()->getManager()->getRepository(Customer::class);
+
+        $customer = $customerRepository->find( $this->sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
+        $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
         //dd($request->request, $customer);
@@ -504,28 +512,8 @@ class MediaController extends AbstractController
 
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
 
-                if(!$media)
-                {
-
-                    //$task = $ffmpegTasksRepository->findOneBy(['filename' => $mediaInfos['oldName'].".".$mediaInfos['extension'], 'registered' => new DateTime()]);
-                    $task = $ffmpegTasksRepository->find($mediaInfos['id']);
-
-                    // si aucune task n'est trouvé et que ce n'est pas une image qui a été edité (donc c'est une video)
-                    if(!$task AND $mediaInfos['mediaType'] === 'video')
-                        throw new Exception(sprintf("No Task found with id '%d' !", $mediaInfos['id']));
-
-                    $media = new Video();
-
-                    $media->setName( $mediaInfos['name'] );
-
-                }
-                else
-                {
-                    $media->setName( ($media->getName() !== $mediaInfos['name']) ? $mediaInfos['name'] : $media->getName() );
-                    $task = null;
-                }
-
-                $media->setDiffusionStart($diffusionStartDate)
+                $media->setName( $mediaInfos['name'] )
+                      ->setDiffusionStart($diffusionStartDate)
                       ->setDiffusionEnd($diffusionEndDate);
 
                 // if user change file name
@@ -567,20 +555,7 @@ class MediaController extends AbstractController
                     }
                 }
 
-                if(!$task)
-                    $manager->flush();
-
-                else
-                {
-
-                    $media = json_decode($this->serializer->serialize($media, 'json'), true);
-
-                    $task->setFilename( $mediaInfos['name'] . '.' . $mediaInfos['extension'] )
-                         ->setMedia($media);
-
-                    $this->getDoctrine()->getManager()->flush();
-
-                }
+                $manager->flush();
 
             }
 

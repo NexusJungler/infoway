@@ -1081,7 +1081,8 @@ class UploadHandlerTool extends Tool
 
                     $.ajax({
                         type: 'post',
-                        url: '/edit/media',
+                        //url: '/edit/media',
+                        url: `/mediatheque/${this.__uploadMediaType}`,
                         data: this.__$location.find('form#medias_list_form').serialize(),
                         success: (response) => {
 
