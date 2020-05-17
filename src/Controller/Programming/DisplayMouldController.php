@@ -3,6 +3,7 @@
 namespace App\Controller\Programming;
 
 use App\Entity\Customer\DisplayMould;
+use App\Entity\Customer\Product;
 use App\Form\Customer\DisplayMouldType;
 use App\Repository\Customer\DisplayMouldRepository;
 use App\Serializer\Normalizer\EmptyDateTimeNormalizer;
@@ -49,6 +50,7 @@ class DisplayMouldController extends AbstractController
 
         if( $serializedDisplayMould === null ) throw new \Error( 'invalid mould datas') ;
 
+        $mediasPickables = [] ;
 
 
 
@@ -65,11 +67,24 @@ class DisplayMouldController extends AbstractController
         ];
 
 
+        $productrepo = $this->getDoctrine()->getRepository(Product::class);
+
+        $product = $productrepo->findOneBy(['id' => 2]);
+//        dd($product->getMedias()->getValues());
+
         foreach( $displayMouldToCreate->getCriterions() as $criterion ){
             foreach($criterion->getProducts() as $product){
-                dd($product);
+                foreach($product->getMedias() as $media){
+                    if( ! in_array( $media , $mediasPickables ) ) $mediasPickables[] = $media ;
+                };
             }
         }
+
+      foreach( $displayMouldToCreate->getTags() as $tag ) {
+          foreach( $tag->getMedias() as $media ) {
+              if( ! in_array( $media , $mediasPickables ) ) $mediasPickables[] = $media ;
+          }
+      }
         $form = $this->createForm(DisplayMouldType::class, $displayMouldToCreate, $optionsToPassToForm );
         $form->handleRequest($request);
 

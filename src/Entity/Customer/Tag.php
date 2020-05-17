@@ -57,11 +57,18 @@ class Tag
      */
     private $screenDisplays;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="tags")
+     * @ORM\JoinTable(name="tags_medias")
+     */
+    private $medias ;
+
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->displayMoulds = new ArrayCollection() ;
         $this->screenDisplays = new ArrayCollection() ;
+        $this->medias = new ArrayCollection();
     }
 
     public function setId( int $id ): self{
@@ -220,6 +227,32 @@ class Tag
         if ($this->screenDisplays->contains($screenDisplay)) {
             $this->screenDisplays->removeElement($screenDisplay);
             $screenDisplay->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
         }
 
         return $this;

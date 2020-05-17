@@ -105,6 +105,7 @@ class DisplaySpaceController extends AbstractController
 
             $session->set('serializedDisplayMould', $serializedDisplayMould) ;
             $flashBagHandler->getFlashBagContainer()->add('serializedDisplayMould',$serializedDisplayMould ) ;
+
             //dd($flashBagHandler);
 //            $flashBagHandler->addFlashBag('serializedDisplayMould' , $serializedDisplayMould);
 

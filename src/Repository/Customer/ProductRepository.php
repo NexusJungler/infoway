@@ -44,8 +44,8 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
 
     public function getAllProductsWhereCriterionDoesNotAppear(Criterion $criterion){
 
-        $criterionProductsIds = $criterion->getProducts()->filter(function(Site $site){
-            return $site->getId() ;
+        $criterionProductsIds = $criterion->getProducts()->filter(function(Product $product){
+            return $product->getId() ;
         });
 
         return $criterionProductsIds->count() <1 ? $this->findAll() : $this->getProductsWhereIdNotIn($criterionProductsIds->getValues() );
