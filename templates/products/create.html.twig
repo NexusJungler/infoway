@@ -1,17 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="debug">
-        <div class="form">
-            {{ form_start(form) }}
-                {{ form_row(form.category) }}
-                {{ form_row(form.priceType) }}
-                {{ form_row(form.name) }}
-                {{ form_row(form.amount) }}
-                {{ form_row(form.description) }}
-                {{ form_row(form.note) }}
-                {{ form_row(form.start) }}
-                {{ form_row(form.end) }}
+    <main class="main main_produits">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': 'créer', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-create tab-create-product current produits-create">
+
+                <article class="display product-display ">
+                    <div class="display-content">
+                        <div class="tab-content-title">
+                            <h3 class="title">Créer votre Produit</h3>
+                        </div>
+                        <div class="display-btn">
+                            <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Modification à date</a>
+                        </div>
+                    </div>
+                </article >
+
+                    <div class="form">
+                        {{ form_start(form) }}
+                            {{ form_row(form.category) }}
+                            {{ form_row(form.priceType) }}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.amount) }}
+                            {{ form_row(form.description) }}
+                            {{ form_row(form.note) }}
+                            {{ form_row(form.start) }}
+                            {{ form_row(form.end) }}
 
                 <div class="ManyToMany">
                     {{ form_row(form.tags) }}
@@ -42,11 +70,24 @@
                 {% endif %}
             {{ form_end(form) }}
 
-        </div>
+            </div>
 
-        <button>Modification à date</button>
+
+                </div>
+            </section>    
+            
+
+
+        </div>
+    </main>
+
+
+    <div class="debug">
+        
+
+        {# <button>Modification à date</button> #}
         {#{{ dump(expected_change_forms) }}#}
-        {% for date,value in expected_change_forms %}
+        {# {% for date,value in expected_change_forms %}
             <div class="form">
                 <h2>{{ date }}</h2>
                 {{ form_start(value, {'attr': {'name': 'ujgvjhvbjkh', 'action': path('expected_change::save', {'classname': 'product', 'id': app.request.attributes.get('_route_params')['product'] })}}) }}
@@ -72,7 +113,7 @@
                 <input type="hidden" name="expected_change" value="1">
                 {{ form_end(value) }}
             </div>
-        {% endfor %}
+        {% endfor %} #}
     </div>
 
     {% block javascripts %}

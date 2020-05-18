@@ -39,10 +39,10 @@
                             <div class="all__enseigne">
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
-                                    <option value="">AREAS</option>
-                                        {# {% for customer in customer %}
-                                            <option value="{{customer}}">{{customer}}</option>
-                                        {% endfor %} #}
+                                        <option value="">Sélectionner l'enseigne</option>
+                                        {% for name in app.session.get('customerNames') %}
+                                            <option value="{{name}}">{{name}}</option>
+                                        {% endfor %}
                                     </select>
                                     <p class="number__enseigne"><span >25</span> enseignes</p>
                                     <div>
@@ -169,14 +169,14 @@
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">
-                                <a href="/products"><span class="nav-menu-title">Produits</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <a href="{{ path('products::show') }}"><span class="nav-menu-title">Produits</span><i class="icon icon-iy-produit-prix"></i></a>
                                 <ul class="nav-sous-menu">
                                     <li><a href="" ><span >Prix</span></a></li>
                                     <li><a href=""><span> Playlist/Room</span></a></li>
                                     <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="/products"><span class="nav-mobile-title">Produits</span></a></li>
+                                    <li><a href="{{ path('products::show') }}"><span class="nav-mobile-title">Produits</span></a></li>
                                     <li><a href=""><span >Prix</span></a></li>
                                     <li><a href=""><span> Playlist/Room</span></a></li>
                                     <li><a href=""><span >Info Ecrans</span></a></li>
@@ -197,9 +197,15 @@
                                 </ul>
                             </li >
                             <li class="nav-menu-hover">
-                                <a href="/media"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <a href="{{ path('media::showMediatheque', {media: 'image'}) }}"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-iy-produit-prix"></i></a>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="/media"><span class="nav-mobile-title">Médiathèque</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'image'}) }}"><span class="nav-mobile-title">Image</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'video'}) }}"><span class="nav-mobile-title">Vidéos</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'video_synchro'}) }}"><span class="nav-mobile-title">Vidéos Synchro</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'video_thematic'}) }}"><span class="nav-mobile-title">Vidéos Thématique</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'element_graphic'}) }}"><span class="nav-mobile-title">Éléments graphiques</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'template'}) }}"><span class="nav-mobile-title">Templates</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {media: 'incruste'}) }}"><span class="nav-mobile-title">Incrustes</span></a></li>
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">

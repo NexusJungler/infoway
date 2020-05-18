@@ -1,41 +1,76 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Catégories {% endblock %}
+
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('show_categories') }}
+{% endblock %} #}
+
 {% block body %}
     <main class="main main_setting">    
         <div class="main-content">
 
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Paroduits', 'sousTitle': 'catégories', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
             <section class="wrapper_tabcontent">
-                <div id="" class="debug">
-                    <form method="post" action="{{ path('categories::delete') }}">
-                        <table id="list">
-                            <thead>
-                            <tr>
-                                <th>sélection</th>
-                                <th>nom</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for category in categories %}
-                                <tr>
-                                    <td><input type="checkbox" name="categories[{{ category.id }}]"></td>
-                                    <td>{{ category.name }}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </form>
+                <div id="tab-categories" class="tab-content current categories">
+               
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <button type="button" class="btn" ><a href="{{ path('category::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
+                                <button type="button" class="btn" ><a id="edit" href="{{ path('category::edit', {'category': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
+                                {# <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button> #}
+                                <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="" class="content-table table">
+
+                        <div class="table-categories">
+                            <form method="post" action="{{ path('categories::delete') }}">
+                                <table id="list" class="table-custome">
+                                    <thead class="thead-info">
+                                        <tr>
+                                            <th>sélection</th>
+                                            <th>nom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        {% for category in categories %}
+                                            <tr>
+                                                <td><input type="checkbox" name="categories[{{ category.id }}]"></td>
+                                                <td>{{ category.name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+                
+                        </div>
+
+                    </article>
+
+
                 </div>
 
-                <div>
-                    <button><a href="{{ path('category::create') }}">Ajouter</a></button>
-                    <button><a id="edit" href="{{ path('category::edit', {'category': 1}) }}">Modifier</a></button>
-                    <button id="delete">Supprimer</button>
-                </div>
             </section>
+
         </div>
     </main>    
     
-
     {% block javascripts %}
       {#  {{ encore_entry_script_tags('show_categories') }} #}
     {% endblock javascripts %}

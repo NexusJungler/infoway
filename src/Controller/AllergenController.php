@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AllergenController extends AbstractController
 {
@@ -38,18 +39,46 @@ class AllergenController extends AbstractController
     public function create(Request $request): Response
     {
         $allergen = new Allergen();
-        $allergen->setCreatedAt(new \DateTime());
+        // $allergen->setCreatedAt(new \DateTime());
 
         $form = $this->createForm(AllergenType::class, $allergen);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager('kfc');
+            $pictoFile = $form->get('pictogram')->getData();
+
+            if ($pictoFile) {
+                $originalFilename = pathinfo($pictoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                
+                // $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$pictoFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pictoFile->move(
+                        $this->getParameter('pictoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $allergen->setPictogram($newFilename);
+            }
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($allergen);
             $em->flush();
             return $this->redirectToRoute('allergens::show');
+
+
         }
+
+
 
         return $this->render("allergens/create.html.twig", [
             'form' => $form->createView()
@@ -66,13 +95,13 @@ class AllergenController extends AbstractController
      */
     public function edit(Request $request, Allergen $allergen): Response
     {
-        $em = $this->getDoctrine()->getManager('kfc');
+        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(AllergenType::class, $allergen);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager('kfc');
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('allergens::show');
         }
@@ -93,7 +122,7 @@ class AllergenController extends AbstractController
     {
         $allergens = $request->request->get('allergens');
         if($allergens != []) {
-            $em = $this->getDoctrine()->getManager('kfc');
+            $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository( Allergen::class);
             foreach ($allergens as $id => $val) {
                 $allergen = $rep->find($id);

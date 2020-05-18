@@ -63,7 +63,8 @@ addTagBtn.on('click', e =>{
 })
 
 $(".tags-color").on('change', function(){
-    $(".tags_list ul li div div:nth-child(2)").append( "<span class='bloc-color'></span>" );
-    $(".bloc-color").css("background-color",this.value);
+    // $(".tags_list ul li div div:nth-child(2)").append( "<span class='bloc-color'></span>" );
+    $(".create-tags .tags_list li div label").css("background-color",this.value);
+    console.log(this.value);
 })
 

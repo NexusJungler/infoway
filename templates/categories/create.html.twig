@@ -1,19 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <main class="main main_produits">
+        <div class="main-content">
 
-    <div id="" class="debug">
-        {{ form_start(form) }}
-        {#{{ form(form) }}#}
-        {#
-        <ul>
-            {% for product in form.products %}
-                <li>{{ form_row(product.name) }}</li>
-            {% endfor %}
-        </ul>
-        #}
+            <section class="jumbotron">
 
-        {{ form_end(form) }}
-    </div>
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'categories', 'sousTitle': 'créer', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {# {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %} #}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-create tab-create-product current produits-create">
+
+
+                    <article id="" class="debug">
+                        {{ form_start(form) }}
+                        {#{{ form(form) }}#}
+                        {#
+                        <ul>
+                            {% for product in form.products %}
+                                <li>{{ form_row(product.name) }}</li>
+                            {% endfor %}
+                        </ul>
+                        #}
+
+                        {{ form_end(form) }}
+                    </article>
+
+                </div>
+            </section>    
+
+        </div>
+    </main>    
 
 {% endblock %}

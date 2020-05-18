@@ -44,7 +44,7 @@
                     transform: skewX(25deg);
                     position: absolute;
                     width: 25%;
-                    height: rem(42px);
+                    height: 100%;
                     right: -1.6rem;
                     top: 0rem;
                     border-right: 0.06rem solid #4D646D;
@@ -78,7 +78,7 @@
                 // z-index: 5;
                 &::after{
                     content: '';
-                    height: rem(46px);
+                    height: 100%;
                     background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
                     z-index: 3;
                     border-bottom: 0;
@@ -151,7 +151,7 @@
                 border-left: 0.15rem solid #4F9BAE;    
                 position: relative;
                 margin: 0.3rem 0.5rem;
-                height: 2rem;
+                height: 100%;
             }
         }
         p{

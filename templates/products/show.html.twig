@@ -14,12 +14,12 @@
             <section class="jumbotron">
 
                 {% block settingtitle %}
-                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS/PRIX', 'sousTitle': '', 'showSecondTitles': true } %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS/PRIX', 'sousTitle': '', 'showSecondTitles': false } %}
                 {% endblock %}
 
-                {# {% block wrapper %}
-                    {% include 'wrapper/wrapper-settings.html.twig'  %}
-                {% endblock %} #}
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
                 
             </section>
 
@@ -27,6 +27,62 @@
 
             <section class="wrapper_tabcontent">
                 <div id="tab-products" class="tab-content current produits">
+
+                    {# <div class="display-columns">
+                        <div class="display-content">
+                            <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                            <div class="display-down">
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Tags optionnels
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Type de prix
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Prix Compagnie MEDIUM
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Prix Compagnie PREMIUM
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="display-dates">
+                            <button type="button" class="drop-btn">Dates <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></button>
+                            <div class="display-down">
+
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Date actuelle
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Date 2
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Date 3
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> #}
 
                     <article class="display setting-display ">
                         <div class="display-content">
@@ -66,7 +122,7 @@
                                     <th>mention</th>
                                     <th>tags</th>
                                     <th>type de prix</th>
-                                    {# <th>début de diffusion</th> #}
+                                    {# <th>Allergènes</th> #}
                                     <th>Date de fin</th>
                                     <th>Visuel</th>
                                 </tr>
@@ -112,7 +168,7 @@
 
     
 
-    <div id="popup_properties">
+    <div id="popup_properties" >
         <h1>Sélectionnez les éléments du produit à conserver</h1>
         <form action="{{ path('product::duplicate', {'product': 3}) }}" method="post">
             <table class="center">

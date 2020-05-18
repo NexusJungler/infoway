@@ -8,6 +8,7 @@ parameters:
     doctrine_file_path: '%kernel.project_dir%/config/packages/doctrine.yaml'
     env_file_path: '%kernel.project_dir%/.env'
     logoDirectory: '%kernel.project_dir%/public/logo/'
+    pictoDirectory: '%kernel.project_dir%/public/pictogram/'
     uploadDirectory: '%kernel.project_dir%/public/upload/'
     uploadAuthorizedMimeTypes:
         image:

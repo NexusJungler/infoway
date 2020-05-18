@@ -4,7 +4,7 @@
     <div class="" >
         <div class="info-tags">
             <ul>
-                <li><span class="cercle-color"></span></li>
+                <li><img src="{{ asset('/build/images/color_picker.png') }}" alt="color_picker"></li>
                 <li>TAG créé</li>
                 <li>Description</li>
             </ul>
@@ -14,7 +14,7 @@
                 <li>
                     <div>
                         <div>{{ form_widget(tag.color, {'attr': {'class': 'tags-color'} }) }}</div>
-                        <div><span class="bloc-color"></span>{{ form_widget(tag.name, {'attr': {'class': 'tags-input'} }) }}</div>
+                        <div>{{ form_widget(tag.name, {'attr': {'class': 'tags-input'} }) }}</div>
                         <div>{{ form_widget(tag.description, {'attr': {'class': 'tags-desc'} }) }}</div>
                     </div>
                      

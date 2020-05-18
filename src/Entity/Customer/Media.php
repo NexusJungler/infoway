@@ -77,7 +77,6 @@ class Media
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Product", inversedBy="media")
-     * @ORM\JoinTable(name="products_medias")
      */
     private $products;
 
@@ -85,6 +84,11 @@ class Media
      * @ORM\Column(type="string", nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $containIncruste;
 
     public function __construct()
     {
@@ -266,6 +270,18 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getContainIncruste(): bool
+    {
+        return $this->containIncruste;
+    }
+
+    public function setContainIncruste(bool $containIncruste): self
+    {
+        $this->containIncruste = $containIncruste;
 
         return $this;
     }

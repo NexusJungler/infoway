@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Entity\Admin\Customer;
 use App\Entity\Admin\User;
 use App\Service\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -90,7 +89,8 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+            //return new RedirectResponse($targetPath);
+            return new RedirectResponse($this->urlGenerator->generate('app'));
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
@@ -104,17 +104,15 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         $sessionManager = new SessionManager(new Session()) ;
 
         if($sessionManager->get('user') !== null ) $sessionManager->remove('user');
-        if($sessionManager->get('current_customer') !== null ) $sessionManager->remove('current_customer');
 
         $sessionManager->set('user',$this->lastRegisteredUser);
-        $sessionManager->set('current_customer', $this->entityManager->getRepository(Customer::class)->findOneBy(['name' => 'kfc'])) ;
+
         //  $userFromDatabase=$sessionManager->get('user');
         return new RedirectResponse($this->urlGenerator->generate('app'));
     }
 
     protected function getLoginUrl()
     {
-        
         return $this->urlGenerator->generate('user::login');
     }
 }

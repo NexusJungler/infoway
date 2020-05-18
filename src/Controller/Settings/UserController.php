@@ -37,6 +37,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Repository\Admin\CustomerRepository;
 
 //Controlleur gerant la partie utilisateur
 class UserController extends AbstractController
@@ -1193,6 +1194,26 @@ class UserController extends AbstractController
         //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
 
     }
+
+    /**
+    * @Route(path="/update/user/current/customer", name="user::updateUserCurrentCustomer", methods={"POST"})
+    */
+   public function updateUserCurrentCustomer(Request $request, SessionManager $sessionManager, CustomerRepository $customerRepository)
+   {
+   
+       if(!$request->request->get('customer'))
+           throw new Exception("Missing 'customer' parameter in POST data !");
+   
+       $customer = $customerRepository->findOneByName($request->request->get('customer'));
+       if(!$customer)
+           throw new Exception(sprintf("Internal Error : no customer found with the name '%s'", $request->request->get('customer')));
+   
+       ($sessionManager->get('current_customer') === null) ? $sessionManager->set('current_customer', $customer) : $sessionManager->replace('current_customer', $customer);
+       //dd($sessionManager->get('current_customer'));
+       return new Response("200 OK");
+   
+   }
+     
 
 
 }

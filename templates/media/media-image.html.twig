@@ -6,9 +6,11 @@
         <article id="picture" class="tab-content current">
             <article class="display site-display ">
                 <div class="display-content">
+                    {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
                     <div>
                         <button type="button" class="btn btn-upload add-table"><i class="fas fa-plus"></i>UPLOAD</button>
                     </div>
+                    {% endif %}
                     <div class="display-content-columns">
                         <div class="display-content-poste">
                             <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
@@ -42,7 +44,7 @@
                     </div>
 
                     <div class="display-btn">
-                        <p>Prodits : </p>
+                        <p>Produits : </p>
                         <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
                         <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
                         <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
@@ -50,103 +52,13 @@
                         <button type="button" class="tags-table">TAG</button>
                     </div>
                 </div>
-            </article > 
+            </article >
 
+            {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is same as(true) %}
 
+                {% include "/popups/upload-popup.html.twig" %}
 
-            <article class="add-popup">
-            
-                <div class="modal">
-
-                    <div class="header-modal">
-                        <div>
-                            <p class="upload-title">Préparation de l'Upload</p>
-                            <button type="button" class="btn btn-popupclose upload_abort">X</button>
-                        </div>
-                    </div>
-
-                    <div class="model-upload-file files_selection">
-
-                        <div class="upload-file">
-                            <form id="uploadForm">
-                                <label for="uploadmedia">selectionner vos fichiers</label>
-                                <input type="file" id="uploadmedia" name="uploadmedia" multiple>
-                            </form>
-                        </div>
-
-                        <div class="upload-info">
-
-                            <div class="table">
-                                <table class="table-custome" >
-                                    <thead  class="table-info thead-content">
-                                        <tr>
-                                            <th>Liste des médias déposés :</th>    
-                                            <th></th>
-                                            <th>Formats acceptés</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody tbody-content scrollbar-table">
-
-                                    </tbody>  
-                                </table>    
-                            </div> 
-
-                        </div>
-                        
-                        <div>
-                            <button type="button" class="product-btn-add start_upload_button" style="display: none">Démarrer l'upload</button>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="modal-upload-download on_progress" style="display: none">
-
-                        <div class="upload_list_container">
-                            <table class="upload_list">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tbody-content">
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="download-file">
-                            <button type="button" class="btn btn-popupclose upload_abort">Annuler</button>
-                            <button type="button" class="product-btn-add show_media_edit_container" style="display: none;">Suivant</button>
-                        </div>
-
-                    </div>
-
-                    <div class="edit_media_info" style="display: none">
-
-                        <div class="media_list_container">
-                            <table class="media_list">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody class="tbody-content">
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-
-                </div>
-            </article>
+            {% endif %}
         </article>
     </section>
 

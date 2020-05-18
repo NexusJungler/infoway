@@ -46,30 +46,29 @@ Encore
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
     
     //settings
-        //Enseigne
-        .addEntry('enseigne', './assets/js/settings/enseigne.js')
-
+    //Enseigne
+    .addEntry('enseigne', './assets/js/settings/enseigne.js')
+    // TAGS
+    .addEntry('tags', './assets/js/tags.js')
+    .addEntry('criterion', './assets/js/criterion.js')
     .addEntry('settings-user', './assets/js/settings/settings_user.js')
+
     // .addEntry('criterion', './assets/js/settings/criterion.js')
 
     // Product
     .addEntry('product', './assets/js/product.js')
     .addEntry('product_price', './assets/js/product/product_price.js')
     .addEntry('date', './assets/js/date.js')
-
-
-
     .addEntry('show_factories', './assets/js/show_factories.js')
+    .addEntry('show_products', './assets/js/show_products.js')
+    .addEntry('show_categories', './assets/js/show_categories.js')
+    .addEntry('show_allergens', './assets/js/show_allergens.js')
+    .addEntry('show_pricetypes', './assets/js/show_pricetypes.js')
+    .addEntry('edit_product', './assets/js/edit_product.js')
 
-    // TAGS
-    .addEntry('tags', './assets/js/tags.js')
-
-    .addEntry('criterion', './assets/js/criterion.js')
-
-
+    //media
+    .addEntry('mediatheque', './assets/js/mediatheque.js')
     
-
-
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
