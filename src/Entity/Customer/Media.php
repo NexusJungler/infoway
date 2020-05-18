@@ -85,6 +85,11 @@ class Media
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $containIncruste;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -265,6 +270,18 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getContainIncruste(): bool
+    {
+        return $this->containIncruste;
+    }
+
+    public function setContainIncruste(bool $containIncruste): self
+    {
+        $this->containIncruste = $containIncruste;
 
         return $this;
     }

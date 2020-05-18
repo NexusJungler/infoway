@@ -69,8 +69,9 @@
 
                         <thead>
                         <tr>
-                            <th>Fichier</th>
-                            <th>Téléchargement</th>
+                            <th class="uploaded-file-name-col">Fichier</th>
+                            <th class="file-upload-state-col">Téléchargement</th>
+                            <th style="display: none" class="media-choice-input-col"></th>
                             <th>Médias</th>
                             <th>Caractéristiques</th>
                             <th>Nom</th>
@@ -89,9 +90,21 @@
                     </table>
                 </div>
 
-                <div class="action-btn-container" style="display: none">
-                    <button type="button" class="cancel-all-upload">Annuler</button>
-                    <button type="button" class="save-media-modif">Enregistrer</button>
+                <div class="action-btn-container">
+
+                    <div class="edit-btn-container" style="display: none">
+                        <button type="button" class="cancel-all-upload">Annuler</button>
+                        <button type="button" class="save-media-modif">Enregistrer</button>
+                        <button type="button" class="show-media-info-resume" style="display: none;">Suivant</button>
+                    </div>
+
+                    <div class="main-btn-container" style="display: none">
+                        <button type="button" class="show-media-edit-btn">&leftarrow; Précédent</button>
+                        <button type="button" class="replace-media-btn">Remplacer un média</button>
+                        <button type="button" class="program-media-btn">Programmer</button>
+                        <button type="button" class="show-mediatheque-btn">Médiathèque</button>
+                    </div>
+
                 </div>
 
             </div>

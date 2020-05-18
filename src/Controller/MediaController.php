@@ -92,7 +92,6 @@ class MediaController extends AbstractController
 
         $mediaList = new MediasList();
         $form = $this->createForm(MediasListType::class, $mediaList, [
-            'action' => $this->generateUrl('media::editMedia'),
             'attr' => [
                 'id' => 'medias_list_form'
             ]
@@ -193,6 +192,7 @@ class MediaController extends AbstractController
                 'extension' => $real_file_extension,
                 'mediaProducts' => [],
                 'mediaTags' => [],
+                'mediaContainIncruste' => false,
             ];
 
             // don't duplicate code !!
@@ -250,6 +250,7 @@ class MediaController extends AbstractController
 
             $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
                   ->setExtension($real_file_extension)
+                  ->setContainIncruste(false)
                   ->setType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
@@ -436,7 +437,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        //dd($request->request, $customer);
+        dd($request->request, $customer);
 
         $error = [  ];
 
@@ -513,6 +514,7 @@ class MediaController extends AbstractController
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
 
                 $media->setName( $mediaInfos['name'] )
+                      ->setContainIncruste( $mediaInfos['containIncruste'] )
                       ->setDiffusionStart($diffusionStartDate)
                       ->setDiffusionEnd($diffusionEndDate);
 

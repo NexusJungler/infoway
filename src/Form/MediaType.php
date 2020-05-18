@@ -9,6 +9,8 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +28,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_id',
                     'value' => '__MEDIA_ID__',
+                    'disabled' => true,
                 ]
             ])
 
@@ -34,6 +37,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_name',
                     'value' => '__MEDIA_NAME__',
+                    'disabled' => true,
                 ]
             ])
 
@@ -42,6 +46,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_type',
                     'value' => '__MEDIA_TYPE__',
+                    'disabled' => true,
                 ]
             ])
 
@@ -50,6 +55,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_extension',
                     'value' => '__MEDIA_EXTENSION__',
+                    'disabled' => true,
                 ]
             ])
 
@@ -73,7 +79,7 @@ class MediaType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'media_tags'
+                    'class' => 'media_tags',
                 ]
             ])
 
@@ -84,9 +90,23 @@ class MediaType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'media_products'
+                    'class' => 'media_products',
                 ]
                 ])
+
+            ->add('containIncruste', ChoiceType::class, [
+                'label' => 'Contient des incrutes',
+                'attr' => [
+                    'class' => 'media_contain_incruste',
+                ],
+                'choices' => [
+                  'Oui' => true,
+                  'Non' => false,
+                ],
+                'multiple'=> false,
+                'expanded'=> true,
+                'data' => false,
+            ])
 
             // @TODO: incrustes
             //->add('incrustes')

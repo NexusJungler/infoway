@@ -9,7 +9,7 @@
 /assets/images
 /assets/css/fontawesome
 /assets/js/fontawesome
-
+/public/miniatures
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

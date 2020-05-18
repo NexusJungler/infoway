@@ -146,7 +146,7 @@ class DatabaseAccessHandler
 
         file_put_contents($this->__parameterBag->get('doctrine_file_path'), Yaml::dump($doctrineConfig,10));
 
-        // @TODO: ajout des tables
+        // ajout des tables
         //exec("php bin/console doctrine:migrations:diff --em=[$databaseName] --configuration=/config/doctrine_migrations_customer.yaml");
         //exec("php bin/console doctrine:migrations:migrate --em=[$databaseName] --configuration=/config/doctrine_migrations_customer.yaml");
 

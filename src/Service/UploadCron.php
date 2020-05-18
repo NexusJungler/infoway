@@ -77,6 +77,7 @@ class UploadCron
         $this->fileUploadDate = $taskInfo['uploadDate'];
         $this->mediaProducts = $taskInfo['mediaProducts'] ?? [];
         $this->mediaTags = $taskInfo['mediaTags'] ?? [];
+        $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'] ?? false;
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -884,6 +885,7 @@ class UploadCron
                             ->setCreatedAt(new DateTime())
                             ->setDiffusionStart($this->fileDiffusionStart)
                             ->setDiffusionEnd($this->fileDiffusionEnd)
+                            ->setContainIncruste($this->mediaContainIncruste)
                             ->setHeight($data['height'])
                             ->setWidth($data['width'])
                             ->setName($file)
@@ -968,6 +970,7 @@ class UploadCron
                 $newImg->setName($this->filename)
                        ->setType($this->mediatype)
                        ->setRatio($ratio)
+                       ->setContainIncruste($this->mediaContainIncruste)
                        ->setExtension($this->extension)
                        ->setWidth($width)
                        ->setHeight($height)
