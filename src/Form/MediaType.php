@@ -28,7 +28,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_id',
                     'value' => '__MEDIA_ID__',
-                    'disabled' => true,
+                    //'disabled' => true,
                 ]
             ])
 
@@ -37,7 +37,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_name',
                     'value' => '__MEDIA_NAME__',
-                    'disabled' => true,
+                    //'disabled' => true,
                 ]
             ])
 
@@ -46,7 +46,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_type',
                     'value' => '__MEDIA_TYPE__',
-                    'disabled' => true,
+                    //'disabled' => true,
                 ]
             ])
 
@@ -55,7 +55,7 @@ class MediaType extends AbstractType
                 'attr' => [
                     'class' => 'media_extension',
                     'value' => '__MEDIA_EXTENSION__',
-                    'disabled' => true,
+                    //'disabled' => true,
                 ]
             ])
 

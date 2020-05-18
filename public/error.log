@@ -1,5 +1,0 @@
-[png @ 000001b8c198db00] chunk too big
-[png @ 000001b8c19809c0] chunk too big
-Error while decoding stream #0:0: Invalid data found when processing input
-Cannot determine format of input stream 0:0 after EOF
-Error marking filters as finished

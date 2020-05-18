@@ -82,7 +82,7 @@ class UploadCron
         $this->fileDiffusionStart = new DateTime();
 
         $diffusionEndDate = new DateTime();
-        $diffusionEndDate->modify('+30 year');
+        $diffusionEndDate->modify('+10 year');
         $this->fileDiffusionEnd = $diffusionEndDate;
 
         $filename = $taskInfo['fileName'];
@@ -91,7 +91,7 @@ class UploadCron
         $this->entityManager = $managerRegistry->getManager(strtolower($this->customer));
 
         //$this->repository = new media_rep($this->getCustomerBase($customer));
-        $this->repository = $this->entityManager->getRepository(Media::class);
+        $this->repository = $this->entityManager->getRepository(Media::class)->setEntityManager($this->entityManager);
         //$this->repository->setBase($this->getCustomerBase($this->customer));
 
         $options = ['diff' => 'medias', 'them' => 'thematics', 'sync' => 'synchros'];

@@ -32,8 +32,6 @@ parameters:
         - doc
         - docx
 
-
-
     passwordResetTokenTimer: 1 # 1h
     mailer_user: noreply@infoway.fr
     mailer_password: Annesivy1974
