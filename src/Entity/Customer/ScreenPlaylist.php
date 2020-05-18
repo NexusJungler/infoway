@@ -25,14 +25,10 @@ class ScreenPlaylist
     private $screenPosition;
 
     /**
-     * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="Media")
-     * @ORM\JoinTable(name="screen_playlists_medias",
-     *      joinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORm\JoinColumn(name="media_id", referencedColumnName="id")}
-     *      )
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="ScreenPlaylistEntry", mappedBy="screenPlaylist")
      */
-    private $medias;
+    private $entries;
 
     /**
      * One Product has One Shipment.
@@ -43,7 +39,7 @@ class ScreenPlaylist
 
     public function __construct()
     {
-        $this->medias = new ArrayCollection();
+        $this->entries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +93,37 @@ class ScreenPlaylist
     {
         if ($this->medias->contains($media)) {
             $this->medias->removeElement($media);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScreenPlaylistEntry[]
+     */
+    public function getEntries(): Collection
+    {
+        return $this->entries;
+    }
+
+    public function addEntry(ScreenPlaylistEntry $entry): self
+    {
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+            $entry->setScreenPlaylist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntry(ScreenPlaylistEntry $entry): self
+    {
+        if ($this->entries->contains($entry)) {
+            $this->entries->removeElement($entry);
+            // set the owning side to null (unless already changed)
+            if ($entry->getScreenPlaylist() === $this) {
+                $entry->setScreenPlaylist(null);
+            }
         }
 
         return $this;

@@ -73,8 +73,8 @@ class ProgrammingMouldController extends AbstractController
 
             $programmingMouldToCreate->addDisplay( $mouldDisplay ) ;
         }
-        dd($programmingMouldToCreate);
-//        dd($programmingMouldToCreate);
+
+
 
 //        dd( $programmingMouldToCreate ) ;
         $entityManager = $this->getDoctrine()->getManager('kfc');

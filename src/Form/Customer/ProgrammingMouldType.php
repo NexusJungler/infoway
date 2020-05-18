@@ -50,7 +50,6 @@ class ProgrammingMouldType extends AbstractType
         }
 
         $builder
-            ->add('screensNumber')
             ->add('criterions', EntityType::class , [
                 'class' => Criterion::class,
                 'choice_label' => 'name',

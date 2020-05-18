@@ -67,55 +67,11 @@ class DisplaySpaceController extends AbstractController
     /**
      * @Route("/{id}", name="programming_display_space_show", methods={"GET", "POST"})
      */
-    public function show(DisplaySpace $displaySpace, Request $request, SerializerInterface $serializer, FlashBagHandler $flashBagHandler, SessionInterface $session): Response
+    public function show(DisplaySpace $displaySpace, Request $request): Response
     {
 
-
-        $data = $serializer->serialize('test','json');
-        $ProgrammingMould = new ProgrammingMould() ;
-        $ProgrammingMould->setDisplaySpace( $displaySpace ) ;
-
-        $defaultTimeSlot = new TimeSlot() ;
-        $defaultTimeSlot->setStartAt(new \DateTime('00:00'));
-        $defaultTimeSlot->setEndAt(new \DateTime('00:00'));
-
-        $ProgrammingMould->addTimeSlot( $defaultTimeSlot ) ;
-
-        $optionsToPassToForm = [
-            'allowPlaylistCreation' => false,
-            'allowDisplaySpaceChoice' => false,
-            'allowModelChoice'   => true
-            ];
-
-        $form = $this->createForm(ProgrammingMouldType::class, $ProgrammingMould, $optionsToPassToForm );
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $handleCircularRefContext = [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                    return $object->getId();
-                },
-            ];
-
-
-            $serializedProgrammingMould = $serializer->serialize($ProgrammingMould,'json' , $handleCircularRefContext) ;
-//            dd($serializedProgrammingMould);
-
-
-            $session->set('serializedProgrammingMould', $serializedProgrammingMould) ;
-            $flashBagHandler->getFlashBagContainer()->add('serializedProgrammingMould',$serializedProgrammingMould ) ;
-
-            //dd($flashBagHandler);
-//            $flashBagHandler->addFlashBag('serializedProgrammingMould' , $serializedProgrammingMould);
-
-
-
-            return $this->redirectToRoute('programming_programming_mould_new');
-        }
         return $this->render('programming/display_space/show.html.twig', [
             'display_space' => $displaySpace,
-            'form' => $form->createView()
         ]);
     }
 

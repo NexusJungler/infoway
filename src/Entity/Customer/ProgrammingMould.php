@@ -51,12 +51,10 @@ class ProgrammingMould
     private $generatedLocalProgrammings;
 
     /**
-     * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="moulds")
-     * @ORM\JoinColumn(name="display_space_id", referencedColumnName="id")
-     * @Groups({"mouldSerialization"})
+     * @ORM\ManyToOne(targetEntity="DisplaySetting")
+     * @ORM\JoinColumn(name="setting_id", referencedColumnName="id")
      */
-    private $displaySpace;
+    private $displaySetting;
 
     /**
      * Many Users have Many Groups.
@@ -324,6 +322,18 @@ class ProgrammingMould
         if ($this->displays->contains($display)) {
             $this->displays->removeElement($display);
         }
+
+        return $this;
+    }
+
+    public function getDisplaySetting(): ?DisplaySetting
+    {
+        return $this->displaySetting;
+    }
+
+    public function setDisplaySetting(?DisplaySetting $displaySetting): self
+    {
+        $this->displaySetting = $displaySetting;
 
         return $this;
     }

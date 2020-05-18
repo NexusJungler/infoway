@@ -35,9 +35,16 @@ class DisplaySpace
      */
     private $localProgrammings;
 
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="DisplaySetting", mappedBy="displaySpace")
+     */
+    private $displaySettings;
+
     public function __construct() {
         $this->moulds = new ArrayCollection();
         $this->localProgrammings = new ArrayCollection() ;
+        $this->displaySettings = new ArrayCollection() ;
     }
 
     public function setId( int $id ): self{
@@ -118,6 +125,37 @@ class DisplaySpace
             // set the owning side to null (unless already changed)
             if ($localProgramming->getDisplaySpace() === $this) {
                 $localProgramming->setDisplaySpace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DisplaySetting[]
+     */
+    public function getDisplaySettings(): Collection
+    {
+        return $this->displaySettings;
+    }
+
+    public function addDisplaySetting(DisplaySetting $displaySetting): self
+    {
+        if (!$this->displaySettings->contains($displaySetting)) {
+            $this->displaySettings[] = $displaySetting;
+            $displaySetting->setDisplaySpace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisplaySetting(DisplaySetting $displaySetting): self
+    {
+        if ($this->displaySettings->contains($displaySetting)) {
+            $this->displaySettings->removeElement($displaySetting);
+            // set the owning side to null (unless already changed)
+            if ($displaySetting->getDisplaySpace() === $this) {
+                $displaySetting->setDisplaySpace(null);
             }
         }
 

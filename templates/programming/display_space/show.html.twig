@@ -15,6 +15,18 @@
                 <th>Name</th>
                 <td>{{ display_space.name }}</td>
             </tr>
+            <tr>
+                <th>Configurations</th>
+                <td>
+                    <ul>
+                        {% for  displaySetting in  display_space.displaySettings %}
+                            <li>displaySetting.name</li>
+                        {% endfor  %}
+                    </ul>
+
+                </td>
+                <td><a href="{{ path('programming_display_setting_new', {'displaySpace': display_space.id}) }} ">New</a></td>
+            </tr>
         </tbody>
     </table>
     {{ include('programming/display_space/_form.html.twig') }}
