@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Media.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MediaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MediaUploaderType.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/DatabaseAccessHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/DatabaseAccessHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UploadCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadCron.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/popups/upload-popup.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload-popup.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -170,17 +166,20 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Service" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\infoway\new_app\src\Controller\Settings" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\infoway\new_app\src\Controller" />
+      <recent name="C:\laragon\www\infoway\new_app\src\Service" />
+      <recent name="C:\laragon\www\infoway\new_app\src\Repository\Customer" />
+      <recent name="C:\laragon\www\infoway\new_app\src\Entity\Customer" />
+      <recent name="C:\laragon\www\infoway\new_app\src\Controller\Settings" />
       <recent name="C:\laragon\www\infoway\new_app\src" />
-      <recent name="C:\laragon\www\infoway\new_app\assets\js\class\Tools" />
-      <recent name="C:\laragon\www\infoway\new_app\assets" />
-      <recent name="C:\laragon\www\infoway\new_app\templates" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -235,7 +234,7 @@
       <workItem from="1589538520036" duration="32208000" />
       <workItem from="1589638350649" duration="4987000" />
       <workItem from="1589718995669" duration="1651000" />
-      <workItem from="1589790005131" duration="19371000" />
+      <workItem from="1589790005131" duration="26779000" />
     </task>
     <servers />
   </component>
@@ -271,10 +270,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="692" y="-785" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589377580476" />
-    <state x="756" y="-817" key="NewPhpClassDialog" timestamp="1589282571982">
+    <state x="756" y="-817" key="NewPhpClassDialog" timestamp="1589813196836">
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="756" y="-817" key="NewPhpClassDialog/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589282571982" />
+    <state x="756" y="-817" key="NewPhpClassDialog/0.0.1280.720/2.-1080.1920.1080/-1920.-574.1920.1080@2.-1080.1920.1080" timestamp="1589813196836" />
     <state x="509" y="-863" width="1378" height="1066" key="dock-window-1" timestamp="1589200071459">
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>

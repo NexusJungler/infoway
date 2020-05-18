@@ -86,8 +86,9 @@ class MediaController extends AbstractController
         $products = $manager->getRepository(Product::class)->setEntityManager( $manager )->findAll();
         $categories = $manager->getRepository(Category::class)->setEntityManager( $manager )->findAll();
         $tags = $manager->getRepository(Tag::class)->setEntityManager( $manager )->findAll();
+        $productsCriterions = $manager->getRepository(Product::class)->setEntityManager( $manager )->findProductsCriterions();
 
-        // upload is not accessible in 'template' and 'incrustations' tab
+        // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($media_displayed !== 'template' AND $media_displayed !== 'incruste');
 
         $mediaList = new MediasList();
@@ -110,6 +111,7 @@ class MediaController extends AbstractController
             'products' => $products,
             'categories' => $categories,
             'tags' => $tags,
+            'productsCriterions' => $productsCriterions,
             'form' => $form->createView(),
         ]);
 

@@ -1093,9 +1093,12 @@ class UploadHandlerTool extends Tool
         {
             $('.save-media-modif').on('click.onClickOnSaveButtonSendMediaInfo', e => {
 
-                if( this.__$location.find('.media_list tbody form.input.invalid').length === 0)
-                {
+                console.log( this.__$location.find('.media_list tbody .form_input:empty') ); debugger
 
+                this.allFormInputIsNotEmpty();
+
+                if( this.__$location.find('.media_list tbody .form_input.invalid').length === 0)
+                {
                     $.ajax({
                         type: 'post',
                         //url: '/edit/media',
@@ -1171,7 +1174,10 @@ class UploadHandlerTool extends Tool
 
                         },
                     });
-
+                }
+                else
+                {
+                    alert("Certains champs des formulaire ne sont pas valides !");
                 }
 
             })
@@ -1182,6 +1188,19 @@ class UploadHandlerTool extends Tool
         }
 
         return this;
+    }
+
+    allFormInputIsNotEmpty()
+    {
+        this.__$location.find('.media_list tbody .form_input').each( (index, element) => {
+
+            if( $(element).val() === '' )
+            {
+                $(element).addClass('invalid');
+                $(element).parent().find('span.error').text('Ce champ ne peut pas être vide').removeClass('hidden');
+            }
+
+        } )
     }
 
     onTypingFileNewNameCheckValidity(active)
