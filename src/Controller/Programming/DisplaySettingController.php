@@ -58,7 +58,7 @@ class DisplaySettingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="programming_display_setting_show", methods={"GET"})
+     * @Route("/{id}", name="programming_display_setting_show", methods={"GET" , "POST" })
      */
     public function show(Request $request , DisplaySetting $displaySetting, SerializerInterface $serializer, FlashBagHandler $flashBagHandler, SessionInterface $session): Response
     {  $ProgrammingMould = new ProgrammingMould() ;
@@ -72,7 +72,7 @@ class DisplaySettingController extends AbstractController
 
         $optionsToPassToForm = [
             'allowPlaylistCreation' => false,
-            'allowDisplaySpaceChoice' => false,
+            'allowDisplaySettingChoice' => false,
             'allowModelChoice'   => true
         ];
 
@@ -90,7 +90,6 @@ class DisplaySettingController extends AbstractController
 
             $serializedProgrammingMould = $serializer->serialize($ProgrammingMould,'json' , $handleCircularRefContext) ;
 //            dd($serializedProgrammingMould);
-
 
             $session->set('serializedProgrammingMould', $serializedProgrammingMould) ;
             $flashBagHandler->getFlashBagContainer()->add('serializedProgrammingMould',$serializedProgrammingMould ) ;

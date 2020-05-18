@@ -77,7 +77,7 @@ class Media
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="medias")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="medias", cascade={"persist"})
      */
     private $products;
 

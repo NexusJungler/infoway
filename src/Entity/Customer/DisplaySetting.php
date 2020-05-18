@@ -29,10 +29,12 @@ class DisplaySetting
 
     /**
      * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="displaySettings")
+     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="displaySettings", cascade={"persist"})
      * @ORM\JoinColumn(name="display_space_id", referencedColumnName="id")
      */
     private $displaySpace;
+
+
 
 
     public function getId(): ?int

@@ -4,7 +4,10 @@
 namespace App\Form\DataTransformer;
 
 use App\Entity\Customer\Media;
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
@@ -12,9 +15,9 @@ class MediaToNumberTransformer implements DataTransformerInterface
 {
 private $entityManager;
 
-public function __construct(EntityManagerInterface $entityManager)
+public function __construct(ManagerRegistry $registry)
 {
-$this->entityManager = $entityManager;
+$this->entityManager = $registry->getManager('kfc');
 }
 
 /**
@@ -25,6 +28,7 @@ $this->entityManager = $entityManager;
 */
 public function transform($media)
 {
+
 if (null === $media) {
 return '';
 }
@@ -32,13 +36,7 @@ return '';
 return $media->getId();
 }
 
-/**
-* Transforms a string (number) to an object (issue).
-*
-* @param  string $issueNumber
-* @return Media|null
-* @throws TransformationFailedException if object (issue) is not found.
-*/
+
 public function reverseTransform($mediaId)
 {
 // no issue number? It's optional, so that's ok

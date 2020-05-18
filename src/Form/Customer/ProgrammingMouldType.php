@@ -3,6 +3,7 @@
 namespace App\Form\Customer;
 
 use App\Entity\Customer\Criterion;
+use App\Entity\Customer\DisplaySetting;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\DisplaySpace;
 use App\Entity\Customer\Tag;
@@ -19,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProgrammingMouldType extends AbstractType
 {
     private bool $allowPlaylistCreation = true ;
-    private bool $allowDisplaySpaceCHoice = true ;
+    private bool $allowDisplaySettingChoice = true ;
     private bool $allowModelChoice = false ;
 
 
@@ -27,13 +28,13 @@ class ProgrammingMouldType extends AbstractType
     {
 //        dd($this->ProgrammingMouldRepo);
 
-        $this->allowDisplaySpaceCHoice = $options['allowDisplaySpaceChoice'] ;
+        $this->allowDisplaySettingChoice = $options['allowDisplaySettingChoice'] ;
         $this->allowPlaylistCreation = $options['allowPlaylistCreation'] ;
         $this->allowModelChoice = $options['allowModelChoice'] ;
 
-        if( $this->allowDisplaySpaceCHoice ) {
-            $builder->add('displaySpace', EntityType::class, [
-                'class' => DisplaySpace::class,
+        if( $this->allowDisplaySettingChoice ) {
+            $builder->add('displaySetting', EntityType::class, [
+                'class' => DisplaySetting::class,
                 'choice_label' => 'name',
             ]) ;
         }
@@ -88,16 +89,16 @@ class ProgrammingMouldType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ProgrammingMould::class,
             'allowPlaylistCreation' => true,
-            'allowDisplaySpaceChoice'    => true,
+            'allowDisplaySettingChoice'    => true,
             'allowModelChoice' => false
         ]);
         $resolver->setRequired([
             'allowPlaylistCreation' ,
-            'allowDisplaySpaceChoice',
+            'allowDisplaySettingChoice',
             'allowModelChoice'
         ]);
         $resolver->setAllowedTypes('allowPlaylistCreation','bool') ;
-        $resolver->setAllowedTypes('allowDisplaySpaceChoice','bool') ;
+        $resolver->setAllowedTypes('allowDisplaySettingChoice','bool') ;
         $resolver->setAllowedTypes('allowModelChoice','bool') ;
     }
 }

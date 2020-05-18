@@ -39,7 +39,7 @@ class Criterion
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions")
+     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions", cascade={"persist"})
      * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
      */
     private $list;

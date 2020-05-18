@@ -27,7 +27,7 @@ class ScreenPlaylistEntry
      * @ORM\ManyToOne(targetEntity="ScreenPlaylist", inversedBy="entries")
      * @ORM\JoinColumn(name="playlist_id", referencedColumnName="id")
      */
-    private $playlistId;
+    private $playlist;
 
     /**
      * @ORM\ManyToOne(targetEntity="Media")
@@ -52,17 +52,6 @@ class ScreenPlaylistEntry
         return $this;
     }
 
-    public function getPlaylistId(): ?ScreenPlaylist
-    {
-        return $this->playlistId;
-    }
-
-    public function setPlaylistId(?ScreenPlaylist $playlistId): self
-    {
-        $this->playlistId = $playlistId;
-
-        return $this;
-    }
 
     public function getMedia(): ?Media
     {
@@ -72,6 +61,18 @@ class ScreenPlaylistEntry
     public function setMedia(?Media $media): self
     {
         $this->media = $media;
+
+        return $this;
+    }
+
+    public function getPlaylist(): ?ScreenPlaylist
+    {
+        return $this->playlist;
+    }
+
+    public function setPlaylist(?ScreenPlaylist $playlist): self
+    {
+        $this->playlist = $playlist;
 
         return $this;
     }

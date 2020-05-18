@@ -3,9 +3,11 @@
 namespace App\Controller\Programming;
 
 use App\Entity\Customer\Display;
+use App\Entity\Customer\Media;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\ScreenPlaylist;
+use App\Entity\Customer\ScreenPlaylistEntry;
 use App\Form\Customer\ProgrammingMouldType;
 use App\Repository\Customer\ProgrammingMouldRepository;
 use App\Serializer\Normalizer\EmptyDateTimeNormalizer;
@@ -64,8 +66,11 @@ class ProgrammingMouldController extends AbstractController
             $mouldDisplay = new Display() ;
             $mouldDisplay->setTimeSlot( $timeSlot ) ;
 
-            for( $i=1 ; $i<=$programmingMouldToCreate->getScreensNumber(); $i++ ){
+            for( $i=1 ; $i<=$programmingMouldToCreate->getDisplaySetting()->getScreensQuantity(); $i++ ){
                 $screenPlaylist  = new ScreenPlaylist() ;
+                $screenPlaylistENtry = new ScreenPlaylistEntry();
+                $screenPlaylistENtry->setMedia($this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => 4]));
+                $screenPlaylist->addEntry( $screenPlaylistENtry );
                 $screenPlaylist->setScreenPosition( $i ) ;
 
                 $mouldDisplay->addPlaylist( $screenPlaylist ) ;
@@ -78,11 +83,12 @@ class ProgrammingMouldController extends AbstractController
 
 //        dd( $programmingMouldToCreate ) ;
         $entityManager = $this->getDoctrine()->getManager('kfc');
+
         $entityManager->persist($programmingMouldToCreate);
 
 
         $optionsToPassToForm = [
-            'allowDisplaySpaceChoice' => false,
+            'allowDisplaySettingChoice' => false,
         ];
 
 
@@ -110,6 +116,7 @@ class ProgrammingMouldController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+//            dd( $programmingMouldToCreate );
             $entityManager->persist($programmingMouldToCreate);
             $entityManager->flush();
 

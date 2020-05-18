@@ -75,7 +75,7 @@ class Site
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Devise")
+     * @ORM\ManyToOne(targetEntity="Devise", cascade={"persist"})
      * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
      */
     private $devise;
@@ -100,7 +100,7 @@ class Site
 
     /**
      * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="PricesGroup", inversedBy="sites")
+     * @ORM\ManyToOne(targetEntity="PricesGroup", inversedBy="sites", cascade={"persist"})
      * @ORM\JoinColumn(name="prices_group_id", referencedColumnName="id")
      */
     private $pricesGroup;

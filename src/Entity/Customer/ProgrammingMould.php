@@ -35,7 +35,7 @@ class ProgrammingMould
 
     /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="Display")
+     * @ORM\ManyToMany(targetEntity="Display", cascade={"persist"})
      * @ORM\JoinTable(name="displays_programming_moulds",
      *      joinColumns={@ORM\JoinColumn(name="mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="display_id", referencedColumnName="id", unique=true)}
@@ -51,7 +51,7 @@ class ProgrammingMould
     private $generatedLocalProgrammings;
 
     /**
-     * @ORM\ManyToOne(targetEntity="DisplaySetting")
+     * @ORM\ManyToOne(targetEntity="DisplaySetting", cascade={"persist"})
      * @ORM\JoinColumn(name="setting_id", referencedColumnName="id")
      */
     private $displaySetting;
@@ -83,7 +83,7 @@ class ProgrammingMould
 
     /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="TimeSlot")
+     * @ORM\ManyToMany(targetEntity="TimeSlot", cascade={"persist"})
      * @ORM\JoinTable(name="programming_moulds_timeslots",
      *      joinColumns={@ORM\JoinColumn(name="programming_mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="time_slot_id", referencedColumnName="id", unique=true)}
@@ -193,17 +193,7 @@ class ProgrammingMould
         return $this;
     }
 
-    public function getDisplaySpace(): ?DisplaySpace
-    {
-        return $this->displaySpace;
-    }
 
-    public function setDisplaySpace(?DisplaySpace $displaySpace): self
-    {
-        $this->displaySpace = $displaySpace;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Criterion[]

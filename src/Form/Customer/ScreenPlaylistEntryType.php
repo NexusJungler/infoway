@@ -23,9 +23,12 @@ class ScreenPlaylistEntryType extends AbstractType
     {
         $builder
             ->add('positionInPlaylist')
-            ->add('media',NumberType::class)
+            ->add('media',NumberType::class) ;
+
+
+        $builder
             ->get('media')
-            ->addModelTransformer($this->transformer)
+            ->addModelTransformer( $this->transformer ) ;
         ;
     }
 

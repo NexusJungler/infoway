@@ -20,7 +20,7 @@ class Display
 
     /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="ScreenPlaylist")
+     * @ORM\ManyToMany(targetEntity="ScreenPlaylist", cascade={"persist"})
      * @ORM\JoinTable(name="displays_screen_playlists",
      *      joinColumns={@ORM\JoinColumn(name="display_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id", unique=true)}

@@ -23,7 +23,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Category", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Category", inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -35,7 +35,7 @@ class Product
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PriceType")
+     * @ORM\ManyToOne(targetEntity="PriceType", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $price_type;
@@ -81,7 +81,7 @@ class Product
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="products_criterions")
      */
     private $criterions;
@@ -92,7 +92,7 @@ class Product
     private $product_allergens;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Media", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="products_medias")
      */
     private $medias;

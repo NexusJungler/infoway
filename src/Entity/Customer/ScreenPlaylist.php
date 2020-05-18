@@ -26,7 +26,7 @@ class ScreenPlaylist
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="ScreenPlaylistEntry", mappedBy="screenPlaylist")
+     * @ORM\OneToMany(targetEntity="ScreenPlaylistEntry", mappedBy="playlist", cascade={"persist"})
      */
     private $entries;
 
@@ -72,31 +72,6 @@ class ScreenPlaylist
         return $this;
     }
 
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMedias(): Collection
-    {
-        return $this->medias;
-    }
-
-    public function addMedia(Media $media): self
-    {
-        if (!$this->medias->contains($media)) {
-            $this->medias[] = $media;
-        }
-
-        return $this;
-    }
-
-    public function removeMedia(Media $media): self
-    {
-        if ($this->medias->contains($media)) {
-            $this->medias->removeElement($media);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|ScreenPlaylistEntry[]
@@ -110,7 +85,7 @@ class ScreenPlaylist
     {
         if (!$this->entries->contains($entry)) {
             $this->entries[] = $entry;
-            $entry->setScreenPlaylist($this);
+            $entry->setPlaylist($this);
         }
 
         return $this;
@@ -121,11 +96,13 @@ class ScreenPlaylist
         if ($this->entries->contains($entry)) {
             $this->entries->removeElement($entry);
             // set the owning side to null (unless already changed)
-            if ($entry->getScreenPlaylist() === $this) {
-                $entry->setScreenPlaylist(null);
+            if ($entry->getPlaylist() === $this) {
+                $entry->setPlaylist(null);
             }
         }
 
         return $this;
     }
+
+
 }

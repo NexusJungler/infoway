@@ -25,24 +25,17 @@ class DisplaySpace
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="ProgrammingMould", mappedBy="displaySpace")
-     */
-    private $moulds;
-
-    /**
-     * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="displaySpace")
      */
     private $localProgrammings;
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="DisplaySetting", mappedBy="displaySpace")
+     * @ORM\OneToMany(targetEntity="DisplaySetting", mappedBy="displaySpace", cascade={"persist"})
      */
     private $displaySettings;
 
     public function __construct() {
-        $this->moulds = new ArrayCollection();
         $this->localProgrammings = new ArrayCollection() ;
         $this->displaySettings = new ArrayCollection() ;
     }
@@ -69,36 +62,6 @@ class DisplaySpace
         return $this;
     }
 
-    /**
-     * @return Collection|ProgrammingMould[]
-     */
-    public function getMoulds(): Collection
-    {
-        return $this->moulds;
-    }
-
-    public function addMould(ProgrammingMould $mould): self
-    {
-        if (!$this->moulds->contains($mould)) {
-            $this->moulds[] = $mould;
-            $mould->setDisplaySpace($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMould(ProgrammingMould $mould): self
-    {
-        if ($this->moulds->contains($mould)) {
-            $this->moulds->removeElement($mould);
-            // set the owning side to null (unless already changed)
-            if ($mould->getDisplaySpace() === $this) {
-                $mould->setDisplaySpace(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|localProgramming[]
