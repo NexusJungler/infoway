@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,9 +34,22 @@ class TagType extends AbstractType
         $this->_allowSiteChoice = $options[ 'allowSiteChoice' ] ;
 
         $builder
-            ->add('color', ColorType::class)
-            ->add('name')
-            ->add('description');
+            ->add('color', ColorType::class,[
+                'attr' => [
+                    'class' => 'tags-color'
+                ],  
+            ])
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'tags-input'
+                ],
+            ])
+           
+            ->add('description', TextType::class, [
+                'attr' => [
+                    'class' => 'tags-desc'
+                ],
+            ]);
         if ($this->_allowSiteChoice){
             $builder
                 ->add('sites', EntityType::class, [

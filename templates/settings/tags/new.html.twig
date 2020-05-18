@@ -2,6 +2,11 @@
 
 {% block title %}Créer TAGS{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('criterion') }}
+{% endblock %}
+
 {% block body %}
     <main class="main main-tags">
         <div class="main-content">
@@ -32,7 +37,7 @@
                                     <label>Nom : </label>
                                     <input type="text" id="tag_list_tags_name" name="" required="required" maxlength="255" class="tags-input" placeholder="PROMO">
                                     <textarea id="tag_list_tags_description" name="" required="required" class="tags-desc" placeholder="Produits promotionnel du 21 mai"></textarea>
-                                    <button type="button" class="btn">Créer TAG</button>
+                                    <button type="button" class="btn" id="add_tag">Créer TAG</button>
                                 </div>
                             </div>
 
@@ -50,3 +55,7 @@
 {% endblock %}
 
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('tags') }}
+{% endblock javascripts %} 

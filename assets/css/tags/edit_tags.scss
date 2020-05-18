@@ -16,11 +16,12 @@
 .edit-tags{
     margin-left: 2.5%;
     .content-tags{
+        display: flex;
         margin-top: 30px;
         background: #B1C1C8 0% 0% no-repeat padding-box;
         border: 1px solid #707070;
         height: 100px;
-        padding: 25px 45px;
+        padding: 33px 45px;
         .tags-color{
             border-radius: 50%;
             width: 25px;
@@ -42,8 +43,47 @@
             max-width: 100%;
             padding: 2px 10px;
             font:  16px 'Barlow' ;
-            top: 11px;
+            // top: 11px;
             position: relative;
+        }
+    }
+
+    .bloc{
+        display: flex;
+        .bloc-produits{
+            margin-right: 30px;
+            
+            height: 650px;
+            .table-produits{
+                width: 100%;
+                max-width: 545px;
+            }
+        }
+        .bloc-media{
+            margin-right: 30px;
+            .table-media{
+                width: 100%;
+                max-width: 545px;
+            }
+        }
+
+        .bloc-site{
+            .table-site{
+                width: 100%;
+                max-width: 390px;
+                
+            }
+        }
+
+
+        .table{
+            
+            .thead{
+                background: #C0CCD1 0% 0% no-repeat padding-box;
+                tr{
+                    padding: 20px 30px 20px 10px;
+                }
+            }
         }
     }
 }

@@ -75,43 +75,69 @@
         }
     }
 
-    .table-tags{
-        width: 100%;
-        thead{
-            background: #FFFFFF 0% 0% no-repeat padding-box;
-            th{
-                padding: 10px;
+
+    .info-tags{
+        ul{
+            background-color: white;
+            display: flex;
+            height: 36px;
+            padding: 3px;
+            li{
                 &:nth-child(1){
                     width: 10%;
                 }
                 &:nth-child(2){
-                    width: 15%;
+                    text-align: center;
+                    width: 17%;
                 }
+            
                 &:nth-child(3){
+                    width: 40%;
                     text-align: left;
+                    padding-left: 20px;
                 }
             }
         }
-        tbody{
-            background: #EBEBEB 0% 0% no-repeat padding-box;
-            tr{  height: 53px;}
-            td{
-                &:nth-child(1){
-                    width: 10%;
-                    text-align: center;
-                }
-                &:nth-child(2){
-                    width: 15%;
-                    text-align: center;
-                }
-                &:nth-child(3){
-                    textarea{
-                        position: relative;
-                        top: 10px;
+    }
+    .tags_list{
+        display: block;
+        padding-left: 0;
+        li{
+            margin-top: 15px;
+            margin-bottom: 15px;
+            div{
+                display: flex;
+                div{
+                    
+                    &:nth-child(1){
+                        margin-left:45px;
+                        margin-right: 60px;
                     }
+                    &:nth-child(2){
+                        // width: 110px;
+                        // max-width: 100%;
+                        // border: rem(1px) solid #C0CCD1;
+                        // // padding: 6px 10px;
+                    }
+                    &:nth-child(3){
+                        margin-left:50px;
+                    }
+                    label{
+                        display: none;
+                    }
+                    
+                }
+                .tags-color {
+                    position: relative;
+                    top: 5px;
+                    left: 0px;
+                    width: 24px;
+                    height: 23px;
+                    border: none;
+                    border-radius: 50px;
+                    background: none;
                 }
             }
-        
         }
     }
     .bloc-site{
@@ -184,4 +210,9 @@
         padding: 10px;
         text-align: center;
     }
+}
+
+.bloc-color{
+    height: 20px;
+    width: 20px;
 }

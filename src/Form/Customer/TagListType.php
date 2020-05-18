@@ -39,7 +39,8 @@ class TagListType extends AbstractType
                     'customer' => $this->_customer ,
                     'user' => $this->_user,
                     'allowSiteChoice' => false
-                ]
+                ],
+                'allow_add' => true,
             ])
             ->add('sites', EntityType::class, [
                 'class' => Site::class,

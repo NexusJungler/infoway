@@ -28,7 +28,8 @@ class CriterionsListType extends AbstractType
                 'entry_type' => CriterionInListType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false
+                'required' => false,
+                
             ));
 
         ;

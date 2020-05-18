@@ -2,6 +2,11 @@
 
 {% block title %}New CriterionList{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('criterion') }}
+{% endblock %}
+
 {% block body %}
 <main class="main main_setting">
         <div class="main-content">
@@ -47,5 +52,6 @@
 
 
 {% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('criterion') }}
 {% endblock javascripts %}

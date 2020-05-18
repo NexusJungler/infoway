@@ -1,5 +1,4 @@
-@import 'custome/input-rdo.scss';
-
+// @import 'custome/input-rdo.scss';
 
 // page gestion des crieters
 
@@ -497,22 +496,24 @@
                 text-align: right;
             }    
             .content-criteres-bloc{
-                height: 140px;
-                max-height: 250px;
-                overflow: auto;
+                // height: 140px;
+                // max-height: 250px;
+                // overflow: auto;
                 .row-criteres{    
                     display: flex;
                     padding: 15px 25px;
-                    div{
+                     div{
                         display: contents;
+                        
                     }
                     .selected{
-                        label{
-                            width: 85px;
-                            display: inline-block;
-                            font: 18px 'Barlow';
-                            color: #899CA4;
-                        }
+                        
+                    }
+                    label{
+                        width: 85px;
+                        display: inline-block;
+                        font: 18px 'Barlow';
+                        color: #899CA4;
                     }
                     .input-custome{
                         width: 250px;
@@ -546,6 +547,10 @@
                     left: 25px;
                     height: 16px;
                     width: 16px;
+                    &:after{
+                        width: 12px;
+                        height: 12px;
+                    }
                 }
             }
 

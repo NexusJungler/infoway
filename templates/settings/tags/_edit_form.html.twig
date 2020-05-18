@@ -1,41 +1,98 @@
 {{ form_start(form) }}
+
     <div class="row ">
-        <div class="content-tags row">
+        <div class="content-tags row" >
+        <div >
+        </div>
             {{ form_widget(form.color, {'attr': {'class': 'tags-color'} }) }}
             {{ form_widget(form.name, {'attr': {'class': 'tags-input'} }) }} 
             {{ form_widget(form.description, {'attr': {'class': 'tags-desc'} }) }}
         </div>
     </div>
 
-    <div class="bloc-site">
-        <div class="content-site">
-            <h2 class="title-site">TAGS affectés au site : </h2> 
-            <input type="search" id="site-search" name="q" aria-label="Search" placeholder="Rechercher un élément..." >
-        </div>
-        
-    </div>
-    <div>
-        <table class="table-site">
-             <thead>
-                <tr>
-                    <th>Site</th>
-                    <th>Ajouter sites : </th>
-                </tr>
-            </thead>
-            <tbody>
-                {# {% for site in form.sites %} #}
+
+    <article class="bloc">
+        <div class="bloc-produits">
+            <div class='title'>
+                <h3>Affecté aux produits :</h3>
+            </div>
+            <table class="table-produits table">
+                <thead class="thead">
                     <tr>
-                        <td class="">
-                            {{ form_widget(form.sites, {'attr': {'class': ''} }) }}
-                        </td>
-                        <td>
-                            Adresses
-                        </td>
-                    </tr>            
-                {# {% endfor %} #}
-            </tbody>
-        </table>
-    </div>
+                        <th>Produits</th>
+                        <th>Ajouter Produits : <button type="button" class="btn">Produits</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# {% for site in form.sites %} #}
+                        <tr>
+                            <td class="">
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>            
+                    {# {% endfor %} #}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="bloc-media">
+            <div class='title'>
+                <h3>Affecté aux médias :</h3>
+            </div>
+            <table class="table-media table">
+                <thead class="thead">
+                    <tr>
+                        <th>Médias</th>
+                        <th>Ajouter médias : <button type="button" class="btn">Médiathèque</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# {% for site in form.sites %} #}
+                        <tr>
+                            <td class="">
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>            
+                    {# {% endfor %} #}
+                </tbody>
+            </table>
+        </div>
+        <div class="bloc-site " >
+            <div class='title'>
+                <h3>Affecté aux sites : </h3>
+            </div>
+            <table class="table-site table">
+                <thead class="thead">
+                    <tr>
+                        <th>Site</th>
+                        <th>Ajouter sites : <button type="button" class="btn">Sites</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# {% for site in form.sites %} #}
+                        <tr>
+                            <td class="">
+                                {{ form_widget(form.sites, {'attr': {'class': ''} }) }}
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>            
+                    {# {% endfor %} #}
+                </tbody>
+            </table>
+        </div>
+
+    </article>
+
+
+    
 
     <div class="btn-tag-enregistrer">
         <button class="btn">{{ button_label|default('Enregistrer') }}</button>

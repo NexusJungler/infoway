@@ -16,26 +16,16 @@ $(".tab-content-criteres .modified-criterion").click(function(){
 })
 
 
-let i = 2;
 $(".form-content .btn-add .btn-add-critiere").click(function(){
-       i++;
-       var html = "";
-       html += "<div class='row-criteres' id='row"+i+"'> <div class='selected'> ";
-       html += "<label for='criterion_list_criterions_"+i+"_selected'> choix n°"+i+" </label><label class='container-input'><input type='checkbox' id='criterion_list_criterions_"+i+"_selected' name='criterion_list[criterions]['+i+'][selected]' class='checkbox-custome' value="+i+"><span class='container-rdo'></span></label></div> ";
-       html += "<div><input type='text' id='criterion_list_criterions_"+i+"_name' name='criterion_list[criterions]["+i+"][name]' class='input-custome'></div>";
-       html += "<div><textarea type='text' id='criterion_list_criterions_"+i+"_description' name='criterion_list[criterions]["+i+"][description]' class='input-custome-desc'></textarea></div>";
-       html += "<div><button type='button' id='row"+i+"' class='delete-row btn'>X</button></div></div>";
-       
-       $('.content-criteres-bloc').append(html);
-       
+    $(".content-criteres-bloc").animate({scrollTop:100}, 'slow');
 });
 
 
 //delete 
 $(".content-criteres-bloc").on("click", ".delete-row", function(){
     var button_id = $(this).attr("id");
-    console.log(button_id);
-    $('#'+button_id+'').remove();   
+
+    $('#criterions_list_criterions_'+button_id+'').parents('li').remove();   
 });
 
 
@@ -54,19 +44,25 @@ $(".row-criterion .chkbox-critere").change( function(){
     }
 })
 
-// $(".delete-row").click(function(){
-//        var count_input = $(".content-criteres-bloc").find('input[type="checkbox"]').length;
-//        var checked_count =  $('[type="checkbox"]:checked').length;
 
-//        if(count_input != checked_count){
-//               console.log("2");
-//               $(".content-criteres-bloc").find('input[type="checkbox"]').each(function(){
-//                      if($(this).is(":checked"))
-//                 {
-//                     $(this).parents(".content-criteres-bloc row-criteres").remove();
-//                 }
-//               });
-//        }else{
-//               return false
-//        }
-// })
+let addTagBtn = $('#add_criterion')
+
+addTagBtn.on('click', e =>{
+    
+    let list = $('.criterion_list')
+    
+    let counter = list.children().length;
+
+    let newWidget = list.attr('data-prototype');
+    newWidget = newWidget.replace(/__name__/g, counter);
+    newWidget = "<div>" + newWidget + "<button type='button' id='"+ counter +"' class='btn delete-row' >x</button></div>"
+
+    counter++;
+    list.data('widget-counter', counter);
+    
+    let newElem = $(list.attr('data-widget-tags')).html(newWidget);
+
+    newElem.appendTo(list);
+
+})
+

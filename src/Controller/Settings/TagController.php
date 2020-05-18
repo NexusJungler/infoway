@@ -33,13 +33,7 @@ class TagController extends AbstractController
      */
     public function index(TagsRepository $tagsRepository): Response
     {
-       $test =  $this->getDoctrine()->ge;
 
-
-       $repo = $test->getRepository(Tag::class);
-
-       dd($repo);
-       dd($repo->findById());
         return $this->render('settings/tags/index.html.twig', [
             'tags' => $tagsRepository->findAll(),
         ]);
@@ -71,7 +65,7 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            // dd($form->getData());
             if(
                     ! $tagsHandler->isAllSitesSelectedArePossessedByUser( $tagsList->getSites(), $currentUser, $currentCustomer )
                 ||  ! $tagsHandler->isMinimumSitesSelectionIsReached( $tagsList )

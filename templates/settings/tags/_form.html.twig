@@ -1,31 +1,26 @@
 
 {{ form_start(form) }}
 
-    <div class="row">
-        <table class="table-tags">
-            <thead>
-                <tr>
-                    <th><span class="cercle-color"></span></th>
-                    <th>TAG créé</th>
-                    <th>Description</th>   
-                </tr>
-            </thead>
-            <tbody>
-                {% for tag in form.tags %}
-                    <tr>
-                        <td>
-                            {{ form_widget(tag.color, {'attr': {'class': 'tags-color'} }) }}
-                        </td>
-                        <td>
-                            {{ form_widget(tag.name, {'attr': {'class': 'tags-input'} }) }} 
-                        </td>
-                        <td>
-                            {{ form_widget(tag.description, {'attr': {'class': 'tags-desc'} }) }} 
-                        </td>
-                    </tr>                               
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="" >
+        <div class="info-tags">
+            <ul>
+                <li><span class="cercle-color"></span></li>
+                <li>TAG créé</li>
+                <li>Description</li>
+            </ul>
+        </div>
+        <ul class="tags tags_list row " data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}">
+            {% for tag in form.tags %}
+                <li>
+                    <div>
+                        <div>{{ form_widget(tag.color, {'attr': {'class': 'tags-color'} }) }}</div>
+                        <div><span class="bloc-color"></span>{{ form_widget(tag.name, {'attr': {'class': 'tags-input'} }) }}</div>
+                        <div>{{ form_widget(tag.description, {'attr': {'class': 'tags-desc'} }) }}</div>
+                    </div>
+                     
+                </li>                         
+            {% endfor %}
+        </ul>
     </div>
 
     <div class="bloc-site">
@@ -52,11 +47,15 @@
             </thead>
             <tbody>
                 {% for site in form.sites %}
-                {{dump(site)}}
+                {# {{dump(site)}} #}
                     <tr>
                         <td class="">
+                            {# <label class="container-input">
+                                <input type="checkbox"> Site <i class="fas fa-angle-down"></i>
+                                <span class="container-rdo"></span>
+                            </label> #}
+                            {# {{ form_widget(site, {'attr': {'class': ''} }) }} #}
                             {{ form_row(site, {'attr': {'class': ''} }) }}
-                            {# {{ form_label(site.label, {'attr': {'class': ''} }) }} #}
                         </td>
                         <td>
                             Adresses
