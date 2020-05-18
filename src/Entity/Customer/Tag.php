@@ -47,15 +47,15 @@ class Tag
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="DisplayMould", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="ProgrammingMould", mappedBy="tags")
      */
-    private $displayMoulds;
+    private $ProgrammingMoulds;
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="ScreenDisplay", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="LocalProgramming", mappedBy="tags")
      */
-    private $screenDisplays;
+    private $LocalProgrammings;
 
     /**
      * @ORM\ManyToMany(targetEntity="Media", inversedBy="tags")
@@ -66,8 +66,8 @@ class Tag
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->displayMoulds = new ArrayCollection() ;
-        $this->screenDisplays = new ArrayCollection() ;
+        $this->ProgrammingMoulds = new ArrayCollection() ;
+        $this->LocalProgrammings = new ArrayCollection() ;
         $this->medias = new ArrayCollection();
     }
 
@@ -177,56 +177,56 @@ class Tag
     }
 
     /**
-     * @return Collection|DisplayMould[]
+     * @return Collection|ProgrammingMould[]
      */
-    public function getDisplayMoulds(): Collection
+    public function getProgrammingMoulds(): Collection
     {
-        return $this->displayMoulds;
+        return $this->ProgrammingMoulds;
     }
 
-    public function addDisplayMould(DisplayMould $displayMould): self
+    public function addProgrammingMould(ProgrammingMould $ProgrammingMould): self
     {
-        if (!$this->displayMoulds->contains($displayMould)) {
-            $this->displayMoulds[] = $displayMould;
-            $displayMould->addTag($this);
+        if (!$this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds[] = $ProgrammingMould;
+            $ProgrammingMould->addTag($this);
         }
 
         return $this;
     }
 
-    public function removeDisplayMould(DisplayMould $displayMould): self
+    public function removeProgrammingMould(ProgrammingMould $ProgrammingMould): self
     {
-        if ($this->displayMoulds->contains($displayMould)) {
-            $this->displayMoulds->removeElement($displayMould);
-            $displayMould->removeTag($this);
+        if ($this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds->removeElement($ProgrammingMould);
+            $ProgrammingMould->removeTag($this);
         }
 
         return $this;
     }
 
     /**
-     * @return Collection|ScreenDisplay[]
+     * @return Collection|LocalProgramming[]
      */
-    public function getScreenDisplays(): Collection
+    public function getLocalProgrammings(): Collection
     {
-        return $this->screenDisplays;
+        return $this->LocalProgrammings;
     }
 
-    public function addScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function addLocalProgramming(LocalProgramming $LocalProgramming): self
     {
-        if (!$this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays[] = $screenDisplay;
-            $screenDisplay->addTag($this);
+        if (!$this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings[] = $LocalProgramming;
+            $LocalProgramming->addTag($this);
         }
 
         return $this;
     }
 
-    public function removeScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function removeLocalProgramming(LocalProgramming $LocalProgramming): self
     {
-        if ($this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays->removeElement($screenDisplay);
-            $screenDisplay->removeTag($this);
+        if ($this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings->removeElement($LocalProgramming);
+            $LocalProgramming->removeTag($this);
         }
 
         return $this;

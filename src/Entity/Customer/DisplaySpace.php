@@ -25,19 +25,19 @@ class DisplaySpace
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="DisplayMould", mappedBy="displaySpace")
+     * @ORM\OneToMany(targetEntity="ProgrammingMould", mappedBy="displaySpace")
      */
     private $moulds;
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="ScreenDisplay", mappedBy="displaySpace")
+     * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="displaySpace")
      */
-    private $screenDisplays;
+    private $localProgrammings;
 
     public function __construct() {
         $this->moulds = new ArrayCollection();
-        $this->screenDisplays = new ArrayCollection() ;
+        $this->localProgrammings = new ArrayCollection() ;
     }
 
     public function setId( int $id ): self{
@@ -63,14 +63,14 @@ class DisplaySpace
     }
 
     /**
-     * @return Collection|DisplayMould[]
+     * @return Collection|ProgrammingMould[]
      */
     public function getMoulds(): Collection
     {
         return $this->moulds;
     }
 
-    public function addMould(DisplayMould $mould): self
+    public function addMould(ProgrammingMould $mould): self
     {
         if (!$this->moulds->contains($mould)) {
             $this->moulds[] = $mould;
@@ -80,7 +80,7 @@ class DisplaySpace
         return $this;
     }
 
-    public function removeMould(DisplayMould $mould): self
+    public function removeMould(ProgrammingMould $mould): self
     {
         if ($this->moulds->contains($mould)) {
             $this->moulds->removeElement($mould);
@@ -94,30 +94,30 @@ class DisplaySpace
     }
 
     /**
-     * @return Collection|ScreenDisplay[]
+     * @return Collection|localProgramming[]
      */
-    public function getScreenDisplays(): Collection
+    public function getlocalProgrammings(): Collection
     {
-        return $this->screenDisplays;
+        return $this->localProgrammings;
     }
 
-    public function addScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function addlocalProgramming(localProgramming $localProgramming): self
     {
-        if (!$this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays[] = $screenDisplay;
-            $screenDisplay->setDisplaySpace($this);
+        if (!$this->localProgrammings->contains($localProgramming)) {
+            $this->localProgrammings[] = $localProgramming;
+            $localProgramming->setDisplaySpace($this);
         }
 
         return $this;
     }
 
-    public function removeScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function removelocalProgramming(localProgramming $localProgramming): self
     {
-        if ($this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays->removeElement($screenDisplay);
+        if ($this->localProgrammings->contains($localProgramming)) {
+            $this->localProgrammings->removeElement($localProgramming);
             // set the owning side to null (unless already changed)
-            if ($screenDisplay->getDisplaySpace() === $this) {
-                $screenDisplay->setDisplaySpace(null);
+            if ($localProgramming->getDisplaySpace() === $this) {
+                $localProgramming->setDisplaySpace(null);
             }
         }
 

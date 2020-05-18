@@ -3,10 +3,10 @@
 namespace App\Controller\Programming;
 
 use App\Entity\Admin\Customer;
-use App\Entity\Customer\DisplayMould;
+use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\DisplaySpace;
 use App\Entity\Customer\TimeSlot;
-use App\Form\Customer\DisplayMouldType;
+use App\Form\Customer\ProgrammingMouldType;
 use App\Form\Customer\DisplaySpaceType;
 use App\Repository\Customer\DisplaySpaceRepository;
 use App\Service\FlashBagHandler;
@@ -72,14 +72,14 @@ class DisplaySpaceController extends AbstractController
 
 
         $data = $serializer->serialize('test','json');
-        $displayMould = new DisplayMould() ;
-        $displayMould->setDisplaySpace( $displaySpace ) ;
+        $ProgrammingMould = new ProgrammingMould() ;
+        $ProgrammingMould->setDisplaySpace( $displaySpace ) ;
 
         $defaultTimeSlot = new TimeSlot() ;
         $defaultTimeSlot->setStartAt(new \DateTime('00:00'));
         $defaultTimeSlot->setEndAt(new \DateTime('00:00'));
 
-        $displayMould->addTimeSlot( $defaultTimeSlot ) ;
+        $ProgrammingMould->addTimeSlot( $defaultTimeSlot ) ;
 
         $optionsToPassToForm = [
             'allowPlaylistCreation' => false,
@@ -87,7 +87,7 @@ class DisplaySpaceController extends AbstractController
             'allowModelChoice'   => true
             ];
 
-        $form = $this->createForm(DisplayMouldType::class, $displayMould, $optionsToPassToForm );
+        $form = $this->createForm(ProgrammingMouldType::class, $ProgrammingMould, $optionsToPassToForm );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -99,19 +99,19 @@ class DisplaySpaceController extends AbstractController
             ];
 
 
-            $serializedDisplayMould = $serializer->serialize($displayMould,'json' , $handleCircularRefContext) ;
-//            dd($serializedDisplayMould);
+            $serializedProgrammingMould = $serializer->serialize($ProgrammingMould,'json' , $handleCircularRefContext) ;
+//            dd($serializedProgrammingMould);
 
 
-            $session->set('serializedDisplayMould', $serializedDisplayMould) ;
-            $flashBagHandler->getFlashBagContainer()->add('serializedDisplayMould',$serializedDisplayMould ) ;
+            $session->set('serializedProgrammingMould', $serializedProgrammingMould) ;
+            $flashBagHandler->getFlashBagContainer()->add('serializedProgrammingMould',$serializedProgrammingMould ) ;
 
             //dd($flashBagHandler);
-//            $flashBagHandler->addFlashBag('serializedDisplayMould' , $serializedDisplayMould);
+//            $flashBagHandler->addFlashBag('serializedProgrammingMould' , $serializedProgrammingMould);
 
 
 
-            return $this->redirectToRoute('programming_display_mould_new');
+            return $this->redirectToRoute('programming_programming_mould_new');
         }
         return $this->render('programming/display_space/show.html.twig', [
             'display_space' => $displaySpace,

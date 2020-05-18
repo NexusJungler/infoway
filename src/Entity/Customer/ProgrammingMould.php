@@ -5,66 +5,73 @@ namespace App\Entity\Customer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\ScreenDisplayRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\ProgrammingMouldRepository")
+ * @ORM\Table(name="programming_moulds")
  */
-class ScreenDisplay
+class ProgrammingMould
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"mouldSerialization"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"mouldSerialization"})
      */
     private $name;
 
     /**
+     * @ORM\Column(type="integer")
+     * @Groups({"mouldSerialization"})
+     */
+    private $screensNumber;
+
+    /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="Playlist")
-     * @ORM\JoinTable(name="screen_displays_playlists",
-     *      joinColumns={@ORM\JoinColumn(name="screen_display_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id", unique=true)}
+     * @ORM\ManyToMany(targetEntity="Display")
+     * @ORM\JoinTable(name="displays_programming_moulds",
+     *      joinColumns={@ORM\JoinColumn(name="mould_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="display_id", referencedColumnName="id", unique=true)}
      *      )
+     *
      */
-    private $playlists;
+    private $displays;
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="mould")
+     */
+    private $generatedLocalProgrammings;
 
     /**
      * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplayMould", inversedBy="generatedScreenDisplays")
-     * @ORM\JoinColumn(name="mould_id", referencedColumnName="id")
-     */
-    private $mould;
-
-    /**
-     * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="screenDisplays")
+     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="moulds")
      * @ORM\JoinColumn(name="display_space_id", referencedColumnName="id")
+     * @Groups({"mouldSerialization"})
      */
     private $displaySpace;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="screenDisplays")
-     * @ORM\JoinTable(name="screen_displays_criterions")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="ProgrammingMoulds" , cascade={"persist"} )
+     * @ORM\JoinTable(name="programming_moulds_criterions")
+     * @Groups({"mouldSerialization"})
      */
     private $criterions;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="screenDisplays")
-     * @ORM\JoinTable(name="screen_displays_tags")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="ProgrammingMoulds", cascade={"persist"} )
+     * @ORM\JoinTable(name="programming_moulds_tags")
      */
     private $tags;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $screensQuantity;
 
     /**
      * @ORM\Column(type="datetime")
@@ -79,20 +86,24 @@ class ScreenDisplay
     /**
      * Many User have Many Phonenumbers.
      * @ORM\ManyToMany(targetEntity="TimeSlot")
-     * @ORM\JoinTable(name="screen_displays_timeslots",
-     *      joinColumns={@ORM\JoinColumn(name="screen_display_id", referencedColumnName="id")},
+     * @ORM\JoinTable(name="programming_moulds_timeslots",
+     *      joinColumns={@ORM\JoinColumn(name="programming_mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="time_slot_id", referencedColumnName="id", unique=true)}
      *      )
+     * @Groups({"mouldSerialization"})
      */
     private $timeSlots ;
 
 
-    public function __construct()
-    {
+    private ?ProgrammingMould $model = null;
+
+    public function __construct() {
+        $this->criterions = new ArrayCollection() ;
+        $this->tags = new ArrayCollection() ;
         $this->playlists = new ArrayCollection();
-        $this->criterions = new ArrayCollection();
-        $this->tags = new ArrayCollection();
+        $this->generatedLocalProgrammings = new ArrayCollection();
         $this->timeSlots = new ArrayCollection() ;
+        $this->displays = new ArrayCollection();
     }
 
 
@@ -113,18 +124,20 @@ class ScreenDisplay
         return $this;
     }
 
-
-    public function getScreensQuantity(): ?int
+    public function getScreensNumber(): ?int
     {
-        return $this->screensQuantity;
+        return $this->screensNumber;
     }
 
-    public function setScreensQuantity(int $screensQuantity): self
+    public function setScreensNumber(int $screensNumber): self
     {
-        $this->screensQuantity = $screensQuantity;
+        $this->screensNumber = $screensNumber;
 
         return $this;
     }
+
+
+
 
     public function getStartAt(): ?\DateTimeInterface
     {
@@ -150,40 +163,34 @@ class ScreenDisplay
         return $this;
     }
 
+
     /**
-     * @return Collection|Playlist[]
+     * @return Collection|LocalProgramming[]
      */
-    public function getPlaylists(): Collection
+    public function getGeneratedLocalProgrammings(): Collection
     {
-        return $this->playlists;
+        return $this->generatedLocalProgrammings;
     }
 
-    public function addPlaylist(Playlist $playlist): self
+    public function addGeneratedLocalProgramming(LocalProgramming $generatedLocalProgramming): self
     {
-        if (!$this->playlists->contains($playlist)) {
-            $this->playlists[] = $playlist;
+        if (!$this->generatedLocalProgrammings->contains($generatedLocalProgramming)) {
+            $this->generatedLocalProgrammings[] = $generatedLocalProgramming;
+            $generatedLocalProgramming->setMould($this);
         }
 
         return $this;
     }
 
-    public function removePlaylist(Playlist $playlist): self
+    public function removeGeneratedLocalProgramming(LocalProgramming $generatedLocalProgramming): self
     {
-        if ($this->playlists->contains($playlist)) {
-            $this->playlists->removeElement($playlist);
+        if ($this->generatedLocalProgrammings->contains($generatedLocalProgramming)) {
+            $this->generatedLocalProgrammings->removeElement($generatedLocalProgramming);
+            // set the owning side to null (unless already changed)
+            if ($generatedLocalProgramming->getMould() === $this) {
+                $generatedLocalProgramming->setMould(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function getMould(): ?DisplayMould
-    {
-        return $this->mould;
-    }
-
-    public function setMould(?DisplayMould $mould): self
-    {
-        $this->mould = $mould;
 
         return $this;
     }
@@ -253,6 +260,23 @@ class ScreenDisplay
     }
 
     /**
+     * @return ProgrammingMould|null
+     */
+    public function getModel(): ?ProgrammingMould
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param ProgrammingMould|null $model
+     */
+    public function setModel(?ProgrammingMould $model): self
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    /**
      * @return Collection|TimeSlot[]
      */
     public function getTimeSlots(): Collection
@@ -277,4 +301,32 @@ class ScreenDisplay
 
         return $this;
     }
+
+    /**
+     * @return Collection|Display[]
+     */
+    public function getDisplays(): Collection
+    {
+        return $this->displays;
+    }
+
+    public function addDisplay(Display $display): self
+    {
+        if (!$this->displays->contains($display)) {
+            $this->displays[] = $display;
+        }
+
+        return $this;
+    }
+
+    public function removeDisplay(Display $display): self
+    {
+        if ($this->displays->contains($display)) {
+            $this->displays->removeElement($display);
+        }
+
+        return $this;
+    }
+
+
 }
