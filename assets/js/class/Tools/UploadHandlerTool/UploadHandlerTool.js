@@ -104,12 +104,15 @@ class UploadHandlerTool extends Tool
         $('.upload-file-list').empty();
         $('.media_list tbody').empty();
 
+        $('.start_upload_button').fadeOut()
+
         $(".upload-title").text("Préparation de l'Upload");
         $(".files_selection").fadeIn();
         $(".edit_media_info").fadeOut();
 
         this.__filesToUpload = [];
         this.__$mediasCollection.empty();
+        this.__uploadAuthorized = false;
     }
 
     onClickOnModalCloseButtonsCloseModal(active)
