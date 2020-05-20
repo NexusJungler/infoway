@@ -46,7 +46,7 @@ class CriterionsListController extends AbstractController
 
 
         $criterionList->addCriterion( new Criterion() );
-        // $criterionList->addCriterion( new Criterion() );
+        $criterionList->addCriterion( new Criterion() );
 
         $form = $this->createForm(CriterionsListType::class, $criterionList);
 

@@ -25,9 +25,10 @@
     .content-tags{
         .table-custome{
             border-radius: 0;
+            border: 1px solid #899CA4;
             .thead-info{
                 background: #E3E3E3 0% 0% no-repeat padding-box;
-                border: 1px solid #899CA4;
+                border: 0px;
                 width: 100%;
                 &::after{
                     display: none;
@@ -46,20 +47,21 @@
                 
             }
             .tbody-content{
-                background: #F6F6F6 0% 0% no-repeat padding-box;
-                border: 0;
-                margin-bottom:30px;
+                background: #EBEBEB 0% 0% no-repeat padding-box;
                 padding: 20px 60px ;
-                height: 400px;
+                height: 350px;
+                max-height: 350px;
+                display: grid;
+                overflow: auto;
+                border: 0;
                 tr{
-                    margin: 20px 0;
-                    &:nth-child(2n+2){
-                        background: #F6F6F6 0% 0% no-repeat padding-box;
-                    }
+                    margin: 5px 0;
+                    background: #EBEBEB 0% 0% no-repeat padding-box;
                     td{
                         border: 0;
                         padding: 0;
                         text-align: center;
+                        background: #EBEBEB 0% 0% no-repeat padding-box;
                         &:first-child{
                             width: 10%; 
                         }
@@ -74,7 +76,6 @@
                             padding: 0px 5px 0 10px;
                             width: 90%;
                         }
-
                         input{
                             margin-left: 60px;
                         }

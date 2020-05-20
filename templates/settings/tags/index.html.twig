@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tag index{% endblock %}
+{% block title %}Gestion des Tags{% endblock %}
 
 {% block stylesheets %}
     {{ parent()}}
@@ -38,16 +38,17 @@
 
                         <article class="tab-content-title">
                             <h3 class="title">Gestion des TAGS</h3>
-                            <p>SUPER WILD COFFEE</p>
+                            {# <p>SUPER WILD COFFEE</p> #}
                         </article>
 
                         <article class="display setting-display ">
                             <div class="display-content">
                                 <div class="display-btn">
                                     <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
-                                    <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    {# <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button> #}
                                     <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>
-                                    <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                    <button type="button"  class="btn delete-tag" data-tablelistdelete="site" ><i class="fas fa-trash"></i>Supprimer</button>
+                                    
                                 </div>
                             </div>
                         </article> 
@@ -61,29 +62,31 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tbody tbody-content scrollbar-table">
-                                    {% for tag in tags %}
-                                        <tr class="tags-poster" id="col-tag{{loop.index}}">
-                                            <td>
-                                                <label class="container-input">
-                                                    <input type="checkbox" name="tags{{ tag.id }}" class="chkbox-tag" id="{{ tag.id }}" data-tag="{{tag.id}}">
-                                                    <span class="container-rdo-tags"></span>
-                                                </label>
-                                                <p class="container-tags">
-                                                    <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }} 
-                                                    <button type="button" id="delete-tag{{loop.index}}" class="btn-delete-tag">x</button>
-                                                </p>
-                                            </td>
-                                            <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
-                                            {# <td>
-                                                <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
-                                                <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
-                                            </td> #}
-                                        </tr>
-                                    {% else %}
-                                        <tr>
-                                            <td colspan="4">no records found</td>
-                                        </tr>
-                                    {% endfor %}
+                                    {# <form method="post" action="{{ path('tags_delete') }}" id="form_tags_action" > #}
+                                        {% for tag in tags %}
+                                            <tr class="tags-poster" id="col-tag{{loop.index}}">
+                                                <td>
+                                                    <label class="container-input">
+                                                        <input type="checkbox" name="tags{{ tag.id }}" class="chkbox-tag" id="{{ tag.id }}" data-tag="{{tag.id}}">
+                                                        <span class="container-rdo-tags"></span>
+                                                    </label>
+                                                    <p class="container-tags">
+                                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }} 
+                                                        <button type="button" id="delete-tag{{loop.index}}" class="btn-delete-tag"><a href="{{ path('tags_show', {'id': tag.id}) }}">x</a></button>
+                                                    </p>
+                                                </td>
+                                                <td class="container-tags-desc"><p class="cercle-desc">{{ tag.description }}<p></td>
+                                                {# <td>
+                                                    <a href="{{ path('tags_show', {'id': tag.id}) }}">show</a>
+                                                    <a href="{{ path('tags_edit', {'id': tag.id}) }}">edit</a>
+                                                </td> #}
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="4">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {# </form> #}
                                 </tbody>
                             </table>
                         <article>

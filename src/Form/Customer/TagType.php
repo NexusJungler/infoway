@@ -36,18 +36,25 @@ class TagType extends AbstractType
         $builder
             ->add('color', ColorType::class,[
                 'attr' => [
-                    'class' => 'tags-color'
+                    'class' => 'tags-color',
+                    'value' => ''
                 ],  
             ])
             ->add('name', TextType::class, [
                 'attr' => [
-                    'class' => 'tags-input'
+                    'class' => 'tags-input',
+                    'placeholder' => "PROMO",
+                    
                 ],
+                // 'choice_label' => [
+                //     'class' => 'test'
+                // ],
             ])
            
             ->add('description', TextType::class, [
                 'attr' => [
-                    'class' => 'tags-desc'
+                    'class' => 'tags-desc',
+                    'placeholder' => "Produits promotionnel du 21 mai"
                 ],
             ]);
         if ($this->_allowSiteChoice){

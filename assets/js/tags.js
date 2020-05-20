@@ -33,14 +33,24 @@ $(".content-tags .tags-poster .chkbox-tag").change( function(){
 })
 
 //delete 
-$(".content-criteres-bloc").on("click", ".delete-row", function(){
-    var button_id = $(this).attr("id");
-    console.log(button_id);
-    $('#'+button_id+'').remove();   
+
+$(".delete-tag").on('click', function() {
+    $("#form_tags_action").submit();
+   
+})
+
+
+$(".tags-color").on('change', function(e){
+    $(this).parents('ul.tags_list').find( '.color_input' ).css("background-color",this.value);
+})
+
+//Search Filterable table
+$("#site-search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".tbody-serach tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
 });
-
-
-
 
 let addTagBtn = $('#add_tag')
 
@@ -62,9 +72,5 @@ addTagBtn.on('click', e =>{
 
 })
 
-$(".tags-color").on('change', function(){
-    // $(".tags_list ul li div div:nth-child(2)").append( "<span class='bloc-color'></span>" );
-    $(".create-tags .tags_list li div label").css("background-color",this.value);
-    console.log(this.value);
-})
+
 

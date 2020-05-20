@@ -68,6 +68,8 @@
         .row{
             .tags-input{
                 margin-left: 45px;
+                padding: 4px 10px;
+                font:  16px 'Barlow';
             }
             .tags-desc{
                 margin-left: 20px;
@@ -110,33 +112,42 @@
             div{
                 display: flex;
                 div{
-                    
+                    label{
+                        display: none;
+                    }
                     &:nth-child(1){
                         margin-left:40px;
                         margin-right: 60px;
                     }
                     &:nth-child(2){
+                        position: relative;
                         label{
+                           
                             display: none;
                         }
-                        &::after{
-                            content: "";
-                            height: 15px;
-                            width: 15px;
+                        .color_input{
+                            top: 7px;
+                            left: 7px;
+                            position: absolute;
+                            height: 16px;
+                            width: 16px;
                             border-radius: 50%;
-                            background-color: blue;
+                            background-color: black;
                         }
-                        // width: 110px;
-                        // max-width: 100%;
-                        // border: rem(1px) solid #C0CCD1;
-                        // // padding: 6px 10px;
+                        .tags-input{
+                            width: 120px;
+                            max-width: 100%;
+                            padding-left: 28px;
+                            border-radius: 15px 9px 9px 15px;
+                        }
+                        &::after{
+                            
+                        }
                     }
                     &:nth-child(3){
                         margin-left:50px;
                     }
-                    label{
-                        display: none;
-                    }
+                    
                     
                 }
                 .tags-color {
@@ -156,7 +167,7 @@
         margin: 50px auto 20px;
         .content-site{
             margin-left: 250px;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             display: flex;
             .title-site{
                 margin-right: 20px;
@@ -196,7 +207,6 @@
                 &:nth-child(2){
                     text-align: left;
                 }
-               
             }
         }
         tbody{
@@ -219,7 +229,6 @@
         }
     }
     .btn-tag-enregistrer{
-        padding: 10px;
         text-align: center;
     }
 }
