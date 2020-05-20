@@ -82,7 +82,7 @@ class UploadCron
         $this->fileDiffusionStart = new DateTime();
 
         $diffusionEndDate = new DateTime();
-        $diffusionEndDate->modify('+30 year');
+        $diffusionEndDate->modify('+10 year');
         $this->fileDiffusionEnd = $diffusionEndDate;
 
         $filename = $taskInfo['fileName'];
@@ -184,8 +184,11 @@ class UploadCron
                             $dest = $this->destfolder . "/$size/" . $this->fileID . '.' . $valid_ext;
                             rename($dir_ref, $dest);
 
-                            $mediasHandler->changeImageDpi($dest, $dest,72);
-                            $mediasHandler->convertImageCMYKToRGB($dest, $dest);
+                            if($this->filetype === 'image')
+                            {
+                                $mediasHandler->changeImageDpi($dest, $dest,72);
+                                $mediasHandler->convertImageCMYKToRGB($dest, $dest);
+                            }
 
                             if($size == 'high') {
                                 $this->repository->updateHigh($this->fileID);
@@ -923,8 +926,10 @@ class UploadCron
                         ];
                     }
 
+
                     if ($audio != null) {
                         $data = $infofile['audio'];
+
                         if ($this->mediatype != 'them') {
                             $newVideo->setAudioCodec($data['codec_long_name']);
                             $newVideo->setAudioDebit((int)($data['bit_rate'] / 1000) . ' kbit/s');

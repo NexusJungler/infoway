@@ -51,7 +51,6 @@ class TagController extends AbstractController
 
         $tagExemple = new Tag() ;
         $tagsList->addTag( $tagExemple ) ;
-
         if( ! $currentCustomer instanceof Customer ) throw new \Error('invalid Customer') ;
         if( ! $currentUser instanceof User ) throw new \Error('invalid User') ;
 
@@ -123,9 +122,9 @@ class TagController extends AbstractController
 
             $sitesSelected = $tag->getSites() ;
 
-            foreach($sitesSelected as $siteSelected){
-                if ( ! in_array ($siteSelected , $sitesAffectedToTag) ) throw new \Error('One site was not affected , impossible to modify tag') ;
-            }
+            // foreach($sitesSelected as $siteSelected){
+            //     if ( ! in_array ($siteSelected , $sitesAffectedToTag) ) throw new \Error('One site was not affected , impossible to modify tag') ;
+            // }
             if( $sitesSelected->count() < 1 ) throw new \Error('You need to affect minimum one site to the tag created') ;
 
             $customerManager->flush();

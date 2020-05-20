@@ -84,7 +84,7 @@
                         </div>
                     </div> #}
 
-                    <article class="display setting-display ">
+                   <article class="display setting-display ">
                         <div class="display-content">
                             <div class="display-btn">
                                 <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
@@ -104,6 +104,9 @@
                         {% endfor %}
                     </select>
                     <form method="post" action="{{ path('products::delete') }}" class="table">
+
+                    
+
                         <table id="list" class="table-custome">
                             <thead class="thead-info">
                                 <tr>
@@ -122,7 +125,7 @@
                                     <th>mention</th>
                                     <th>tags</th>
                                     <th>type de prix</th>
-                                    {# <th>Allergènes</th> #}
+                                    <th>Allergènes</th>
                                     <th>Date de fin</th>
                                     <th>Visuel</th>
                                 </tr>
@@ -139,9 +142,8 @@
                                     <td><i class="fas fa-spinner"></i></td>
                                     <td>{{ product.name }}</td>
                                     <td><i class="fas fa-pen"></i></td>
-                                    <td>{{ product.category.name }}</td>
-                                    
                                     <td>{{ product.amount }}</td>
+                                    <td>{{ product.category.name }}</td>
                                     <td>{{ product.description }}</td>
                                     <td>{{ product.note }}</td>
                                     <td class="tag">
@@ -152,6 +154,12 @@
                                         {% endfor %}
                                     </td>
                                     <td>{{ product.priceType.name }}</td>
+                                    <td class="tag">
+                                        {% for allergen in product.allergens %}
+                                            {# <span>{{ allergen.name }}</span> #}
+                                            <img src="/pictogram/{{ allergen.pictogram }}" alt"" class="image-td">
+                                        {% endfor %}
+                                    </td>
                                     {# <td>{{ product.start |date('Y-m-d') }}</td> #}
                                     <td>{{ product.end |date('d-m-Y') }}</td>
                                     <td><i class="fas fa-eye"></i></td>
@@ -162,13 +170,19 @@
                     </form>
                 </div>
             </section>
-        </div>    
-    <main>
-    
 
-    
+            <article class="add-popup add-popup2 upload_popup">
 
-    <div id="popup_properties" >
+                <div class="modal">
+
+                    <div class="header-modal">
+                        <div>
+                            <p class="upload-title"></p>
+                            <button type="button" class="btn btn-popupclose2 ">X</button>
+                        </div>
+                    </div>
+
+                    <div id="popup_properties" >
         <h1>Sélectionnez les éléments du produit à conserver</h1>
         <form action="{{ path('product::duplicate', {'product': 3}) }}" method="post">
             <table class="center">
@@ -217,8 +231,21 @@
         </form>
     </div>
 
-    {# {% block javascripts %}
+                </div>
+            </article>
+
+
+
+        </div>    
+    <main>
+    
+
+    
+
+    
+
+    {% block javascripts %}
         {{ encore_entry_script_tags('show_products') }}
-    {% endblock javascripts %} #}
+    {% endblock javascripts %}
 
 {% endblock %}

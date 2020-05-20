@@ -4,8 +4,13 @@
 namespace App\Controller;
 
 use App\Entity\Admin\Entity;
+use App\Entity\Customer\Date;
 use App\Entity\Customer\ExpectedChange;
+use App\Entity\Customer\ExpectedChangesList;
 use App\Entity\Customer\PriceType;
+use App\Form\Customer\DateType;
+use App\Form\Customer\ExpectedChangesListType;
+use App\Serializer\Normalizer\IgnoreNotAllowedNulledAttributeNormalizer;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Admin\Allergen;
 use App\Entity\Customer\Product;
@@ -20,13 +25,16 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ProductController extends AbstractController
 {
     /**
      * @var Serializer
      */
-    private $__serializer;
+    private $_serializer;
+
+    private $_session;
 
     public function __construct()
     {
@@ -35,10 +43,13 @@ class ProductController extends AbstractController
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
                 return $object->getId();
             },
-            AbstractNormalizer::IGNORED_ATTRIBUTES => ['__initializer__', '__cloner__', '__isInitialized__', 'date']
+            // AbstractNormalizer::IGNORED_ATTRIBUTES => ['__initializer__', '__cloner__', '__isInitialized__', 'date']
         ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $this->__serializer = new Serializer([$normalizer], [$encoder]);
+        // $normalizer = new IgnoreNotAllowedNulledAttributeNormalizer(null, null, null, null, null, null, $defaultContext);
+        $this->_serializer = new Serializer([$normalizer], [$encoder]);
+
+        $this->_session = new Session();
     }
 
     /**
@@ -54,18 +65,29 @@ class ProductController extends AbstractController
         $em = $this->getDoctrine()->getManager('kfc');
         $rep = $em->getRepository(Product::class);
         $products = $rep->findBy(['category' => $category_id]);
-        $json = $this->__serializer->serialize($products,'json');
+        $json = $this->_serializer->serialize($products,'json');
 
-        $test = json_decode($json, true);
-        foreach($test as $i => $product) {
+        $clean = json_decode($json, true);
+        //dd($clean);
+        foreach($clean as $i => $product) {
+            if($product['start'] !== null) {
+                $start = new \DateTime();
+                $start->setTimestamp($product['start']['timestamp']);
+                $product['start'] = $start->format('d-m-Y');
+            }
+
+            if($product['end'] !== null) {
+                $end = new \DateTime();
+                $end->setTimestamp($product['end']['timestamp']);
+                $product['end'] = $end->format('d-m-Y');
+            }
+            
             unset($product['createdAt']);
-            unset($product['start']);
-            unset($product['end']);
-            $test[$i] = $product;
+            $clean[$i] = $product;
         }
         //dd($json);
         // (json_decode($json, true));
-        return new Response(json_encode($test));
+        return new Response(json_encode($clean));
     }
 
     /**
@@ -79,7 +101,17 @@ class ProductController extends AbstractController
         $em = $this->getDoctrine()->getManager('kfc');
         $products = $em->getRepository( Product::class)->findAll();
         $categories = $em->getRepository(Category::class)->findAll();
-        //dd($products);
+        $rep_allergen = $this->getDoctrine()->getRepository(Allergen::class, 'default');
+        $rep_allergen_relation = $em->getRepository(ProductAllergen::class);
+
+        foreach ($products as $product) {
+            $current_product_allergens_relation = $rep_allergen_relation->findBy(['product' => $product]);
+            foreach ($current_product_allergens_relation as $allergen_relation) {
+                $id = $allergen_relation->getAllergenId();
+                $product->addAllergen($rep_allergen->find($id));
+            }
+        }
+        // dd($products);
 
         return $this->render("products/show.html.twig", [
             'products' => $products,
@@ -96,7 +128,6 @@ class ProductController extends AbstractController
      */
     public function create(Request $request): Response
     {
-
         $product = new Product();
         $product->setCreatedAt(new \DateTime());
 
@@ -105,14 +136,35 @@ class ProductController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $mediaFile = $form->get('logo')->getData();
+            if ($mediaFile) {
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $mediaFile->guessExtension();
+
+                try {
+                    $mediaFile->move(
+                        $this->getParameter('logoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $product->setLogo($newFilename);
+            }
+
             $em = $this->getDoctrine()->getManager('kfc');
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute('products::show');
         }
 
+        $rep_allergen = $this->getDoctrine()->getRepository(Allergen::class, 'default');
+        $allergens = $rep_allergen->findAll();
+
         return $this->render("products/create.html.twig", [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'allergens' => $allergens,
+            'product_allergens'=> [],
         ]);
 
     }
@@ -127,25 +179,38 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
-        $expected_change_service = new ExpectedChangeService($this->getDoctrine());
+        // $expected_change_service = new ExpectedChangeService($this->getDoctrine());
+
+        $expectedChangesList = new ExpectedChangesList();
+        $expectedChangesList->setCurrentObject($product);
+        $newDate = new Date();
+        $newDate->setValue(new \DateTime());
+        $formExpectedChanges = $this->createForm(ExpectedChangesListType::class, $expectedChangesList, [
+            'allowExpectedChanges' => false,
+            'allowCurrentObjectChoice' => false
+        ]);
+
+        $formExpectedChanges->handleRequest($request);
+
+        $formCreateDate = $this->createForm(DateType::class, $newDate);
+        $formCreateDate->handleRequest($request);
 
         $product->setAllergens(new ArrayCollection());
         $form = $this->createForm(ProductType::class, $product);
 
-        $expected_change_forms = [];
-
         /*
+        $expected_change_forms = [];
         $expected_change_forms = $this->forward('App\Controller\ExpectedChangeController::getForms', [
             'classname'  => 'product',
             'id' => $product->getId(),
         ]);
         */
-        // dd($expected_change_forms);
 
         $rep_change = $this->getDoctrine()->getRepository(ExpectedChange::class, 'kfc');
         $entity = $this->getDoctrine()->getRepository(Entity::class, 'default')->findOneBy(['name' => 'product']);
         $all_change = $rep_change->findBy(['entity' => $entity->getId(), 'instance' => $product->getId()]);
 
+        /*
         foreach($all_change as $change) {
             // dd($change);
             $datas = $change->getDatas();
@@ -165,13 +230,16 @@ class ProductController extends AbstractController
             $end->setTimestamp($datas['end']);
             $product->setEnd($end);
 
-            $page= $this->get('form.factory')->createNamed('toto', ProductType::class, $product);
-            // dd($page);
+            // $page = $this->get('form.factory')->createNamed('toto', ProductType::class, $product);
+            $page = $this->createForm(ExpectedChangeType::class, $expectedChange, [
+                'entityToChange' => new CategoryType()
+            ]);
+
             $expectedDate = $change->getExpectedAt()->getValue()->format('Y-m-d');
             $expected_change_forms[$expectedDate] = $page->createView();
         }
+        */
 
-        // dd($expected_change_forms);
         $form->handleRequest($request);
 
         $rep_allergen = $this->getDoctrine()->getRepository(Allergen::class, 'default');
@@ -188,30 +256,24 @@ class ProductController extends AbstractController
             $current_product_allergen_ids[] = $id;
         }
 
+        if ($formExpectedChanges->isSubmitted() && $formExpectedChanges->isValid()) {
+
+            dump($expectedChangesList);
+            $serializedObject = $this->_serializer->serialize($expectedChangesList, 'json');
+            dump($serializedObject);
+            // $deserializedObject = $this->_serializer->deserialize($serializedObject, ExpectedChangesList::class, 'json');
+            $deserializedObject= json_decode($serializedObject);
+            $this->_session->set('serializedObject', $serializedObject);
+
+            return $this->redirectToRoute('expected_change::savebis', ['classname' => 'product', 'id' => $product->getId()]);
+        }
+
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager('kfc');
 
-            if($request->request->get('expected_date') !== null ){
-                $product_id = $product->getId();
-                // $product = null;
-                $em->detach($product);
-
-                $expected_change_service->update($request, 'product', $product_id);
-                // $em->flush();
-                // $service->update($request, 'product', $product->getId());
-
-                /*
-                $this->forward('App\Controller\ExpectedChangeController::update', [
-                    'request'  => $request,
-                    'classname' => 'product',
-                    'id' => $product->getId()
-                ]);
-                */
-
-                return $this->redirectToRoute('product::edit', ['product' => $product_id]);
-            } else {
                 $updated_product_allergen_ids = $request->request->get('allergens');
+                dump($updated_product_allergen_ids);
 
                 if($updated_product_allergen_ids !== null) {
                     foreach ($updated_product_allergen_ids as $updated_allergen_id) {
@@ -223,25 +285,46 @@ class ProductController extends AbstractController
                         }
                     }
 
+                    dump($current_product_allergen_ids);
                     foreach ($current_product_allergen_ids as $id) {
                         if(!in_array($id, $updated_product_allergen_ids)) {
                             $current_association = $rep_allergen_relation->findOneBy(['product' => $product, 'allergenId' => $id]);
+                            dump($current_association);
                             $em->remove($current_association);
                         }
                     }
                 }
 
+            $mediaFile = $form->get('logo')->getData();
+            if ($mediaFile) {
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $mediaFile->guessExtension();
+
+                try {
+                    $mediaFile->move(
+                        $this->getParameter('logoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $product->setLogo($newFilename);
+            }
+                // dd('exit');
                 $em->flush();
                 return $this->redirectToRoute('products::show');
-            }
 
         }
+
+        $dates = $this->getDoctrine()->getRepository(Date::class, 'kfc')->findAll();
 
         return $this->render("products/create.html.twig", [
             'form' => $form->createView(),
             'allergens' => $allergens,
             'product_allergens'=> $current_product_allergens,
-            'expected_change_forms' => $expected_change_forms
+            'dates' => $dates,
+            'formExpectedChanges' => $formExpectedChanges->createView(),
+            'formCreateDate' => $formCreateDate->createView()
         ]);
     }
 
@@ -331,6 +414,21 @@ class ProductController extends AbstractController
 
         return $this->render("products/create.html.twig", [
             'form' => $form->createView()
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/create-date", name="app:date")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function date(Request $request): Response
+    {
+
+        return $this->render("pricesfactories/manage.html.twig", [
+
         ]);
 
     }

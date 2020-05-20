@@ -67,4 +67,4 @@ $(".enseigne select#enseigne").on("change", e => {
            })
        }
    
-   })
+   });

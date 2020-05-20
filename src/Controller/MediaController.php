@@ -157,10 +157,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if($mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
-            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
-
-        elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
+        if(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
             return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
 
         elseif($mediaRepository->findOneByName( pathinfo($file['name'])['filename'] ) )
@@ -179,6 +176,12 @@ class MediaController extends AbstractController
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
 
         move_uploaded_file($file['tmp_name'], $path);
+
+        if($mediasHandler->fileIsCorrupt($path, $fileType))
+        {
+            unlink($path);
+            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
 
@@ -218,9 +221,14 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No media found with name : '%s'", $name));
 
-            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/" . $media->getId() . ".png";
+            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/low/" . $media->getId() . ".png";
+
+            if(!file_exists($miniaturePath))
+                throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
             $dpi = $mediasHandler->getImageDpi($miniaturePath);
+
+            $highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
 
             $response = [
                 'id' => $media->getId(),
@@ -230,6 +238,7 @@ class MediaController extends AbstractController
                 'dpi' => $dpi,
                 'type' => 'image',
                 'customer' => $customerName,
+                'highestFormat' => $highestFormat,
             ];
 
         }
@@ -277,6 +286,8 @@ class MediaController extends AbstractController
             $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
+            $highestFormat = $this->getMediaHigestFormat($id, "video");
+
             $response = [
                 'id' => $id,
                 'extension' => $real_file_extension,
@@ -286,6 +297,7 @@ class MediaController extends AbstractController
                 'type' => 'video',
                 'customer' => $customerName,
                 'mimeType' => $mimeType,
+                'highestFormat' => $highestFormat,
             ];
 
         }
@@ -319,7 +331,7 @@ class MediaController extends AbstractController
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/" . $task->getFiletype() . "/" . $media->getId() . "." . $media->getExtension();
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/" . $task->getFiletype() . "/low/" . $media->getId() . "." . $media->getExtension();
             $mimeType = finfo_file($finfo, $path);
 
             $response = [
@@ -439,7 +451,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        dd($request->request, $customer);
+        //dd($request->request, $customer);
 
         $error = [  ];
 
@@ -507,7 +519,7 @@ class MediaController extends AbstractController
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
                 $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
 
-                if($diffusionEndDate < $diffusionStartDate)
+                if($diffusionStartDate < $diffusionEndDate)
                 {
                     $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
                     break;
@@ -568,6 +580,31 @@ class MediaController extends AbstractController
         return new JsonResponse( ($error === []) ? '200 OK' : $error , ($error === []) ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    private function getMediaHigestFormat(int $id, string $mediaType)
+    {
 
+        $formats = [
+            'HD', 'high', 'medium', 'low'
+        ];
+
+        $customerName = $this->sessionManager->get('current_customer')->getName();
+
+        $root = $path = $this->getParameter('project_dir') . "/../main/data_" . $customerName . "/PLAYER INFOWAY WEB/medias";
+
+        if($mediaType === 'image')
+            $path = $root. "/image";
+
+        else
+            $path = $root. "/video";
+
+        foreach ($formats as $format)
+        {
+            //dd($path . "/" .$format . "/" . $id . ( ($mediaType === "image") ? ".png" : ".mp4") );
+            if(file_exists( $path . "/" .$format . "/" . $id . ( ($mediaType === "image") ? ".png" : ".mp4") ))
+                return $format;
+        }
+
+        return  'low';
+    }
 
 }

@@ -33,6 +33,19 @@ class CustomerRepository extends ServiceEntityRepository
         $this->__searchRecursiveService = new ArraySearchRecursiveService();
     }
 
+    public function findAllNames()
+    {
+
+        $names = [];
+
+        foreach ($this->findAll() as $customer)
+        {
+            $names[] = $customer->getName();
+        }
+
+        return $names;
+    }
+
     public function findCustomerWithSiteByName($customerName)
     {
 

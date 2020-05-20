@@ -76,7 +76,7 @@ class MediasHandler
      */
     public function getImageDpi(string $filename){
 
-        $cmd = "magick identify -quiet -format %x \"".$filename."\"";
+        $cmd = "magick identify -quiet -format %x \"".$filename."\"  2>&1";
 
         exec($cmd, $data, $cmdResultStatus);
 
@@ -104,13 +104,15 @@ class MediasHandler
      * @param string $originalFileName
      * @param string $outputFileName
      * @param int $dpi
+     * @return bool
+     * @throws Exception
      */
     public function changeImageDpi(string $originalFileName, string $outputFileName, int $dpi)
     {
 
         if($this->getImageDpi($outputFileName) !== 72)
         {
-            $cmd = "magick convert \"" . $originalFileName . "\" -density " . $dpi . " \"" . $outputFileName . "\"";
+            $cmd = "magick convert \"" . $originalFileName . "\" -density " . $dpi . " \"" . $outputFileName . "\"  2>&1";
             exec($cmd, $data, $cmdResultStatus);
 
             if($cmdResultStatus === 1)
@@ -127,11 +129,13 @@ class MediasHandler
      *
      * @param string $originalFileName
      * @param string $outputFileName
+     * @return bool
+     * @throws Exception
      */
     public function convertImageCMYKToRGB(string $originalFileName, string $outputFileName)
     {
 
-        $cmd = "magick convert \"" . $originalFileName . "\" -colorspace rgb \"" . $outputFileName . "\"";
+        $cmd = "magick convert \"" . $originalFileName . "\" -colorspace rgb \"" . $outputFileName . "\"  2>&1";
         exec($cmd, $data, $cmdResultStatus);
 
         if($cmdResultStatus === 1)
@@ -152,7 +156,7 @@ class MediasHandler
     {
 
         if($fileType === 'image')
-            $cmd = "magick identify -verbose \"" . $fileName . "\"";
+            $cmd = "magick identify -verbose \"" . $fileName . "\" 2>&1";
 
         else
             $cmd = "ffmpeg -v error -i \"" . $fileName . "\" -f null - 2>error.log";

@@ -291,7 +291,7 @@
                     .tbody-content{
                         
                         tr{
-                            display: none;
+                            display: block;
                             height: 37px;
                             background-color: #BAC4C9;
                             // background: #A4B4BBA6 0% 0% no-repeat padding-box;
@@ -330,18 +330,18 @@
 /** MEDIA **/
 
 /** PC **/
-@media (max-width: rem(1412px)){
-    .tab-create-user{
-        .form-content-table {
-            .content-table-left{
-                .table .table-custome .thead-content::after{
-                    height: 48px;
-                }
+// @media (max-width: rem(1412px)){
+//     .tab-create-user{
+//         .form-content-table {
+//             .content-table-left{
+//                 .table .table-custome .thead-content::after{
+//                     height: 48px;
+//                 }
 
-            }
-        }
-    } 
-}
+//             }
+//         }
+//     } 
+// }
 
 @media (max-width: rem(1250px)){
     .tab-create-user{
@@ -351,9 +351,9 @@
                 max-width: 100%;
                 margin-right: 0;
                 margin-bottom: 10px;
-                .table .table-custome .thead-content::after{
-                    height: 32px;
-                }
+                // .table .table-custome .thead-content::after{
+                //     height: 32px;
+                // }
             }
             .content-table-right{
                 max-width: 100%;
@@ -370,9 +370,9 @@
                 max-width: 100%;
                 margin-right: 0;
                 margin-bottom: 10px;
-                .table .table-custome .thead-content::after{
-                    height: 32px;
-                }
+                // .table .table-custome .thead-content::after{
+                //     height: 32px;
+                // }
             }
 
             .content-table-right{

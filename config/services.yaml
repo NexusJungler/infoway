@@ -5,22 +5,35 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     project_dir: '%kernel.project_dir%'
+    logs_dir: '%kernel.logs_dir%'
+    config_dir: '%kernel.project_dir%/config'
     doctrine_file_path: '%kernel.project_dir%/config/packages/doctrine.yaml'
     env_file_path: '%kernel.project_dir%/.env'
     logoDirectory: '%kernel.project_dir%/public/logo/'
     pictoDirectory: '%kernel.project_dir%/public/pictogram/'
     uploadDirectory: '%kernel.project_dir%/public/upload/'
-    uploadAuthorizedMimeTypes:
-        image:
-            - jpeg
-            - png
-        video:
-            -
-        
-    logoAuthorizedMimeTypes:
-        - png
+    logo_dir: '%kernel.project_dir%/public/logo'
+    upload_dir: '%kernel.project_dir%/public/upload'
+    sys_path:
+        #datas: "D:/main"
+        datas: "%kernel.project_dir%/../main"
+
+    authorizedExtensions:
+        - jpg
         - jpeg
-        
+        - png
+        - bmp
+        - gif
+        - svg
+        - mp4
+        - avi
+        - 3gp
+        - mp3
+        - ppt
+        - pptx
+        - pdf
+        - doc
+        - docx
     passwordResetTokenTimer: 1 # 1h
     mailer_user: noreply@infoway.fr
     mailer_password: Annesivy1974
@@ -99,5 +112,17 @@ services:
 
                 # method attribute is optional
               method: initializeUsers
+
+
+    App\EventListener\Customer\ProductListener:
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Customer\Product
+              entity_manager: kfc
+                #                # entity_manager attribute is optional
+
+                # method attribute is optional
+              method: initializeAllergens          
 
     Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'

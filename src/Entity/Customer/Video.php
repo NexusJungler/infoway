@@ -57,7 +57,7 @@ class Video extends Media
     private $videoDebit;
 
     /**
-     * @ORM\Column(type="string", name="audio_codec", length=255)
+     * @ORM\Column(type="string", name="audio_codec", length=255, nullable=true)
      */
     private $audioCodec;
 
@@ -67,17 +67,17 @@ class Video extends Media
     private $audioFrame;
 
     /**
-     * @ORM\Column(type="string", name="audio_debit", length=255)
+     * @ORM\Column(type="string", name="audio_debit", length=255, nullable=true)
      */
     private $audioDebit;
 
     /**
-     * @ORM\Column(type="string", name="audio_frequence", length=255)
+     * @ORM\Column(type="string", name="audio_frequence", length=255, nullable=true)
      */
     private $audioFrequence;
 
     /**
-     * @ORM\Column(type="integer", name="audio_channel", nullable=true, length=1)
+     * @ORM\Column(type="integer", name="audio_channel", nullable=true, length=1, )
      */
     private $audioChannel;
 
@@ -188,7 +188,7 @@ class Video extends Media
         return $this->audioCodec;
     }
 
-    public function setAudioCodec(string $audioCodec): self
+    public function setAudioCodec(?string $audioCodec): self
     {
         $this->audioCodec = $audioCodec;
 
@@ -200,7 +200,7 @@ class Video extends Media
         return $this->audioDebit;
     }
 
-    public function setAudioDebit(string $audioDebit): self
+    public function setAudioDebit(?string $audioDebit): self
     {
         $this->audioDebit = $audioDebit;
 
@@ -212,7 +212,7 @@ class Video extends Media
         return $this->audioFrequence;
     }
 
-    public function setAudioFrequence(string $audioFrequence): self
+    public function setAudioFrequence(?string $audioFrequence): self
     {
         $this->audioFrequence = $audioFrequence;
 

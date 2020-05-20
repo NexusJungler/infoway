@@ -98,6 +98,9 @@ class Table  {
         $('.btn-popupclose').click(function () {
             $('.add-popup').removeClass('is-open');
         });
+
+
+        
         
         
         // popup

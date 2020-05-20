@@ -1,3 +1,9 @@
+{% if passwordWasUpdated is defined and passwordWasUpdated is same as(true) %}
+    <div>
+        <p>Votre mot de passe a bien été modifié avec succés ! Vous pouvez vous connecter avec votr enouveau mot de passe</p>
+    </div>
+{% endif %}
+
 <div class="form-group form_item_container">
     <input type="email" id="inputEmail" name="user[email]" {% if error is defined and error is not empty %} class="invalid" {% endif %} placeholder="Email" {% if last_username is defined %} value="{{ last_username }}" {% endif %} required>
 </div>

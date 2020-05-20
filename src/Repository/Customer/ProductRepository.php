@@ -40,6 +40,28 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
         ;
     }
 
+    
+    public function findProductsCriterions()
+    {
+
+        $productsCriterions = [];
+
+        foreach ($this->findAll() as $product)
+        {
+
+            $productsCriterions[$product->getName()] = [];
+
+            foreach ($product->getCriterions()->getValues() as $criterion)
+            {
+                $productsCriterions[$product->getName()][] = $criterion->getName();
+            }
+
+        }
+
+        return $productsCriterions;
+
+    }
+
     // Eureka --> Surcharger la Méthode findAll() pour contrôler le lazy load !!
 
     // /**

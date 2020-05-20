@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Produits {% endblock %}
+
 {% block body %}
     <main class="main main_produits">
         <div class="main-content">
@@ -17,16 +19,16 @@
             </section>
 
             <section class="wrapper_tabcontent">
-                <div id="tab-products" class="tab-create tab-create-product current produits-create">
+                <div id="tab-products" class="tab-create tab-create-product current ">
 
                 <article class="display product-display ">
                     <div class="display-content">
                         <div class="tab-content-title">
                             <h3 class="title">Créer votre Produit</h3>
                         </div>
-                        <div class="display-btn">
+                        {# <div class="display-btn">
                             <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Modification à date</a>
-                        </div>
+                        </div> #}
                     </div>
                 </article >
 
@@ -46,8 +48,7 @@
                 </div>
 
                 <div class="ManyToMany">
-                    {{ form_row(form.allergens) }}
-                    {#
+                    {# {{ form_row(form.allergens) }} #}
                     <div>
                         <label class="label-custome" for="allergens">Allergenes</label>
                         <select id="allergens" name="allergens[]" multiple="multiple">
@@ -60,7 +61,6 @@
                             {% endfor %}
                         </select>+
                     </div>
-                    #}
                 </div>
 
                 {{ form_row(form.logo) }}
@@ -116,12 +116,14 @@
         {% endfor %} #}
     </div>
 
-    {% block javascripts %}
+    
+{% endblock %}
+
+{% block javascripts %}
         {{ encore_entry_script_tags('app') }}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
         <script>
             $('.ManyToMany select').select2();
         </script>
-        {#{{ encore_entry_script_tags('edit_product') }}#}
+        {{ encore_entry_script_tags('edit_product') }}
     {% endblock javascripts %}
-{% endblock %}

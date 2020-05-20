@@ -2,12 +2,10 @@
 
 namespace App\Form\Customer;
 
+use App\Entity\Customer\Date;
 use App\Entity\Customer\ExpectedChange;
-use App\Entity\Customer\Product;
-use App\Form\ProductType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,10 +18,16 @@ class ExpectedChangeType extends AbstractType
         // $reflectionEntityToChange = new \ReflectionClass($options['entityToChange']);
         $this->importedForm = $options['entityToChange'];
         $classname = get_class($options['entityToChange']);
-        //dd($classname);
 
         $builder
-            ->add('entityObject', $classname)
+            ->add('entityObject', $classname, [
+                'label' => false
+            ])
+            /*
+            ->add('expectedAt', EntityType::class, [
+                'class' => Date::class,
+            ])
+            */
         ;
     }
 

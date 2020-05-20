@@ -57,7 +57,6 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
             Security::LAST_USERNAME,
             $credentials['email']
         );
-
         return $credentials;
     }
 
@@ -100,7 +99,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         $userRepo->getUserWithRoles($this->lastRegisteredUser);
         $userRepo->getUserWithSites($this->lastRegisteredUser);
 
-
+        
         $sessionManager = new SessionManager(new Session()) ;
 
         if($sessionManager->get('user') !== null ) $sessionManager->remove('user');

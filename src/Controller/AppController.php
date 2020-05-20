@@ -3,6 +3,8 @@
 
 namespace App\Controller;
 
+use App\Repository\Admin\CustomerRepository;
+use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{ Request, Response };
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +20,7 @@ class AppController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function homePage(Request $request): Response
+    public function homePage(Request $request,  CustomerRepository $customerRepository, SessionManager $sessionManager): Response
     {
 
 //        if($this->getUser() === null)
@@ -39,6 +41,10 @@ class AppController extends AbstractController
             'date_format' => 'd-m-Y',
             'clock_format' => 24
         ];
+
+        ($sessionManager->get('customerNames') === null) ?
+            $sessionManager->set('customerNames', $customerRepository->findAllNames()) :
+            $sessionManager->replace('customerNames', $customerRepository->findAllNames());
 
         //dump($location);
 

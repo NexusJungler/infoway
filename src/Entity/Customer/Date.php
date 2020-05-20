@@ -21,12 +21,21 @@ class Date
      */
     private $value;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    public function __toString(): string {
+        return $this->value->format('d-m-Y');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getValue(): ?\DateTimeInterface
+    public function getValue(): \DateTimeInterface
     {
         return $this->value;
     }
@@ -35,6 +44,17 @@ class Date
     {
         $this->value = $value;
 
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
         return $this;
     }
 }

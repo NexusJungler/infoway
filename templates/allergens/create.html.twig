@@ -42,12 +42,9 @@
         </div>
     </main>  
 
-
-
-
-
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        {#{{ encore_entry_script_tags('edit_product') }}#}
+        {{ encore_entry_script_tags('edit_product') }}
     {% endblock javascripts %}
+    
 {% endblock %}

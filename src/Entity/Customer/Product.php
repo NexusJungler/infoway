@@ -320,6 +320,7 @@ class Product
         return $this->allergens;
     }
 
+
     public function setAllergens(Collection $allergens): self
     {
         $this->allergens = $allergens;

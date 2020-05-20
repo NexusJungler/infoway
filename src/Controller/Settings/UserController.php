@@ -681,11 +681,20 @@ class UserController extends AbstractController
      * @param TranslatorInterface $translator
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
+    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, SessionManager $sessionManager): Response
     {
         if ($this->getUser()) {
-             return $this->redirectToRoute('home');
+             return $this->redirectToRoute('app::home');
          }
+
+        if($sessionManager->get('passwordWasUpdated') === null)
+            $passwordWasUpdated = false;
+
+        else
+        {
+            $passwordWasUpdated = $sessionManager->get('passwordWasUpdated');
+            $sessionManager->remove('passwordWasUpdated');
+        }
 
         // get the login error if there is one
         // last username entered by the user
@@ -702,7 +711,8 @@ class UserController extends AbstractController
             'page_title' => 'Connexion',
             'form_title' => 'Connexion',
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+            'passwordWasUpdated' => $passwordWasUpdated
         ]);
     }
 
@@ -785,7 +795,7 @@ class UserController extends AbstractController
      * @return Response
      * @throws Exception
      */
-	public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, EmailSenderService $emailSenderService, EntityManagerInterface $entityManager, UserRepository $userRepository, string $password_reset_token): Response
+	public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, EmailSenderService $emailSenderService, EntityManagerInterface $entityManager, UserRepository $userRepository, SessionManager $sessionManager, string $password_reset_token): Response
     {
 
         $user = $userRepository->findOneByPasswordResetToken($password_reset_token);
@@ -817,7 +827,11 @@ class UserController extends AbstractController
 
                     $entityManager->flush();
 
-                    $passwordWasUpdated = true;
+                    $sessionManager->set('passwordWasUpdated', true);
+
+                    return $this->redirectToRoute('user::login');
+
+                    //$passwordWasUpdated = true;
                     //$this->addFlash('message', 'Votre mot de passe a bien été modifié avec succés !');
                 }
 
@@ -860,17 +874,15 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render('user/user_login.html.twig', [
+        return $this->render('settings/user/user_login.html.twig', [
             'page_title' => 'Réinitialisation du Mot de passe',
             'form_title' => 'Réinitialisation du mot de passe',
             'error' => $error ?? "",
             'tokenIsInvalid' => $tokenIsInvalid ?? false,
-            'passwordWasUpdated' => $passwordWasUpdated ?? false,
             'userNotFound' => $userNotFound ?? null
         ]);
       
     }
-
 
     /**
      * @Route(path="/users/list", name="user::showAllUsers")
@@ -1207,11 +1219,12 @@ class UserController extends AbstractController
        $customer = $customerRepository->findOneByName($request->request->get('customer'));
        if(!$customer)
            throw new Exception(sprintf("Internal Error : no customer found with the name '%s'", $request->request->get('customer')));
-   
+           dump($sessionManager);
        ($sessionManager->get('current_customer') === null) ? $sessionManager->set('current_customer', $customer) : $sessionManager->replace('current_customer', $customer);
        //dd($sessionManager->get('current_customer'));
+       dd($sessionManager);
        return new Response("200 OK");
-   
+
    }
      
 

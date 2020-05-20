@@ -217,9 +217,7 @@
                         left: -7px;
                     }
                 }
-                &::after{
-                    height: 48px;
-                }
+               
                 th{
                     width: 100%;
                     &:nth-child(1){
@@ -254,15 +252,15 @@
                         width: 6%;
                     }
                     &:nth-child(11){
+                       width: 6%;
+                    }
+                    &:nth-child(12){
                         text-align: center;
                         width: 13%;
                     }
-                    &:nth-child(12){
+                    &:nth-child(13){
                         width: 4%;
                     }
-                    // &:nth-child(13){
-                    //     width: 6%;
-                    // }
                 }
             }
             .tbody{
@@ -304,10 +302,13 @@
                         width: 6%;
                     }
                     &:nth-child(11){
+                        width: 6%;
+                    }
+                    &:nth-child(12){
                         text-align: center;
                         width: 13%;
                     }
-                    &:nth-child(12){
+                    &:nth-child(13){
                         width: 4%;
                     }
                     // &:nth-child(13){

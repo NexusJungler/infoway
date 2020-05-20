@@ -46,6 +46,21 @@ class CategoryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $mediaFile = $form->get('logo')->getData();
+            if ($mediaFile) {
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $mediaFile->guessExtension();
+
+                try {
+                    $mediaFile->move(
+                        $this->getParameter('logoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $category->setLogo($newFilename);
+            }
             $em = $this->getDoctrine()->getManager('kfc');
             $em->persist($category);
             $em->flush();
@@ -79,7 +94,21 @@ class CategoryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // dd($category->getProducts());
+            $mediaFile = $form->get('logo')->getData();
+            if ($mediaFile) {
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $mediaFile->guessExtension();
+
+                try {
+                    $mediaFile->move(
+                        $this->getParameter('logoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $category->setLogo($newFilename);
+            }
             $em = $this->getDoctrine()->getManager('kfc');
             $em->flush();
             return $this->redirectToRoute('categories::show');

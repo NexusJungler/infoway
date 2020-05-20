@@ -4,7 +4,7 @@ namespace App\Repository\Admin;
 
 use App\Entity\Admin\Allergen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Allergen|null find($id, $lockMode = null, $lockVersion = null)

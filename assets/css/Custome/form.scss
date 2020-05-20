@@ -1,3 +1,9 @@
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
 .form-content{
     border: 0.06rem solid #899CA4;
     margin: 1.5rem 0;
