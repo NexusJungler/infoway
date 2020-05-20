@@ -27,11 +27,6 @@ class ProgrammingMould
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"mouldSerialization"})
-     */
-    private $screensNumber;
 
     /**
      * Many User have Many Phonenumbers.
@@ -72,12 +67,12 @@ class ProgrammingMould
     private $tags;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endAt;
 
@@ -122,27 +117,13 @@ class ProgrammingMould
         return $this;
     }
 
-    public function getScreensNumber(): ?int
-    {
-        return $this->screensNumber;
-    }
-
-    public function setScreensNumber(int $screensNumber): self
-    {
-        $this->screensNumber = $screensNumber;
-
-        return $this;
-    }
-
-
-
 
     public function getStartAt(): ?\DateTimeInterface
     {
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeInterface $startAt): self
+    public function setStartAt(?\DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
@@ -154,7 +135,7 @@ class ProgrammingMould
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeInterface $endAt): self
+    public function setEndAt(?\DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
 

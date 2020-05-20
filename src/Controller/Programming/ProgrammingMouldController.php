@@ -2,12 +2,15 @@
 
 namespace App\Controller\Programming;
 
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Display;
+use App\Entity\Customer\DisplaySetting;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\ScreenPlaylist;
 use App\Entity\Customer\ScreenPlaylistEntry;
+use App\Entity\Customer\Tag;
 use App\Form\Customer\ProgrammingMouldType;
 use App\Repository\Customer\ProgrammingMouldRepository;
 use App\Serializer\Normalizer\EmptyDateTimeNormalizer;
@@ -48,43 +51,83 @@ class ProgrammingMouldController extends AbstractController
     public function new(Request $request, FlashBagHandler $flashBagHandler, SerializerInterface $serializer, SessionInterface $session): Response
     {
 
-
-        $serializedProgrammingMould = $flashBagHandler->getOneFlashBagOrNul('serializedProgrammingMould') ;
-
-        $serializedProgrammingMould =  $session->get('serializedProgrammingMould', $serializedProgrammingMould) ;
-
-        if( $serializedProgrammingMould === null ) throw new \Error( 'invalid mould datas') ;
+        $entityManager = $this->getDoctrine()->getManager('kfc');
+//        $serializedProgrammingMould = $flashBagHandler->getOneFlashBagOrNul('serializedProgrammingMould') ;
+        $programmingMouldFromSession =  $session->get('programmingMould') ;
 
         $mediasPickables = [] ;
 
+        $newProgrammingMould = new ProgrammingMould() ;
+
+        $importedCriterionsIds = $programmingMouldFromSession->getCriterions()->map(function($criterion){
+            return $criterion->getId();
+        })->toArray() ;
+
+        if( count( $importedCriterionsIds ) > 0 ) {
+
+            $criterionsFromDb = $this->getDoctrine()->getRepository(Criterion::class)->findBy(['id' => $importedCriterionsIds] );
+
+            foreach($criterionsFromDb as $criterionToAddToNewProgrammingMould){
+                $newProgrammingMould->addCriterion( $criterionToAddToNewProgrammingMould );
+
+                foreach($criterionToAddToNewProgrammingMould->getProducts() as $product){
+
+                    foreach($product->getMedias() as $media){
+                        if( ! in_array( $media , $mediasPickables ) ) $mediasPickables[] = $media ;
+                    };
+                }
+            }
+        }
 
 
-        $programmingMouldToCreate = $serializer->deserialize( $serializedProgrammingMould ,ProgrammingMould::class,'json');
 
-        foreach( $programmingMouldToCreate->getTimeSlots() as $timeSlot ) {
+        $importedTagsIds = $programmingMouldFromSession->getTags()->map( function( $tag ){
+            return $tag->getId();
+        })->toArray() ;
+
+        if( count( $importedTagsIds ) > 0 ) {
+
+            $tagsFromDb = $this->getDoctrine()->getRepository(Tag::class)->findBy(['id' => $importedCriterionsIds] );
+
+            foreach($tagsFromDb as $tagToAddToNewProgrammingMould){
+                $newProgrammingMould->addTag( $tagToAddToNewProgrammingMould );
+
+                foreach( $tagToAddToNewProgrammingMould->getMedias() as $media ) {
+                    if( ! in_array( $media , $mediasPickables ) ) $mediasPickables[] = $media ;
+                }
+            }
+        }
+
+        $displaySettingFromDb = $this->getDoctrine()->getRepository(DisplaySetting::class)->findOneBy( ['id' => $programmingMouldFromSession->getDisplaySetting()->getId() ] );
+        $newProgrammingMould->setDisplaySetting( $displaySettingFromDb ) ;
+
+        foreach( $programmingMouldFromSession->getTimeSlots() as $timeSlot ) {
+
+            $newProgrammingMould->addTimeSlot( $timeSlot ) ;
 
             $mouldDisplay = new Display() ;
             $mouldDisplay->setTimeSlot( $timeSlot ) ;
 
-            for( $i=1 ; $i<=$programmingMouldToCreate->getDisplaySetting()->getScreensQuantity(); $i++ ){
+            for( $i=1 ; $i<=$newProgrammingMould->getDisplaySetting()->getScreensQuantity(); $i++ ){
                 $screenPlaylist  = new ScreenPlaylist() ;
                 $screenPlaylistENtry = new ScreenPlaylistEntry();
                 $screenPlaylistENtry->setMedia($this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => 4]));
+                $screenPlaylistENtry->setPositionInPlaylist( 1 );
                 $screenPlaylist->addEntry( $screenPlaylistENtry );
                 $screenPlaylist->setScreenPosition( $i ) ;
 
                 $mouldDisplay->addPlaylist( $screenPlaylist ) ;
             }
 
-            $programmingMouldToCreate->addDisplay( $mouldDisplay ) ;
+            $newProgrammingMould->addDisplay( $mouldDisplay ) ;
         }
 
 
 
 //        dd( $programmingMouldToCreate ) ;
-        $entityManager = $this->getDoctrine()->getManager('kfc');
 
-        $entityManager->persist($programmingMouldToCreate);
+
+        //$entityManager->persist($programmingMouldToCreate);
 
 
         $optionsToPassToForm = [
@@ -92,32 +135,22 @@ class ProgrammingMouldController extends AbstractController
         ];
 
 
-        $productrepo = $this->getDoctrine()->getRepository(Product::class);
-
-        $product = $productrepo->findOneBy(['id' => 2]);
+//        $productrepo = $this->getDoctrine()->getRepository(Product::class);
+//
+//        $product = $productrepo->findOneBy(['id' => 2]);
 //        dd($product->getMedias()->getValues());
 
-        foreach( $programmingMouldToCreate->getCriterions() as $criterion ){
-            foreach($criterion->getProducts() as $product){
-                foreach($product->getMedias() as $media){
-                    if( ! in_array( $media , $mediasPickables ) ) $mediasPickables[] = $media ;
-                };
-            }
-        }
 
-      foreach( $programmingMouldToCreate->getTags() as $tag ) {
-          foreach( $tag->getMedias() as $media ) {
-              if( ! in_array( $media , $mediasPickables ) ) $mediasPickables[] = $media ;
-          }
-      }
-        $form = $this->createForm(ProgrammingMouldType::class, $programmingMouldToCreate, $optionsToPassToForm );
+//        dd($programmingMouldToCreate);
+
+
+        $form = $this->createForm(ProgrammingMouldType::class, $newProgrammingMould, $optionsToPassToForm );
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-//            dd( $programmingMouldToCreate );
-            $entityManager->persist($programmingMouldToCreate);
+            $entityManager->persist( $newProgrammingMould );
             $entityManager->flush();
 
 
@@ -125,7 +158,7 @@ class ProgrammingMouldController extends AbstractController
         }
 
         return $this->render('programming/programming_mould/new.html.twig', [
-            'programming_mould' => $programmingMouldToCreate,
+            'programming_mould' => $newProgrammingMould,
             'form' => $form->createView(),
         ]);
     }

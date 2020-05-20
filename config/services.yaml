@@ -23,6 +23,7 @@ parameters:
     passwordResetTokenTimer: 1 # 1h
     mailer_user: noreply@infoway.fr
     mailer_password: Annesivy1974
+    container.dumper.inline_factories: true
 
 services:
     # default configuration for services in *this* file

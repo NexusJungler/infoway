@@ -88,11 +88,13 @@ class DisplaySettingController extends AbstractController
             ];
 
 
-            $serializedProgrammingMould = $serializer->serialize($ProgrammingMould,'json' , $handleCircularRefContext) ;
+          //  $serializedProgrammingMould = $serializer->serialize($ProgrammingMould,'json' , $handleCircularRefContext) ;
+
+            $session->set('programmingMould',$ProgrammingMould ) ;
 //            dd($serializedProgrammingMould);
 
-            $session->set('serializedProgrammingMould', $serializedProgrammingMould) ;
-            $flashBagHandler->getFlashBagContainer()->add('serializedProgrammingMould',$serializedProgrammingMould ) ;
+         //   $session->set('serializedProgrammingMould', $serializedProgrammingMould) ;
+            //$flashBagHandler->getFlashBagContainer()->add('serializedProgrammingMould',$serializedProgrammingMould ) ;
 
             //dd($flashBagHandler);
 //            $flashBagHandler->addFlashBag('serializedProgrammingMould' , $serializedProgrammingMould);
