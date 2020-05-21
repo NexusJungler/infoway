@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Customer;
+namespace App\Repository\Admin;
 
-use App\Entity\Customer\Screen;
+use App\Entity\Admin\Screen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

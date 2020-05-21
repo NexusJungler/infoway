@@ -29,6 +29,8 @@ class SiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Site::class);
     }
 
+
+
     public function getSitesByUserAndCustomer(User $user, Customer $customer){
 
         $userSiteEntriesForCustomer = $this->userSiteRepo->getSitesByUserAndCustomer($user, $customer) ;

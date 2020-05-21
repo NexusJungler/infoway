@@ -3,6 +3,7 @@
 namespace App\Entity\Customer;
 
 use App\Entity\Admin\Country;
+use App\Entity\Admin\Screen;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\TimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -127,9 +128,15 @@ class Site
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Screen", mappedBy="site")
+     * @ORM\OneToMany(targetEntity="SiteScreen", mappedBy="site", cascade={"persist"})
      */
-    private $screens;
+    private $siteScreens;
+
+
+    private $screens  ;
+
+    private $displaySettings ;
+    private $displaySpaces ;
 
 
     public function __construct() {
@@ -138,6 +145,9 @@ class Site
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new ArrayCollection() ;
         $this->screens = new ArrayCollection() ;
+        $this->displaySettings = new ArrayCollection() ;
+        $this->displaySpaces = new ArrayCollection() ;
+        $this->siteScreens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -467,6 +477,37 @@ class Site
             // set the owning side to null (unless already changed)
             if ($screen->getSite() === $this) {
                 $screen->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SiteScreen[]
+     */
+    public function getSiteScreens(): Collection
+    {
+        return $this->siteScreens;
+    }
+
+    public function addSiteScreen(SiteScreen $siteScreen): self
+    {
+        if (!$this->siteScreens->contains($siteScreen)) {
+            $this->siteScreens[] = $siteScreen;
+            $siteScreen->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSiteScreen(SiteScreen $siteScreen): self
+    {
+        if ($this->siteScreens->contains($siteScreen)) {
+            $this->siteScreens->removeElement($siteScreen);
+            // set the owning side to null (unless already changed)
+            if ($siteScreen->getSite() === $this) {
+                $siteScreen->setSite(null);
             }
         }
 

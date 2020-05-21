@@ -64,11 +64,6 @@ class LocalProgramming
     private $tags;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $screensQuantity;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $startAt;
@@ -117,18 +112,6 @@ class LocalProgramming
     }
 
 
-    public function getScreensQuantity(): ?int
-    {
-        return $this->screensQuantity;
-    }
-
-    public function setScreensQuantity(int $screensQuantity): self
-    {
-        $this->screensQuantity = $screensQuantity;
-
-        return $this;
-    }
-
     public function getStartAt(): ?\DateTimeInterface
     {
         return $this->startAt;
@@ -160,9 +143,40 @@ class LocalProgramming
         return $this->mould;
     }
 
+    public function generateLocalProgrammingFromMould(ProgrammingMould $mould){
+
+        $this->setName( $mould->getName() ) ;
+
+        foreach( $mould->getDisplays() as $display ){
+            $this->addDisplay( $display );
+        }
+
+        foreach( $mould->getTags() as $tag ){
+            $this->addTag( $tag );
+        }
+
+        foreach( $mould->getCriterions() as $criterion ){
+            $this->addCriterion( $criterion );
+        }
+
+        foreach( $mould->getTimeSlots() as $timeSlot ){
+            $this->addTimeSlot( $timeSlot );
+        }
+
+        $this->setStartAt( $mould->getStartAt() );
+
+        $this->setEndAt( $mould->getEndAt() ) ;
+
+        $mould->addGeneratedLocalProgramming( $this ) ;
+
+        return $this;
+    }
+
     public function setMould(?ProgrammingMould $mould): self
     {
         $this->mould = $mould;
+        $this->generateLocalProgrammingFromMould( $mould );
+        $mould->addGeneratedLocalProgramming($this);
 
         return $this;
     }

@@ -3,7 +3,9 @@
 namespace App\Controller\Settings;
 
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\Screen;
 use App\Entity\Customer\Site;
+use App\Entity\Customer\SiteScreen;
 use App\Form\SiteType;
 use App\Repository\Customer\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +35,12 @@ class SiteController extends AbstractController
     public function new(Request $request, SessionInterface $session): Response
     {
         $site = new Site();
+        $site->addScreen( $this->getDoctrine()->getRepository(Screen::class)->findOneBy(['id' => 1]));
+//        $this->getDoctrine()->getManager('kfc')->persist($site);
+//        $siteScreen = new SiteScreen() ;
+//
+//        $siteScreen->setScreenId(1);
+//        $site->addSiteScreen($siteScreen);
 
         $currentCustomer = $session->get('current_customer') ;
         $creator = $session->get('user') ;
@@ -47,6 +55,7 @@ class SiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
 
             $site->setCustomer( $currentCustomer );
 
@@ -78,9 +87,19 @@ class SiteController extends AbstractController
     /**
      * @Route("/{id}/edit", name="sites_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Site $site): Response
+    public function edit(Request $request, Site $site, SessionInterface $session): Response
     {
-        $form = $this->createForm(SiteType::class, $site);
+
+        $currentCustomer = $session->get('current_customer') ;
+        $creator = $session->get('user') ;
+
+        $datasToPassToSiteForm = [
+            'customer' => $currentCustomer,
+            'creator' => $creator
+        ] ;
+
+
+        $form = $this->createForm(SiteType::class, $site, $datasToPassToSiteForm);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

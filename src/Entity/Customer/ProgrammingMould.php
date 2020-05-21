@@ -41,7 +41,7 @@ class ProgrammingMould
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="mould")
+     * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="mould", cascade={"persist"})
      */
     private $generatedLocalProgrammings;
 
