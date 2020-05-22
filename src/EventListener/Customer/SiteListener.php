@@ -18,5 +18,8 @@ class SiteListener
     public function initializeUsers(Site $site, $e)
     {
         $site->setUsers( new ArrayCollection() );
+        $site->setScreens( new ArrayCollection() ) ;
+
     }
+
 }

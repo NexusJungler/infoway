@@ -37,16 +37,8 @@ class SiteScreenType extends AbstractType
                     'choice_label' => 'serialNumber'
                 ])
 //            ->add('site')
-            ->add('localProgramming', EntityType::class,
-                [
-                    'class' => ProgrammingMould::class,
-                    'choice_label' => 'name'
-                ]);
+            ->add('localProgramming', LocalProgrammingType::class) ;
 
-        $builder->
-        get('localProgramming')
-            ->addModelTransformer($this->modelTransformer);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -460,6 +460,11 @@ class Site
         return $this->screens;
     }
 
+    public function setScreens(Collection $screens) : self {
+         $this->screens = $screens->filter( fn( Screen $screen ) =>  $screen );
+
+         return $this;
+    }
     public function addScreen(Screen $screen): self
     {
         if (!$this->screens->contains($screen)) {

@@ -43,6 +43,17 @@ class Screen
 
     private $site ;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $available;
+
+
+    public function __construct()
+    {
+        $this->available = true;
+    }
+
 
     public function getId(): ?int
     {
@@ -121,6 +132,18 @@ class Screen
         $this->site = $site;
 
         return $this ;
+    }
+
+    public function getAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): self
+    {
+        $this->available = $available;
+
+        return $this;
     }
 
 

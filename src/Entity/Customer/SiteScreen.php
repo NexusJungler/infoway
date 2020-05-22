@@ -34,7 +34,7 @@ class SiteScreen
 
     /**
      * One Product has One Shipment.
-     * @ORM\OneToOne(targetEntity="LocalProgramming")
+     * @ORM\OneToOne(targetEntity="LocalProgramming", cascade={"persist"})
      * @ORM\JoinColumn(name="local_programming_id", referencedColumnName="id")
      */
     private $localProgramming;

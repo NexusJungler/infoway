@@ -56,8 +56,6 @@ class SitesScreenToScreenTransformer implements DataTransformerInterface
         }
 
 
-
-
          return $this->screens->map( function( Screen $screen ) use ( $importatedSiteScreensSortedById ){
 
              if(  isset( $importatedSiteScreensSortedById[ $screen->getId() ] ) ) { return $importatedSiteScreensSortedById[ $screen->getId() ] ; }

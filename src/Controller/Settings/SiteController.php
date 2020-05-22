@@ -4,8 +4,10 @@ namespace App\Controller\Settings;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Screen;
+use App\Entity\Admin\ScreensList;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\SiteScreen;
+use App\Form\Admin\ScreensListType;
 use App\Form\SiteType;
 use App\Repository\Customer\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +37,9 @@ class SiteController extends AbstractController
     public function new(Request $request, SessionInterface $session): Response
     {
         $site = new Site();
-        $site->addScreen( $this->getDoctrine()->getRepository(Screen::class)->findOneBy(['id' => 1]));
+        $siteScreen = new SiteScreen() ;
+        $siteScreen->setScreen( $this->getDoctrine()->getRepository(Screen::class)->findOneBy(['id' => 1]))  ;
+        $site->addSiteScreen( $siteScreen  ) ;
 //        $this->getDoctrine()->getManager('kfc')->persist($site);
 //        $siteScreen = new SiteScreen() ;
 //
@@ -49,12 +53,19 @@ class SiteController extends AbstractController
             'customer' => $currentCustomer,
             'creator' => $creator
         ] ;
+        $datasToPassToScreensListForm = [
+            'showOnlyAvailablesScreens' => true
+        ] ;
 
+        $screensList = new ScreensList() ;
+        $screenListForm = $this->createForm(ScreensListType::class, $screensList , $datasToPassToScreensListForm );
         $form = $this->createForm(SiteType::class, $site, $datasToPassToSiteForm ) ;
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+//            dd($site) ;
+
 
 
             $site->setCustomer( $currentCustomer );
@@ -70,6 +81,7 @@ class SiteController extends AbstractController
         return $this->render('sites/new.html.twig', [
             'site' => $site,
             'form' => $form->createView(),
+            'screensListForm' => $screenListForm->createView(),
             'currentCustomer' => $currentCustomer
         ]);
     }
@@ -98,12 +110,40 @@ class SiteController extends AbstractController
             'creator' => $creator
         ] ;
 
+        $screensIdToImport = [] ;
+
+        foreach( $site->getSiteScreens() as $siteScreen ) {  $screensIdToImport[] = $siteScreen->getScreenId() ; }
+
+        $importatedScreensFromDb = $this->getDoctrine()->getRepository(Screen::class)->findBy(['id' => $screensIdToImport]) ;
+
+        $importatedScreensFromDbSortedById = [] ;
+
+        foreach( $importatedScreensFromDb as $importatedScreen){  $importatedScreensFromDbSortedById[ $importatedScreen->getId() ] = $importatedScreen ;  }
+
+        foreach( $site->getSiteScreens() as $siteScreen ){
+            $screenFromDb = $importatedScreensFromDbSortedById[ $siteScreen->getScreenId()] ?? null ;
+            if( $screenFromDb !== null  ){ $siteScreen->setScreen( $screenFromDb ) ; }
+            else{ $site->removeSiteScreen( $siteScreen ) ; }
+        }
 
         $form = $this->createForm(SiteType::class, $site, $datasToPassToSiteForm);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+          $em =  $this->getDoctrine()->getManager('kfc') ;
+
+
+            foreach( $site->getSiteScreens() as $siteScreen ){
+
+                if($siteScreen->getLocalProgramming() !== null ){
+                    foreach( $siteScreen->getLocalProgramming()->getEntitiesToRemoveFromDb() as $entityToRemoveFromDb ){
+                        $em->remove( $entityToRemoveFromDb );
+                    };
+                }
+            }
+
+            $this->getDoctrine()->getManager('kfc')->flush();
 
             return $this->redirectToRoute('sites_index');
         }
@@ -111,6 +151,7 @@ class SiteController extends AbstractController
         return $this->render('sites/edit.html.twig', [
             'site' => $site,
             'form' => $form->createView(),
+            'currentCustomer' => $currentCustomer
         ]);
     }
 

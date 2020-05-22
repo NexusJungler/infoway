@@ -102,10 +102,9 @@ private $siteScreenToScreenTransformer ;
                     // looks for choices from this entity
                     'class' => PricesGroup::class,
                     'choice_label' => 'name',
-                    'by_reference' => false
                 ])
 //            ->add('screens', EntityType::class)
-            ->add('screens', CollectionType::class ,
+            ->add('siteScreens', CollectionType::class ,
                 [
                     'entry_type' => SiteScreenType::class,
                 ])
@@ -113,9 +112,9 @@ private $siteScreenToScreenTransformer ;
          //   ->add('nightProgramming',NightProgrammingType::class)
 //            ->add('tags')
         ;
-
-        $builder->get('screens')
-            ->addModelTransformer( $this->siteScreenToScreenTransformer );
+//
+//        $builder->get('screens')
+//            ->addModelTransformer( $this->siteScreenToScreenTransformer );
     }
 
     public function configureOptions(OptionsResolver $resolver)

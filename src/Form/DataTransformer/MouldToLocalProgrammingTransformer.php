@@ -27,9 +27,9 @@ class MouldToLocalProgrammingTransformer implements DataTransformerInterface
      * @param  Media|null $issue
      * @return LocalProgramming
      */
-    public function transform($mould)
+    public function transform( $localProgramming )
     {
-
+        dd($mould) ;
         if (null === $mould) {
             return '';
         }
@@ -39,12 +39,14 @@ class MouldToLocalProgrammingTransformer implements DataTransformerInterface
     }
 
 
-    public function reverseTransform( $mould )
+    public function reverseTransform( $localProgramming )
     {
-// no issue number? It's optional, so that's ok
-        if (! $mould ) {
-            return;
-        }
+//// no issue number? It's optional, so that's ok
+//        if (!  $localProgramming  ) {
+//            return;
+//        }
+
+        dd( $localProgramming ) ;
 
         $localProgramming = new LocalProgramming();
         $localProgramming->setMould( $mould );

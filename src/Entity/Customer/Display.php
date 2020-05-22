@@ -30,7 +30,7 @@ class Display
 
     /**
      * One Product has One Shipment.
-     * @ORM\OneToOne(targetEntity="TimeSlot")
+     * @ORM\OneToOne(targetEntity="TimeSlot", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="timslot_id", referencedColumnName="id")
      */
     private $timeSlot;
@@ -38,6 +38,13 @@ class Display
     public function __construct()
     {
         $this->playlists = new ArrayCollection();
+    }
+
+    public function __clone()
+    {
+       $this->id = null ;
+       $this->timeSlot = clone $this->timeSlot ;
+       $this->playlists = $this->playlists->map( fn( ScreenPlaylist $screenPlaylist ) => clone $screenPlaylist ) ;
     }
 
     public function getId(): ?int

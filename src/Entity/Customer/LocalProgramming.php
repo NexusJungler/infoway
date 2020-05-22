@@ -26,7 +26,7 @@ class LocalProgramming
 
     /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="Display")
+     * @ORM\ManyToMany(targetEntity="Display", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="local_programming_displays",
      *      joinColumns={@ORM\JoinColumn(name="local_programming_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="display_id", referencedColumnName="id", unique=true)}
@@ -64,24 +64,16 @@ class LocalProgramming
     private $tags;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endAt;
 
-    /**
-     * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="TimeSlot")
-     * @ORM\JoinTable(name="local_programmings_timeslots",
-     *      joinColumns={@ORM\JoinColumn(name="local_programming_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="time_slot_id", referencedColumnName="id", unique=true)}
-     *      )
-     */
-    private $timeSlots ;
+    private $entitiesToRemoveFromDb = [] ;
 
 
     public function __construct()
@@ -89,7 +81,6 @@ class LocalProgramming
         $this->playlists = new ArrayCollection();
         $this->criterions = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->timeSlots = new ArrayCollection() ;
         $this->displays = new ArrayCollection();
     }
 
@@ -117,7 +108,7 @@ class LocalProgramming
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeInterface $startAt): self
+    public function setStartAt(?\DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
@@ -129,7 +120,7 @@ class LocalProgramming
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeInterface $endAt): self
+    public function setEndAt(?\DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
 
@@ -147,36 +138,38 @@ class LocalProgramming
 
         $this->setName( $mould->getName() ) ;
 
+        $this->displays = new ArrayCollection() ;
         foreach( $mould->getDisplays() as $display ){
-            $this->addDisplay( $display );
+            $this->addDisplay( clone $display );
         }
 
+        $this->tags = new ArrayCollection() ;
         foreach( $mould->getTags() as $tag ){
             $this->addTag( $tag );
         }
 
+        $this->criterions = new ArrayCollection() ;
         foreach( $mould->getCriterions() as $criterion ){
             $this->addCriterion( $criterion );
-        }
-
-        foreach( $mould->getTimeSlots() as $timeSlot ){
-            $this->addTimeSlot( $timeSlot );
         }
 
         $this->setStartAt( $mould->getStartAt() );
 
         $this->setEndAt( $mould->getEndAt() ) ;
 
-        $mould->addGeneratedLocalProgramming( $this ) ;
+//        $mould->addGeneratedLocalProgramming( $this ) ;
 
         return $this;
     }
 
     public function setMould(?ProgrammingMould $mould): self
     {
+//        dd('ici');
         $this->mould = $mould;
+
+        $this->entitiesToRemoveFromDb = array_merge($this->entitiesToRemoveFromDb , array_map(fn(Display $display) => $display, $this->getDisplays()->getValues() ) ) ;
+
         $this->generateLocalProgrammingFromMould( $mould );
-        $mould->addGeneratedLocalProgramming($this);
 
         return $this;
     }
@@ -246,32 +239,6 @@ class LocalProgramming
     }
 
     /**
-     * @return Collection|TimeSlot[]
-     */
-    public function getTimeSlots(): Collection
-    {
-        return $this->timeSlots;
-    }
-
-    public function addTimeSlot(TimeSlot $timeSlot): self
-    {
-        if (!$this->timeSlots->contains($timeSlot)) {
-            $this->timeSlots[] = $timeSlot;
-        }
-
-        return $this;
-    }
-
-    public function removeTimeSlot(TimeSlot $timeSlot): self
-    {
-        if ($this->timeSlots->contains($timeSlot)) {
-            $this->timeSlots->removeElement($timeSlot);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Display[]
      */
     public function getDisplays(): Collection
@@ -296,4 +263,14 @@ class LocalProgramming
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getEntitiesToRemoveFromDb(): array
+    {
+        return $this->entitiesToRemoveFromDb;
+    }
+
+
 }
