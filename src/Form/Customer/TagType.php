@@ -6,6 +6,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
+use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use App\Repository\Customer\SiteRepository;
 use App\Service\SessionManager;
@@ -25,6 +26,12 @@ class TagType extends AbstractType
     private User $_user ;
     private Customer $_customer ;
     private bool $_allowSiteChoice ;
+    private bool $_allowProductsChoice ;
+    private $siteRepo ;
+
+    public function __construct(SiteRepository $siteRepo ){
+        $this->siteRepo = $siteRepo ;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,12 +39,12 @@ class TagType extends AbstractType
         $this->_user = $options[ 'user' ] ;
         $this->_customer = $options[ 'customer' ] ;
         $this->_allowSiteChoice = $options[ 'allowSiteChoice' ] ;
-
+        $this->_allowProductsChoice = $options[ 'allowProductsChoice' ] ;
+        
         $builder
             ->add('color', ColorType::class,[
                 'attr' => [
-                    'class' => 'tags-color',
-                    'value' => ''
+                    'class' => 'tags-color'
                 ],  
             ])
             ->add('name', TextType::class, [
@@ -62,9 +69,17 @@ class TagType extends AbstractType
                 ->add('sites', EntityType::class, [
                     'class' => Site::class,
                     'choice_label' => 'name',
-                    'query_builder' => function(SiteRepository $siteRepository ){
-                        $siteRepository->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ;
-                    },
+                    'choices' =>  $this->siteRepo->getSitesByUserAndCustomer( $this->_user, $this->_customer ) ,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ]);
+        }
+        if ($this ->_allowProductsChoice){
+            $builder
+                ->add('products', EntityType::class, [
+                    'class' => Product::class,
+                    'choice_label' => 'name',
                     'multiple' => true,
                     'expanded' => true,
                     'by_reference' => false
@@ -77,9 +92,11 @@ class TagType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Tag::class,
             'allowSiteChoice' => true,
+            'allowProductsChoice' => true,
         ]);
         $resolver->setRequired([
             'allowSiteChoice',
+            'allowProductsChoice',
             'customer',
             'user'
         ]);

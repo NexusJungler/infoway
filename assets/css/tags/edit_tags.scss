@@ -1,4 +1,6 @@
 @import '../custome/input-rdo.scss';
+@import '../custome/table.scss';
+@import '../custome/popup.scss';
 
 /** Function for converting  px to rem **/
 @function rem($size) {
@@ -22,7 +24,39 @@
         border: 1px solid #707070;
         height: 100px;
         padding: 33px 45px;
+        .content-color{
+            position: relative;
+            // margin-right: 35px;
+            img{
+                position: relative;
+                z-index: 1;
+                display: none;
+            }
+            input{
+                // position: relative;
+                // top: 2px;
+                // left: 2px;
+                // border: none;
+                // border-radius: 50%;
+                // background: none;
+            }
+        }
+        .show-color{
+            position: relative;
+            .input-color-edit {
+                top: 7px;
+                left: 7px;
+                position: absolute;
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+                background-color: black;
+            }
+            
+        }
         .tags-color{
+            position: relative;
+            top:3px;
             border-radius: 50%;
             width: 25px;
             height: 25px;
@@ -30,11 +64,12 @@
         }
         .tags-input{
             @extend .border-input;
-            width: 110px;
+            width: 120px;
             max-width: 100%;
             padding: 6px 10px;
             font:  16px 'Barlow';
             margin-right: 45px;
+            padding-left: 28px;
 
         }
         .tags-desc{
@@ -50,40 +85,169 @@
 
     .bloc{
         display: flex;
-        .bloc-produits{
-            margin-right: 30px;
-            
-            height: 650px;
-            .table-produits{
-                width: 100%;
-                max-width: 545px;
+        margin-top: 30px;
+
+        .title{
+            font:  25px "Barlow";
+            color: #4D646D;
+            margin-bottom: 15px;
+            .title-bold{
+                font-weight: bold;
+                text-transform: uppercase;
             }
         }
+
+    
+        .bloc-produits{
+            margin-right: 30px;
+            height: 550px;
+            .table-produits{
+                width: 100% ;
+                max-width: 545px;
+                .thead-info{
+                    th{
+                        // padding: 20px 33px 20px 70px;
+                        &:nth-child(1){
+                            width: 40%;
+                            border: 0;
+                        }
+                        &:nth-child(2){
+                            width: 60%;
+                            text-align: right;
+                            
+                        }
+                    }
+                }
+                .tbody{
+                    tr{
+                        td{
+                            &:nth-child(1){
+                                width: 40%;
+                            }
+                            &:nth-child(2){
+                                width: 60%;
+                                position: relative;
+                                input{
+                                    position: absolute;
+                                    right: 10px;
+                                }
+                            } 
+                        }
+                    }
+                }
+            }
+        }
+
+
+
         .bloc-media{
             margin-right: 30px;
             .table-media{
                 width: 100%;
                 max-width: 545px;
+                .thead-info{
+                    th{
+                        &:nth-child(1){
+                            width: 40%;
+                            border: 0;
+                            text-align: left;
+                        }
+                        &:nth-child(2){
+                            width: 60%;
+                            text-align: right;
+                            
+                        }
+                    }
+                }
             }
         }
 
         .bloc-site{
-            .table-site{
+            .table-site-custome{
                 width: 100%;
                 max-width: 390px;
-                
+                .thead-info{
+                    th{
+                        &:nth-child(1){
+                            width: 40%;
+                            border: 0;
+                            text-align: left;
+                            padding-left: 20px;
+                        }
+                        &:nth-child(2){
+                            width: 60%;
+                            text-align: right;
+                            
+                        }
+                    }
+                }
+                .tbody{
+                    tr{
+                        td{
+                            padding: 10px 15px;
+                            width: 100%;
+                            position: relative;
+                            input{
+                                position: absolute;
+                                right: 10px;
+                            }
+                        }
+                        
+                    }
+                }
             }
         }
 
 
         .table{
             
-            .thead{
+            .thead-info{
+                border: 1px solid #899CA4;
                 background: #C0CCD1 0% 0% no-repeat padding-box;
+                width: 100%;
+                border-radius: 0;
+                &::after{
+                    display: none;
+                }
+                th{
+                    padding: 15px 0px;
+                    // padding: 20px 33px 20px 70px;
+                    display: inline-block;
+                }
+            }
+            .tbody{
+                border: 1px solid #899CA4;
+                border-top: 0;
+                height: 450px;
+                max-height: 450px;
+                overflow: auto;
                 tr{
-                    padding: 20px 30px 20px 10px;
+                    &:nth-child(even){
+                        background: #FFFFFF 0% 0% no-repeat padding-box;
+                    }
                 }
             }
         }
+    }
+
+    .add-popup{
+        background: transparent;
+        .modal {
+            margin: 0 auto;
+            margin-top: 10%;
+            position: relative;
+            padding: 30px;
+            width: 25%;
+            height: 50%;
+            background-color: #ddd;
+            color: #231D23;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+        }
+    }
+
+    .popup-site{
+        display: inline-flex;
     }
 }

@@ -8,6 +8,9 @@ use App\Entity\Admin\User;
 use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
+use App\Form\Customer\AddSiteType;
+use App\Object\Customer\SitesList;
+
 use App\Form\Customer\TagListType;
 use App\Form\Customer\TagType;
 use App\Repository\Customer\TagsRepository;
@@ -16,10 +19,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\ChoiceList\LazyChoiceList;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Component\Form\ChoiceList\View\ChoiceView ;
 
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -60,6 +65,7 @@ class TagController extends AbstractController
 
 
         $form = $this->createForm(TagListType::class, $tagsList , $datasToPassToTagForm);
+        
 
         $form->handleRequest($request);
 
@@ -116,7 +122,25 @@ class TagController extends AbstractController
         $datasToPassToTagForm = ['user' => $currentUser, 'customer' => $currentCustomer ] ;
 
         $form = $this->createForm(TagType::class, $tag, $datasToPassToTagForm );
+        $tagFormView = $form->createView() ;
+
+        $sitesImportatedFromDb = new ArrayCollection( array_values( array_map( fn( ChoiceView $choice ) => $choice->data,$tagFormView->children['sites']->vars['choices'] ) ) ) ;
+
+        $optionsToPassToAddSiteForm = [
+            'sitesToDisplay' => $sitesImportatedFromDb
+        ];
+        $addSiteForm = $this->createForm(AddSiteType::class ,  [] , $optionsToPassToAddSiteForm) ;
+        $addSiteActionView = $addSiteForm->createView();
+
+        foreach($addSiteActionView->children[ 'sites' ]->vars[ 'choices' ] as $index => $choice ){
+            $currentSite = $choice->data ;
+
+            $addSiteActionView->children['sites']->children[ $index ]->vars['data'] = $currentSite ;
+        }
+        //dd( $addSiteActionView);
+
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -134,7 +158,8 @@ class TagController extends AbstractController
 
         return $this->render('settings/tags/edit.html.twig', [
             'tag' => $tag,
-            'form' => $form->createView(),
+            'form' => $tagFormView,
+            'addSiteForm' => $addSiteActionView
         ]);
     }
 

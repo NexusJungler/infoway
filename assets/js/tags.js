@@ -44,6 +44,26 @@ $(".tags-color").on('change', function(e){
     $(this).parents('ul.tags_list').find( '.color_input' ).css("background-color",this.value);
 })
 
+
+//page edit tags
+var val = $('.tags-color-edit').attr("value");
+$('.input-color-edit').css("background-color", val);
+
+$(".tags-color-edit").on('change', function(e){
+    $('.input-color-edit').css("background-color",this.value);
+})
+
+$('.btn-site').click(function () {
+    $('.add-popup-site').addClass('is-open');
+    return false;
+  });
+
+$('.btn-popupclose2').click(function () {
+    $('.add-popup-site').removeClass('is-open');
+});
+
+
+
 //Search Filterable table
 $("#site-search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
@@ -71,6 +91,7 @@ addTagBtn.on('click', e =>{
     newElem.appendTo(list);
 
 })
+
 
 
 
