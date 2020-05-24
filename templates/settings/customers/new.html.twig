@@ -14,7 +14,7 @@
             <section class="jumbotron">
 
                 {% block settingtitle %}
-                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Création', 'showSecondTitles': true } %}
                 {% endblock %}
 
                 {% block wrapper %}
@@ -28,8 +28,8 @@
                 <div id="setting-enseigne" class="tab-content current enseigne">
 
                     <article class="tab-content-title">
-                        <h3 class="title">Enseigne</h3>
-                        <p>SUPER WILD COFFEE</p>
+                        <h3 class="title">Créer une Enseigne</h3>
+                        <p>vous êtes Multi-enseigne</p>
                     </article>
 
                     <article class="display setting-display ">
@@ -53,7 +53,7 @@
 
                         {{ include('settings/customers/_form.html.twig') }}
 
-                        <a href="{{ path('customers_index') }}0">back to list</a>
+                        {# <a href="{{ path('customers_index') }}0">back to list</a> #}
                     <article>
 
                 </div>

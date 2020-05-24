@@ -17,7 +17,13 @@
     </div>
 
     <div class="">
-        {{ form_widget(form) }}
+        {% for contact in form.contact  %}  
+            {# {{dump(contact)}} #}
+            {{ form_row(contact, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway',}}) }}
+                                        
+        {% endfor %}
+    
+        {# {{ form_widget(form) }} #}
     </div>
     
     <button class="btn">{{ button_label|default('Save') }}</button>
