@@ -9,7 +9,10 @@ use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
 use App\Form\Customer\TagListType;
+use App\Form\Customer\TagsActionForm;
+use App\Form\Customer\TagsActionType;
 use App\Form\Customer\TagType;
+use App\Object\Customer\Action\TagsAction;
 use App\Repository\Customer\TagsRepository;
 use App\Service\TagsHandler;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,14 +32,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class TagController extends AbstractController
 {
     /**
-     * @Route("/", name="tags_index", methods={"GET"})
+     * @Route("/", name="tags_index", methods={"GET" , "POST"})
      */
-    public function index(TagsRepository $tagsRepository): Response
+    public function index(TagsRepository $tagsRepository, Request $request): Response
     {
-//       $test =  $this->getDoctrine()->ge;
+        $tagsList = new TagsAction() ;
 
+        $tagsActionForm = $this->createForm(TagsActionType::class, $tagsList );
+        $tagsActionForm->handleRequest($request);
 
+        $tagsActionView = $tagsActionForm->createView();
+
+        foreach($tagsActionView->children[ 'tags' ]->vars[ 'choices' ] as $choice ){
+            $currentTag = $choice->data ;
+            $tagsActionView->children['tags']->children[ $currentTag->getId() ]->vars['data'] = $currentTag ;
+        }
+
+        if ($tagsActionForm->isSubmitted() && $tagsActionForm->isValid()) {
+            if( $tagsActionForm->get('delete')->isClicked() ) {
+                return $this->delete( $tagsList , $request);
+//                return $this->redirectToRoute('tags_delete', [
+//                    'tagsToDelete'  => $tagsList,
+//                ]);
+            }
+        }
         return $this->render('settings/tags/index.html.twig', [
+            'tagsActionForm' => $tagsActionView ,
             'tags' => $tagsRepository->findAll(),
         ]);
     }
@@ -96,6 +117,8 @@ class TagController extends AbstractController
         ]);
     }
 
+
+
     /**
      * @Route("/{id}", name="tags_show", methods={"GET"})
      */
@@ -150,16 +173,24 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="tags_delete", methods={"DELETE"})
+     * @Route("/", name="tags_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Tag $tag): Response
+    public function delete(TagsAction $tagsToDelete , Request $request ): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager('kfc');
+
+        foreach($tagsToDelete->getTags() as $tag) {
             $entityManager->remove($tag);
-            $entityManager->flush();
         }
+            $entityManager->flush();
+//        if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($tag);
+//            $entityManager->flush();
+//        }
 
         return $this->redirectToRoute('tags_index');
     }
+
+
 }
