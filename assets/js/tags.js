@@ -9,15 +9,15 @@ const $ = require('jquery');
 global.$ = global.jQuery = $;
 
 
-$(".tags .modified-tag").click(function(){
-
-    $.each($(".tags-poster input[type='checkbox']:checked"), function(){
-        var id_tag = $(this).attr('data-tag');
-        
-        window.location.href= "/tags/"+ id_tag +"/edit"
-        console.log(id_tag);
-    })
-})
+// $(".tags .modified-tag").click(function(){
+//
+//     $.each($(".tags-poster input[type='checkbox']:checked"), function(){
+//         var id_tag = $(this).attr('data-tag');
+//
+//         window.location.href= "/tags/"+ id_tag +"/edit"
+//         console.log(id_tag);
+//     })
+// })
 
 $(".content-tags .tags-poster .chkbox-tag").change( function(){
     let nb_input = $(".tags-poster input[type='checkbox']:checked").length;
