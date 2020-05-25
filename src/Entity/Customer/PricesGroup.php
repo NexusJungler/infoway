@@ -26,7 +26,7 @@ class PricesGroup
 
     /**
      * One prices group  has many sites. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Site", mappedBy="pricesGroup")
+     * @ORM\OneToMany(targetEntity="Site", mappedBy="pricesGroup", cascade={"persist"})
      */
     private $sites;
 

@@ -2,26 +2,25 @@
 
 namespace App\Repository\Customer;
 
-use App\Entity\Customer\DisplayMould;
-
+use App\Entity\Customer\Display;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method DisplayMould|null find($id, $lockMode = null, $lockVersion = null)
- * @method DisplayMould|null findOneBy(array $criteria, array $orderBy = null)
- * @method DisplayMould[]    findAll()
- * @method DisplayMould[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Display|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Display|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Display[]    findAll()
+ * @method Display[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DisplayMouldRepository extends ServiceEntityRepository
+class DisplayRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DisplayMould::class);
+        parent::__construct($registry, Display::class);
     }
 
     // /**
-    //  * @return DisplaySetting[] Returns an array of DisplaySetting objects
+    //  * @return Display[] Returns an array of Display objects
     //  */
     /*
     public function findByExampleField($value)
@@ -38,7 +37,7 @@ class DisplayMouldRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?DisplaySetting
+    public function findOneBySomeField($value): ?Display
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')

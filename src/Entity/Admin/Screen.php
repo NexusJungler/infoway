@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Entity\Customer;
+namespace App\Entity\Admin;
 
+use App\Entity\Customer\Site;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\ScreenRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\ScreenRepository")
  */
 class Screen
 {
@@ -40,12 +41,19 @@ class Screen
      */
     private $majFirmwareAllowed ;
 
+    private $site ;
+
     /**
-     * Many Screens have one site. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="Site", inversedBy="screens")
-     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
+     * @ORM\Column(type="boolean")
      */
-    private $site;
+    private $available;
+
+
+    public function __construct()
+    {
+        $this->available = true;
+    }
+
 
     public function getId(): ?int
     {
@@ -112,15 +120,32 @@ class Screen
         return $this;
     }
 
-    public function getSite(): ?Site
+
+    public function getSite() : Site
     {
         return $this->site;
     }
 
-    public function setSite(?Site $site): self
+
+    public function setSite(Site $site): self
     {
         $this->site = $site;
 
+        return $this ;
+    }
+
+    public function getAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): self
+    {
+        $this->available = $available;
+
         return $this;
     }
+
+
+
 }

@@ -3,10 +3,11 @@
 namespace App\Form\Customer;
 
 use App\Entity\Customer\Criterion;
-use App\Entity\Customer\DisplayMould;
+use App\Entity\Customer\DisplaySetting;
+use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\DisplaySpace;
 use App\Entity\Customer\Tag;
-use App\Repository\Customer\DisplayMouldRepository;
+use App\Repository\Customer\ProgrammingMouldRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,24 +17,24 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DisplayMouldType extends AbstractType
+class ProgrammingMouldType extends AbstractType
 {
     private bool $allowPlaylistCreation = true ;
-    private bool $allowDisplaySpaceCHoice = true ;
+    private bool $allowDisplaySettingChoice = true ;
     private bool $allowModelChoice = false ;
 
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        dd($this->displayMouldRepo);
+//        dd($this->ProgrammingMouldRepo);
 
-        $this->allowDisplaySpaceCHoice = $options['allowDisplaySpaceChoice'] ;
+        $this->allowDisplaySettingChoice = $options['allowDisplaySettingChoice'] ;
         $this->allowPlaylistCreation = $options['allowPlaylistCreation'] ;
         $this->allowModelChoice = $options['allowModelChoice'] ;
 
-        if( $this->allowDisplaySpaceCHoice ) {
-            $builder->add('displaySpace', EntityType::class, [
-                'class' => DisplaySpace::class,
+        if( $this->allowDisplaySettingChoice ) {
+            $builder->add('displaySetting', EntityType::class, [
+                'class' => DisplaySetting::class,
                 'choice_label' => 'name',
             ]) ;
         }
@@ -44,11 +45,12 @@ class DisplayMouldType extends AbstractType
 //            ->add('endAt') ;
 
         if( $this->allowPlaylistCreation ) {
-            $builder->add('playlists');
+            $builder->add('displays', CollectionType::class , [
+                'entry_type' => DisplayType::class,
+            ]);
         }
 
         $builder
-            ->add('screensNumber')
             ->add('criterions', EntityType::class , [
                 'class' => Criterion::class,
                 'choice_label' => 'name',
@@ -69,7 +71,7 @@ class DisplayMouldType extends AbstractType
 
         if( $this->allowModelChoice ) {
             $builder->add('model', EntityType::class , [
-                'class' => DisplayMould::class,
+                'class' => ProgrammingMould::class,
                 'choice_label' => 'name',
                 'em' => 'kfc',
                 'by_reference' => false,
@@ -85,18 +87,18 @@ class DisplayMouldType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => DisplayMould::class,
+            'data_class' => ProgrammingMould::class,
             'allowPlaylistCreation' => true,
-            'allowDisplaySpaceChoice'    => true,
+            'allowDisplaySettingChoice'    => true,
             'allowModelChoice' => false
         ]);
         $resolver->setRequired([
             'allowPlaylistCreation' ,
-            'allowDisplaySpaceChoice',
+            'allowDisplaySettingChoice',
             'allowModelChoice'
         ]);
         $resolver->setAllowedTypes('allowPlaylistCreation','bool') ;
-        $resolver->setAllowedTypes('allowDisplaySpaceChoice','bool') ;
+        $resolver->setAllowedTypes('allowDisplaySettingChoice','bool') ;
         $resolver->setAllowedTypes('allowModelChoice','bool') ;
     }
 }

@@ -71,14 +71,16 @@ class Media
     private $width;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media")
+     * @ORM\ManyToMany(targetEntity="Tag", mappedBy="medias")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Product", inversedBy="media")
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="medias", cascade={"persist"})
      */
     private $products;
+
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -96,6 +98,13 @@ class Media
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
+
+    public function setId( int $id ): self{
+        $this->id = $id ;
+
+        return $this;
+    }
+
 
     public function getId(): ?int
     {

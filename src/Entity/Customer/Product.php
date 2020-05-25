@@ -23,7 +23,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Category", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Category", inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -35,7 +35,7 @@ class Product
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PriceType")
+     * @ORM\ManyToOne(targetEntity="PriceType", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $price_type;
@@ -81,7 +81,7 @@ class Product
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="products_criterions")
      */
     private $criterions;
@@ -91,6 +91,13 @@ class Product
      */
     private $product_allergens;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="products", cascade={"persist"})
+     * @ORM\JoinTable(name="products_medias")
+     */
+    private $medias;
+
+
     private $allergens;
 
     public function __construct()
@@ -99,6 +106,7 @@ class Product
         $this->criterions = new ArrayCollection();
         $this->allergens = new ArrayCollection();
         $this->product_allergens = new ArrayCollection();
+        $this->medias = new ArrayCollection() ;
     }
 
     public function getId(): ?int
@@ -270,7 +278,7 @@ class Product
     {
         if (!$this->criterions->contains($criterion)) {
             $this->criterions[] = $criterion;
-            $criterion->addUser($this);
+            $criterion->addProduct($this);
         }
 
         return $this;
@@ -280,7 +288,7 @@ class Product
     {
         if ($this->criterions->contains($criterion)) {
             $this->criterions->removeElement($criterion);
-            $criterion->removeUser($this);
+            $criterion->removeProduct($this);
         }
 
         return $this;
@@ -344,6 +352,32 @@ class Product
     {
         if ($this->tags->contains($allergen)) {
             $this->tags->removeElement($allergen);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
         }
 
         return $this;

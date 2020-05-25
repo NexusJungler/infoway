@@ -39,7 +39,7 @@ class Criterion
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions")
+     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions", cascade={"persist"})
      * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
      */
     private $list;
@@ -57,16 +57,16 @@ class Criterion
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="DisplayMould", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="ProgrammingMould", mappedBy="criterions")
      * @Groups({"mouldSerialization"})
      */
-    private $displayMoulds;
+    private $ProgrammingMoulds;
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="ScreenDisplay", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="LocalProgramming", mappedBy="criterions")
      */
-    private $screenDisplays;
+    private $LocalProgrammings;
 
     /**
      * @ORM\Column(type="boolean")
@@ -79,8 +79,8 @@ class Criterion
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->position = 1 ;
         $this->selected = false ;
-        $this->displayMoulds = new ArrayCollection() ;
-        $this->screenDisplays = new ArrayCollection() ;
+        $this->ProgrammingMoulds = new ArrayCollection() ;
+        $this->LocalProgrammings = new ArrayCollection() ;
     }
 
     public function setId( int $id ): self{
@@ -217,56 +217,56 @@ class Criterion
     }
 
     /**
-     * @return Collection|DisplayMould[]
+     * @return Collection|ProgrammingMould[]
      */
-    public function getDisplayMoulds(): Collection
+    public function getProgrammingMoulds(): Collection
     {
-        return $this->displayMoulds;
+        return $this->ProgrammingMoulds;
     }
 
-    public function addDisplayMould(DisplayMould $displayMould): self
+    public function addProgrammingMould(ProgrammingMould $ProgrammingMould): self
     {
-        if (!$this->displayMoulds->contains($displayMould)) {
-            $this->displayMoulds[] = $displayMould;
-            $displayMould->addCriterion($this);
+        if (!$this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds[] = $ProgrammingMould;
+            $ProgrammingMould->addCriterion($this);
         }
 
         return $this;
     }
 
-    public function removeDisplayMould(DisplayMould $displayMould): self
+    public function removeProgrammingMould(ProgrammingMould $ProgrammingMould): self
     {
-        if ($this->displayMoulds->contains($displayMould)) {
-            $this->displayMoulds->removeElement($displayMould);
-            $displayMould->removeCriterion($this);
+        if ($this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds->removeElement($ProgrammingMould);
+            $ProgrammingMould->removeCriterion($this);
         }
 
         return $this;
     }
 
     /**
-     * @return Collection|ScreenDisplay[]
+     * @return Collection|LocalProgramming[]
      */
-    public function getScreenDisplays(): Collection
+    public function getLocalProgrammings(): Collection
     {
-        return $this->screenDisplays;
+        return $this->LocalProgrammings;
     }
 
-    public function addScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function addLocalProgramming(LocalProgramming $LocalProgramming): self
     {
-        if (!$this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays[] = $screenDisplay;
-            $screenDisplay->addCriterion($this);
+        if (!$this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings[] = $LocalProgramming;
+            $LocalProgramming->addCriterion($this);
         }
 
         return $this;
     }
 
-    public function removeScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function removeLocalProgramming(LocalProgramming $LocalProgramming): self
     {
-        if ($this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays->removeElement($screenDisplay);
-            $screenDisplay->removeCriterion($this);
+        if ($this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings->removeElement($LocalProgramming);
+            $LocalProgramming->removeCriterion($this);
         }
 
         return $this;

@@ -3,6 +3,8 @@
 namespace App\Form\Customer;
 
 use App\Entity\Customer\DisplaySetting;
+use App\Entity\Customer\DisplaySpace;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,11 +15,12 @@ class DisplaySettingType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('screensNumber')
-            ->add('startAt')
-            ->add('endAt')
-            ->add('playlists')
-            ->add('allowedMediasTypes')
+            ->add('screensQuantity');
+//            ->add('displaySpace',EntityType::class, [
+//                    'class' => DisplaySpace::class ,
+//                    'choice_label' => 'name'
+//                ]
+//                )
         ;
     }
 

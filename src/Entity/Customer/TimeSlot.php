@@ -29,6 +29,12 @@ class TimeSlot
      */
     private $endAt;
 
+    public function __clone()
+    {
+
+        $this->id = null ;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

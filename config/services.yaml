@@ -37,6 +37,7 @@ parameters:
     passwordResetTokenTimer: 1 # 1h
     mailer_user: noreply@infoway.fr
     mailer_password: Annesivy1974
+    container.dumper.inline_factories: true
 
 services:
     # default configuration for services in *this* file
@@ -99,6 +100,18 @@ services:
                 #                entity_manager: custom
                 # method attribute is optional
               method: initializeSites
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\EventListener\ProductListener:
+
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Customer\Product
+              entity_manager: kfc
+              method: initializeAllergens
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

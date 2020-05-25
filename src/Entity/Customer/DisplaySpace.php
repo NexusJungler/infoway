@@ -25,19 +25,19 @@ class DisplaySpace
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="DisplayMould", mappedBy="displaySpace")
+     * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="displaySpace")
      */
-    private $moulds;
+    private $localProgrammings;
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="ScreenDisplay", mappedBy="displaySpace")
+     * @ORM\OneToMany(targetEntity="DisplaySetting", mappedBy="displaySpace", cascade={"persist"})
      */
-    private $screenDisplays;
+    private $displaySettings;
 
     public function __construct() {
-        $this->moulds = new ArrayCollection();
-        $this->screenDisplays = new ArrayCollection() ;
+        $this->localProgrammings = new ArrayCollection() ;
+        $this->displaySettings = new ArrayCollection() ;
     }
 
     public function setId( int $id ): self{
@@ -62,31 +62,32 @@ class DisplaySpace
         return $this;
     }
 
+
     /**
-     * @return Collection|DisplayMould[]
+     * @return Collection|localProgramming[]
      */
-    public function getMoulds(): Collection
+    public function getlocalProgrammings(): Collection
     {
-        return $this->moulds;
+        return $this->localProgrammings;
     }
 
-    public function addMould(DisplayMould $mould): self
+    public function addlocalProgramming(localProgramming $localProgramming): self
     {
-        if (!$this->moulds->contains($mould)) {
-            $this->moulds[] = $mould;
-            $mould->setDisplaySpace($this);
+        if (!$this->localProgrammings->contains($localProgramming)) {
+            $this->localProgrammings[] = $localProgramming;
+            $localProgramming->setDisplaySpace($this);
         }
 
         return $this;
     }
 
-    public function removeMould(DisplayMould $mould): self
+    public function removelocalProgramming(localProgramming $localProgramming): self
     {
-        if ($this->moulds->contains($mould)) {
-            $this->moulds->removeElement($mould);
+        if ($this->localProgrammings->contains($localProgramming)) {
+            $this->localProgrammings->removeElement($localProgramming);
             // set the owning side to null (unless already changed)
-            if ($mould->getDisplaySpace() === $this) {
-                $mould->setDisplaySpace(null);
+            if ($localProgramming->getDisplaySpace() === $this) {
+                $localProgramming->setDisplaySpace(null);
             }
         }
 
@@ -94,30 +95,30 @@ class DisplaySpace
     }
 
     /**
-     * @return Collection|ScreenDisplay[]
+     * @return Collection|DisplaySetting[]
      */
-    public function getScreenDisplays(): Collection
+    public function getDisplaySettings(): Collection
     {
-        return $this->screenDisplays;
+        return $this->displaySettings;
     }
 
-    public function addScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function addDisplaySetting(DisplaySetting $displaySetting): self
     {
-        if (!$this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays[] = $screenDisplay;
-            $screenDisplay->setDisplaySpace($this);
+        if (!$this->displaySettings->contains($displaySetting)) {
+            $this->displaySettings[] = $displaySetting;
+            $displaySetting->setDisplaySpace($this);
         }
 
         return $this;
     }
 
-    public function removeScreenDisplay(ScreenDisplay $screenDisplay): self
+    public function removeDisplaySetting(DisplaySetting $displaySetting): self
     {
-        if ($this->screenDisplays->contains($screenDisplay)) {
-            $this->screenDisplays->removeElement($screenDisplay);
+        if ($this->displaySettings->contains($displaySetting)) {
+            $this->displaySettings->removeElement($displaySetting);
             // set the owning side to null (unless already changed)
-            if ($screenDisplay->getDisplaySpace() === $this) {
-                $screenDisplay->setDisplaySpace(null);
+            if ($displaySetting->getDisplaySpace() === $this) {
+                $displaySetting->setDisplaySpace(null);
             }
         }
 

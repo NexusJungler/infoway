@@ -2,25 +2,25 @@
 
 namespace App\Repository\Customer;
 
-use App\Entity\Customer\Playlist;
+use App\Entity\Customer\ScreenPlaylist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Playlist|null find($id, $lockMode = null, $lockVersion = null)
- * @method Playlist|null findOneBy(array $criteria, array $orderBy = null)
- * @method Playlist[]    findAll()
- * @method Playlist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ScreenPlaylist|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ScreenPlaylist|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ScreenPlaylist[]    findAll()
+ * @method ScreenPlaylist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PlaylistRepository extends ServiceEntityRepository
+class ScreenPlaylistRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Playlist::class);
+        parent::__construct($registry, ScreenPlaylist::class);
     }
 
     // /**
-    //  * @return Playlist[] Returns an array of Playlist objects
+    //  * @return ScreenPlaylist[] Returns an array of ScreenPlaylist objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PlaylistRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Playlist
+    public function findOneBySomeField($value): ?ScreenPlaylist
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

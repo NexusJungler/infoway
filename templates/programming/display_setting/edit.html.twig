@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DisplaySetting{% endblock %}
+
+{% block body %}
+    <h1>Edit DisplaySetting</h1>
+
+    {{ include('programming_display_setting/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('programming_display_setting_index') }}">back to list</a>
+
+    {{ include('programming_display_setting/_delete_form.html.twig') }}
+{% endblock %}

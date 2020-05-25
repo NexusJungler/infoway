@@ -8,9 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Customer\DisplayMouldRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\ProgrammingMouldRepository")
+ * @ORM\Table(name="programming_moulds")
  */
-class DisplayMould
+class ProgrammingMould
 {
     /**
      * @ORM\Id()
@@ -26,67 +27,60 @@ class DisplayMould
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"mouldSerialization"})
-     */
-    private $screensNumber;
 
     /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="Playlist")
-     * @ORM\JoinTable(name="moulds_playlists",
+     * @ORM\ManyToMany(targetEntity="Display", cascade={"persist"})
+     * @ORM\JoinTable(name="displays_programming_moulds",
      *      joinColumns={@ORM\JoinColumn(name="mould_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="display_id", referencedColumnName="id", unique=true)}
      *      )
      *
      */
-    private $playlists;
+    private $displays;
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="ScreenDisplay", mappedBy="mould")
+     * @ORM\OneToMany(targetEntity="LocalProgramming", mappedBy="mould", cascade={"persist"})
      */
-    private $generatedScreenDisplays;
+    private $generatedLocalProgrammings;
 
     /**
-     * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="DisplaySpace", inversedBy="moulds")
-     * @ORM\JoinColumn(name="display_space_id", referencedColumnName="id")
-     * @Groups({"mouldSerialization"})
+     * @ORM\ManyToOne(targetEntity="DisplaySetting", cascade={"persist"})
+     * @ORM\JoinColumn(name="setting_id", referencedColumnName="id")
      */
-    private $displaySpace;
+    private $displaySetting;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="displayMoulds" , cascade={"persist"} )
-     * @ORM\JoinTable(name="display_moulds_criterions")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="ProgrammingMoulds" , cascade={"persist"} )
+     * @ORM\JoinTable(name="programming_moulds_criterions")
      * @Groups({"mouldSerialization"})
      */
     private $criterions;
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="displayMoulds", cascade={"persist"} )
-     * @ORM\JoinTable(name="display_moulds_tags")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="ProgrammingMoulds", cascade={"persist"} )
+     * @ORM\JoinTable(name="programming_moulds_tags")
      */
     private $tags;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endAt;
 
     /**
      * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="TimeSlot")
-     * @ORM\JoinTable(name="display_moulds_timeslots",
-     *      joinColumns={@ORM\JoinColumn(name="display_mould_id", referencedColumnName="id")},
+     * @ORM\ManyToMany(targetEntity="TimeSlot", cascade={"persist"})
+     * @ORM\JoinTable(name="programming_moulds_timeslots",
+     *      joinColumns={@ORM\JoinColumn(name="programming_mould_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="time_slot_id", referencedColumnName="id", unique=true)}
      *      )
      * @Groups({"mouldSerialization"})
@@ -94,14 +88,15 @@ class DisplayMould
     private $timeSlots ;
 
 
-    private ?DisplayMould $model = null;
+    private ?ProgrammingMould $model = null;
 
     public function __construct() {
         $this->criterions = new ArrayCollection() ;
         $this->tags = new ArrayCollection() ;
         $this->playlists = new ArrayCollection();
-        $this->generatedScreenDisplays = new ArrayCollection();
+        $this->generatedLocalProgrammings = new ArrayCollection();
         $this->timeSlots = new ArrayCollection() ;
+        $this->displays = new ArrayCollection();
     }
 
 
@@ -122,27 +117,13 @@ class DisplayMould
         return $this;
     }
 
-    public function getScreensNumber(): ?int
-    {
-        return $this->screensNumber;
-    }
-
-    public function setScreensNumber(int $screensNumber): self
-    {
-        $this->screensNumber = $screensNumber;
-
-        return $this;
-    }
-
-
-
 
     public function getStartAt(): ?\DateTimeInterface
     {
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeInterface $startAt): self
+    public function setStartAt(?\DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
@@ -154,81 +135,46 @@ class DisplayMould
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeInterface $endAt): self
+    public function setEndAt(?\DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Playlist[]
-     */
-    public function getPlaylists(): Collection
-    {
-        return $this->playlists;
-    }
-
-    public function addPlaylist(Playlist $playlist): self
-    {
-        if (!$this->playlists->contains($playlist)) {
-            $this->playlists[] = $playlist;
-        }
-
-        return $this;
-    }
-
-    public function removePlaylist(Playlist $playlist): self
-    {
-        if ($this->playlists->contains($playlist)) {
-            $this->playlists->removeElement($playlist);
-        }
-
-        return $this;
-    }
 
     /**
-     * @return Collection|ScreenDisplay[]
+     * @return Collection|LocalProgramming[]
      */
-    public function getGeneratedScreenDisplays(): Collection
+    public function getGeneratedLocalProgrammings(): Collection
     {
-        return $this->generatedScreenDisplays;
+        return $this->generatedLocalProgrammings;
     }
 
-    public function addGeneratedScreenDisplay(ScreenDisplay $generatedScreenDisplay): self
+    public function addGeneratedLocalProgramming(LocalProgramming $generatedLocalProgramming): self
     {
-        if (!$this->generatedScreenDisplays->contains($generatedScreenDisplay)) {
-            $this->generatedScreenDisplays[] = $generatedScreenDisplay;
-            $generatedScreenDisplay->setMould($this);
+        if (!$this->generatedLocalProgrammings->contains($generatedLocalProgramming)) {
+            $this->generatedLocalProgrammings[] = $generatedLocalProgramming;
+            $generatedLocalProgramming->setMould($this);
         }
 
         return $this;
     }
 
-    public function removeGeneratedScreenDisplay(ScreenDisplay $generatedScreenDisplay): self
+    public function removeGeneratedLocalProgramming(LocalProgramming $generatedLocalProgramming): self
     {
-        if ($this->generatedScreenDisplays->contains($generatedScreenDisplay)) {
-            $this->generatedScreenDisplays->removeElement($generatedScreenDisplay);
+        if ($this->generatedLocalProgrammings->contains($generatedLocalProgramming)) {
+            $this->generatedLocalProgrammings->removeElement($generatedLocalProgramming);
             // set the owning side to null (unless already changed)
-            if ($generatedScreenDisplay->getMould() === $this) {
-                $generatedScreenDisplay->setMould(null);
+            if ($generatedLocalProgramming->getMould() === $this) {
+                $generatedLocalProgramming->setMould(null);
             }
         }
 
         return $this;
     }
 
-    public function getDisplaySpace(): ?DisplaySpace
-    {
-        return $this->displaySpace;
-    }
 
-    public function setDisplaySpace(?DisplaySpace $displaySpace): self
-    {
-        $this->displaySpace = $displaySpace;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Criterion[]
@@ -283,17 +229,17 @@ class DisplayMould
     }
 
     /**
-     * @return DisplayMould|null
+     * @return ProgrammingMould|null
      */
-    public function getModel(): ?DisplayMould
+    public function getModel(): ?ProgrammingMould
     {
         return $this->model;
     }
 
     /**
-     * @param DisplayMould|null $model
+     * @param ProgrammingMould|null $model
      */
-    public function setModel(?DisplayMould $model): self
+    public function setModel(?ProgrammingMould $model): self
     {
         $this->model = $model;
         return $this;
@@ -321,6 +267,44 @@ class DisplayMould
         if ($this->timeSlots->contains($timeSlot)) {
             $this->timeSlots->removeElement($timeSlot);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Display[]
+     */
+    public function getDisplays(): Collection
+    {
+        return $this->displays;
+    }
+
+    public function addDisplay(Display $display): self
+    {
+        if (!$this->displays->contains($display)) {
+            $this->displays[] = $display;
+        }
+
+        return $this;
+    }
+
+    public function removeDisplay(Display $display): self
+    {
+        if ($this->displays->contains($display)) {
+            $this->displays->removeElement($display);
+        }
+
+        return $this;
+    }
+
+    public function getDisplaySetting(): ?DisplaySetting
+    {
+        return $this->displaySetting;
+    }
+
+    public function setDisplaySetting(?DisplaySetting $displaySetting): self
+    {
+        $this->displaySetting = $displaySetting;
 
         return $this;
     }
