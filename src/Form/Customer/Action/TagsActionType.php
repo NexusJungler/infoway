@@ -29,6 +29,10 @@ class TagsActionType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                 ])
+            ->add('edit', SubmitType::class,
+                [
+                    'label' => 'Modifier'
+                ])
             ->add('delete', SubmitType::class,
                 [
                     'label' => 'Supprimer'

@@ -56,9 +56,13 @@ class TagController extends AbstractController
         if ($tagsActionForm->isSubmitted() && $tagsActionForm->isValid()) {
             if( $tagsActionForm->get('delete')->isClicked() ) {
                 return $this->delete( $tagsList , $request);
-//                return $this->redirectToRoute('tags_delete', [
-//                    'tagsToDelete'  => $tagsList,
-//                ]);
+            }
+            if( $tagsActionForm->get('edit')->isClicked() ) {
+                if( $tagsList->getTags()->count() === 1 ) {
+                    $tag = $tagsList->getTags()->get(0) ;
+
+                    return $this->redirectToRoute( 'tags_edit', [ 'id' => $tag->getId() ]);
+                }
             }
         }
         return $this->render('settings/tags/index.html.twig', [

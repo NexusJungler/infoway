@@ -49,7 +49,12 @@
 {#                                    <button class="btn" >{{ button_label|default('Enregistrer') }}</button>#}
 {#                                    <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>#}
                                     <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>
+{#                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>#}
+                                    {{ form_widget(tagsActionForm.edit, {
+                                        'icon': 'far fa-edit',
+                                        'label': 'Modifier',
+                                        'attr':{'class': 'btn modified-tag' }
+                                    }) }}
                                     {{ form_widget(tagsActionForm.delete, {
                                         'icon': 'fas fa-trash',
                                         'label': 'Supprimer',
