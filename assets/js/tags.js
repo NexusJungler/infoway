@@ -39,10 +39,10 @@ $(".delete-tag").on('click', function() {
    
 })
 
-
-$(".tags-color").on('change', function(e){
-    $(this).parents('ul.tags_list').find( '.color_input' ).css("background-color",this.value);
+$("ul.tags_list").on('change', ".tags-color" , function(e){
+    $(this).parents('ul.tags_list li ').find( '.color_input' ).css("background-color",this.value);
 })
+
 
 
 //page edit tags
@@ -52,6 +52,7 @@ $('.input-color-edit').css("background-color", val);
 $(".tags-color-edit").on('change', function(e){
     $('.input-color-edit').css("background-color",this.value);
 })
+
 
 $('.btn-site').click(function () {
     $('.add-popup-site').addClass('is-open');
@@ -87,10 +88,66 @@ addTagBtn.on('click', e =>{
     list.data('widget-counter', counter);
     
     let newElem = $(list.attr('data-widget-tags')).html(newWidget);
-    
+
+    $('<span class="color_input">').insertBefore(newElem.find('.tags-name'));
+
     newElem.appendTo(list);
 
 })
+
+// page edit tags
+
+$('.tag__sites__site input[type="checkbox"]').on('change', function(){
+
+    let $targetedCheckBox = $(this) ;
+
+   let needChange = !(  ( $targetedCheckBox.is(':checked') && $targetedCheckBox.is(':visible') ) || ( !$targetedCheckBox.is(':checked') && !$targetedCheckBox.is(':visible') ) )
+
+    if( ! needChange ) return ;
+
+    let $inputContainer = $targetedCheckBox.parents('tr.tag__sites__site')
+    let $sitesPopupCorrespondingCheckbox = $(`input#add_site_sites_${this.value}`) ;
+
+    if( $(this).is(':checked') ) {
+
+        $inputContainer.removeClass('hidden')
+        $sitesPopupCorrespondingCheckbox.prop('checked', true)
+        $sitesPopupCorrespondingCheckbox.parents('tr').addClass('hidden')
+    }else{
+        $inputContainer.addClass('hidden')
+        $sitesPopupCorrespondingCheckbox.prop('checked', false)
+        $sitesPopupCorrespondingCheckbox.parents('tr').removeClass('hidden')
+
+    }
+    // console.log( $sitesPopupCorrespondingCheckbox )
+});
+
+
+$('.popup__add-site__site input[type="checkbox"]').on('change' , function(){
+
+    let $targetedCheckBox = $(this) ;
+
+    let $inputContainer = $targetedCheckBox.parents('tr.popup__add-site__site')
+    let $tagSitesCorrespondingCheckbox = $(`input#tag_sites_${this.value}`);
+
+    let needChange = !(  ( $targetedCheckBox.is(':checked') &&  $inputContainer.css('display') === 'none' ) || ( ! $targetedCheckBox.is(':checked') &&  $inputContainer.css('display') !== 'none' ) )
+    if( ! needChange )  return ;
+
+    if( $(this).is(':checked') ) {
+        $inputContainer.addClass('hidden')
+        $tagSitesCorrespondingCheckbox.prop('checked', true)
+        $tagSitesCorrespondingCheckbox.parents('tr').removeClass('hidden')
+    }else{
+        $inputContainer.removeClass('hidden')
+        $tagSitesCorrespondingCheckbox.prop('checked', false)
+        $tagSitesCorrespondingCheckbox.parents('tr').addClass('hidden')
+    }
+    // console.log( $tagSitesCorrespondingCheckbox )
+
+})
+
+
+
 
 
 

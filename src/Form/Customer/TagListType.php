@@ -43,7 +43,8 @@ class TagListType extends AbstractType
                 'entry_options'  => [
                     'customer' => $this->_customer ,
                     'user' => $this->_user,
-                    'allowSiteChoice' => false
+                    'allowSiteChoice' => false,
+                    'allowProductsChoice' => false,
                 ],
                 'allow_add' => true,
             ])

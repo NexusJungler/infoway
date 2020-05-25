@@ -79,6 +79,11 @@ class TagController extends AbstractController
 
 
             foreach( $tagsList->getTags() as $tag ){
+
+                foreach( $tagsList->getSites() as $site ){
+                    $tag->addSite($site) ;
+                }
+
                 $customerManager->persist( $tag );
             }
             $customerManager->flush();
@@ -136,7 +141,13 @@ class TagController extends AbstractController
             $currentSite = $choice->data ;
 
             $addSiteActionView->children['sites']->children[ $index ]->vars['data'] = $currentSite ;
+            $addSiteActionView->children['sites']->children[ $index ]->vars['id'] = 'add_site_sites_' . $currentSite->getId();
         }
+
+        foreach($tagFormView->children[ 'sites' ]->vars[ 'data' ] as $index => $site ){
+            $tagFormView->children['sites']->children[ $site->getId()  ]->vars['data'] = $site ;
+        }
+
         //dd( $addSiteActionView);
 
         $form->handleRequest($request);

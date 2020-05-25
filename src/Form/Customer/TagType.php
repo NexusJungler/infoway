@@ -49,7 +49,7 @@ class TagType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'attr' => [
-                    'class' => 'tags-input',
+                    'class' => 'tags-input tags-name',
                     'placeholder' => "PROMO",
                     
                 ],

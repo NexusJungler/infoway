@@ -26,12 +26,14 @@ class AddSiteType extends AbstractType
         $this->sitesToDisplay =  $options['sitesToDisplay'] ;
         $this->sitesToDisplay = $this->sitesToDisplay->filter( fn( Site $site) => $site ) ;
 
-
         $builder
             ->add('sites', ChoiceType::class, [
                 'choices' => $this->sitesToDisplay ,
                 'choice_label' => function(Site $site) {
                     return $site->getName();
+                },
+                'choice_value' => function (Site $site) {
+                    return $site->getId() ;
                 },
                 'multiple' => true,
                 'expanded' => true

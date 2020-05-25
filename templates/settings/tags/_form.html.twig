@@ -1,6 +1,5 @@
 
 {{ form_start(form) }}
-    {{dump(app.session.flashbag)}}
     <div class="" >
         <div class="info-tags">
             <ul>
@@ -56,7 +55,8 @@
                     {% set currentsite = form.sites.vars.choices[site.vars.value].data %}
                     <tr>
                         <td>
-                            {{ form_row(site, {'attr': {'class': ''} }) }}
+                            {{ form_widget(site, {'attr': {'class': ''} }) }}
+                            {{  form_label(site) }}
                         </td>
                         <td>
                             {{ currentsite.adress }}

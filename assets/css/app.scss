@@ -37,6 +37,10 @@ img {
     height: auto;
 }
 
+.hidden{
+    display: none!important;
+}
+
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
