@@ -42,28 +42,26 @@
                         </article>
 
                         {{ form_start( tagsActionForm)  }}
-                        <article class="display setting-display ">
-                            <div class="display-content">
-                                <div class="display-btn">
-
-{#                                    <button class="btn" >{{ button_label|default('Enregistrer') }}</button>#}
-{#                                    <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>#}
-                                    <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-{#                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>#}
-                                    {{ form_widget(tagsActionForm.edit, {
-                                        'icon': 'far fa-edit',
-                                        'label': 'Modifier',
-                                        'attr':{'class': 'btn modified-tag' }
-                                    }) }}
-                                    {{ form_widget(tagsActionForm.delete, {
-                                        'icon': 'fas fa-trash',
-                                        'label': 'Supprimer',
-                                        'attr':{'class': 'btn delete-tabl' }
-                                    }) }}
-
+                            <article class="display setting-display ">
+                                <div class="display-content">
+                                    <div class="display-btn">
+                                        {# <button class="btn" >{{ button_label|default('Enregistrer') }}</button>#}
+                                        <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                                        <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                        {{ form_widget(tagsActionForm.edit, {
+                                            'icon': 'far fa-edit',
+                                            'label': 'Modifier',
+                                            'attr':{'class': 'btn modified-tag' }
+                                        }) }}
+                                        {{ form_widget(tagsActionForm.delete, {
+                                            'icon': 'fas fa-trash',
+                                            'label': 'Supprimer',
+                                            'attr':{'class': 'btn delete-tabl' }
+                                        }) }}
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
+
                         <article class="content-tags table">
                             <table class="table-custome">
                                 <thead class="table-info thead-info">
@@ -83,7 +81,7 @@
                                                 </label>
                                                 <p class="container-tags">
                                                     <span class="mini-cercle" style="background: {{currentTag.color}};"></span>{{ currentTag.name }}
-                                                    <button type="button" id="delete-tag{{loop.index}}" class="btn-delete-tag">x</button>
+                                                    {# <button type="button" id="delete-tag{{loop.index}}" class="btn-delete-tag">x</button> #}
                                                 </p>
                                             </td>
                                             <td class="container-tags-desc"><p class="cercle-desc">{{ currentTag.description }}<p></td>

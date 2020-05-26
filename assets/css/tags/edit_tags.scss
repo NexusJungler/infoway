@@ -15,6 +15,15 @@
     height: 30px;
 }
 
+.edit-tags{
+    .btn{
+        padding: 0.06rem 0.7rem 0.2rem;
+        i{
+            margin-right: 6px;
+        }
+    }
+}
+
 
 
 .edit-tags{
@@ -121,18 +130,26 @@
                     }
                 }
                 .tbody{
-                    height: 350px;
-                    max-height: 350px;
+                    height: 500px;
+                    max-height: 500px;
                     display: block;
                     overflow: auto;
                     tr{
                         td{
+                            border: 0;
                             &:nth-child(1){
                                 width: 40%;
+                                img{
+                                    width: 171px;
+                                    height: 109px;
+                                    border: 1px solid #707070;
+                                    border-radius: 6px;
+                                }
                             }
                             &:nth-child(2){
                                 width: 60%;
                                 position: relative;
+                                vertical-align: middle;
                                 input{
                                     position: absolute;
                                     right: 10px;
@@ -166,8 +183,8 @@
                     }
                 }
                 .tbody{
-                    height: 350px;
-                    max-height: 350px;
+                    height: 500px;
+                    max-height: 500px;
                     display: block;
                     overflow: auto;
                     overflow: auto;
@@ -195,8 +212,8 @@
                     }
                 }
                 .tbody{
-                    height: 350px;
-                    max-height: 350px;
+                    height: 500px;
+                    max-height: 500px;
                     display: block;
                     overflow: auto;
                     tr{
@@ -257,21 +274,56 @@
             margin: 0 auto;
             margin-top: 10%;
             position: relative;
-            padding: 30px;
+            border: 1px solid #4D646D;
+            padding: 0px;
             width: 25%;
-            height: 50%;
+            height: 53%;
             background-color: #ddd;
             color: #231D23;
             text-align: center;
             overflow: hidden;
             box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
         }
+        .header-modal{
+            background: #4D646D 0% 0% no-repeat padding-box;
+            display: flex;
+            padding:8px;
+            color: white;
+            .btn{
+                margin-top: 5px;
+                position: absolute;
+                background: #FF4040;
+                right: 8px;
+            }
+        }
+        .btn{
+            margin-top: 10px;
+        }
+
     }
 
     .popup-site{
         display: inline-flex;
+        padding: 20px;
     }
 
+    .table-site-custome{
+
+        .tbody{
+            height: 240px;
+            max-height: 240px;
+            display: block;
+            tr{
+                height: 11%;
+                td{
+                    div{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
+            }
+        }
+    }
 
 
 }

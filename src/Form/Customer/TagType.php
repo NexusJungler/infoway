@@ -58,8 +58,8 @@ class TagType extends AbstractType
                 'attr' => [
                     'class' => 'tags-input tags-name',
                     'placeholder' => "PROMO",
-                    
                 ],
+                'required' => '',
                 // 'choice_label' => [
                 //     'class' => 'test'
                 // ],
@@ -68,8 +68,9 @@ class TagType extends AbstractType
             ->add('description', TextType::class, [
                 'attr' => [
                     'class' => 'tags-desc',
-                    'placeholder' => "Produits promotionnel du 21 mai"
+                    'placeholder' => "Produits promotionnel du 21 mai",
                 ],
+                'required' => false,
             ]);
         if ($this->_allowSiteChoice){
             $this->_user = $options[ 'user' ] ;

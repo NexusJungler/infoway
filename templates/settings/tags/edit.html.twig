@@ -38,10 +38,11 @@
                         <article class="display setting-display ">
                             <div class="display-content">
                                 <div class="display-btn">
-                                    <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
-                                    <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>
-                                    <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+{#                                    <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>#}
+{#                                    <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>#}
+{#                                    <button type="button" class="btn modified-tag"><i class="far fa-edit"></i>Modifier</button>#}
+{#                                    <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>#}
+                                    {{ include('settings/tags/_delete_form.html.twig') }}
                                 </div>
                             </div>
                         </article>
@@ -50,7 +51,7 @@
                         {# {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
 
                         <a href="{{ path('tags_index') }}">back to list</a>#}
-                        {{ include('settings/tags/_delete_form.html.twig') }}
+
 
                     </div>
                 </section>

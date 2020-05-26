@@ -33,7 +33,7 @@
                     {% for product in form.products %}
                         <tr>
                             <td class="">
-                                
+                                <img src="{{ asset('/build/images/no-available-image.png') }}" alt="Factory & cO">
                             </td>
                             <td>
                                 {{ form_row(product, {'attr': {'class': ''} }) }}
@@ -112,38 +112,39 @@
     <div class="modal">
 
         <div class="header-modal">
-            <div>
-                <p class="upload-title"></p>
-                <button type="button" class="btn btn-popupclose2 ">X</button>
-            </div>
+            <p class="upload-title">Affecter :</p>
+            <button type="button" class="btn btn-popupclose2 ">X</button>
         </div>
-        <div class="popup-site">
+
+        <div class="popup-site table" >
             {{ form_start( addSiteForm ) }}
-            {# {{dump(addSiteForm)}} #}
             <table class="table-site-custome table-custome">
                 <thead class="table-info thead-info">
-                <tr>
-                    <th>Site</th>
-
-                </tr>
+                    <tr>
+                        <th>Site</th>
+                    </tr>
                 </thead>
                 <tbody class="tbody tbody-content scrollbar-table">
-                {% for site in addSiteForm.sites %}
-                    {%  set currentSite =  site.vars.data %}
-                    <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}">
-                        <td class="">
-                            {{ form_row(site, {'attr': {
-                                'checked' : currentSite in tag.sites ,
-                                'id' : 'add_site_sites_tryrt' ~ site.vars.value
-                            } }) }}
-                        </td>
-                    </tr>
-                {% endfor %}
+                    {% for site in addSiteForm.sites %}
+                        {%  set currentSite =  site.vars.data %}
+                        <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}">
+                            <td class="">
+                                {{ form_row(site, {'attr': {
+                                    'checked' : currentSite in tag.sites ,
+                                    'id' : 'add_site_sites_tryrt' ~ site.vars.value
+                                } }) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             {{ form_end( addSiteForm ) }}
         </div>
 
+        <div>
+            <button type="button" class="btn btn-popupclose2">Affecter au produit</button>
+        </div>
 
     </div>
+
 </article>

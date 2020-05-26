@@ -1,5 +1,4 @@
 // import style css
-import "../css/tags.scss";
 import "../css/tags/create_tags.scss";
 import "../css/tags/list_tags.scss";
 import "../css/tags/edit_tags.scss";
@@ -8,16 +7,6 @@ import "../css/tags/edit_tags.scss";
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-
-// $(".tags .modified-tag").click(function(){
-//
-//     $.each($(".tags-poster input[type='checkbox']:checked"), function(){
-//         var id_tag = $(this).attr('data-tag');
-//
-//         window.location.href= "/tags/"+ id_tag +"/edit"
-//         console.log(id_tag);
-//     })
-// })
 
 $(".content-tags .tags-poster .chkbox-tag").change( function(){
     let nb_input = $(".tags-poster input[type='checkbox']:checked").length;
@@ -36,14 +25,11 @@ $(".content-tags .tags-poster .chkbox-tag").change( function(){
 
 $(".delete-tag").on('click', function() {
     $("#form_tags_action").submit();
-   
 })
 
 $("ul.tags_list").on('change', ".tags-color" , function(e){
     $(this).parents('ul.tags_list li ').find( '.color_input' ).css("background-color",this.value);
 })
-
-
 
 //page edit tags
 var val = $('.tags-color-edit').attr("value");
@@ -64,7 +50,6 @@ $('.btn-popupclose2').click(function () {
 });
 
 
-
 //Search Filterable table
 $("#site-search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
@@ -72,6 +57,7 @@ $("#site-search").on("keyup", function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
+
 
 let addTagBtn = $('#add_tag')
 
@@ -153,6 +139,17 @@ $('.popup__add-site__site input[type="checkbox"]').on('change' , function(){
 
 })
 
+
+
+$("#selectAll").click(function() {
+    $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+});
+
+$("input[type=checkbox]").click(function() {
+    if (!$(this).prop("checked")) {
+        $("#selectAll").prop("checked", false);
+    }
+});
 
 
 
