@@ -89,6 +89,13 @@ addTagBtn.on('click', e =>{
     
     let newElem = $(list.attr('data-widget-tags')).html(newWidget);
 
+    let $tagNameInput = $('#tag_list_tagToCreate_name') ;
+    newElem.find('input.tags-name').val( $tagNameInput.val() );
+
+    let $tagDescriptionInput  = $('#tag_list_tagToCreate_description')
+    newElem.find('input.tags-desc').val( $tagDescriptionInput.val() );
+
+
     $('<span class="color_input">').insertBefore(newElem.find('.tags-name'));
 
     newElem.appendTo(list);

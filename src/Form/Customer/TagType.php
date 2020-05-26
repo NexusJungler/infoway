@@ -27,6 +27,8 @@ class TagType extends AbstractType
     private Customer $_customer ;
     private bool $_allowSiteChoice ;
     private bool $_allowProductsChoice ;
+    private bool $_allowColorChoice ;
+
     private $siteRepo ;
 
     public function __construct(SiteRepository $siteRepo ){
@@ -36,18 +38,23 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $this->_user = $options[ 'user' ] ;
-        $this->_customer = $options[ 'customer' ] ;
+
+
         $this->_allowSiteChoice = $options[ 'allowSiteChoice' ] ;
         $this->_allowProductsChoice = $options[ 'allowProductsChoice' ] ;
-        
+        $this->_allowColorChoice = $options[ 'allowColorChoice' ] ;
+
+        if( $this->_allowColorChoice ) {
+            $builder
+                ->add('color', ColorType::class,[
+                    'attr' => [
+                        'class' => 'tags-color'
+                    ],
+                ]);
+        }
         $builder
-            ->add('color', ColorType::class,[
-                'attr' => [
-                    'class' => 'tags-color'
-                ],  
-            ])
             ->add('name', TextType::class, [
+                'label' => 'Nom',
                 'attr' => [
                     'class' => 'tags-input tags-name',
                     'placeholder' => "PROMO",
@@ -65,6 +72,8 @@ class TagType extends AbstractType
                 ],
             ]);
         if ($this->_allowSiteChoice){
+            $this->_user = $options[ 'user' ] ;
+            $this->_customer = $options[ 'customer' ] ;
             $builder
                 ->add('sites', EntityType::class, [
                     'class' => Site::class,
@@ -93,8 +102,12 @@ class TagType extends AbstractType
             'data_class' => Tag::class,
             'allowSiteChoice' => true,
             'allowProductsChoice' => true,
+            'allowColorChoice' => true,
+            'customer' => null,
+            'user' => null
         ]);
         $resolver->setRequired([
+            'allowColorChoice',
             'allowSiteChoice',
             'allowProductsChoice',
             'customer',
