@@ -12,21 +12,7 @@ doctrine:
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-            pira:
-                url: '%env(resolve:DATABASE_PIRA_URL)%'
-                driver: pdo_mysql
-                server_version: '5.7'
-                charset: utf8mb4
-            infoway:
-                url: '%env(resolve:DATABASE_INFOWAY_URL)%'
-                driver: pdo_mysql
-                server_version: '5.7'
-                charset: utf8mb4
-            mcdo:
-                url: '%env(resolve:DATABASE_MCDO_URL)%'
-                driver: pdo_mysql
-                server_version: '5.7'
-                charset: utf8mb4
+
     orm:
         default_entity_manager: default
         entity_managers:
@@ -48,30 +34,3 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity/Customer'
                         prefix: App\Entity\Customer
                         alias: Kfc
-            pira:
-                connection: pira
-                mappings:
-                    pira:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Customer'
-                        prefix: App\Entity\Customer
-                        alias: Pira
-            infoway:
-                connection: infoway
-                mappings:
-                    infoway:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Customer'
-                        prefix: App\Entity\Customer
-                        alias: Infoway
-            mcdo:
-                connection: mcdo
-                mappings:
-                    mcdo:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Customer'
-                        prefix: App\Entity\Customer
-                        alias: Mcdo

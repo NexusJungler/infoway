@@ -39,6 +39,12 @@ class TagListType extends AbstractType
         $this->_customer = $options[ 'customer' ] ;
         
         $builder
+            ->add('tagToCreate', TagType::class ,
+                [
+                    'allowSiteChoice' => false,
+                    'allowProductsChoice' => false,
+                    'allowColorChoice' => false
+                ])
             ->add('tags', CollectionType::class,[
                 // each entry in the array will be an "email" field
                 'entry_type' => TagType::class,
