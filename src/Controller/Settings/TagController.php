@@ -10,10 +10,9 @@ use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
 use App\Form\Customer\AddSiteType;
 use App\Object\Customer\SitesList;
-
 use App\Form\Customer\TagListType;
 use App\Form\Customer\TagsActionForm;
-use App\Form\Customer\TagsActionType;
+use App\Form\Customer\Action\TagsActionType;
 use App\Form\Customer\TagType;
 use App\Object\Customer\Action\TagsAction;
 use App\Repository\Customer\TagsRepository;

@@ -61,7 +61,7 @@ class CriterionsListController extends AbstractController
                 ||  ! $criterionsListsHandler->isMinimumCriterionsInListLimitIsReached( $criterionList )
             ) return $this->redirectToRoute( 'criterions_lists_new' ) ;
 
-            dd($criterionList);
+            // dd($criterionList);
             $currentEM->persist($criterionList);
             $currentEM->flush();
 

@@ -28,7 +28,7 @@
                     <li class="row-criteres " >
                         <div id="criterions_list_criterions_0">
                             <div class="selected">
-                                {{ form_label(criterion.selected , "choix par defaut"  ) }}
+                                {{ form_label(criterion.selected   ) }}
                                 {{ form_widget(criterion.selected ) }}
                                 {# <label class="container-input">
                                     {{ form_widget(criterion.selected, {'attr': {'checked': 'true'}}) }}
@@ -59,7 +59,7 @@
         </div>
     
         <div class="btn-save">
-            <button class="btn" type="submit" >{{ button_label|default('Enregister la liste') }}</button>
+            <button class="btn btn-create-critions" type="submit" >{{ button_label|default('Enregister la liste') }}</button>
         </div>
 
     {{ form_end(form) }}

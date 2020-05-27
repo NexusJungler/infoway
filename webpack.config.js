@@ -14,11 +14,11 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
     .copyFiles({
-        from: './assets/medias',
+        from: './assets/images',
 
         // copying without versioning
         // target path, relative to the output dir
-        to: 'medias/[path][name].[ext]',
+        to: 'images/[path][name].[ext]',
 
         // copying with versioning
         // if versioning is enabled, add the file hash too

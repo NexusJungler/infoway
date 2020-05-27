@@ -24,8 +24,6 @@
     }
 }
 
-
-
 .edit-tags{
     margin-left: 2.5%;
     .content-tags{
@@ -35,9 +33,10 @@
         border: 1px solid #707070;
         height: 100px;
         padding: 33px 45px;
+        width: 100%;
         .content-color{
+            width: 6%;
             position: relative;
-            // margin-right: 35px;
             img{
                 position: relative;
                 z-index: 1;
@@ -53,6 +52,7 @@
             }
         }
         .show-color{
+            width: 30%;
             position: relative;
             .input-color-edit {
                 top: 7px;
@@ -63,7 +63,9 @@
                 border-radius: 50%;
                 background-color: black;
             }
-            
+        }
+        .content-desc{
+            width: 75%;
         }
         .tags-color{
             position: relative;
@@ -71,7 +73,6 @@
             border-radius: 50%;
             width: 25px;
             height: 25px;
-            margin-right: 30px;
         }
         .tags-input{
             @extend .border-input;
@@ -79,9 +80,7 @@
             max-width: 100%;
             padding: 6px 10px;
             font:  16px 'Barlow';
-            margin-right: 45px;
             padding-left: 28px;
-
         }
         .tags-desc{
             @extend .border-input;
@@ -89,7 +88,6 @@
             max-width: 100%;
             padding: 2px 10px;
             font:  16px 'Barlow' ;
-            // top: 11px;
             position: relative;
         }
     }
@@ -108,7 +106,6 @@
             }
         }
 
-    
         .bloc-produits{
             margin-right: 30px;
             height: 550px;
@@ -158,6 +155,17 @@
                         }
                     }
                 }
+            }
+
+            .container-input .container-rdo {
+                position: absolute;
+                top: -1px;
+                left: 83%;
+                height: 23px;
+                width: 23px;
+                background-color: white;
+                border-radius: 3px;
+                border: 1px solid #4D646D;
             }
         }
 
@@ -320,10 +328,14 @@
                         display: flex;
                         justify-content: space-between;
                     }
+                    input {
+                        margin-top: 8px;
+                        margin-right: 15px;
+                    }
                 }
             }
         }
     }
 
-
 }
+

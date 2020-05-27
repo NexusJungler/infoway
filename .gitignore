@@ -26,6 +26,7 @@ config/packages/doctrine.yaml
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
+/public/miniatures/
 npm-debug.log
 yarn-error.log
 

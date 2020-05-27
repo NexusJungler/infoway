@@ -3,7 +3,10 @@
 // page gestion des crieters
 
 .tab-content-criteres{
-
+    .hide-btn{
+        pointer-events: none;
+        background: #ABBBC0;
+    }
     .display{
         &::after {
             border: 1px solid #4D646D;

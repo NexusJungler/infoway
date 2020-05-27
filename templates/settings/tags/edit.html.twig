@@ -47,7 +47,10 @@
                             </div>
                         </article>
 
-                        {{ include('settings/tags/_edit_form.html.twig', {'button_label': 'Update'}) }}
+                        <article class="content-edit-tags">
+                            {{ include('settings/tags/_edit_form.html.twig', {'button_label': 'Update'}) }}
+                        </article>
+                        
                         {# {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
 
                         <a href="{{ path('tags_index') }}">back to list</a>#}

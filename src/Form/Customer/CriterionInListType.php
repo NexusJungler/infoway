@@ -17,6 +17,9 @@ class CriterionInListType extends AbstractType
         $builder
             ->add('selected',CheckboxType::class,[
                 'label' => 'choix n°__name__',
+                'attr'=> [
+                    'class' => 'checkbox-criterion'
+                ],
             ] )
             ->add('name', TextType::class, [
                 'label' => false,

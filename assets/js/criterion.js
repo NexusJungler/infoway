@@ -66,3 +66,28 @@ addTagBtn.on('click', e =>{
 
 })
 
+
+$('.checkbox-criterion').change( e => {
+    uniqueChoice();
+})
+
+$('#criterions_list_multiple').change( e => {
+    uniqueChoice();
+})
+
+function uniqueChoice(){
+    let selectChoix = $('#criterions_list_multiple').children("option:selected").val();
+
+    if(selectChoix == 0){
+        let nb_input = $(".checkbox-criterion:checked").length;
+        if( nb_input === 1 ){
+            $(".btn-create-critions").prop('disabled', false);
+        }else {
+            $(".btn-create-critions").prop('disabled', true);
+            $(".btn-create-critions").addClass("hide-btn");
+        }
+        
+    }else{
+        console.log("multiple");
+    }
+}

@@ -9,7 +9,7 @@
                 <span class="input-color-edit"></span>
                 {{ form_widget(form.name, {'attr': {'class': 'tags-input'} }) }}
             </div>
-            <div>
+            <div class="content-desc">
                 {{ form_widget(form.description, {'attr': {'class': 'tags-desc'} }) }}
             </div> 
         </div>
@@ -36,6 +36,11 @@
                                 <img src="{{ asset('/build/images/no-available-image.png') }}" alt="Factory & cO">
                             </td>
                             <td>
+                            {# <label class="container-input">
+                                    {{ form_widget(site, {'attr': {'class': ''} }) }}
+                                    {{  form_label(site) }}
+                                    <span class="container-rdo"></span>
+                                </label> #}
                                 {{ form_row(product, {'attr': {'class': ''} }) }}
                             </td>
                         </tr>            

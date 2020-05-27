@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Form\Customer;
+namespace App\Form\Customer\Action;
 
 use App\Entity\Customer\CriterionsList;
 use App\Entity\Customer\Tag;
