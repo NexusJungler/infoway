@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\ExpectedChange;
+use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -15,16 +16,12 @@ use Doctrine\Persistence\ObjectManager;
  */
 class ExpectedChangeRepository extends ServiceEntityRepository
 {
+
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExpectedChange::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**

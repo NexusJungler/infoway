@@ -14,7 +14,7 @@ class UploadHandlerTool extends Tool
         // @see : https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
         this.__authorizedFiles = {
 
-            image_video: [
+            medias: [
                 'image/jpg', 'image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/x-windows-bmp', 'image/pjpeg', 'image/svg+xml',
                 '.jpg', '.jpeg', '.png', '.bmp', '.gif', '.svg', 'video/*', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime',
                 '.mp4', '.avi', '.3gp'
@@ -64,7 +64,7 @@ class UploadHandlerTool extends Tool
             console.error("Error : cannot found data-media_displayed on element : .main-media !"); //debugger
         }
 
-        let type = (this.__uploadMediaType === 'image' || this.__uploadMediaType === 'video') ? 'image_video': this.__uploadMediaType;
+        let type = this.__uploadMediaType;
         $(".uploadbtn").attr("accept", this.__authorizedFiles[ type ]);
 
         this.__total_files_allowed = 50;
@@ -159,9 +159,8 @@ class UploadHandlerTool extends Tool
 
     fileMimeTypeIsAccepted(mime_type)
     {
-        let type = (this.__uploadMediaType === 'image' || this.__uploadMediaType === 'video') ? 'image_video': this.__uploadMediaType;
         // search mime_type in authorized extension using upload current tab (image, video, video synchro, ...)
-        return this.__authorizedFiles[type].indexOf(mime_type) !== -1;
+        return this.__authorizedFiles[this.__uploadMediaType].indexOf(mime_type) !== -1;
     }
 
     fileIsAlreadyUploaded(file)
@@ -682,7 +681,7 @@ class UploadHandlerTool extends Tool
                         uploadState.html("Téléchargement en cours ...");
                         let formData = new FormData();
                         formData.append('file', fileToUpload.file);
-                        formData.append('media_type', (this.__uploadMediaType === 'image' || this.__uploadMediaType === "video") ? 'image_video' : this.__uploadMediaType);
+                        formData.append('media_type', this.__uploadMediaType);
 
                         const fileExtension = fileToUpload.file.name.split('.').pop();
                         const fileName = fileToUpload.file.name.replace( '.' + fileExtension , '');

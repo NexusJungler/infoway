@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Synchro;
+use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\OptimisticLockException;
@@ -20,6 +21,8 @@ class SynchroRepository extends ServiceEntityRepository
 
     private string $base;
 
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Synchro::class);
@@ -27,13 +30,6 @@ class SynchroRepository extends ServiceEntityRepository
         if($this->base != null) {
             $singleton = true;
         }
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     /**

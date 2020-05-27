@@ -7,12 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="media_type", type="string")
- * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video" })
+ * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "element_graphic" = "ElementGraphic" })
  * @UniqueEntity(fields={"name"})
  */
 class Media
@@ -84,11 +85,6 @@ class Media
      * @ORM\Column(type="string", nullable=false)
      */
     private $type;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $containIncruste;
 
     public function __construct()
     {
@@ -270,18 +266,6 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getContainIncruste(): bool
-    {
-        return $this->containIncruste;
-    }
-
-    public function setContainIncruste(bool $containIncruste): self
-    {
-        $this->containIncruste = $containIncruste;
 
         return $this;
     }

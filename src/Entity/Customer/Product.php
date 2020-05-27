@@ -22,7 +22,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Category", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -75,7 +75,7 @@ class Product
     private $end;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
      */
     private $tags;
 
@@ -90,11 +90,23 @@ class Product
      */
     private $allergens;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="product")
+     */
+    private $medias;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ElementGraphic", inversedBy="products")
+     */
+    private $elementGraphics;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->allergens = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criterions = new ArrayCollection();
+        $this->allergens = new ArrayCollection();
+        $this->elementGraphics = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -303,6 +315,55 @@ class Product
     {
         if ($this->tags->contains($allergen)) {
             $this->tags->removeElement($allergen);
+        }
+
+        return $this;
+    }
+
+    public function getMedias(): Collection
+    {
+        return $this->allergens;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ElementGraphic[]
+     */
+    public function getElementGraphics(): Collection
+    {
+        return $this->elementGraphics;
+    }
+
+    public function addElementGraphic(ElementGraphic $elementGraphic): self
+    {
+        if (!$this->elementGraphics->contains($elementGraphic)) {
+            $this->elementGraphics[] = $elementGraphic;
+        }
+
+        return $this;
+    }
+
+    public function removeElementGraphic(ElementGraphic $elementGraphic): self
+    {
+        if ($this->elementGraphics->contains($elementGraphic)) {
+            $this->elementGraphics->removeElement($elementGraphic);
         }
 
         return $this;

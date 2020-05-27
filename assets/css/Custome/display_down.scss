@@ -1,17 +1,12 @@
 .display{
     padding-top: rem(58px);
     position: relative;
-    &::after {
-        content: '';
-        top: rem(5px);
-        left: 1%;
-        width: 99%;
-        border: rem(1px) solid #4D646D;
-        position: relative;
-        display: block;
-    }
+
     .display-content{
         display: flex;
+        flex-direction: column;
+        width: 100%;
+
         .display-content-columns{
             display: flex;
             .drop-btn{
@@ -66,12 +61,140 @@
                 }
             }
         }
+
+        button {
+            cursor: pointer;
+        }
+
+        .top{
+            width: 100%;
+            margin-bottom: 1%;
+
+            &::after {
+                content: '';
+                //top: rem(5px);
+                left: 0%;
+                width: 99%;
+                border: rem(1px) solid #4D646D;
+                position: relative;
+                display: block;
+            }
+
+            .actions-btn-container {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 1%;
+
+                .container:not(:last-child) {
+                    margin-right: 2%;
+                }
+
+                .left-btns, .right-btns{
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                .left-btns{
+                    width: 65%;
+
+                    #show-media-waiting-incrustation-container  {
+                        position: relative;
+
+                        .media-waiting-incrustation-number {
+                            background-color: #FF5722;
+                            color: #FFF;
+                            position: absolute;
+                        }
+
+                    }
+
+                }
+
+                .right-btns{
+                    width: 35%;
+                }
+
+            }
+
+        }
+
+        .body{
+
+            .filters-container{
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                
+                .filter {
+                    cursor: pointer;
+                }
+
+                .left-filter-container {
+                    width: 70%;
+                    display: flex;
+                    flex-direction: row;
+
+                    .filter-by-orientation-or-type-container {
+                        background-color: #FFF;
+                        border: 1px solid #C0CCD1;
+                        display: flex;
+                        flex-direction: row;
+                        width: 30%;
+                        justify-content: space-around;
+                        text-align: center;
+
+                        i{
+                            font-size: 30px;
+                            color: #00B8F5;
+                        }
+
+                    }
+
+                    .filter-by-characteristics-container {
+                        background-color: #E3E3E3;
+                        border: 1px solid #C0CCD1;
+                        display: flex;
+                        flex-direction: row;
+                        width: 70%;
+                        justify-content: space-around;
+                    }
+
+                }
+
+                .right-filter-container {
+                    width: 30%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                }
+
+            }
+
+            .medias-list-container {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                .card{
+                    width: 250px;
+                    height: 280px;
+                }
+
+            }
+
+        }
+
+        
+
+
     }
 
     .display-btn{
         display: flex;
-        position: absolute;
-        right: 0;
+        /*position: absolute;
+        right: 0;*/
         &::after{
             border: rem(1px) solid #4D646D;
         }

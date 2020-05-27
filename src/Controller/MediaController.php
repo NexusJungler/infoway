@@ -8,6 +8,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Image;
+use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
@@ -72,24 +73,43 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/mediatheque/{media}", name="media::showMediatheque", methods={"GET", "POST"},
-     * requirements={"media": "[a-z_]+"})
+     * @Route(path="/mediatheque/{mediasDisplayedType}", name="media::showMediatheque", methods={"GET", "POST"},
+     * requirements={"mediasDisplayedType": "[a-z_]+"})
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $media)
+    public function showMediatheque(Request $request, string $mediasDisplayedType)
     {
-
-        $media_displayed = $media;
 
         $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $managerName );
-        $products = $manager->getRepository(Product::class)->setEntityManager( $manager )->findAll();
-        $categories = $manager->getRepository(Category::class)->setEntityManager( $manager )->findAll();
-        $tags = $manager->getRepository(Tag::class)->setEntityManager( $manager )->findAll();
-        $productsCriterions = $manager->getRepository(Product::class)->setEntityManager( $manager )->findProductsCriterions();
+
+        $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
+        $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
+        $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
+        $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
+        $incrusteRepo = $manager->getRepository(Incruste::class)->setEntityManager( $manager );
+
+        $products = $productRepo->findAll();
+        $categories = $categoryRepo->findAll();
+        $tags = $tagRepo->findAll();
+        $productsCriterions = $productRepo->findProductsCriterions();
+        $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
+
+        if($mediasDisplayedType === "template")
+        {
+            die("TODO: get all templates");
+        }
+
+        elseif($mediasDisplayedType === "incruste")
+        {
+            die("TODO: get all incrustes");
+        }
+
+        else
+            $mediasToDisplayed = $mediaRepo->getMediaByType($mediasDisplayedType);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
-        $uploadIsAuthorizedOnPage = ($media_displayed !== 'template' AND $media_displayed !== 'incruste');
+        $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
         $mediaList = new MediasList();
         $form = $this->createForm(MediasListType::class, $mediaList, [
@@ -98,7 +118,13 @@ class MediaController extends AbstractController
             ]
         ]);
 
-        //$form->handleRequest($request);
+        // @TODO: remplacer le formulaire dans lapopup d'upload par le form créer par le formbuilder et laisser symfony gérer la validation (assert)
+        /*$form->handleRequest($request);
+
+        if( $form->isSubmitted() && $form->isValid() )
+        {
+
+        }*/
 
         if($request->isMethod('POST'))
         {
@@ -106,13 +132,15 @@ class MediaController extends AbstractController
         }
 
         return $this->render("media/media-image.html.twig", [
-            'media_displayed' => $media_displayed, // will be used by js for get authorized extensions for upload
+            'media_displayed' => $mediasDisplayedType, // will be used by js for get authorized extensions for upload
             'uploadIsAuthorizedOnPage' => $uploadIsAuthorizedOnPage,
             'products' => $products,
             'categories' => $categories,
             'tags' => $tags,
             'productsCriterions' => $productsCriterions,
             'form' => $form->createView(),
+            'mediasWaitingForIncrustes' => $mediasWaitingForIncrustes,
+            'mediasToDisplayed' => $mediasToDisplayed,
         ]);
 
     }
@@ -273,7 +301,8 @@ class MediaController extends AbstractController
                 'fileType' => $fileType,
                 'type' => $mediaType,
                 'extension' => $real_file_extension,
-                'media' => $media
+                'media' => $media,
+                'mediaContainIncruste' => false,
             ];
 
             list($width, $height, $codec) = $mediasHandler->getVideoDimensions($path);
@@ -328,7 +357,7 @@ class MediaController extends AbstractController
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/" . $task->getFiletype() . "/" . $media->getId() . "." . $media->getExtension();
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/" . $task->getFiletype() . "/low/" . $media->getId() . "." . $media->getExtension();
             $mimeType = finfo_file($finfo, $path);
 
             $response = [
@@ -448,7 +477,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        //dd($request->request, $customer);
+        dd($request->request, $customer);
 
         $error = [  ];
 
@@ -516,7 +545,7 @@ class MediaController extends AbstractController
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
                 $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
 
-                if($index === 0)
+                if($diffusionEndDate < $diffusionStartDate)
                 {
                     $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
                     break;

@@ -4,6 +4,7 @@ namespace App\Repository\Customer;
 
 use App\Entity\Customer\CriterionCategory;
 use App\Entity\Customer\CriterionList;
+use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -15,6 +16,9 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class CriterionListRepository extends ServiceEntityRepository
 {
+
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CriterionList::class);

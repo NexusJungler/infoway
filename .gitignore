@@ -10,6 +10,7 @@
 /assets/css/fontawesome
 /assets/js/fontawesome
 /public/miniatures
+/src/Migrations/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

@@ -2,7 +2,10 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
+use App\Entity\Customer\Video;
+use App\Repository\MainRepository;
 use App\Repository\RepositoryInterface;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,16 +23,80 @@ use PDO;
  */
 class MediaRepository extends ServiceEntityRepository
 {
+
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Media::class);
     }
 
-    public function setEntityManager(ObjectManager $entityManager): self
+    /**
+     * Renvoie un tableau contenant tout les médias qui doivent contenir des incrustes mais qui ne contiennent pas encore d'incruste
+     *
+     * @return array
+     */
+    public function getMediasInWaitingListForIncrustes(): array
     {
-        $this->_em = $entityManager;
-        return $this;
+
+        $mediasInWaitingList = [];
+
+        $medias = $this->createQueryBuilder('m')
+                                   ->leftJoin(Image::class,"i", "WITH", "i.containIncruste = true AND i.incrustes IS EMPTY")
+                                   ->leftJoin(Video::class,"v", "WITH", "v.containIncruste = true AND v.incrustes IS EMPTY")
+                                   ->getQuery()
+                                   ->getResult();
+
+        $mediasInWaitingList['number'] = sizeof($medias);
+        $mediasInWaitingList['medias'] = $medias;
+
+        return $mediasInWaitingList;
+
     }
+
+
+    public function getMediaByType(string $type)
+    {
+
+        $typeOfMediasToSearch = [];
+        $medias = [];
+
+        switch ($type)
+        {
+
+            case "medias":
+                //$typeOfMediasToSearch['types']= [ 'image', 'video' ];
+
+                $medias = $this->createQueryBuilder('m')
+                                ->leftJoin(Image::class,"i", "WITH", "(i.containIncruste = false) OR (i.containIncruste = true AND i.incrustes IS NOT EMPTY)")
+                                ->leftJoin(Video::class,"v", "WITH", "(v.containIncruste = false) OR (v.containIncruste = true AND v.incrustes IS NOT EMPTY)")
+                                ->distinct()
+                                ->getQuery()
+                                ->getResult();
+
+                break;
+
+            case "video_synchro":
+                $typeOfMediasToSearch['types']= [ 'sync' ];
+                break;
+
+            case "video_thematic":
+                $typeOfMediasToSearch['types']= [ 'them' ];
+                break;
+
+            case "element_graphic":
+                $typeOfMediasToSearch['types']= [ 'elgp' ];
+                break;
+
+            default:
+                throw new Exception(sprintf("Error : Unrecognized media type ! Trying to get medias with '%s' type but this media type is not exist ", $type));
+
+        }
+
+        return $medias;
+
+    }
+
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
         $column = 'PRO_'.$columnPrice.'_jour';

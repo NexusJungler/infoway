@@ -59,6 +59,10 @@ class UploadCron
      */
     private $mediaTags;
 
+    private bool $mediaContainIncruste;
+
+    private array $encodeOutputFormatFolder;
+
     /**
      * UploadCron constructor.
      *
@@ -75,9 +79,9 @@ class UploadCron
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
         $this->mediatype = $taskInfo['mediaType'];
         $this->fileUploadDate = $taskInfo['uploadDate'];
-        $this->mediaProducts = $taskInfo['mediaProducts'] ?? [];
-        $this->mediaTags = $taskInfo['mediaTags'] ?? [];
-        $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'] ?? false;
+        $this->mediaProducts = $taskInfo['mediaProducts'];
+        $this->mediaTags = $taskInfo['mediaTags'];
+        $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'];
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -86,6 +90,10 @@ class UploadCron
         $this->fileDiffusionEnd = $diffusionEndDate;
 
         $filename = $taskInfo['fileName'];
+
+        $this->encodeOutputFormatFolder = [
+            '8k', '4k', 'HD+', 'HD', 'high', 'medium', 'low',
+        ];
 
         // get dynamically the right EntityManager based on customer name
         $this->entityManager = $managerRegistry->getManager(strtolower($this->customer));
@@ -184,8 +192,11 @@ class UploadCron
                             $dest = $this->destfolder . "/$size/" . $this->fileID . '.' . $valid_ext;
                             rename($dir_ref, $dest);
 
-                            $mediasHandler->changeImageDpi($dest, $dest,72);
-                            $mediasHandler->convertImageCMYKToRGB($dest, $dest);
+                            if($this->filetype === 'image')
+                            {
+                                $mediasHandler->changeImageDpi($dest, $dest,72);
+                                $mediasHandler->convertImageCMYKToRGB($dest, $dest);
+                            }
 
                             if($size == 'high') {
                                 $this->repository->updateHigh($this->fileID);
@@ -436,6 +447,7 @@ class UploadCron
         $resolution = $this->getVideoDimensions($video);
         $width = $resolution['width'];
         $height = $resolution['height'];
+        //dd($width, $height);
         $ratio = $width / $height;
         if($ratio > 1) {
             $this->syncOri = 'horizontal';
@@ -461,6 +473,8 @@ class UploadCron
             $old_path = $this->customer_dir . iconv('UTF-8', 'Windows-1252', 'VIDÉOS') . '/';
         }
 
+        $copySourceToFolder = "HD";
+
         switch ($ratio) {
             case 16 / 9:  // Plein Ecran Horizontal
 
@@ -470,12 +484,29 @@ class UploadCron
                 }
 
                 if ($width > 1920 && $height > 1080) {
+
                     $max_size = true;
-                    $output_high = "1920*1080";
                     $HD = true; // On se prépare à copier la source dans 'HD' si la résolution dépasse le format high
+
+                    // 4k
+                    if($width === 3840 && $height === 2160) {
+                        $output_high = "3840*2160";
+                        $copySourceToFolder = "4k";
+                    }
+
+                    // 8k
+                    elseif($width === 7680 && $height === 4320) {
+                        $output_high = "7680*4320";
+                        $copySourceToFolder = "8k";
+                    }
+
+                    else {
+                        $output_high = "1920*1080";
+                    }
+
                 }
 
-                if ($width == 1920 && $height == 1080) {
+                if ($width === 1920 && $height === 1080) {
                     $max_size = false;
                     // On copie simplement la vidéo sans la réencoder dans les répertoires Tizen et LFD!
                     //dd($video, $this->destfolder . 'high/' . $this->filename . '.mp4');
@@ -598,13 +629,8 @@ class UploadCron
                 }
                 if($HD) {
 
-                    // if end with video/
-                    if (substr($this->destfolder, -strlen('video/')) === 'video/')
-                        copy($video, $this->destfolder . 'HD/' . $this->filename . '.mp4');
-
-                    else
-                        // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
-                        copy($video, $this->destfolder . 'video/HD/' . $this->filename . '.mp4');
+                    // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
+                    copy($video, $this->destfolder . $copySourceToFolder . $this->filename . '.mp4');
                 }
             }
         }

@@ -6,51 +6,178 @@
         <article id="picture" class="tab-content current">
             <article class="display site-display ">
                 <div class="display-content">
-                    {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
-                    <div>
-                        <button type="button" class="btn btn-upload add-table"><i class="fas fa-plus"></i>UPLOAD</button>
-                    </div>
-                    {% endif %}
-                    <div class="display-content-columns">
-                        <div class="display-content-poste">
-                            <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                            <div class="display-content-down">
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox" > Société / Marque
-                                        <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Societe" value="" >
-                                        <span class="mutliselect-check"></span>
-                                    </label>
+
+                    <div class="top">
+
+                        <div class="actions-btn-container">
+
+                            <div class="left-btns">
+
+                                {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
+                                    <div class="upload-btn-container container">
+                                        <button type="button" class="btn btn-upload add-table"><i class="fas fa-plus"></i>UPLOAD</button>
+                                    </div>
+                                {% endif %}
+
+                                <div id="show-media-waiting-incrustation-container" class="container">
+                                    <button type="button" id="show-media-waiting-incrustation" class="btn">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        En attente d'incrustation
+                                    </button>
+                                    <span class="media-waiting-incrustation-number">{{ mediasWaitingForIncrustes['number'] }}</span>
                                 </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Groupe de prix
-                                        <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Groupe" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
+
+                                <div class="show-archived-media-container container">
+                                    <button type="button" id="show-archived-media-button" class="btn"><i class="fas fa-archive"></i>Médias archivés</button>
                                 </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Critéré sélectif obligatoire</span>
-                                        <input type="checkbox"  name="satut"  data-tableDeleteCol="selectif" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Critérés
-                                        <input type="checkbox"  checked name="satut"  data-tableDeleteCol="critere" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
+
                             </div>
+
+                            <div class="display-btn right-btns">
+
+                                <div class="container">
+                                    <span>Medias : </span>
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn add-table"><i class="fas fa-pen"></i>Ajouter</button>
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="tags-table">TAG</button>
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+
+                            </div>
+
                         </div>
+
                     </div>
 
-                    <div class="display-btn">
-                        <p>Produits : </p>
-                        <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
-                        <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
-                        <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
-                        <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
-                        <button type="button" class="tags-table">TAG</button>
+                    <div class="body">
+
+                        <div class="filters-container">
+
+                            <div class="left-filter-container">
+
+                                <div class="filter-by-orientation-or-type-container">
+
+                                    <div class="show-only-horizontal-media-filter filter">
+                                        <i class="fas fa-mobile"></i> <br>
+                                        <span>Horizontal</span>
+                                    </div>
+
+                                    <div class="show-only-vertical-media-filter filter">
+                                        <i class="fas fa-mobile"></i> <br>
+                                        <span>Vertical</span>
+                                    </div>
+
+                                    <div class="show-only-images-filter filter">
+                                        <i class="fas fa-image"></i> <br>
+                                        <span>Images</span>
+                                    </div>
+
+                                    <div class="show-only-videos-filter filter">
+                                        <i class="fab fa-youtube"></i> <br>
+                                        <span>Videos</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="filter-by-characteristics-container">
+
+                                    <div class="filter-by-categories-container">
+                                        <select name="" id="filter-by-categorie">
+                                            <option value="">Catégories</option>
+                                            {% for categorie in categories %}
+                                                <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="filter-by-products-container">
+                                        <select name="" id="filter-by-product">
+                                            <option value="">Produits</option>
+                                            {% for product in products %}
+                                                <option value="{{ product.id }}">{{ product.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="filter-by-criterions-container">
+                                        <select name="" id="">
+                                            <option value="">Critères</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="filter-by-tags-container">
+                                        <select name="" id="">
+                                            <option value="">Tags</option>
+                                            {% for tag in tags %}
+                                                <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="filter-validation-btn-container">
+                                        <button type="button">FILTER</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="right-filter-container">
+
+                                <div class="filter-by-created-date-container">
+                                    <select name="" id="">
+                                        <option value="">Les plus récents d'abord</option>
+                                        <option value="">Les plus anciens d'abord</option>
+                                    </select>
+                                </div>
+
+                                <div class="pagination-container">
+                                    <select name="" id="choice-displayed-elements-number">
+                                        <option value="">15</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medias-list-container">
+
+                            {% for media in mediasToDisplayed %}
+
+                                <div class="card">
+
+                                    <div class="card-header"></div>
+
+                                    <div class="card-body">
+                                        <img src="" alt="">
+                                        <span>{{ media.name }}</span>
+                                    </div>
+
+                                    <div class="card-footer"></div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
                     </div>
+
                 </div>
             </article >
 
