@@ -1,4 +1,5 @@
 import "../css/critiers.scss";
+import "../css/criteres/edit_criteres.scss";
 // import "../css/settings/critiers.scss";
 
 const $ = require('jquery');
@@ -79,6 +80,7 @@ function uniqueChoice(){
     let selectChoix = $('#criterions_list_multiple').children("option:selected").val();
 
     if(selectChoix == 0){
+        console.log("unique");
         let nb_input = $(".checkbox-criterion:checked").length;
         if( nb_input === 1 ){
             $(".btn-create-critions").prop('disabled', false);
