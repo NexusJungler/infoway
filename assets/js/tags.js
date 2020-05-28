@@ -39,6 +39,7 @@ $(".tags-color-edit").on('change', function(e){
     $('.input-color-edit').css("background-color",this.value);
 })
 
+// popup site
 
 $('.btn-site').click(function () {
     $('.add-popup-site').addClass('is-open');
@@ -49,6 +50,16 @@ $('.btn-popupclose2').click(function () {
     $('.add-popup-site').removeClass('is-open');
 });
 
+// popup site produits
+
+$('.btn-produits').click(function () {
+    $('.add-popup-produits').addClass('is-open');
+    return false;
+  });
+
+$('.btn-popupclose2').click(function () {
+    $('.add-popup-produits').removeClass('is-open');
+});
 
 //Search Filterable table
 $("#site-search").on("keyup", function() {

@@ -12,18 +12,9 @@
                     {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Tags', 'showSecondTitles': true } %}
                 {% endblock %}
 
-                <article class="wrapper">
-                    <div class="wrapper-content">
-                        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
-                        <ul class="tabs">
-                            <a href="{{ path('app:enseigne') }}"><li class="{% if app.request.attributes.get('_route') == 'app:enseigne' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
-                            <a href="{{ path('users:view') }}"><li class="{% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
-                            <a href="{{ path('criterions_lists_index') }}"><li class="{% if app.request.attributes.get('_route') == 'criterions_lists_index' %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings"><p class="css-tab__label">Critères</p></li></a>
-                            <a href="{{ path('tags_index') }}"><li class=" {% if app.request.attributes.get('_route') == 'tags_index' %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings"> <p class="css-tab__label">TAGS</p> </li></a>
-                        </ul>
-                        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                </article>
+               {% block wrapper %}
+                    {% include 'wrapper/wrapper-settings.html.twig'  %}
+                {% endblock %}
                 
             </section>
 
@@ -48,12 +39,12 @@
                         </article>
 
                         <article class="content-edit-tags">
-                            {{ include('settings/tags/_edit_form.html.twig', {'button_label': 'Update'}) }}
+                            {{ include('settings/tags/_edit_form.html.twig', {'button_label': 'Enregistrer'}) }}
                         </article>
                         
-                        {# {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }}
+                        {# {{ include('tags/_form.html.twig', {'button_label': 'Update'}) }} #}
 
-                        <a href="{{ path('tags_index') }}">back to list</a>#}
+                        
 
 
                     </div>

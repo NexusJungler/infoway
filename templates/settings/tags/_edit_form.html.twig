@@ -26,22 +26,26 @@
                 <thead class="table-info thead-info">
                     <tr>
                         <th>Produits</th>
-                        <th>Ajouter Produits : <button type="button" class="btn"><i class="fas fa-align-justify"></i>Produits</button></th>
+                        <th>Ajouter Produits : <button type="button" class="btn btn-produits"><i class="fas fa-align-justify"></i>Produits</button></th>
                     </tr>
                 </thead>
                 <tbody class="tbody tbody-content scrollbar-table">
                     {% for product in form.products %}
+
+                        {# {%  set currentProduits = product.vars.data  %}
+                        <tr class="tag__produits__produit{% if currentProduits not in tag.sites %} hidden{% endif %}"> #}
+                        
                         <tr>
                             <td class="">
                                 <img src="{{ asset('/build/images/no-available-image.png') }}" alt="Factory & cO">
                             </td>
                             <td>
-                            {# <label class="container-input">
-                                    {{ form_widget(site, {'attr': {'class': ''} }) }}
-                                    {{  form_label(site) }}
+                            <label class="container-input">
+                                    {{ form_widget(product, {'attr': {'class': ''} }) }}
+                                    {{  form_label(product) }}
                                     <span class="container-rdo"></span>
-                                </label> #}
-                                {{ form_row(product, {'attr': {'class': ''} }) }}
+                                </label>
+                                {# {{ form_row(product, {'attr': {'class': ''} }) }} #}
                             </td>
                         </tr>            
                     {% endfor %}
@@ -91,7 +95,12 @@
                         {%  set currentSite = site.vars.data  %}
                         <tr class="tag__sites__site{% if currentSite not in tag.sites %} hidden{% endif %}">
                             <td >
-                                {{ form_row(site, {'attr': {} }) }}
+                            <label class="container-input">
+                                    {{ form_widget(site, {'attr': {'class': ''} }) }}
+                                    {{  form_label(site) }}
+                                    <span class="container-rdo"></span>
+                                </label>
+                                {# {{ form_row(site, {'attr': {} }) }} #}
                             </td>
                             {# <td>
                                 
@@ -106,7 +115,8 @@
 
 
     <div class="btn-tag-enregistrer">
-        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+        <a href="{{ path('tags_index') }}" class="btn btn-back-tags">Annuler</a> 
+        <button type="button" class="btn">{{ button_label|default('Enregistrer') }}</button>
     </div>
 
 {{ form_end(form) }}
@@ -144,6 +154,49 @@
                 </tbody>
             </table>
             {{ form_end( addSiteForm ) }}
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-popupclose2">Affecter au site</button>
+        </div>
+
+    </div>
+
+</article>
+
+
+<article class="add-popup add-popup-produits">
+
+    <div class="modal">
+
+        <div class="header-modal">
+            <p class="upload-title">Affecter :</p>
+            <button type="button" class="btn btn-popupclose2 ">X</button>
+        </div>
+
+        <div class="popup-site table" >
+            {# {{ form_start( addSiteForm ) }} #}
+            <table class="table-site-custome table-custome">
+                <thead class="table-info thead-info">
+                    <tr>
+                        <th>Produits</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-content scrollbar-table">
+                    {# {% for site in addSiteForm.sites %}
+                        {%  set currentSite =  site.vars.data %} #}
+                        {# <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}"> #}
+                            <td class="">
+                                {# {{ form_row(site, {'attr': {
+                                    'checked' : currentSite in tag.sites ,
+                                    'id' : 'add_site_sites_tryrt' ~ site.vars.value
+                                } }) }} #}
+                            </td>
+                        </tr>
+                    {# {% endfor %} #}
+                </tbody>
+            </table>
+            {# {{ form_end( addSiteForm ) }} #}
         </div>
 
         <div>

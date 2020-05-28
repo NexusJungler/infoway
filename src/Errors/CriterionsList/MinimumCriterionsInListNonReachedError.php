@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Errors\CriterionsList;
 class MinimumCriterionsInListNonReachedError extends CriterionsListError {
     public function __construct( int $minimumCriterionsInList)
