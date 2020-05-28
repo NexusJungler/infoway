@@ -9,6 +9,7 @@ use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Site;
 use App\Entity\Customer\Tag;
 use App\Form\Customer\AddSiteType;
+use App\Form\Customer\AddProductType;
 use App\Object\Customer\SitesList;
 use App\Form\Customer\TagListType;
 use App\Form\Customer\TagsActionForm;
@@ -178,6 +179,26 @@ class TagController extends AbstractController
             $tagFormView->children['sites']->children[ $site->getId()  ]->vars['data'] = $site ;
         }
 
+     
+        $productsImportatedFromDb = new ArrayCollection( array_values( array_map( fn( ChoiceView $choice ) => $choice->data,$tagFormView->children['products']->vars['choices'] ) ) ) ;
+
+        $optionsToPassToAddProductForm = [
+            'productsToDisplay' => $productsImportatedFromDb
+        ];
+        $addProductForm = $this->createForm(AddProductType::class ,  [] , $optionsToPassToAddProductForm) ;
+        $addProductActionView = $addProductForm->createView();
+
+        foreach($addProductActionView->children[ 'products' ]->vars[ 'choices' ] as $index => $choice ){
+            $currentSite = $choice->data ;
+            $addProductActionView->children['products']->children[ $index ]->vars['data'] = $currentSite ;
+            $addProductActionView->children['products']->children[ $index ]->vars['id'] = 'add_product_products_' . $currentSite->getId();
+        }
+
+        foreach($tagFormView->children[ 'products' ]->vars[ 'data' ] as $index => $product ){
+            $tagFormView->children['products']->children[ $product->getId()  ]->vars['data'] = $site ;
+        }
+
+
         //dd( $addSiteActionView);
 
         $form->handleRequest($request);
@@ -196,11 +217,12 @@ class TagController extends AbstractController
 
             return $this->redirectToRoute('tags_index');
         }
-
+        
         return $this->render('settings/tags/edit.html.twig', [
             'tag' => $tag,
             'form' => $tagFormView,
-            'addSiteForm' => $addSiteActionView
+            'addSiteForm' => $addSiteActionView ,
+            'addProductForm' => $addProductActionView
         ]);
     }
 
