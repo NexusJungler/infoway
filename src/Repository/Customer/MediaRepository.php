@@ -41,14 +41,28 @@ class MediaRepository extends ServiceEntityRepository
 
         $mediasInWaitingList = [];
 
-        $medias = $this->createQueryBuilder('m')
-                                   ->leftJoin(Image::class,"i", "WITH", "i.containIncruste = true AND i.incrustes IS EMPTY")
-                                   ->leftJoin(Video::class,"v", "WITH", "v.containIncruste = true AND v.incrustes IS EMPTY")
-                                   ->getQuery()
-                                   ->getResult();
+        // @TODO: a améliorer (ne pas répéter le code, essayer de faire une requete avec innerJoin etc)
+
+        $medias = $this->_em->createQueryBuilder()->select("i")
+                                                  ->from(Image::class, 'i')
+                                                  ->where("i.containIncruste = true AND i.incrustes IS EMPTY")
+                                                  ->distinct()
+                                                  ->getQuery()
+                                                  ->getResult();
 
         $mediasInWaitingList['number'] = sizeof($medias);
         $mediasInWaitingList['medias'] = $medias;
+
+        $medias = $this->_em->createQueryBuilder()->select("v")
+                                                  ->from(Video::class, 'v')
+                                                  ->where("v.containIncruste = true AND v.incrustes IS EMPTY")
+                                                  ->distinct()
+                                                  ->getQuery()
+                                                  ->getResult();
+
+        $mediasInWaitingList['number'] += sizeof($medias);
+
+        $mediasInWaitingList['medias'] = array_merge($mediasInWaitingList['medias'], $medias);
 
         return $mediasInWaitingList;
 
@@ -58,34 +72,43 @@ class MediaRepository extends ServiceEntityRepository
     public function getMediaByType(string $type)
     {
 
-        $typeOfMediasToSearch = [];
         $medias = [];
 
         switch ($type)
         {
 
             case "medias":
-                //$typeOfMediasToSearch['types']= [ 'image', 'video' ];
 
-                $medias = $this->createQueryBuilder('m')
-                                ->leftJoin(Image::class,"i", "WITH", "(i.containIncruste = false) OR (i.containIncruste = true AND i.incrustes IS NOT EMPTY)")
-                                ->leftJoin(Video::class,"v", "WITH", "(v.containIncruste = false) OR (v.containIncruste = true AND v.incrustes IS NOT EMPTY)")
-                                ->distinct()
-                                ->getQuery()
-                                ->getResult();
+                // @TODO: a améliorer (ne pas répéter le code, essayer de faire une requete avec innerJoin etc)
+
+                $images = $this->_em->createQueryBuilder()->select("i")
+                    ->from(Image::class, 'i')
+                    ->where("i.containIncruste = false OR (i.containIncruste = true AND i.incrustes IS NOT EMPTY)")
+                    ->distinct()
+                    ->getQuery()
+                    ->getResult();
+
+                $videos = $this->_em->createQueryBuilder()->select("v")
+                    ->from(Video::class, 'v')
+                    ->where("v.containIncruste = false OR (v.containIncruste = true AND v.incrustes IS NOT EMPTY)")
+                    ->distinct()
+                    ->getQuery()
+                    ->getResult();
+
+                $medias = array_merge($images, $videos);
 
                 break;
 
             case "video_synchro":
-                $typeOfMediasToSearch['types']= [ 'sync' ];
+
                 break;
 
             case "video_thematic":
-                $typeOfMediasToSearch['types']= [ 'them' ];
+
                 break;
 
             case "element_graphic":
-                $typeOfMediasToSearch['types']= [ 'elgp' ];
+
                 break;
 
             default:

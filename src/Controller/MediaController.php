@@ -131,6 +131,8 @@ class MediaController extends AbstractController
             return $this->saveMediaCharacteristic($request);
         }
 
+        // @TODO: pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
+
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $mediasDisplayedType, // will be used by js for get authorized extensions for upload
             'uploadIsAuthorizedOnPage' => $uploadIsAuthorizedOnPage,
