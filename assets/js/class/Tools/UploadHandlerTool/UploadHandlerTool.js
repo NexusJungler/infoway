@@ -958,11 +958,11 @@ class UploadHandlerTool extends Tool
         let preview = null;
 
         if(mediaInfos.type === 'image')
-            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.png" />`;
+            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/images/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.png" />`;
 
         else
             preview = `<video class="preview" controls>
-                            <source src="/miniatures/${mediaInfos.customer}/video/low/${mediaInfos.id}.${mediaInfos.extension}" type="${mediaInfos.mimeType}">
+                            <source src="/miniatures/${mediaInfos.customer}/videos/low/${mediaInfos.id}.${mediaInfos.extension}" type="${mediaInfos.mimeType}">
                        </video>`;
 
         preview +=  `<i class="fas fa-expand-alt expand-miniature" data-media_id="${mediaInfos.id}"></i>`;
@@ -1118,6 +1118,8 @@ class UploadHandlerTool extends Tool
 
                             $(`.edit_media_info .unregistered`).removeClass('unregistered');
                             $('.show-media-info-resume').fadeIn();
+
+                            //@TODO: insert media card in mediatheque after saving
 
                         },
                         error: (response) => {
@@ -1362,7 +1364,7 @@ class UploadHandlerTool extends Tool
                 if(index !== -1)
                 {
                     const mediaInfo = this.__mediaInfos[index];
-                    $('.expand-miniature-container .modal-body').html(`<img src="/miniatures/${mediaInfo.customer}/image/${mediaInfo.highestFormat}/${mediaId}.png" alt="/miniatures/${mediaInfo.customer}/image/${mediaInfo.highestFormat}/${mediaId}.png">`);
+                    $('.expand-miniature-container .modal-body').html(`<img src="/miniatures/${mediaInfo.customer}/images/${mediaInfo.highestFormat}/${mediaId}.png" alt="/miniatures/${mediaInfo.customer}/image/${mediaInfo.highestFormat}/${mediaId}.png">`);
                     this.__$location.css({ 'z-index': '0' });
                     $('.expand-miniature-container').fadeIn();
                 }

@@ -6,7 +6,7 @@ use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Video;
 use App\Repository\MainRepository;
-use App\Repository\RepositoryInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -33,82 +33,112 @@ class MediaRepository extends ServiceEntityRepository
 
     /**
      * Renvoie un tableau contenant tout les médias qui doivent contenir des incrustes mais qui ne contiennent pas encore d'incruste
+     * (boolean a true et tableau des incrustes vide)
      *
      * @return array
      */
     public function getMediasInWaitingListForIncrustes(): array
     {
 
-        $mediasInWaitingList = [];
+        $medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                            ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
+                            ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
+                            ->andWhere("( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = true AND i.incrustes IS EMPTY) ) OR (v.containIncruste = true AND v.incrustes IS EMPTY)")
+                            ->orderBy("m.id", "ASC")
+                            ->getQuery()
+                            ->getResult();
 
-        // @TODO: a améliorer (ne pas répéter le code, essayer de faire une requete avec innerJoin etc)
+        //dd($medias);
 
-        $medias = $this->_em->createQueryBuilder()->select("i")
-                                                  ->from(Image::class, 'i')
-                                                  ->where("i.containIncruste = true AND i.incrustes IS EMPTY")
-                                                  ->distinct()
-                                                  ->getQuery()
-                                                  ->getResult();
-
-        $mediasInWaitingList['number'] = sizeof($medias);
-        $mediasInWaitingList['medias'] = $medias;
-
-        $medias = $this->_em->createQueryBuilder()->select("v")
-                                                  ->from(Video::class, 'v')
-                                                  ->where("v.containIncruste = true AND v.incrustes IS EMPTY")
-                                                  ->distinct()
-                                                  ->getQuery()
-                                                  ->getResult();
-
-        $mediasInWaitingList['number'] += sizeof($medias);
-
-        $mediasInWaitingList['medias'] = array_merge($mediasInWaitingList['medias'], $medias);
-
-        return $mediasInWaitingList;
+        return [
+            'size' => sizeof($medias),
+            'medias' => $medias
+        ];
 
     }
 
 
-    public function getMediaByType(string $type)
+    public function getAllArchivedMedias()
     {
 
-        $medias = [];
+        $medias = $this->findBy(['isArchived' => true]);
+
+        return [
+            'size' => sizeof($medias),
+            'medias' => $medias
+        ];
+
+    }
+
+
+    public function getMediaInByTypeForMediatheque(string $type)
+    {
+
+        // @TODO: pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
 
         switch ($type)
         {
 
+            // recupère les medias qui ont (boolean a true et tableau des incrustes non vide) et qui n'ont pas
+            // d'incruste(boolean a false et tableau des incrustes vide)
             case "medias":
 
-                // @TODO: a améliorer (ne pas répéter le code, essayer de faire une requete avec innerJoin etc)
+                $dql = "SELECT m FROM " . Media::class. " m 
+                
+                        LEFT JOIN " . Image::class . " i WITH m.id = i.id
+                        LEFT JOIN " . Video::class . " v WITH m.id = v.id
+                        
+                        WHERE ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
+                        OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
+                        
+                        ORDER BY m.id ASC";
 
-                $images = $this->_em->createQueryBuilder()->select("i")
-                    ->from(Image::class, 'i')
-                    ->where("i.containIncruste = false OR (i.containIncruste = true AND i.incrustes IS NOT EMPTY)")
-                    ->distinct()
-                    ->getQuery()
-                    ->getResult();
+                $query = $this->_em->createQuery($dql)
+                                   ->setFirstResult(0)
+                                   ->setMaxResults(2);
 
-                $videos = $this->_em->createQueryBuilder()->select("v")
-                    ->from(Video::class, 'v')
-                    ->where("v.containIncruste = false OR (v.containIncruste = true AND v.incrustes IS NOT EMPTY)")
-                    ->distinct()
-                    ->getQuery()
-                    ->getResult();
 
-                $medias = array_merge($images, $videos);
+                /*$medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                                                          ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
+                                                          ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
+                                                          ->andWhere("( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) 
+                                                                          AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )")
+                                                          ->orderBy("m.id", "ASC")
+                                                          ->getQuery()
+                                                          ->getResult();*/
+
+                $medias = new Paginator($query, $fetchJoinCollection = true);
+
+                //$c = count($medias);
+
+                foreach ($medias as $media)
+                {
+                    dump($media);
+                }
+
+                foreach ($medias as $media)
+                {
+
+                    if($media instanceof Image)
+                        $orderedMedias['images'][] = $media;
+
+                    else
+                        $orderedMedias['videos'][] = $media;
+
+                }
 
                 break;
 
             case "video_synchro":
-
+                die("Implemente video synchro recuperation logic");
                 break;
 
             case "video_thematic":
-
+                die("Implemente video thematic recuperation logic");
                 break;
 
             case "element_graphic":
-
+                die("Implemente element graphic recuperation logic");
                 break;
 
             default:
@@ -116,7 +146,7 @@ class MediaRepository extends ServiceEntityRepository
 
         }
 
-        return $medias;
+        return $orderedMedias;
 
     }
 

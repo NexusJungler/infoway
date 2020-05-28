@@ -3,6 +3,7 @@ import UploadHandlerTool from "../UploadHandlerTool/UploadHandlerTool";
 import {ClockManager} from "../../Managers/ClockManager/ClockManager";
 import MediaProductAssociationHandlerTool from "../ProductAssociationHandler/MediaProductAssociationHandlerTool";
 import MediaTagAssociationHandlerTool from "../TagAssociationHandler/MediaTagAssociationHandlerTool";
+import ArchivedMediasHandlerTool from "../ArchivedMediasHandler/ArchivedMediasHandlerTool";
 
 class ToolBox
 {
@@ -28,6 +29,7 @@ class ToolBox
             new UploadHandlerTool(),
             new MediaProductAssociationHandlerTool(),
             new MediaTagAssociationHandlerTool(),
+            new ArchivedMediasHandlerTool(),
         ];
     }
 

@@ -19,16 +19,20 @@
                                     </div>
                                 {% endif %}
 
-                                <div id="show-media-waiting-incrustation-container" class="container">
+                                <div class="show-media-waiting-incrustation-container container">
                                     <button type="button" id="show-media-waiting-incrustation" class="btn">
                                         <i class="fas fa-hourglass-half"></i>
                                         En attente d'incrustation
                                     </button>
-                                    <span class="media-waiting-incrustation-number">{{ mediasWaitingForIncrustes['number'] }}</span>
+                                    <span class="media-waiting-incrustation-number">{{ mediasWaitingForIncrustes['size'] }}</span>
                                 </div>
 
                                 <div class="show-archived-media-container container">
-                                    <button type="button" id="show-archived-media-button" class="btn"><i class="fas fa-archive"></i>Médias archivés</button>
+                                    <button type="button" id="show-archived-media-button" class="btn">
+                                        <i class="fas fa-archive"></i>
+                                        Médias archivés
+                                    </button>
+                                    <span class="archived-medias-number">{{ archivedMedias['size'] }}</span>
                                 </div>
 
                             </div>
@@ -156,22 +160,18 @@
 
                         <div class="medias-list-container">
 
-                            {% for media in mediasToDisplayed %}
+                            {% if mediasToDisplayed['images'] is defined and mediasToDisplayed['images'] is not empty %}
 
-                                <div class="card">
+                                {% include "/media/_media_card.html.twig" with { 'container_id': 'medias-images-container', 'subject': mediasToDisplayed['images'], 'media_type': 'image' } %}
 
-                                    <div class="card-header"></div>
+                            {% endif %}
 
-                                    <div class="card-body">
-                                        <img src="" alt="">
-                                        <span>{{ media.name }}</span>
-                                    </div>
 
-                                    <div class="card-footer"></div>
+                            {% if mediasToDisplayed['videos'] is defined and mediasToDisplayed['videos'] is not empty %}
 
-                                </div>
+                                {% include "/media/_media_card.html.twig" with { 'container_id': 'medias-images-container', 'subject': mediasToDisplayed['videos'], 'media_type': 'video' } %}
 
-                            {% endfor %}
+                            {% endif %}
 
                         </div>
 

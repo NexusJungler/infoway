@@ -63,12 +63,12 @@ class UploadCron
 
     private array $encodeOutputFormatFolder;
 
+    private $mediaMimeType;
+
     /**
      * UploadCron constructor.
      *
-     * @param $customer_name
-     * @param $filename
-     * @param $mediatype
+     * @param array $taskInfo
      * @param ManagerRegistry $managerRegistry If you give ManagerRegistry (Doctrine), this class can access all app EntityManager
      * @param ParameterBagInterface $parameterBag for access parameter (which is defined in config/services.yaml)
      */
@@ -82,6 +82,7 @@ class UploadCron
         $this->mediaProducts = $taskInfo['mediaProducts'];
         $this->mediaTags = $taskInfo['mediaTags'];
         $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'];
+        $this->mediaMimeType = $taskInfo['mimeType'];
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -908,6 +909,7 @@ class UploadCron
                         //$newMedia->setType($this->mediatype);
                         $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
                             ->setType($this->mediatype)
+                            ->setMimeType($this->mediaMimeType)
                             ->setCreatedAt(new DateTime())
                             ->setDiffusionStart($this->fileDiffusionStart)
                             ->setDiffusionEnd($this->fileDiffusionEnd)
@@ -995,6 +997,7 @@ class UploadCron
                 $ratio = $this->EstablishFormat($width, $height);
                 $newImg->setName($this->filename)
                        ->setType($this->mediatype)
+                        ->setMimeType($this->mediaMimeType)
                        ->setRatio($ratio)
                        ->setContainIncruste($this->mediaContainIncruste)
                        ->setExtension($this->extension)

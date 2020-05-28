@@ -38,7 +38,7 @@ class EmailSenderService
 	 * @param string $bodyContentType
 	 * @throws Exception
 	 */
-	public function sendEmail(string $to, string $subject, $body, string $bodyContentType)
+	public function sendEmail(string $to, string $subject, $body, string $bodyContentType = 'text/html')
 	{
 		try
 		{

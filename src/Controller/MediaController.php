@@ -94,6 +94,7 @@ class MediaController extends AbstractController
         $tags = $tagRepo->findAll();
         $productsCriterions = $productRepo->findProductsCriterions();
         $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
+        $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
         if($mediasDisplayedType === "template")
         {
@@ -106,8 +107,8 @@ class MediaController extends AbstractController
         }
 
         else
-            $mediasToDisplayed = $mediaRepo->getMediaByType($mediasDisplayedType);
-
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType);
+dump($mediasToDisplayed);
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
@@ -131,7 +132,6 @@ class MediaController extends AbstractController
             return $this->saveMediaCharacteristic($request);
         }
 
-        // @TODO: pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
 
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $mediasDisplayedType, // will be used by js for get authorized extensions for upload
@@ -143,6 +143,7 @@ class MediaController extends AbstractController
             'form' => $form->createView(),
             'mediasWaitingForIncrustes' => $mediasWaitingForIncrustes,
             'mediasToDisplayed' => $mediasToDisplayed,
+            'archivedMedias' => $allArchivedMedias,
         ]);
 
     }
@@ -225,6 +226,7 @@ class MediaController extends AbstractController
                 'mediaProducts' => [],
                 'mediaTags' => [],
                 'mediaContainIncruste' => false,
+                'mimeType' => $mediaType,
             ];
 
             // don't duplicate code !!
@@ -248,7 +250,7 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No media found with name : '%s'", $name));
 
-            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/low/" . $media->getId() . ".png";
+            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/images/low/" . $media->getId() . ".png";
 
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
@@ -276,10 +278,7 @@ class MediaController extends AbstractController
             $fileName = pathinfo($file['name'])['filename'] . '.' . pathinfo($file['name'])['extension'];
             $customer = $customerRepository->findOneByName( $customerName );
 
-            if($fileType === 'image')
-                $media = new Image();
-
-            else if($fileType === 'video')
+            if($fileType === 'video')
                 $media = new Video();
 
             // need new Entity (e.g : for powerpoint, word, ...)
@@ -288,6 +287,7 @@ class MediaController extends AbstractController
 
             $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
                   ->setExtension($real_file_extension)
+                  ->setMimeType($mediaType)
                   ->setContainIncruste(false)
                   ->setType($mediaType);
 
@@ -359,7 +359,7 @@ class MediaController extends AbstractController
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/" . $task->getFiletype() . "/low/" . $media->getId() . "." . $media->getExtension();
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . "." . $media->getExtension();
             $mimeType = finfo_file($finfo, $path);
 
             $response = [

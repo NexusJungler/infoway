@@ -86,6 +86,17 @@ class Media
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", nullable=false, name="mime_type")
+     */
+    private $mimeType;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, name="is_archived")
+     */
+    private $isArchived;
+
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -266,6 +277,30 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMimeType(): string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(string $mimeType): self
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    public function setIsArchived(bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
 
         return $this;
     }

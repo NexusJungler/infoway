@@ -223,6 +223,7 @@ class FfmpegSchedule
                             'mediaProducts' => $taskMediaInfo['products'],
                             'mediaTags' => $taskMediaInfo['tags'],
                             'mediaContainIncruste' => $taskMediaInfo['containIncruste'],
+                            'mimeType' => $taskMediaInfo['mimeType'],
                         ];
 
                         $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
@@ -251,6 +252,7 @@ class FfmpegSchedule
                         'mediaProducts' => $taskMediaInfo['products'],
                         'mediaTags' => $taskMediaInfo['tags'],
                         'mediaContainIncruste' => $taskMediaInfo['containIncruste'],
+                        'mimeType' => $taskMediaInfo['mimeType'],
                     ];
                     $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
                     $errors = $encoding->getErrors();

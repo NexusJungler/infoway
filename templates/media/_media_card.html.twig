@@ -1,0 +1,101 @@
+{% for index, media in subject %}
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="select-media-input-container">
+                <input type="checkbox">
+            </div>
+
+            <div class="media-actions-shorcuts-container">
+                <div class="shorcut shorcut-diff-date-modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date-coming-soon{% endif %}">
+                    <i class="far fa-clock"></i>
+                </div>
+
+                <div class="shorcut">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+
+                <div class="shorcut">
+                    <i class="fas fa-link"></i>
+                </div>
+
+                <div class="shorcut">
+                    <i class="far fa-clock"></i>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="media-miniature-container">
+
+                {% if media_type is same as('image') %}
+
+                    <img class="media-miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
+
+                {% endif %}
+
+                {% if media_type is same as('video') %}
+
+                    <video class="media-miniature" controls>
+                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                    </video>
+
+                {% endif %}
+
+            </div>
+
+            <div class="media-name-container">
+                <span>{{ media.name }}</span>
+            </div>
+
+            <div class="media-associated-items-container">
+
+                <div class="media-criterions-container associated-item">
+
+                    {% if media.products is not empty %}
+
+                        {% for product in media.products %}
+
+                            {% for criterion in product.criterions %}
+
+                                <p class="criterion"><span></span>{{ criterion.name }}</p>
+
+                            {% endfor%}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 critères associés</p>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="media-tags-container associated-item">
+
+                    {% if media.tags is not empty %}
+
+                        {% for tag in media.tags %}
+                            <p class="tag"><span></span> {{ tag.name }}</p>
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 tags associés</p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endfor %}
