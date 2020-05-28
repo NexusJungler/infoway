@@ -47,17 +47,10 @@
                                     <div class="display-btn">
                                         {# <button class="btn" >{{ button_label|default('Enregistrer') }}</button>#}
                                         <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
-                                        <button type="button" class="btn duplicate-tag"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                        {{ form_widget(tagsActionForm.edit, {
-                                            'icon': 'far fa-edit',
-                                            'label': 'Modifier',
-                                            'attr':{'class': 'btn modified-tag' }
-                                        }) }}
-                                        {{ form_widget(tagsActionForm.delete, {
-                                            'icon': 'fas fa-trash',
-                                            'label': 'Supprimer',
-                                            'attr':{'class': 'btn delete-tabl' }
-                                        }) }}
+                                        <button type="button" class="btn duplicate-tag"><i class="fas fa-plus"></i>Dupliquer</button>
+                                        <button class="btn modified-tag" ><i class="fas fa-edit"></i>Mofifier</button>
+                                        <button class="btn delete-tag-popup" ><i class="fas fa-plus"></i>Supprimer</button>
+                                        
                                     </div>
                                 </div>
                             </article>
@@ -92,10 +85,60 @@
                             </table>
                         </article>
 
+                        <article class="add-popup add-popup-delete ">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">Configuration de la suppreession</p>
+                                    <button type="button" class="btn btn-popupclose2 ">X</button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-popupclose2">NON</button>
+                                    {{ form_widget(tagsActionForm.delete, {
+                                        'label': 'OUI',
+                                        'attr':{'class': 'btn delete-tag' }
+                                    }) }}
+                                    {# {{ form_widget(tagsActionForm.delete, {
+                                        'icon': 'fas fa-trash',
+                                        'label': 'oui',
+                                        'attr':{'class': 'btn delete-tabl' }
+                                    }) }} #}
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="add-popup add-popup-edit ">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">modification</p>
+                                    <button type="button" class="btn btn-popupclose2 ">X</button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>voulez vous modifier ?</p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-popupclose2">NON</button>
+                                    {# {{ form_widget(tagsActionForm.edit, {
+                                            'icon': 'far fa-edit',
+                                            'label': 'Modifier',
+                                            'attr':{'class': 'btn modified-tag' }
+                                        }) }} #}
+                                        {{ form_widget(tagsActionForm.edit, {
+                                            'label': 'OUI',
+                                            'attr':{'class': 'btn' }
+                                        }) }}
+                                </div>
+                            </div>
+                        </article>
+
                         {{ form_end( tagsActionForm ) }}
                     </div>
                 </section>
             {% endblock %}
+
+            
                 
         </div>
     </main>

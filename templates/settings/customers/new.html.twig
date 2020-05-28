@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('enseigne') }}
+    {{ encore_entry_link_tags('customer') }}
 {% endblock %}
 
 {% block body %}
@@ -25,7 +25,7 @@
 
             <section class="wrapper_tabcontent">
 
-                <div id="setting-enseigne" class="tab-content current enseigne">
+                <div id="setting-enseigne" class="tab-content current customer">
 
                     <article class="tab-content-title">
                         <h3 class="title">Créer une Enseigne</h3>
@@ -43,7 +43,7 @@
                         </div>
                     </article> 
 
-                    <article class="content-enseigne"> 
+                    <article class="content-create-customer"> 
                          {% set errors = app.session.flashbag.get('error') %}
 
                         {# {{ dump(errors) }} #}

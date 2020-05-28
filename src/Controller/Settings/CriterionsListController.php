@@ -48,8 +48,13 @@ class CriterionsListController extends AbstractController
         $criterionList->addCriterion( new Criterion() );
         $criterionList->addCriterion( new Criterion() );
 
-        $form = $this->createForm(CriterionsListType::class, $criterionList);
+        $form = $this->createForm(CriterionsListType::class, $criterionList);     
 
+        $criterionListFormView = $form->createView();
+        foreach($criterionListFormView->children["criterions"]->children as $index => $criterionForm ){
+            $criterionForm->vars["label"]= "choix n°".($index + 1 );
+        }
+        
 
         $form->handleRequest($request);
 
@@ -70,7 +75,7 @@ class CriterionsListController extends AbstractController
 
         return $this->render('settings/criterions_lists/new.html.twig', [
             'criterions_list' => $criterionList,
-            'form' => $form->createView(),
+            'form' => $criterionListFormView,
         ]);
     }
 

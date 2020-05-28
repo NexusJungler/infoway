@@ -45,17 +45,17 @@ Encore
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
     
-    //settings
-    //Enseigne
-    .addEntry('enseigne', './assets/js/settings/enseigne.js')
-    // TAGS
+    /********* Settings *********/
+    /** Customer **/
+    .addEntry('customer', './assets/js/settings/customer.js')
+    /** Tags **/
     .addEntry('tags', './assets/js/tags.js')
+    /** criterion **/
     .addEntry('criterion', './assets/js/criterion.js')
+    /** User **/
     .addEntry('settings-user', './assets/js/settings/settings_user.js')
 
-    // .addEntry('criterion', './assets/js/settings/criterion.js')
-
-    // Product
+    /********* Product *********/
     .addEntry('product', './assets/js/product.js')
     .addEntry('product_price', './assets/js/product/product_price.js')
     .addEntry('date', './assets/js/date.js')

@@ -1,0 +1,38 @@
+/** Function for converting  px to rem **/
+@function rem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+
+
+.customer{
+    margin-left: 2.5%;
+    .content-create-customer{
+        margin-top: 40px;
+    }
+    .content-form-customer{
+        width: 740px;
+        max-width: 100%;
+        height: 185px;
+        border: 1px solid #899CA4;
+        padding: 10px;
+        .content-left{
+            width: 70%;
+        }
+        .content-right{
+            width: 30%;
+        }
+    }
+    .content-contact{
+        margin-top: rem(40px);
+    }
+
+    .content-form-contact{
+        
+        width: 740px;
+        max-width: 100%;
+        border: 1px solid #899CA4;
+        padding: 10px;
+    }
+}

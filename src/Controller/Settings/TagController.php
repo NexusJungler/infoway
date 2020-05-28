@@ -81,8 +81,8 @@ class TagController extends AbstractController
         $currentCustomer = $session->get('current_customer') ;
         $currentUser = $session->get('user') ;
 
-        $tagExemple = new Tag() ;
-        $tagsList->addTag( $tagExemple ) ;
+        // $tagExemple = new Tag() ;
+        // $tagsList->addTag( $tagExemple ) ;
         if( ! $currentCustomer instanceof Customer ) throw new \Error('invalid Customer') ;
         if( ! $currentUser instanceof User ) throw new \Error('invalid User') ;
 
@@ -189,13 +189,13 @@ class TagController extends AbstractController
         $addProductActionView = $addProductForm->createView();
 
         foreach($addProductActionView->children[ 'products' ]->vars[ 'choices' ] as $index => $choice ){
-            $currentSite = $choice->data ;
-            $addProductActionView->children['products']->children[ $index ]->vars['data'] = $currentSite ;
-            $addProductActionView->children['products']->children[ $index ]->vars['id'] = 'add_product_products_' . $currentSite->getId();
+            $currentProduct = $choice->data ;
+            $addProductActionView->children['products']->children[ $index ]->vars['data'] = $currentProduct ;
+            $addProductActionView->children['products']->children[ $index ]->vars['id'] = 'add_product_products_' . $currentProduct->getId();
         }
 
         foreach($tagFormView->children[ 'products' ]->vars[ 'data' ] as $index => $product ){
-            $tagFormView->children['products']->children[ $product->getId()  ]->vars['data'] = $site ;
+            $tagFormView->children['products']->children[ $product->getId()  ]->vars['data'] = $product ;
         }
 
 

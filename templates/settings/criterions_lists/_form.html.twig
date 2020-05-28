@@ -29,7 +29,7 @@
                         <div id="criterions_list_criterions_0">
                             <div class="selected">
                                 {{ form_label(criterion.selected   ) }}
-                                {{ form_widget(criterion.selected ) }}
+                                {{ form_widget(criterion.selected, {'attr': {'label' :'choix n°'~loop.index , }} ) }}
                                 {# <label class="container-input">
                                     {{ form_widget(criterion.selected, {'attr': {'checked': 'true'}}) }}
                                     <span class="container-rdo"></span>
@@ -37,7 +37,7 @@
                                 
                             </div>
                             <div>
-                                {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' '}})  }}
+                                {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' ', }})  }}
                             </div>
                             <div class="form-desc">
                                 {{ form_widget(criterion.description, {'attr': {'class': 'input-custome-desc',' placeholder' : 'Type de produits par conviction religieuse'}}) }}

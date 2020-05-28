@@ -67,7 +67,7 @@ class CriterionsListHandlerService
        else {
 
            $error = new MinimumCriterionsInListNonReachedError( $this->_minimumCriterionsInlist ) ;
-           $this->_flashBagHandler->getFlashBag()->set('error',$error->errorToArray() ) ;
+           $this->_flashBagHandler->addErrorInFlashbag($error) ;
 
            return false ;
        }

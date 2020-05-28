@@ -11,12 +11,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CriterionInListType extends AbstractType
-{
+{   
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('selected',CheckboxType::class,[
-                'label' => 'choix n°__name__',
                 'attr'=> [
                     'class' => 'checkbox-criterion'
                 ],

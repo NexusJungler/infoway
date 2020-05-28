@@ -32,15 +32,13 @@
                 <tbody class="tbody tbody-content scrollbar-table">
                     {% for product in form.products %}
 
-                        {# {%  set currentProduits = product.vars.data  %}
-                        <tr class="tag__produits__produit{% if currentProduits not in tag.sites %} hidden{% endif %}"> #}
-                        
-                        <tr>
+                        {%  set currentProduct = product.vars.data  %}
+                        <tr class="tag__products__product{% if currentProduct not in tag.products %} hidden{% endif %}">
                             <td class="">
                                 <img src="{{ asset('/build/images/no-available-image.png') }}" alt="Factory & cO">
                             </td>
                             <td>
-                            <label class="container-input">
+                                <label class="container-input">
                                     {{ form_widget(product, {'attr': {'class': ''} }) }}
                                     {{  form_label(product) }}
                                     <span class="container-rdo"></span>
@@ -116,7 +114,7 @@
 
     <div class="btn-tag-enregistrer">
         <a href="{{ path('tags_index') }}" class="btn btn-back-tags">Annuler</a> 
-        <button type="button" class="btn">{{ button_label|default('Enregistrer') }}</button>
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
     </div>
 
 {{ form_end(form) }}
@@ -146,7 +144,7 @@
                             <td class="">
                                 {{ form_row(site, {'attr': {
                                     'checked' : currentSite in tag.sites ,
-                                    'id' : 'add_site_sites_tryrt' ~ site.vars.value
+                                    'id' : 'add_site_sites_tr' ~ site.vars.value
                                 } }) }}
                             </td>
                         </tr>
@@ -175,7 +173,7 @@
         </div>
 
         <div class="popup-site table" >
-            {# {{ form_start( addSiteForm ) }} #}
+            {{ form_start( addProductForm ) }}
             <table class="table-site-custome table-custome">
                 <thead class="table-info thead-info">
                     <tr>
@@ -183,20 +181,20 @@
                     </tr>
                 </thead>
                 <tbody class="tbody tbody-content scrollbar-table">
-                    {# {% for site in addSiteForm.sites %}
-                        {%  set currentSite =  site.vars.data %} #}
-                        {# <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}"> #}
+                    {% for product in addProductForm.products %}
+                        {%  set currentProduct =  product.vars.data %}
+                        <tr class="popup__add-product__products{% if currentProduct in tag.products %} hidden{% endif %}">
                             <td class="">
-                                {# {{ form_row(site, {'attr': {
-                                    'checked' : currentSite in tag.sites ,
-                                    'id' : 'add_site_sites_tryrt' ~ site.vars.value
-                                } }) }} #}
+                                {{ form_row(product, {'attr': {
+                                    'checked' : currentProduct in tag.Products ,
+                                    'id' : 'add_product_products_tr' ~ product.vars.value
+                                } }) }}
                             </td>
                         </tr>
-                    {# {% endfor %} #}
+                    {% endfor %}
                 </tbody>
             </table>
-            {# {{ form_end( addSiteForm ) }} #}
+            {{ form_end( addProductForm ) }}
         </div>
 
         <div>

@@ -1,8 +1,8 @@
 {{ form_start(form) }}
 {# {{dump(form)}} #}
-    <div class="content-import-enseigne">
 
-        <div class="">
+    <div class="content-form-customer">
+        <div class="content-left">
             <div class="row">
                 <label class="form-label " for="customer_name">Nom de l'enseigne</label>
                 {{ form_widget(form.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway',}}) }}
@@ -12,18 +12,23 @@
                 {{ form_widget(form.logo) }}
             </div>
         </div>
-        <div>
+        <div class="content-right">
+            <img></img>
+
         </div>
     </div>
 
-    <div class="">
-        {% for contact in form.contact  %}  
-            {# {{dump(contact)}} #}
-            {{ form_row(contact, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway',}}) }}
-                                        
-        {% endfor %}
-    
-        {# {{ form_widget(form) }} #}
+   
+
+    <div class="content-contact">
+        <h2>Contact<H2>
+        <div class="content-form-contact">
+            {% for contact in form.contact  %}  
+                {# {{dump(contact)}} #}
+                {{ form_row(contact, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway',}}) }}                    
+            {% endfor %}
+        </div>
+        
     </div>
     
     <button class="btn">{{ button_label|default('Save') }}</button>

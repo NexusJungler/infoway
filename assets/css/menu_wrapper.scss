@@ -75,6 +75,7 @@
             .current{
                 background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
                 border-bottom: 0;
+                z-index: 2;
                 // z-index: 5;
                 &::after{
                     content: '';

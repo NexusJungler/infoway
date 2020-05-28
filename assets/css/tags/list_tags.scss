@@ -170,6 +170,42 @@
     }
 }
 
+.main-tags{
+    .add-popup{
+        background: transparent;
+        .modal {
+            margin: 0 auto;
+            margin-top: 10%;
+            position: relative;
+            border: 1px solid #4D646D;
+            padding: 0px;
+            width: 45%;
+            height: 25%;
+            background-color: #ddd;
+            color: #231D23;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+        }
+        .header-modal{
+            background: #4D646D 0% 0% no-repeat padding-box;
+            display: flex;
+            padding:8px;
+            color: white;
+            .btn{
+                margin-top: 5px;
+                position: absolute;
+                background: #FF4040;
+                right: 8px;
+            }
+        }
+        .btn{
+            margin-top: 10px;
+        }
+
+    }
+}
+
 
 /* MEDIA QUERY */
 
