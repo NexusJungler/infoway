@@ -95,7 +95,7 @@ class MediaRepository extends ServiceEntityRepository
 
                 $query = $this->_em->createQuery($dql)
                                    ->setFirstResult(0)
-                                   ->setMaxResults(2);
+                                   ->setMaxResults(15);
 
 
                 /*$medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
