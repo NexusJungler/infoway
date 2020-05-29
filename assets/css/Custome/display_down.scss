@@ -172,6 +172,15 @@
                         flex-direction: row;
                         width: 70%;
                         justify-content: space-around;
+
+                        .filter-validation-btn-container {
+
+                            .filter-validation-btn{
+                                text-transform: uppercase;
+                            }
+
+                        }
+
                     }
 
                 }

@@ -8,5 +8,6 @@ toolBox.activeTool("MediaProductAssociationHandlerTool")
 ;
 
 toolBox.getTool("FilterMediasTool").activeSubTool("FilterMediasByTypeSubTool")
-    //.activeTool("FilterMediasByOrientation")
+                                          //.activeTool("FilterMediasByOrientation")
+                                            .activeSubTool("FilterMediasByCharacteristicsSubTool")
 ;

@@ -1,5 +1,12 @@
 import Tool from "../Tool";
 import FilterMediasByTypeSubTool from "./FilterMediasByTypeSubTool/FilterMediasByTypeSubTool";
+import FilterMediasByOrientationSubTool from "./FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool";
+import FilterMediasByCategorySubTool from "./FilterMediasByCategorySubTool/FilterMediasByCategorySubTool";
+import FilterMediasByProductSubTool from "./FilterMediasByProductSubTool/FilterMediasByProductSubTool";
+import FilterMediasByCriterionSubTool from "./FilterMediasByCriterionSubTool/FilterMediasByCriterionSubTool";
+import FilterMediasByTagSubTool from "./FilterMediasByTagSubTool/FilterMediasByTagSubTool";
+import FilterMediasByCharacteristicsSubTool
+    from "./FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool";
 
 class FilterMediasTool extends Tool
 {
@@ -9,7 +16,9 @@ class FilterMediasTool extends Tool
         super();
         this.__name = this.constructor.name;
         this.__subTools = [
-            new FilterMediasByTypeSubTool()
+            new FilterMediasByTypeSubTool(),
+            new FilterMediasByOrientationSubTool(),
+            new FilterMediasByCharacteristicsSubTool(),
         ]
     }
 
