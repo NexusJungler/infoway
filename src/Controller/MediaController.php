@@ -73,11 +73,11 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}", name="media::showMediatheque", methods={"GET", "POST"},
-     * requirements={"mediasDisplayedType": "[a-z_]+"})
+     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
+     * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType)
+    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
     {
 
         $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
@@ -96,6 +96,8 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
+        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') ?? 15;
+
         if($mediasDisplayedType === "template")
         {
             die("TODO: get all templates");
@@ -107,8 +109,13 @@ class MediaController extends AbstractController
         }
 
         else
-            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType);
-dump($mediasToDisplayed);
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType, $page, $numberOfMediasDisplayedInMediatheque);
+
+        $numberOfPages = intval( ceil($mediasToDisplayed['size'] / $numberOfMediasDisplayedInMediatheque) );
+        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
+
+        dump($mediasToDisplayed, $mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
+
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
@@ -143,6 +150,8 @@ dump($mediasToDisplayed);
             'form' => $form->createView(),
             'mediasWaitingForIncrustes' => $mediasWaitingForIncrustes,
             'mediasToDisplayed' => $mediasToDisplayed,
+            'numberOfPages' => $numberOfPages,
+            'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
             'archivedMedias' => $allArchivedMedias,
         ]);
 
@@ -227,6 +236,7 @@ dump($mediasToDisplayed);
                 'mediaTags' => [],
                 'mediaContainIncruste' => false,
                 'mimeType' => $mediaType,
+                'isArchived' => false,
             ];
 
             // don't duplicate code !!
@@ -289,6 +299,7 @@ dump($mediasToDisplayed);
                   ->setExtension($real_file_extension)
                   ->setMimeType($mediaType)
                   ->setContainIncruste(false)
+                  ->setIsArchived(false)
                   ->setType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
@@ -305,6 +316,7 @@ dump($mediasToDisplayed);
                 'extension' => $real_file_extension,
                 'media' => $media,
                 'mediaContainIncruste' => false,
+                'isArchived' => false,
             ];
 
             list($width, $height, $codec) = $mediasHandler->getVideoDimensions($path);

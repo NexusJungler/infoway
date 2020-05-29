@@ -281,9 +281,11 @@ class UploadHandlerTool extends Tool
             newUploadFileItem.appendTo( $(`.upload-file-list`) );
 
             if(fileIsAccepted)
+            {
                 this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, file: item} );
-
-            console.log(this.__filesToUpload); //debugger
+                console.log("new element added in upload list")
+                console.log(this.__filesToUpload); //debugger
+            }
 
             if($(".upload-file-list tr.valid_upload_item").length > this.__total_files_allowed)
             {
@@ -397,16 +399,19 @@ class UploadHandlerTool extends Tool
         {
             $(".upload-info table tbody").on("click.onClickOnRemoveFileButtonRemoveFileFromList", ".remove_file_from_list", e => {
 
-                // remove element from list
-                $(`.upload-info table tbody tr[data-file="${ $(e.currentTarget).data('target') }"]`).remove();
-
-                // remove element from array
                 const index = this.__filesToUpload.findIndex( fileToUpload => fileToUpload.name === $(e.currentTarget).data('target') );
 
-                this.__filesToUpload.splice( index, 1 );
+                $(`.upload-info table tbody tr[data-file="${ $(e.currentTarget).data('target') }"]`).remove();
 
-                if( $(".upload-info table tbody tr").length < 1 )
-                    $(".model-upload-file .start_upload_button").fadeOut();
+                if(index !== -1)
+                {
+                    this.__filesToUpload.splice( index, 1 );
+                    console.log("upload element removed !");
+                    console.log(this.__filesToUpload.length);
+
+                    if( $(".upload-info table tbody tr").length < 1 )
+                        $(".model-upload-file .start_upload_button").fadeOut();
+                }
 
             })
         }
@@ -671,11 +676,12 @@ class UploadHandlerTool extends Tool
                     $(".files_selection table tbody").empty();
                     $(".upload-title").text("Médias à caractériser");
                     //$(".modal-upload-download").fadeIn();
-                    let ajax = null;
 
+                    //console.log(this.__filesToUpload.length); debugger
                     // for each file in upload list
                     $.each( this.__filesToUpload, (index, fileToUpload) => {
 
+                        //console.log("ajax"); debugger
 
                         const uploadState = $(`.edit_media_info .tbody #upload_${fileToUpload.index} .upload_state`);
                         uploadState.html("Téléchargement en cours ...");
@@ -687,7 +693,7 @@ class UploadHandlerTool extends Tool
                         const fileName = fileToUpload.file.name.replace( '.' + fileExtension , '');
 
 
-                        ajax = $.ajax({
+                        $.ajax({
                             url: "/upload/media",
                             type: "POST",
                             data: formData,

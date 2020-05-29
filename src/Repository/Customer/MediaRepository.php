@@ -71,7 +71,7 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
-    public function getMediaInByTypeForMediatheque(string $type)
+    public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15)
     {
 
         // @TODO: pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
@@ -93,11 +93,6 @@ class MediaRepository extends ServiceEntityRepository
                         
                         ORDER BY m.id ASC";
 
-                $query = $this->_em->createQuery($dql)
-                                   ->setFirstResult(0)
-                                   ->setMaxResults(15);
-
-
                 /*$medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
                                                           ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
                                                           ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
@@ -107,13 +102,14 @@ class MediaRepository extends ServiceEntityRepository
                                                           ->getQuery()
                                                           ->getResult();*/
 
-                $medias = new Paginator($query, $fetchJoinCollection = true);
+                $medias = $this->paginate($dql, $currentPage, $limit);;
 
-                //$c = count($medias);
+                $orderedMedias['size'] = sizeof($medias);
 
-                foreach ($medias as $media)
+                // sert pour choisir le nombre d emedia à afficher sur la page
+                for($i = 5; $i <= $orderedMedias['size']+5; $i+=5)
                 {
-                    dump($media);
+                    $orderedMedias['numberOfMediasAllowedToDisplayed'][] = $i;
                 }
 
                 foreach ($medias as $media)
@@ -147,6 +143,23 @@ class MediaRepository extends ServiceEntityRepository
         }
 
         return $orderedMedias;
+
+    }
+
+    /**
+     * @param string $query
+     * @param int $page
+     * @param int $limit
+     * @return Paginator
+     */
+    private function paginate(string $query, int $page = 1, int $limit = 15)
+    {
+
+        $query = $this->_em->createQuery($query)
+                           ->setFirstResult($limit * ($page - 1))
+                           ->setMaxResults($limit);
+
+        return new Paginator($query, $fetchJoinCollection = true);
 
     }
 

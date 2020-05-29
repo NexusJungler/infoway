@@ -177,6 +177,19 @@
                     display: flex;
                     flex-direction: column;
                     align-items: flex-end;
+
+                    .pagination-container{
+                        display: flex;
+                        flex-direction: row;
+
+                        .pages-container {
+                            .page.current{
+                                color: #4F9BAE;
+                            }
+                        }
+
+                    }
+
                 }
 
             }

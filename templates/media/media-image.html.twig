@@ -148,9 +148,21 @@
                                 </div>
 
                                 <div class="pagination-container">
-                                    <select name="" id="choice-displayed-elements-number">
-                                        <option value="">15</option>
-                                    </select>
+
+                                    <div class="displayed-elements-number-selection-container">
+                                        <select name="" id="displayed-elements-number-selection">
+                                            {% for choice in numberOfMediasAllowedToDisplayed %}
+                                                <option value="{{ choice }}" {% if loop.first %} selected {% endif %}>{{ choice }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="pages-container">
+                                        {% for i in 1..numberOfPages %}
+                                            <a class="page {% if app.request.attributes.get('_route_params')['page']|string_to_int is same as(i) %}current{% endif %}" href="{{ path('media::showMediatheque', {mediasDisplayedType: app.request.attributes.get('_route_params')['mediasDisplayedType'], page: i}) }}">{{ i }}</a>
+                                        {% endfor %}
+                                    </div>
+
                                 </div>
 
                             </div>

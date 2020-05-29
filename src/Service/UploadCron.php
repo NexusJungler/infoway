@@ -65,6 +65,8 @@ class UploadCron
 
     private $mediaMimeType;
 
+    private $mediaIsArchived;
+
     /**
      * UploadCron constructor.
      *
@@ -83,6 +85,7 @@ class UploadCron
         $this->mediaTags = $taskInfo['mediaTags'];
         $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'];
         $this->mediaMimeType = $taskInfo['mimeType'];
+        $this->mediaIsArchived = $taskInfo['isArchived'];
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -910,6 +913,7 @@ class UploadCron
                         $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
                             ->setType($this->mediatype)
                             ->setMimeType($this->mediaMimeType)
+                            ->setIsArchived($this->mediaIsArchived)
                             ->setCreatedAt(new DateTime())
                             ->setDiffusionStart($this->fileDiffusionStart)
                             ->setDiffusionEnd($this->fileDiffusionEnd)
@@ -997,7 +1001,8 @@ class UploadCron
                 $ratio = $this->EstablishFormat($width, $height);
                 $newImg->setName($this->filename)
                        ->setType($this->mediatype)
-                        ->setMimeType($this->mediaMimeType)
+                       ->setMimeType($this->mediaMimeType)
+                       ->setIsArchived($this->mediaIsArchived)
                        ->setRatio($ratio)
                        ->setContainIncruste($this->mediaContainIncruste)
                        ->setExtension($this->extension)
