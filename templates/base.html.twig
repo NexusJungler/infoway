@@ -11,6 +11,8 @@
             <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
             <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
             <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
+            <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
+
             {{ encore_entry_link_tags('app') }}
         {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
@@ -230,6 +232,10 @@
         {% endblock %}
 
         {% block javascripts %}
+            <script src="vendor/select2/dist/js/select2.min.js"></script>
+            <script>
+                $(".ManyToMany select").select2();
+            </script>
             {{ encore_entry_script_tags('app') }}
         {#{{ encore_entry_script_tags('modal_message') }}#}
         {% endblock javascripts %}

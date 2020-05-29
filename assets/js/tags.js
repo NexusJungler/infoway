@@ -7,71 +7,103 @@ import "../css/tags/edit_tags.scss";
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-/** Btn Modifaction tags **/
-$(".modified-tag").prop('disabled', true)
+/** page list tags**/
+let nameTags = [];
+
+// btn modification
 $(".modified-tag").addClass("hide-btn");
 
 $(".content-tags .tags-poster .chkbox-tag").change( function(){
-    let nb_input = $(".tags-poster input[type='checkbox']:checked").length;
-    $(".modified-tag").removeClass("hide-btn");
+    let nb_input_tags = $(".tags-poster input[type='checkbox']:checked").length;
     
-    if( nb_input > 1 || nb_input < 1 ){
-        $(".modified-tag").prop('disabled', true)
-        $(".modified-tag").addClass("hide-btn");
+    /** Btn Modifaction tags **/
 
-        $('.modified-tag').click(function () {
-            $('.add-popup-edit').addClass('is-open');
-            return false;
-          });
-
-    }else{
+    if(  nb_input_tags === 1 ){
         $(".modified-tag").prop('disabled', false)
         $(".modified-tag").removeClass("hide-btn");
+    }else{
+        $(".modified-tag").prop('disabled', true)
+        $(".modified-tag").addClass("hide-btn");
     }
+
 })
 
-$('.btn-popupclose2').click(function () {
-    $('.add-popup-delete').removeClass('is-open');
-});
-
-/** Btn delete tags **/
-
-$(".delete-tag-popup").prop('disabled', true)
-// $(".delete-tag-popup").addClass("hide-btn");
+//btn delete
+$(".delete-tag-popup").addClass("hide-btn");
 
 $(".content-tags .tags-poster .chkbox-tag").change( function(){
     let nb_input = $(".tags-poster input[type='checkbox']:checked").length;
-
-    if( nb_input == 1 || nb_input > 1 ){
+    
+    /** Btn delete tags **/
+    if( nb_input > 0 ){
         $(".delete-tag-popup").prop('disabled', false)
+        $(".delete-tag-popup").removeClass("hide-btn");
+        
 
-        $('.delete-tag-popup').click(function () {
-            $('.add-popup-delete').addClass('is-open');
-            return false;
-          });
     }else{
         $(".delete-tag-popup").prop('disabled', true)
+        $(".delete-tag-popup").addClass("hide-btn");
 
     }
 })
 
-$('.btn-popupclose2').click(function () {
-    $('.add-popup-delete').removeClass('is-open');
+// popup modification
+$('.modified-tag').click(function () {
+    $('.add-popup-edit').addClass('is-open');
+
+    $.each($(".tags-poster input[type='checkbox']:checked"), (index, input) => {
+        let selectedTagName = $(input).parents("td").find(".current-tags-name").text();
+        if(nameTags.indexOf(selectedTagName) === -1){
+            nameTags.push(selectedTagName);
+        }
+    });
+    
+    nameTags.forEach(nameTag =>{
+        if($(`.content-modal .selected-tags-list p[text="${nameTag}"]`).length === 0 ){
+            $("<p>" + nameTag + "</p>").appendTo($(".content-modal .selected-tags-list"));
+        }
+    });
+    return false;
+});
+
+$('.btn-popupclose').click( () => {
+    $('.add-popup-edit').removeClass('is-open');
+    $(".content-modal .selected-tags-list ").empty();
+    nameTags=[];
 });
 
 
+// popup delete
+$('.delete-tag-popup').click(function () {
+    $('.add-popup-delete').addClass('is-open');
 
+    $.each($(".tags-poster input[type='checkbox']:checked"), (index, input) => {
+        let selectedTagName = $(input).parents("td").find(".current-tags-name").text();
+        if(nameTags.indexOf(selectedTagName) === -1){
+            nameTags.push(selectedTagName);
+        }
+    });
+
+    nameTags.forEach(nameTag =>{
+        if($(`.content-modal .selected-tags-list p[text="${nameTag}"]`).length === 0 ){
+            $("<p>" + nameTag + "</p>").appendTo($(".content-modal .selected-tags-list"));
+        }
+    });
+    return false;
+});
+
+$('.btn-popupclose').click( () => {
+    $('.add-popup-delete').removeClass('is-open');
+    $(".content-modal .selected-tags-list ").empty();
+    nameTags=[];
+});
+
+// recupere les couleur et afficher sur les tags
 $("ul.tags_list").on('change', ".tags-color" , function(e){
     $(this).parents('ul.tags_list li ').find( '.color_input' ).css("background-color",this.value);
 })
 
-//page edit tags
-var val = $('.tags-color-edit').attr("value");
-$('.input-color-edit').css("background-color", val);
-
-$(".tags-color-edit").on('change', function(e){
-    $('.input-color-edit').css("background-color",this.value);
-})
+/** page create tags**/
 
 // popup site
 
@@ -80,7 +112,7 @@ $('.btn-site').click(function () {
     return false;
   });
 
-$('.btn-popupclose2').click(function () {
+$('.btn-popupclose').click(function () {
     $('.add-popup-site').removeClass('is-open');
 });
 
@@ -122,7 +154,7 @@ addTagBtn.on('click', e =>{
 
     let $tagNameInput = $('#tag_list_tagToCreate_name') ;
     newElem.find('input.tags-name').val( $tagNameInput.val() );
-
+    
     let $tagDescriptionInput  = $('#tag_list_tagToCreate_description')
     newElem.find('input.tags-desc').val( $tagDescriptionInput.val() );
 
@@ -133,8 +165,24 @@ addTagBtn.on('click', e =>{
 
 })
 
+addTagBtn.of("click", e =>{
+
+    if ($("#tag_list_tagToCreate_name") === "TEXT") {
+        $("#tag_list_tagToCreate_name").value('');
+    }
+    
+})
+
+
 // page edit tags
 
+
+var val = $('.tags-color-edit').attr("value");
+$('.input-color-edit').css("background-color", val);
+
+$(".tags-color-edit").on('change', function(e){
+    $('.input-color-edit').css("background-color",this.value);
+})
 
 // popop site 
 $('.tag__sites__site input[type="checkbox"]').on('change', function(){
@@ -239,6 +287,7 @@ $('.popup__add-product__products input[type="checkbox"]').on('change' , function
     // console.log( $tagSitesCorrespondingCheckbox )
 
 })
+
 
 
 

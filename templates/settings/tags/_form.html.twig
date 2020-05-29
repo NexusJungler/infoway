@@ -16,7 +16,7 @@
         </div>
 
         <ul class="tags tags_list row " data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}">
-            {% for tag in form.tags %}
+            {# {% for tag in form.tags %}
                 <li>
                     <div>
                         <div>{{ form_widget(tag.color, {'attr': {'class': 'tags-color'} }) }}</div>
@@ -27,7 +27,7 @@
                         <div>{{ form_widget(tag.description, {'attr': {'class': 'tags-desc', required: 'required'} }) }}</div>
                     </div>
                 </li>                         
-            {% endfor %}
+            {% endfor %} #}
         </ul>
     </article>
 
