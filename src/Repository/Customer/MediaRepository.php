@@ -4,6 +4,7 @@ namespace App\Repository\Customer;
 
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
+use App\Entity\Customer\Product;
 use App\Entity\Customer\Video;
 use App\Repository\MainRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -74,7 +75,7 @@ class MediaRepository extends ServiceEntityRepository
     public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15, string $orderByCreatedDate = 'DESC')
     {
 
-        // @TODO: pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
+        // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
 
         switch ($type)
         {
@@ -112,14 +113,24 @@ class MediaRepository extends ServiceEntityRepository
                     $orderedMedias['numberOfMediasAllowedToDisplayed'][] = $i;
                 }
 
-                foreach ($medias as $media)
+                foreach ($medias as $index => $media)
                 {
 
-                    if($media instanceof Image)
-                        $orderedMedias['images'][] = $media;
+                    $key = ($media instanceof Image) ? 'images' : 'videos';
 
-                    else
-                        $orderedMedias['videos'][] = $media;
+                    $orderedMedias[$key][$index] = [
+                        'media' => $media,
+                        'media_products' => [],
+                        'media_categories' => [],
+                    ];
+
+                    foreach ($media->getProducts()->getValues() as $product)
+                    {
+                        $orderedMedias[$key][$index]['media_products'][] = $product->getId();
+
+                        if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias[$key][$index]['media_categories']))
+                            $orderedMedias[$key][$index]['media_categories'][] = $product->getCategory()->getId();
+                    }
 
                 }
 
@@ -147,6 +158,10 @@ class MediaRepository extends ServiceEntityRepository
         return $orderedMedias;
 
     }
+
+
+
+
 
     /**
      * @param string $query

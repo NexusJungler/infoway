@@ -96,7 +96,10 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') ?? 15;
+        if($this->sessionManager->get('numberOfMediasDisplayedInMediatheque') === null)
+            $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', 15);
+
+        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
 
         if($mediasDisplayedType === "template")
         {
@@ -235,7 +238,7 @@ class MediaController extends AbstractController
                 'mediaProducts' => [],
                 'mediaTags' => [],
                 'mediaContainIncruste' => false,
-                'mimeType' => $mediaType,
+                'mimeType' => $mimeType,
                 'isArchived' => false,
             ];
 
@@ -297,7 +300,7 @@ class MediaController extends AbstractController
 
             $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
                   ->setExtension($real_file_extension)
-                  ->setMimeType($mediaType)
+                  ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
                   ->setType($mediaType);

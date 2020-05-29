@@ -135,7 +135,7 @@
                 display: flex;
                 flex-direction: row;
                 width: 100%;
-                
+
                 .filter {
                     cursor: pointer;
                 }
@@ -157,6 +157,10 @@
                         i{
                             font-size: 30px;
                             color: #00B8F5;
+                        }
+
+                        .filter-media-by-type.active {
+                            border: 3px solid #00B8F5;;
                         }
 
                     }
@@ -222,6 +226,10 @@
 
                     &:hover{
                         background-color: #B1C1C8;
+                    }
+
+                    &.hidden{
+                        display: none;
                     }
 
                     .card-header{

@@ -1,6 +1,18 @@
-{% for index, media in subject %}
+{% for index, mediaInfos in subject %}
 
-    <div class="card" data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}">
+    <div class="card" data-created_date="{{ mediaInfos['media'].createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}"
+
+            {% if (mediaInfos['media_products'] is not empty) %}
+                data-products="{{ mediaInfos['media_products']|join(', ') }}"
+            {% else %}
+                data-products="0"
+            {% endif %}
+
+            {% if (mediaInfos['media_categories'] is not empty) %}
+                data-category="{{ mediaInfos['media_categories']|join(', ') }}"
+            {% else %}
+                data-category="0"
+            {% endif %} >
 
         <div class="card-header">
             <div class="select-media-input-container">
@@ -8,7 +20,7 @@
             </div>
 
             <div class="media-actions-shorcuts-container">
-                <div class="shorcut shorcut-diff-date-modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date-coming-soon{% endif %}">
+                <div class="shorcut shorcut-diff-date-modification {% if mediaInfos['media'].diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date-coming-soon{% endif %}">
                     <i class="far fa-clock"></i>
                 </div>
 
@@ -33,15 +45,15 @@
 
                 {% if media_type is same as('image') %}
 
-                    <img class="media-miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
+                    <img class="media-miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ mediaInfos['media'].id }}.png"
+                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
 
                 {% endif %}
 
                 {% if media_type is same as('video') %}
 
                     <video class="media-miniature" controls>
-                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ mediaInfos['media'].mimeType }}">
                     </video>
 
                 {% endif %}
@@ -49,16 +61,16 @@
             </div>
 
             <div class="media-name-container">
-                <span>{{ media.name }}</span>
+                <span>{{ mediaInfos['media'].name }}</span>
             </div>
 
             <div class="media-associated-items-container">
 
                 <div class="media-criterions-container associated-item">
 
-                    {% if media.products is not empty %}
+                    {% if mediaInfos['media'].products is not empty %}
 
-                        {% for product in media.products %}
+                        {% for product in mediaInfos['media'].products %}
 
                             {% for criterion in product.criterions %}
 
@@ -78,9 +90,9 @@
 
                 <div class="media-tags-container associated-item">
 
-                    {% if media.tags is not empty %}
+                    {% if mediaInfos['media'].tags is not empty %}
 
-                        {% for tag in media.tags %}
+                        {% for tag in mediaInfos['media'].tags %}
                             <p class="tag"><span></span> {{ tag.name }}</p>
                         {% endfor %}
 
