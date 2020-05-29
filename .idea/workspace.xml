@@ -4,14 +4,18 @@
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox/ToolBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sys_flags.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/sys_flags.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Translator/Translator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/SessionManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SessionManager.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/UploadCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadCron.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -250,7 +254,7 @@
       <workItem from="1590484881370" duration="438000" />
       <workItem from="1590565416668" duration="852000" />
       <workItem from="1590566283657" duration="779000" />
-      <workItem from="1590567192069" duration="62409000" />
+      <workItem from="1590567192069" duration="77400000" />
     </task>
     <servers />
   </component>
@@ -321,6 +325,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="859" y="417" key="com.intellij.database.actions.DdlActions$CreateObject$1/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1590682096702" />
+    <state x="769" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590755470648">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="769" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1590755470648" />
     <state x="509" y="-863" width="1378" height="1066" key="dock-window-1" timestamp="1589200071459">
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>

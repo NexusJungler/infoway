@@ -479,7 +479,20 @@ class MediaController extends AbstractController
         return new Response( $output );
     }
 
+    /**
+     * @Route(path="/update/mediatheque/medias/displayed/number")
+     */
+    public function updateMaxMediasDisplayedNumberInMediatheque(Request $request)
+    {
 
+        $number = $request->request->get('number');
+
+        ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
+            $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
+            $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
+
+        return new Response("200 OK");
+    }
 
     private function saveMediaCharacteristic(Request $request)
     {

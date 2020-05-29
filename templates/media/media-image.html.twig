@@ -141,9 +141,9 @@
                             <div class="right-filter-container">
 
                                 <div class="filter-by-created-date-container">
-                                    <select name="" id="">
-                                        <option value="">Les plus récents d'abord</option>
-                                        <option value="">Les plus anciens d'abord</option>
+                                    <select name="" id="medias-sortable-by-date">
+                                        <option value="desc" selected>Les plus récents d'abord</option>
+                                        <option value="asc">Les plus anciens d'abord</option>
                                     </select>
                                 </div>
 
@@ -152,14 +152,14 @@
                                     <div class="displayed-elements-number-selection-container">
                                         <select name="" id="displayed-elements-number-selection">
                                             {% for choice in numberOfMediasAllowedToDisplayed %}
-                                                <option value="{{ choice }}" {% if loop.first %} selected {% endif %}>{{ choice }}</option>
+                                                <option value="{{ choice }}" {% if choice is same as(app.session.get('numberOfMediasDisplayedInMediatheque')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
 
                                     <div class="pages-container">
                                         {% for i in 1..numberOfPages %}
-                                            <a class="page {% if app.request.attributes.get('_route_params')['page']|string_to_int is same as(i) %}current{% endif %}" href="{{ path('media::showMediatheque', {mediasDisplayedType: app.request.attributes.get('_route_params')['mediasDisplayedType'], page: i}) }}">{{ i }}</a>
+                                            <a class="page {% if app.request.attributes.get('_route_params')['page']|string_to_int is same as(i) %}current_page{% endif %}" href="{{ path('media::showMediatheque', {mediasDisplayedType: app.request.attributes.get('_route_params')['mediasDisplayedType'], page: i}) }}">{{ i }}</a>
                                         {% endfor %}
                                     </div>
 

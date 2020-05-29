@@ -4,6 +4,7 @@ import {ClockManager} from "../../Managers/ClockManager/ClockManager";
 import MediaProductAssociationHandlerTool from "../ProductAssociationHandler/MediaProductAssociationHandlerTool";
 import MediaTagAssociationHandlerTool from "../TagAssociationHandler/MediaTagAssociationHandlerTool";
 import ArchivedMediasHandlerTool from "../ArchivedMediasHandler/ArchivedMediasHandlerTool";
+import PaginatorHandler from "../PaginatorHandler/PaginatorHandler";
 
 class ToolBox
 {
@@ -30,6 +31,7 @@ class ToolBox
             new MediaProductAssociationHandlerTool(),
             new MediaTagAssociationHandlerTool(),
             new ArchivedMediasHandlerTool(),
+            new PaginatorHandler(),
         ];
     }
 

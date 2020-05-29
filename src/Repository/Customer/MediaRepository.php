@@ -71,7 +71,7 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
-    public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15)
+    public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15, string $orderByCreatedDate = 'DESC')
     {
 
         // @TODO: pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
@@ -91,7 +91,7 @@ class MediaRepository extends ServiceEntityRepository
                         WHERE ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
                         OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
                         
-                        ORDER BY m.id ASC";
+                        ORDER BY m.createdAt " . $orderByCreatedDate;
 
                 /*$medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
                                                           ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
@@ -104,7 +104,7 @@ class MediaRepository extends ServiceEntityRepository
 
                 $medias = $this->paginate($dql, $currentPage, $limit);;
 
-                $orderedMedias['size'] = sizeof($medias);
+                $orderedMedias['size'] = $medias->count();
 
                 // sert pour choisir le nombre d emedia à afficher sur la page
                 for($i = 5; $i <= $orderedMedias['size']+5; $i+=5)
@@ -122,6 +122,8 @@ class MediaRepository extends ServiceEntityRepository
                         $orderedMedias['videos'][] = $media;
 
                 }
+
+                //dd($orderedMedias);
 
                 break;
 
@@ -159,7 +161,7 @@ class MediaRepository extends ServiceEntityRepository
                            ->setFirstResult($limit * ($page - 1))
                            ->setMaxResults($limit);
 
-        return new Paginator($query, $fetchJoinCollection = true);
+        return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
 
     }
 

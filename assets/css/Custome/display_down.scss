@@ -183,8 +183,16 @@
                         flex-direction: row;
 
                         .pages-container {
-                            .page.current{
-                                color: #4F9BAE;
+
+                            .page{
+                                color: #000;
+                                text-decoration: underline;
+
+                                &.current_page{
+                                    color: #4F9BAE;
+                                    text-decoration: none;
+                                }
+
                             }
                         }
 
