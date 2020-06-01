@@ -42,7 +42,7 @@
 
                         <tbody class="product-choice-list">
                         {% for product in products %}
-                            <tr data-product_id="{{ product.id }}" data-category="{{ product.category.id }}" data-product_criterions="{{ productsCriterions[product.name] | join(', ') }}">
+                            <tr data-product_id="{{ product.id }}" data-category="{{ product.category.id }}" data-product_criterions="{{ productsCriterions[product.id] | join(', ') }}">
                                 <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
                                 <td class="product_name">{{ product.name }}</td>
                                 <td>{{ product.description }}</td>

@@ -7,47 +7,34 @@ namespace App\Controller;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Category;
-use App\Entity\Customer\Image;
 use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
-use App\Entity\Customer\Synchro;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Form\MediasListType;
 use App\Repository\Admin\CustomerRepository;
 use App\Repository\Admin\FfmpegTasksRepository;
-use App\Repository\Customer\MediaRepository;
-use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
 use App\Service\MediasHandler;
 use App\Service\SessionManager;
 use App\Service\UploadCron;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Exception;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response, Session\SessionInterface};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\Json;
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
+use \Doctrine\Persistence\ObjectManager;
 
 
-class MediaController extends AbstractController
+class MediaController extends AbstractController implements \JsonSerializable
 {
 
     private SerializerInterface $serializer;
@@ -99,25 +86,12 @@ class MediaController extends AbstractController
         if($this->sessionManager->get('numberOfMediasDisplayedInMediatheque') === null)
             $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', 15);
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
+        list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
-        if($mediasDisplayedType === "template")
-        {
-            die("TODO: get all templates");
-        }
+        //$numberOfPages = intval( ceil($mediasToDisplayed['size'] / $numberOfMediasDisplayedInMediatheque) );
+        //$numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
 
-        elseif($mediasDisplayedType === "incruste")
-        {
-            die("TODO: get all incrustes");
-        }
-
-        else
-            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType, $page, $numberOfMediasDisplayedInMediatheque);
-
-        $numberOfPages = intval( ceil($mediasToDisplayed['size'] / $numberOfMediasDisplayedInMediatheque) );
-        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
-
-        dump($mediasToDisplayed, $mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
+        //dump($mediasToDisplayed, $mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
@@ -129,7 +103,7 @@ class MediaController extends AbstractController
             ]
         ]);
 
-        // @TODO: remplacer le formulaire dans lapopup d'upload par le form créer par le formbuilder et laisser symfony gérer la validation (assert)
+        // @TODO: remplacer le formulaire dans la popup d'upload par le form créer par le formbuilder et laisser symfony gérer la validation (assert)
         /*$form->handleRequest($request);
 
         if( $form->isSubmitted() && $form->isValid() )
@@ -482,20 +456,46 @@ class MediaController extends AbstractController
         return new Response( $output );
     }
 
+
     /**
-     * @Route(path="/update/mediatheque/medias/displayed/number")
+     * @Route(path="/get/more/medias/for/mediatheque", name="media::getMoreMediasForMediatheque", methods={"POST"})
+     * @param Request $request
      */
-    public function updateMaxMediasDisplayedNumberInMediatheque(Request $request)
+    public function getMoreMediasForMediatheque(Request $request)
     {
 
-        $number = $request->request->get('number');
+        $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $managerName );
 
-        ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
-            $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
-            $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
+        if($request->request->get('numberOfMediasToDisplay') !== null)
+        {
 
-        return new Response("200 OK");
+            $number = intval($request->request->get('numberOfMediasToDisplay'));
+
+            if(!is_int($number))
+                throw new Exception(sprintf("'numberOfMediasDisplayedInMediatheque' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+            ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
+                $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
+                $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
+
+        }
+
+        list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
+
+        $mediasToDisplayed['customer'] = strtolower($this->sessionManager->get('current_customer')->getName());
+
+        $mediasToDisplayed = $this->serializer->serialize($mediasToDisplayed, 'json');
+
+        return new JsonResponse([
+            'mediasToDisplayed' => $mediasToDisplayed,
+            'numberOfPages' => $numberOfPages,
+            'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
+            'userMediasDisplayedChoice' => $this->sessionManager->get('numberOfMediasDisplayedInMediatheque'),
+        ]);
+
     }
+
 
     private function saveMediaCharacteristic(Request $request)
     {
@@ -662,5 +662,60 @@ class MediaController extends AbstractController
 
         return  'low';
     }
+    
+    private function getMediasForMediatheque(ObjectManager &$manager, Request &$request)
+    {
 
+        $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
+
+        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
+
+        $mediasDisplayedType = $request->get('mediasDisplayedType');
+        $page = intval($request->get('page'));
+
+        if($mediasDisplayedType === "template")
+        {
+            die("TODO: get all templates");
+        }
+
+        elseif($mediasDisplayedType === "video_synchro")
+        {
+            die("TODO: get all video synchro");
+        }
+
+        elseif($mediasDisplayedType === "video_thematic")
+        {
+            die("TODO: get all video thematic");
+        }
+
+        elseif($mediasDisplayedType === "element_graphic")
+        {
+            die("TODO: get all element graphic");
+        }
+
+        elseif($mediasDisplayedType === "incruste")
+        {
+            die("TODO: get all incrustes");
+        }
+
+        else
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType, $page, $numberOfMediasDisplayedInMediatheque);
+
+        $numberOfPages = $mediasToDisplayed['numberOfPages'];
+        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
+        unset($mediasToDisplayed['numberOfPages']);
+        unset($mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
+
+        return [
+            $mediasToDisplayed,
+            $numberOfPages,
+            $numberOfMediasAllowedToDisplayed,
+        ];
+
+    }
+    
+    public function jsonSerialize()
+    {
+        return $this->medias;
+    }
 }

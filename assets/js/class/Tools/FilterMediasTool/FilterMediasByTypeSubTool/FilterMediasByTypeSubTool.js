@@ -38,6 +38,7 @@ class FilterMediasByTypeSubTool extends Tool
                 }
                 else
                 {
+
                     if($(e.currentTarget).hasClass("active"))
                     {
                         $(e.currentTarget).removeClass("active");

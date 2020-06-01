@@ -221,6 +221,8 @@
                 flex-direction: row;
                 flex-wrap: wrap;
                 margin: 3% 0 3% 0;
+                height: 950px;
+                overflow: auto;
 
                 .card{
                     width: 16rem;

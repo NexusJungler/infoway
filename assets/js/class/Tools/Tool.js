@@ -47,6 +47,20 @@ class Tool {
         return this.__isActived;
     }
 
+    getUrlParam(parameterName)
+    {
+        let urlParameter = "undefined";
+
+        if(window.location.href.indexOf(parameterName) > -1)
+        {
+            window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                urlParameter[key] = value;
+            });
+        }
+
+        return urlParameter;
+    }
+
     enable()
     {
         console.log(`'${this.__name}' is enabled now !`);

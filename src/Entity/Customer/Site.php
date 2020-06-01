@@ -64,6 +64,14 @@ class Site
      */
     private $customerId;
 
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="sites",cascade={"persist"})
+     * @ORM\JoinTable(name="sites_criterions")
+     *
+     */
+    private $criterions;
+
     private $customer ;
 
     /**
@@ -229,5 +237,32 @@ class Site
         return $this;
     }
 
+    /**
+     * @return Collection|Criterion[]
+     */
+    public function getCriterions(): Collection
+    {
+        return $this->criterions;
+    }
+
+    public function addCriterion(Criterion $criterion): self
+    {
+        if (!$this->criterions->contains($criterion)) {
+            $this->criterions[] = $criterion;
+            $criterion->addSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCriterion(Criterion $criterion): self
+    {
+        if ($this->criterions->contains($criterion)) {
+            $this->criterions->removeElement($criterion);
+            $criterion->removeSite($this);
+        }
+
+        return $this;
+    }
 
 }

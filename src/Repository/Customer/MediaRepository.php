@@ -15,6 +15,11 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use PDO;
+use ReflectionClass;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @method Media|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,6 +35,16 @@ class MediaRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Media::class);
+
+        $circularReferenceHandlingContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
+        $encoder =  new JsonEncoder();
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
+        $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
+
     }
 
     /**
@@ -72,9 +87,9 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
-    public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15, string $orderByCreatedDate = 'DESC')
+    public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15)
     {
-
+        //dd($type, $currentPage, $limit);
         // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
 
         switch ($type)
@@ -92,7 +107,7 @@ class MediaRepository extends ServiceEntityRepository
                         WHERE ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
                         OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
                         
-                        ORDER BY m.createdAt " . $orderByCreatedDate;
+                        ORDER BY m.createdAt DESC";
 
                 /*$medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
                                                           ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
@@ -105,10 +120,12 @@ class MediaRepository extends ServiceEntityRepository
 
                 $medias = $this->paginate($dql, $currentPage, $limit);;
 
-                $orderedMedias['size'] = $medias->count();
+                $orderedMedias['numberOfPages'] = intval( ceil($medias->count() / $limit) );
 
-                // sert pour choisir le nombre d emedia à afficher sur la page
-                for($i = 5; $i <= $orderedMedias['size']+5; $i+=5)
+                //$orderedMedias['medias_products_criterions'] = $this->getEntityManager()->getRepository(Product::class)->findProductsCriterions();
+
+                // sert pour choisir le nombre de media à afficher sur la page
+                for($i = 5; $i <= $medias->count()+5; $i+=5)
                 {
                     $orderedMedias['numberOfMediasAllowedToDisplayed'][] = $i;
                 }
@@ -119,7 +136,7 @@ class MediaRepository extends ServiceEntityRepository
                     $key = ($media instanceof Image) ? 'images' : 'videos';
 
                     $orderedMedias[$key][$index] = [
-                        'media' => $media,
+                        'media' => null,
                         'media_products' => [],
                         'media_categories' => [],
                     ];
@@ -131,6 +148,8 @@ class MediaRepository extends ServiceEntityRepository
                         if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias[$key][$index]['media_categories']))
                             $orderedMedias[$key][$index]['media_categories'][] = $product->getCategory()->getId();
                     }
+
+                    $orderedMedias[$key][$index]['media'] = $media;
 
                 }
 
@@ -160,8 +179,12 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
+    private function findProductCriterions()
+    {
 
 
+
+    }
 
     /**
      * @param string $query

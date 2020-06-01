@@ -2,22 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9a96c236-be20-4a2c-a93f-dbe09aa17172.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9a96c236-be20-4a2c-a93f-dbe09aa17172/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Translator/Translator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Site.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Site.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/SessionManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SessionManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UploadCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadCron.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/associations/product-association/popup-product-association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product-association/popup-product-association.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +253,9 @@
       <workItem from="1590484881370" duration="438000" />
       <workItem from="1590565416668" duration="852000" />
       <workItem from="1590566283657" duration="779000" />
-      <workItem from="1590567192069" duration="87442000" />
+      <workItem from="1590567192069" duration="88185000" />
+      <workItem from="1590996961917" duration="13411000" />
+      <workItem from="1591013756617" duration="16211000" />
     </task>
     <servers />
   </component>
@@ -284,10 +284,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="656" y="-738" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589554255503" />
-    <state x="767" y="-858" key="#com.intellij.ide.util.MemberChooser" timestamp="1589297024146">
-      <screen x="2" y="-1080" width="1920" height="1080" />
+    <state x="765" y="222" key="#com.intellij.ide.util.MemberChooser" timestamp="1591004087669">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="767" y="-858" key="#com.intellij.ide.util.MemberChooser/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589297024146" />
+    <state x="765" y="222" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591004087669" />
     <state x="2560" y="276" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1590567053185">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -300,11 +301,11 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2610" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590565653560" />
-    <state x="690" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1590740607588">
+    <state x="690" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1591009583910">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="692" y="-785" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589377580476" />
-    <state x="690" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1590740607588" />
+    <state x="690" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591009583910" />
     <state x="2610" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590598736379" />
     <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1590682150459">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -330,10 +331,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="769" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1590755470648" />
-    <state x="509" y="-863" width="1378" height="1066" key="dock-window-1" timestamp="1589200071459">
-      <screen x="2" y="-1080" width="1920" height="1080" />
+    <state x="2322" y="13" width="1378" height="1061" key="dock-window-1" timestamp="1591017939728">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="509" y="-863" width="1378" height="1066" key="dock-window-1/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589200071459" />
+    <state x="2322" y="13" width="1378" height="1061" key="dock-window-1/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591017939728" />
     <state x="-1770" y="-529" width="1378" height="1066" key="dock-window-2" timestamp="1589200331453">
       <screen x="-1920" y="-574" width="1920" height="1080" />
     </state>
@@ -342,11 +344,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="442" y="-963" width="1378" height="1066" key="dock-window-3/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589206255393" />
-    <state x="666" y="139" width="587" height="801" key="find.popup" timestamp="1590682753750">
+    <state x="666" y="139" width="587" height="801" key="find.popup" timestamp="1591014685146">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="668" y="-941" width="587" height="801" key="find.popup/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1588676933192" />
-    <state x="666" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1590682753750" />
+    <state x="666" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591014685146" />
     <state x="2586" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590657509357" />
     <state x="2536" y="791" key="run.anything.popup" timestamp="1590599159773">
       <screen x="1920" y="0" width="1920" height="1080" />

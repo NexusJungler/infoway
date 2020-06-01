@@ -45,11 +45,11 @@ class ProductRepository extends ServiceEntityRepository
         foreach ($this->findAll() as $product)
         {
 
-            $productsCriterions[$product->getName()] = [];
+            $productsCriterions[$product->getId()] = [];
 
             foreach ($product->getCriterions()->getValues() as $criterion)
             {
-                $productsCriterions[$product->getName()][] = $criterion->getName();
+                $productsCriterions[$product->getId()][] = $criterion->getName();
             }
 
         }
