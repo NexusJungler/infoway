@@ -232,12 +232,12 @@
         {% endblock %}
 
         {% block javascripts %}
-            <script src="vendor/select2/dist/js/select2.min.js"></script>
+            {# <script src="vendor/select2/dist/js/select2.min.js"></script>
             <script>
-                $(".ManyToMany select").select2();
-            </script>
+                    $(".ManyToMany select").select2();
+            </script> #}
             {{ encore_entry_script_tags('app') }}
-        {#{{ encore_entry_script_tags('modal_message') }}#}
+            {#{{ encore_entry_script_tags('modal_message') }}#}
         {% endblock javascripts %}
 
     </body>

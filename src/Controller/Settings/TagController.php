@@ -172,7 +172,7 @@ class TagController extends AbstractController
             $currentSite = $choice->data ;
 
             $addSiteActionView->children['sites']->children[ $index ]->vars['data'] = $currentSite ;
-            $addSiteActionView->children['sites']->children[ $index ]->vars['id'] = 'add_site_sites_' . $currentSite->getId();
+            $addSiteActionView->children['sites']->children[ $index ]->vars['id'] = 'tag_sites_' . $currentSite->getId();
         }
 
         foreach($tagFormView->children[ 'sites' ]->vars[ 'data' ] as $index => $site ){

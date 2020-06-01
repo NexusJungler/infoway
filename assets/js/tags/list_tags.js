@@ -92,3 +92,10 @@ $('.btn-popupclose').click( () => {
     $(".content-modal .selected-tags-list ").empty();
     nameTags=[];
 });
+
+// recupere les couleur et afficher sur les tags
+$("ul.tags_list").on('change', ".tags-color" , function(e){
+    $(this).parents('ul.tags_list li ').find( '.color_input' ).css("background-color",this.value);
+})
+
+

@@ -88,7 +88,7 @@
                         <th>Ajouter sites : <button type="button" class="btn btn-site"><i class="fas fa-align-justify"></i>Sites</button></th>
                     </tr>
                 </thead>
-                <tbody class="tbody tbody-content scrollbar-table">
+                <tbody class="tbody tbody-content affected-site-container scrollbar-table">
                     {% for site in form.sites %}
                         {%  set currentSite = site.vars.data  %}
                         <tr class="tag__sites__site{% if currentSite not in tag.sites %} hidden{% endif %}">
@@ -137,14 +137,15 @@
                         <th>Site</th>
                     </tr>
                 </thead>
-                <tbody class="tbody tbody-content scrollbar-table">
+                <tbody class="tbody tbody-content affected-site-container-popup scrollbar-table">
                     {% for site in addSiteForm.sites %}
                         {%  set currentSite =  site.vars.data %}
-                        <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}">
+                        {# <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}"> #}
+                        <tr class="popup__add-site__site">
                             <td class="">
                                 {{ form_row(site, {'attr': {
                                     'checked' : currentSite in tag.sites ,
-                                    'id' : 'add_site_sites_tr' ~ site.vars.value
+                                    'id' : 'tag_sites_' ~ site.vars.value
                                 } }) }}
                             </td>
                         </tr>
@@ -155,7 +156,7 @@
         </div>
 
         <div>
-            <button type="button" class="btn btn-popupclose2">Affecter au site</button>
+            <button type="button" class="btn btn-add-site">Affecter au site</button>
         </div>
 
     </div>
@@ -184,6 +185,7 @@
                     {% for product in addProductForm.products %}
                         {%  set currentProduct =  product.vars.data %}
                         <tr class="popup__add-product__products{% if currentProduct in tag.products %} hidden{% endif %}">
+                        {# <tr class="popup__add-product__products"> #}
                             <td class="">
                                 {{ form_row(product, {'attr': {
                                     'checked' : currentProduct in tag.Products ,
@@ -198,7 +200,7 @@
         </div>
 
         <div>
-            <button type="button" class="btn btn-popupclose2">Affecter au produit</button>
+            <button type="button" class="btn ">Affecter au produit</button>
         </div>
 
     </div>

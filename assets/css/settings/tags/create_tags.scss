@@ -1,4 +1,4 @@
-@import '../custome/input-rdo.scss';
+@import '../../custome/input-rdo.scss';
 
 /** Function for converting  px to rem **/
 @function rem($size) {
@@ -192,6 +192,7 @@
             display: flex;
             .title-site{
                 margin-right: 20px;
+                margin-left: 20px;
                 font:  22px "Segoe UI" ;
             }
             .content-search{
@@ -204,12 +205,12 @@
                     background: #FFFFFF 0 0 no-repeat padding-box;
                     border: 1px solid #4D646D;
                     border-radius: 9px;
-                    padding: 6px 36px 6px 6px;
+                    padding: 6px 6px 6px 6px;
                 }
                 i{
-                    position: absolute;
-                    right: 8px;
-                    top: 5px;
+                    position: relative;
+                    // right: 8px;
+                    top: 3px;
                     color: #B1C1C8;
                     font-size: 20px;
                 }
@@ -239,11 +240,30 @@
         thead{
             background: #FFFFFF 0% 0% no-repeat padding-box;
             th{
-                padding: 10px;
+                padding: 1px 10px 14px 10px;
+                .trace{
+                    // width: 29px;
+                    // height: 29px;
+                    // background: #4D646D 0% 0% no-repeat padding-box;
+                    // border: 1px solid #E3E3E3;
+                    i{
+                        font-size: 35px;
+                        top: 8px;
+                        position: relative;
+                        transition-duration: 0.8s;
+                        transition-property: transform;
+                    }
+                }
+                
                 &:nth-child(1){
-                    width: 30%;
+                    width: 5%;
+                    // display: contents;
                 }
                 &:nth-child(2){
+                    width: 20%;
+                }
+                &:nth-child(3){
+                    width: 75%;
                     text-align: left;
                 }
             }
@@ -252,15 +272,26 @@
             background: #F6F6F6 0% 0% no-repeat padding-box;
             height: 350px;
             max-height: 350px;
-            display: contents;
+            display: none;
             overflow: auto;
+            border: 0;
             tr{
                 height: 53px;
+                &:nth-child(1){
+                    background: #EBEBEB 0% 0% no-repeat padding-box;
+                }
+                &:nth-child(2){
+                    background-color: #F6F6F6;
+                }
             }
             td{
                 padding: 10px;
                 &:nth-child(1){
-                    width: 30%;
+                    width: 5%;
+                    text-align: center;
+                }
+                &:nth-child(2){
+                    width: 20%;
                     text-align: center;
                 }
                 &:nth-child(2){
@@ -287,13 +318,8 @@
     width: 20px;
 }
 
-.create-tags{
-    
-}
 
 /* MEDIA QUERY */
-
-
 
 @media (max-width: 1024px)  {
     .create-tags{
@@ -361,4 +387,20 @@
         //     height: 17px;
         // }
     }
+}
+
+
+
+// .active{
+//     display: contents;
+// }
+.open{
+    display: contents;
+}
+
+.tourne-icone{
+    transform: rotate(90deg);
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
 }

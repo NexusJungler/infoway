@@ -1,4 +1,4 @@
-@import '../custome/input-rdo.scss';
+@import '../../custome/input-rdo.scss';
 
 /** Function for converting  px to rem **/
 @function rem($size) {
@@ -171,77 +171,80 @@
 }
 
 .main-tags{
-    .add-popup{
-        background: transparent;
-        width: 100%;
-        
-        .modal {
-            margin: 0 auto;
-            margin-top: 10%;
-            position: relative;
-            border: 1px solid #4D646D;
-            padding: 0px;
-            width: 35%;
-            height: auto;
-            max-height: 40%;
-            background-color: #ddd;
-            color: #231D23;
-            text-align: center;
-            overflow: hidden;
-            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
-            border-radius: 10px 10px 0px 0px;
-        }
-        .header-modal{
-            background: #4D646D 0% 0% no-repeat padding-box;
-            display: grid;
-            padding:14px;
-            color: white;
-            text-align: center;
-            button{
-                position: absolute;
-                top: 19px;
-                right: 12px;
-                background-color: white;
-                box-shadow: none;
-                padding: 0;
-                margin: 0;
-                border: 0;
-                height: 16px;
-                width: 18px;
-                i{
-                    right: 3px;
-                    color: #F57171;
-                    font-size: 22px;
-                    position: relative;
-                    top: -3px;
-                }
-            }
-        }
-        .content-modal{
-            background-color: white;
-            height: 60%;
-            padding: 20px;
-            .selected-tags-list{
+    .tags{
+        .add-popup{
+            background: transparent;
+            width: 100%;
+            
+            .modal {
+                margin: 0 auto;
+                margin-top: 10%;
+                position: relative;
+                border: 1px solid #4D646D;
+                padding: 0px;
+                width: 35%;
                 height: auto;
-                max-height: 100px;
-                display: block;
-                overflow: auto;
+                max-height: 40%;
+                background-color: #ddd;
+                color: #231D23;
+                text-align: center;
+                overflow: hidden;
+                box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+                border-radius: 10px 10px 0px 0px;
             }
-        }
-        .footer-modal{
-            background: #E3E3E3 0% 0% no-repeat padding-box;
-            padding: 11px;
-            .delete-tag{
-                margin-right: 20px;
+            .header-modal{
+                background: #4D646D 0% 0% no-repeat padding-box;
+                display: grid;
+                padding:14px;
+                color: white;
+                text-align: center;
+                button{
+                    position: absolute;
+                    top: 19px;
+                    right: 12px;
+                    background-color: white;
+                    box-shadow: none;
+                    padding: 0;
+                    margin: 0;
+                    border: 0;
+                    height: 16px;
+                    width: 18px;
+                    i{
+                        right: 3px;
+                        color: #F57171;
+                        font-size: 22px;
+                        position: relative;
+                        top: -3px;
+                    }
+                }
             }
-            .btn{
-                background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
-                :hover{
-                    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+            .content-modal{
+                background-color: white;
+                height: 60%;
+                padding: 20px;
+                .selected-tags-list{
+                    height: auto;
+                    max-height: 100px;
+                    display: block;
+                    overflow: auto;
+                }
+            }
+            .footer-modal{
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                padding: 11px;
+                .delete-tag{
+                    margin-right: 20px;
+                }
+                .btn{
+                    background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+                    &:hover{
+                        background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+                    }
                 }
             }
         }
-    }
+    }   
+    
 }
 
 
