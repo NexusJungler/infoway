@@ -171,10 +171,13 @@ class PaginatorHandler extends Tool
 
     }
 
-    reformateDate(dateToFormating, format = 'Y-m-d G:i:s')
+    reformateDate(dateToFormating)
     {
-
+        console.log(dateToFormating);
         let date = new Date(dateToFormating);
+
+        //date.setTime(dateToFormating);
+        console.log(date.getTime());debugger
         const year = date.getFullYear();
         const month = ( date.getMonth() +1 );
         const day= date.getUTCDate();
@@ -196,14 +199,14 @@ class PaginatorHandler extends Tool
 
         if(page[0] !== '')
         {
-            url = url.replace('/\d*$', '');
+            url = url.replace(/\d*$/, '');
             console.log(url);
-            console.log(page); //debugger
+            console.log(page);
         }
 
         for (let i = 1; i <= limit ; i++)
         {
-            $(`<a class='page ${ (i === 1) ? 'current_page' : '' }' href="${window.location.href}">${i}</a>`).appendTo( $(".pages-container") );
+            $(`<a class='page ${ (i === 1) ? 'current_page' : '' }' href="${ url + i}">${i}</a>`).appendTo( $(".pages-container") );
         }
 
     }
