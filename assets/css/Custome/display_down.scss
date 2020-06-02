@@ -199,11 +199,11 @@
 
                             .page{
                                 color: #000;
-                                text-decoration: underline;
+                                text-decoration: none;
 
                                 &.current_page{
                                     color: #4F9BAE;
-                                    text-decoration: none;
+                                    text-decoration: underline;
                                 }
 
                             }

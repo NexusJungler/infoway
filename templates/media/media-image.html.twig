@@ -159,7 +159,7 @@
 
                                     <div class="pages-container">
                                         {% for i in 1..numberOfPages %}
-                                            <a class="page {% if app.request.attributes.get('_route_params')['page']|string_to_int is same as(i) %}current_page{% endif %}" href="{{ path('media::showMediatheque', {mediasDisplayedType: app.request.attributes.get('_route_params')['mediasDisplayedType'], page: i}) }}">{{ i }}</a>
+                                            <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
                                         {% endfor %}
                                     </div>
 
@@ -174,7 +174,7 @@
 
                             {% for mediaInfos in mediasToDisplayed['medias'] %}
 
-                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],'media_categories': mediaInfos['media_categories'], 'media_type': mediaInfos['media_type'] } %}
+                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'], 'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'], 'media_type': mediaInfos['media_type'] } %}
 
                             {% endfor %}
 

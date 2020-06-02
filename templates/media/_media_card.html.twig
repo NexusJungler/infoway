@@ -10,6 +10,18 @@
             data-category="{{ media_categories|join(', ') }}"
         {% else %}
             data-category="0"
+        {% endif %}
+
+        {% if (media_criterions is not empty) %}
+            data-criterions="{{ media_criterions|join(', ') }}"
+        {% else %}
+            data-criterions="0"
+        {% endif %}
+
+        {% if (media_tags is not empty) %}
+            data-tags="{{ media_tags|join(', ') }}"
+        {% else %}
+            data-tags="0"
         {% endif %} >
 
     <div class="card-header">

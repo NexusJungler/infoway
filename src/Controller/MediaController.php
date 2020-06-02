@@ -61,11 +61,11 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
+     * @Route(path="/mediatheque/{mediasDisplayedType}", name="media::showMediatheque", methods={"GET", "POST"},
      * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
+    public function showMediatheque(Request $request, string $mediasDisplayedType)
     {
 
         $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
@@ -84,13 +84,40 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
+        if($request->isXmlHttpRequest() AND $request->isMethod("POST"))
+        {
+
+            if($request->request->get('numberOfMediasToDisplay') !== null)
+            {
+
+                $number = intval($request->request->get('numberOfMediasToDisplay'));
+
+                if(!is_int($number))
+                    throw new Exception(sprintf("'numberOfMediasDisplayedInMediatheque' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+                ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
+                    $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
+                    $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
+
+            }
+
+            list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
+
+            $mediasToDisplayed['customer'] = strtolower($this->sessionManager->get('current_customer')->getName());
+
+            return new JsonResponse([
+                'mediasToDisplayed' => $mediasToDisplayed,
+                'numberOfPages' => $numberOfPages,
+                'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
+                'userMediasDisplayedChoice' => $this->sessionManager->get('numberOfMediasDisplayedInMediatheque'),
+            ]);
+
+        }
+
         if($this->sessionManager->get('numberOfMediasDisplayedInMediatheque') === null)
             $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', 15);
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
-
-        //$numberOfPages = intval( ceil($mediasToDisplayed['size'] / $numberOfMediasDisplayedInMediatheque) );
-        //$numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
 
         //dump($mediasToDisplayed, $mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
 
@@ -447,54 +474,13 @@ class MediaController extends AbstractController
 
         // if file is in Media or if file is in FfmpegTasks but not already
         if($mediaRepository->findOneByName($fileNameWithoutExtension) OR $task)
-        {
             $output = 0;
-        }
 
         else
             $output = 1;
 
         return new Response( $output );
     }
-
-
-    /**
-     * @Route(path="/get/more/medias/for/mediatheque", name="media::getMoreMediasForMediatheque", methods={"POST"})
-     * @param Request $request
-     */
-    public function getMoreMediasForMediatheque(Request $request)
-    {
-
-        $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
-        $manager = $this->getDoctrine()->getManager( $managerName );
-
-        if($request->request->get('numberOfMediasToDisplay') !== null)
-        {
-
-            $number = intval($request->request->get('numberOfMediasToDisplay'));
-
-            if(!is_int($number))
-                throw new Exception(sprintf("'numberOfMediasDisplayedInMediatheque' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
-
-            ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
-                $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
-                $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
-
-        }
-
-        list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
-
-        $mediasToDisplayed['customer'] = strtolower($this->sessionManager->get('current_customer')->getName());
-
-        return new JsonResponse([
-            'mediasToDisplayed' => $mediasToDisplayed,
-            'numberOfPages' => $numberOfPages,
-            'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
-            'userMediasDisplayedChoice' => $this->sessionManager->get('numberOfMediasDisplayedInMediatheque'),
-        ]);
-
-    }
-
 
     private function saveMediaCharacteristic(Request $request)
     {
@@ -670,7 +656,11 @@ class MediaController extends AbstractController
         $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
 
         $mediasDisplayedType = $request->get('mediasDisplayedType');
-        $page = intval($request->get('page'));
+
+        $page = intval($request->request->get('page'));
+
+        if($page < 1)
+            $page = 1;
 
         if($mediasDisplayedType === "template")
         {

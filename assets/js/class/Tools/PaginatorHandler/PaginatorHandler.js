@@ -10,33 +10,61 @@ class PaginatorHandler extends Tool
         this.__$location = $('.pagination-container');
     }
 
+    reloadMediatheque(page = 1)
+    {
+
+        const mediasDisplayedType = $(".main-media").data("media_displayed");
+        const numberOfMediasToDisplay= $("#displayed-elements-number-selection").val();
+
+        page = parseInt(page);
+
+        $('.medias-list-container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
+
+        $.ajax({
+            url: `/mediatheque/${mediasDisplayedType}`,
+            type: "POST",
+            data: { 'mediasDisplayedType': mediasDisplayedType, 'page': page, 'numberOfMediasToDisplay': numberOfMediasToDisplay },
+            success: (response) => {
+                // add card
+                console.log(response);
+
+                this.rebuildMediasCards(response.mediasToDisplayed);
+                this.rebuildPageList(response.numberOfPages, page);
+                this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
+                this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByTypeSubTool').getAgainMediaListContainer();
+
+            },
+        })
+
+    }
+
+    onClickOnPageReloadMedia(active)
+    {
+        if(active)
+        {
+            this.__$location.on('click.onClickOnPageReloadMedia', '.page', e => {
+
+                e.preventDefault();
+
+                this.reloadMediatheque( $(e.currentTarget).text() );
+
+            })
+        }
+        else
+        {
+            this.__$location.off('click.onClickOnPageReloadMedia', '.page');
+        }
+
+        return this;
+    }
+
     onDisplayedMediasNumberChange(active)
     {
         if(active)
         {
             this.__$location.find("#displayed-elements-number-selection").on("change.onDisplayedMediasNumberChange", e => {
 
-                const mediasDisplayedType = $(".main-media").data("media_displayed");
-                const currentPage = $(".pages-container .page.current_page").text();
-                const numberOfMediasToDisplay= $(e.currentTarget).val();
-
-                $('.medias-list-container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
-
-                $.ajax({
-                    url: "/get/more/medias/for/mediatheque",
-                    type: "POST",
-                    data: { 'mediasDisplayedType': mediasDisplayedType, 'page': currentPage, 'numberOfMediasToDisplay': numberOfMediasToDisplay },
-                    success: (response) => {
-                        // add card
-                        console.log(response);
-
-                        this.rebuildMediasCard(response.mediasToDisplayed);
-                        this.rebuildPageList(response.numberOfPages);
-                        this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
-                        this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByTypeSubTool').getAgainMediaListContainer();
-
-                    },
-                })
+                this.reloadMediatheque();
 
             })
         }
@@ -48,14 +76,14 @@ class PaginatorHandler extends Tool
         return this;
     }
 
-    rebuildMediasCard(mediasInfos)
+    rebuildMediasCards(mediasInfos)
     {
 
         let container = $('<div class="medias-list-container">');
 
         $.each( mediasInfos.medias, (index, mediaInfos) => {
 
-            let card = this.buildMediasCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories}, mediaInfos.media_type, mediasInfos.customer);
+            let card = this.buildMediaCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories, tags: mediaInfos.media_tags, criterions: mediaInfos.media_criterions}, mediaInfos.media_type, mediasInfos.customer);
             $(card).appendTo( container );
 
         } )
@@ -64,7 +92,7 @@ class PaginatorHandler extends Tool
 
     }
 
-    buildMediasCard(media, media_associated_infos = { products: [], categories: [] }, mediaType, customer)
+    buildMediaCard(media, media_associated_infos = { products: [], categories: [], tags: [], criterions: [] }, mediaType, customer)
     {
 
         const dateIsComingSoon = ( this.getDaysDiffBetweenDates(media.diffusionEnd, new Date()) <= 14);
@@ -73,7 +101,13 @@ class PaginatorHandler extends Tool
 
                                 data-products="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 0 }" 
                                 
-                                data-products="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 0 }" >
+                                data-products="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 0 }"
+                                 
+                                 data-criterions="${ (media_associated_infos.criterions.length > 0) ? media_associated_infos.criterions.join(', ') : 0 }"
+                                 
+                                 data-tags="${ (media_associated_infos.tags.length > 0) ? media_associated_infos.tags.join(', ') : 0 }"
+                                 
+                                 >
 
                             <div class="card-header">
                                 <div class="select-media-input-container">
@@ -188,7 +222,7 @@ class PaginatorHandler extends Tool
         return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
-    rebuildPageList(limit)
+    rebuildPageList(limit, currentPage)
     {
 
         $(".pages-container").empty();
@@ -199,13 +233,11 @@ class PaginatorHandler extends Tool
         if(page[0] !== '')
         {
             url = url.replace(/\d*$/, '');
-            console.log(url);
-            console.log(page);
         }
 
         for (let i = 1; i <= limit ; i++)
         {
-            $(`<a class='page ${ (i === 1) ? 'current_page' : '' }' href="${ url + i}">${i}</a>`).appendTo( $(".pages-container") );
+            $(`<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${ url + '/' + i}">${i}</a>`).appendTo( $(".pages-container") );
         }
 
     }
@@ -269,6 +301,7 @@ class PaginatorHandler extends Tool
         super.enable();
         this.onDisplayedMediasNumberChange(true)
             .onMediasSortableByDateChange(true)
+            .onClickOnPageReloadMedia(true)
         ;
     }
 
@@ -277,6 +310,7 @@ class PaginatorHandler extends Tool
         super.disable();
         this.onDisplayedMediasNumberChange(false)
             .onMediasSortableByDateChange(false)
+            .onClickOnPageReloadMedia(false)
         ;
     }
 

@@ -109,15 +109,6 @@ class MediaRepository extends ServiceEntityRepository
                         
                         ORDER BY m.createdAt DESC";
 
-                /*$medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
-                                                          ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
-                                                          ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
-                                                          ->andWhere("( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) 
-                                                                          AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )")
-                                                          ->orderBy("m.id", "ASC")
-                                                          ->getQuery()
-                                                          ->getResult();*/
-
                 $medias = $this->paginate($dql, $currentPage, $limit);;
 
                 $orderedMedias['numberOfPages'] = intval( ceil($medias->count() / $limit) );
@@ -139,8 +130,15 @@ class MediaRepository extends ServiceEntityRepository
                         'media' => null,
                         'media_type' => ($media instanceof Image) ? 'image': 'video',
                         'media_products' => [],
+                        'media_tags' => [],
+                        'media_criterions' => [],
                         'media_categories' => [],
                     ];
+
+                    foreach ($media->getTags()->getValues() as $tag)
+                    {
+                        $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+                    }
 
                     foreach ($media->getProducts()->getValues() as $product)
                     {
@@ -148,6 +146,18 @@ class MediaRepository extends ServiceEntityRepository
 
                         if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))
                             $orderedMedias['medias'][$index]['media_categories'][] = $product->getCategory()->getId();
+
+                        foreach ($product->getCriterions()->getValues() as $criterion)
+                        {
+                            $orderedMedias['medias'][$index]['media_criterions'][] = $criterion->getId();
+                        }
+
+                        foreach ($product->getTags()->getValues() as $tag)
+                        {
+                            if(!in_array($tag->getId(), $orderedMedias['media_tags']))
+                                $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+                        }
+
                     }
 
                     $orderedMedias['medias'][$index]['media'] = $media;
