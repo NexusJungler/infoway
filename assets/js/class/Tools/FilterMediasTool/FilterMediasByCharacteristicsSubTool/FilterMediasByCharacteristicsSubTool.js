@@ -35,9 +35,32 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
                 }
                 else
                 {
+
                     this.__$mediasContainer.find(`.card`).addClass("hidden");
 
-                    this.__$mediasContainer.find(`.card[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`).removeClass("hidden");
+                    if(!this.__parent.isAnFilterIsActive())
+                    {
+                        this.__$mediasContainer.find(`.card[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`).removeClass("hidden");
+                    }
+                    else
+                    {
+
+                        const activeFilters = this.__parent.getActiveFilters();
+                        let filters = `data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`;
+
+                        activeFilters.forEach( (activeFilter) => {
+
+                            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
+
+                        } );
+
+                        console.log(filters); //debugger
+
+                        this.__$mediasContainer.find(`.card[${ filters }`).removeClass("hidden");
+
+                    }
+
+
 
                     this.__parent.__anFilterIsActive = true;
                 }

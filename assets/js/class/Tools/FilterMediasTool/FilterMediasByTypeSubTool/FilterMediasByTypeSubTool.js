@@ -57,6 +57,7 @@ class FilterMediasByTypeSubTool extends SubTool
                         this.__$mediasContainer.find(`.card[data-media_type='image']`).removeClass("hidden");
                         this.__$mediasContainer.find(`.card[data-media_type!='image']`).addClass("hidden");
 
+                        this.__parent.registerNewFilter({property: 'data-media_type', value: 'image'});
                     }
                     else
                     {
@@ -65,6 +66,8 @@ class FilterMediasByTypeSubTool extends SubTool
                         $(e.currentTarget).addClass("active");
                         this.__$mediasContainer.find(`.card[data-media_type='video']`).removeClass("hidden");
                         this.__$mediasContainer.find(`.card[data-media_type!='video']`).addClass("hidden");
+
+                        this.__parent.registerNewFilter({property: 'data-media_type', value: 'video'});
                     }
 
                 }
