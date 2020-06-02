@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Serializer;
 use \Doctrine\Persistence\ObjectManager;
 
 
-class MediaController extends AbstractController implements \JsonSerializable
+class MediaController extends AbstractController
 {
 
     private SerializerInterface $serializer;
@@ -482,11 +482,9 @@ class MediaController extends AbstractController implements \JsonSerializable
 
         }
 
-        list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
+        list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
 
         $mediasToDisplayed['customer'] = strtolower($this->sessionManager->get('current_customer')->getName());
-
-        $mediasToDisplayed = $this->serializer->serialize($mediasToDisplayed, 'json');
 
         return new JsonResponse([
             'mediasToDisplayed' => $mediasToDisplayed,
@@ -664,7 +662,7 @@ class MediaController extends AbstractController implements \JsonSerializable
         return  'low';
     }
     
-    private function getMediasForMediatheque(ObjectManager &$manager, Request &$request)
+    private function getMediasForMediatheque(ObjectManager &$manager, Request &$request, bool $serializeResults = false)
     {
 
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
@@ -707,6 +705,28 @@ class MediaController extends AbstractController implements \JsonSerializable
         unset($mediasToDisplayed['numberOfPages']);
         unset($mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
 
+        if($serializeResults)
+        {
+            $mediasToDisplayed = json_decode( $this->serializer->serialize($mediasToDisplayed, 'json'), true);
+
+            foreach ($mediasToDisplayed['medias'] as &$mediaInfos)
+            {
+
+                foreach ($mediaInfos['media'] as $key => $value)
+                {
+                    if(is_array($value) AND array_key_exists('timezone', $value))
+                    {
+                        $date = new DateTime();
+                        $date->setTimestamp($value['timestamp']);
+                        $mediaInfos['media'][$key] = $date->format('Y-m-d H:i:s');
+                    }
+
+                }
+
+            }
+
+        }
+
         return [
             $mediasToDisplayed,
             $numberOfPages,
@@ -714,9 +734,5 @@ class MediaController extends AbstractController implements \JsonSerializable
         ];
 
     }
-    
-    public function jsonSerialize()
-    {
-        return $this->medias;
-    }
+
 }

@@ -172,18 +172,11 @@
 
                         <div class="medias-list-container">
 
-                            {% if mediasToDisplayed['images'] is defined and mediasToDisplayed['images'] is not empty %}
+                            {% for mediaInfos in mediasToDisplayed['medias'] %}
 
-                                {% include "/media/_media_card.html.twig" with { 'container_id': 'medias-images-container', 'subject': mediasToDisplayed['images'], 'media_type': 'image' } %}
+                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],'media_categories': mediaInfos['media_categories'], 'media_type': mediaInfos['media_type'] } %}
 
-                            {% endif %}
-
-
-                            {% if mediasToDisplayed['videos'] is defined and mediasToDisplayed['videos'] is not empty %}
-
-                                {% include "/media/_media_card.html.twig" with { 'container_id': 'medias-images-container', 'subject': mediasToDisplayed['videos'], 'media_type': 'video' } %}
-
-                            {% endif %}
+                            {% endfor %}
 
                         </div>
 

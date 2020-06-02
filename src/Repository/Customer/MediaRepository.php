@@ -130,26 +130,27 @@ class MediaRepository extends ServiceEntityRepository
                     $orderedMedias['numberOfMediasAllowedToDisplayed'][] = $i;
                 }
 
+                $orderedMedias['medias'] = [];
+
                 foreach ($medias as $index => $media)
                 {
 
-                    $key = ($media instanceof Image) ? 'images' : 'videos';
-
-                    $orderedMedias[$key][$index] = [
+                    $orderedMedias['medias'][$index] = [
                         'media' => null,
+                        'media_type' => ($media instanceof Image) ? 'image': 'video',
                         'media_products' => [],
                         'media_categories' => [],
                     ];
 
                     foreach ($media->getProducts()->getValues() as $product)
                     {
-                        $orderedMedias[$key][$index]['media_products'][] = $product->getId();
+                        $orderedMedias['medias'][$index]['media_products'][] = $product->getId();
 
-                        if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias[$key][$index]['media_categories']))
-                            $orderedMedias[$key][$index]['media_categories'][] = $product->getCategory()->getId();
+                        if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))
+                            $orderedMedias['medias'][$index]['media_categories'][] = $product->getCategory()->getId();
                     }
 
-                    $orderedMedias[$key][$index]['media'] = $media;
+                    $orderedMedias['medias'][$index]['media'] = $media;
 
                 }
 

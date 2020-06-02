@@ -30,8 +30,6 @@ class PaginatorHandler extends Tool
                         // add card
                         console.log(response);
 
-                        response.mediasToDisplayed = JSON.parse(response.mediasToDisplayed)
-
                         this.rebuildMediasCard(response.mediasToDisplayed);
                         this.rebuildPageList(response.numberOfPages);
                         this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
@@ -49,39 +47,30 @@ class PaginatorHandler extends Tool
         return this;
     }
 
-    rebuildMediasCard(mediaInfos)
+    rebuildMediasCard(mediasInfos)
     {
 
         let container = $('<div class="medias-list-container">');
 
-        for(const imageInfo in mediaInfos['images'])
-        {
+        $.each( mediasInfos.medias, (index, mediaInfos) => {
 
-            let card = this.buildMediasCard(mediaInfos['images'][imageInfo], 'image', mediaInfos.customer);
+            let card = this.buildMediasCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories}, mediaInfos.media_type, mediasInfos.customer);
             $(card).appendTo( container );
 
-        }
-
-        for(const videoInfo in mediaInfos['videos'])
-        {
-
-            let card = this.buildMediasCard(mediaInfos['videos'][videoInfo], 'video', mediaInfos.customer);
-            $(card).appendTo( container );
-
-        }
+        } )
 
         $('.medias-list-container').replaceWith(container);
 
     }
 
-    buildMediasCard(mediaInfos, mediaType, customer)
+    buildMediasCard(media, media_associated_infos = { products: [], categories: [] }, mediaType, customer)
     {
 
-        let card = `<div class="card" data-created_date="${ this.reformateDate(mediaInfos.media.createdAt.timestamp) }" data-media_type="${mediaType}" 
+        let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" 
 
-                                data-products="${ (mediaInfos.media_products.length > 0) ? mediaInfos.media_products.join(', ') : 0 }" 
+                                data-products="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 0 }" 
                                 
-                                data-products="${ (mediaInfos.media_categories.length > 0) ? mediaInfos.media_categories.join(', ') : 0 }" >
+                                data-products="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 0 }" >
 
                             <div class="card-header">
                                 <div class="select-media-input-container">
@@ -114,28 +103,28 @@ class PaginatorHandler extends Tool
                             
         if(mediaType === 'image')
         {
-            card += `<img class="media-miniature" src="/miniatures/${ customer }/images/low/${ mediaInfos.media.id }.png"
-                                        alt="/miniatures/${ customer }/images/low/${ mediaInfos.media.id }.png">`
+            card += `<img class="media-miniature" src="/miniatures/${ customer }/images/low/${ media.id }.png"
+                                        alt="/miniatures/${ customer }/images/low/${ media.id }.png">`
         }
         else
         {
             card += `<video class="media-miniature" controls>
-                        <source src="/miniatures/${ customer }/videos/low/${ mediaInfos.media.id }.mp4" type="${ mediaInfos.media.mimeType }">
+                        <source src="/miniatures/${ customer }/videos/low/${ media.id }.mp4" type="${ media.mimeType }">
                     </video>`;
         }
 
         card += `</div>
                  <div class="media-name-container">
-                    <span>${ mediaInfos.media.name }</span>
+                    <span>${ media.name }</span>
                  </div>
                                 
                  <div class="media-associated-items-container">
 
                  <div class="media-criterions-container associated-item">`;
 
-        if(mediaInfos.media.products.length > 0)
+        if(media.products.length > 0)
         {
-            mediaInfos.media.products.forEach( product => {
+            media.products.forEach( product => {
 
                 product.criterions.forEach( criterion =>  {
 
@@ -152,9 +141,9 @@ class PaginatorHandler extends Tool
 
         card += `</div> <div class="media-tags-container associated-item">`;
 
-        if(mediaInfos.media.tags.length > 0)
+        if(media.tags.length > 0)
         {
-            mediaInfos.media.tags.forEach( tag => {
+            media.tags.forEach( tag => {
 
                 card += `<p class="tag"><span></span>${ tag.name }</p>`;
 
@@ -171,19 +160,18 @@ class PaginatorHandler extends Tool
 
     }
 
-    reformateDate(dateToFormating)
+    reformateDate(date)
     {
-        console.log(dateToFormating);
-        let date = new Date(dateToFormating);
 
-        //date.setTime(dateToFormating);
-        console.log(date.getTime());debugger
+        date = new Date(date);
+        date.setMonth( date.getMonth() +1 );
+
         const year = date.getFullYear();
-        const month = ( date.getMonth() +1 );
+        const month = ( date.getMonth() < 10 ) ? '0' + date.getMonth() : date.getMonth();
         const day= date.getUTCDate();
-        const hour = date.getHours();
-        const minutes = date.getMinutes();
-        const second = date.getSeconds();
+        const hour = (date.getHours() < 10) ? '0' + date.getHours() : date.getHours();
+        const minutes = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes();
+        const second = (date.getSeconds() < 10) ? '0' + date.getSeconds() : date.getSeconds();
 
         return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + second;
 
