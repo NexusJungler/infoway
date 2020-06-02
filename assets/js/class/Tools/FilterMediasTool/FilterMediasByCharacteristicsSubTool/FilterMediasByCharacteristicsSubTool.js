@@ -1,6 +1,6 @@
-import Tool from "../../Tool";
+import SubTool from "../../SubTool";
 
-class FilterMediasByCharacteristicsSubTool extends Tool
+class FilterMediasByCharacteristicsSubTool extends SubTool
 {
 
     constructor()
@@ -18,14 +18,29 @@ class FilterMediasByCharacteristicsSubTool extends Tool
         {
             this.__$container.find(".filter-validation-btn").on("click.onClickOnFilterValidationButton", e => {
 
+                e.preventDefault();
+
                 const categorySelected = $('#filter-by-category').val();
                 const productSelected = $('#filter-by-product').val();
                 const criterionSelected = $('#filter-by-criterion').val();
                 const tagSelected = $('#filter-by-tag').val();
 
-                this.__$mediasContainer.find(`.card`).addClass("hidden");
+                if(categorySelected === '' && productSelected === '' && criterionSelected === '' && tagSelected === '' )
+                {
+                    if(!this.__parent.isAnFilterIsActive())
+                    {
+                        this.__parent.__anFilterIsActive = false;
+                        this.__$mediasContainer.find(`.card`).removeClass("hidden");
+                    }
+                }
+                else
+                {
+                    this.__$mediasContainer.find(`.card`).addClass("hidden");
 
-                this.__$mediasContainer.find(`.card[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`).removeClass("hidden");
+                    this.__$mediasContainer.find(`.card[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`).removeClass("hidden");
+
+                    this.__parent.__anFilterIsActive = true;
+                }
 
             })
         }

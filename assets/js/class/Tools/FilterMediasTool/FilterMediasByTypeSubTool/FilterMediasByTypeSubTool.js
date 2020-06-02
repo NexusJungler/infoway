@@ -1,8 +1,7 @@
-import FilterMediasTool from "../FilterMediasTool";
-import Tool from "../../Tool";
+import SubTool from "../../SubTool";
 
 
-class FilterMediasByTypeSubTool extends Tool
+class FilterMediasByTypeSubTool extends SubTool
 {
 
     constructor()
@@ -35,40 +34,39 @@ class FilterMediasByTypeSubTool extends Tool
         {
             $(".filter.filter-media-by-type").on("click.onClickOnMediaFilterByTypeIcon", e => {
 
-                if($(e.currentTarget).hasClass("show-only-images"))
+                // // show all
+                if($(e.currentTarget).hasClass("active"))
                 {
-
-                    if($(e.currentTarget).hasClass("active"))
+                    $(e.currentTarget).removeClass("active");
+                    if(!this.__parent.isAnFilterIsActive())
                     {
-                        $(e.currentTarget).removeClass("active");
-                        this.__$mediasContainer.find(`.card[data-media_type='image']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-media_type!='image']`).removeClass("hidden");
+                        this.__parent.__anFilterIsActive = false;
+                        this.__$mediasContainer.find(`.card`).removeClass("hidden");
                     }
-                    else
-                    {
-                        $(".filter.filter-media-by-type.active").removeClass("active");
-                        $(e.currentTarget).addClass("active")
-                        this.__$mediasContainer.find(`.card[data-media_type='image']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-media_type!='image']`).addClass("hidden");
-                    }
-
                 }
                 else
                 {
 
-                    if($(e.currentTarget).hasClass("active"))
+                    this.__parent.__anFilterIsActive = true;
+
+                    if($(e.currentTarget).hasClass("show-only-images"))
                     {
-                        $(e.currentTarget).removeClass("active");
-                        this.__$mediasContainer.find(`.card[data-media_type='video']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-media_type!='video']`).removeClass("hidden");
+
+                        $(".filter.filter-media-by-type.active").removeClass("active");
+                        $(e.currentTarget).addClass("active")
+                        this.__$mediasContainer.find(`.card[data-media_type='image']`).removeClass("hidden");
+                        this.__$mediasContainer.find(`.card[data-media_type!='image']`).addClass("hidden");
+
                     }
                     else
                     {
+
                         $(".filter.filter-media-by-type.active").removeClass("active");
                         $(e.currentTarget).addClass("active");
                         this.__$mediasContainer.find(`.card[data-media_type='video']`).removeClass("hidden");
                         this.__$mediasContainer.find(`.card[data-media_type!='video']`).addClass("hidden");
                     }
+
                 }
 
             })

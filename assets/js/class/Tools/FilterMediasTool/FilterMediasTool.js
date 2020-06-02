@@ -1,12 +1,7 @@
 import Tool from "../Tool";
 import FilterMediasByTypeSubTool from "./FilterMediasByTypeSubTool/FilterMediasByTypeSubTool";
 import FilterMediasByOrientationSubTool from "./FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool";
-import FilterMediasByCategorySubTool from "./FilterMediasByCategorySubTool/FilterMediasByCategorySubTool";
-import FilterMediasByProductSubTool from "./FilterMediasByProductSubTool/FilterMediasByProductSubTool";
-import FilterMediasByCriterionSubTool from "./FilterMediasByCriterionSubTool/FilterMediasByCriterionSubTool";
-import FilterMediasByTagSubTool from "./FilterMediasByTagSubTool/FilterMediasByTagSubTool";
-import FilterMediasByCharacteristicsSubTool
-    from "./FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool";
+import FilterMediasByCharacteristicsSubTool from "./FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool";
 
 class FilterMediasTool extends Tool
 {
@@ -19,7 +14,8 @@ class FilterMediasTool extends Tool
             new FilterMediasByTypeSubTool(),
             new FilterMediasByOrientationSubTool(),
             new FilterMediasByCharacteristicsSubTool(),
-        ]
+        ];
+        this.__anFilterIsActive = false;
     }
 
     activeSubTool(subToolName)
@@ -29,6 +25,7 @@ class FilterMediasTool extends Tool
             throw new Error(`'${subToolName}' subTool is not registered !`);
 
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
 
         return this;
@@ -52,6 +49,11 @@ class FilterMediasTool extends Tool
     getSubToolIndex(subToolName)
     {
         return this.__subTools.findIndex( subTool =>  subTool.getName() === subToolName );
+    }
+
+    isAnFilterIsActive()
+    {
+        return this.__anFilterIsActive;
     }
 
     enable()

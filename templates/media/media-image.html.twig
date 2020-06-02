@@ -97,36 +97,36 @@
 
                                 <div class="filter-by-characteristics-container">
 
-                                    <div class="filter-by-categories-container">
+                                    <div class="filter-by-categories-container filter-select">
                                         <select id="filter-by-category">
-                                            <option value="0" selected>Catégories</option>
+                                            <option value="none">Aucune catégorie</option>
                                             {% for categorie in categories %}
                                                 <option value="{{ categorie.id }}">{{ categorie.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
 
-                                    <div class="filter-by-products-container">
+                                    <div class="filter-by-products-container filter-select">
                                         <select id="filter-by-product">
-                                            <option value="0" selected>Produits</option>
+                                            <option value="none">Aucun product</option>
                                             {% for product in products %}
                                                 <option value="{{ product.id }}">{{ product.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
 
-                                    <div class="filter-by-criterions-container">
+                                    <div class="filter-by-criterions-container filter-select">
                                         <select id="filter-by-criterion">
-                                            <option value="0" selected>Critères</option>
+                                            <option value="none">Aucun critère</option>
                                             {% for criterion in criterions %}
                                                 <option value="{{ criterion.id }}">{{ criterion.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
 
-                                    <div class="filter-by-tags-container">
+                                    <div class="filter-by-tags-container filter-select">
                                         <select id="filter-by-tag">
-                                            <option value="0" selected>Tags</option>
+                                            <option value="none">Aucun tag</option>
                                             {% for tag in tags %}
                                                 <option value="{{ tag.id }}">{{ tag.name }}</option>
                                             {% endfor %}
@@ -153,7 +153,7 @@
                                 <div class="pagination-container">
 
                                     <div class="displayed-elements-number-selection-container">
-                                        <select name="" id="displayed-elements-number-selection">
+                                        <select id="displayed-elements-number-selection">
                                             {% for choice in numberOfMediasAllowedToDisplayed %}
                                                 <option value="{{ choice }}" {% if choice is same as(app.session.get('numberOfMediasDisplayedInMediatheque')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
                                             {% endfor %}
@@ -162,7 +162,24 @@
 
                                     <div class="pages-container">
                                         {% for i in 1..numberOfPages %}
-                                            <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+
+                                            {% if loop.first or loop.last %}
+                                                <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+                                            {% endif %}
+
+                                            {% if numberOfPages > 3 and not loop.first and not loop.last %}
+
+                                                {% if i < 3 %}
+                                                    <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+
+                                                {% else %}
+
+                                                    <span>...</span>
+
+                                                {% endif %}
+
+                                            {% endif %}
+
                                         {% endfor %}
                                     </div>
 

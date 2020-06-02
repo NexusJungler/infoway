@@ -19,18 +19,20 @@ class PaginatorHandler extends Tool
         page = parseInt(page);
 
         $('.medias-list-container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
+        this.__$location.find('.pages-container').empty();
 
         $.ajax({
             url: `/mediatheque/${mediasDisplayedType}`,
             type: "POST",
             data: { 'mediasDisplayedType': mediasDisplayedType, 'page': page, 'numberOfMediasToDisplay': numberOfMediasToDisplay },
             success: (response) => {
-                // add card
+
                 console.log(response);
 
                 this.rebuildMediasCards(response.mediasToDisplayed);
                 this.rebuildPageList(response.numberOfPages, page);
                 this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
+
                 this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByTypeSubTool').getAgainMediaListContainer();
 
             },
@@ -38,7 +40,7 @@ class PaginatorHandler extends Tool
 
     }
 
-    onClickOnPageReloadMedia(active)
+    onClickOnPageReloadMediatheque(active)
     {
         if(active)
         {
@@ -99,13 +101,15 @@ class PaginatorHandler extends Tool
 
         let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" 
 
-                                data-products="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 0 }" 
+                                data-orientation="${media.orientaion}"
+
+                                data-products="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 'none' }" 
                                 
-                                data-products="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 0 }"
+                                data-products="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 'none' }"
                                  
-                                 data-criterions="${ (media_associated_infos.criterions.length > 0) ? media_associated_infos.criterions.join(', ') : 0 }"
+                                data-criterions="${ (media_associated_infos.criterions.length > 0) ? media_associated_infos.criterions.join(', ') : 'none' }"
                                  
-                                 data-tags="${ (media_associated_infos.tags.length > 0) ? media_associated_infos.tags.join(', ') : 0 }"
+                                data-tags="${ (media_associated_infos.tags.length > 0) ? media_associated_infos.tags.join(', ') : 'none' }"
                                  
                                  >
 
@@ -301,7 +305,7 @@ class PaginatorHandler extends Tool
         super.enable();
         this.onDisplayedMediasNumberChange(true)
             .onMediasSortableByDateChange(true)
-            .onClickOnPageReloadMedia(true)
+            .onClickOnPageReloadMediatheque(true)
         ;
     }
 
@@ -310,7 +314,7 @@ class PaginatorHandler extends Tool
         super.disable();
         this.onDisplayedMediasNumberChange(false)
             .onMediasSortableByDateChange(false)
-            .onClickOnPageReloadMedia(false)
+            .onClickOnPageReloadMediatheque(false)
         ;
     }
 

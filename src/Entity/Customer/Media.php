@@ -96,6 +96,11 @@ class Media
      */
     private $isArchived;
 
+    /**
+     * @ORM\Column(type="string", nullable=false, name="orientation")
+     */
+    private $orientation;
+
 
     public function __construct()
     {
@@ -301,6 +306,18 @@ class Media
     public function setIsArchived(bool $isArchived): self
     {
         $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    public function getOrientation(): string
+    {
+        return $this->orientation;
+    }
+
+    public function setOrientation(string $orientation): self
+    {
+        $this->orientation = $orientation;
 
         return $this;
     }

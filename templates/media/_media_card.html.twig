@@ -1,27 +1,29 @@
 <div class="card" data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}"
 
+        data-orientation="{{ media.orientation }}"
+
         {% if (media_products is not empty) %}
             data-products="{{ media_products|join(', ') }}"
         {% else %}
-            data-products="0"
+            data-products="none"
         {% endif %}
 
         {% if (media_categories is not empty) %}
             data-categories="{{ media_categories|join(', ') }}"
         {% else %}
-            data-categories="0"
+            data-categories="none"
         {% endif %}
 
         {% if (media_criterions is not empty) %}
             data-criterions="{{ media_criterions|join(', ') }}"
         {% else %}
-            data-criterions="0"
+            data-criterions="none"
         {% endif %}
 
         {% if (media_tags is not empty) %}
             data-tags="{{ media_tags|join(', ') }}"
         {% else %}
-            data-tags="0"
+            data-tags="none"
         {% endif %} >
 
     <div class="card-header">

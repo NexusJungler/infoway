@@ -67,6 +67,8 @@ class UploadCron
 
     private $mediaIsArchived;
 
+    private $mediaOrientation;
+
     /**
      * UploadCron constructor.
      *
@@ -99,7 +101,9 @@ class UploadCron
             '8k', '4k', 'HD+', 'HD', 'high', 'medium', 'low',
         ];
 
-        // get dynamically the right EntityManager based on customer name
+        $this->mediaOrientation = null;
+
+        // get dynamically the EntityManager based on customer name
         $this->entityManager = $managerRegistry->getManager(strtolower($this->customer));
 
         //$this->repository = new media_rep($this->getCustomerBase($customer));
@@ -482,6 +486,8 @@ class UploadCron
         switch ($ratio) {
             case 16 / 9:  // Plein Ecran Horizontal
 
+                $this->mediaOrientation = "horizontal";
+
                 if($width < 1920 && $height < 1080) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 1920 x 1080';
                     return false;
@@ -529,6 +535,8 @@ class UploadCron
 
             case 9 / 16:   // Plein Ecran Vertical
 
+                $this->mediaOrientation = "vertical";
+
                 if($width < 1080 && $height < 1920) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 1080 x 1920';
                     return false;
@@ -557,6 +565,8 @@ class UploadCron
 
             case 9 / 8:  // Demi Ecran Horizontal
 
+                $this->mediaOrientation = "horizontal";
+
                 if($width < 1080 && $height < 960) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 1080 x 960';
                     return false;
@@ -584,6 +594,8 @@ class UploadCron
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
+
+                $this->mediaOrientation = "horizontal";
 
                 if ($width < 960 && $height < 1080) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 960 x 1080';
@@ -676,6 +688,8 @@ class UploadCron
         switch ($ratio) {
             case 16 / 9:  // Plein Ecran Horizontal
 
+                $this->mediaOrientation = "horizontal";
+
                 if ($width >= 1920 && $height >= 1080) {
                     $output['high'][0] = 1920;
                     $output['high'][1] = 1080;
@@ -697,6 +711,8 @@ class UploadCron
                 break;
 
             case 9 / 16:   // Plein Ecran Vertical
+
+                $this->mediaOrientation = "vertical";
 
                 if ($width >= 1080 && $height >= 1920) {
                     $output['high'][0] = 1080;
@@ -720,6 +736,8 @@ class UploadCron
 
             case 9 / 8:  // Demi Ecran Horizontal
 
+                $this->mediaOrientation = "horizontal";
+
                 if ($width >= 1080 && $height >= 960) {
                     $output['high'][0] = 1080;
                     $output['high'][1] = 960;
@@ -741,6 +759,8 @@ class UploadCron
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
+
+                $this->mediaOrientation = "vertical";
 
                 if ($width >= 960 && $height >= 1080) {
                     $output['high'][0] = 960;
@@ -913,6 +933,7 @@ class UploadCron
                         $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
                             ->setType($this->mediatype)
                             ->setMimeType($this->mediaMimeType)
+                            ->setOrientation($this->mediaOrientation)
                             ->setIsArchived($this->mediaIsArchived)
                             ->setCreatedAt(new DateTime())
                             ->setDiffusionStart($this->fileDiffusionStart)
@@ -1001,6 +1022,7 @@ class UploadCron
                 $ratio = $this->EstablishFormat($width, $height);
                 $newImg->setName($this->filename)
                        ->setType($this->mediatype)
+                       ->setOrientation($this->mediaOrientation)
                        ->setMimeType($this->mediaMimeType)
                        ->setIsArchived($this->mediaIsArchived)
                        ->setRatio($ratio)
