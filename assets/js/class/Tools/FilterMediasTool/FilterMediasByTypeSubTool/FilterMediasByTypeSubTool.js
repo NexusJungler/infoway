@@ -12,6 +12,23 @@ class FilterMediasByTypeSubTool extends Tool
         this.__$mediasContainer = $(".medias-list-container");
     }
 
+    getMediaContainer()
+    {
+        return this.__$mediasContainer;
+    }
+
+    setMediaContainer(mediaContainer)
+    {
+        this.__$mediasContainer = mediaContainer;
+
+        return this;
+    }
+
+    getAgainMediaListContainer()
+    {
+        this.__$mediasContainer = $(".medias-list-container");
+    }
+
     onClickOnMediaFilterByTypeIcon(active)
     {
         if(active)

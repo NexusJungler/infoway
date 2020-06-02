@@ -33,6 +33,7 @@ class PaginatorHandler extends Tool
                         this.rebuildMediasCard(response.mediasToDisplayed);
                         this.rebuildPageList(response.numberOfPages);
                         this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
+                        this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByTypeSubTool').getAgainMediaListContainer();
 
                     },
                 })

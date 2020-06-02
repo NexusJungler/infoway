@@ -34,6 +34,16 @@ class FilterMediasTool extends Tool
         return this;
     }
 
+    getSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        return this.__subTools[ this.getSubToolIndex(subToolName) ];
+
+    }
+
     subToolIsRegistered(subToolName)
     {
         return this.getSubToolIndex( subToolName ) !== -1;
