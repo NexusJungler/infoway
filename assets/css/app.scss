@@ -20,8 +20,9 @@ body {
     margin: 0;
     padding: 0;
     color: #6F6F6F;
-
-    background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
+    background: url() repeat-x #E2E2E2 ;
+    color: black;
+    // background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
     //width: 100vw;
     //height: 200vh;
 }
@@ -40,6 +41,8 @@ img {
 .hidden{
     display: none!important;
 }
+
+
 
 /** Function for converting  px to rem **/
 @function rem($size) {
@@ -88,7 +91,7 @@ img {
 
 /** SETTINGS **/
 // @import 'settings.scss';
-// @import 'settings/create.scss';
+@import 'settings/create_user.scss';
 
 
 /** MEDIA **/

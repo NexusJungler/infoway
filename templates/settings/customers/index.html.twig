@@ -1,37 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Customer index{% endblock %}
+{% block title %}Enseigne liste{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('customer') }}
+{% endblock %}
 
 {% block body %}
-    <h1>Customer index</h1>
+    <main class="main main_enseigne ">
+        <div class="main-content">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Logo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for customer in customers %}
-            <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.logo }}</td>
-                <td>
-                    <a href="{{ path('customers_show', {'id': customer.id}) }}">show</a>
-                    <a href="{{ path('customers_edit', {'id': customer.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <section class="jumbotron">
 
-    <a href="{{ path('customers_new') }}">Create new</a>
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper-settings.html.twig'  %}
+                {% endblock %}
+    
+            </section>
+
+            <section class="wrapper_tabcontent">
+
+                <div id="setting-enseigne" class="tab-content current enseigne customer-list">
+
+                    <article class="tab-content-title">
+                        <h3 class="title">Enseigne liste</h3>
+                        {# <p>vous êtes Multi-enseigne</p> #}
+                    </article>
+
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <a href="{{ path('customers_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Enseigne</a>
+                                {# <button type="button" class="btn duplicate-enseigne hide-btn"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                <button type="button" class="btn modified-enseigne hide-btn"><i class="far fa-edit"></i>Modifier</button>
+                                <button type="button" class="btn delete-enseigne" data-tablelistdelete="enseigne"><i class="fas fa-trash"></i>Supprimer</button> #}
+                            </div>
+                        </div>
+                    </article> 
+
+                    <article class="table customer-table-list">
+
+                        <table class="table-custome">
+                            <thead class="table-info thead-info">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Logo</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content scrollbar-table">
+                                {% for customer in customers %}
+                                    <tr>
+                                        <td>{{ customer.id }}</td>
+                                        <td>{{ customer.name }}</td>
+                                        <td>{{ customer.logo }}</td>
+                                        <td>
+                                            <a href="{{ path('customers_show', {'id': customer.id}) }}" class="btn">show</a>
+                                            <a href="{{ path('customers_edit', {'id': customer.id}) }}" class="btn" >edit</a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </article>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
 {% endblock %}

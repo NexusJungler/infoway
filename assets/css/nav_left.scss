@@ -1,16 +1,13 @@
 /****************************************************** CONTAINER ********************************************************************/
 #container {
     position: relative;
-    // max-height: 159px;
-    // background-color: #EBEBEB;
     top: rem(130px);
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 100%;
-    background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(180deg, #FFFFFF 30%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
 }
-
 
 /****************************************************** MENU HAMBURGER  ********************************************************************/
 

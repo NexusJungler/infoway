@@ -5,16 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{% block title %}Bienvenue !{% endblock %}</title>
-
         {% block stylesheets %}
             <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
             <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
-            <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
             <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
-            <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
-
+            {# <link href="node_modules/select2/dist/css/select2.min.css" rel="stylesheet" /> #}
             {{ encore_entry_link_tags('app') }}
-        {#{{ encore_entry_link_tags('modal_message') }}#}
+            {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
     </head>
 
@@ -232,7 +229,8 @@
         {% endblock %}
 
         {% block javascripts %}
-            {# <script src="vendor/select2/dist/js/select2.min.js"></script>
+         <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+            {# <script src="node_modules/select2/dist/js/select2.min.js"></script>
             <script>
                     $(".ManyToMany select").select2();
             </script> #}

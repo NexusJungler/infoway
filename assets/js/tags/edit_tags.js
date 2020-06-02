@@ -1,6 +1,6 @@
-// jquery 
-const $ = require('jquery');
-global.$ = global.jQuery = $;
+// // jquery 
+// const $ = require('jquery');
+// global.$ = global.jQuery = $;
 
 //produits
 
@@ -133,17 +133,14 @@ $('.tag__sites__site input[type="checkbox"]').on('change', function(){
     let $inputIds = $('tr.tag__sites__site td input');
 
     $inputIds.each( (index, inputId) => {
-        console.log($(inputId).attr('id'));
         if($(inputId).is(":checked")){
-            console.log("true");
-            $(`.affected-site-container-popup  tr input[id=${$(inputId).attr('id')}]`).prop('checked', true)
+            $(`.affected-site-container-popup  tr input[id=${$(inputId).attr('id')}]`).prop('checked', true);
+            // $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).parents('tr').removeClass('hidden');
         }else{
-            $(`.affected-site-container-popup  tr input[id=${$(inputId).attr('id')}]`).prop('checked', false)
-            console.log("false");
+            $(`.affected-site-container-popup  tr input[id=${$(inputId).attr('id')}]`).prop('checked', false);
+            // $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).parents('tr').addClass('hidden');
         }
     })
-
-    
 });
 
 var val = $('.tags-color-edit').attr("value");

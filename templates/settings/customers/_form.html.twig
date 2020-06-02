@@ -1,35 +1,57 @@
 {{ form_start(form) }}
-{# {{dump(form)}} #}
-
     <div class="content-form-customer">
         <div class="content-left">
             <div class="row">
                 <label class="form-label " for="customer_name">Nom de l'enseigne</label>
                 {{ form_widget(form.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway',}}) }}
             </div>
-            <div>
+            <div class="row row-inputfile">
                 <label class="form-label " >Importer logo</label>
-                {{ form_widget(form.logo) }}
+                <div>
+                    {{ form_widget(form.logo, {'attr': {'class': 'inputfile'}}) }}
+                    <label for="customer_logo"> <i class="far fa-folder"></i> Importer fichier</label>
+                </div>
             </div>
         </div>
         <div class="content-right">
-            <img></img>
+            <div class="content-image">
+                <img src="{{ asset('/build/images/no-available-image.png') }}" alt="no_image" class="update-image">
+            </div>
+            
 
         </div>
     </div>
-
-   
 
     <div class="content-contact">
-        <h2>Contact<H2>
+        <h2 class="title">Contact<h2>
         <div class="content-form-contact">
-            {% for contact in form.contact  %}  
-                {# {{dump(contact)}} #}
-                {{ form_row(contact, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway',}}) }}                    
-            {% endfor %}
+            <div class="row col-input-group">
+                <div class="row-col">
+                    <label class=""> Prénom </label>
+                    {{ form_widget(form.contact.firstName, {'attr': {'class': 'input-custome', ' placeholder' : 'Solène'}}) }}
+                </div>
+                <div class="row-col">
+                    <label class=""> Nom </label>
+                    {{ form_widget(form.contact.lastName, {'attr': {'class': 'input-custome', ' placeholder' : 'Desus'}}) }}
+                </div>
+            </div>
+            <div class="col-input-group">
+                <label class="">Mail</label>
+                {{ form_widget(form.contact.mail, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway'}}) }}
+            </div>
+            <div class="col-input-group">
+                <label class="">Téléphone</label>
+                {{ form_widget(form.contact.telephone, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway'}}) }}
+            </div>
+            <div class="col-input-group">
+                <label class="">Poste</label>
+                {{ form_widget(form.contact.position, {'attr': {'class': 'input-custome', ' placeholder' : 'Infoway'}}) }}
+            </div>
         </div>
-        
     </div>
     
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="content-contact-btn">
+        <button class="btn">{{ button_label|default('Modifier') }}</button>
+    </div>
+    
 {{ form_end(form) }}

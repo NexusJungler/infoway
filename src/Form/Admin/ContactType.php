@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+
 
 class ContactType extends AbstractType
 {
@@ -14,14 +16,22 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('firstName',  TextType::class, [
+                'label' => 'Prénom',
                 'attr' => [
                     'class' => 'input-custome'
+                    
                 ],
             ])
-            ->add('lastName')
-            ->add('mail')
+            ->add('lastName', TextType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('mail', EmailType::class, [
+                'label' => 'Mail',
+            ])
             ->add('telephone')
-            ->add('position')
+            ->add('position', TextType::class, [
+                'label' => 'Poste',
+            ])
         ;
     }
 
