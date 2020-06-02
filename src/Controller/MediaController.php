@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Category;
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
@@ -76,10 +77,12 @@ class MediaController extends AbstractController
         $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
         $incrusteRepo = $manager->getRepository(Incruste::class)->setEntityManager( $manager );
+        $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
 
         $products = $productRepo->findAll();
         $categories = $categoryRepo->findAll();
         $tags = $tagRepo->findAll();
+        $criterions = $criterionRepo->findAll();
         $productsCriterions = $productRepo->findProductsCriterions();
         $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
@@ -151,6 +154,7 @@ class MediaController extends AbstractController
             'products' => $products,
             'categories' => $categories,
             'tags' => $tags,
+            'criterions' => $criterions,
             'productsCriterions' => $productsCriterions,
             'form' => $form->createView(),
             'mediasWaitingForIncrustes' => $mediasWaitingForIncrustes,

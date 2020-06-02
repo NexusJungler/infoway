@@ -7,9 +7,9 @@
         {% endif %}
 
         {% if (media_categories is not empty) %}
-            data-category="{{ media_categories|join(', ') }}"
+            data-categories="{{ media_categories|join(', ') }}"
         {% else %}
-            data-category="0"
+            data-categories="0"
         {% endif %}
 
         {% if (media_criterions is not empty) %}

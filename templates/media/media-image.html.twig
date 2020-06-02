@@ -98,8 +98,8 @@
                                 <div class="filter-by-characteristics-container">
 
                                     <div class="filter-by-categories-container">
-                                        <select name="" id="filter-by-categorie">
-                                            <option value="">Catégories</option>
+                                        <select id="filter-by-category">
+                                            <option value="0" selected>Catégories</option>
                                             {% for categorie in categories %}
                                                 <option value="{{ categorie.id }}">{{ categorie.name }}</option>
                                             {% endfor %}
@@ -107,8 +107,8 @@
                                     </div>
 
                                     <div class="filter-by-products-container">
-                                        <select name="" id="filter-by-product">
-                                            <option value="">Produits</option>
+                                        <select id="filter-by-product">
+                                            <option value="0" selected>Produits</option>
                                             {% for product in products %}
                                                 <option value="{{ product.id }}">{{ product.name }}</option>
                                             {% endfor %}
@@ -116,14 +116,17 @@
                                     </div>
 
                                     <div class="filter-by-criterions-container">
-                                        <select name="" id="">
-                                            <option value="">Critères</option>
+                                        <select id="filter-by-criterion">
+                                            <option value="0" selected>Critères</option>
+                                            {% for criterion in criterions %}
+                                                <option value="{{ criterion.id }}">{{ criterion.name }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
 
                                     <div class="filter-by-tags-container">
-                                        <select name="" id="">
-                                            <option value="">Tags</option>
+                                        <select id="filter-by-tag">
+                                            <option value="0" selected>Tags</option>
                                             {% for tag in tags %}
                                                 <option value="{{ tag.id }}">{{ tag.name }}</option>
                                             {% endfor %}
