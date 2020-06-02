@@ -9,12 +9,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Image extends Media
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    //private $id;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $containIncruste;
+
+    public function getContainIncruste(): bool
+    {
+        return $this->containIncruste;
+    }
+
+    public function setContainIncruste(bool $containIncruste): self
+    {
+        $this->containIncruste = $containIncruste;
+
+        return $this;
+    }
 
 }

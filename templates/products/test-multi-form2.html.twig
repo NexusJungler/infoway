@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="debug">
+        {{ form_start(form) }}
+        {{ form_row(form.product.category) }}
+        {{ form_row(form.product.priceType) }}
+        {{ form_row(form.product.name) }}
+        {{ form_row(form.product.amount) }}
+        {{ form_row(form.product.description) }}
+        {{ form_row(form.product.note) }}
+        {{ form_row(form.product.start) }}
+        {{ form_row(form.product.end) }}
+
+        <div class="ManyToMany">
+            {{ form_row(form.product.criterions) }}
+        </div>
+
+        <div class="ManyToMany">
+            {{ form_row(form.product.tags) }}
+        </div>
+
+        <div class="ManyToMany">
+            {{ form_row(form.product.allergens) }}
+            {#
+            <div>
+                <label class="label-custome" for="allergens">Allergenes</label>
+                <select id="allergens" name="allergens[]" multiple="multiple">
+                    {% for allergen in allergens %}
+                        {% set selected = '' %}
+                        {% if allergen in product_allergens %}
+                            {% set selected = 'selected' %}
+                        {% endif %}
+                        <option value="{{ allergen.id }}" {{ selected }}>{{ allergen.name }}</option>
+                    {% endfor %}
+                </select>+
+            </div>
+            #}
+        </div>
+
+        {{ form_row(form.product.logo) }}
+
+        {#
+        <div id="medias_association_with_context">
+            <div id="upload_ajax">
+                <input type="file" name="new_graph">
+            </div>
+            <ul id="available_graphics">
+                {% for graphic in graphics %}
+                    <li data-id="{{ graphic.id }}"><img src="/datas/medias/piece/{{ graphic.id }}.png" alt="{{ graphic.name }}"></li>
+                {% endfor %}
+            </ul>
+            <ul id="linked_graphics">
+                {% for graphic in linked_graphics %}
+                    <li data-id="{{ graphic.id }}">
+                        <img src="/datas/medias/piece/{{ graphic.id }}.png" alt="{{ graphic.name }}">
+                        <select>
+                            {% for context in contexts %}
+                                <option value="{{ context.id }}" {{ selected }}>{{ context.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        #}
+
+        <div id="factories_prices">
+            {% for price in form.prices %}
+                {% set factory = factories[loop.index-1] %}
+                <h1>Groupe Prix {{ factory.name }}</h1>
+                {{ form_row(price) }}
+            {% endfor %}
+        </div>
+        <div id="checkout_mapping">
+            {% for mapping in form.checkoutMappings %}
+                {% set system = systems[loop.index-1] %}
+                <h1>Système de caisse {{ system.name }}</h1>
+                {{ form_row(mapping) }}
+            {% endfor %}
+        </div>
+
+        <div class="ManyToMany">
+            {{ form_row(form.product.elements) }}
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+        <script>
+            $('.ManyToMany select').select2();
+        </script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $.datepicker.setDefaults($.datepicker.regional[ "fr" ]);
+                $.datepicker.formatDate( "dd-mm-yy", new Date());
+
+                /*
+                $.datepicker.setDefaults({
+                    showOn: "both",
+                    buttonImageOnly: true,
+                    buttonImage: "calendar.gif",
+                    buttonText: "Calendar"
+                });
+                */
+                $(".datepicker").datepicker();
+            });
+        </script>
+        {{ encore_entry_script_tags('edit_product') }}
+    {% endblock javascripts %}
+{% endblock %}

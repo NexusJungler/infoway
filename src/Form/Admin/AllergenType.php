@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Form;
+namespace App\Form\Admin;
 
 use App\Entity\Admin\Allergen;
 use Symfony\Component\Form\AbstractType;
