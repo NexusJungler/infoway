@@ -66,6 +66,8 @@ class PaginatorHandler extends Tool
     buildMediasCard(media, media_associated_infos = { products: [], categories: [] }, mediaType, customer)
     {
 
+        const dateIsComingSoon = ( this.getDaysDiffBetweenDates(media.diffusionEnd, new Date()) <= 14);
+
         let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" 
 
                                 data-products="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 0 }" 
@@ -78,7 +80,7 @@ class PaginatorHandler extends Tool
                                 </div>
                                 
                                 <div class="media-actions-shorcuts-container">
-                                    <div class="shorcut shorcut-diff-date-modification date-coming-soon">
+                                    <div class="shorcut shorcut-diff-date-modification ${ (dateIsComingSoon) ? 'date-coming-soon' : '' }">
                                         <i class="far fa-clock"></i>
                                     </div>
                     
@@ -175,6 +177,14 @@ class PaginatorHandler extends Tool
 
         return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + second;
 
+    }
+
+    getDaysDiffBetweenDates(date1, date2)
+    {
+        date1 = ( date1 instanceof Date) ? date1 : new Date(date1);
+        date2 = ( date2 instanceof Date) ? date2 : new Date(date2);
+        const diffTime = Math.abs(date1 - date2);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
     rebuildPageList(limit)
