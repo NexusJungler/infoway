@@ -3,6 +3,7 @@ namespace App\Service;
 
 
 use App\Entity\Admin\Customer;
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\CriterionsList;
 use App\Errors\Customer\ExistingCriterionsListNameError;
 use App\Errors\CriterionsList\MinimumCriterionsInListNonReachedError;
@@ -56,15 +57,6 @@ class CriterionsListHandlerService
             )
         ) { return false ; }
 
-        /*if( $basicCriterionInlist !== null ) {
-           $criterionsList->getCriterions()->removeElement( $basicCriterionInlist );
-            //$criterionsList->getCriterions()->
-            $criterionsList->getCriterions()->offsetSet(0, $basicCriterionInlist );
-
-            dd( $criterionsList );
-
-
-        }*/
 
         return true;
     }
@@ -72,18 +64,24 @@ class CriterionsListHandlerService
     public function handleCriterionsInList( CriterionsList $criterionsList ) {
 
         $criterionPositionInlist = 0 ;
+        $basicCriterion = $criterionsList->getBasicCriterion();
 
-        foreach($criterionsList->getCriterions() as $criterion){
+        $criterionsListArray  = $criterionsList->getCriterions()->getValues() ;
+        $indexOfBasicCriterionInlist = array_search( $basicCriterion ,$criterionsListArray );
+
+        if( $basicCriterion !== null && $indexOfBasicCriterionInlist ){
+             array_splice($criterionsListArray, $indexOfBasicCriterionInlist,1) ;
+             array_unshift($criterionsListArray,$basicCriterion );
+        }
+
+        foreach($criterionsListArray as $criterion){
 
             if ( $criterion->getName() === null ) {
                 $criterionsList->removeCriterion($criterion) ;
             } else{
-
                 $criterionPositionInlist ++ ;
                 $criterion->setPosition( $criterionPositionInlist ) ;
-
             }
-
         }
 
         return true ;
