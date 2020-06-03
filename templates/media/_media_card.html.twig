@@ -3,27 +3,27 @@
         data-orientation="{{ media.orientation }}"
 
         {% if (media_products is not empty) %}
-            data-products="{{ media_products|join(', ') }}"
+            data-product="{{ media_products|join(', ') }}"
         {% else %}
-            data-products="none"
+            data-product="none"
         {% endif %}
 
         {% if (media_categories is not empty) %}
-            data-categories="{{ media_categories|join(', ') }}"
+            data-category="{{ media_categories|join(', ') }}"
         {% else %}
-            data-categories="none"
+            data-category="none"
         {% endif %}
 
         {% if (media_criterions is not empty) %}
-            data-criterions="{{ media_criterions|join(', ') }}"
+            data-criterion="{{ media_criterions|join(', ') }}"
         {% else %}
-            data-criterions="none"
+            data-criterion="none"
         {% endif %}
 
         {% if (media_tags is not empty) %}
-            data-tags="{{ media_tags|join(', ') }}"
+            data-tag="{{ media_tags|join(', ') }}"
         {% else %}
-            data-tags="none"
+            data-tag="none"
         {% endif %} >
 
     <div class="card-header">

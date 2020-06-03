@@ -9,6 +9,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         this.__name = this.constructor.name;
         this.__$mediasContainer = $(".medias-list-container");
         this.__$container = $(".filter-by-characteristics-container");
+        this.__characteristics = ['category', 'product', 'criterion', 'tag'];
     }
 
     onClickOnFilterValidationButton(active)
@@ -25,13 +26,17 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
                 const criterionSelected = $('#filter-by-criterion').val();
                 const tagSelected = $('#filter-by-tag').val();
 
+                this.registerCharacteristicsFiltersInParent();
+
+                let filters = this.getActivedFilters();
+
                 if(categorySelected === '' && productSelected === '' && criterionSelected === '' && tagSelected === '' )
                 {
                     if(!this.__parent.isAnFilterIsActive())
-                    {
-                        this.__parent.__anFilterIsActive = false;
                         this.__$mediasContainer.find(`.card`).removeClass("hidden");
-                    }
+
+                    else
+                        this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
                 }
                 else
                 {
@@ -40,27 +45,29 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                     if(!this.__parent.isAnFilterIsActive())
                     {
-                        this.__$mediasContainer.find(`.card[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`).removeClass("hidden");
+
+                        let findQuery = '';
+
+                        this.__characteristics.forEach( characteristic => {
+
+                            findQuery += `[data-${characteristic}*='${$(`#filter-by-${characteristic}`).val()}']`;
+
+                        } )
+
+                        if(findQuery === '')
+                            throw new Error(`'${this.__name}'::__characteristics must contain characteristics names but it is empty !`);
+
+                        this.__$mediasContainer.find(`.card${findQuery}`).removeClass("hidden");
+
                     }
                     else
                     {
 
-                        const activeFilters = this.__parent.getActiveFilters();
-                        let filters = `data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`;
+                        //console.log(filters); debugger
 
-                        activeFilters.forEach( (activeFilter) => {
-
-                            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
-
-                        } );
-
-                        console.log(filters); //debugger
-
-                        this.__$mediasContainer.find(`.card[${ filters }`).removeClass("hidden");
+                        this.__$mediasContainer.find(`.card${ filters }`).removeClass("hidden");
 
                     }
-
-
 
                     this.__parent.__anFilterIsActive = true;
                 }
@@ -73,6 +80,48 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         }
 
         return this;
+    }
+
+    registerCharacteristicsFiltersInParent()
+    {
+
+        this.__characteristics.forEach( characteristic => {
+
+            const filter = { 'property': 'data-' + characteristic, 'value': $(`#filter-by-${characteristic}`).val() };
+
+            if(this.__parent.findFilterByProperty(filter.property))
+                this.__parent.replaceAnRegisteredFilter(filter);
+
+            else
+                this.__parent.registerNewFilter(filter);
+
+        } )
+        
+    }
+
+    getActivedFilters()
+    {
+        let filters = '';
+
+        //let filters = `[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`;
+
+        this.__characteristics.forEach( characteristic => {
+
+            const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
+            if(!filterIsRegistered)
+                filters += `[data-${characteristic}*='${$(`#filter-by-${characteristic}`).val()}']`;
+
+        } )
+
+        const activeFilters = this.__parent.getActiveFilters();
+
+        activeFilters.forEach( (activeFilter) => {
+
+            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
+
+        } );
+
+        return filters;
     }
 
     enable()

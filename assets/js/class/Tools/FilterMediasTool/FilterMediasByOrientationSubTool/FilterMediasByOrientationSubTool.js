@@ -17,41 +17,50 @@ class FilterMediasByOrientationSubTool extends SubTool
         {
             $('.filter-media-by-orientation').on("click.onClickOnMediaFilterByOrientationIcon", e => {
 
-                this.__parent.getSubTool()
+                const currentOrientationFilter = $(".filter.filter-media-by-orientation.active");
+                if(currentOrientationFilter.length > 0)
+                {
 
-                // // show all
+                    let filter = { 'property': 'data-orientation', 'value': (currentOrientationFilter.hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical' };
+                    if(this.__parent.isFilterAlreadyRegistered(filter))
+                        this.__parent.removeFilter(filter);
+
+                }
+
+                let filters = this.getActivedFilters();
+
                 if($(e.currentTarget).hasClass("active"))
                 {
                     $(e.currentTarget).removeClass("active");
 
                     if(!this.__parent.isAnFilterIsActive())
-                    {
-                        this.__parent.__anFilterIsActive = false;
                         this.__$mediasContainer.find(`.card`).removeClass("hidden");
-                    }
+
+                    else
+                        this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
                 }
                 else
                 {
 
                     this.__parent.__anFilterIsActive = true;
 
+                    this.__$mediasContainer.find(`.card`).addClass("hidden");
+
+                    this.__parent.registerFiltersInParent({property: 'data-orientation', value: ($(e.currentTarget).hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical'});
+
+                    $(".filter.filter-media-by-orientation.active").removeClass("active");
+
+                    $(e.currentTarget).addClass("active");
+
                     if($(e.currentTarget).hasClass("show-only-horizontal-media"))
-                    {
+                        filters += "[data-orientation*='horizontal']";
 
-                        $(".filter.filter-media-by-orientation.active").removeClass("active");
-                        $(e.currentTarget).addClass("active")
-                        this.__$mediasContainer.find(`.card[data-orientation='horizontal']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-orientation!='horizontal']`).addClass("hidden");
-
-                    }
                     else
-                    {
+                        filters += "[data-orientation*='vertical']";
 
-                        $(".filter.filter-media-by-orientation.active").removeClass("active");
-                        $(e.currentTarget).addClass("active")
-                        this.__$mediasContainer.find(`.card[data-orientation='vertical']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-orientation!='vertical']`).addClass("hidden");
-                    }
+                    //console.log(filters); debugger
+
+                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
 
                 }
 
@@ -63,6 +72,21 @@ class FilterMediasByOrientationSubTool extends SubTool
         }
 
         return this;
+    }
+
+    getActivedFilters()
+    {
+        let filters = '';
+
+        const activeFilters = this.__parent.getActiveFilters();
+
+        activeFilters.forEach( (activeFilter) => {
+
+            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
+
+        } );
+
+        return filters;
     }
 
     enable()

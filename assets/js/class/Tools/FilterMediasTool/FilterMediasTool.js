@@ -75,7 +75,7 @@ class FilterMediasTool extends Tool
             throw new Error(`Attempt to register an filter, but filter must contain 'value' property`);
 
         else if(this.isFilterAlreadyRegistered(filter))
-            throw new Error(`Attempt to register an filter, but an filter is already registered with same property ! Use 'replaceAnRegisteredFilter' for replacement`);
+            throw new Error(`Attempt to register an filter, but an filter is already registered with same datas ! Use 'replaceAnRegisteredFilter' for replacement`);
 
         else
             this.__activeFilters.push(filter);
@@ -94,16 +94,47 @@ class FilterMediasTool extends Tool
         else if(!filter.hasOwnProperty('value'))
             throw new Error(`Attempt to register an filter, but filter must contain 'value' property`);
 
-        else if(!this.isFilterAlreadyRegistered(filter))
-            throw new Error(`Attempt to replace an filter, but this filter is not registered with same property ! Use 'registerNewFilter' for register it`);
+        else if(!this.findFilterByProperty(filter.property))
+            throw new Error(`Attempt to replace an filter, but this filter is not registered ! Use 'registerNewFilter' for register it`);
 
         else
         {
-            this.__activeFilters.splice(this.getRegisteredFilterIndex(filter), 1);
+
+            this.__activeFilters.splice(this.getFilterIndexByProperty(filter.property), 1);
 
             this.__activeFilters.push(filter);
         }
 
+    }
+
+    removeFilter(filter)
+    {
+
+        if( typeof filter !== 'object' )
+            throw new Error(`Attempt to register an filter, but filter must be an object`);
+
+        else if(!filter.hasOwnProperty('property'))
+            throw new Error(`Attempt to register an filter, but filter must contain 'property' property`);
+
+        else if(!filter.hasOwnProperty('value'))
+            throw new Error(`Attempt to register an filter, but filter must contain 'value' property`);
+
+        else if(!this.isFilterAlreadyRegistered(filter))
+            throw new Error(`Attempt to remove an filter, but this filter is not registered ! Use 'registerNewFilter' for register it`);
+
+        else
+            this.__activeFilters.splice(this.getRegisteredFilterIndex(filter), 1);
+
+    }
+
+    findFilterByProperty(property)
+    {
+        return this.getFilterIndexByProperty(property) !== -1;
+    }
+
+    getFilterIndexByProperty(property)
+    {
+        return this.__activeFilters.findIndex( activeFilter => activeFilter.property === property );
     }
 
     isFilterAlreadyRegistered(filter)
@@ -113,7 +144,18 @@ class FilterMediasTool extends Tool
 
     getRegisteredFilterIndex(filter)
     {
-        return this.__activeFilters.findIndex( activeFilter => activeFilter.property === filter.property );
+        return this.__activeFilters.findIndex( activeFilter => activeFilter.property === filter.property && activeFilter.value === filter.value );
+    }
+
+    registerFiltersInParent(filter)
+    {
+
+        if(this.isFilterAlreadyRegistered(filter))
+            this.replaceAnRegisteredFilter(filter);
+
+        else
+            this.registerNewFilter(filter);
+
     }
 
     enable()

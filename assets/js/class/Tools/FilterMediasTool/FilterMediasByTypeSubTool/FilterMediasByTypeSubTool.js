@@ -34,41 +34,49 @@ class FilterMediasByTypeSubTool extends SubTool
         {
             $(".filter.filter-media-by-type").on("click.onClickOnMediaFilterByTypeIcon", e => {
 
-                // // show all
+                const currentTypeFilter = $(".filter.filter-media-by-type.active");
+                if(currentTypeFilter.length > 0)
+                {
+
+                    let filter = { 'property': 'data-media_type', 'value': (currentTypeFilter.hasClass("show-only-images")) ? 'image' : 'video' };
+                    if(this.__parent.isFilterAlreadyRegistered(filter))
+                        this.__parent.removeFilter(filter);
+
+                }
+
+                let filters = this.getActivedFilters();
+
                 if($(e.currentTarget).hasClass("active"))
                 {
                     $(e.currentTarget).removeClass("active");
+
                     if(!this.__parent.isAnFilterIsActive())
-                    {
-                        this.__parent.__anFilterIsActive = false;
                         this.__$mediasContainer.find(`.card`).removeClass("hidden");
-                    }
+                    else
+                        this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
                 }
                 else
                 {
 
                     this.__parent.__anFilterIsActive = true;
 
+                    this.__$mediasContainer.find(`.card`).addClass("hidden");
+
+                    this.__parent.registerFiltersInParent({property: 'data-media_type', value: ($(e.currentTarget).hasClass("show-only-images")) ? 'image' : 'video'});
+
+                    $(".filter.filter-media-by-type.active").removeClass("active");
+
+                    $(e.currentTarget).addClass("active");
+
                     if($(e.currentTarget).hasClass("show-only-images"))
-                    {
+                        filters += "[data-media_type*='image']";
 
-                        $(".filter.filter-media-by-type.active").removeClass("active");
-                        $(e.currentTarget).addClass("active")
-                        this.__$mediasContainer.find(`.card[data-media_type='image']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-media_type!='image']`).addClass("hidden");
-
-                        this.__parent.registerNewFilter({property: 'data-media_type', value: 'image'});
-                    }
                     else
-                    {
+                        filters += "[data-media_type*='video']";
 
-                        $(".filter.filter-media-by-type.active").removeClass("active");
-                        $(e.currentTarget).addClass("active");
-                        this.__$mediasContainer.find(`.card[data-media_type='video']`).removeClass("hidden");
-                        this.__$mediasContainer.find(`.card[data-media_type!='video']`).addClass("hidden");
+                    //console.log(filters); debugger
 
-                        this.__parent.registerNewFilter({property: 'data-media_type', value: 'video'});
-                    }
+                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
 
                 }
 
@@ -80,6 +88,21 @@ class FilterMediasByTypeSubTool extends SubTool
         }
 
         return this;
+    }
+
+    getActivedFilters()
+    {
+        let filters = '';
+
+        const activeFilters = this.__parent.getActiveFilters();
+
+        activeFilters.forEach( (activeFilter) => {
+
+            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
+
+        } );
+
+        return filters;
     }
 
     enable()
