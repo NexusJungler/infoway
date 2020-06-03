@@ -31,6 +31,14 @@ class MediaRepository extends ServiceEntityRepository
         return $this;
     }
 
+    public function getMediaInIncrusteWaitingListNumber()
+    {
+
+
+
+    }
+
+
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
         $column = 'PRO_'.$columnPrice.'_jour';
         $sql = "SELECT $column FROM `qui_groupe_prix_valeurs` WHERE id_produit = ? AND id_groupe_prix = ? and date = (

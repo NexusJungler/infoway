@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="" class="debug">
+        <form method="post" action="{{ path('checkoutsystems::delete') }}">
+            <table id="list">
+                <thead>
+                <tr>
+                    <th>Sélection</th>
+                    <th>Nom</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for system in checkoutsystems %}
+                    <tr>
+                        <td><input type="checkbox" name="systems[{{ system.id }}]"></td>
+                        <td>{{ system.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <button><a href="{{ path('checkoutsystem::create') }}">Ajouter</a></button>
+        <button><a id="edit" href="{{ path('checkoutsystem::edit', {'checkoutSystem': 1}) }}">Modifier</a></button>
+        <button id="delete">Supprimer</button>
+    </div>
+
+    {% block javascripts %}
+    {#{{ encore_entry_script_tags('show_checkoutsystems') }}#}
+    {% endblock javascripts %}
+
+{% endblock %}

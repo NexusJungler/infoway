@@ -5,7 +5,7 @@ import '../css/app.scss';
 // css
 require('../css/custom-style.css');
 require('../css/class/managers/clockManager.css');
-
+require('../css/debug.css');
 
 // import JS
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";

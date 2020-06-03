@@ -97,6 +97,10 @@ class Product
      */
     private $medias;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="ElementGraphic", inversedBy="products", cascade={"persist"})
+     */
+    private $elements;
 
     private $allergens;
 
@@ -107,6 +111,7 @@ class Product
         $this->allergens = new ArrayCollection();
         $this->product_allergens = new ArrayCollection();
         $this->medias = new ArrayCollection() ;
+        $this->elements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -328,7 +333,6 @@ class Product
         return $this->allergens;
     }
 
-
     public function setAllergens(Collection $allergens): self
     {
         $this->allergens = $allergens;
@@ -339,10 +343,13 @@ class Product
     {
         if (!$this->allergens->contains($allergen)) {
             $this->allergens[] = $allergen;
+
+            /*
             $new = new ProductAllergen();
             $new->setAllergenId($allergen->getId())
                 ->setProduct($this);
             $this->addProductAllergen($new);
+            */
         }
 
         return $this;
@@ -350,8 +357,8 @@ class Product
 
     public function removeAllergen(Allergen $allergen): self
     {
-        if ($this->tags->contains($allergen)) {
-            $this->tags->removeElement($allergen);
+        if ($this->allergens->contains($allergen)) {
+            $this->allergens->removeElement($allergen);
         }
 
         return $this;
@@ -383,5 +390,30 @@ class Product
         return $this;
     }
 
+
+    /**
+     * @return Collection|ElementGraphic[]
+     */
+    public function getElements(): Collection
+    {
+        return $this->elements;
+    }
+
+    public function addElement(ElementGraphic $element): self
+    {
+        if (!$this->elements->contains($element)) {
+            $this->elements[] = $element;
+        }
+
+        return $this;
+    }
+
+    public function removeElement(ElementGraphic $element): self
+    {
+        if ($this->elements->contains($element)) {
+            $this->elements->removeElement($element);
+        }
+        return $this;
+    }
 
 }

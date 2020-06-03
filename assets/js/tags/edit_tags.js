@@ -57,30 +57,30 @@ $('.popup__add-product__products input[type="checkbox"]').on('change' , function
 
 // popop site 
 
-$('.tag__sites__site input[type="checkbox"]').on('change', function(){
+// $('.tag__sites__site input[type="checkbox"]').on('change', function(){
 
-    let $targetedCheckBox = $(this) ;
+//     let $targetedCheckBox = $(this) ;
 
-   let needChange = !(  ( $targetedCheckBox.is(':checked') && $targetedCheckBox.is(':visible') ) || ( !$targetedCheckBox.is(':checked') && !$targetedCheckBox.is(':visible') ) )
+//    let needChange = !(  ( $targetedCheckBox.is(':checked') && $targetedCheckBox.is(':visible') ) || ( !$targetedCheckBox.is(':checked') && !$targetedCheckBox.is(':visible') ) )
 
-    if( ! needChange ) return ;
+//     if( ! needChange ) return ;
 
-    let $inputContainer = $targetedCheckBox.parents('tr.tag__sites__site')
-    let $sitesPopupCorrespondingCheckbox = $(`input#add_site_sites_${this.value}`) ;
+//     let $inputContainer = $targetedCheckBox.parents('tr.tag__sites__site')
+//     let $sitesPopupCorrespondingCheckbox = $(`input#add_site_sites_${this.value}`) ;
 
-    if( $(this).is(':checked') ) {
+//     if( $(this).is(':checked') ) {
 
-        $inputContainer.removeClass('hidden')
-        $sitesPopupCorrespondingCheckbox.prop('checked', true)
-        $sitesPopupCorrespondingCheckbox.parents('tr').addClass('hidden')
-    }else{
-        $inputContainer.addClass('hidden')
-        $sitesPopupCorrespondingCheckbox.prop('checked', false)
-        $sitesPopupCorrespondingCheckbox.parents('tr').removeClass('hidden')
+//         $inputContainer.removeClass('hidden')
+//         $sitesPopupCorrespondingCheckbox.prop('checked', true)
+//         $sitesPopupCorrespondingCheckbox.parents('tr').addClass('hidden')
+//     }else{
+//         $inputContainer.addClass('hidden')
+//         $sitesPopupCorrespondingCheckbox.prop('checked', false)
+//         $sitesPopupCorrespondingCheckbox.parents('tr').removeClass('hidden')
 
-    }
-    // console.log( $sitesPopupCorrespondingCheckbox )
-});
+//     }
+//     // console.log( $sitesPopupCorrespondingCheckbox )
+// });
 
 
 // $('.popup__add-site__site input[type="checkbox"]').on('change' , function(){

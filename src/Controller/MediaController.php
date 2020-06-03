@@ -157,7 +157,10 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
+        if($mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
+            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
             return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
 
         elseif($mediaRepository->findOneByName( pathinfo($file['name'])['filename'] ) )
@@ -176,12 +179,6 @@ class MediaController extends AbstractController
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
 
         move_uploaded_file($file['tmp_name'], $path);
-
-        if($mediasHandler->fileIsCorrupt($path, $fileType))
-        {
-            unlink($path);
-            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
 
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
 
@@ -451,7 +448,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        //dd($request->request, $customer);
+        dd($request->request, $customer);
 
         $error = [  ];
 
@@ -519,7 +516,7 @@ class MediaController extends AbstractController
                 $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
                 $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
 
-                if($diffusionStartDate < $diffusionEndDate)
+                if($diffusionEndDate < $diffusionStartDate)
                 {
                     $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
                     break;

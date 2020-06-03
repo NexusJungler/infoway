@@ -38,4 +38,17 @@ $(function() {
         $('#redirectToEdit').submit();
     });
 
+    $("select").change(function(){
+        var options = $(this).children();
+        $.each(options, function(i, option){
+            let value = 'false';
+            // console.log($(this));
+            console.log($(this).prop('selected'));
+            if($(this).prop('checked')) {
+                value = 'true';
+            }
+            // console.log('child ' + i + '= ' + value);
+        });
+    });
+
 });
