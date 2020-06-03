@@ -46,25 +46,39 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
             const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
 
-            let value = $(`#filter-by-${characteristic}`).val();
+            const applyFilterCheckbox = this.__$container.find(`.apply-filter[data-target='${characteristic}']`);
 
-            if(value === '' && filterIsRegistered)
-                this.__parent.removeFilterByProperty('data-' + characteristic);
-
-            else
+            if(applyFilterCheckbox.is(':checked'))
             {
 
-                if(value !== '')
+                console.log("apply"); debugger
+
+                let value = $(`#filter-by-${characteristic}`).val();
+
+                if(value === '' && filterIsRegistered)
+                    this.__parent.removeFilterByProperty('data-' + characteristic);
+
+                else
                 {
 
-                    if(!filterIsRegistered)
-                        this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
+                    if(value !== '')
+                    {
 
-                    else
-                        this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
+                        if(!filterIsRegistered)
+                            this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
+
+                        else
+                            this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
+
+                    }
 
                 }
 
+            }
+            else
+            {
+                if(filterIsRegistered)
+                    this.__parent.removeFilterByProperty('data-' + characteristic);
             }
 
         } )
@@ -72,10 +86,34 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         return this.__parent.getActivedFilters();
     }
 
+    onCharacteristicsSelectChangeCheckedValue(active)
+    {
+
+        if(active)
+        {
+            this.__$container.find('select').on('change.onCharacteristicsSelectChangeCheckedValue', e => {
+
+                const select = $(e.currentTarget);
+
+                if(select.val() === '')
+                    select.parent().prev('.apply-filter-container').find('.apply-filter').prop('checked', false);
+
+            })
+        }
+        else
+        {
+            this.__$container.find('select').off('change.onCharacteristicsSelectChangeCheckedValue');
+        }
+
+        return this;
+
+    }
+
     enable()
     {
         super.enable();
         this.onClickOnFilterValidationButton(true)
+            .onCharacteristicsSelectChangeCheckedValue(true)
         ;
     }
 
@@ -83,6 +121,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
     {
         super.disable();
         this.onClickOnFilterValidationButton(false)
+            .onCharacteristicsSelectChangeCheckedValue(false)
         ;
     }
 
