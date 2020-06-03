@@ -42,6 +42,33 @@ class CriterionsListHandlerService
         $this->_criterionsListsRepo = $this->_em->getRepository( CriterionsList::class ) ;
     }
 
+
+    public function handleBasicCriterionInList( CriterionsList $criterionsList ){
+
+        $basicCriterionInlist = $criterionsList->getBasicCriterion() ;
+
+        if(
+            ( $criterionsList->isBasicCriterionUsed() &&
+                ( $basicCriterionInlist === null || $basicCriterionInlist->getName() === null || ! $criterionsList->getCriterions()->contains( $basicCriterionInlist ) )
+            ) ||
+            ( ! $criterionsList->isBasicCriterionUsed() &&
+                $basicCriterionInlist !== null
+            )
+        ) { return false ; }
+
+        /*if( $basicCriterionInlist !== null ) {
+           $criterionsList->getCriterions()->removeElement( $basicCriterionInlist );
+            //$criterionsList->getCriterions()->
+            $criterionsList->getCriterions()->offsetSet(0, $basicCriterionInlist );
+
+            dd( $criterionsList );
+
+
+        }*/
+
+        return true;
+    }
+
     public function handleCriterionsInList( CriterionsList $criterionsList ) {
 
         $criterionPositionInlist = 0 ;

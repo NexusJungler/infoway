@@ -44,7 +44,6 @@ class CriterionsListController extends AbstractController
 
         $criterionList = new CriterionsList();
 
-
         $criterionList->addCriterion( new Criterion() );
         $criterionList->addCriterion( new Criterion() );
 
@@ -60,12 +59,14 @@ class CriterionsListController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if (
-                    $criterionsListsHandler->isCriterionsListNameAlreadyExistInDb( $criterionList )
-                ||  ! $criterionsListsHandler->handleCriterionsInList( $criterionList )
-                ||  ! $criterionsListsHandler->isMinimumCriterionsInListLimitIsReached( $criterionList )
-            ) return $this->redirectToRoute( 'criterions_lists_new' ) ;
 
+            if (
+                $criterionsListsHandler->isCriterionsListNameAlreadyExistInDb( $criterionList ) ||
+                ! $criterionsListsHandler->handleBasicCriterionInList( $criterionList ) ||
+                ! $criterionsListsHandler->handleCriterionsInList( $criterionList ) ||
+                ! $criterionsListsHandler->isMinimumCriterionsInListLimitIsReached( $criterionList )
+            ) return $this->redirectToRoute( 'criterions_lists_new' ) ;
+          //  dd( $criterionList );
             // dd($criterionList);
             $currentEM->persist($criterionList);
             $currentEM->flush();

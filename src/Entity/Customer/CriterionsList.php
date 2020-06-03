@@ -40,6 +40,14 @@ class CriterionsList
      */
     private $criterions;
 
+    private $basicCriterionUsed = false ;
+    /**
+     * One Product has One Shipment.
+     * @ORM\OneToOne(targetEntity="Criterion")
+     * @ORM\JoinColumn(name="basic_criterion_id", referencedColumnName="id", nullable=true )
+     */
+    private $basicCriterion;
+
 
     // ...
 
@@ -110,12 +118,43 @@ class CriterionsList
     {
         if ($this->criterions->contains($criterion)) {
             $this->criterions->removeElement($criterion);
+            if( $criterion === $this->getBasicCriterion() ) $this->setBasicCriterion( null ) ;
             // set the owning side to null (unless already changed)
             if ($criterion->getList() === $this) {
                 $criterion->setList(null);
             }
         }
 
+        return $this;
+    }
+
+    public function isBasicCriterionUsed() : bool {
+        return $this->basicCriterionUsed ;
+    }
+
+    public function setBasicCriterionUsed(bool $basicCriterionUsed) : self {
+
+        $this->basicCriterionUsed = $basicCriterionUsed ;
+
+        return $this ;
+
+    }
+    public function getBasicCriterion(): ?Criterion
+    {
+        return $this->basicCriterion;
+    }
+
+    public function setBasicCriterion(?Criterion $basicCriterion): self
+    {
+
+        if( $basicCriterion !== null ){
+            $this->addCriterion( $basicCriterion );
+        }else{
+            if( $this->basicCriterion !== null ){
+                $this->removeCriterion( $this->basicCriterion );
+            }
+        }
+        $this->basicCriterion = $basicCriterion;
         return $this;
     }
 
