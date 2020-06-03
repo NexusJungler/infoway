@@ -57,9 +57,17 @@ class FilterMediasTool extends Tool
         return this.__anFilterIsActive;
     }
 
-    getActiveFilters()
+    getActivedFilters()
     {
-        return this.__activeFilters;
+        let filters = '';
+
+        this.__activeFilters.forEach( (activeFilter) => {
+
+            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
+
+        } );
+
+        return filters;
     }
 
     registerNewFilter(filter= {property: null, value: null})

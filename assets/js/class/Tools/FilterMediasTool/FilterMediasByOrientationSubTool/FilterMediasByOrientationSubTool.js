@@ -17,34 +17,31 @@ class FilterMediasByOrientationSubTool extends SubTool
         {
             $('.filter-media-by-orientation').on("click.onClickOnMediaFilterByOrientationIcon", e => {
 
-                const currentOrientationFilter = $(".filter.filter-media-by-orientation.active");
-                if(currentOrientationFilter.length > 0)
-                {
+                let filter = { 'property': 'data-orientation', 'value': ($(e.currentTarget).hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical' };
+                if(this.__parent.findFilterByProperty(filter.property))
+                    this.__parent.replaceAnRegisteredFilter(filter);
 
-                    let filter = { 'property': 'data-orientation', 'value': (currentOrientationFilter.hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical' };
-                    if(this.__parent.isFilterAlreadyRegistered(filter))
-                        this.__parent.removeFilter(filter);
+                else
+                    this.__parent.registerNewFilter(filter);
 
-                }
+                let filters = this.__parent.getActivedFilters();
 
-                let filters = this.getActivedFilters();
+                this.__$mediasContainer.find(`.card`).addClass("hidden");
 
                 if($(e.currentTarget).hasClass("active"))
                 {
+
                     $(e.currentTarget).removeClass("active");
 
-                    if(!this.__parent.isAnFilterIsActive())
-                        this.__$mediasContainer.find(`.card`).removeClass("hidden");
+                    this.__parent.removeFilter(filter);
 
-                    else
-                        this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+                    filters = this.__parent.getActivedFilters();
+
+                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+
                 }
                 else
                 {
-
-                    this.__parent.__anFilterIsActive = true;
-
-                    this.__$mediasContainer.find(`.card`).addClass("hidden");
 
                     this.__parent.registerFiltersInParent({property: 'data-orientation', value: ($(e.currentTarget).hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical'});
 
@@ -72,21 +69,6 @@ class FilterMediasByOrientationSubTool extends SubTool
         }
 
         return this;
-    }
-
-    getActivedFilters()
-    {
-        let filters = '';
-
-        const activeFilters = this.__parent.getActiveFilters();
-
-        activeFilters.forEach( (activeFilter) => {
-
-            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
-
-        } );
-
-        return filters;
     }
 
     enable()

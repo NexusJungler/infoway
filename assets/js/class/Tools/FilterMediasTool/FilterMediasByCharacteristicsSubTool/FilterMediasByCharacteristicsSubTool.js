@@ -21,56 +21,11 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                 e.preventDefault();
 
-                const categorySelected = $('#filter-by-category').val();
-                const productSelected = $('#filter-by-product').val();
-                const criterionSelected = $('#filter-by-criterion').val();
-                const tagSelected = $('#filter-by-tag').val();
-
-                this.registerCharacteristicsFiltersInParent();
-
                 let filters = this.getActivedFilters();
 
-                if(categorySelected === '' && productSelected === '' && criterionSelected === '' && tagSelected === '' )
-                {
-                    if(!this.__parent.isAnFilterIsActive())
-                        this.__$mediasContainer.find(`.card`).removeClass("hidden");
+                this.__$mediasContainer.find(`.card`).addClass("hidden");
 
-                    else
-                        this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
-                }
-                else
-                {
-
-                    this.__$mediasContainer.find(`.card`).addClass("hidden");
-
-                    if(!this.__parent.isAnFilterIsActive())
-                    {
-
-                        let findQuery = '';
-
-                        this.__characteristics.forEach( characteristic => {
-
-                            findQuery += `[data-${characteristic}*='${$(`#filter-by-${characteristic}`).val()}']`;
-
-                        } )
-
-                        if(findQuery === '')
-                            throw new Error(`'${this.__name}'::__characteristics must contain characteristics names but it is empty !`);
-
-                        this.__$mediasContainer.find(`.card${findQuery}`).removeClass("hidden");
-
-                    }
-                    else
-                    {
-
-                        //console.log(filters); debugger
-
-                        this.__$mediasContainer.find(`.card${ filters }`).removeClass("hidden");
-
-                    }
-
-                    this.__parent.__anFilterIsActive = true;
-                }
+                this.__$mediasContainer.find(`.card${ filters }`).removeClass("hidden");
 
             })
         }
@@ -82,46 +37,27 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         return this;
     }
 
-    registerCharacteristicsFiltersInParent()
-    {
-
-        this.__characteristics.forEach( characteristic => {
-
-            const filter = { 'property': 'data-' + characteristic, 'value': $(`#filter-by-${characteristic}`).val() };
-
-            if(this.__parent.findFilterByProperty(filter.property))
-                this.__parent.replaceAnRegisteredFilter(filter);
-
-            else
-                this.__parent.registerNewFilter(filter);
-
-        } )
-        
-    }
-
     getActivedFilters()
     {
-        let filters = '';
-
-        //let filters = `[data-categories*='${categorySelected}'][data-products*='${productSelected}'][data-criterions*='${criterionSelected}'][data-tags*='${tagSelected}']`;
 
         this.__characteristics.forEach( characteristic => {
 
             const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
+
+            let value = $(`#filter-by-${characteristic}`).val();
+
+            if(value === '')
+                value = 'none';
+
             if(!filterIsRegistered)
-                filters += `[data-${characteristic}*='${$(`#filter-by-${characteristic}`).val()}']`;
+                this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
+
+            else
+                this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
 
         } )
 
-        const activeFilters = this.__parent.getActiveFilters();
-
-        activeFilters.forEach( (activeFilter) => {
-
-            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
-
-        } );
-
-        return filters;
+        return this.__parent.getActivedFilters();
     }
 
     enable()

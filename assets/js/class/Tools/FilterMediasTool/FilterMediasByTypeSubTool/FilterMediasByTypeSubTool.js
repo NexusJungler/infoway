@@ -34,45 +34,36 @@ class FilterMediasByTypeSubTool extends SubTool
         {
             $(".filter.filter-media-by-type").on("click.onClickOnMediaFilterByTypeIcon", e => {
 
-                const currentTypeFilter = $(".filter.filter-media-by-type.active");
-                if(currentTypeFilter.length > 0)
-                {
+                let filter = { 'property': 'data-media_type', 'value': ($(e.currentTarget).hasClass("show-only-images")) ? 'image' : 'video' };
+                if(this.__parent.findFilterByProperty(filter.property))
+                    this.__parent.replaceAnRegisteredFilter(filter);
 
-                    let filter = { 'property': 'data-media_type', 'value': (currentTypeFilter.hasClass("show-only-images")) ? 'image' : 'video' };
-                    if(this.__parent.isFilterAlreadyRegistered(filter))
-                        this.__parent.removeFilter(filter);
+                else
+                    this.__parent.registerNewFilter(filter);
 
-                }
+                let filters = this.__parent.getActivedFilters();
 
-                let filters = this.getActivedFilters();
+                this.__$mediasContainer.find(`.card`).addClass("hidden");
 
                 if($(e.currentTarget).hasClass("active"))
                 {
                     $(e.currentTarget).removeClass("active");
 
-                    if(!this.__parent.isAnFilterIsActive())
-                        this.__$mediasContainer.find(`.card`).removeClass("hidden");
-                    else
-                        this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+                    this.__parent.removeFilter(filter);
+
+                    filters = this.__parent.getActivedFilters();
+
+                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+
                 }
                 else
                 {
-
-                    this.__parent.__anFilterIsActive = true;
-
-                    this.__$mediasContainer.find(`.card`).addClass("hidden");
 
                     this.__parent.registerFiltersInParent({property: 'data-media_type', value: ($(e.currentTarget).hasClass("show-only-images")) ? 'image' : 'video'});
 
                     $(".filter.filter-media-by-type.active").removeClass("active");
 
                     $(e.currentTarget).addClass("active");
-
-                    if($(e.currentTarget).hasClass("show-only-images"))
-                        filters += "[data-media_type*='image']";
-
-                    else
-                        filters += "[data-media_type*='video']";
 
                     //console.log(filters); debugger
 
@@ -88,21 +79,6 @@ class FilterMediasByTypeSubTool extends SubTool
         }
 
         return this;
-    }
-
-    getActivedFilters()
-    {
-        let filters = '';
-
-        const activeFilters = this.__parent.getActiveFilters();
-
-        activeFilters.forEach( (activeFilter) => {
-
-            filters += `[${activeFilter.property}*='${activeFilter.value}']`;
-
-        } );
-
-        return filters;
     }
 
     enable()
