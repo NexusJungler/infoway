@@ -17,21 +17,31 @@ class CriterionsListType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('description')
+            ->add('basicCriterionUsed', ChoiceType::class, [
+                'label' => 'Définir un critère de base ?',
+                'choices' => [
+                    'Oui' => 1 ,
+                ],
+                'expanded' => true,
+            ])
+            ->add('basicCriterion', CriterionInListType::class,[
+                'required' => false,
+                'label' => 'Critère de base'
+            ])
             ->add('multiple',ChoiceType::class,  [
                 'choices'  => [
                     'Multiple' => true,
                     'Unique' => false,
                 ],
             ])
-            ->add('description')
             ->add('criterions', CollectionType::class, array(
                 'entry_type' => CriterionInListType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false,
-                
+                'required' => false,                
             ));
-
+            
         ;
     }
 
