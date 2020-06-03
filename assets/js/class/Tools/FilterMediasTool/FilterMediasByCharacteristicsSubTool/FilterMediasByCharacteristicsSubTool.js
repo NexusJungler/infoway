@@ -23,6 +23,8 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                 let filters = this.getActivedFilters();
 
+                console.log(filters); debugger
+
                 this.__$mediasContainer.find(`.card`).addClass("hidden");
 
                 this.__$mediasContainer.find(`.card${ filters }`).removeClass("hidden");
@@ -46,14 +48,24 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
             let value = $(`#filter-by-${characteristic}`).val();
 
-            if(value === '')
-                value = 'none';
-
-            if(!filterIsRegistered)
-                this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
+            if(value === '' && filterIsRegistered)
+                this.__parent.removeFilterByProperty('data-' + characteristic);
 
             else
-                this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
+            {
+
+                if(value !== '')
+                {
+
+                    if(!filterIsRegistered)
+                        this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
+
+                    else
+                        this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
+
+                }
+
+            }
 
         } )
 

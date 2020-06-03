@@ -135,6 +135,16 @@ class FilterMediasTool extends Tool
 
     }
 
+    removeFilterByProperty(property)
+    {
+
+        if(!this.findFilterByProperty(property))
+            throw new Error(``);
+
+        this.__activeFilters.splice(this.getFilterIndexByProperty(property), 1);
+
+    }
+
     findFilterByProperty(property)
     {
         return this.getFilterIndexByProperty(property) !== -1;

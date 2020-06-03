@@ -163,6 +163,10 @@
                             border: 3px solid #00B8F5;;
                         }
 
+                        .filter.show-only-horizontal-media i {
+                            transform: rotate(-90deg);
+                        }
+
                     }
 
                     .filter-by-characteristics-container {
