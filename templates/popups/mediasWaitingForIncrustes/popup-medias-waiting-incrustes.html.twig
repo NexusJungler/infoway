@@ -1,5 +1,150 @@
-<article class="" id="mediasWaitingForIncrustes-popup">
+<section class="popup_container popup_medias_waiting_incrustation_container">
 
+    <article class="popup popup_medias_waiting_incrustes">
 
+        <div class="header-modal">
 
-</article>
+            <div class="left-side">
+                <div class="item icon-container">
+                    <i class="fas fa-hourglass-half icon"></i>
+                </div>
+
+                <div class="item title-container">
+                    <p class="title">Médias en attente d'incrustation</p>
+                </div>
+
+                <div class="item medias-number-container">
+                    <p class="medias-number">{{ mediasWaitingForIncrustation['number'] }}</p>
+                </div>
+
+            </div>
+
+            <div class="right-side">
+
+                <div class="close-modal-button-container">
+                    <button type="button" class="close-modal-button">X</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="body-modal">
+
+            <div class="archived_medias_list_container">
+
+                <form action="" name="edit_media_waiting_incrustation">
+
+                    <table>
+
+                        <thead>
+                        <tr>
+                            <th class="select_media_col"></th>
+                            <th class="media_miniature_col">Médias</th>
+                            <th class="media_characteristics_col">Caractéristiques</th>
+                            <th class="media_name_col">Nom</th>
+                            <th class="media_associated_criterions_col">Critères affectés</th>
+                            <th class="media_associated_tags_col">TAGS affectés</th>
+                            <th class="media_associated_products_col">Associer produits</th>
+                            <th class="media_incrustations_col">Prix & Rupture</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="archived_medias_list">
+
+                        {% for media in mediasWaitingForIncrustation['medias'] %}
+
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="select_media" data-media="{{ media.id }}">
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <input type="text" value="{{ media.name }}" name="edit_media_waiting_incrustation['medias'][{{ loop.index0 }}][name]">
+                                </td>
+                                <td>
+
+                                    {% if media.products.values is empty %}
+
+                                        <span>0 critères affectés</span>
+
+                                    {% else %}
+
+                                        {% for product in media.products.values %}
+
+                                            {% for criterion in productsCriterions[product.id] %}
+                                               <span>{{ criterion }}</span>
+                                            {% endfor %}
+
+                                        {% endfor %}
+
+                                    {% endif %}
+
+                                </td>
+                                <td>
+
+                                    {% if media.tags.values is empty %}
+
+                                        <span>0 tags affectés</span>
+
+                                    {% else %}
+
+                                        {% for tag in media.tags.values %}
+                                            <span>{{ tag.name }}</span>
+                                        {% endfor %}
+
+                                    {% endif %}
+
+                                </td>
+                                <td>
+                                    {% if media.products.values is empty %}
+
+                                        <span>0 produits affectés</span>
+
+                                    {% else %}
+
+                                        {% for product in media.products.values %}
+
+                                            <span>{{ product.name }}</span>
+
+                                        {% endfor %}
+
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button">Incrustes</button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </form>
+
+            </div>
+
+            <div class="body_modal_bottom">
+
+                <div class="actions_buttons_container">
+                    <button class="btn close-modal-button" type="button">Fermer</button>
+                </div>
+
+                <div class="actions_buttons_container">
+                    <button class="btn save_medias_edited_infos" type="button">Enregistrer</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</section>

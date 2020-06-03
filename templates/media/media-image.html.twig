@@ -24,7 +24,7 @@
                                         <i class="fas fa-hourglass-half"></i>
                                         En attente d'incrustation
                                     </button>
-                                    <span class="media-waiting-incrustation-number">{{ mediasWaitingForIncrustes['size'] }}</span>
+                                    <span class="media-waiting-incrustation-number">{{ mediasWaitingForIncrustation['number'] }}</span>
                                 </div>
 
                                 <div class="show-archived-media-container container">
@@ -32,7 +32,7 @@
                                         <i class="fas fa-archive"></i>
                                         Médias archivés
                                     </button>
-                                    <span class="archived-medias-number">{{ archivedMedias['size'] }}</span>
+                                    <span class="archived-medias-number">{{ archivedMedias['number'] }}</span>
                                 </div>
 
                             </div>
@@ -243,6 +243,9 @@
                 {% include "/popups/upload-popup.html.twig" %}
 
             {% endif %}
+
+            {% include "/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" %}
+
         </article>
     </section>
 

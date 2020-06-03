@@ -27,7 +27,7 @@ class MediaType extends AbstractType
                 'label' => 'Id',
                 'attr' => [
                     'class' => 'media_id',
-                    'value' => '__MEDIA_ID__',
+                    //'value' => '__MEDIA_ID__',
                     //'disabled' => true,
                 ]
             ])
@@ -36,16 +36,7 @@ class MediaType extends AbstractType
                 'label' => 'Nom',
                 'attr' => [
                     'class' => 'media_name',
-                    'value' => '__MEDIA_NAME__',
-                    //'disabled' => true,
-                ]
-            ])
-
-            ->add('mediaType', TextType::class, [
-                'label' => 'Type du media',
-                'attr' => [
-                    'class' => 'media_type',
-                    'value' => '__MEDIA_TYPE__',
+                    //'value' => '__MEDIA_NAME__',
                     //'disabled' => true,
                 ]
             ])
@@ -54,7 +45,7 @@ class MediaType extends AbstractType
                 'label' => 'Extension',
                 'attr' => [
                     'class' => 'media_extension',
-                    'value' => '__MEDIA_EXTENSION__',
+                    //'value' => '__MEDIA_EXTENSION__',
                     //'disabled' => true,
                 ]
             ])

@@ -60,9 +60,9 @@
                 <div class="media_list_container">
 
                     <div class="hidden">
-                        {{ form_start(form) }}
-                        <ul class="medias_collection" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
-                        {{ form_end(form) }}
+                        {{ form_start(uploadMediaForm) }}
+                        <ul class="medias_collection" data-prototype="{{ form_widget(uploadMediaForm.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
+                        {{ form_end(uploadMediaForm) }}
                     </div>
 
                     <table class="media_list">

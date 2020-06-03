@@ -6,6 +6,7 @@ import MediaTagAssociationHandlerTool from "../TagAssociationHandler/MediaTagAss
 import ArchivedMediasHandlerTool from "../ArchivedMediasHandler/ArchivedMediasHandlerTool";
 import PaginatorHandler from "../PaginatorHandler/PaginatorHandler";
 import FilterMediasTool from "../FilterMediasTool/FilterMediasTool";
+import MediaWaitingIncrustationHandler from "../MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
 
 class ToolBox
 {
@@ -34,6 +35,7 @@ class ToolBox
             new ArchivedMediasHandlerTool(),
             new PaginatorHandler(),
             new FilterMediasTool(),
+            new MediaWaitingIncrustationHandler(),
         ];
     }
 

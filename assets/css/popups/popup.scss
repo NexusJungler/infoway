@@ -1,0 +1,24 @@
+.popup_container{
+
+    margin-top: 0;
+    position: absolute;
+    height: 650px;
+    width: 1563px;
+    background-color: transparent;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    top: 51%;
+    left: 6.2%;
+    z-index: 10000;
+    transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+    &.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      .modal {
+        transform: translate(0px, 0px);
+        margin-top: 0;
+      }
+    }
+
+}

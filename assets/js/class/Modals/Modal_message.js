@@ -20,7 +20,7 @@ class Modal_message {
 
     create(container = "body", content) {
 
-        if($(container).children("div.modals").length > 0)
+        if($(container).children("div.popups").length > 0)
             $(`${container} div.modal`).remove();
 
         const modal = $('<div/>', {

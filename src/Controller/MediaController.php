@@ -84,7 +84,7 @@ class MediaController extends AbstractController
         $tags = $tagRepo->findAll();
         $criterions = $criterionRepo->findAll();
         $productsCriterions = $productRepo->findProductsCriterions();
-        $mediasWaitingForIncrustes = $mediaRepo->getMediasInWaitingListForIncrustes();
+        $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
         if($request->isXmlHttpRequest() AND $request->isMethod("POST"))
@@ -128,7 +128,8 @@ class MediaController extends AbstractController
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
         $mediaList = new MediasList();
-        $form = $this->createForm(MediasListType::class, $mediaList, [
+
+        $uploadMediaForm = $this->createForm(MediasListType::class, $mediaList, [
             'attr' => [
                 'id' => 'medias_list_form'
             ]
@@ -156,8 +157,8 @@ class MediaController extends AbstractController
             'tags' => $tags,
             'criterions' => $criterions,
             'productsCriterions' => $productsCriterions,
-            'form' => $form->createView(),
-            'mediasWaitingForIncrustes' => $mediasWaitingForIncrustes,
+            'uploadMediaForm' => $uploadMediaForm->createView(),
+            'mediasWaitingForIncrustation' => $mediasWaitingForIncrustation,
             'mediasToDisplayed' => $mediasToDisplayed,
             'numberOfPages' => $numberOfPages,
             'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,

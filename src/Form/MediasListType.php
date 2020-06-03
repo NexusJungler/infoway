@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Customer\MediasList;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -15,12 +14,14 @@ class MediasListType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder->add('medias', CollectionType::class, [
             'label' => false,
             'required' => false,
             'entry_type' => MediaType::class,
             'allow_add' => true,
         ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

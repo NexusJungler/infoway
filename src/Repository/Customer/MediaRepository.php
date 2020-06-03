@@ -67,7 +67,7 @@ class MediaRepository extends ServiceEntityRepository
         //dd($medias);
 
         return [
-            'size' => sizeof($medias),
+            'number' => sizeof($medias),
             'medias' => $medias
         ];
 
@@ -80,7 +80,7 @@ class MediaRepository extends ServiceEntityRepository
         $medias = $this->findBy(['isArchived' => true]);
 
         return [
-            'size' => sizeof($medias),
+            'number' => sizeof($medias),
             'medias' => $medias
         ];
 
@@ -190,7 +190,7 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
-    private function findProductCriterions()
+    private function getTagsByMedia(Media $media)
     {
 
 

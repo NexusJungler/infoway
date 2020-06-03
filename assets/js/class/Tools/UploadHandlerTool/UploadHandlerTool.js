@@ -557,7 +557,7 @@ class UploadHandlerTool extends Tool
             newWidget = newWidget.replace(/__name__/g, counter);
             newWidget = newWidget.replace(/__MEDIA_ID__/g, item.id);
             newWidget = newWidget.replace(/__MEDIA_NAME__/g, item.fileName);
-            newWidget = newWidget.replace(/__MEDIA_TYPE__/g, item.type);
+            //newWidget = newWidget.replace(/__MEDIA_TYPE__/g, item.type);
             newWidget = newWidget.replace(/__MEDIA_EXTENSION__/g, item.extension);
 
             // create a new list element and add it to the list
