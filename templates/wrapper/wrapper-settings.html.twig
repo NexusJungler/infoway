@@ -2,7 +2,11 @@
     <div class="wrapper-content">
         <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
         <ul class="tabs">
-            <a href="{{ path('customers_new') }}"><li class="{% if app.request.attributes.get('_route') == 'customers_new' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>
+            <a href="{{ path('customers_new') }}">
+                <li class="{% if app.request.attributes.get('_route') is same as('customers_new') or app.request.attributes.get('_route') is same as('customers_show') %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> 
+                    <p class="css-tab__label">Enseigne</p>
+                </li>
+            </a>
             <a href="{{ path('users:view') }}"><li class="{% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>
             <a href="{{ path('criterions_lists_index') }}">
                 <li class="{% if app.request.attributes.get('_route') is same as( 'criterions_lists_index' ) or app.request.attributes.get('_route') is same as( 'criterions_lists_new' ) or app.request.attributes.get('_route') is same as( 'criterions_lists_edit') %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings">

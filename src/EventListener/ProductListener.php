@@ -11,13 +11,12 @@ use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\ManagerRegistry;
 
-
 class ProductListener
 {
     // the entity listener methods receive two arguments:
     // the entity instance and the lifecycle event
     public function initializeAllergens(Product $product, $e)
     {
-        $product->setAllergens( new ArrayCollection() );
+        $product->setAllergens(new ArrayCollection());
     }
 }

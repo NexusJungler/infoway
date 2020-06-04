@@ -7,12 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="media_type", type="string")
- * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video" })
+ * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "element_graphic" = "ElementGraphic" })
  * @UniqueEntity(fields={"name"})
  */
 class Media
@@ -71,26 +72,19 @@ class Media
     private $width;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", mappedBy="medias")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media")
      */
     private $tags;
 
     /**
-     * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="medias", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Product", inversedBy="media")
      */
     private $products;
-
 
     /**
      * @ORM\Column(type="string", nullable=false)
      */
     private $type;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $containIncruste;
 
     public function __construct()
     {
@@ -98,13 +92,6 @@ class Media
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
-
-    public function setId( int $id ): self{
-        $this->id = $id ;
-
-        return $this;
-    }
-
 
     public function getId(): ?int
     {
@@ -279,18 +266,6 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getContainIncruste(): bool
-    {
-        return $this->containIncruste;
-    }
-
-    public function setContainIncruste(bool $containIncruste): self
-    {
-        $this->containIncruste = $containIncruste;
 
         return $this;
     }

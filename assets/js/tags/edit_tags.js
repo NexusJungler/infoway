@@ -57,6 +57,8 @@ $('.popup__add-product__products input[type="checkbox"]').on('change' , function
 
 // popop site 
 
+// window.onbeforeunload
+
 $('.tag__sites__site input[type="checkbox"]').on('change', function(){
 
     let $targetedCheckBox = $(this) ;
@@ -83,33 +85,8 @@ $('.tag__sites__site input[type="checkbox"]').on('change', function(){
 });
 
 
-// $('.popup__add-site__site input[type="checkbox"]').on('change' , function(){
-
-//     let $targetedCheckBox = $(this) ;
-
-//     let $inputContainer = $targetedCheckBox.parents('tr.popup__add-site__site')
-//     let $tagSitesCorrespondingCheckbox = $(`input#tag_sites_${this.value}`);
-
-//     let needChange = !(  ( $targetedCheckBox.is(':checked') &&  $inputContainer.css('display') === 'none' ) || ( ! $targetedCheckBox.is(':checked') &&  $inputContainer.css('display') !== 'none' ) )
-//     if( ! needChange )  return ;
-
-//     if( $(this).is(':checked') ) {
-//         // $inputContainer.addClass('hidden')
-//         $tagSitesCorrespondingCheckbox.prop('checked', true)
-//         $tagSitesCorrespondingCheckbox.parents('tr').removeClass('hidden')
-//     }else{
-//         // $inputContainer.removeClass('hidden')
-//         $tagSitesCorrespondingCheckbox.prop('checked', false)
-//         $tagSitesCorrespondingCheckbox.parents('tr').addClass('hidden')
-//     }
-//     // console.log( $tagSitesCorrespondingCheckbox )
-
-// })
-
-
 let siteInputPopup = [];
 let siteInput = [];
-
 
 $('.btn-add-site').on("click", function(){
 
@@ -117,11 +94,11 @@ $('.btn-add-site').on("click", function(){
 
     $inputPopupIds.each( (index, inputPopupId) => {
         if($(inputPopupId).is(":checked")){
-            $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).parents('tr').removeClass('hidden');
-            $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).prop('checked', true)
+            $(`.affected-site-container tr input[class=${$(inputPopupId).attr('class')}]`).parents('tr').removeClass('hidden');
+            $(`.affected-site-container tr input[class=${$(inputPopupId).attr('class')}]`).prop('checked', true)
         }else{
-            $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).parents('tr').addClass('hidden');
-            $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).prop('checked', false)
+            $(`.affected-site-container tr input[class=${$(inputPopupId).attr('class')}]`).parents('tr').addClass('hidden');
+            $(`.affected-site-container tr input[class=${$(inputPopupId).attr('class')}]`).prop('checked', false)
         }
     })
 
@@ -134,14 +111,15 @@ $('.tag__sites__site input[type="checkbox"]').on('change', function(){
 
     $inputIds.each( (index, inputId) => {
         if($(inputId).is(":checked")){
-            $(`.affected-site-container-popup  tr input[id=${$(inputId).attr('id')}]`).prop('checked', true);
+            $(`.affected-site-container-popup  tr input[class=${$(inputId).attr('class')}]`).prop('checked', true);
             // $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).parents('tr').removeClass('hidden');
         }else{
-            $(`.affected-site-container-popup  tr input[id=${$(inputId).attr('id')}]`).prop('checked', false);
+            $(`.affected-site-container-popup  tr input[class=${$(inputId).attr('class')}]`).prop('checked', false);
             // $(`.affected-site-container tr input[id=${$(inputPopupId).attr('id')}]`).parents('tr').addClass('hidden');
         }
     })
 });
+
 
 var val = $('.tags-color-edit').attr("value");
 $('.input-color-edit').css("background-color", val);

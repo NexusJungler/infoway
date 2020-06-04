@@ -94,15 +94,11 @@
                         <tr class="tag__sites__site{% if currentSite not in tag.sites %} hidden{% endif %}">
                             <td >
                             <label class="container-input">
-                                    {{ form_widget(site, {'attr': {'class': ''} }) }}
+                                    {{ form_widget(site, {'attr': {'class': 'tag_sites_' ~ site.vars.value} }) }}
                                     {{  form_label(site) }}
                                     <span class="container-rdo"></span>
                                 </label>
-                                {# {{ form_row(site, {'attr': {} }) }} #}
                             </td>
-                            {# <td>
-                                
-                            </td> #}
                         </tr>            
                     {% endfor %}
                 </tbody>
@@ -145,7 +141,7 @@
                             <td class="">
                                 {{ form_row(site, {'attr': {
                                     'checked' : currentSite in tag.sites ,
-                                    'id' : 'tag_sites_' ~ site.vars.value
+                                    'class' : 'tag_sites_' ~ site.vars.value
                                 } }) }}
                             </td>
                         </tr>

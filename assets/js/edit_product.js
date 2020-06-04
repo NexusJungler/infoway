@@ -1,3 +1,7 @@
+// import style css
+import "../css/products/edit_product.scss";
+
+
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
@@ -36,6 +40,19 @@ $(function() {
         // document.location.href = '/expected_change_bis/product/' + instance;
         console.log($('#redirectToEdit'));
         $('#redirectToEdit').submit();
+    });
+
+    $("select").change(function(){
+        var options = $(this).children();
+        $.each(options, function(i, option){
+            let value = 'false';
+            // console.log($(this));
+            console.log($(this).prop('selected'));
+            if($(this).prop('checked')) {
+                value = 'true';
+            }
+            // console.log('child ' + i + '= ' + value);
+        });
     });
 
 });

@@ -3,20 +3,19 @@
 namespace App\Form\Customer;
 
 use App\Entity\Admin\Allergen;
+use App\Entity\Customer\Criterion;
+use App\Entity\Customer\ElementGraphic;
 use App\Entity\Customer\PriceType;
-use App\Repository\Admin\AllergenRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ProductType extends AbstractType
 {
@@ -67,17 +66,33 @@ class ProductType extends AbstractType
                 'label' => 'Mention',
                 'label_attr' => array('class' => 'label-custome')])
             ->add('start', DateTimeType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd-MM-yyyy',
+                // 'input_format' => 'dd-MM-yyyy',
                 'attr' => [
-                    'class' => 'input-custome'
+                    'class' => 'datepicker'
                 ],
                 'label' => 'Début de validité',
                 'label_attr' => array('class' => 'label-custome')])
             ->add('end', DateTimeType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd-MM-yyyy',
                 'attr' => [
-                    'class' => 'input-custome'
+                    'class' => 'datepicker'
                 ],
                 'label' => 'Fin de validité',
-                'label_attr' => array('class' => 'label-custome')])
+                'label_attr' => array('class' => 'label-custome')
+                ])
+            ->add('criterions', EntityType::class, [
+                    'class' => Criterion::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'required' => false,
+                    'label_attr' => array('class' => 'label-custome')
+                ]
+            )
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
@@ -92,7 +107,15 @@ class ProductType extends AbstractType
                     'multiple' => true,
                     'required' => false,
                     'label_attr' => array('class' => 'label-custome'),
-                    'by_reference' => false
+                    'by_reference' => true
+                ]
+            )
+            ->add('elements', EntityType::class, [
+                    'class' => ElementGraphic::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'required' => false,
+                    'label_attr' => array('class' => 'label-custome'),
                 ]
             )
             ->add('logo', TextType::class, [
@@ -110,7 +133,9 @@ class ProductType extends AbstractType
                 ]
             )
             */
+            /*
             ->add('valider', SubmitType::class)
+            */
         ;
     }
 

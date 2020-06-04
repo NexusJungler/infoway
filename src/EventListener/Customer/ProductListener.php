@@ -5,6 +5,7 @@ namespace App\EventListener\Customer;
 
 use App\Entity\Customer\Product;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 
 class ProductListener
 {

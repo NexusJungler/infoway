@@ -28,12 +28,12 @@ class MainPrice
     private $product;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $day_value;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $night_value;
 
@@ -71,7 +71,7 @@ class MainPrice
         return $this->day_value;
     }
 
-    public function setDayValue(string $day_value): self
+    public function setDayValue(?string $day_value): self
     {
         $this->day_value = $day_value;
 
@@ -83,7 +83,7 @@ class MainPrice
         return $this->night_value;
     }
 
-    public function setNightValue(string $night_value): self
+    public function setNightValue(?string $night_value): self
     {
         $this->night_value = $night_value;
 
