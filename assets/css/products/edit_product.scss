@@ -56,6 +56,7 @@
             .input-custome{
                 width: 50%;
             }
+           
         }
         .row-amount{
             .input-custome{
@@ -83,6 +84,7 @@
         .row-date{
             .row-col{
                 text-align: center;
+                position: relative;
                 span{
                     margin: 0px 5px;
                 }
@@ -95,8 +97,104 @@
                     color: #343434;
                     padding: 5px 5px;
                     width: 25%;
+                    &::after{
+                        content: "\f107";
+                        font-family: FontAwesome;
+                        position: relative;
+                        color: #E3E3E3;
+                        top: 0px;
+                        right: 0;
+                        height: 32px;
+                        width: 32px;
+                        text-align: center;
+                        font-size: 24px;
+                        border-radius: 0.3rem;
+                        background: #A4B4BB 0% 0% no-repeat padding-box;
+                        pointer-events: none;
+                    }
                 }
                 
+                
+            }
+        }
+    }
+}
+
+
+#product_editor_product_category{
+    
+    option{
+        font-size: 15px;
+        min-height: 60px;
+        padding: 6px;
+    }
+}
+
+
+.add-popup{
+    top:-130px;
+    height: 110%;
+    width: 100%;
+    .modal{
+        margin: 30% auto 0 auto;
+        width: 1000px;
+        max-width: 100%;
+        height: 700px;
+        max-height: 100%;
+        padding: 0;
+    }
+    .header-modal{
+        background: #4D646D 0% 0% no-repeat padding-box;
+        display: flex;
+        padding:8px;
+        color: white;
+        .btn{
+            margin-top: 5px;
+            position: absolute;
+            background: #FF4040;
+            right: 8px;
+            &:hover{
+                background: rgb(207, 73, 73);
+            }
+        }
+    }
+}
+
+.add-popup-allergens{
+    .modal{
+        width: 800px;
+        max-width: 100%;
+    }
+    .content-popup-allergens{
+        height: 100%;
+        max-height: 610px;
+        .table-custome{
+            margin-top: 40px;
+            .tbody{
+                td{
+                    &:nth-child(1){
+                        width: 10%;
+                        .container-input{
+                            display: initial;
+                            .container-rdo-tags{
+                                left: 15px;
+                            }
+                        }
+                    }
+                    &:nth-child(2){
+                        width: 10%;
+                    }
+                    &:nth-child(3){
+                        .desc{
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #899CA4;
+                            border-radius: 9px;
+                            width: 80%;
+                            text-align: left;
+                            padding: 0px 10px; 
+                        }
+                    }
+                }
             }
         }
     }
