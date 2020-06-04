@@ -1,7 +1,7 @@
 <div class="form-content">
     {{ form_start(form) }}
 
-        <div class="row">
+        <div class="row row-color">
             <div class="row">
                 {{ form_label(form.name, 'Nom de la liste :',  {'label_attr': {'class': 'form-label'}} )  }}
                 {{ form_widget(form.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Religieux',}}) }}
@@ -11,6 +11,29 @@
                 {{ form_widget(form.description, {'attr': {'class': 'input-custome',' placeholder' : 'Type de produits par conviction religieuse'} } ) }}
             </div>
         </div>
+
+        <div class="row row-color">
+            <div class="row">
+                {{form_label(form.basicCriterionUsed)}}
+                {{form_widget(form.basicCriterionUsed)}}
+            </div>
+        </div>
+
+        
+        <div class="row row-color">
+            <div class="row">
+                {{}}
+                {{form_row(form.basicCriterion.selected)}}
+            </div>
+            <div class="row">
+                {{form_row(form.basicCriterion.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Critère de base'}})}}
+            </div>
+            <div class="row">
+            {{form_row(form.basicCriterion.description, {'attr': {'class': 'input-custome',' placeholder' : 'Gamme de base valable pour Halal et Pas Halal'} } )}}
+            </div>
+        </div>
+        
+
     
         <div class="row row-multiple">
             {{ form_label(form.multiple, 'Pour les sites, Affectaion à choix :',  {'label_attr': {'class': 'form-label'}} )  }}

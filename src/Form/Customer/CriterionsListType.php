@@ -24,6 +24,8 @@ class CriterionsListType extends AbstractType
                     'Oui' => 1 ,
                 ],
                 'expanded' => true,
+                // 'multiple'  => true,
+                
             ])
             ->add('basicCriterion', CriterionInListType::class,[
                 'required' => false,

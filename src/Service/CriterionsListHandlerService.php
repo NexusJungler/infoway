@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Customer\CriterionsList;
-use App\Errors\Customer\ExistingCriterionsListNameError;
+use App\Errors\CriterionsList\ExistingCriterionsListNameError;
 use App\Errors\CriterionsList\MinimumCriterionsInListNonReachedError;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
