@@ -40,7 +40,7 @@
                                     <select name="enseigne" id="enseigne">
                                         <option value="">Sélectionner l'enseigne</option>
                                         {% for name in app.session.get('customerNames') %}
-                                            <option value="{{name}}">{{name}}</option>
+                                            <option value="{{name}}" {% if (app.session.get('current_customer') is not null) and (name is same as(app.session.get('current_customer').name)) %} selected {% endif %} >{{name}}</option>
                                         {% endfor %}
                                     </select>
                                     <p class="number__enseigne"><span >25</span> enseignes</p>

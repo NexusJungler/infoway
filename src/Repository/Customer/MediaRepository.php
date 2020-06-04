@@ -7,6 +7,7 @@ use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Video;
 use App\Repository\MainRepository;
+use App\Service\MediasHandler;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -32,7 +33,7 @@ class MediaRepository extends ServiceEntityRepository
 
     use MainRepository;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler)
     {
         parent::__construct($registry, Media::class);
 
@@ -44,6 +45,7 @@ class MediaRepository extends ServiceEntityRepository
         $encoder =  new JsonEncoder();
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
         $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
+        $this->mediasHandler = $mediasHandler;
 
     }
 
@@ -63,6 +65,21 @@ class MediaRepository extends ServiceEntityRepository
                             ->orderBy("m.id", "ASC")
                             ->getQuery()
                             ->getResult();
+
+        foreach ($medias as $media)
+        {
+
+            if($media instanceof Image)
+            {
+                $media->media_type = 'image';
+            }
+
+            else
+            {
+                $media->media_type = 'video';
+            }
+
+        }
 
         //dd($medias);
 

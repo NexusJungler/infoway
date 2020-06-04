@@ -1,24 +1,33 @@
 .popup_container{
 
-    margin-top: 0;
+    margin-top: 8%;
     position: absolute;
     height: 650px;
-    width: 1563px;
+    width: 1654px;
     background-color: transparent;
     align-items: center;
     pointer-events: none;
     opacity: 0;
-    top: 51%;
-    left: 6.2%;
+    top: 10%;
+    left: 0.5%;
     z-index: 10000;
     transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
-    &.is-open {
+    &.is_open {
       opacity: 1;
       pointer-events: auto;
-      .modal {
-        transform: translate(0px, 0px);
-        margin-top: 0;
+
+      .popup{
+
+        .popup_header{
+          background: #4D646D 0% 0% no-repeat padding-box;
+          color: white;
+          display: flex;
+          flex-direction: row;
+          height: 8%;
+        }
+
       }
+
     }
 
 }
