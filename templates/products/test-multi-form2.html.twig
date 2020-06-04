@@ -3,7 +3,9 @@
 {% block title %} Produits {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
+    {{ parent('app') }}
+    <link rel="stylesheet" href="select2.css">
+    <link rel="stylesheet" href="select2-bootstrap.css">
     {{ encore_entry_link_tags('edit_product') }}
 {% endblock %}
 
@@ -75,17 +77,47 @@
                             <div class="row">
                                 {{ form_label(form.product.criterions) }}
                                 <div class="row-col">
+                                    <button type="button" class="btn popup-criterions"><i class="fas fa-plus-circle"></i>Critères</button>
                                     <div class="ManyToMany">
                                         {{ form_widget(form.product.criterions) }}
                                     </div>
                                 </div>
                             </div>
 
+                            {# <div class="row">
+                                {{ form_label(form.product.criterions) }}
+                                <div class="row-col">
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.criterions) }}
+                                    </div>
+                                </div>
+                            </div> #}
+
                             <div class="row">
+                                {{ form_label(form.product.tags) }}
+                                <div class="row-col">
+                                    <button type="button" class="btn popup-tags"><i class="fas fa-plus-circle"></i>TAGS</button>
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.tags) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# <div class="row">
                                 {{ form_label(form.product.tags) }}
                                 <div class="row-col">
                                     <div class="ManyToMany">
                                         {{ form_widget(form.product.tags) }}
+                                    </div>
+                                </div>
+                            </div> #}
+
+                            <div class="row">
+                                {{ form_label(form.product.allergens) }}
+                                <div class="row-col">
+                                    <button type="button" class="btn popup-allergens"><i class="fas fa-plus-circle"></i>Allergènes</button>
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.allergens) }}
                                     </div>
                                 </div>
                             </div>
@@ -214,8 +246,94 @@
     </main>    
 
 
+    <article class="add-popup add-popup-criterions ">
+        <div class="modal">
+
+            <div class="header-modal">
+                <p class="upload-title">Critères affectés à :</p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+
+            <div class="content-popup-criterions" >
+                {# <article class="content-criteres"> 
+                    <ul>
+                        {%  for criterions_list in criterions_lists  %}
+                            <li class="row-criterion">
+                                {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                <article> #}
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-add-site">Affecter au site</button>
+            </div>
+
+        </div>
+    </article>
+
+    <article class="add-popup add-popup-tags">
+        <div class="modal">
+
+            <div class="header-modal">
+                <p class="upload-title">Affecter tags à :</p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+
+            <div class="content-popup-tags">
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-add-site">Affecter au site</button>
+            </div>
+
+        </div>
+    </article>
+
+    <article class="add-popup add-popup-allergens">
+        <div class="modal">
+
+            <div class="header-modal">
+                <p class="upload-title">Affecter allergènes à :</p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+
+            <div class="content-popup-allergens table" >
+                <table class="table-custome">
+                    <thead>
+                    </thead>
+                    <tbody class="tbody">
+                        <tr>
+                            <td>
+                                <label class="container-input">
+                                <input type="checkbox">
+                                    {# {{ form_widget(tag, {'attr': {'class': 'chkbox-tag'}} ) }} #}
+                                    <span class="container-rdo-tags"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <img class="icon-allergen" src="" alt="">
+                            </td>
+                            <td>
+                                <p class="desc">Poissons et produits à base de poissons</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-add-site">Affecter au site</button>
+            </div>
+
+        </div>
+    </article>
+
+
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ parent() }}
+        {# {{ encore_entry_script_tags('app') }} #}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
         <script>
             $('.ManyToMany select').select2();
@@ -236,9 +354,12 @@
                 */
                 $(".datepicker").datepicker({
                     dateFormat: "dd-mm-yy",
+                    duration: "fast"
                 });
             });
         </script>
         {{ encore_entry_script_tags('edit_product') }}
     {% endblock javascripts %}
 {% endblock %}
+
+

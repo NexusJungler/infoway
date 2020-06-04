@@ -4,7 +4,7 @@
         <ul class="tabs">
             <a href="{{ path('products::show') }}">
                 <li class="{% if app.request.attributes.get('_route') == 'products::show' %}  current {% endif %}"  data-tab="tab-products"> 
-                    <p class="css-tab__label">Produits / prix</p>
+                    <p class="css-tab__label">Produits</p>
                 </li>
             </a>
             <a href="{{ path('categories::show') }}">
