@@ -1,7 +1,8 @@
-import Tool from "../Tool"
+import Tool from "../../Tool"
+import SubTool from "../../SubTool";
 
 
-class UploadHandlerTool extends Tool
+class UploadHandlerTool extends SubTool
 {
 
     constructor()

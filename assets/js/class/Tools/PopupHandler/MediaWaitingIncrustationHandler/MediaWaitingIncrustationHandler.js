@@ -1,6 +1,7 @@
-import Tool from "../Tool";
+import Tool from "../../Tool";
+import SubTool from "../../SubTool";
 
-class MediaWaitingIncrustationHandler extends Tool
+class MediaWaitingIncrustationHandler extends SubTool
 {
 
     constructor()
@@ -10,58 +11,6 @@ class MediaWaitingIncrustationHandler extends Tool
         this.__$container = $('.popup_medias_waiting_incrustation_container');
         this.__$location = $('.popup_medias_waiting_incrustes');
         this.__$mediasList = $('.archived_medias_list');
-        this.__mediasNamesRegistered = [];
-    }
-
-    getAllMediasNamesRegistered()
-    {
-        return this.__mediasNamesRegistered;
-    }
-
-    registerAllMediasNames()
-    {
-        this.__$mediasList.find('.media_name_edit_input').each( (index, media_name_input) => {
-
-            media_name_input = $(media_name_input);
-
-            const mediaName = media_name_input.val();
-
-            if(mediaName === '')
-                media_name_input.addClass('invalid');
-
-            else
-            {
-
-                if(!this.mediaNameIsAlreadyRegistered(mediaName))
-                {
-                    this.registerMediaName(media_name_input.data('media'), mediaName)
-                    console.log(this.getAllMediasNamesRegistered())
-                }
-                else
-                {
-                    media_name_input.addClass('invalid');
-                }
-
-            }
-
-        } )
-
-        return this;
-    }
-
-    registerMediaName(mediaId, mediaName)
-    {
-        this.__mediasNamesRegistered.push( {media: mediaId, value: mediaName } );
-    }
-
-    mediaNameIsAlreadyRegistered(mediaName)
-    {
-        return this.getRegisteredMediaNameIndex(mediaName) !== -1;
-    }
-
-    getRegisteredMediaNameIndex(mediaName)
-    {
-        return this.__mediasNamesRegistered.findIndex( mediaNameRegistered => mediaNameRegistered.value === mediaName );
     }
 
     onClickOnWaitingListButtonOpenModal(active)
@@ -89,16 +38,7 @@ class MediaWaitingIncrustationHandler extends Tool
         {
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
 
-                if(this.__$mediasList.find('.media_name_edit_input.unregistered').length > 0)
-                {
-
-                    if(confirm("Certaines de vos modifications n'ont pas enregistrés. Voulez-vous vraiment fermer cet fenetre et perdres vos modifications ?"))
-                        this.__$container.removeClass('is_open');
-
-                }
-
-                else
-                    this.__$container.removeClass('is_open');
+                this.__$container.removeClass('is_open');
 
             })
         }
@@ -146,7 +86,6 @@ class MediaWaitingIncrustationHandler extends Tool
 
         return this;
     }
-
 
 
     enable()

@@ -4,13 +4,18 @@ require("../css/popups/popup_media_waiting_incrustation/popup_media_waiting_incr
 import ToolBox from "./class/Tools/ToolBox";
 
 const toolBox = new ToolBox();
-toolBox.activeTool("MediaProductAssociationHandlerTool")
-       .activeTool("MediaTagAssociationHandlerTool")
-       .activeTool("PaginatorHandler")
+toolBox.activeTool("PaginatorHandler")
        .activeTool("FilterMediasTool")
-       .activeTool("MediaWaitingIncrustationHandler")
-       .activeTool("MediaInfoSheetHandler")
+       .activeTool("PopupHandler")
 ;
+
+toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
+                                        .activeSubTool("MediaWaitingIncrustationHandler")
+                                        .activeSubTool("MediaProductAssociationHandlerTool")
+                                        .activeSubTool("MediaTagAssociationHandlerTool")
+                                        .activeSubTool("UploadHandlerTool")
+;
+
 
 toolBox.getTool("FilterMediasTool").activeSubTool("FilterMediasByTypeSubTool")
                                             .activeSubTool("FilterMediasByOrientationSubTool")

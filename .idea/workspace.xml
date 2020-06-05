@@ -2,17 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/SubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/SubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/TagAssociationHandler/MediaTagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,6 +181,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools" />
       <recent name="C:\laragon\www\infoway\new_app\src\Controller\Settings" />
     </key>
@@ -253,7 +255,7 @@
       <workItem from="1590566283657" duration="779000" />
       <workItem from="1590567192069" duration="88185000" />
       <workItem from="1590996961917" duration="13411000" />
-      <workItem from="1591013756617" duration="114858000" />
+      <workItem from="1591013756617" duration="116961000" />
     </task>
     <servers />
   </component>

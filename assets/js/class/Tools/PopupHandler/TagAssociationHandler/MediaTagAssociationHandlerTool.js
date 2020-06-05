@@ -1,6 +1,7 @@
-import Tool from "../Tool";
+import Tool from "../../Tool";
+import SubTool from "../../SubTool";
 
-class MediaTagAssociationHandlerTool extends Tool
+class MediaTagAssociationHandlerTool extends SubTool
 {
 
     constructor()
