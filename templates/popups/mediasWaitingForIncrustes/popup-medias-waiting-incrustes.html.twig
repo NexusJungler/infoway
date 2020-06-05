@@ -31,11 +31,11 @@
 
         <div class="popup_body">
 
-            <div class="archived_medias_list_container popup_body_item">
+            <div class="archived_medias_list_container table popup_body_item">
 
-                <table>
+                <table class="table-custome">
 
-                    <thead>
+                    <thead class="thead-info">
                         <tr>
                             <th></th>
                             <th>Médias</th>
@@ -47,11 +47,11 @@
                         </tr>
                     </thead>
 
-                    <tbody class="archived_medias_list">
+                    <tbody class="archived_medias_list tbody tbody-content scrollbar-table">
 
                         {% for media in mediasWaitingForIncrustation['medias'] %}
 
-                            <tr class="{{ (loop.index0 is even) ? 'even': 'odd' }}">
+                            <tr>
                                 <td class="select_media_col">
                                     <div class="media_selection_container container">
                                         <input type="checkbox" class="select_media container_child" data-media="{{ media.id }}">

@@ -277,7 +277,7 @@ class MediaController extends AbstractController
 
             $dpi = $mediasHandler->getImageDpi($miniaturePath);
 
-            $highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
+            //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
 
             $response = [
                 'id' => $media->getId(),
@@ -287,7 +287,7 @@ class MediaController extends AbstractController
                 'dpi' => $dpi,
                 'type' => 'image',
                 'customer' => $customerName,
-                'highestFormat' => $highestFormat,
+                //'highestFormat' => $highestFormat,
             ];
 
         }
@@ -336,7 +336,7 @@ class MediaController extends AbstractController
             $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
-            $highestFormat = $this->getMediaHigestFormat($id, "video");
+            //$highestFormat = $this->getMediaHigestFormat($id, "video");
 
             $response = [
                 'id' => $id,
@@ -347,7 +347,7 @@ class MediaController extends AbstractController
                 'type' => 'video',
                 'customer' => $customerName,
                 'mimeType' => $mimeType,
-                'highestFormat' => $highestFormat,
+                //'highestFormat' => $highestFormat,
             ];
 
         }

@@ -1370,7 +1370,7 @@ class UploadHandlerTool extends Tool
                 if(index !== -1)
                 {
                     const mediaInfo = this.__mediaInfos[index];
-                    $('.expand-miniature-container .modal-body').html(`<img src="/miniatures/${mediaInfo.customer}/images/${mediaInfo.highestFormat}/${mediaId}.png" alt="/miniatures/${mediaInfo.customer}/image/${mediaInfo.highestFormat}/${mediaId}.png">`);
+                    $('.expand-miniature-container .modal-body').html(`<img src="/miniatures/${mediaInfo.customer}/images/medium/${mediaId}.png" alt="/miniatures/${mediaInfo.customer}/image/medium/${mediaId}.png">`);
                     this.__$location.css({ 'z-index': '0' });
                     $('.expand-miniature-container').fadeIn();
                 }

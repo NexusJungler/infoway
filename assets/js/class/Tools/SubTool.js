@@ -1,4 +1,4 @@
-import ToolBox from "./ToolBox/ToolBox";
+import ToolBox from "./ToolBox";
 import Tool from "./Tool";
 
 class SubTool extends Tool

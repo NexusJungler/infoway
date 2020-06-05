@@ -1,12 +1,13 @@
-import CustomerCreatorHandler from "../CustomerCreatorHandler/CustomerCreatorHandler";
-import UploadHandlerTool from "../UploadHandlerTool/UploadHandlerTool";
-import {ClockManager} from "../../Managers/ClockManager/ClockManager";
-import MediaProductAssociationHandlerTool from "../ProductAssociationHandler/MediaProductAssociationHandlerTool";
-import MediaTagAssociationHandlerTool from "../TagAssociationHandler/MediaTagAssociationHandlerTool";
-import ArchivedMediasHandlerTool from "../ArchivedMediasHandler/ArchivedMediasHandlerTool";
-import PaginatorHandler from "../PaginatorHandler/PaginatorHandler";
-import FilterMediasTool from "../FilterMediasTool/FilterMediasTool";
-import MediaWaitingIncrustationHandler from "../MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
+import CustomerCreatorHandler from "./CustomerCreatorHandler/CustomerCreatorHandler";
+import UploadHandlerTool from "./UploadHandlerTool/UploadHandlerTool";
+import {ClockManager} from "../Managers/ClockManager/ClockManager";
+import MediaProductAssociationHandlerTool from "./ProductAssociationHandler/MediaProductAssociationHandlerTool";
+import MediaTagAssociationHandlerTool from "./TagAssociationHandler/MediaTagAssociationHandlerTool";
+import ArchivedMediasHandlerTool from "./ArchivedMediasHandler/ArchivedMediasHandlerTool";
+import PaginatorHandler from "./PaginatorHandler/PaginatorHandler";
+import FilterMediasTool from "./FilterMediasTool/FilterMediasTool";
+import MediaWaitingIncrustationHandler from "./MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
+import MediaInfoSheetHandler from "./MediaInfoSheetHandler/MediaInfoSheetHandler";
 
 class ToolBox
 {
@@ -36,6 +37,7 @@ class ToolBox
             new PaginatorHandler(),
             new FilterMediasTool(),
             new MediaWaitingIncrustationHandler(),
+            new MediaInfoSheetHandler(),
         ];
     }
 

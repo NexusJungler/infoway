@@ -20,7 +20,7 @@ import {Table} from "./class/Table/Table";
 import {Navbar} from "./class/Navbar/Navbar";
 
 import {Form} from "./class/Form/Form";
-import ToolBox from "./class/Tools/ToolBox/ToolBox";
+import ToolBox from "./class/Tools/ToolBox";
 
 //require('../js/fontawesome/js/all')
 

@@ -1,4 +1,4 @@
-import ToolBox from "./ToolBox/ToolBox";
+import ToolBox from "./ToolBox";
 
 class Tool {
 
