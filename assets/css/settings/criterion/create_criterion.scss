@@ -1,0 +1,180 @@
+
+.create-criteres{
+    
+    .form-content{
+        margin: 1rem 0 0 0 ;
+        padding: 0;
+        .row{
+            padding: 15px 20px;
+            .input-custome{
+                height: 30px;
+            }
+            .form-label{
+                padding-top: 0.3rem;
+                color: #283338;
+                font: 1rem "Barlow";
+            }
+            &:first-child{
+                padding: 15px 10px 0px 10px;
+                
+                
+                .row{
+                    .form-label{
+                        width: 38%;
+                        margin-right: 19px;
+                    }
+                    &:first-child{
+                        width: 30%;
+                    }
+                    &:last-child{
+                        width: 70%;
+                        .form-label{
+                            width: auto;
+                            margin-right: 19px;
+                        }
+                    }
+                }
+            }
+            &:nth-child(n+2){
+                color: #283338;
+                .row{
+                    padding: 0;
+                    &:first-child{
+                        width: 10%;
+                        margin-right: 19px;
+                    }
+                    &:nth-child(2){
+                        width: 18%;
+                        .input-custome{
+                            width: 100%;
+                        }
+                    }
+                    &:last-child{
+                        width: 58%;
+                        .form-label{
+                            text-align: end;
+                            margin-right: 20px;
+                            width: 27.5%;
+                        }
+                        .input-custome{
+                            width: 100%;
+                        }
+                    }
+
+                }
+            }
+        }
+        .row-create{
+            background: #C0CCD1 0% 0% no-repeat padding-box;
+        }
+        .row-multiple{
+            margin-top: 10px;
+            .form-label{
+                width: 17%;
+            }
+            .input-custome{
+                width: 250px;
+            }
+        }
+        .content-criteres{
+            margin-bottom: 50px;
+            .title{
+                width: 30%;
+                text-align: right;
+            }    
+            .content-criteres-bloc{
+                // height: 140px;
+                // max-height: 250px;
+                // overflow: auto;
+                .row-criteres{    
+                    display: flex;
+                    padding: 15px 20px;
+                     div{
+                        display: contents;
+                        
+                    }
+                    .selected{
+                        
+                    }
+                    label{
+                        width: 85px;
+                        display: inline-block;
+                        font: 18px 'Barlow';
+                        color: #899CA4;
+                    }
+                    .input-custome{
+                        width: 250px;
+                        height: 25px;
+                        margin: 0px 40px 0 20px;
+                    }
+                    .input-custome-desc {
+                        width: 650px;
+                        max-width: 100%;
+                        height: 25px;
+                        padding: 0em 0rem 0rem 1rem;
+                        border: 0.06rem solid #C0CCD1;
+                        border-radius: 0.4rem;
+                        margin-right: 40px;
+                        font: 16px 'Barlow';
+                    }
+                    
+                }
+                .delete-row{
+                    width: 23px;
+                    height: 23px;
+                    background: #BFCCD1;
+                    padding: 0rem 0rem 0.2rem;
+                    font-size: 17px;
+                    border: 0;
+                }
+            }
+            .container-input{
+                .container-rdo{
+                    top: 4px;
+                    left: 25px;
+                    height: 16px;
+                    width: 16px;
+                    &:after{
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+            }
+
+            .btn-add{
+                width: 28.5%;
+                text-align: right;
+                .btn{
+                    width: 250px;
+                }
+            }
+
+        }
+    
+        .btn-save{
+            background: #E3E3E3 0% 0% no-repeat padding-box;
+            padding: 10px;
+            text-align: center;
+        }
+
+    }
+
+    .row-define-criterion{
+        display: none;
+        opacity: 0;
+        -webkit-transition: all 1s ease;  
+        -moz-transition: all 1s ease;  
+        -o-transition: all 1s ease;  
+        -ms-transition: all 1s ease;  
+        transition: all 1s ease;
+        // position: absolute;
+        // top: -40px
+    }
+    .active{
+        display: flex;
+        // height: auto;
+        // position: relative;
+        // top: 0;
+        opacity: 1;
+    }
+}

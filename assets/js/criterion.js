@@ -1,9 +1,10 @@
 import "../css/critiers.scss";
-import "../css/criteres/edit_criteres.scss";
-// import "../css/settings/critiers.scss";
+import "../css/settings/criterion/create_criterion.scss";
+import "../css/settings/criterion/edit_criterion.scss";
+import "../css/settings/criterion/list_criterion.scss";
 
-const $ = require('jquery');
-global.$ = global.jQuery = $;
+import createCriterion from "./settings/criterion/createCriterion.js";
+
 
 // checked input modification
 $(".tab-content-criteres .modified-criterion").click(function(){
@@ -26,7 +27,7 @@ $(".form-content .btn-add .btn-add-critiere").click(function(){
 $(".content-criteres-bloc").on("click", ".delete-row", function(){
     var button_id = $(this).attr("id");
 
-    $('#criterions_list_criterions_'+button_id+'').parents('li').remove();   
+    $('#criterions_list_criterions_'+button_id+'_selected').parents('li').remove();   
 });
 
 
@@ -64,8 +65,10 @@ addTagBtn.on('click', e =>{
     let newElem = $(list.attr('data-widget-tags')).html(newWidget);
 
     newElem.appendTo(list);
-
+    $(`#criterions_list_criterions_${counter-1} label[for='criterions_list_criterions_${counter-1}_selected']`).html("Choix n°" + counter );
 })
+
+
 
 
 $('.checkbox-criterion').change( e => {
@@ -93,3 +96,19 @@ function uniqueChoice(){
         console.log("multiple");
     }
 }
+$("#criterions_list_basicCriterionUsed_0").prop("required", false);
+
+$("#criterions_list_basicCriterionUsed input[type=radio]").on('click', function() {
+  
+    if(this.previous){
+        this.checked = false
+        $(".row-define-criterion").removeClass("active");
+    }
+    
+    this.previous = this.checked; 
+
+    // $("#criterions_list_basicCriterionUsed input[type=radio]").prop("checked", false);
+});
+
+let createcriterion = new createCriterion();
+createcriterion.enable();

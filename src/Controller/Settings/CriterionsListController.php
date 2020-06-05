@@ -48,23 +48,25 @@ class CriterionsListController extends AbstractController
         $criterionList->addCriterion( new Criterion() );
 
         $form = $this->createForm(CriterionsListType::class, $criterionList);     
-
-        $criterionListFormView = $form->createView();
-        foreach($criterionListFormView->children["criterions"]->children as $index => $criterionForm ){
-            $criterionForm->vars["label"]= "choix n°".($index + 1 );
-        }
         
+        $criterionListFormView = $form->createView();
+        
+        foreach($criterionListFormView->children["criterions"]->children as $index => $criterionForm){
+            $criterionForm["selected"]->vars["label"] = $index === 0 ? 'Choix par defaut' : 'Choix n°'.($index + 1) ;
+        }
 
         $form->handleRequest($request);
 
+       
         if ($form->isSubmitted() && $form->isValid()) {
-
-
+          
+            
             if (
                 $criterionsListsHandler->isCriterionsListNameAlreadyExistInDb( $criterionList ) ||
                 ! $criterionsListsHandler->handleBasicCriterionInList( $criterionList ) ||
                 ! $criterionsListsHandler->handleCriterionsInList( $criterionList ) ||
                 ! $criterionsListsHandler->isMinimumCriterionsInListLimitIsReached( $criterionList )
+            
             ) return $this->redirectToRoute( 'criterions_lists_new' ) ;
           //  dd( $criterionList );
             // dd($criterionList);

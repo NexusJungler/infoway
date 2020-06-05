@@ -128,11 +128,11 @@ class CriterionsList
         return $this;
     }
 
-    public function isBasicCriterionUsed() : bool {
+    public function isBasicCriterionUsed() : ?bool {
         return $this->basicCriterionUsed ;
     }
 
-    public function setBasicCriterionUsed(bool $basicCriterionUsed) : self {
+    public function setBasicCriterionUsed(?bool $basicCriterionUsed) : self {
 
         $this->basicCriterionUsed = $basicCriterionUsed ;
 

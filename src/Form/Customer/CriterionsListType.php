@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvents;
 
 class CriterionsListType extends AbstractType
 {
@@ -22,9 +23,9 @@ class CriterionsListType extends AbstractType
                 'label' => 'Définir un critère de base ?',
                 'choices' => [
                     'Oui' => 1 ,
+                    // 'Non' => 0
                 ],
                 'expanded' => true,
-                // 'multiple'  => true,
                 
             ])
             ->add('basicCriterion', CriterionInListType::class,[
@@ -42,8 +43,16 @@ class CriterionsListType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'required' => false,                
-            ));
-            
+            ))
+            ->addEventListener(FormEvents::PRE_SUBMIT, function($listener){
+                $formData = $listener->getData();
+
+                $formData['basicCriterionUsed'] = $formData['basicCriterionUsed']??false;
+             
+                $listener->setData($formData);
+                $listener->getForm()['basicCriterionUsed']->setData(false);
+                // dd($listener);
+            });
         ;
     }
 

@@ -47,12 +47,13 @@ class CriterionsListHandlerService
 
         $basicCriterionInlist = $criterionsList->getBasicCriterion() ;
 
+      
         if(
             ( $criterionsList->isBasicCriterionUsed() &&
                 ( $basicCriterionInlist === null || $basicCriterionInlist->getName() === null || ! $criterionsList->getCriterions()->contains( $basicCriterionInlist ) )
             ) ||
-            ( ! $criterionsList->isBasicCriterionUsed() &&
-                $basicCriterionInlist !== null
+            ( ! $criterionsList->isBasicCriterionUsed()  &&
+                ($basicCriterionInlist !== null && $basicCriterionInlist->getName() !== null)
             )
         ) { return false ; }
 

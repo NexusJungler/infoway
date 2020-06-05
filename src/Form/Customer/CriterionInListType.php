@@ -13,14 +13,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CriterionInListType extends AbstractType
 {   
     
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        
             ->add('selected',CheckboxType::class,[
-                'label' => 'Cocher par défault',
+                'label' => 'Choix n°',
                 'attr'=> [
                     'class' => 'checkbox-criterion'
                 ],
+           
             ] )
             ->add('name', TextType::class, [
                 'label' => false,
@@ -32,9 +35,12 @@ class CriterionInListType extends AbstractType
             ->add('description', TextAreaType::class,[
                 'label' => false,
                 'attr'=> [
-                    'class' => 'input-custome-desc'
+                    'class' => 'input-custome-desc',
+                    // 'placeholder' => '----------------------------------------------------------'
                 ],
             ])
+
+            
         ;
     }
 
@@ -43,5 +49,6 @@ class CriterionInListType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Criterion::class,
         ]);
+        
     }
 }
