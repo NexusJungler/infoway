@@ -12,6 +12,7 @@ use App\Entity\Customer\ExpectedChange;
 use App\Entity\Customer\ExpectedChangesList;
 use App\Entity\Customer\PricesFactory;
 use App\Entity\Customer\ProductAllergen;
+use App\Form\Customer\AddCriterionType;
 use App\Object\Customer\ProductEditor;
 use App\Form\Customer\ProductEditorType;
 use App\Form\Customer\ProductType;
@@ -191,8 +192,9 @@ class ProductController extends AbstractController
         $rep_factory = $em->getRepository(PricesFactory::class)->setEntityManager($em);
         $rep_checkoutS = $em->getRepository(CheckoutSystem::class)->setEntityManager($em);
         $rep_checkoutP = $em->getRepository(CheckoutProduct::class)->setEntityManager($em);
-        $rep_Allergen = $em2->getRepository(Allergen::class)->setEntityManager($em2);
+        $rep_Allergen = $em2->getRepository(Allergen::class) ;
         $rep_productAllergen = $em->getRepository(ProductAllergen::class)->setEntityManager($em);
+
 
         // Injection des allergens
         $product_allergens = $rep_productAllergen->findBy(['product' => $product]);
@@ -262,6 +264,13 @@ class ProductController extends AbstractController
 
         $form = $this->createForm(ProductEditorType::class, $product_editor);
         $form->handleRequest($request);
+
+//        dd( $form['product']['criterions'] );
+        $criterionsLoaded = $form['product']['criterions']->getConfig()->getOptions()['choice_loader']->loadChoiceList()->getChoices() ;
+
+        $optionsToPassToAddCriterionsForm = [ 'criterionsToDisplay' => new ArrayCollection( $criterionsLoaded ) ] ;
+        $addCriterionForm = $this->createForm(AddCriterionType::class, [], $optionsToPassToAddCriterionsForm );
+
         if($form->isSubmitted() && $form->isValid())
         {
             // Update Allergens
@@ -295,6 +304,7 @@ class ProductController extends AbstractController
         // return $this->render("products/test-multi-form.html.twig", $render_vars);
         return $this->render("products/test-multi-form2.html.twig", [
             'form' => $form->createView(),
+            'addCriterionForm' => $addCriterionForm->createView(),
             'factories' => $factories,
             'systems' => $checkout_systems
         ]);

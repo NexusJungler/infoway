@@ -78,9 +78,8 @@
                                 {{ form_label(form.product.criterions) }}
                                 <div class="row-col">
                                     <button type="button" class="btn popup-criterions"><i class="fas fa-plus-circle"></i>Critères</button>
-                                    <div class="ManyToMany">
+
                                         {{ form_widget(form.product.criterions) }}
-                                    </div>
                                 </div>
                             </div>
 
@@ -255,6 +254,19 @@
             </div>
 
             <div class="content-popup-criterions" >
+                {{ form_start( addCriterionForm ) }}
+                {%  for list in addCriterionForm.criterions.vars['choices']  %}
+
+                    <h2>{{ list.label }}</h2>
+                    {% for key , criterion in list %}
+                        {{ form_row( addCriterionForm.criterions[ key ]  ) }}
+                        {#{{ dump(criterion) }}#}
+                    {% endfor  %}
+                {% endfor %}
+                {#{% for criterions in addCriterionForm.criterions %}#}
+                    {#{{ form_widget( criterions ) }}#}
+                {#{% endfor  %}#}
+                {{ form_end( addCriterionForm ) }}
                 {# <article class="content-criteres"> 
                     <ul>
                         {%  for criterions_list in criterions_lists  %}

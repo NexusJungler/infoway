@@ -20,6 +20,7 @@ import ToolBox from "./class/Tools/ToolBox/ToolBox";
 
 
 const $ = require('jquery');
+
 global.$ = global.jQuery = $;
 
 //jqueryValidate

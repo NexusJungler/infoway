@@ -89,6 +89,7 @@ class ProductType extends AbstractType
                     'class' => Criterion::class,
                     'choice_label' => 'name',
                     'multiple' => true,
+                    'expanded' => true,
                     'required' => false,
                     'label_attr' => array('class' => 'label-custome')
                 ]
