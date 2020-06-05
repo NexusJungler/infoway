@@ -1,8 +1,30 @@
-.popup_medias_waiting_incrustation_container{
+.popup_media_info_sheet_container{
+  height: 850px;
 
   .popup {
 
+    .popup_body{
+      display: flex;
+      flex-direction: column;
 
+      .popup_body_item{
+        width: 100%;
+
+        &.top{
+          height: 15%;
+        }
+
+        &.middle{
+          height: 55%;
+        }
+
+        &.bottom{
+          height: 30%;
+        }
+
+      }
+
+    }
 
   }
 

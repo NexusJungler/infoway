@@ -149,7 +149,7 @@ class PaginatorHandler extends Tool
         }
         else
         {
-            card += `<video class="media-miniature" controls>
+            card += `<video class="media-miniature">
                         <source src="/miniatures/${ customer }/videos/low/${ media.id }.mp4" type="${ media.mimeType }">
                     </video>`;
         }

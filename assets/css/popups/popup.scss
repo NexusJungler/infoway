@@ -36,7 +36,7 @@
           color: white;
           display: flex;
           flex-direction: row;
-          height: 8%;
+          height: 10%;
           width: 100%;
 
           .popup_header_item{
@@ -100,6 +100,19 @@
 
           }
 
+        }
+
+        .popup_body{
+          height: 80%;
+        }
+
+        .popup_footer{
+          height: 10%;
+          max-height: 10%;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
         }
 
       }

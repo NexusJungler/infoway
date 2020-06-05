@@ -57,14 +57,14 @@
 
             {% if media_type is same as('image') %}
 
-                <img class="media-miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                <img class="media-miniature miniature-image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
                      alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
 
             {% endif %}
 
             {% if media_type is same as('video') %}
 
-                <video class="media-miniature" controls>
+                <video class="media-miniature miniature-video">
                     <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
                 </video>
 

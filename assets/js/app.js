@@ -56,7 +56,6 @@ clock.enable();
 
 const toolBox = new ToolBox();
 toolBox.activeTool("CustomerCreatorHandler")
-       .activeTool("UploadHandlerTool")
 ;
 
 $(".enseigne select#enseigne").on("change", e => {
