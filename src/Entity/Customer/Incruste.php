@@ -19,19 +19,60 @@ class Incruste
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Video", mappedBy="incrustes")
+     * @ORM\ManyToMany(targetEntity="Media", mappedBy="incrustes")
      */
-    private $videos;
+    private $media;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Image", mappedBy="incrustes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Product", inversedBy="incrustes")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $images;
+    private $product;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, name="price_type")
+     */
+    private $priceType;
+
+    /**
+     * @ORM\Column(type="smallint", name="x", length=10, options={"unsigned"=true})
+     */
+    private $x;
+
+    /**
+     * @ORM\Column(type="smallint", name="y", length=10, options={"unsigned"=true})
+     */
+    private $y;
+
+    /**
+     * @ORM\Column(type="smallint", length=10, options={"unsigned"=true})
+     */
+    private $width;
+
+    /**
+     * @ORM\Column(type="smallint", length=5, options={"unsigned"=true})
+     */
+    private $height;
+
+    /**
+     * @ORM\Column(type="smallint", length=5, nullable=true, options={"unsigned"=true}, name="frame_start")
+     */
+    private $frameStart;
+
+    /**
+     * @ORM\Column(type="smallint", length=6, nullable=true, options={"unsigned"=true}, name="frame_end")
+     */
+    private $frameEnd;
+
 
     public function __construct()
     {
-        $this->videos = new ArrayCollection();
-        $this->images = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -39,58 +80,138 @@ class Incruste
         return $this->id;
     }
 
-    /**
-     * @return Collection|Video[]
-     */
-    public function getVideos(): Collection
+    public function getType(): string
     {
-        return $this->videos;
+        return $this->type;
     }
 
-    public function addVideo(Video $video): self
+    public function setType(string $type): self
     {
-        if (!$this->videos->contains($video)) {
-            $this->videos[] = $video;
-            $video->addIncruste($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVideo(Video $video): self
-    {
-        if ($this->videos->contains($video)) {
-            $this->videos->removeElement($video);
-            $video->removeIncruste($this);
-        }
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * @return Collection|Image[]
+     * @return Collection|Media[]
      */
-    public function getImages(): Collection
+    public function getMedia(): Collection
     {
-        return $this->images;
+        return $this->media;
     }
 
-    public function addImage(Image $image): self
+    public function addMedium(Media $medium): self
     {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->addIncruste($this);
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->addIncruste($this);
         }
 
         return $this;
     }
 
-    public function removeImage(Image $image): self
+    public function removeMedium(Media $medium): self
     {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            $image->removeIncruste($this);
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            $medium->removeIncruste($this);
         }
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getPriceType(): ?string
+    {
+        return $this->priceType;
+    }
+
+    public function setPriceType(string $priceType): self
+    {
+        $this->priceType = $priceType;
+
+        return $this;
+    }
+
+    public function getX(): ?int
+    {
+        return $this->x;
+    }
+
+    public function setX(int $x): self
+    {
+        $this->x = $x;
+
+        return $this;
+    }
+
+    public function getY(): ?int
+    {
+        return $this->y;
+    }
+
+    public function setY(int $y): self
+    {
+        $this->y = $y;
+
+        return $this;
+    }
+
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    public function setWidth(int $width): self
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(int $height): self
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getFrameStart(): ?int
+    {
+        return $this->frameStart;
+    }
+
+    public function setFrameStart(?int $frameStart): self
+    {
+        $this->frameStart = $frameStart;
+
+        return $this;
+    }
+
+    public function getFrameEnd(): ?int
+    {
+        return $this->frameEnd;
+    }
+
+    public function setFrameEnd(?int $fameEnd): self
+    {
+        $this->frameEnd = $fameEnd;
 
         return $this;
     }

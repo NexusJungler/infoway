@@ -3,17 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Image.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Image.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Media.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Site.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Site.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Video.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Video.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +256,8 @@
       <workItem from="1590566283657" duration="779000" />
       <workItem from="1590567192069" duration="88185000" />
       <workItem from="1590996961917" duration="13411000" />
-      <workItem from="1591013756617" duration="123051000" />
+      <workItem from="1591013756617" duration="123654000" />
+      <workItem from="1591602900458" duration="28759000" />
     </task>
     <servers />
   </component>

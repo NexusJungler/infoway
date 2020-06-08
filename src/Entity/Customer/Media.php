@@ -101,12 +101,23 @@ class Media
      */
     private $orientation;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $containIncruste;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Incruste", inversedBy="media")
+     */
+    private $incrustes;
+
 
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->incrustes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -318,6 +329,44 @@ class Media
     public function setOrientation(string $orientation): self
     {
         $this->orientation = $orientation;
+
+        return $this;
+    }
+
+    public function getContainIncruste(): bool
+    {
+        return $this->containIncruste;
+    }
+
+    public function setContainIncruste(bool $containIncruste): self
+    {
+        $this->containIncruste = $containIncruste;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Incruste[]
+     */
+    public function getIncrustes(): Collection
+    {
+        return $this->incrustes;
+    }
+
+    public function addIncruste(Incruste $incruste): self
+    {
+        if (!$this->incrustes->contains($incruste)) {
+            $this->incrustes[] = $incruste;
+        }
+
+        return $this;
+    }
+
+    public function removeIncruste(Incruste $incruste): self
+    {
+        if ($this->incrustes->contains($incruste)) {
+            $this->incrustes->removeElement($incruste);
+        }
 
         return $this;
     }

@@ -82,6 +82,7 @@ class Site
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->criterions = new ArrayCollection();
     }
 
 

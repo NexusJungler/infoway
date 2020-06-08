@@ -1,6 +1,8 @@
-<div class="card" data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}"
+<div class="card" id="media_{{ media.id }}" data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}" data-orientation="{{ media.orientation }}"
 
-        data-orientation="{{ media.orientation }}"
+        data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}"
+
+        data-customer="{{ app.session.get('current_customer').name }}"
 
         {% if (media_products is not empty) %}
             data-product="{{ media_products|join(', ') }}"
@@ -53,7 +55,8 @@
 
     <div class="card-body">
 
-        <div class="media-miniature-container">
+        <div class="media-miniature-container" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
+                {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
 
             {% if media_type is same as('image') %}
 
@@ -73,7 +76,7 @@
         </div>
 
         <div class="media-name-container">
-            <span>{{ media.name }}</span>
+            <span class="media-name">{{ media.name }}</span>
         </div>
 
         <div class="media-associated-items-container">

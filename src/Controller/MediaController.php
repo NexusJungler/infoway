@@ -487,6 +487,10 @@ class MediaController extends AbstractController
         return new Response( $output );
     }
 
+
+
+
+
     private function saveMediaCharacteristic(Request $request)
     {
 

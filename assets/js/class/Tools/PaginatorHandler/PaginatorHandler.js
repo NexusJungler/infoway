@@ -99,9 +99,9 @@ class PaginatorHandler extends Tool
 
         const dateIsComingSoon = ( this.getDaysDiffBetweenDates(media.diffusionEnd, new Date()) <= 14);
 
-        let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" 
+        let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" data-orientation="${media.orientaion}"
 
-                                data-orientation="${media.orientaion}"
+                                data-media_diff_start="${ this.reformateDate(media.diffusionStart, true, '/') }" data-media_diff_end="${ this.reformateDate(media.diffusionEnd, true, '/') }"
 
                                 data-product="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 'none' }" 
                                 
@@ -201,7 +201,7 @@ class PaginatorHandler extends Tool
 
     }
 
-    reformateDate(date)
+    reformateDate(date, onlyDate = false, dateSeparator = '-', clockSeparator = ':')
     {
 
         date = new Date(date);
@@ -214,7 +214,14 @@ class PaginatorHandler extends Tool
         const minutes = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes();
         const second = (date.getSeconds() < 10) ? '0' + date.getSeconds() : date.getSeconds();
 
-        return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + second;
+        if(!onlyDate)
+        {
+            return year + dateSeparator + month + dateSeparator + day + ' ' + hour + clockSeparator + minutes + clockSeparator + second;
+        }
+        else
+        {
+            return year + dateSeparator + month + dateSeparator + day;
+        }
 
     }
 
