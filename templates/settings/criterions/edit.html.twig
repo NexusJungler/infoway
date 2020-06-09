@@ -20,14 +20,14 @@
                 {% block wrapper %}
                     {% include 'wrapper/wrapper_settings.html.twig'  %}
                 {% endblock %}
-                
+
             </section>
 
             {% block maincontent %}
                 <section class="wrapper_tabcontent">
 
-                    <div id="setting-criteres" class="tab-content current tab-content-criteres edit-critere ">
-                    
+                    <div id="setting-criteres" class="tab-content current tab-content-criteres edit-criterion ">
+
                         <article class="tab-content-title">
                             <h3 class="title">Modifier Critéres</h3>
                             <p>SUPER WILD COFFEE</p>
@@ -36,32 +36,53 @@
                         <article class="display criterion-display ">
                             <div class="display-content">
                                 <div class="display-btn">
-                                    <a href="{{ path('criterions_lists_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Critère</a>
-                                    <button type="button" class="btn duplicate-criterion"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                    <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Modifier</button>
-                                    {# <button type="button" class="btn delete-criterion" data-tablelistdelete="site">Supprimer</button> #}
-                                    {{ include('settings/criterions/_delete_form.html.twig') }}
+                                    <a href="{{ path('criterions_lists_new') }}"  class="btn btn_hidden" ><i class="fas fa-plus"></i>Créer Critère</a>
+                                    <button type="button" class="btn btn_hidden duplicate-criterion"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn btn_hidden modified-criterion"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn btn-popup-delete-criterion" data-tablelistdelete="site"><i class="fas fa-trash"></i> Supprimer</button>
                                 </div>
                             </div>
                         </article>
-                    
-                        {% set criterions_list = criterion.list %}
-                        {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
 
-                        {{ include('settings/criterions/_form.html.twig', {'button_label': 'Update'}) }}
+                        <article class="content-edit-criterion">
+                            {% set criterions_list = criterion.list %}
+                            {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
 
-                        <a href="{{ path('criterions_show', {'id' : criterion.id }) }}" class="btn">Annuler</a>
+                            {{ include('settings/criterions/_form.html.twig', {'button_label': 'Update'}) }}
 
-                        
+
+                        </article>
+
                     </div>
-                    
-                <section>
+
+                    <article class="add-popup popup-confirmation add-popup-delete">
+                        <div class="modal">
+                            <div class="header-modal">
+                                <p class="upload-title">Configuration de la suppression</p>
+                                <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                            </div>
+                            <div class="content-modal" >
+                                <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                                <div class="selected-tags-list" >
+                                </div>
+                            </div>
+                            <div class="footer-modal">
+                                {{ include('settings/criterions/_delete_form.html.twig') }}
+                                <button type="button" class="btn btn-popupclose">NON</button>
+                            </div>
+                        </div>
+                    </article>
+
+                </section>
+
             {% endblock %}
-                
+
         </div>
     </main>
 
-
-
-    
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('criterion') }}
+{% endblock javascripts %}

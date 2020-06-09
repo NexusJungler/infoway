@@ -3,7 +3,7 @@
 {% block title %}Edit CriterionList{% endblock %}
 
 {% block body %}
-<main class="main main_criterion">
+    <main class="main main_criterion">
         <div class="main-content">
 
             <section class="jumbotron">
@@ -15,19 +15,18 @@
                 {% block wrapper %}
                     {% include 'wrapper/wrapper_settings.html.twig'  %}
                 {% endblock %}
-                
+
             </section>
 
             {% block maincontent %}
                 <section class="wrapper_tabcontent">
 
                     <div id="setting-criteres" class="tab-content current create-criteres modifie-critere ">
-                    
+
                         <article class="tab-content-title">
                             <h3 class="title">Gestion des Critéres</h3>
                             <p>SUPER WILD COFFEE</p>
                         </article>
-
 
                         {# <article class="display criterion-display ">
                             <div class="display-content">
@@ -39,19 +38,18 @@
                                 </div>
                             </div>
                         </article> #}
-                        
-                    
-                        
+
                         {{ include('settings/criterions_lists/_form.html.twig', {'button_label': 'Update'}) }}
 
                         <a href="{{ path('criterions_lists_index') }}">back to list</a>
 
                         {{ include('settings/criterions_lists/_delete_form.html.twig') }}
                     </div>
-                    
+
                 <section>
             {% endblock %}
-                
+
         </div>
     </main>
 {% endblock %}
+

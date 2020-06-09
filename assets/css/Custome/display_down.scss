@@ -77,26 +77,7 @@
             margin-top: rem(5px);
             font: rem(20px) 'Barlow', lighter;
         }
-        .btn{
-            height: rem(31px);
-            padding: 0.20rem 0.5rem 0.4rem;
-            font: rem(17px) 'Barlow', lighter;
-            background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
-            box-shadow: 0px 3px 6px #00000029;
-            border: rem(1px) solid #FFFFFF;
-            border-radius: rem(6px);
-            margin-right: rem(10px);
-            &:hover{
-                background: transparent linear-gradient(180deg, #395C65 0%, #18373E 100%) 0% 0% no-repeat padding-box;
-            }
-            i{
-                margin-right: 10px;
-            }
 
-        }
-        .hide-btn{
-            background: transparent linear-gradient(180deg, #A4B4BB 0%, #C0CCD1 100%) 0% 0% no-repeat padding-box;
-        }
         svg{
             font-size: rem(15px);
             margin-right: rem(8px);

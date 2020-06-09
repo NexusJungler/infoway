@@ -2,9 +2,12 @@ class createCriterion{
 
     enable(){
         this.onClickShowCriterionBase(true);
+        this.onClickOpenPopup(true);
     }
     disable(){
         this.onClickShowCriterionBase(false);
+        this.onClickOpenPopup(false);
+       
     }
 
     onClickShowCriterionBase(active) {
@@ -20,6 +23,18 @@ class createCriterion{
             
         }else{
             $("#criterions_list_basicCriterionUsed input[type=radio]").off('click.onClickShowCriterionBase');
+        }
+    }
+
+    onClickOpenPopup(active) {
+        if(active){
+            $('.btn-popup-delete-criterion').on('click.onClickOpenPopup', function(){
+                $('.add-popup-delete').addClass('is-open');
+                return false;
+            })
+            
+        }else{
+            $(".btn-popup-delete-criterion").off('click.onClickOpenPopup');
         }
     }
 

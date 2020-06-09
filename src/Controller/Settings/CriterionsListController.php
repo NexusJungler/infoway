@@ -59,14 +59,15 @@ class CriterionsListController extends AbstractController
 
        
         if ($form->isSubmitted() && $form->isValid()) {
-          
-            
+//            dump($request);
+//            dd($criterionList);
             if (
                 $criterionsListsHandler->isCriterionsListNameAlreadyExistInDb( $criterionList ) ||
                 ! $criterionsListsHandler->handleBasicCriterionInList( $criterionList ) ||
                 ! $criterionsListsHandler->handleCriterionsInList( $criterionList ) ||
                 ! $criterionsListsHandler->isMinimumCriterionsInListLimitIsReached( $criterionList )
             ) return $this->redirectToRoute( 'criterions_lists_new' ) ;
+
             $currentEM->persist($criterionList);
             $currentEM->flush();
 

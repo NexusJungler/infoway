@@ -49,7 +49,7 @@ addTagBtn.on('click', e =>{
 
     let newWidget = list.attr('data-prototype');
     newWidget = newWidget.replace(/__name__/g, counter);
-    newWidget = "<div>" + newWidget + "<button type='button' id='"+ counter +"' class='btn delete-row' >x</button></div>"
+    newWidget = "<div>" + newWidget + "<div><button type='button' id='"+ counter +"' class='btn delete-row' >x</button></div></div>"
 
     counter++;
     list.data('widget-counter', counter);

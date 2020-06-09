@@ -20,7 +20,7 @@ body {
     margin: 0;
     padding: 0;
     color: #6F6F6F;
-    background: url() repeat-x #E2E2E2 ;
+    background:  repeat-x #E2E2E2 ;
     color: black;
     // background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
     //width: 100vw;
@@ -42,6 +42,8 @@ img {
     display: none!important;
 }
 
+
+
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
@@ -58,6 +60,9 @@ img {
 @import 'custome/scrollbar.scss';
 
 @import 'custome/form.scss';
+
+@import "custome/button.scss";
+
 
 /************************* CUSTOM ICON  ***************************/
 @import 'custom_icon.scss';

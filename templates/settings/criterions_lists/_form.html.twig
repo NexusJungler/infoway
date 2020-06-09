@@ -62,23 +62,26 @@
             
              <div class="content-criteres-bloc">
                 <ul class="tags criterion_list" data-prototype="{{ form_widget(form.criterions.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li class="row-criteres"></li>'|e }}">
+                    {{dump(form)}}
                     {% for criterion in form.criterions  %}   
                     <li class="row-criteres " >
                         <div >
-                            <div class="selected">
-                                {{ form_label(criterion.selected ) }}
-                                {{ form_widget(criterion.selected ) }}
-                                {# <label class="container-input">
-                                    {{ form_widget(criterion.selected, {'attr': {'checked': 'true'}}) }}
-                                    <span class="container-rdo"></span>
-                                </label> #}
-                            </div>
-                            <div>
-                                {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' ', }})  }}
-                            </div>
-                            <div class="form-desc">
-                                {{ form_widget(criterion.description, {'attr': {'class': 'input-custome-desc',' placeholder' : ''}}) }}
-                            </div>
+                            <div id="{{criterion.vars.id}}">
+                                <div >
+                                    {{ form_label(criterion.selected ) }}
+                                    {{ form_widget(criterion.selected ) }}
+                                    {# <label class="container-input">
+                                        {{ form_widget(criterion.selected, {'attr': {'checked': 'true'}}) }}
+                                        <span class="container-rdo"></span>
+                                    </label> #}
+                                </div>
+                                <div>
+                                    {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' ', }})  }}
+                                </div>
+                                <div >
+                                    {{ form_widget(criterion.description, {'attr': {'class': 'input-custome-desc',' placeholder' : ''}}) }}
+                                </div>
+                            </div>   
                             <div>
                                 <button type="button" id="{{loop.index0 }}" class="btn delete-row">X</button>
                             </div>
