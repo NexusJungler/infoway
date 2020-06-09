@@ -100,14 +100,14 @@
                                     <div class="filter-by-categories-container filter-by-characteristics-item">
 
                                         <div class="apply-filter-container">
-                                            <input type="checkbox" class="apply-filter" data-target="category">
+                                            <input type="checkbox" class="apply-filter" data-target="categories">
                                         </div>
 
                                         <div class="filter-select-container">
-                                            <select id="filter-by-category">
+                                            <select id="filter-by-categories">
                                                 <option value="" selected>Catégories</option>
                                                 {% for categorie in categories %}
-                                                    <option value="{{ categorie.name }}">{{ categorie.name }}</option>
+                                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -117,14 +117,14 @@
                                     <div class="filter-by-products-container filter-by-characteristics-item">
 
                                         <div class="apply-filter-container">
-                                            <input type="checkbox" class="apply-filter" data-target="product">
+                                            <input type="checkbox" class="apply-filter" data-target="products">
                                         </div>
 
                                         <div class="filter-select-container">
-                                            <select id="filter-by-product">
+                                            <select id="filter-by-products">
                                                 <option value="" selected>Produits</option>
                                                 {% for product in products %}
-                                                    <option value="{{ product.name }}">{{ product.name }}</option>
+                                                    <option value="{{ product.id }}">{{ product.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -134,14 +134,14 @@
                                     <div class="filter-by-criterions-container filter-by-characteristics-item">
 
                                         <div class="apply-filter-container">
-                                            <input type="checkbox" class="apply-filter" data-target="criterion">
+                                            <input type="checkbox" class="apply-filter" data-target="criterions">
                                         </div>
 
                                         <div class="filter-select-container">
-                                            <select id="filter-by-criterion">
+                                            <select id="filter-by-criterions">
                                                 <option value="" selected>Critères</option>
                                                 {% for criterion in criterions %}
-                                                    <option value="{{ criterion.name }}">{{ criterion.name }}</option>
+                                                    <option value="{{ criterion.id }}">{{ criterion.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -151,14 +151,14 @@
                                     <div class="filter-by-tags-container filter-by-characteristics-item">
 
                                         <div class="apply-filter-container">
-                                            <input type="checkbox" class="apply-filter" data-target="tag">
+                                            <input type="checkbox" class="apply-filter" data-target="tags">
                                         </div>
 
                                         <div class="filter-select-container">
-                                            <select id="filter-by-tag">
+                                            <select id="filter-by-tags">
                                                 <option value="" selected>Tags</option>
                                                 {% for tag in tags %}
-                                                    <option value="{{ tag.name }}">{{ tag.name }}</option>
+                                                    <option value="{{ tag.id }}">{{ tag.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>

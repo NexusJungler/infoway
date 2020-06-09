@@ -23,7 +23,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                 let filters = this.getActivedFilters();
 
-                console.log(filters); debugger
+                console.log(filters); //debugger
 
                 this.__$mediasContainer.find(`.card`).addClass("hidden");
 
@@ -50,8 +50,6 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
             if(applyFilterCheckbox.is(':checked'))
             {
-
-                console.log("apply"); debugger
 
                 let value = $(`#filter-by-${characteristic}`).val();
 
@@ -97,6 +95,9 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                 if(select.val() === '')
                     select.parent().prev('.apply-filter-container').find('.apply-filter').prop('checked', false);
+
+                else
+                    select.parent().prev('.apply-filter-container').find('.apply-filter').prop('checked', true);
 
             })
         }
