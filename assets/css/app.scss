@@ -42,8 +42,6 @@ img {
     display: none!important;
 }
 
-
-
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
@@ -89,15 +87,9 @@ img {
 /** SITE **/
 @import 'site.scss';
 
-/** SETTINGS **/
-// @import 'settings.scss';
-// @import 'settings/create_user.scss';
-
 
 /** MEDIA **/
 @import 'media.scss';
-
-
 
 @import 'allergenes.scss';
 
