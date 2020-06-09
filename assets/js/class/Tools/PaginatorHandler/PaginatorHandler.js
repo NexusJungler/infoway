@@ -103,13 +103,13 @@ class PaginatorHandler extends Tool
 
                                 data-media_diff_start="${ this.reformateDate(media.diffusionStart, true, '/') }" data-media_diff_end="${ this.reformateDate(media.diffusionEnd, true, '/') }"
 
-                                data-product="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 'none' }" 
+                                data-products="${ (media_associated_infos.products.length > 0) ? media_associated_infos.products.join(', ') : 'none' }" 
                                 
-                                data-category="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 'none' }"
+                                data-categorys="${ (media_associated_infos.categories.length > 0) ? media_associated_infos.categories.join(', ') : 'none' }"
                                  
-                                data-criterion="${ (media_associated_infos.criterions.length > 0) ? media_associated_infos.criterions.join(', ') : 'none' }"
+                                data-criterions="${ (media_associated_infos.criterions.length > 0) ? media_associated_infos.criterions.join(', ') : 'none' }"
                                  
-                                data-tag="${ (media_associated_infos.tags.length > 0) ? media_associated_infos.tags.join(', ') : 'none' }"
+                                data-tags="${ (media_associated_infos.tags.length > 0) ? media_associated_infos.tags.join(', ') : 'none' }"
                                  
                                  >
 

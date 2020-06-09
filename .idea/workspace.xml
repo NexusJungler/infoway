@@ -4,10 +4,12 @@
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,7 +253,7 @@
       <workItem from="1590567192069" duration="88185000" />
       <workItem from="1590996961917" duration="13411000" />
       <workItem from="1591013756617" duration="123654000" />
-      <workItem from="1591602900458" duration="46445000" />
+      <workItem from="1591602900458" duration="53301000" />
     </task>
     <servers />
   </component>
@@ -315,6 +317,10 @@
     <state x="756" y="-817" key="NewPhpClassDialog/0.0.1280.720/2.-1080.1920.1080/-1920.-574.1920.1080@2.-1080.1920.1080" timestamp="1589813196836" />
     <state x="754" y="263" key="NewPhpClassDialog/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591200754021" />
     <state x="2674" y="263" key="NewPhpClassDialog/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590598189528" />
+    <state x="705" y="242" key="RollbackChangesDialog" timestamp="1591716833209">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="705" y="242" key="RollbackChangesDialog/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591716833209" />
     <state width="498" height="446" key="SwitcherDM" timestamp="1590569481962">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>

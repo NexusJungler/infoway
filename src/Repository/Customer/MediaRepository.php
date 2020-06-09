@@ -6,6 +6,7 @@ use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Video;
+use App\Repository\Admin\AllergenRepository;
 use App\Repository\MainRepository;
 use App\Service\MediasHandler;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -33,7 +34,7 @@ class MediaRepository extends ServiceEntityRepository
 
     use MainRepository;
 
-    public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler)
+    public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler, AllergenRepository $allergenRepository)
     {
         parent::__construct($registry, Media::class);
 
@@ -46,6 +47,7 @@ class MediaRepository extends ServiceEntityRepository
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
         $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
         $this->mediasHandler = $mediasHandler;
+        $this->allergenRepository = $allergenRepository;
 
     }
 
@@ -150,6 +152,7 @@ class MediaRepository extends ServiceEntityRepository
                         'media_tags' => [],
                         'media_criterions' => [],
                         'media_categories' => [],
+                        'media_allergens' => [],
                     ];
 
                     foreach ($media->getTags()->getValues() as $tag)
@@ -171,8 +174,14 @@ class MediaRepository extends ServiceEntityRepository
 
                         foreach ($product->getTags()->getValues() as $tag)
                         {
-                            if(!in_array($tag->getId(), $orderedMedias['media_tags']))
+                            if(!in_array($tag->getId(), $orderedMedias['medias'][$index]['media_tags']))
                                 $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+                        }
+
+                        foreach ($product->getAllergens()->getValues() as $allergen)
+                        {
+                            if(!in_array($allergen->getAllergenId(), $orderedMedias['medias'][$index]['media_tags']))
+                                $orderedMedias['medias'][$index]['media_tags'][] = $allergen->getAllergenId();
                         }
 
                     }
@@ -251,6 +260,11 @@ class MediaRepository extends ServiceEntityRepository
 
             foreach ($product->getAllergens()->getValues() as $allergen)
             {
+                $allergenId = $allergen->getAllergenId();
+                $allergen = $this->allergenRepository->find($allergenId);
+                if(!$allergen)
+                    throw new Exception(sprintf("No allergen found with id : '%s'", $allergenId));
+
                 if(!in_array($allergen->getName(), $datas['allergens']))
                     $datas['allergens'][] = $allergen->getName();
             }

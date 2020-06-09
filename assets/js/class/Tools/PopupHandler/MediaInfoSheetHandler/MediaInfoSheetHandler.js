@@ -114,6 +114,7 @@ class MediaInfoSheetHandler extends SubTool
                 this.__$location.find('.media_allergens_container').empty();
                 this.__$location.find('.media_diffusion_spaces_container .container_body').empty();
                 this.__$location.find('.media_products_list').empty();
+                this.__$location.find('.media_incrustations_list').empty();
 
             })
         }

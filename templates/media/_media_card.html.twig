@@ -5,27 +5,33 @@
         data-customer="{{ app.session.get('current_customer').name | lower }}"
 
         {% if (media_products is not empty) %}
-            data-product="{{ media_products|join(', ') }}"
+            data-products="{{ media_products|join(', ') }}"
         {% else %}
             data-product="none"
         {% endif %}
 
-        {% if (media_categories is not empty) %}
-            data-category="{{ media_categories|join(', ') }}"
+        {% if (media_allergens is not empty) %}
+            data-allergens="{{ media_allergens|join(', ') }}"
         {% else %}
-            data-category="none"
+            data-allergens="none"
+        {% endif %}
+
+        {% if (media_categories is not empty) %}
+            data-categories="{{ media_categories|join(', ') }}"
+        {% else %}
+            data-categories="none"
         {% endif %}
 
         {% if (media_criterions is not empty) %}
-            data-criterion="{{ media_criterions|join(', ') }}"
+            data-criterions="{{ media_criterions|join(', ') }}"
         {% else %}
-            data-criterion="none"
+            data-criterions="none"
         {% endif %}
 
         {% if (media_tags is not empty) %}
-            data-tag="{{ media_tags|join(', ') }}"
+            data-tags="{{ media_tags|join(', ') }}"
         {% else %}
-            data-tag="none"
+            data-tags="none"
         {% endif %} >
 
     <div class="card-header">

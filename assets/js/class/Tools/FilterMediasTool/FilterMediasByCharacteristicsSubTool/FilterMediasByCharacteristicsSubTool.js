@@ -9,7 +9,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         this.__name = this.constructor.name;
         this.__$mediasContainer = $(".medias-list-container");
         this.__$container = $(".filter-by-characteristics-container");
-        this.__characteristics = ['category', 'product', 'criterion', 'tag'];
+        this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
     }
 
     onClickOnFilterValidationButton(active)

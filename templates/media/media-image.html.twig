@@ -107,7 +107,7 @@
                                             <select id="filter-by-category">
                                                 <option value="" selected>Catégories</option>
                                                 {% for categorie in categories %}
-                                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                                                    <option value="{{ categorie.name }}">{{ categorie.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -124,7 +124,7 @@
                                             <select id="filter-by-product">
                                                 <option value="" selected>Produits</option>
                                                 {% for product in products %}
-                                                    <option value="{{ product.id }}">{{ product.name }}</option>
+                                                    <option value="{{ product.name }}">{{ product.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -141,7 +141,7 @@
                                             <select id="filter-by-criterion">
                                                 <option value="" selected>Critères</option>
                                                 {% for criterion in criterions %}
-                                                    <option value="{{ criterion.id }}">{{ criterion.name }}</option>
+                                                    <option value="{{ criterion.name }}">{{ criterion.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -158,7 +158,7 @@
                                             <select id="filter-by-tag">
                                                 <option value="" selected>Tags</option>
                                                 {% for tag in tags %}
-                                                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                                    <option value="{{ tag.name }}">{{ tag.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -226,7 +226,7 @@
 
                             {% for mediaInfos in mediasToDisplayed['medias'] %}
 
-                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'], 'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'], 'media_type': mediaInfos['media_type'] } %}
+                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'], 'media_allergens': mediaInfos['media_allergens'], 'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'], 'media_type': mediaInfos['media_type'] } %}
 
                             {% endfor %}
 
