@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-<main class="main main_setting">
+    <main class="main main_criterion">
         <div class="main-content">
 
             <section class="jumbotron">
@@ -23,33 +23,27 @@
                 
             </section>
 
-            <section>
+            {% block maincontent %}
+                <section class="wrapper_tabcontent">
+                    <div id="setting-criteres" class="tab-content current create-criteres">
 
-                {% block maincontent %}
-                    <section class="wrapper_tabcontent">
-                        <div id="setting-criteres" class="tab-content current create-criteres">
+                        <article class="tab-content-criteres-form">
+                            <div class="tab-content-title">
+                                <h3 class="title">Créer liste de Critéres</h3>
+                            </div>
+                            
+                            {{ include('settings/criterions_lists/_form.html.twig') }}
 
-                            <article class="tab-content-criteres-form">
-                                <div class="tab-content-title">
-                                    <h3 class="title">Créer liste de Critéres</h3>
-                                </div>
-                                
-                                {{ include('settings/criterions_lists/_form.html.twig') }}
-
-                                {# <a href="{{ path('criterions_lists_index') }}">back to list</a> #}
-                            </article>
-                              
-                        <div>
-                    <section>
-                {% endblock %}
-                
-            </section>
-
+                            {# <a href="{{ path('criterions_lists_index') }}">back to list</a> #}
+                        </article>
+                            
+                    <div>
+                <section>
+            {% endblock %}
+            
         </div>
     </main>
-
 {% endblock %}
-
 
 {% block javascripts %}
     {{ parent() }}

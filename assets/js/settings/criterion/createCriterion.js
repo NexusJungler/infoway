@@ -10,10 +10,11 @@ class createCriterion{
     onClickShowCriterionBase(active) {
         if(active){
             $("#criterions_list_basicCriterionUsed input[type=radio]").on('click.onClickShowCriterionBase', function(){
-                if ($(this).is(":checked")) {
+                if ($(this).val() === "1" ) {
                     $(".row-define-criterion").addClass("active");
                 }else{
                     $(".row-define-criterion").removeClass("active");
+                    $("#criterions_list_basicCriterionUsed_1").is(':checked');
                 }
             })
             
@@ -22,9 +23,6 @@ class createCriterion{
         }
     }
 
-
-
-    
 }
 
 export default createCriterion;

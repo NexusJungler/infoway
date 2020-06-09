@@ -22,11 +22,12 @@ class CriterionsListType extends AbstractType
             ->add('basicCriterionUsed', ChoiceType::class, [
                 'label' => 'Définir un critère de base ?',
                 'choices' => [
-                    'Oui' => 1 ,
-                    // 'Non' => 0
+                    'Non' => 0,
+                    'Oui' => 1 
+                    
                 ],
                 'expanded' => true,
-                
+                // 'required' => false,
             ])
             ->add('basicCriterion', CriterionInListType::class,[
                 'required' => false,
@@ -51,7 +52,6 @@ class CriterionsListType extends AbstractType
              
                 $listener->setData($formData);
                 $listener->getForm()['basicCriterionUsed']->setData(false);
-                // dd($listener);
             });
         ;
     }

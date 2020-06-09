@@ -1,8 +1,8 @@
-<div class="form-content">
+<div class="form-content form-criterion-content">
     {{ form_start(form) }}
 
         <div class="row-create">
-            <div class="row ">
+            <div class="row row-create_list">
                 <div class="row">
                     {{ form_label(form.name, 'Nom de la liste :',  {'label_attr': {'class': 'form-label'}} )  }}
                     {{ form_widget(form.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Religieux',}}) }}
@@ -16,12 +16,27 @@
             <div class="row">
                 <div class="row">
                     {{form_label(form.basicCriterionUsed)}}
-                    {{form_widget(form.basicCriterionUsed)}}
+                    <div class="submit-rating" id="criterions_list_basicCriterionUsed">
+                        {% for basicCriterionUsed in form.basicCriterionUsed  %}  
+                            {{form_widget(basicCriterionUsed)}}
+                        {% endfor %}
+                            <label for="criterions_list_basicCriterionUsed_0" class="rating-label rating-label-non">Non</label>
+                            <div class="smile-rating-toggle"></div>
+                            <div class="toggle-rating-pill"></div>
+                            <label for="criterions_list_basicCriterionUsed_1" class="rating-label rating-label-oui">Oui</label>
+                    </div>
                 </div>
             </div>
+
+      
+
             <div class="row row-define-criterion">
                 <div class="row">
-                    {{form_label(form.basicCriterion.selected,  'Critère de base',  {'label_attr': {'class': ''}} )}}
+                    {{form_label(form.basicCriterion.selected,  'Critère de base',  {'label_attr': {'class': 'form-input-basicCriterion'}} )}}
+                    <label class="container-input">
+                        {{form_widget(form.basicCriterion.selected)}}
+                        <span class="container-rdo"></span>
+                    </label>
                     {{form_widget(form.basicCriterion.selected)}}
                 </div>
                 <div class="row">
@@ -35,12 +50,6 @@
 
         </div>
         
-
-        
-        
-        
-
-    
         <div class="row row-multiple">
             {{ form_label(form.multiple, 'Pour les sites, Affectaion à choix :',  {'label_attr': {'class': 'form-label'}} )  }}
             {{ form_widget(form.multiple, {'attr': {'class': 'input-custome'}}) }}
@@ -82,7 +91,7 @@
             </div>  
 
             <div class="btn-add">
-                <button type="button" class="btn btn-add-critiere" id="add_criterion">Ajouter un critère</button>
+                <button type="button" class="btn btn-add-critiere" id="add_criterion"> <i class="fas fa-plus-circle"></i> Ajouter un critère</button>
             </div>
         </div>
     

@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Admin\Allergen;
-use App\Form\AllergenType;
+use App\Form\Admin\AllergenType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
