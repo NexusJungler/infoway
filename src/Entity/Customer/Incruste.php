@@ -24,20 +24,20 @@ class Incruste
     private $media;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Product", inversedBy="incrustes")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="incrustes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, name="type_incruste")
      */
-    private $type;
+    private $typeIncruste;
 
     /**
-     * @ORM\Column(type="string", nullable=false, name="price_type")
+     * @ORM\Column(type="string", nullable=false, name="type_price")
      */
-    private $priceType;
+    private $typePrice;
 
     /**
      * @ORM\Column(type="smallint", name="x", length=10, options={"unsigned"=true})
@@ -69,6 +69,21 @@ class Incruste
      */
     private $frameEnd;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Model", cascade={"persist", "remove"})
+     */
+    private $style;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, length=10)
+     */
+    private $visibility;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, length=10, name="category_product")
+     */
+    private $categoryProduct;
+
 
     public function __construct()
     {
@@ -80,14 +95,14 @@ class Incruste
         return $this->id;
     }
 
-    public function getType(): string
+    public function getTypeIncruste(): string
     {
-        return $this->type;
+        return $this->typeIncruste;
     }
 
-    public function setType(string $type): self
+    public function setTypeIncruste(string $type): self
     {
-        $this->type = $type;
+        $this->typeIncruste = $type;
 
         return $this;
     }
@@ -132,14 +147,14 @@ class Incruste
         return $this;
     }
 
-    public function getPriceType(): ?string
+    public function getTypePrice(): ?string
     {
-        return $this->priceType;
+        return $this->typePrice;
     }
 
-    public function setPriceType(string $priceType): self
+    public function setTypePrice(string $priceType): self
     {
-        $this->priceType = $priceType;
+        $this->typePrice = $priceType;
 
         return $this;
     }
@@ -212,6 +227,42 @@ class Incruste
     public function setFrameEnd(?int $fameEnd): self
     {
         $this->frameEnd = $fameEnd;
+
+        return $this;
+    }
+
+    public function getStyle(): ?Model
+    {
+        return $this->style;
+    }
+
+    public function setStyle(?Model $style): self
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    public function getVisibility(): int
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(?int $visibility): self
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    public function getCategoryProduct(): ?int
+    {
+        return $this->categoryProduct;
+    }
+
+    public function setCategoryProduct(?int $categoryProduct): self
+    {
+        $this->categoryProduct = $categoryProduct;
 
         return $this;
     }

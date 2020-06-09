@@ -101,7 +101,7 @@ class Product
     private $elementGraphics;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Customer\Incruste", mappedBy="product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Incruste", mappedBy="product", orphanRemoval=true)
      */
     private $incrustes;
 

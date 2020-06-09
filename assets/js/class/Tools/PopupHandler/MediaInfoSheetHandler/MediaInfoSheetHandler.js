@@ -195,8 +195,24 @@ class MediaInfoSheetHandler extends SubTool
 
     }
 
-    showMediaIncrustes(mediaChooseId)
+    showMediaIncrustes(mediaIncrustations)
     {
+
+        mediaIncrustations.forEach( (mediaIncrustation) => {
+
+            const productName = Object.keys(mediaIncrustation);
+            const incrustesTypes = Object.values(mediaIncrustation)[0];
+
+            let newElement= `<tr>
+                                 <td>${productName}</td> 
+                                 <td><input type="checkbox" ${ incrustesTypes.includes('Prix') ? 'checked' : '' }></td>  
+                                 <td><input type="checkbox" ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }></td>  
+                                 <td><input type="checkbox" ${ incrustesTypes.includes('Texte') ? 'checked' : '' }></td>  
+                             </tr>`;
+
+            $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )
+
+        } )
 
     }
 
