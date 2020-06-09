@@ -2,7 +2,7 @@
 
         data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}"
 
-        data-customer="{{ app.session.get('current_customer').name }}"
+        data-customer="{{ app.session.get('current_customer').name | lower }}"
 
         {% if (media_products is not empty) %}
             data-product="{{ media_products|join(', ') }}"

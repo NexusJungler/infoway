@@ -113,6 +113,14 @@
           flex-direction: row;
           justify-content: center;
           align-items: center;
+          
+          .actions_buttons_container{
+
+            button{
+              cursor: pointer;
+            }
+          }
+          
         }
 
       }

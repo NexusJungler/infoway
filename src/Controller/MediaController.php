@@ -488,7 +488,47 @@ class MediaController extends AbstractController
     }
 
 
+    /**
+     * @Route(path="/file/miniature/exists", name="media::mediaMiniatureExist", methods={"POST"})
+     */
+    public function mediaMiniatureExist(Request $request)
+    {
 
+        $path = $this->parameterBag->get('project_dir'). '/public/' . $request->request->get('path');
+
+        if( file_exists($path) )
+            return new Response( "200 OK" );
+
+        else
+            return new Response( "404 File Not Found", 404 );
+    }
+
+
+    /**
+     * @Route(path="/retrieve/media/associated/infos", name="media::retrieveMediaInfosForPopup", methods={"POST"})
+     */
+    public function retrieveMediaInfosForPopup(Request $request)
+    {
+
+        $mediaId = intval( $request->request->get('mediaId') );
+
+        if($mediaId === 0)
+            throw new Exception(sprintf("Invalid media id given ! No media can be found with this id : '%s'", $mediaId));
+
+        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $mediaRepo = $manager->getRepository(Media::class);
+
+        try
+        {
+            $datas = $mediaRepo->getMediaInfosForInfoSheetPopup($mediaId);
+        }
+        catch (Exception $e)
+        {
+            dd($e->getMessage());
+        }
+
+        return new JsonResponse($datas);
+    }
 
 
     private function saveMediaCharacteristic(Request $request)

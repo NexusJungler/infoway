@@ -207,6 +207,52 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
+    public function getMediaInfosForInfoSheetPopup(int $mediaId)
+    {
+
+        $media = $this->find($mediaId);
+
+        if(!$media)
+            throw new Exception(sprintf("No media found"));
+
+        $datas = [
+            'incrustations' => [],
+            'products' => [],
+            'criterions' => [],
+            'tags' => [],
+            'allergens'=> [],
+            'diffusionSpaces'=> []
+        ];
+
+        foreach ($media->getProducts()->getValues() as $product)
+        {
+            $datas['products'][] = $product->getName();
+
+            foreach ($product->getCriterions()->getValues() as $criterion)
+            {
+                if(!in_array($criterion->getName(), $datas['criterions']))
+                    $datas['criterions'][] = $criterion->getName();
+            }
+
+            foreach ($product->getTags()->getValues() as $tag)
+            {
+                if(!in_array($tag->getName(), $datas['tags']))
+                    $datas['tags'][] = $tag->getName();
+            }
+
+            foreach ($product->getAllergens()->getValues() as $allergen)
+            {
+                if(!in_array($allergen->getName(), $datas['allergens']))
+                    $datas['allergens'][] = $allergen->getName();
+            }
+
+        }
+
+        return $datas;
+
+    }
+
+
     private function getTagsByMedia(Media $media)
     {
 
