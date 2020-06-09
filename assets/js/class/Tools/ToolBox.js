@@ -8,6 +8,7 @@ import PaginatorHandler from "./PaginatorHandler/PaginatorHandler";
 import FilterMediasTool from "./FilterMediasTool/FilterMediasTool";
 import MediaWaitingIncrustationHandler from "./PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
 import PopupHandler from "./PopupHandler/PopupHandler";
+import MediaDeletingHandler from "./MediaDeletingHandler/MediaDeletingHandler";
 
 class ToolBox
 {
@@ -34,6 +35,7 @@ class ToolBox
             new PaginatorHandler(),
             new FilterMediasTool(),
             new PopupHandler(),
+            new MediaDeletingHandler(),
         ];
     }
 

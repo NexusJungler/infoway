@@ -44,11 +44,11 @@
                                 </div>
 
                                 <div class="container">
-                                    <button type="button" class="btn add-table"><i class="fas fa-pen"></i>Ajouter</button>
+                                    <button type="button" class="btn add-table" disabled><i class="fas fa-pen"></i>Ajouter</button>
                                 </div>
 
                                 <div class="container">
-                                    <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                                    <button type="button" class="btn duplicate-table" disabled><i class="fas fa-plus"></i>Dupliquer</button>
                                 </div>
 
                                 <div class="container">
@@ -56,7 +56,7 @@
                                 </div>
 
                                 <div class="container">
-                                    <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
+                                    <button type="button" class="btn delete-table delete_media_btn" disabled><i class="fas fa-trash"></i>Supprimer</button>
                                 </div>
 
                             </div>
@@ -244,9 +244,11 @@
 
             {% endif %}
 
-            {% include "/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" %}
+            {% include "/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" %}
 
             {% include "/popups/mediaInfoSheet/popup_media_info_sheet.twig" %}
+
+            {% include "/popups/deletingMedia/popup_delete_media.html.twig" %}
 
         </article>
     </section>

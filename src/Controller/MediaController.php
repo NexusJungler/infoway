@@ -424,7 +424,7 @@ class MediaController extends AbstractController
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         $id = $request->request->get('media');
-        //dd($id);
+        dd($id);
         $media = $mediaRepository->find($id);
 
         if(!$media)
@@ -443,15 +443,15 @@ class MediaController extends AbstractController
             $mediaType = 'image';
 
         $sizes = ['low', 'medium', 'high', 'HD'];
-        foreach ($sizes as $size) {
+        /*foreach ($sizes as $size) {
             $path = $this->getParameter('project_dir') .'/../main/data_' . $managerName . '/PLAYER INFOWAY WEB/medias/' . $mediaType . '/' .$size .'/' . $media->getId() . '.' . $media->getExtension();
 
             if(file_exists($path))
                 unlink($path);
-        }
+        }*/
 
-        $manager->remove($media);
-        $manager->flush();
+        //$manager->remove($media);
+        //$manager->flush();
 
         return new Response("200 OK");
     }
