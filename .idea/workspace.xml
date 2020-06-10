@@ -3,14 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaDeletingHandler/MediaDeletingHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediaDeletingHandler/MediaDeletingHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup-medias-waiting-incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,7 +249,7 @@
       <workItem from="1590567192069" duration="88185000" />
       <workItem from="1590996961917" duration="13411000" />
       <workItem from="1591013756617" duration="123654000" />
-      <workItem from="1591602900458" duration="60750000" />
+      <workItem from="1591602900458" duration="61612000" />
     </task>
     <servers />
   </component>

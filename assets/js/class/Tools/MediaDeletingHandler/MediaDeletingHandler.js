@@ -48,7 +48,7 @@ class MediaDeletingHandler extends Tool
 
                     $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
 
-                    this.__mediasToDelete.push(mediaId);
+                    this.__mediasToDelete.push({ id: mediaId });
 
                 } )
 
@@ -68,18 +68,41 @@ class MediaDeletingHandler extends Tool
     {
         if(active)
         {
-            this.__$location.find('.media_deleting_confirmation_btn').on('click.onClickOnConfirmationButtonDeleteMedia', async(e) => {
+            this.__$location.find('.media_deleting_confirmation_btn').on('click.onClickOnConfirmationButtonDeleteMedia', e => {
 
-                const allMediaIsSuccessfullyDeleted = await this.allMediasToDeleteIsDeleted();
+                let mediaDeleted = 0;
+                let mediasToDeleteNumber = this.__mediasToDelete.length;
 
-                console.log(allMediaIsSuccessfullyDeleted); debugger
+                this.__mediasToDelete.forEach( (mediaToDelete) => {
 
-                if(allMediaIsSuccessfullyDeleted)
-                {
-                    this.resetPopup();
+                    const mediaId = mediaToDelete.id;
 
-                    this.__$container.removeClass('is_open');
-                }
+                    $.ajax({
+                       url: '/remove/media',
+                        type: "POST",
+                        data: {media: mediaId},
+                        success: (response) => {
+
+                           $(`#media_${mediaId}`).remove();
+                           mediaDeleted++;
+
+                            if(mediaDeleted === mediasToDeleteNumber)
+                            {
+                                this.resetPopup();
+
+                                this.__$container.removeClass('is_open');
+                            }
+
+                        },
+                        error: (response, status, error) => {
+
+                            console.error(response); //debugger
+                            alert(`Erreur durant la suppression du media '${mediaId}'`)
+
+                        },
+                    });
+
+                } );
 
             })
         }
@@ -91,37 +114,7 @@ class MediaDeletingHandler extends Tool
         return this;
     }
 
-    allMediasToDeleteIsDeleted()
-    {
 
-        return new Promise( (resolve, reject) => {
-
-            let mediaDeleted = 0;
-            let mediasToDeleteNumber = this.__mediasToDelete.length;
-
-            $.ajax({
-                url: '/remove/media',
-                type: "POST",
-                data: {media: JSON.stringify(this.__mediasToDelete)},
-                success: (response) => {
-
-                    //$(`#media_${mediaId}`).remove();
-                    mediaDeleted++;
-
-                },
-                error: (response, status, error) => {
-
-                    console.error(response); //debugger
-                    alert(`Erreur durant la suppression du media '${mediaId}'`)
-
-                },
-            });
-
-            resolve( (mediaDeleted === mediasToDeleteNumber) );
-
-        } )
-
-    }
 
     onClickOnPopupCloseButton(active)
     {
