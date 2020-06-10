@@ -3,25 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaDeletingHandler/MediaDeletingHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/product-association/popup-product-association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/upload-popup.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +248,7 @@
       <workItem from="1590996961917" duration="13411000" />
       <workItem from="1591013756617" duration="123654000" />
       <workItem from="1591602900458" duration="70904000" />
-      <workItem from="1591793805741" duration="8923000" />
+      <workItem from="1591793805741" duration="9175000" />
     </task>
     <servers />
   </component>
