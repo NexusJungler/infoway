@@ -1,6 +1,7 @@
-import Tool from "../Tool";
+import Tool from "../../Tool";
+import SubTool from "../../SubTool";
 
-class MediaProductAssociationHandlerTool extends Tool
+class MediaProductAssociationHandlerTool extends SubTool
 {
 
     constructor()
@@ -56,6 +57,22 @@ class MediaProductAssociationHandlerTool extends Tool
         } )
 
     }
+
+
+    onClickOnProductAssociationShortcutShowModal(active)
+    {
+        if(active)
+        {
+            $('.medias-list-container').on('click.onClickOnProductAssociationShortcutShowModal', '.card ')
+        }
+        else
+        {
+
+        }
+
+        return this;
+    }
+
 
     onClickOnProductAssociationButtonShowModal(active)
     {
@@ -302,6 +319,7 @@ class MediaProductAssociationHandlerTool extends Tool
             .onClickOnSelectAllButtonSelectAllProducts(true)
             .onClickOnAddProductInListCheckbox(true)
             .onCategorySelectionAddFilterOnProductList(true)
+            .onClickOnProductAssociationShortcutShowModal(true)
             .onClickOnProductAssociationButtonShowModal(true)
             .onClickOnCloseButtonCloseProductAssociationModal(true)
         ;
@@ -314,6 +332,7 @@ class MediaProductAssociationHandlerTool extends Tool
             .onClickOnSelectAllButtonSelectAllProducts(false)
             .onClickOnAddProductInListCheckbox(false)
             .onCategorySelectionAddFilterOnProductList(false)
+            .onClickOnProductAssociationShortcutShowModal(false)
             .onClickOnProductAssociationButtonShowModal(false)
             .onClickOnCloseButtonCloseProductAssociationModal(false)
         ;

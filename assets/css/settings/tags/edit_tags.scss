@@ -316,11 +316,14 @@
 }
 
 .edit-tags{
+
     .add-popup{
         background: transparent;
+        width: 100%;
+        top: -8rem;
         .modal {
             margin: 0 auto;
-            margin-top: 10%;
+            margin-top: 25%;
             position: relative;
             border: 1px solid #4D646D;
             padding: 0px;
@@ -338,10 +341,10 @@
             padding:8px;
             color: white;
             .btn{
-                margin-top: 5px;
+                margin-top: -3px;
                 position: absolute;
                 background: #FF4040;
-                right: 8px;
+                right: 3px;
             }
         }
         .btn{

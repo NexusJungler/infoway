@@ -1,15 +1,16 @@
 /* == button == */
-
 .btn{
-    height: rem(31px);
+    height: 31px;
+    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+    border: 0.06rem solid #306D7C;
     padding: 0.20rem 0.5rem 0.4rem;
-    font: rem(17px) 'Barlow', lighter;
-    background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+    font: 1rem 'Barlow', medium;
+    color: #ffffff;
+    margin-right: 10px;
     box-shadow: 0px 3px 6px #00000029;
-    border-radius: rem(6px);
-    margin-right: rem(10px);
+    border-radius: 6px;
     &:hover{
-        background: transparent linear-gradient(180deg, #395C65 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+        background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
     }
     i{
         margin-right: 10px;
@@ -22,3 +23,12 @@
   border: rem(1px) solid #FFFFFF;
 }
 
+.content-btn_center{
+     margin-top: 35px;
+     text-align: center;
+ }
+
+.content-btn_left{
+    margin-top: 35px;
+    text-align: left;
+}

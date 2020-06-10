@@ -1,3 +1,6 @@
+// import style css
+import "../css/products/show_product.scss";
+
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 

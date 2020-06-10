@@ -1,0 +1,37 @@
+.popup_delete_medias_container{
+  height: 500px;
+  width: 800px;
+  left: 30%;
+
+  &.is_open{
+
+    .popup{
+
+      .popup_header{
+        height: 10%;
+        border: 1px solid #899CA4;
+        border-radius: 7px 7px 0 0;
+      }
+
+      .popup_body{
+        height: 80%;
+      }
+
+      .popup_footer{
+        height: 10%;
+
+        .actions_buttons_container{
+
+          &:not(:last-child){
+            margin-right: 2%;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

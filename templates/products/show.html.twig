@@ -2,19 +2,19 @@
 
 {% block title %} Produits {% endblock %}
 
-{# {% block stylesheets %}
+ {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('show_factories') }}
-{% endblock %} #}
+    {{ encore_entry_link_tags('show_products') }}
+{% endblock %}
 
 {% block body %}
-    <main class="main main_produits">
+    <main class="main main_product">
         <div class="main-content">
 
             <section class="jumbotron">
 
                 {% block settingtitle %}
-                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS/PRIX', 'sousTitle': '', 'showSecondTitles': false } %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': '', 'showSecondTitles': false } %}
                 {% endblock %}
 
                 {% block wrapper %}
@@ -23,68 +23,46 @@
                 
             </section>
 
-            
-
             <section class="wrapper_tabcontent">
-                <div id="tab-products" class="tab-content current produits">
+                <div id="tab-products" class="tab-content current content-product">
 
-                    {# <div class="display-columns">
-                        <div class="display-content">
-                            <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                            <div class="display-down">
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Tags optionnels
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Type de prix
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Prix Compagnie MEDIUM
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Prix Compagnie PREMIUM
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="display-dates">
-                            <button type="button" class="drop-btn">Dates <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></button>
-                            <div class="display-down">
+                    <article class="tab-content-title">
+                        <h3 class="title">Produits</h3>
+                    </article>
 
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Date actuelle
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Date 2
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                                <div class="product-select-col">
-                                    <label class="mutliselect-chkbox"> Date 3
-                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
-                                        <span class="mutliselect-check"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div> #}
+                     {#<div class="display-columns">#}
+                        {#<div class="display-content">#}
+                            {#<button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>#}
+                            {#<div class="display-down">#}
+                                {#<div class="product-select-col">#}
+                                    {#<label class="mutliselect-chkbox"> Tags optionnels#}
+                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
+                                        {#<span class="mutliselect-check"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+                                {#<div class="product-select-col">#}
+                                    {#<label class="mutliselect-chkbox"> Type de prix#}
+                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
+                                        {#<span class="mutliselect-check"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+                                {#<div class="product-select-col">#}
+                                    {#<label class="mutliselect-chkbox"> Prix Compagnie MEDIUM#}
+                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
+                                        {#<span class="mutliselect-check"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+                                {#<div class="product-select-col">#}
+                                    {#<label class="mutliselect-chkbox"> Prix Compagnie PREMIUM#}
+                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
+                                        {#<span class="mutliselect-check"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
 
-                   <article class="display setting-display ">
+                    <article class="display setting-display ">
                         <div class="display-content">
                             <div class="display-btn">
                                 <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
@@ -94,15 +72,16 @@
                                 <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
                             </div>
                         </div>
-                    </article> 
+                    </article>
 
-  
+
                     <select id="category">
                         <option>TOUTES</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
                     </select>
+
                     <form method="post" action="{{ path('products::delete') }}" class="table">
 
                     

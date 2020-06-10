@@ -18,9 +18,9 @@
         align-items: center;
         pointer-events: none;
         opacity: 0;
-        top: 51%;
+        top: 10%;
         left: 6.2%;
-        z-index: 5;
+        z-index: 10000;
         transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
         &.is-open {
             opacity: 1;

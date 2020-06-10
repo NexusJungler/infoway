@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Contexte;
+use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -14,6 +15,9 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ContexteRepository extends ServiceEntityRepository
 {
+
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Contexte::class);

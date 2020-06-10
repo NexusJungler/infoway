@@ -2,6 +2,8 @@
 
 namespace App\Entity\Customer;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,7 +52,7 @@ class Video extends Media
     private $videoDebit;
 
     /**
-     * @ORM\Column(type="string", name="audio_codec", length=255)
+     * @ORM\Column(type="string", name="audio_codec", length=255, nullable=true)
      */
     private $audioCodec;
 
@@ -60,12 +62,12 @@ class Video extends Media
     private $audioFrame;
 
     /**
-     * @ORM\Column(type="string", name="audio_debit", length=255)
+     * @ORM\Column(type="string", name="audio_debit", length=255, nullable=true)
      */
     private $audioDebit;
 
     /**
-     * @ORM\Column(type="string", name="audio_frequence", length=255)
+     * @ORM\Column(type="string", name="audio_frequence", length=255, nullable=true)
      */
     private $audioFrequence;
 
@@ -79,10 +81,10 @@ class Video extends Media
      */
     private $duration;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $containIncruste;
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function getFormat(): ?string
     {
@@ -248,18 +250,6 @@ class Video extends Media
     public function setDuration(string $duration): self
     {
         $this->duration = $duration;
-
-        return $this;
-    }
-
-    public function getContainIncruste(): bool
-    {
-        return $this->containIncruste;
-    }
-
-    public function setContainIncruste(bool $containIncruste): self
-    {
-        $this->containIncruste = $containIncruste;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Image;
+use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -15,16 +16,12 @@ use Doctrine\Persistence\ObjectManager;
  */
 class ImageRepository extends ServiceEntityRepository
 {
+
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Image::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**

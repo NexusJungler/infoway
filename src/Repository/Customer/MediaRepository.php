@@ -2,8 +2,14 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
-use App\Repository\RepositoryInterface;
+use App\Entity\Customer\Product;
+use App\Entity\Customer\Video;
+use App\Repository\Admin\AllergenRepository;
+use App\Repository\MainRepository;
+use App\Service\MediasHandler;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -11,6 +17,12 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use PDO;
+use ReflectionClass;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @method Media|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,21 +32,288 @@ use PDO;
  */
 class MediaRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    use MainRepository;
+
+    private Serializer $serializer;
+
+    private MediasHandler $mediasHandler;
+
+    private AllergenRepository $allergenRepository;
+
+    private ParameterBagInterface $parameterBag;
+
+    public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler, AllergenRepository $allergenRepository, ParameterBagInterface $parameterBag)
     {
         parent::__construct($registry, Media::class);
+
+        $circularReferenceHandlingContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
+        $encoder =  new JsonEncoder();
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
+        $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
+
+        $this->mediasHandler = $mediasHandler;
+        $this->allergenRepository = $allergenRepository;
+        $this->parameterBag = $parameterBag;
     }
 
-    public function setEntityManager(ObjectManager $entityManager): self
+    /**
+     * Renvoie un tableau contenant tout les médias qui doivent contenir des incrustes mais qui ne contiennent pas encore d'incruste
+     * (boolean a true et tableau des incrustes vide)
+     *
+     * @return array
+     */
+    public function getMediasInWaitingListForIncrustes(): array
     {
-        $this->_em = $entityManager;
-        return $this;
+
+        $medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                            ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
+                            ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
+                            ->andWhere("( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = true AND i.incrustes IS EMPTY) ) OR (v.containIncruste = true AND v.incrustes IS EMPTY)")
+                            ->orderBy("m.id", "ASC")
+                            ->getQuery()
+                            ->getResult();
+
+        foreach ($medias as $media)
+        {
+
+            if($media instanceof Image)
+            {
+                $media->media_type = 'image';
+            }
+
+            else
+            {
+                $media->media_type = 'video';
+            }
+
+        }
+
+        //dd($medias);
+
+        return [
+            'number' => sizeof($medias),
+            'medias' => $medias
+        ];
+
     }
 
-    public function getMediaInIncrusteWaitingListNumber()
+
+    public function getAllArchivedMedias()
+    {
+
+        $medias = $this->findBy(['isArchived' => true]);
+
+        return [
+            'number' => sizeof($medias),
+            'medias' => $medias
+        ];
+
+    }
+
+
+    public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15)
+    {
+        //dd($type, $currentPage, $limit);
+        // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
+
+        switch ($type)
+        {
+
+            // recupère les medias qui ont (boolean a true et tableau des incrustes non vide) et qui n'ont pas
+            // d'incruste(boolean a false et tableau des incrustes vide)
+            case "medias":
+
+                $dql = "SELECT m FROM " . Media::class. " m 
+                
+                        LEFT JOIN " . Image::class . " i WITH m.id = i.id
+                        LEFT JOIN " . Video::class . " v WITH m.id = v.id
+                        
+                        WHERE ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
+                        OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
+                        
+                        ORDER BY m.createdAt DESC";
+
+                $medias = $this->paginate($dql, $currentPage, $limit);;
+
+                $orderedMedias['numberOfPages'] = intval( ceil($medias->count() / $limit) );
+
+                //$orderedMedias['medias_products_criterions'] = $this->getEntityManager()->getRepository(Product::class)->findProductsCriterions();
+
+                // sert pour choisir le nombre de media à afficher sur la page
+                for($i = 5; $i <= $medias->count()+5; $i+=5)
+                {
+                    $orderedMedias['numberOfMediasAllowedToDisplayed'][] = $i;
+                }
+
+                $orderedMedias['medias'] = [];
+
+                $customerName = $this->getEntityManager()->getConnection()->getDatabase();
+
+                foreach ($medias as $index => $media)
+                {
+
+                    $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                       $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                       . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+
+                    $orderedMedias['medias'][$index] = [
+                        'media' => null,
+                        'media_type' => ($media instanceof Image) ? 'image': 'video',
+                        'media_products' => [],
+                        'media_tags' => [],
+                        'media_criterions' => [],
+                        'media_categories' => [],
+                        'media_allergens' => [],
+                        'miniature_exist' => $mediaMiniatureExist,
+                    ];
+
+                    foreach ($media->getTags()->getValues() as $tag)
+                    {
+                        $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+                    }
+
+                    foreach ($media->getProducts()->getValues() as $product)
+                    {
+                        $orderedMedias['medias'][$index]['media_products'][] = $product->getId();
+
+                        if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))
+                            $orderedMedias['medias'][$index]['media_categories'][] = $product->getCategory()->getId();
+
+                        foreach ($product->getCriterions()->getValues() as $criterion)
+                        {
+                            $orderedMedias['medias'][$index]['media_criterions'][] = $criterion->getId();
+                        }
+
+                        foreach ($product->getTags()->getValues() as $tag)
+                        {
+                            if(!in_array($tag->getId(), $orderedMedias['medias'][$index]['media_tags']))
+                                $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+                        }
+
+                        foreach ($product->getProductAllergens()->getValues() as $allergen)
+                        {
+                            if(!in_array($allergen->getAllergenId(), $orderedMedias['medias'][$index]['media_tags']))
+                                $orderedMedias['medias'][$index]['media_tags'][] = $allergen->getAllergenId();
+                        }
+
+                    }
+
+                    $orderedMedias['medias'][$index]['media'] = $media;
+
+                }
+
+                //dd($orderedMedias);
+
+                break;
+
+            case "video_synchro":
+                die("Implemente video synchro recuperation logic");
+                break;
+
+            case "video_thematic":
+                die("Implemente video thematic recuperation logic");
+                break;
+
+            case "element_graphic":
+                die("Implemente element graphic recuperation logic");
+                break;
+
+            default:
+                throw new Exception(sprintf("Error : Unrecognized media type ! Trying to get medias with '%s' type but this media type is not exist ", $type));
+
+        }
+
+        return $orderedMedias;
+
+    }
+
+
+    public function getMediaInfosForInfoSheetPopup(int $mediaId)
+    {
+
+        $media = $this->find($mediaId);
+
+        if(!$media)
+            throw new Exception(sprintf("No media found"));
+
+        $datas = [
+            'incrustations' => [],
+            'products' => [],
+            'criterions' => [],
+            'tags' => [],
+            'allergens'=> [],
+            'diffusionSpaces'=> []
+        ];
+
+        foreach ($media->getProducts()->getValues() as $product)
+        {
+            $datas['products'][] = $product->getName();
+
+            $productIncrustes = [];
+
+            foreach ($product->getIncrustes()->getValues() as $incruste)
+            {
+                $productIncrustes[$product->getName()][] = $incruste->getTypeIncruste();
+            }
+
+            $datas['incrustations'][] = $productIncrustes;
+
+            foreach ($product->getCriterions()->getValues() as $criterion)
+            {
+                if(!in_array($criterion->getName(), $datas['criterions']))
+                    $datas['criterions'][] = $criterion->getName();
+            }
+
+            foreach ($product->getTags()->getValues() as $tag)
+            {
+                if(!in_array($tag->getName(), $datas['tags']))
+                    $datas['tags'][] = $tag->getName();
+            }
+
+            foreach ($product->getProductAllergens()->getValues() as $allergen)
+            {
+                $allergenId = $allergen->getAllergenId();
+                $allergen = $this->allergenRepository->find($allergenId);
+                if(!$allergen)
+                    throw new Exception(sprintf("No allergen found with id : '%s'", $allergenId));
+
+                if(!in_array($allergen->getName(), $datas['allergens']))
+                    $datas['allergens'][] = $allergen->getName();
+            }
+
+        }
+
+        return $datas;
+
+    }
+
+
+    private function getTagsByMedia(Media $media)
     {
 
 
+
+    }
+
+    /**
+     * @param string $query
+     * @param int $page
+     * @param int $limit
+     * @return Paginator
+     */
+    private function paginate(string $query, int $page = 1, int $limit = 15)
+    {
+
+        $query = $this->_em->createQuery($query)
+                           ->setFirstResult($limit * ($page - 1))
+                           ->setMaxResults($limit);
+
+        return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
 
     }
 

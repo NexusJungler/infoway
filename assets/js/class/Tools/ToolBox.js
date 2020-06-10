@@ -1,8 +1,14 @@
-import CustomerCreatorHandler from "../CustomerCreatorHandler/CustomerCreatorHandler";
-import UploadHandlerTool from "../UploadHandlerTool/UploadHandlerTool";
-import {ClockManager} from "../../Managers/ClockManager/ClockManager";
-import MediaProductAssociationHandlerTool from "../ProductAssociationHandler/MediaProductAssociationHandlerTool";
-import MediaTagAssociationHandlerTool from "../TagAssociationHandler/MediaTagAssociationHandlerTool";
+import CustomerCreatorHandler from "./CustomerCreatorHandler/CustomerCreatorHandler";
+import UploadHandlerTool from "./PopupHandler/UploadHandlerTool/UploadHandlerTool";
+import {ClockManager} from "../Managers/ClockManager/ClockManager";
+import MediaProductAssociationHandlerTool from "./PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool";
+import MediaTagAssociationHandlerTool from "./PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool";
+import ArchivedMediasHandlerTool from "./ArchivedMediasHandler/ArchivedMediasHandlerTool";
+import PaginatorHandler from "./PaginatorHandler/PaginatorHandler";
+import FilterMediasTool from "./FilterMediasTool/FilterMediasTool";
+import MediaWaitingIncrustationHandler from "./PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
+import PopupHandler from "./PopupHandler/PopupHandler";
+import MediaDeletingHandler from "./PopupHandler/MediaDeletingHandler/MediaDeletingHandler";
 
 class ToolBox
 {
@@ -25,9 +31,11 @@ class ToolBox
     {
         this.__tools = [
             new CustomerCreatorHandler(),
-            new UploadHandlerTool(),
-            new MediaProductAssociationHandlerTool(),
-            new MediaTagAssociationHandlerTool(),
+            new ArchivedMediasHandlerTool(),
+            new PaginatorHandler(),
+            new FilterMediasTool(),
+            new PopupHandler(),
+            new MediaDeletingHandler(),
         ];
     }
 
@@ -51,7 +59,19 @@ class ToolBox
 
     activeAllTools()
     {
-        this.__tools.map( tool => tool.enable() );
+        this.__tools.map( tool => {
+
+            if(this.toolIsRegistered(tool.getName()))
+            {
+                tool.setToolBox(this);
+                tool.enable();
+            }
+
+            else
+                throw new Error(`'${tool.getName()}' tool is not registered !`);
+
+        } );
+
         return this;
     }
 

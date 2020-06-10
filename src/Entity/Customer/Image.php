@@ -2,6 +2,8 @@
 
 namespace App\Entity\Customer;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,21 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Image extends Media
 {
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $containIncruste;
 
-    public function getContainIncruste(): bool
+
+    public function __construct()
     {
-        return $this->containIncruste;
-    }
-
-    public function setContainIncruste(bool $containIncruste): self
-    {
-        $this->containIncruste = $containIncruste;
-
-        return $this;
+        parent::__construct();
     }
 
 }

@@ -49,6 +49,7 @@
             }
             &:nth-child(n+2){
                 color: #283338;
+                font: 1rem "Barlow";
                 .row{
                     padding: 0;
                     &:first-child{
@@ -79,17 +80,13 @@
         .row-create{
             background: #C0CCD1 0% 0% no-repeat padding-box;
         }
-       
-        
-    
+
         .btn-save{
             background: #E3E3E3 0% 0% no-repeat padding-box;
             padding: 10px;
             text-align: center;
         }
-
     }
-
 
     .row-multiple{
         margin-top: 10px;
@@ -110,9 +107,6 @@
         -o-transition: all 1s ease;  
         -ms-transition: all 1s ease;  
         transition: all 1s ease;
-        // position: absolute;
-        // top: -40px
-
         .form-input-basicCriterion{
             padding-top: 0.3rem;
         }
@@ -129,13 +123,9 @@
                 }
             }
         }
-
     }
     .active{
         display: flex;
-        // height: auto;
-        // position: relative;
-        // top: 0;
         opacity: 1;
     }
 }
@@ -226,17 +216,16 @@
                 }
             }
         }
-    
     }
 }
-
 
 .submit-rating {
 	display: flex;
 	align-items: center;
     justify-content: center;
     position: relative;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    width: 170px;
     input{
         display: none;
     }
@@ -244,33 +233,22 @@
         position: relative;
         text-align: center;
         z-index: 3;
-        -webkit-box-flex: 0.34;
-        flex: 0.34;
-        z-index: 3;
+        -webkit-box-flex: 3.34;
+        flex: 3.34;
         cursor: pointer;
         transition: 250ms;
         font: 18px "Barlow" ;
         color: #4D646D;
         &.rating-label-non {
-            margin-right: 1rem;
+            right: -15px;
+            text-align: left;
         }
         &.rating-label-oui {
-            margin-left: 1rem;
+            left: -20px;
+            text-align: right;
         }
-        
     }
-
 }
-
-// .rating-label-oui {
-// 	left: -28px;	
-// 	text-align: right;
-// }
-// .rating-label-non {
-// 	left: 58px;	
-// 	text-align: left;
-// 	color: #222;
-// }
 
 .toggle-rating-pill {
 	position: relative;
@@ -287,7 +265,7 @@
 	height: 22px;
     background-color: white;
     top:2px;
-	left: 49px;
+	left: 60px;
 	border-radius: 500px;
 	transition: all 250ms;
 	z-index: 4;
@@ -303,13 +281,12 @@
     font-weight: 700;
 }
 #criterions_list_basicCriterionUsed_1:checked~.smile-rating-toggle {
-    left: 78px;
+    left: 88px;
 }
 
 #criterions_list_basicCriterionUsed_1:checked~.toggle-rating-pill {
 	background: #53B3C7 0% 0% no-repeat padding-box;
 }
-
 
 .content-criteres-bloc {
     .container-input{

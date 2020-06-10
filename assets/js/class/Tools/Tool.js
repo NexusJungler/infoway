@@ -1,4 +1,4 @@
-import ToolBox from "./ToolBox/ToolBox";
+import ToolBox from "./ToolBox";
 
 class Tool {
 
@@ -18,7 +18,7 @@ class Tool {
     {
 
         if(typeof name !== 'string' || typeof name === "undefined" || name === "" || name === null)
-            throw new Error("Invalid 'name' parameter for Tool::setName()");
+            throw new Error(`Attempt to set name to ${this.__name}, but name must be instance of string`);
 
         this.__name = name;
 
@@ -29,7 +29,7 @@ class Tool {
     {
 
         if( !(toolBox instanceof ToolBox) )
-            throw new Error("Invalid 'toolBox' parameter for Tool::setToolBox()");
+            throw new Error(`Attempt to set toolbox to ${this.__name}, but toolbox must be instance of ToolBox`);
 
         this.__toolBox = toolBox;
         console.log(`ToolBox is now added in '${this.__name}' !`);
@@ -42,20 +42,36 @@ class Tool {
         return this.__toolBox;
     }
 
+
+
     toolIsActived()
     {
         return this.__isActived;
     }
 
+    getUrlParam(parameterName)
+    {
+        let urlParameter = "undefined";
+
+        if(window.location.href.indexOf(parameterName) > -1)
+        {
+            window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                urlParameter[key] = value;
+            });
+        }
+
+        return urlParameter;
+    }
+
     enable()
     {
-        console.log(`'${this.__name}' is enabled now !`);
+        console.log(`'${this.__name}' is enabled !`);
         this.__isActived = true;
     }
 
     disable()
     {
-        console.log(`'${this.__name}' is disabled now !`);
+        console.log(`'${this.__name}' is disabled !`);
         this.__isActived = false;
     }
 

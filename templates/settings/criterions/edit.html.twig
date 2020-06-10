@@ -38,7 +38,7 @@
                                 <div class="display-btn">
                                     <a href="{{ path('criterions_lists_new') }}"  class="btn btn_hidden" ><i class="fas fa-plus"></i>Créer Critère</a>
                                     <button type="button" class="btn btn_hidden duplicate-criterion"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                    <button type="button" class="btn btn_hidden modified-criterion"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn btn_hidden popup-confimation_modified"><i class="far fa-edit"></i>Modifier</button>
                                     <button type="button" class="btn btn-popup-delete-criterion" data-tablelistdelete="site"><i class="fas fa-trash"></i> Supprimer</button>
                                 </div>
                             </div>
@@ -48,9 +48,7 @@
                             {% set criterions_list = criterion.list %}
                             {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
 
-                            {{ include('settings/criterions/_form.html.twig', {'button_label': 'Update'}) }}
-
-
+                            {{ include('settings/criterions/_form.html.twig', {'button_label': 'Enregistrer'}) }}
                         </article>
 
                     </div>

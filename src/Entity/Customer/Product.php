@@ -102,7 +102,11 @@ class Product
      */
     private $elements;
 
-    private $allergens;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Incruste", mappedBy="product", orphanRemoval=true)
+     */
+    private $incrustes;
 
     public function __construct()
     {
@@ -112,6 +116,7 @@ class Product
         $this->product_allergens = new ArrayCollection();
         $this->medias = new ArrayCollection() ;
         $this->elements = new ArrayCollection();
+        $this->incrustes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -413,6 +418,37 @@ class Product
         if ($this->elements->contains($element)) {
             $this->elements->removeElement($element);
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection|Incruste[]
+     */
+    public function getIncrustes(): Collection
+    {
+        return $this->incrustes;
+    }
+
+    public function addIncruste(Incruste $incruste): self
+    {
+        if (!$this->incrustes->contains($incruste)) {
+            $this->incrustes[] = $incruste;
+            $incruste->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIncruste(Incruste $incruste): self
+    {
+        if ($this->incrustes->contains($incruste)) {
+            $this->incrustes->removeElement($incruste);
+            // set the owning side to null (unless already changed)
+            if ($incruste->getProduct() === $this) {
+                $incruste->setProduct(null);
+            }
+        }
+
         return $this;
     }
 

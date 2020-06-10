@@ -28,13 +28,18 @@ class createCriterion{
 
     onClickOpenPopup(active) {
         if(active){
-            $('.btn-popup-delete-criterion').on('click.onClickOpenPopup', function(){
-                $('.add-popup-delete').addClass('is-open');
+            $('.btn-open-popup_product').on('click.onClickOpenPopup', function(){
+                $('.add-popup-produits').addClass('is-open');
+                return false;
+            })
+            $('.btn-open-popup_site').on('click.onClickOpenPopup', function(){
+                $('.add-popup-site').addClass('is-open');
                 return false;
             })
             
         }else{
-            $(".btn-popup-delete-criterion").off('click.onClickOpenPopup');
+            $(".btn-open-popup_product").off('click.onClickOpenPopup');
+            $(".btn-open-popup_site").off('click.onClickOpenPopup');
         }
     }
 

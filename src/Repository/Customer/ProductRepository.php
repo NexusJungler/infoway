@@ -2,9 +2,8 @@
 
 namespace App\Repository\Customer;
 
-use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Product;
-use App\Entity\Customer\Site;
+use App\Repository\MainRepository;
 use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -16,18 +15,14 @@ use Doctrine\Persistence\ObjectManager;
  * @method product[]    findAll()
  * @method product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository implements RepositoryInterface
+class ProductRepository extends ServiceEntityRepository
 {
+
+    use MainRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, product::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     public function findProductWithTags($id)
@@ -42,7 +37,6 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
         ;
     }
 
-    
     public function findProductsCriterions()
     {
 
@@ -51,43 +45,16 @@ class ProductRepository extends ServiceEntityRepository implements RepositoryInt
         foreach ($this->findAll() as $product)
         {
 
-            $productsCriterions[$product->getName()] = [];
+            $productsCriterions[$product->getId()] = [];
 
             foreach ($product->getCriterions()->getValues() as $criterion)
             {
-                $productsCriterions[$product->getName()][] = $criterion->getName();
+                $productsCriterions[$product->getId()][] = $criterion->getName();
             }
 
         }
 
         return $productsCriterions;
-    }
-
-    public function getAllProductsWhereCriterionDoesNotAppear(Criterion $criterion){
-
-        $criterionProductsIds = $criterion->getProducts()->filter(function(Product $product){
-            return $product->getId() ;
-        });
-
-        return $criterionProductsIds->count() <1 ? $this->findAll() : $this->getProductsWhereIdNotIn($criterionProductsIds->getValues() );
-    }
-
-
-    public function getProductsWhereIdNotIn(array $ids){
-
-        return  $this->createQueryBuilder('p')
-            ->where('p.id NOT IN ( :ids )')
-            ->setParameter('ids', $ids)
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-    public function getAllProductsIds() : array {
-
-        return array_map(
-            function( Product $product ){ return $product->getId() ; }
-            ,  $this->findAll() ) ;
 
     }
 

@@ -1,0 +1,115 @@
+<section id="upload_popups">
+
+    <article class="add-popup upload_popup">
+        <div class="modal">
+
+            <div class="header-modal">
+                <div>
+                    <p class="upload-title">Préparation de l'Upload</p>
+                    <button type="button" class="btn btn-popupclose upload_abort">X</button>
+                </div>
+            </div>
+
+            <div class="model-upload-file files_selection">
+
+                <div class="upload-file">
+                    <form id="uploadForm">
+
+                        <div class="box__input dragndrop_download_input_container">
+                            <span>Déposez votre ou vos fichiers ici</span> <br>
+                            <img src="{{ asset('/build/images/download_icon.png') }}" alt="download icon">
+                        </div>
+
+                        <div class="basic_download_input_container">
+                            <label for="uploadmedia">Sélectionner vos fichiers</label>
+                            <input type="file" id="uploadmedia" class="uploadbtn" name="uploadmedia" multiple>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="upload-info">
+
+                    <div class="table">
+                        <table class="table-custome" >
+                            <thead  class="table-info thead-content">
+                            <tr>
+                                <th>Liste des médias déposés :</th>
+                                <th></th>
+                                <th>Formats acceptés</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content upload-file-list scrollbar-table">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="start-upload-container">
+                    <span class="error error_over-max-file"></span>
+                    <button type="button" class="product-btn-add start_upload_button" style="display: none">Démarrer l'upload</button>
+                </div>
+
+            </div>
+
+            <div class="edit_media_info" style="display: none">
+
+                <div class="media_list_container">
+
+                    <div class="hidden">
+                        {{ form_start(uploadMediaForm) }}
+                        <ul class="medias_collection" data-prototype="{{ form_widget(uploadMediaForm.medias.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}"></ul>
+                        {{ form_end(uploadMediaForm) }}
+                    </div>
+
+                    <table class="media_list">
+
+                        <thead>
+                        <tr>
+                            <th class="uploaded-file-name-col">Fichier</th>
+                            <th class="file-upload-state-col">Téléchargement</th>
+                            <th style="display: none" class="media-choice-input-col"></th>
+                            <th>Médias</th>
+                            <th>Caractéristiques</th>
+                            <th>Nom</th>
+                            <th>Date de diffusion</th>
+                            <th>Critères</th>
+                            <th>Affecter TAGS</th>
+                            <th>Associer produits</th>
+                            <th>Incrustations</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="tbody">
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="action-btn-container">
+
+                    <div class="edit-btn-container" style="display: none">
+                        <button type="button" class="cancel-all-upload">Annuler</button>
+                        <button type="button" class="save-media-modif">Enregistrer</button>
+                        <button type="button" class="show-media-info-resume" style="display: none;">Suivant</button>
+                    </div>
+
+                    <div class="main-btn-container" style="display: none">
+                        <button type="button" class="show-media-edit-btn">&leftarrow; Précédent</button>
+                        <button type="button" class="replace-media-btn">Remplacer un média</button>
+                        <button type="button" class="program-media-btn">Programmer</button>
+                        <button type="button" class="show-mediatheque-btn">Médiathèque</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </article>
+
+</section>

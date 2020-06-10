@@ -1,6 +1,6 @@
 {{ form_start(form) }}
 
-    <div class="row">
+    <div class="content-criterion_edit">
         <div class="row-col_name">
             <label class="container-input">
                 {{ form_widget(form.selected) }}
@@ -11,21 +11,21 @@
         <div class="row-col_description">
             {{ form_widget(form.description) }}
         </div>
-
-
     </div>
 
     <section class="content-assigned table">
 
-        <article class="content-assigned-products bloc-produits">
+        <article class="content-assigned-products">
+
             <div class='title'>
                 <h3>Affecté aux <span class="title-bold">produits</span> :</h3>
             </div>
+
             <table class="table-assigned">
                 <thead class="thead-assigned">
                     <tr>
                         <th>Produits</th>
-                        <th>Ajouter Produits : <button type="button" class="btn"><i class="fas fa-align-justify"></i>Produits</button></th>
+                        <th>Ajouter Produits : <button type="button" class="btn btn-open-popup_product"><i class="fas fa-align-justify"></i>Produits</button></th>
                     </tr>
                 </thead>
                 <tbody class="tbody-assigned scrollbar-table">
@@ -35,11 +35,14 @@
                         {#<tr class="tag__sites__site{% if currentProduct not in criterion.product %} hidden{% endif %}">#}
                         <tr>
                             <td>
-                                <img src="{{ asset('/build/images/no-available-image.png') }}" class="img-product" alt="no-available-image">
+                                <div class="content-assigned-image">
+                                    <img src="{{ asset('/build/images/no-available-image.png') }}" class="img-product" alt="no-available-image">
+                                </div>
+
                             </td>
                             <td>
                                 <label class="container-input">
-                                    {{ form_widget(product ,  {'attr': {'checked': currentProduct not in availablesProducts }}) }}
+                                    {{ form_widget(product ,  {'attr': {'class': 'tag_sites_' ~ product.vars.value} }) }}
                                     {{  form_label(product) }}
                                     <span class="container-rdo"></span>
                                 </label>
@@ -50,25 +53,30 @@
             </table>
         </article>
 
+        <div class="content-assigned-site">
 
-        <div class="content-assigned-site " >
-            <div class='title'>
-                <h3>Affecté aux <span class="title-bold">sites</span>: </h3>
+            <div class="title">
+                <h3>Affecté aux <span class="title-bold">sites</span> :</h3>
             </div>
-            <table class="table-site-custome table-custome">
-                <thead class="table-info thead-info">
+
+            <table class="table-assigned">
+                <thead class="thead-assigned">
                     <tr>
                         <th>Site</th>
-                        <th>Ajouter sites : <button type="button" class="btn btn-site"><i class="fas fa-align-justify"></i>Sites</button></th>
+                        <th>Ajouter sites : <button type="button" class="btn btn-open-popup_site"><i class="fas fa-align-justify"></i>Sites</button></th>
                     </tr>
                 </thead>
-                <tbody class="tbody tbody-content affected-site-container scrollbar-table">
+                <tbody class="tbody-assigned scrollbar-table">
                 {#{%  if form.sites|length < 1  %}  {{ form_row(form.sites) }} {% endif %}#}
                     {% for site in form.sites %}
                         {%  set currentSite =  form.sites.vars.choices[site.vars.value].data %}
                         <tr>
-                            <td>
-                                {{ form_row(site ,  {'attr': {'checked': currentSite not in availablesSites }}  ) }}
+                            <td class="td-custome_padding">
+                                <label class="container-input">
+                                    {{ form_widget(site ,  {'attr': {'class': 'tag_sites_' ~ site.vars.value} }) }}
+                                    {{  form_label(site) }}
+                                    <span class="container-rdo"></span>
+                                </label>
                                 {#<label class="container-input">#}
                                     {#{{ form_widget(site, {'attr': {'class': 'tag_sites_' ~ site.vars.value} }) }}#}
                                     {#{{  form_label(site) }}#}
@@ -76,28 +84,28 @@
                                 {#</label>#}
                             </td>
                         </tr>
-                {% endfor  %}
+                    {% endfor  %}
                 </tbody>
             </table>
+
         </div>
 
     </section>
 
-    <div class="content-btn">
+    <div class="content-btn_left">
         <a href="{{ path('criterions_show', {'id' : criterion.id }) }}" class="btn">Annuler</a>
         <button class="btn">{{ button_label|default('Enregister') }}</button>
     </div>
 
-
-
 {{ form_end(form) }}
+
 
 <article class="add-popup add-popup-site ">
 
     <div class="modal">
 
         <div class="header-modal">
-            <p class="upload-title">Affecter :</p>
+            <p class="upload-title">Affecter s:</p>
             <button type="button" class="btn btn-popupclose2 ">X</button>
         </div>
 
@@ -140,7 +148,7 @@
     <div class="modal">
 
         <div class="header-modal">
-            <p class="upload-title">Affecter :</p>
+            <p class="upload-title">Affecter p:</p>
             <button type="button" class="btn btn-popupclose2 ">X</button>
         </div>
 

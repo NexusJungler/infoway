@@ -86,11 +86,38 @@ class Media
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", nullable=false, name="mime_type")
+     */
+    private $mimeType;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, name="is_archived")
+     */
+    private $isArchived;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, name="orientation")
+     */
+    private $orientation;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $containIncruste;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Incruste", inversedBy="media")
+     */
+    private $incrustes;
+
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->incrustes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,6 +293,80 @@ class Media
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMimeType(): string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(string $mimeType): self
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    public function setIsArchived(bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    public function getOrientation(): string
+    {
+        return $this->orientation;
+    }
+
+    public function setOrientation(string $orientation): self
+    {
+        $this->orientation = $orientation;
+
+        return $this;
+    }
+
+    public function getContainIncruste(): bool
+    {
+        return $this->containIncruste;
+    }
+
+    public function setContainIncruste(bool $containIncruste): self
+    {
+        $this->containIncruste = $containIncruste;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Incruste[]
+     */
+    public function getIncrustes(): Collection
+    {
+        return $this->incrustes;
+    }
+
+    public function addIncruste(Incruste $incruste): self
+    {
+        if (!$this->incrustes->contains($incruste)) {
+            $this->incrustes[] = $incruste;
+        }
+
+        return $this;
+    }
+
+    public function removeIncruste(Incruste $incruste): self
+    {
+        if ($this->incrustes->contains($incruste)) {
+            $this->incrustes->removeElement($incruste);
+        }
 
         return $this;
     }

@@ -1,0 +1,169 @@
+<section class="popup_container popup_medias_waiting_incrustation_container">
+
+    <article class="popup popup_medias_waiting_incrustes">
+
+        <div class="popup_header">
+
+            <div class="left_side popup_header_item">
+                <div class="item icon-container">
+                    <i class="fas fa-hourglass-half icon"></i>
+                </div>
+
+                <div class="item title_container">
+                    <p class="title">Médias en attente d'incrustation</p>
+                </div>
+
+                <div class="item medias_number_container">
+                    <p class="medias_number">{{ mediasWaitingForIncrustation['number'] }}</p>
+                </div>
+
+            </div>
+
+            <div class="right_side popup_header_item">
+
+                <div class="item close_popup_button_container">
+                    <button type="button" class="close_modal_button">X</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="popup_body">
+
+            <div class="archived_medias_list_container table popup_body_item">
+
+                <table class="table-custome">
+
+                    <thead class="thead-info">
+                        <tr>
+                            <th></th>
+                            <th>Médias</th>
+                            <th>Caractéristiques</th>
+                            <th>Nom</th>
+                            <th>Critères affectés</th>
+                            <th>TAGS affectés</th>
+                            <th>Produits associés</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="archived_medias_list tbody tbody-content scrollbar-table">
+
+                        {% for media in mediasWaitingForIncrustation['medias'] %}
+
+                            <tr>
+                                <td class="select_media_col">
+                                    <div class="media_selection_container container">
+                                        <input type="checkbox" class="select_media container_child" data-media="{{ media.id }}">
+                                    </div>
+                                </td>
+                                <td class="media_miniature_col">
+                                    <div class="media_miniature_container container">
+                                        {% if media.media_type is same as('image') %}
+
+                                            <img class="media_miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                                                 alt="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png">
+
+                                        {% else %}
+
+                                            <video class="media-miniature container_child" controls>
+                                                <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                                            </video>
+
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="media_characteristics_col">
+                                    <div class="media_characteristics_container container">
+                                        <span>{{ media.width }}*{{ media.height }}px</span> <br>
+                                        <span>{{ media.extension }}</span> <br>
+                                        {% if media.media_type is same as('image') %}
+                                            <span>72dpi</span>
+                                        {% else %}
+                                            <span>{{ media.videoCodec }}</span>
+                                        {% endif%}
+                                    </div>
+                                </td>
+                                <td class="media_name_col">
+                                    <div class="media_name_container container">
+                                        <p class="media_name container_child">{{ media.name }}</p>
+                                    </div>
+                                </td>
+                                <td class="media_associated_criterions_col">
+                                    <div class="media_criterions_container container">
+                                        {% if (media.products.values is empty) or (media.products.values| length is same as(1) and productsCriterions[media.products.values[0].id] is empty)  %}
+
+                                            <span class="container_child">Aucun critère</span>
+
+                                        {% else %}
+
+                                            {% for product in media.products.values %}
+
+                                                {% for criterion in productsCriterions[product.id] %}
+                                                    <span class="container_child">{{ criterion }}</span>
+                                                {% endfor %}
+
+                                            {% endfor %}
+
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="media_associated_tags_col">
+                                    <div class="media_tags_container container">
+                                        {% if media.tags.values is empty %}
+
+                                            <span class="container_child">Aucun tag</span>
+
+                                        {% else %}
+
+                                            {% for tag in media.tags.values %}
+                                                <span class="container_child">{{ tag.name }}</span>
+                                            {% endfor %}
+
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="media_associated_products_col">
+                                    <div class="media_products_container container">
+                                        {% if media.products.values is empty %}
+
+                                            <span class="container_child">Aucun produit</span>
+
+                                        {% else %}
+
+                                            {% for product in media.products.values %}
+
+                                                <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
+
+                                            {% endfor %}
+
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="popup_footer">
+
+            <div class="actions_buttons_container">
+                <button class="btn close_modal_button" type="button">Fermer</button>
+            </div>
+
+            <div class="actions_buttons_container">
+                <button type="button" class="btn redirect_to_module_incruste_button disabled">Incruster PRIX</button>
+            </div>
+
+        </div>
+
+    </article>
+
+</section>

@@ -25,7 +25,7 @@
 
             {% block maincontent %}
                 <section class="wrapper_tabcontent">
-                    <div id="setting-criteres" class="tab-content current tab-content-criteres">
+                    <div id="setting-criteres" class="tab-content current tab-content-criteres content-criterion">
 
                         <article class="tab-content-title">
                             <h3 class="title">Gestion des Critéres</h3>
@@ -38,13 +38,13 @@
                                 <div class="display-btn">
                                     <a href="{{ path('criterions_lists_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Critère</a>
                                     <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
-                                    <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Modifier</button>
-                                    <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                    <button type="button" class="btn btn-popup-edit-criterion"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn btn-popup-delete-criterion" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
                                 </div>
                             </div>
                         </article>
 
-                        <article class="content-criteres"> 
+                        <article class="content-criterion_list">
                             <ul>
                                 {%  for criterions_list in criterions_lists  %}
                                     <li class="row-criterion">
@@ -53,6 +53,42 @@
                                 {% endfor %}
                             </ul>
                         <article>
+
+                        <article class="add-popup popup-confirmation add-popup-delete ">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">Configuration de la suppression</p>
+                                    <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                                    <div class="selected-tags-list" >
+                                    </div>
+                                </div>
+                                <div class="footer-modal">
+
+                                    <button type="button" class="btn btn-popupclose">NON</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="add-popup popup-confirmation add-popup-edit">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">modification</p>
+                                    <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>voulez vous modifier ?</p>
+                                    <div class="selected-tags-list" >
+                                    </div>
+                                </div>
+                                <div class="footer-modal">
+                                    <button type="button" class="btn modified-criterion">OUI</button>
+                                    <button type="button" class="btn btn-popupclose">NON</button>
+                                </div>
+                            </div>
+                        </article>
 
                     <div>
                 <section>

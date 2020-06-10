@@ -16,7 +16,8 @@ import {Table} from "./class/Table/Table";
 import {Navbar} from "./class/Navbar/Navbar";
 
 import {Form} from "./class/Form/Form";
-import ToolBox from "./class/Tools/ToolBox/ToolBox";
+import ToolBox from "./class/Tools/ToolBox";
+
 
 
 const $ = require('jquery');
@@ -50,9 +51,7 @@ const clock= new ClockManager();
 clock.enable();
 
 const toolBox = new ToolBox();
-toolBox.activeTool("CustomerCreatorHandler")
-       .activeTool("UploadHandlerTool")
-;
+toolBox.activeTool("CustomerCreatorHandler");
 
 $(".enseigne select#enseigne").on("change", e => {
 
