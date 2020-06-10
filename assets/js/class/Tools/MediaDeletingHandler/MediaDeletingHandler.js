@@ -12,17 +12,21 @@ class MediaDeletingHandler extends Tool
         this.__$location = $(".popup_delete_medias");
     }
 
-    onMediaSelectionAndDeselectionChangeDeleteButtonState(active)
+    onMediaSelectionAndDeselectionChangeMediaActionsButtonsState(active)
     {
         if(active)
         {
             $(".select-media-input-container .select-media-input").on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', e => {
 
                 if($(".select-media-input-container .select-media-input:checked").length === 0)
-                    $('.delete_media_btn').attr('disabled', true);
+                {
+                    $('.media_action_btn').attr('disabled', true);
+                }
 
                 else
-                    $('.delete_media_btn').removeAttr('disabled');
+                {
+                    $('.media_action_btn').removeAttr('disabled');
+                }
 
             })
         }
@@ -150,7 +154,7 @@ class MediaDeletingHandler extends Tool
     enable()
     {
         super.enable();
-        this.onMediaSelectionAndDeselectionChangeDeleteButtonState(true)
+        this.onMediaSelectionAndDeselectionChangeMediaActionsButtonsState(true)
             .onClickOnDeletingButtonShowPopup(true)
             .onClickOnPopupCloseButton(true)
             .onClickOnConfirmationButtonDeleteMedia(true)
@@ -160,7 +164,7 @@ class MediaDeletingHandler extends Tool
     disable()
     {
         super.disable();
-        this.onMediaSelectionAndDeselectionChangeDeleteButtonState(false)
+        this.onMediaSelectionAndDeselectionChangeMediaActionsButtonsState(false)
             .onClickOnDeletingButtonShowPopup(false)
             .onClickOnPopupCloseButton(false)
             .onClickOnConfirmationButtonDeleteMedia(false)

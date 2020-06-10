@@ -60,6 +60,11 @@ class PaginatorHandler extends Tool
         return this;
     }
 
+    onClickOnArrowNavigateToPage(active)
+    {
+
+    }
+
     onDisplayedMediasNumberChange(active)
     {
         if(active)
