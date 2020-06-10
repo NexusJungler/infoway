@@ -80,7 +80,7 @@
                 display: block;
             }
 
-            .actions-btn-container {
+            .actions_btn_container {
                 width: 100%;
                 display: flex;
                 flex-direction: row;
@@ -90,18 +90,18 @@
                     margin-right: 2%;
                 }
 
-                .left-btns, .right-btns{
+                .left_btns, .right_btns{
                     display: flex;
                     flex-direction: row;
                 }
 
-                .left-btns{
+                .left_btns{
                     width: 65%;
 
-                    .show-media-waiting-incrustation-container  {
+                    .show_media_waiting_incrustation_container  {
                         position: relative;
 
-                        .media-waiting-incrustation-number {
+                        .media_waiting_incrustation_number {
                             background-color: #FF5722;
                             color: #FFF;
                             position: absolute;
@@ -113,10 +113,10 @@
 
                     }
 
-                    .show-archived-media-container{
+                    .show_archived_media_container{
                         position: relative;
 
-                        .archived-medias-number {
+                        .archived_medias_number {
                             background-color: #4f9bae;
                             color: #FFF;
                             position: absolute;
@@ -129,7 +129,7 @@
 
                 }
 
-                .right-btns{
+                .right_btns{
                     width: 35%;
 
                     .btn{
@@ -151,7 +151,7 @@
 
         .body{
 
-            .filters-container{
+            .filters_container{
                 display: flex;
                 flex-direction: row;
                 width: 100%;
@@ -160,12 +160,12 @@
                     cursor: pointer;
                 }
 
-                .left-filter-container {
+                .left_filter_container {
                     width: 70%;
                     display: flex;
                     flex-direction: row;
 
-                    .filter-by-orientation-or-type-container {
+                    .filter_by_orientation_or_type_container {
                         background-color: #FFF;
                         border: 1px solid #C0CCD1;
                         display: flex;
@@ -183,13 +183,13 @@
                             border: 3px solid #00B8F5;;
                         }
 
-                        .filter.show-only-horizontal-media i {
+                        .filter.show_only_horizontal_media i {
                             transform: rotate(-90deg);
                         }
 
                     }
 
-                    .filter-by-characteristics-container {
+                    .filter_by_characteristics_container {
                         background-color: #E3E3E3;
                         border: 1px solid #C0CCD1;
                         display: flex;
@@ -198,16 +198,16 @@
                         justify-content: space-around;
                         align-items: center;
 
-                        .filter-by-characteristics-item{
+                        .filter_by_characteristics_item{
                             display: flex;
                             flex-direction: row;
                             justify-content: center;
                             align-items: center;
                         }
 
-                        .filter-validation-btn-container {
+                        .filter_validation_btn_container {
 
-                            .filter-validation-btn{
+                            .filter_validation_btn{
                                 text-transform: uppercase;
                             }
 
@@ -217,13 +217,13 @@
 
                 }
 
-                .right-filter-container {
+                .right_filter_container {
                     width: 30%;
                     display: flex;
                     flex-direction: column;
                     align-items: flex-end;
 
-                    .pagination-container{
+                    .pagination_container{
                         display: flex;
                         flex-direction: row;
                         width: 37%;
@@ -232,13 +232,13 @@
                             width: 50%;
                         }
 
-                        .displayed-elements-number-selection-container{
+                        .displayed_elements_number_selection_container{
                             select{
                                 width: 60%;
                             }
                         }
 
-                        .pages-container {
+                        .pages_container {
                             text-align: right;
 
                             .page{
@@ -270,7 +270,7 @@
 
             }
 
-            .medias-list-container {
+            .medias_list_container {
                 width: 100%;
                 display: flex;
                 flex-direction: row;
@@ -298,7 +298,7 @@
                         display: none;
                     }
 
-                    .card-header{
+                    .card_header{
                         display: flex;
                         flex-direction: row;
                         height: 5%;
@@ -308,13 +308,13 @@
                             width: 50%;
                         }
 
-                        .media-actions-shorcuts-container{
+                        .media_actions_shortcuts_container{
                             width: 50%;
                             display: flex;
                             flex-direction: row;
                             justify-content: space-between;
 
-                            .shorcut{
+                            .shortcut{
                                 width: 30%;
                                 height: 100%;
                                 background-color: #4F9BAE;
@@ -327,7 +327,7 @@
 
                             }
 
-                            .shorcut-diff-date-modification.date-coming-soon {
+                            .shortcut_diff_date_modification.date_coming_soon {
                                 background-color: #F57171;
                                 color: #FFF;
                             }
@@ -336,18 +336,18 @@
 
                     }
 
-                    .card-body{
+                    .card_body{
                         height: 95%;
                         display: flex;
                         flex-direction: column;
                         margin-bottom: 5%;
 
-                        .media-miniature-container{
+                        .media_miniature_container{
                             width: 100%;
                             height: 75%;
                             margin-bottom: 3%;
 
-                            .media-miniature{
+                            .media_miniature{
                                 display: block;
                                 margin-left: auto;
                                 margin-right: auto;
@@ -359,7 +359,7 @@
 
                         }
 
-                        .media-name-container {
+                        .media_name_container {
                             background-color: #FFF;
                             color: #000;
                             text-align: center;
@@ -369,13 +369,13 @@
                             /*border-radius: 6px;*/
                         }
 
-                        .media-associated-items-container {
+                        .media_associated_items_container {
                             display: flex;
                             flex-direction: column;
                             height: 15%;
                             margin-bottom: 3%;
 
-                            .associated-item{
+                            .associated_item{
                                 width: 100%;
                                 display: flex;
                                 flex-direction: row;

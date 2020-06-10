@@ -9,7 +9,6 @@ const toolBox = new ToolBox();
 toolBox.activeTool("PaginatorHandler")
        .activeTool("FilterMediasTool")
        .activeTool("PopupHandler")
-       .activeTool("MediaDeletingHandler")
 ;
 
 toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
@@ -17,6 +16,7 @@ toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
                                         .activeSubTool("MediaProductAssociationHandlerTool")
                                         .activeSubTool("MediaTagAssociationHandlerTool")
                                         .activeSubTool("UploadHandlerTool")
+                                        .activeSubTool("MediaDeletingHandler")
 ;
 
 

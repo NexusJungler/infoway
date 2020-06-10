@@ -16,7 +16,7 @@ class MediaInfoSheetHandler extends SubTool
     {
         if(active)
         {
-            $('.media-miniature').on('click.onClickOnMediaMiniatureShowMediaInfoSheet', async(e) => {
+            this.__parent.getMediasContainer().find('.media_miniature').on('click.onClickOnMediaMiniatureShowMediaInfoSheet', async(e) => {
 
                 const mediaId = $(e.currentTarget).parents('.card').attr('id').replace('media_', '');
                 const customer = $(e.currentTarget).parents('.card').data('customer');
@@ -30,7 +30,7 @@ class MediaInfoSheetHandler extends SubTool
                     mediaInfosExist = true;
 
 
-                const isImage = $(e.currentTarget).hasClass('miniature-image');
+                const isImage = $(e.currentTarget).hasClass('miniature_image');
 
                 let miniature = null;
 
@@ -41,22 +41,22 @@ class MediaInfoSheetHandler extends SubTool
 
                     if(await this.mediaFileExist(path))
                     {
-                        miniature = (isImage) ? `<img class="miniature" src="${path}">` : `<video class="miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
+                        miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
                         this.getMediaRegisteredInfos(mediaId).miniatureExist = true;
                     }
                     else
                     {
-                        miniature = `<img class="miniature not_found" src="/build/images/no-available-image.png">`;
+                        miniature = `<img class="media_miniature not_found" src="/build/images/no-available-image.png">`;
                         this.getMediaRegisteredInfos(mediaId).miniatureExist = false;
                     }
 
                 }
 
                 else if(this.getMediaRegisteredInfos(mediaId).miniatureExist === false)
-                    miniature = `<img class="miniature not_found" src="/build/images/no-available-image.png">`;
+                    miniature = `<img class="media_miniature not_found" src="/build/images/no-available-image.png">`;
 
                 else
-                    miniature = (isImage) ? `<img class="miniature" src="${path}">` : `<video class="miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
+                    miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
 
 
 
@@ -67,14 +67,14 @@ class MediaInfoSheetHandler extends SubTool
                     this.__$location.find('.media_type').text('video');
 
                 this.__$location.find('.media_miniature_container').html( miniature );
-                this.__$location.find('.media_title').text( $(e.currentTarget).parents('.card-body').find('.media-name').text() );
+                this.__$location.find('.media_title').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
                 this.__$location.find('.media_validity_container .media_diff_start').text( $(e.currentTarget).parents('.card').data('media_diff_start') );
                 this.__$location.find('.media_validity_container .media_diff_end').text( $(e.currentTarget).parents('.card').data('media_diff_end') );
 
                 if(this.getDaysDiffBetweenDates($(e.currentTarget).parents('.card').data('media_diff_end'), new Date()) <= 14)
-                    this.__$location.find('.media_validity_container .media_diff_end').addClass('date-coming-soon');
+                    this.__$location.find('.media_validity_container .media_diff_end').addClass('date_coming_soon');
 
-                this.__$location.find('.media_infos_bottom .media_name_container .media_name').text( $(e.currentTarget).parents('.card-body').find('.media-name').text() );
+                this.__$location.find('.media_infos_bottom .media_name_container .media_name').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
 
                 this.showMediaCharacteristics(mediaId, isImage);
 
@@ -96,7 +96,7 @@ class MediaInfoSheetHandler extends SubTool
         }
         else
         {
-            $('.media-miniature').off('click.onClickOnMediaMiniatureShowMediaInfoSheet');
+            this.__parent.getMediasContainer().find('.media_miniature').off('click.onClickOnMediaMiniatureShowMediaInfoSheet');
         }
 
         return this;
@@ -182,13 +182,13 @@ class MediaInfoSheetHandler extends SubTool
     showMediaCharacteristics(mediaChooseId, mediaIsImage)
     {
 
-        let characteristics = '<span>' + $(`#media_${mediaChooseId}`).find('.media-miniature-container').data('size') + ' px</span>, <span>' + $(`#media_${mediaChooseId}`).find('.media-miniature-container').data('extension') + '</span>, <span></span>';
+        let characteristics = '<span>' + $(`#media_${mediaChooseId}`).find('.media_miniature_container').data('size') + ' px</span>, <span>' + $(`#media_${mediaChooseId}`).find('.media_miniature_container').data('extension') + '</span>, <span></span>';
 
         if(mediaIsImage)
-            characteristics += $(`#media_${mediaChooseId}`).find('.media-miniature-container').data('dpi') + ' dpi';
+            characteristics += $(`#media_${mediaChooseId}`).find('.media_miniature_container').data('dpi') + ' dpi';
 
         else
-            characteristics += $(`#media_${mediaChooseId}`).find('.media-miniature-container').data('codec');
+            characteristics += $(`#media_${mediaChooseId}`).find('.media_miniature_container').data('codec');
 
         characteristics += '</span>';
 

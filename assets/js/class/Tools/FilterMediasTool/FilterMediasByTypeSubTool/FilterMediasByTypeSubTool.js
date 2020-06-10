@@ -14,9 +14,9 @@ class FilterMediasByTypeSubTool extends SubTool
     {
         if(active)
         {
-            $(".filter.filter-media-by-type").on("click.onClickOnMediaFilterByTypeIcon", e => {
+            $(".filter.filter_media_by_type").on("click.onClickOnMediaFilterByTypeIcon", e => {
 
-                let filter = { 'property': 'data-media_type', 'value': ($(e.currentTarget).hasClass("show-only-images")) ? 'image' : 'video' };
+                let filter = { 'property': 'data-media_type', 'value': ($(e.currentTarget).hasClass("show_only_images")) ? 'image' : 'video' };
                 if(this.__parent.findFilterByProperty(filter.property))
                     this.__parent.replaceAnRegisteredFilter(filter);
 
@@ -57,7 +57,7 @@ class FilterMediasByTypeSubTool extends SubTool
         }
         else
         {
-            $(".filter.filter-media-by-type").off("click.onClickOnMediaFilterByTypeIcon")
+            $(".filter.filter_media_by_type").off("click.onClickOnMediaFilterByTypeIcon")
         }
 
         return this;

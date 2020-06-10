@@ -7,7 +7,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$container = $(".filter-by-characteristics-container");
+        this.__$container = $(".filter_by_characteristics_container");
         this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
     }
 
@@ -16,7 +16,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
         if(active)
         {
-            this.__$container.find(".filter-validation-btn").on("click.onClickOnFilterValidationButton", e => {
+            this.__$container.find(".filter_validation_btn").on("click.onClickOnFilterValidationButton", e => {
 
                 e.preventDefault();
 
@@ -32,7 +32,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         }
         else
         {
-            this.__$container.find(".filter-validation-btn").off("click.onClickOnFilterValidationButton")
+            this.__$container.find(".filter_validation_btn").off("click.onClickOnFilterValidationButton")
         }
 
         return this;
@@ -45,12 +45,12 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
             const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
 
-            const applyFilterCheckbox = this.__$container.find(`.apply-filter[data-target='${characteristic}']`);
+            const applyFilterCheckbox = this.__$container.find(`.apply_filter[data-target='${characteristic}']`);
 
             if(applyFilterCheckbox.is(':checked'))
             {
 
-                let value = $(`#filter-by-${characteristic}`).val();
+                let value = $(`#filter_by_${characteristic}`).val();
 
                 if(value === '' && filterIsRegistered)
                     this.__parent.removeFilterByProperty('data-' + characteristic);
@@ -93,10 +93,10 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
                 const select = $(e.currentTarget);
 
                 if(select.val() === '')
-                    select.parent().prev('.apply-filter-container').find('.apply-filter').prop('checked', false);
+                    select.parent().prev('.apply_filter_container').find('.apply_filter').prop('checked', false);
 
                 else
-                    select.parent().prev('.apply-filter-container').find('.apply-filter').prop('checked', true);
+                    select.parent().prev('.apply_filter_container').find('.apply_filter').prop('checked', true);
 
             })
         }

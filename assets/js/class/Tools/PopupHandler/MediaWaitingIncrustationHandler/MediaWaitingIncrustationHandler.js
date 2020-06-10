@@ -18,7 +18,7 @@ class MediaWaitingIncrustationHandler extends SubTool
         if(active)
         {
 
-            $('#show-media-waiting-incrustation').on('click.onClickOnWaitingListButtonOpenModal', e => {
+            $('#show_media_waiting_incrustation').on('click.onClickOnWaitingListButtonOpenModal', e => {
 
                 this.__$container.addClass('is_open');
 
@@ -26,7 +26,7 @@ class MediaWaitingIncrustationHandler extends SubTool
         }
         else
         {
-            $('#show-media-waiting-incrustation').off('click.onClickOnWaitingListButtonOpenModal');
+            $('#show_media_waiting_incrustation').off('click.onClickOnWaitingListButtonOpenModal');
         }
 
         return this;

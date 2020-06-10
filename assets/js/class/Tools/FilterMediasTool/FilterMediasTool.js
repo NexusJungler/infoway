@@ -17,12 +17,12 @@ class FilterMediasTool extends Tool
         ];
         this.__anFilterIsActive = false;
         this.__activeFilters = [];
-        this.__$mediasContainer = $(".medias-list-container");
+        this.__$mediasContainer = $(".medias_list_container");
     }
 
     getAgainMediaListContainer()
     {
-        this.__$mediasContainer = $(".medias-list-container");
+        this.__$mediasContainer = $(".medias_list_container");
     }
 
     getMediasContainer()

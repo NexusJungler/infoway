@@ -58,6 +58,22 @@ class MediaProductAssociationHandlerTool extends SubTool
 
     }
 
+
+    onClickOnProductAssociationShortcutShowModal(active)
+    {
+        if(active)
+        {
+            $('.medias-list-container').on('click.onClickOnProductAssociationShortcutShowModal', '.card ')
+        }
+        else
+        {
+
+        }
+
+        return this;
+    }
+
+
     onClickOnProductAssociationButtonShowModal(active)
     {
 
@@ -303,6 +319,7 @@ class MediaProductAssociationHandlerTool extends SubTool
             .onClickOnSelectAllButtonSelectAllProducts(true)
             .onClickOnAddProductInListCheckbox(true)
             .onCategorySelectionAddFilterOnProductList(true)
+            .onClickOnProductAssociationShortcutShowModal(true)
             .onClickOnProductAssociationButtonShowModal(true)
             .onClickOnCloseButtonCloseProductAssociationModal(true)
         ;
@@ -315,6 +332,7 @@ class MediaProductAssociationHandlerTool extends SubTool
             .onClickOnSelectAllButtonSelectAllProducts(false)
             .onClickOnAddProductInListCheckbox(false)
             .onCategorySelectionAddFilterOnProductList(false)
+            .onClickOnProductAssociationShortcutShowModal(false)
             .onClickOnProductAssociationButtonShowModal(false)
             .onClickOnCloseButtonCloseProductAssociationModal(false)
         ;

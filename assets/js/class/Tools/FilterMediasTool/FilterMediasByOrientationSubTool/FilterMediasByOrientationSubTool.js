@@ -14,9 +14,9 @@ class FilterMediasByOrientationSubTool extends SubTool
     {
         if(active)
         {
-            $('.filter-media-by-orientation').on("click.onClickOnMediaFilterByOrientationIcon", e => {
+            $('.filter.filter_media_by_orientation').on("click.onClickOnMediaFilterByOrientationIcon", e => {
 
-                let filter = { 'property': 'data-orientation', 'value': ($(e.currentTarget).hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical' };
+                let filter = { 'property': 'data-orientation', 'value': ($(e.currentTarget).hasClass("show_only_horizontal_media")) ? 'horizontal' : 'vertical' };
                 if(this.__parent.findFilterByProperty(filter.property))
                     this.__parent.replaceAnRegisteredFilter(filter);
 
@@ -42,13 +42,13 @@ class FilterMediasByOrientationSubTool extends SubTool
                 else
                 {
 
-                    this.__parent.registerFiltersInParent({property: 'data-orientation', value: ($(e.currentTarget).hasClass("show-only-horizontal-media")) ? 'horizontal' : 'vertical'});
+                    this.__parent.registerFiltersInParent({property: 'data-orientation', value: ($(e.currentTarget).hasClass("show_only_horizontal_media")) ? 'horizontal' : 'vertical'});
 
-                    $(".filter.filter-media-by-orientation.active").removeClass("active");
+                    $(".filter.filter_media_by_orientation.active").removeClass("active");
 
                     $(e.currentTarget).addClass("active");
 
-                    if($(e.currentTarget).hasClass("show-only-horizontal-media"))
+                    if($(e.currentTarget).hasClass("show_only_horizontal_media"))
                         filters += "[data-orientation*='horizontal']";
 
                     else
@@ -64,7 +64,7 @@ class FilterMediasByOrientationSubTool extends SubTool
         }
         else
         {
-            $('.filter-media-by-orientation').off("click.onClickOnMediaFilterByOrientationIcon");
+            $('.filter.filter_media_by_orientation').off("click.onClickOnMediaFilterByOrientationIcon");
         }
 
         return this;

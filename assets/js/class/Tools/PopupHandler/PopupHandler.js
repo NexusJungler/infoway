@@ -4,6 +4,7 @@ import MediaWaitingIncrustationHandler from "./MediaWaitingIncrustationHandler/M
 import MediaProductAssociationHandlerTool from "./ProductAssociationHandler/MediaProductAssociationHandlerTool";
 import MediaTagAssociationHandlerTool from "./TagAssociationHandler/MediaTagAssociationHandlerTool";
 import UploadHandlerTool from "./UploadHandlerTool/UploadHandlerTool";
+import MediaDeletingHandler from "./MediaDeletingHandler/MediaDeletingHandler";
 
 class PopupHandler extends Tool
 {
@@ -18,7 +19,20 @@ class PopupHandler extends Tool
             new MediaProductAssociationHandlerTool(),
             new MediaTagAssociationHandlerTool(),
             new UploadHandlerTool(),
+            new MediaDeletingHandler(),
         ];
+
+        this.__$mediasContainer = $(".medias_list_container");
+    }
+
+    getAgainMediaListContainer()
+    {
+        this.__$mediasContainer = $(".medias_list_container");
+    }
+
+    getMediasContainer()
+    {
+        return this.__$mediasContainer;
     }
 
     activeAllSubTools()

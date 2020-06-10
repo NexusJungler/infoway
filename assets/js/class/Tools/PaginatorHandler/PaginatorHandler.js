@@ -36,6 +36,7 @@ class PaginatorHandler extends Tool
                 this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
 
                 this.getToolBox().getTool('FilterMediasTool').getAgainMediaListContainer();
+                this.getToolBox().getTool('PopupHandler').getAgainMediaListContainer();
 
             },
         })
@@ -155,24 +156,24 @@ class PaginatorHandler extends Tool
                                  >
 
                             <div class="card-header">
-                                <div class="select-media-input-container">
+                                <div class="select_media_input_container">
                                     <input type="checkbox">
                                 </div>
                                 
-                                <div class="media-actions-shorcuts-container">
-                                    <div class="shorcut shorcut-diff-date-modification ${ (dateIsComingSoon) ? 'date-coming-soon' : '' }">
+                                <div class="media_actions_shortcuts_container">
+                                    <div class="shortcut shortcut_diff_date_modification ${ (dateIsComingSoon) ? 'date_coming_soon' : '' }">
                                         <i class="far fa-clock"></i>
                                     </div>
                     
-                                    <div class="shorcut">
+                                    <div class="shortcut">
                                         <i class="fas fa-euro-sign"></i>
                                     </div>
                     
-                                    <div class="shorcut">
+                                    <div class="shortcut">
                                         <i class="fas fa-link"></i>
                                     </div>
                     
-                                    <div class="shorcut">
+                                    <div class="shortcut">
                                         <i class="far fa-clock"></i>
                                     </div>
                     
@@ -329,7 +330,7 @@ class PaginatorHandler extends Tool
     {
         if(active)
         {
-            $("#medias-sortable-by-date").on("change.onMediasSortableByDateChange", e => {
+            $("#medias_sortable_by_date").on("change.onMediasSortableByDateChange", e => {
 
                 const mediasCards = $(".medias-list-container .card");
 
@@ -341,7 +342,7 @@ class PaginatorHandler extends Tool
         }
         else
         {
-            $("#medias-sortable-by-date").off("change.onMediasSortableByDateChange")
+            $("#medias_sortable_by_date").off("change.onMediasSortableByDateChange")
         }
 
         return this;

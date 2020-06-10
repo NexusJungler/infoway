@@ -1,6 +1,7 @@
-import Tool from "../Tool";
+import Tool from "../../Tool";
+import SubTool from "../../SubTool";
 
-class MediaDeletingHandler extends Tool
+class MediaDeletingHandler extends SubTool
 {
 
     constructor()
@@ -16,23 +17,19 @@ class MediaDeletingHandler extends Tool
     {
         if(active)
         {
-            $(".medias-list-container").on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select-media-input", e => {
+            this.__parent.getMediasContainer().on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input", e => {
 
-                if($(".select-media-input-container .select-media-input:checked").length === 0)
-                {
+                if(this.__parent.getMediasContainer().find(".select_media_input:checked").length === 0)
                     $('.media_action_btn').attr('disabled', true);
-                }
 
                 else
-                {
                     $('.media_action_btn').removeAttr('disabled');
-                }
 
             })
         }
         else
         {
-            $(".medias-list-container").off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select-media-input");
+            this.__parent.getMediasContainer().off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input");
         }
 
         return this;
@@ -45,12 +42,12 @@ class MediaDeletingHandler extends Tool
         {
             $('.delete_media_btn').on('click.onClickOnDeletingButtonShowPopup', e => {
 
-                if($(".select-media-input-container .select-media-input:checked").length > 0)
+                if(this.__parent.getMediasContainer().find('.select_media_input_container .select_media_input:checked').length > 0)
                 {
-                    $(".select-media-input-container .select-media-input:checked").each( (index, input) => {
+                    this.__parent.getMediasContainer().find('.select_media_input_container .select_media_input:checked').each( (index, input) => {
 
                         const mediaId = $(input).parents('.card').attr('id').replace('media_', '');
-                        const mediaName = $(input).parents('.card').find('.media-name-container .media-name').text();
+                        const mediaName = $(input).parents('.card').find('.media_name_container .media_name').text();
 
                         $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
 
@@ -120,8 +117,6 @@ class MediaDeletingHandler extends Tool
 
         return this;
     }
-
-
 
     onClickOnPopupCloseButton(active)
     {

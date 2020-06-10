@@ -109,7 +109,7 @@
                         align-items: center;
                         background-color: #899CA4;
 
-                        .miniature{
+                        .media_miniature{
                           max-width: 100%;
                           max-height: 100%;
                           object-fit: contain;
@@ -144,7 +144,7 @@
 
                           .icon_container{
 
-                            &.date-coming-soon{
+                            &.date_coming_soon{
                               background-color: #F57171;
                             }
 

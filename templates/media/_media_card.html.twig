@@ -34,50 +34,50 @@
             data-tags="none"
         {% endif %} >
 
-    <div class="card-header">
-        <div class="select-media-input-container">
-            <input type="checkbox" class="select-media-input">
+    <div class="card_header">
+        <div class="select_media_input_container">
+            <input type="checkbox" class="select_media_input">
         </div>
 
-        <div class="media-actions-shorcuts-container">
-            <div class="shorcut shorcut-diff-date-modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date-coming-soon{% endif %}">
+        <div class="media_actions_shortcuts_container">
+            <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date_coming_soon{% endif %}">
                 <i class="far fa-clock"></i>
             </div>
 
-            <div class="shorcut">
+            <div class="shortcut">
                 <i class="fas fa-euro-sign"></i>
             </div>
 
-            <div class="shorcut">
-                <i class="fas fa-link"></i>
+            <div class="shortcut">
+                <i class="fas fa-link shortcut_product_association"></i>
             </div>
 
-            <div class="shorcut">
+            <div class="shortcut">
                 <i class="far fa-clock"></i>
             </div>
 
         </div>
     </div>
 
-    <div class="card-body">
+    <div class="card_body">
 
-        <div class="media-miniature-container" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
+        <div class="media_miniature_container" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
                 {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
 
             {% if miniature_exist is same as(false) %}
 
-                <img class="media-miniature miniature-image" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
             {% else %}
 
                 {% if media_type is same as('image') %}
 
-                    <img class="media-miniature miniature-image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                    <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
                          alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
 
                 {% elseif media_type is same as('video') %}
 
-                    <video class="media-miniature miniature-video">
+                    <video class="media_miniature miniature_video">
                         <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
                     </video>
 
@@ -87,13 +87,13 @@
 
         </div>
 
-        <div class="media-name-container">
-            <span class="media-name">{{ media.name }}</span>
+        <div class="media_name_container">
+            <span class="media_name">{{ media.name }}</span>
         </div>
 
-        <div class="media-associated-items-container">
+        <div class="media_associated_items_container">
 
-            <div class="media-criterions-container associated-item">
+            <div class="media_criterions_container associated_item">
 
                 {% if media.products is not empty %}
 
@@ -115,7 +115,7 @@
 
             </div>
 
-            <div class="media-tags-container associated-item">
+            <div class="media_tags_container associated_item">
 
                 {% if media.tags is not empty %}
 

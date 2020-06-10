@@ -1365,7 +1365,7 @@ class UploadHandlerTool extends SubTool
         {
             this.__$location.on("click.onClickOnExpandMiniatureButton", ".expand-miniature", e => {
 
-                const mediaId = $(e.currentTarget).data('media_id');
+                /*const mediaId = $(e.currentTarget).data('media_id');
                 const index = this.__mediaInfos.findIndex( mediaInfo => mediaInfo.id === mediaId );
 
                 if(index !== -1)
@@ -1374,7 +1374,7 @@ class UploadHandlerTool extends SubTool
                     $('.expand-miniature-container .modal-body').html(`<img src="/miniatures/${mediaInfo.customer}/images/medium/${mediaId}.png" alt="/miniatures/${mediaInfo.customer}/image/medium/${mediaId}.png">`);
                     this.__$location.css({ 'z-index': '0' });
                     $('.expand-miniature-container').fadeIn();
-                }
+                }*/
 
             })
         }
@@ -1390,17 +1390,17 @@ class UploadHandlerTool extends SubTool
     {
         if(active)
         {
-            $('.expand-miniature-container .close-btn').on('click.onClickOnMiniatureExpandedPopupCloseBtn', e => {
+            $('.popup_media_expanded_miniature .close_modal_button').on('click.onClickOnMiniatureExpandedPopupCloseBtn', e => {
 
-                this.__$location.css({ 'z-index': '' });
+                /*this.__$location.css({ 'z-index': '' });
                 $('.expand-miniature-container').fadeOut();
-                $('.expand-miniature-container .modal-body').empty();
+                $('.expand-miniature-container .modal-body').empty();*/
 
             })
         }
         else
         {
-            $('.expand-miniature-container .close-btn').off('click.onClickOnMiniatureExpandedPopupCloseBtn');;
+            $('.popup_media_expanded_miniature .close_modal_button').off('click.onClickOnMiniatureExpandedPopupCloseBtn');;
         }
 
         return this;
