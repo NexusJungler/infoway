@@ -18,6 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 use Exception;
 use PDO;
 use ReflectionClass;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -34,7 +35,15 @@ class MediaRepository extends ServiceEntityRepository
 
     use MainRepository;
 
-    public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler, AllergenRepository $allergenRepository)
+    private Serializer $serializer;
+
+    private MediasHandler $mediasHandler;
+
+    private AllergenRepository $allergenRepository;
+
+    private ParameterBagInterface $parameterBag;
+
+    public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler, AllergenRepository $allergenRepository, ParameterBagInterface $parameterBag)
     {
         parent::__construct($registry, Media::class);
 
@@ -46,9 +55,10 @@ class MediaRepository extends ServiceEntityRepository
         $encoder =  new JsonEncoder();
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
         $this->serializer = new Serializer( [ $normalizer ] , [ $encoder ] );
+
         $this->mediasHandler = $mediasHandler;
         $this->allergenRepository = $allergenRepository;
-
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -142,8 +152,14 @@ class MediaRepository extends ServiceEntityRepository
 
                 $orderedMedias['medias'] = [];
 
+                $customerName = $this->getEntityManager()->getConnection()->getDatabase();
+
                 foreach ($medias as $index => $media)
                 {
+
+                    $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                       $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                       . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                     $orderedMedias['medias'][$index] = [
                         'media' => null,
@@ -153,6 +169,7 @@ class MediaRepository extends ServiceEntityRepository
                         'media_criterions' => [],
                         'media_categories' => [],
                         'media_allergens' => [],
+                        'miniature_exist' => $mediaMiniatureExist,
                     ];
 
                     foreach ($media->getTags()->getValues() as $tag)

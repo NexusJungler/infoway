@@ -16,7 +16,7 @@ class MediaDeletingHandler extends Tool
     {
         if(active)
         {
-            $(".select-media-input-container .select-media-input").on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', e => {
+            $(".medias-list-container").on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select-media-input", e => {
 
                 if($(".select-media-input-container .select-media-input:checked").length === 0)
                 {
@@ -32,7 +32,7 @@ class MediaDeletingHandler extends Tool
         }
         else
         {
-            $(".select-media-input-container .select-media-input:checked").off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState');
+            $(".medias-list-container").off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select-media-input");
         }
 
         return this;

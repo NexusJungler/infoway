@@ -64,18 +64,24 @@
         <div class="media-miniature-container" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
                 {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
 
-            {% if media_type is same as('image') %}
+            {% if miniature_exist is same as(false) %}
 
-                <img class="media-miniature miniature-image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                     alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                <img class="media-miniature miniature-image" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
-            {% endif %}
+            {% else %}
 
-            {% if media_type is same as('video') %}
+                {% if media_type is same as('image') %}
 
-                <video class="media-miniature miniature-video">
-                    <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
-                </video>
+                    <img class="media-miniature miniature-image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+
+                {% elseif media_type is same as('video') %}
+
+                    <video class="media-miniature miniature-video">
+                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
+                    </video>
+
+                {% endif %}
 
             {% endif %}
 
