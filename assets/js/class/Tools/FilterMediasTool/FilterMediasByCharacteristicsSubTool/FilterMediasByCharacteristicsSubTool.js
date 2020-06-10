@@ -7,7 +7,6 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$mediasContainer = $(".medias-list-container");
         this.__$container = $(".filter-by-characteristics-container");
         this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
     }
@@ -25,9 +24,9 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                 console.log(filters); //debugger
 
-                this.__$mediasContainer.find(`.card`).addClass("hidden");
+                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
 
-                this.__$mediasContainer.find(`.card${ filters }`).removeClass("hidden");
+                this.__parent.getMediasContainer().find(`.card${ filters }`).removeClass("hidden");
 
             })
         }

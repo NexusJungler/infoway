@@ -105,6 +105,10 @@
                             background-color: #FF5722;
                             color: #FFF;
                             position: absolute;
+                            right: 0;
+                            width: 10%;
+                            border: 0.06rem solid #FF5722;
+                            border-radius: 0 0.19rem 0.19rem 0;
                         }
 
                     }
@@ -116,6 +120,10 @@
                             background-color: #4f9bae;
                             color: #FFF;
                             position: absolute;
+                            right: 0;
+                            width: 10%;
+                            border: 0.06rem solid #4f9bae;
+                            border-radius: 0 0.19rem 0.19rem 0;
                         }
                     }
 
@@ -123,6 +131,10 @@
 
                 .right-btns{
                     width: 35%;
+
+                    .btn{
+                        margin: 0;
+                    }
 
                     button{
                         &:disabled{

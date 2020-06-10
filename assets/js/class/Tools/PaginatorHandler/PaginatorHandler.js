@@ -33,7 +33,7 @@ class PaginatorHandler extends Tool
                 this.rebuildPageList(response.numberOfPages, page);
                 this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
 
-                this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByTypeSubTool').getAgainMediaListContainer();
+                this.getToolBox().getTool('FilterMediasTool').getAgainMediaListContainer();
 
             },
         })
@@ -99,7 +99,7 @@ class PaginatorHandler extends Tool
 
         const dateIsComingSoon = ( this.getDaysDiffBetweenDates(media.diffusionEnd, new Date()) <= 14);
 
-        let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" data-orientation="${media.orientaion}"
+        let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" data-orientation="${media.orientation}"
 
                                 data-media_diff_start="${ this.reformateDate(media.diffusionStart, true, '/') }" data-media_diff_end="${ this.reformateDate(media.diffusionEnd, true, '/') }"
 

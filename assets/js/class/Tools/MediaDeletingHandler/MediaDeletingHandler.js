@@ -41,18 +41,21 @@ class MediaDeletingHandler extends Tool
         {
             $('.delete_media_btn').on('click.onClickOnDeletingButtonShowPopup', e => {
 
-                $(".select-media-input-container .select-media-input:checked").each( (index, input) => {
+                if($(".select-media-input-container .select-media-input:checked").length > 0)
+                {
+                    $(".select-media-input-container .select-media-input:checked").each( (index, input) => {
 
-                    const mediaId = $(input).parents('.card').attr('id').replace('media_', '');
-                    const mediaName = $(input).parents('.card').find('.media-name-container .media-name').text();
+                        const mediaId = $(input).parents('.card').attr('id').replace('media_', '');
+                        const mediaName = $(input).parents('.card').find('.media-name-container .media-name').text();
 
-                    $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
+                        $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
 
-                    this.__mediasToDelete.push({ id: mediaId });
+                        this.__mediasToDelete.push({ id: mediaId });
 
-                } )
+                    } )
 
-                this.__$container.addClass('is_open');
+                    this.__$container.addClass('is_open');
+                }
 
             })
         }

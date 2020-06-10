@@ -8,24 +8,6 @@ class FilterMediasByTypeSubTool extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$mediasContainer = $(".medias-list-container");
-    }
-
-    getMediaContainer()
-    {
-        return this.__$mediasContainer;
-    }
-
-    setMediaContainer(mediaContainer)
-    {
-        this.__$mediasContainer = mediaContainer;
-
-        return this;
-    }
-
-    getAgainMediaListContainer()
-    {
-        this.__$mediasContainer = $(".medias-list-container");
     }
 
     onClickOnMediaFilterByTypeIcon(active)
@@ -43,7 +25,7 @@ class FilterMediasByTypeSubTool extends SubTool
 
                 let filters = this.__parent.getActivedFilters();
 
-                this.__$mediasContainer.find(`.card`).addClass("hidden");
+                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
 
                 if($(e.currentTarget).hasClass("active"))
                 {
@@ -53,7 +35,7 @@ class FilterMediasByTypeSubTool extends SubTool
 
                     filters = this.__parent.getActivedFilters();
 
-                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+                    this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
 
                 }
                 else
@@ -67,7 +49,7 @@ class FilterMediasByTypeSubTool extends SubTool
 
                     //console.log(filters); debugger
 
-                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+                    this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
 
                 }
 

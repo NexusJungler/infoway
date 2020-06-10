@@ -17,6 +17,17 @@ class FilterMediasTool extends Tool
         ];
         this.__anFilterIsActive = false;
         this.__activeFilters = [];
+        this.__$mediasContainer = $(".medias-list-container");
+    }
+
+    getAgainMediaListContainer()
+    {
+        this.__$mediasContainer = $(".medias-list-container");
+    }
+
+    getMediasContainer()
+    {
+        return this.__$mediasContainer;
     }
 
     activeSubTool(subToolName)

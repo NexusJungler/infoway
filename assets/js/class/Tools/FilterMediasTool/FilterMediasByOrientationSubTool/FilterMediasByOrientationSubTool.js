@@ -8,7 +8,6 @@ class FilterMediasByOrientationSubTool extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$mediasContainer = $(".medias-list-container");
     }
 
     onClickOnMediaFilterByOrientationIcon(active)
@@ -26,7 +25,7 @@ class FilterMediasByOrientationSubTool extends SubTool
 
                 let filters = this.__parent.getActivedFilters();
 
-                this.__$mediasContainer.find(`.card`).addClass("hidden");
+                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
 
                 if($(e.currentTarget).hasClass("active"))
                 {
@@ -37,7 +36,7 @@ class FilterMediasByOrientationSubTool extends SubTool
 
                     filters = this.__parent.getActivedFilters();
 
-                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+                    this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
 
                 }
                 else
@@ -57,7 +56,7 @@ class FilterMediasByOrientationSubTool extends SubTool
 
                     //console.log(filters); debugger
 
-                    this.__$mediasContainer.find(`.card${filters}`).removeClass("hidden");
+                    this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
 
                 }
 
