@@ -184,7 +184,7 @@
 
                                 <div class="pagination-container">
 
-                                    <div class="displayed-elements-number-selection-container">
+                                    <div class="displayed-elements-number-selection-container container">
                                         <select id="displayed-elements-number-selection">
                                             {% for choice in numberOfMediasAllowedToDisplayed %}
                                                 <option value="{{ choice }}" {% if choice is same as(app.session.get('numberOfMediasDisplayedInMediatheque')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
@@ -192,27 +192,35 @@
                                         </select>
                                     </div>
 
-                                    <div class="pages-container">
-                                        {% for i in 1..numberOfPages %}
+                                    <div class="pages-container container">
 
-                                            {% if loop.first or loop.last %}
-                                                <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
-                                            {% endif %}
+                                        {% if numberOfPages > 1 %}
 
-                                            {% if numberOfPages > 3 and not loop.first and not loop.last %}
+                                            {% for i in 1..numberOfPages %}
 
-                                                {% if i < 3 %}
-                                                    <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+                                                {% if loop.first or loop.last %}
+                                                    <a class="page {% if loop.first %}current_page{% endif %}" href="">{{ i }}</a>
+                                                {% endif %}
 
-                                                {% else %}
+                                                {% if not loop.first and not loop.last %}
 
-                                                    <span>...</span>
+                                                    {% if i < 3 %}
+                                                        <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+
+                                                    {% else %}
+
+                                                        <span>...</span>
+
+                                                    {% endif %}
 
                                                 {% endif %}
 
-                                            {% endif %}
+                                            {% endfor %}
 
-                                        {% endfor %}
+                                            <i class="fas fa-chevron-right page_navigation_arrow next"></i>
+
+                                        {% endif %}
+
                                     </div>
 
                                 </div>

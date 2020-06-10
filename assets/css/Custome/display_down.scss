@@ -226,12 +226,25 @@
                     .pagination-container{
                         display: flex;
                         flex-direction: row;
+                        width: 37%;
+
+                        .container{
+                            width: 50%;
+                        }
+
+                        .displayed-elements-number-selection-container{
+                            select{
+                                width: 60%;
+                            }
+                        }
 
                         .pages-container {
+                            text-align: right;
 
                             .page{
                                 color: #000;
                                 text-decoration: none;
+                                margin-right: 10%;
 
                                 &.current_page{
                                     color: #4F9BAE;
@@ -239,6 +252,16 @@
                                 }
 
                             }
+                            
+                            .page_navigation_arrow{
+                                cursor: pointer;
+
+                                &.prev{
+                                    margin-right: 10%;
+                                }
+
+                            }
+                            
                         }
 
                     }

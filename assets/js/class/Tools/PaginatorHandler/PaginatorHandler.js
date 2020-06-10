@@ -8,6 +8,7 @@ class PaginatorHandler extends Tool
         super();
         this.__name = this.constructor.name;
         this.__$location = $('.pagination-container');
+        this.pageNavigationIsActive = true;
     }
 
     reloadMediatheque(page = 1)
@@ -19,7 +20,8 @@ class PaginatorHandler extends Tool
         page = parseInt(page);
 
         $('.medias-list-container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
-        this.__$location.find('.pages-container').empty();
+
+        this.pageNavigationIsActive = false;
 
         $.ajax({
             url: `/mediatheque/${mediasDisplayedType}`,
@@ -48,7 +50,8 @@ class PaginatorHandler extends Tool
 
                 e.preventDefault();
 
-                this.reloadMediatheque( $(e.currentTarget).text() );
+                if(this.pageNavigationIsActive)
+                    this.reloadMediatheque( $(e.currentTarget).text() );
 
             })
         }
@@ -63,6 +66,39 @@ class PaginatorHandler extends Tool
     onClickOnArrowNavigateToPage(active)
     {
 
+        if(active)
+        {
+            this.__$location.on('click.onClickOnArrowNavigateToPage', '.page_navigation_arrow', e => {
+
+                let currentPage = $('.page.current_page');
+
+                if( $(e.currentTarget).hasClass('prev') )
+                {
+                    if(currentPage.prev('a').length > 0)
+                    {
+                        currentPage.removeClass('current_page');
+                        currentPage.prev('a').addClass('current_page');
+                        this.reloadMediatheque( currentPage.prev('a').text() );
+                    }
+                }
+                else if( $(e.currentTarget).hasClass('next') )
+                {
+                    if(currentPage.next('a').length > 0)
+                    {
+                        currentPage.removeClass('current_page');
+                        currentPage.next('a').addClass('current_page');
+                        this.reloadMediatheque( currentPage.next('a').text() );
+                    }
+                }
+
+            })
+        }
+        else
+        {
+            this.__$location.off('click.onClickOnArrowNavigateToPage', '.page_navigation_arrow');
+        }
+
+        return this;
     }
 
     onDisplayedMediasNumberChange(active)
@@ -241,20 +277,38 @@ class PaginatorHandler extends Tool
     rebuildPageList(limit, currentPage)
     {
 
-        $(".pages-container").empty();
+        this.__$location.find('.pages-container').empty();
 
-        let page = window.location.href.match(/\d*$/);
-        let url = window.location.href;
-
-        if(page[0] !== '')
+        if(limit > 1)
         {
-            url = url.replace(/\d*$/, '');
+
+            let url = window.location.href;
+
+            let pageContainerContent = '';
+
+            if(currentPage > 1)
+            {
+                pageContainerContent += '<i class="fas fa-chevron-left page_navigation_arrow prev"></i>';
+                //$('<i class="fas fa-chevron-left page_navigation_arrow left"></i>').appendTo( $(".pages-container") );
+            }
+
+            for (let i = 1; i <= limit ; i++)
+            {
+                pageContainerContent += `<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${ url + '/' + i}">${i}</a>`;
+                //$(`<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${ url + '/' + i}">${i}</a>`).appendTo( $(".pages-container") );
+            }
+
+            if(limit > currentPage)
+            {
+                pageContainerContent += '<i class="fas fa-chevron-right page_navigation_arrow next"></i>';
+                //$('<i class="fas fa-chevron-right page_navigation_arrow right"></i>').appendTo( $(".pages-container") );
+            }
+
+            this.__$location.find('.pages-container').html( pageContainerContent );
+
         }
 
-        for (let i = 1; i <= limit ; i++)
-        {
-            $(`<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${ url + '/' + i}">${i}</a>`).appendTo( $(".pages-container") );
-        }
+        this.pageNavigationIsActive = true;
 
     }
 
@@ -318,6 +372,7 @@ class PaginatorHandler extends Tool
         this.onDisplayedMediasNumberChange(true)
             .onMediasSortableByDateChange(true)
             .onClickOnPageReloadMediatheque(true)
+            .onClickOnArrowNavigateToPage(true)
         ;
     }
 
@@ -327,6 +382,7 @@ class PaginatorHandler extends Tool
         this.onDisplayedMediasNumberChange(false)
             .onMediasSortableByDateChange(false)
             .onClickOnPageReloadMediatheque(false)
+            .onClickOnArrowNavigateToPage(false)
         ;
     }
 
