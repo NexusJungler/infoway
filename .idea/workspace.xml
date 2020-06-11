@@ -4,7 +4,6 @@
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,7 +250,7 @@
       <workItem from="1591013756617" duration="123654000" />
       <workItem from="1591602900458" duration="70904000" />
       <workItem from="1591793805741" duration="13942000" />
-      <workItem from="1591812407722" duration="27058000" />
+      <workItem from="1591812407722" duration="27315000" />
     </task>
     <servers />
   </component>

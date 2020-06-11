@@ -200,11 +200,11 @@
                                         <i class="fas fa-chevron-left page_navigation_arrow prev"></i>
 
                                         {# nombre de page a afficher avant de cacher et remplacer par des '...' #}
-                                        {% set numberOfPagesToDisplayBeforeHidePages = 3 %}
+                                        {% set numberOfPagesToDisplayBeforeHidePages = 4 %}
 
                                         {% for i in 1..numberOfPages %}
 
-                                            {% if i < numberOfPagesToDisplayBeforeHidePages or loop.last %}
+                                            {% if i < numberOfPagesToDisplayBeforeHidePages or loop.last or i is same as(currentPage) %}
 
                                                 <a class="page {% if i is same as(currentPage) %}current_page{% endif %}" href="{{ path('media::showMediatheque', {'mediasDisplayedType': media_displayed, 'page': i}) }}">{{ i }}</a>
 

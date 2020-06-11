@@ -358,7 +358,7 @@ class PaginatorHandler extends Tool
                 console.log(page);
             }
 
-            let numberOfPagesToDisplayBeforeHidePages = 3;
+            let numberOfPagesToDisplayBeforeHidePages = 4;
 
             let pageContainerContent = '';
 
