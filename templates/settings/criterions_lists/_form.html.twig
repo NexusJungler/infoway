@@ -1,0 +1,109 @@
+<div class="form-content form-criterion-content">
+    {{ form_start(form) }}
+
+        <div class="row-create">
+            <div class="row row-create_list">
+                <div class="row">
+                    {{ form_label(form.name, 'Nom de la liste :',  {'label_attr': {'class': 'form-label'}} )  }}
+                    {{ form_widget(form.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Religieux',}}) }}
+                </div>
+                <div class="row ">
+                    {{ form_label(form.description, 'description de la liste :',  {'label_attr': {'class': 'form-label'}} )  }}
+                    {{ form_widget(form.description, {'attr': {'class': 'input-custome',' placeholder' : 'Type de produits par conviction religieuse'} } ) }}
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="row">
+                    {{form_label(form.basicCriterionUsed)}}
+                    <div class="submit-rating" id="criterions_list_basicCriterionUsed">
+                        {% for basicCriterionUsed in form.basicCriterionUsed  %}  
+                            {{form_widget(basicCriterionUsed)}}
+                        {% endfor %}
+                            <label for="criterions_list_basicCriterionUsed_0" class="rating-label rating-label-non">Non</label>
+                            <div class="smile-rating-toggle"></div>
+                            <div class="toggle-rating-pill"></div>
+                            <label for="criterions_list_basicCriterionUsed_1" class="rating-label rating-label-oui">Oui</label>
+                    </div>
+                </div>
+            </div>
+
+      
+
+            <div class="row row-define-criterion">
+                <div class="row">
+                    {{form_label(form.basicCriterion.selected,  'Critère de base',  {'label_attr': {'class': 'form-input-basicCriterion'}} )}}
+                    <label class="container-input">
+                        {{form_widget(form.basicCriterion.selected)}}
+                        <span class="container-rdo"></span>
+                    </label>
+                    {{form_widget(form.basicCriterion.selected)}}
+                </div>
+                <div class="row">
+                    {{form_widget(form.basicCriterion.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Critère de base'}})}}
+                </div>
+                <div class="row">
+                {{ form_label(form.basicCriterion.name, 'description :',  {'label_attr': {'class': 'form-label'}} )  }}
+                {{form_widget(form.basicCriterion.description, {'attr': {'class': 'input-custome',' placeholder' : 'Gamme de base valable pour Halal et Pas Halal'} } )}}
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="row row-multiple">
+            {{ form_label(form.multiple, 'Pour les sites, Affectaion à choix :',  {'label_attr': {'class': 'form-label'}} )  }}
+            {{ form_widget(form.multiple, {'attr': {'class': 'input-custome'}}) }}
+        </div>
+
+        <div class="content-criteres">
+            <div class="title">
+                <p>Critères<p>
+            </div>
+            
+             <div class="content-criteres-bloc">
+                <ul class="tags criterion_list" data-prototype="{{ form_widget(form.criterions.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li class="row-criteres"></li>'|e }}">
+                    {{dump(form)}}
+                    {% for criterion in form.criterions  %}   
+                    <li class="row-criteres " >
+                        <div >
+                            <div id="{{criterion.vars.id}}">
+                                <div >
+                                    {{ form_label(criterion.selected ) }}
+                                    {{ form_widget(criterion.selected ) }}
+                                    {# <label class="container-input">
+                                        {{ form_widget(criterion.selected, {'attr': {'checked': 'true'}}) }}
+                                        <span class="container-rdo"></span>
+                                    </label> #}
+                                </div>
+                                <div>
+                                    {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' ', }})  }}
+                                </div>
+                                <div >
+                                    {{ form_widget(criterion.description, {'attr': {'class': 'input-custome-desc',' placeholder' : ''}}) }}
+                                </div>
+                            </div>   
+                            <div>
+                                <button type="button" id="{{loop.index0 }}" class="btn delete-row">X</button>
+                            </div>
+                        </div>    
+                    </li>
+                {% endfor %}
+
+                </ul>
+               
+            </div>  
+
+            <div class="btn-add">
+                <button type="button" class="btn btn-add-critiere" id="add_criterion"> <i class="fas fa-plus-circle"></i> Ajouter un critère</button>
+            </div>
+        </div>
+    
+        <div class="btn-save">
+            <button class="btn btn-create-critions" type="submit" >{{ button_label|default('Enregister la liste') }}</button>
+        </div>
+
+    {{ form_end(form) }}
+</div>
+
+
+

@@ -7,7 +7,6 @@ use App\Repository\Admin\CustomerRepository;
 use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{ Request, Response };
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
@@ -21,7 +20,7 @@ class AppController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function homePage(Request $request, CustomerRepository $customerRepository, SessionManager $sessionManager, ParameterBagInterface $parameterBag): Response
+    public function homePage(Request $request,  CustomerRepository $customerRepository, SessionManager $sessionManager): Response
     {
 
 //        if($this->getUser() === null)
@@ -50,7 +49,7 @@ class AppController extends AbstractController
         //dump($location);
 
         return $this->render("home/zone-diffusion.html.twig", [
-            //'customerNames' => $customerRepository->findAllNames(),
+            'customer' => $customer,
             'location' => $location
         ]);
     }
@@ -70,6 +69,8 @@ class AppController extends AbstractController
 
     }
 
+    /** Page Produits **/
+
     /**
      * @Route(path="/products", name="app:products")
      *
@@ -86,10 +87,67 @@ class AppController extends AbstractController
             'tags',
             'Q08'
         ];
-        return $this->render("products.html.twig", [
+        return $this->render("products/products_price.html.twig", [
             'customer' => $customer
         ]);
     }
+
+    /**
+     * @Route(path="/create-product", name="app:create-product")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function create_product(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("products/create_product.html.twig", [
+            'customer' => $customer
+        ]);
+    }
+
+    /**
+     * @Route(path="/categories", name="app:categories")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function categories(Request $request): Response
+    {
+        
+        return $this->render("products/categories.html.twig", [
+        ]);
+    }
+
+    /**
+     * @Route(path="/prix", name="app:prix")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function prix(Request $request): Response
+    {
+        $customer = [
+            'nom',
+            'format',
+            'categorie',
+            'description',
+            'tags',
+            'Q08'
+        ];
+        return $this->render("products/price.html.twig", [
+            'customer' => $customer
+        ]);
+    }
+
+
 
     /**
      * @Route(path="/site", name="app:site")
@@ -233,7 +291,7 @@ class AppController extends AbstractController
     public function managementtags(Request $request): Response
     {
 
-        return $this->render("settings/management-tags.html.twig", [
+        return $this->render("Tags/show.html.twig", [
 
         ]);
 
@@ -251,6 +309,21 @@ class AppController extends AbstractController
     {
 
         return $this->render("image/media-image.html.twig", [
+
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/create-date", name="app:date")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function date(Request $request): Response
+    {
+
+        return $this->render("pricesfactories/create-date.html.twig", [
 
         ]);
 

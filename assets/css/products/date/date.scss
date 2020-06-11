@@ -1,0 +1,133 @@
+.content-date{
+    margin-left: 2.5%;
+    
+    .content-table-date{
+        margin-top: 30px;
+        display: flex;
+        .content-right{
+            width: 800px;
+            max-width: 100%;
+            margin-right: 50px;
+            .title{
+                color: #283338;
+                font:  21px 'Barlow';
+                margin-bottom: 20px;
+                margin-left: 20px;
+            }
+            .table-custome{
+                border-radius: 0;
+                .thead-info{
+                    width: 100%;
+                    border: 1px solid #707070;
+                    &::after{
+                        display: none;
+                    }
+                    th{
+                        
+                        padding: 14px 7px;
+                        &:nth-child(1){
+                            background: #899CA4 0% 0% no-repeat padding-box;
+                            font:  25px 'Barlow';
+                            width: 18%;
+                        }
+                        &:nth-child(2){
+                            background: #E3E3E3 0% 0% no-repeat padding-box;
+                            font:  21px 'Barlow';
+                            color: #4D646D;
+                        }
+
+                    }
+                }
+                .tbody{
+                    height: 400px;
+                    max-height: 400px;
+                    display: block;
+                    border: 1px solid #C0CCD1;
+                    border-top: 0;
+                    // background: linear-gradient(to right, #FFFFFF 34.5%, #F6F6F6 34.5%, #F6F6F6 50%);
+                    .container-input{
+                        .container-rdo-tags {
+                            left: 0px;
+                            border-radius: 0px;
+                        }
+                    } 
+                    tr{
+                        // margin-top: 55px;
+                        &:nth-child(odd){
+                            td{
+
+                                &:nth-child(1){
+                                    background: #DCECEF 0% 0% no-repeat padding-box;
+                                }
+                                &:nth-child(2){
+                                    background: #E3E3E3 0% 0% no-repeat padding-box;
+                                }
+                            }
+                        }
+                    }
+                    td{
+                        height: 55px;
+                        vertical-align: middle;
+                        padding: 10px 20px;
+                        .container-input{
+                            margin: 0;
+                        }
+                        &:nth-child(1){
+                            width: 17.9%;
+                            text-align: center;
+                        }
+                        &:nth-child(2){
+                            background: #F6F6F6 0% 0% no-repeat padding-box;
+                            text-align: center;
+                            // border: 0;
+                            .cercle-desc{
+                                border: 1px solid #C0CCD1;
+                                border-radius: 6px;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        .content-left{
+            width: 440px;
+            max-width: 100%;
+            .title{
+                text-align: center;
+                font:  25px 'Barlow';
+                letter-spacing: 0px;
+                color: #4F9BAE;
+                margin-bottom: 20px;
+            }
+            .content-calendar{
+                width: 440px;
+                max-width: 100%;
+                height: 450px;
+                max-height: 450px;
+                background: #87C4D1 0% 0% no-repeat padding-box;
+                border: 2px solid #9BABB2;
+            }
+            .content-input-date{
+                margin: 20px auto;
+                text-align: center;
+                [type="date"] {
+                    border: 1px solid #A4B4BB;
+                    border-radius: 6px;
+                    // background: #FFFFFF 0% 0% no-repeat padding-box;
+                    padding: 4px;
+                    letter-spacing: 2px;
+                    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+                }
+                [type="date"]::-webkit-inner-spin-button {
+                    display: none;
+                }
+                [type="date"]::-webkit-calendar-picker-indicator {
+                    opacity: 0;
+                }  
+            }
+        }
+    }
+}
+

@@ -4,3 +4,4 @@ $(".tab-content.tab-create #create-entity-choice input[type='radio']").on("chang
     $("form[name='create_company_piece'] input[name='type']").val($(e.currentTarget).data('id'));
 
 })
+

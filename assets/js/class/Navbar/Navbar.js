@@ -8,7 +8,7 @@ class Navbar {
             $('#menu-closed').addClass('menu-test');
           });
 
-        $('.menu-wrap input[type="checkbox"]').change( e =>{
+        $('.menu-wrap .toggler').change( e =>{
             
             let $checkBox = $(e.currentTarget) ;
 

@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use App\Entity\Customer\PriceType;
 use App\Form\PriceTypeType;
-use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +18,9 @@ class PriceTypeController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function show(SessionManager $sessionManager): Response
+    public function show(): Response
     {
-        $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+        $em = $this->getDoctrine()->getManager('kfc');
         $price_types = $em->getRepository(PriceType::class)->findAll();
 
         return $this->render("pricetypes/show.html.twig", [
@@ -36,7 +35,7 @@ class PriceTypeController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function create(Request $request, SessionManager $sessionManager): Response
+    public function create(Request $request): Response
     {
         $type = new PriceType();
         $form = $this->createForm(PriceTypeType::class, $type);
@@ -44,7 +43,7 @@ class PriceTypeController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $em->persist($type);
             $em->flush();
             return $this->redirectToRoute('pricetypes::show');
@@ -64,14 +63,14 @@ class PriceTypeController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function edit(Request $request, PriceType $type, SessionManager $sessionManager): Response
+    public function edit(Request $request, PriceType $type): Response
     {
         $form = $this->createForm(PriceTypeType::class, $type);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $em->flush();
             return $this->redirectToRoute('pricetypes::show');
         }
@@ -88,11 +87,11 @@ class PriceTypeController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function delete(Request $request, SessionManager $sessionManager): Response
+    public function delete(Request $request): Response
     {
         $types = $request->request->get('types');
         if($types != []) {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $rep = $em->getRepository( PriceType::class);
             foreach ($types as $id => $val) {
                 $type = $rep->find($id);

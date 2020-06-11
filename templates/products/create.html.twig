@@ -1,79 +1,129 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Produits {% endblock %}
+
 {% block body %}
+    <main class="main main_produits">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': 'créer', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-create tab-create-product current ">
+
+                <article class="display product-display ">
+                    <div class="display-content">
+                        <div class="tab-content-title">
+                            <h3 class="title">Créer votre Produit</h3>
+                        </div>
+                        {# <div class="display-btn">
+                            <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Modification à date</a>
+                        </div> #}
+                    </div>
+                </article >
+
+                    <div class="form">
+                        {{ form_start(form) }}
+                            {{ form_row(form.category) }}
+                            {{ form_row(form.priceType) }}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.amount) }}
+                            {{ form_row(form.description) }}
+                            {{ form_row(form.note) }}
+                            {{ form_row(form.start) }}
+                            {{ form_row(form.end) }}
+
+                <div class="ManyToMany">
+                    {{ form_row(form.tags) }}
+                </div>
+
+                <div class="ManyToMany">
+                    {# {{ form_row(form.allergens) }} #}
+                    <div>
+                        <label class="label-custome" for="allergens">Allergenes</label>
+                        <select id="allergens" name="allergens[]" multiple="multiple">
+                            {% for allergen in allergens %}
+                                {% set selected = '' %}
+                                {% if allergen in product_allergens %}
+                                    {% set selected = 'selected' %}
+                                {% endif %}
+                                <option value="{{ allergen.id }}" {{ selected }}>{{ allergen.name }}</option>
+                            {% endfor %}
+                        </select>+
+                    </div>
+                </div>
+
+                {{ form_row(form.logo) }}
+
+                {% if expected_change is defined %}
+                    <input type="hidden" name="expected_date" value="2020-05-10">
+                {% endif %}
+            {{ form_end(form) }}
+
+            </div>
+
+
+                </div>
+            </section>    
+            
+
+
+        </div>
+    </main>
+
+
     <div class="debug">
-        {{ form_start(form) }}
-            {{ form_row(form.category) }}
-            {{ form_row(form.priceType) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.amount) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.note) }}
-            {{ form_row(form.start) }}
-            {{ form_row(form.end) }}
+        
 
-            <div class="ManyToMany">
-                {{ form_row(form.tags) }}
+        {# <button>Modification à date</button> #}
+        {#{{ dump(expected_change_forms) }}#}
+        {# {% for date,value in expected_change_forms %}
+            <div class="form">
+                <h2>{{ date }}</h2>
+                {{ form_start(value, {'attr': {'name': 'ujgvjhvbjkh', 'action': path('expected_change::save', {'classname': 'product', 'id': app.request.attributes.get('_route_params')['product'] })}}) }}
+                {{ form_row(value.category) }}
+                {{ form_row(value.priceType) }}
+                {{ form_row(value.name) }}
+                {{ form_row(value.amount) }}
+                {{ form_row(value.description) }}
+                {{ form_row(value.note) }}
+                {{ form_row(value.start) }}
+                {{ form_row(value.end) }}
+
+                <div class="ManyToMany">
+                    {{ form_row(value.tags) }}
+                </div>
+
+                <div class="ManyToMany">
+                    {{ form_row(value.allergens) }}
+                </div>
+
+                {{ form_row(value.logo) }}
+                <input type="hidden" name="expected_date" value="{{ date }}">
+                <input type="hidden" name="expected_change" value="1">
+                {{ form_end(value) }}
             </div>
-
-            <div class="ManyToMany">
-                {#{{ form_row(form.allergens) }} #}
-                <div>
-                    <label class="label-custome" for="allergens">Allergenes</label>
-                    <select id="allergens" name="allergens[]" multiple="multiple">
-                        {#{% for allergen in allergens %}
-                            {% set selected = '' %}
-                            {% if allergen in product_allergens %}
-                                {% set selected = 'selected' %}
-                            {% endif %}
-                            <option value="{{ allergen.id }}" {{ selected }}>{{ allergen.name }}</option>
-                        {% endfor %}#}
-                    </select>+
-                </div>
-            </div>
-
-            {{ form_row(form.logo) }}
-
-            {#
-            <div id="tags">
-                <p>Tags</p>
-                <div class="associated">
-                    <p>associés</p>
-                    <ul>
-                        {% for tag in tags.all %}
-                            <li>{{ tag.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="interaction">
-                    <img src="assets/ajout.png">
-                    <img src="assets/retrait.png">
-                </div>
-                <div class="unassociated">
-                    <p>non associés</p>
-                    <ul>
-                        <li>toto</li>
-                        <li>toto</li>
-                        <li>toto</li>
-                        {% for tag in tags.all %}
-                            <li>{{ tag.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            #}
-
-            {% if expected_change is defined %}
-                <input type="hidden" name="expected_date" value="2020-05-10">
-            {% endif %}
-        {{ form_end(form) }}
+        {% endfor %} #}
     </div>
-    {% block javascripts %}
+
+    
+{% endblock %}
+
+{% block javascripts %}
         {{ encore_entry_script_tags('app') }}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
         <script>
-            // $('.ManyToMany select').select2();
+            $('.ManyToMany select').select2();
         </script>
-        {#{{ encore_entry_script_tags('edit_product') }}#}
+        {{ encore_entry_script_tags('edit_product') }}
     {% endblock javascripts %}
-{% endblock %}

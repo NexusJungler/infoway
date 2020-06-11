@@ -12,8 +12,8 @@ doctrine:
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
-            quick:
-                url: '%env(resolve:DATABASE_QUICK_URL)%'
+            pira:
+                url: '%env(resolve:DATABASE_PIRA_URL)%'
                 driver: pdo_mysql
                 server_version: '5.7'
                 charset: utf8mb4
@@ -38,12 +38,13 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity/Customer'
                         prefix: App\Entity\Customer
                         alias: Kfc
-            quick:
-                connection: quick
+            pira:
+                connection: pira
                 mappings:
-                    quick:
+                    pira:
                         is_bundle: false
                         type: annotation
                         dir: '%kernel.project_dir%/src/Entity/Customer'
                         prefix: App\Entity\Customer
-                        alias: Quick
+                        alias: Pira
+     

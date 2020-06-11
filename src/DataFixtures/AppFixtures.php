@@ -7,7 +7,6 @@ namespace App\DataFixtures;
 use App\Entity\Admin\Country;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Feature;
-use App\Entity\Admin\Perimeter;
 use App\Entity\Admin\Permission;
 use \App\Entity\Customer\Role;
 use App\Entity\Admin\TimeZone;
@@ -275,37 +274,34 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
     private function loadUsers(\Doctrine\Persistence\ObjectManager &$manager)
     {
 
-        //$tokenGeneratorService = new TokenGeneratorService();
+        $tokenGeneratorService = new TokenGeneratorService();
 
         $customer = $this->getPersistedEntity($manager, ['className' => Customer::class, 'property' => 'name', 'value' => 'Kfc']);
 
-        $perimeter = new Perimeter();
-        $perimeter->setName("Permiter1")
-                  ->setLevel(1);
+        for ($i = 1; $i <= 5; $i++)
+        {
 
-        /*$role = new Role();
-        $role->setName("Role1 ")
-            ->setLevel(1);*/
+            $role = new Role();
+            $role->setName("role " . $i)
+                 ->setLevel($i);
 
-        $user = new User();
+            $user = new User();
+            $user->setFirstName($this->__faker->firstName)
+                ->setLastName($this->__faker->lastName)
+                ->setPassword($this->__encoder->encodePassword($user, $this->__faker->password))
+                ->setEmail($this->__faker->email)
+                ->setPhoneNumber($this->__faker->phoneNumber)
+                ->setAccountConfirmationToken($tokenGeneratorService->generate(15))
+                ->setPasswordResetToken(null)
+                ->addRole($role, $customer)
+                ->addCustomer($customer);
 
-        $user->setPerimeter($perimeter)
-            ->setActivated(0)
-            ->setFirstName('User1')
-            ->setLastName('toto')
-            ->setPassword($this->__encoder->encodePassword(
-                $user,
-                'totoRtyu3$'
-            ))
-            ->setPhoneNumber('0143256232')
-            ->setActivated(0)
-            ->setEmail('cbaby@infoway.fr');
+            $customer->addUser($user);
 
-        $customer->addUser($user);
+            $manager->persist($role);
+            $manager->persist($user);
 
-        //$manager->persist($role);
-        $manager->persist($user);
-        $manager->persist($perimeter);
+        }
 
     }
 

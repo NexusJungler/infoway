@@ -4,14 +4,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>{% block title %}Bienvenue !{% endblock %}</title>
-
+        <title>{% block title %} Bienvenue !{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
             <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
-            <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+            <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
+            {# <link href="node_modules/select2/dist/css/select2.min.css" rel="stylesheet" /> #}
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             {{ encore_entry_link_tags('app') }}
-        {#{{ encore_entry_link_tags('modal_message') }}#}
+            {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
     </head>
 
@@ -24,7 +26,7 @@
         {% block header %}
             <header class="header">
                 <div class="logo__infoway">
-                    <img src="{{ asset('/build/images/infoway.png') }}" alt="logo infoway">
+                    <img src="{{ asset('build/images/infoway.png') }}" alt="logo infoway">
                 </div>
                 <div class="menu-wrap">
                     <input type="checkbox" class="toggler" />
@@ -34,13 +36,13 @@
                     <div class="header__block--left">
                         <div class="header__gradient-left">
                             <div class="logo__enseigne">
-                                <img src="{{ asset('/build/images/Logo_AREA_blanc.png') }}" alt="logo quick">
+                                {# <img src="{{ asset('/build/images/Logo_AREA_blanc.png') }}" alt="logo quick"> #}
                             <div class="all__enseigne">
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
                                         <option value="">Sélectionner l'enseigne</option>
                                         {% for name in app.session.get('customerNames') %}
-                                            <option value="{{name}}" {% if (app.session.get('current_customer') is not null) and (name is same as(app.session.get('current_customer').name)) %} selected {% endif %} >{{name}}</option>
+                                            <option value="{{name}}" {% if (app.session.get('current_customer') is not null ) and (name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{name}}</option>
                                         {% endfor %}
                                     </select>
                                     <p class="number__enseigne"><span >25</span> enseignes</p>
@@ -52,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-
+{# 
                     <div class="header__gradient-center">
                         <div class="update">
                             <img src="{{ asset('/build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
@@ -60,9 +62,6 @@
                                 <form class="enseigne-site">
                                     <select name="enseigne-site" id="enseigne-site">
                                         <option value="">Sélectionner l'enseigne</option>
-                                        {# {% for customer in customer %}
-                                            <option value="{{customer}}">{{customer}}</option>
-                                        {% endfor %} #}
                                     </select><br>
                                     <p class="number__enseigne-site"><span >7</span>Sites<p>
                                     <div>
@@ -75,7 +74,7 @@
                             </div>
                             
                         </div>
-                    </div>
+                    </div> #}
 
                     <div class="header__gradient-right">
                         <div class="all__site">
@@ -140,14 +139,14 @@
                                 <a href="/" class=""><i class="icon icon-iy-airplay"></i></a>
                             </li>
                             <li  class="nav-menu-hover">
-                                <a href="/enseigne" ><span class="nav-menu-title">Configuration</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <a href="{{ path('customers_new') }}" ><span class="nav-menu-title">Configuration</span><i class="icon icon-iy-produit-prix"></i></a>
                                 <ul class="nav-sous-menu">
                                     <li><a href=""><span >Marque</span></a></li>
                                     <li><a href=""><span> Tags</span></a></li>
                                     <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="/enseigne"><span class="nav-mobile-title">Configuration</span></a></li>
+                                    <li><a href="{{ path('customers_new') }}"><span class="nav-mobile-title">Configuration</span></a></li>
                                     <li><a href=""><span >Prix</span></a></li>
                                     <li><a href=""><span> Playlist/Room</span></a></li>
                                     <li><a href=""><span >Info Ecrans</span></a></li>
@@ -168,14 +167,14 @@
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">
-                                <a href="/products"><span class="nav-menu-title">Produits</span><i class="icon icon-iy-produit-prix"></i></a>
+                                <a href="{{ path('products::show') }}"><span class="nav-menu-title">Produits</span><i class="icon icon-iy-produit-prix"></i></a>
                                 <ul class="nav-sous-menu">
                                     <li><a href="" ><span >Prix</span></a></li>
                                     <li><a href=""><span> Playlist/Room</span></a></li>
                                     <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="/products"><span class="nav-mobile-title">Produits</span></a></li>
+                                    <li><a href="{{ path('products::show') }}"><span class="nav-mobile-title">Produits</span></a></li>
                                     <li><a href=""><span >Prix</span></a></li>
                                     <li><a href=""><span> Playlist/Room</span></a></li>
                                     <li><a href=""><span >Info Ecrans</span></a></li>
@@ -231,8 +230,13 @@
         {% endblock %}
 
         {% block javascripts %}
+         <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+            {# <script src="node_modules/select2/dist/js/select2.min.js"></script>
+            <script>
+                    $(".ManyToMany select").select2();
+            </script> #}
             {{ encore_entry_script_tags('app') }}
-        {#{{ encore_entry_script_tags('modal_message') }}#}
+            {#{{ encore_entry_script_tags('modal_message') }}#}
         {% endblock javascripts %}
 
     </body>

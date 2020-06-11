@@ -44,14 +44,31 @@ Encore
     .addEntry('user_login', './assets/js/user_login.js')
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
+    
+    /********* Settings *********/
+    /** Customer **/
+    .addEntry('customer', './assets/js/settings/customer.js')
+    /** Tags **/
+    .addEntry('tags', './assets/js/tags.js')
+    /** criterion **/
+    .addEntry('criterion', './assets/js/criterion.js')
+    /** User **/
+    .addEntry('settings-user', './assets/js/settings/settings_user.js')
 
-    // Product
+    /********* Product *********/
     .addEntry('product', './assets/js/product.js')
-    .addEntry('product-price', './assets/js/product/product_price.js')
-    .addEntry('mediatheque', './assets/js/mediatheque.js')
-    .addEntry('show_products', './assets/js/show_products.js')
+    .addEntry('product_price', './assets/js/product/product_price.js')
+    .addEntry('date', './assets/js/date.js')
     .addEntry('show_factories', './assets/js/show_factories.js')
+    .addEntry('show_products', './assets/js/show_products.js')
+    .addEntry('show_categories', './assets/js/show_categories.js')
+    .addEntry('show_allergens', './assets/js/show_allergens.js')
+    .addEntry('show_pricetypes', './assets/js/show_pricetypes.js')
+    .addEntry('edit_product', './assets/js/edit_product.js')
 
+    //media
+    .addEntry('mediatheque', './assets/js/mediatheque.js')
+    
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

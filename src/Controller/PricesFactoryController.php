@@ -12,7 +12,6 @@ use App\Entity\Customer\Site;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\MainPrice;
 use App\Form\PricesFactoryType;
-use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +25,9 @@ class PricesFactoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function show(SessionManager $sessionManager): Response
+    public function show(): Response
     {
-        $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+        $em = $this->getDoctrine()->getManager('kfc');
         $factories = $em->getRepository(PricesFactory::class)->findAll();
         $sites = $em->getRepository(Site::class)->findAll();
         // create relation one to Many inversé dans site!
@@ -57,7 +56,7 @@ class PricesFactoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function create(Request $request, SessionManager $sessionManager): Response
+    public function create(Request $request): Response
     {
         $factory = new PricesFactory();
         $factory->setCreatedAt(new \DateTime());
@@ -66,7 +65,7 @@ class PricesFactoryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $em->persist($factory);
             $em->flush();
             return $this->redirectToRoute('pricesfactories::show');
@@ -86,14 +85,14 @@ class PricesFactoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function edit(Request $request, PricesFactory $factory, SessionManager $sessionManager): Response
+    public function edit(Request $request, PricesFactory $factory): Response
     {
         $form = $this->createForm(PricesFactoryType::class, $factory);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $em->flush();
             return $this->redirectToRoute('pricesfactories::show');
         }
@@ -110,11 +109,11 @@ class PricesFactoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function delete(Request $request, SessionManager $sessionManager): Response
+    public function delete(Request $request): Response
     {
         $factories = $request->request->get('factories');
         if($factories != []) {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $rep = $em->getRepository( PricesFactoryType::class);
             foreach ($factories as $id => $val) {
                 $factory = $rep->find($id);
@@ -132,10 +131,10 @@ class PricesFactoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function getPrices(Request $request, SessionManager $sessionManager): Response
+    public function getPrices(Request $request): Response
     {
         $factories_ids = $request->request->get('factories');
-        $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+        $em = $this->getDoctrine()->getManager('kfc');
         $entitiesManager = $this->getDoctrine()->getManager('default');
 
         $rep = $em->getRepository(PricesFactory::class);
@@ -207,9 +206,9 @@ class PricesFactoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function savePrices(Request $request, SessionManager $sessionManager): Response
+    public function savePrices(Request $request): Response
     {
-        $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+        $em = $this->getDoctrine()->getManager('kfc');
         $entitiesManager = $this->getDoctrine()->getManager('default');
         $messages = [];
 

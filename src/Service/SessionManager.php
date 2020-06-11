@@ -56,7 +56,7 @@ class SessionManager
     {
 
         if(is_null($this->get($name)))
-            throw new NoSuchIndexException(sprintf("Error ! Session variable '%s' not found !", $name));
+            throw new NoSuchIndexException(sprintf("Error ! Cause : session variable '%s' not found !", $name));
 
         // if session variable is array
         if(is_array($this->get($name)))

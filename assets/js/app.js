@@ -2,14 +2,10 @@
 import '../css/general/reset.scss';
 import '../css/app.scss';
 
-
 // css
-// require('../css/app.css');
 require('../css/custom-style.css');
 require('../css/class/managers/clockManager.css');
-
-// impoet font awesome
-//require('../css/fontawesome/css/all.css');
+require('../css/debug.css');
 
 // import JS
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";
@@ -22,7 +18,7 @@ import {Navbar} from "./class/Navbar/Navbar";
 import {Form} from "./class/Form/Form";
 import ToolBox from "./class/Tools/ToolBox";
 
-//require('../js/fontawesome/js/all')
+
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
@@ -30,7 +26,7 @@ global.$ = global.jQuery = $;
 //jqueryValidate
 require('../js/jqueryValidate/jquery.validate.js');
 
-
+require('../js/tags.js');
 
 // Tabs Menu
 let tab_menu = new Tabmenu();
@@ -55,20 +51,19 @@ const clock= new ClockManager();
 clock.enable();
 
 const toolBox = new ToolBox();
-toolBox.activeTool("CustomerCreatorHandler")
-;
+toolBox.activeTool("CustomerCreatorHandler");
 
 $(".enseigne select#enseigne").on("change", e => {
 
-    const selectedCustomer = $(e.currentTarget).val();
-
-    if(selectedCustomer !== "")
-    {
-        $.ajax({
-            url: "/update/user/current/customer",
-            type: "POST",
-            data: { 'customer': selectedCustomer },
-        })
-    }
-
-})
+       const selectedCustomer = $(e.currentTarget).val();
+   
+       if(selectedCustomer !== "")
+       {
+           $.ajax({
+               url: "/update/user/current/customer",
+               type: "POST",
+               data: { 'customer': selectedCustomer },
+           })
+       }
+   
+   });

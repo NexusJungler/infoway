@@ -1,0 +1,86 @@
+
+{{ form_start(form) }}
+
+    <article class="bloc-create-tags row" >
+            {{ form_widget(form.tagToCreate, {'attr': {'class': 'row'} }) }}
+             <button type="button" class="btn" id="add_tag">Créer TAG</button>
+    </article>
+
+    <article>
+        <div class="info-tags">
+            <ul>
+                <li><img src="{{ asset('/build/images/color_picker.png') }}" alt="color_picker"></li>
+                <li>TAG créé</li>
+                <li>Description</li>
+            </ul>
+        </div>
+
+        <ul class="tags tags_list row " data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li></li>'|e }}">
+            {# {% for tag in form.tags %}
+                <li>
+                    <div>
+                        <div>{{ form_widget(tag.color, {'attr': {'class': 'tags-color'} }) }}</div>
+                        <div>
+                            <span class="color_input"></span>
+                            {{ form_widget(tag.name, {'attr': {'class': 'tags-input', required: 'required' } }) }}
+                        </div>
+                        <div>{{ form_widget(tag.description, {'attr': {'class': 'tags-desc', required: 'required'} }) }}</div>
+                    </div>
+                </li>                         
+            {% endfor %} #}
+        </ul>
+    </article>
+
+    <article class="bloc-site">
+        <div class="content-site">
+            <div class="row">
+                <h2 class="title-site">choix des site pour affection</h2> 
+                <div class="content-search">
+                    <input type="search" class="search" id="site-search" name="q" aria-label="Search" placeholder="Rechercher un élément..." >
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-site">
+            <table >
+                 <thead class=" accordion-toggle">
+                    <tr>
+                        <th><span class="trace"><i class="fas fa-caret-right"></i></span></th>
+                        <th>
+                            <label class="container-input">
+                                <input type="checkbox" id="selectAll"> Site <i class="fas fa-angle-down"></i>
+                                <span class="container-rdo"></span>
+                            </label>
+                        </th>
+                        <th>Adresses <i class="fas fa-angle-down"></i></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-serach ">
+                    {% for site in form.sites %}
+                        {% set currentsite = form.sites.vars.choices[site.vars.value].data %}
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <label class="container-input">
+                                    {{ form_widget(site, {'attr': {'class': ''} }) }}
+                                    {{  form_label(site) }}
+                                    <span class="container-rdo"></span>
+                                </label>
+                            </td>
+                            <td>
+                                {{ currentsite.adress }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+
+    <div class="btn-tag-enregistrer">
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    
+{{ form_end(form) }}

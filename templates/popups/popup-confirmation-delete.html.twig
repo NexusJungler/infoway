@@ -1,0 +1,17 @@
+<article class="add-popup popup-confirmation add-popup-delete">
+    <div class="modal">
+        <div class="header-modal">
+            <p class="upload-title">Configuration de la suppression</p>
+            <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+        </div>
+        <div class="content-modal" >
+            <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+            <div class="selected-tags-list" >
+            </div>
+        </div>
+        <div class="footer-modal">
+            {{ include('settings/criterions/_delete_form.html.twig') }}
+            <button type="button" class="btn btn-popupclose">NON</button>
+        </div>
+    </div>
+</article>

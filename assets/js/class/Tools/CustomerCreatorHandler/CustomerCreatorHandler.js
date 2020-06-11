@@ -6,8 +6,7 @@ class CustomerCreatorHandler extends Tool
     constructor()
     {
         super();
-        //this.__name = "CustomerCreatorHandler";
-        this.__name = this.constructor.name;
+        this.__name = "CustomerCreatorHandler";
         this.__$form = $("#createCustomer form");
         this.__contactFields = [
             {

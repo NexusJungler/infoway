@@ -3,6 +3,7 @@
 namespace App\Entity\Customer;
 
 use App\Entity\Admin\Allergen;
+use App\Entity\Customer\ProductAllergen;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +23,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Category", inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -34,7 +35,7 @@ class Product
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PriceType")
+     * @ORM\ManyToOne(targetEntity="PriceType", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $price_type;
@@ -75,30 +76,32 @@ class Product
     private $end;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="products")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Criterion", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="products_criterions")
      */
     private $criterions;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProductAllergens", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="ProductAllergen", mappedBy="product", cascade={"persist"})
      */
-    private $allergens;
+    private $product_allergens;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="product")
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="products", cascade={"persist"})
+     * @ORM\JoinTable(name="products_medias")
      */
     private $medias;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ElementGraphic", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="ElementGraphic", inversedBy="products", cascade={"persist"})
      */
-    private $elementGraphics;
+    private $elements;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Incruste", mappedBy="product", orphanRemoval=true)
@@ -110,8 +113,9 @@ class Product
         $this->tags = new ArrayCollection();
         $this->criterions = new ArrayCollection();
         $this->allergens = new ArrayCollection();
-        $this->elementGraphics = new ArrayCollection();
-        $this->medias = new ArrayCollection();
+        $this->product_allergens = new ArrayCollection();
+        $this->medias = new ArrayCollection() ;
+        $this->elements = new ArrayCollection();
         $this->incrustes = new ArrayCollection();
     }
 
@@ -167,7 +171,7 @@ class Product
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -284,7 +288,7 @@ class Product
     {
         if (!$this->criterions->contains($criterion)) {
             $this->criterions[] = $criterion;
-            $criterion->addUser($this);
+            $criterion->addProduct($this);
         }
 
         return $this;
@@ -294,7 +298,33 @@ class Product
     {
         if ($this->criterions->contains($criterion)) {
             $this->criterions->removeElement($criterion);
-            $criterion->removeUser($this);
+            $criterion->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductAllergen[]
+     */
+    public function getProductAllergens(): Collection
+    {
+        return $this->product_allergens;
+    }
+
+    public function addProductAllergen(ProductAllergen $product_allergen): self
+    {
+        if (!$this->product_allergens->contains($product_allergen)) {
+            $this->product_allergens[] = $product_allergen;
+        }
+
+        return $this;
+    }
+
+    public function removeProductAllergen(ProductAllergen $allergen): self
+    {
+        if ($this->tags->contains($allergen)) {
+            $this->tags->removeElement($allergen);
         }
 
         return $this;
@@ -308,10 +338,23 @@ class Product
         return $this->allergens;
     }
 
+    public function setAllergens(Collection $allergens): self
+    {
+        $this->allergens = $allergens;
+        return $this;
+    }
+
     public function addAllergen(Allergen $allergen): self
     {
         if (!$this->allergens->contains($allergen)) {
             $this->allergens[] = $allergen;
+
+            /*
+            $new = new ProductAllergen();
+            $new->setAllergenId($allergen->getId())
+                ->setProduct($this);
+            $this->addProductAllergen($new);
+            */
         }
 
         return $this;
@@ -319,16 +362,19 @@ class Product
 
     public function removeAllergen(Allergen $allergen): self
     {
-        if ($this->tags->contains($allergen)) {
-            $this->tags->removeElement($allergen);
+        if ($this->allergens->contains($allergen)) {
+            $this->allergens->removeElement($allergen);
         }
 
         return $this;
     }
 
+    /**
+     * @return Collection|Media[]
+     */
     public function getMedias(): Collection
     {
-        return $this->allergens;
+        return $this->medias;
     }
 
     public function addMedia(Media $media): self
@@ -349,29 +395,29 @@ class Product
         return $this;
     }
 
+
     /**
      * @return Collection|ElementGraphic[]
      */
-    public function getElementGraphics(): Collection
+    public function getElements(): Collection
     {
-        return $this->elementGraphics;
+        return $this->elements;
     }
 
-    public function addElementGraphic(ElementGraphic $elementGraphic): self
+    public function addElement(ElementGraphic $element): self
     {
-        if (!$this->elementGraphics->contains($elementGraphic)) {
-            $this->elementGraphics[] = $elementGraphic;
+        if (!$this->elements->contains($element)) {
+            $this->elements[] = $element;
         }
 
         return $this;
     }
 
-    public function removeElementGraphic(ElementGraphic $elementGraphic): self
+    public function removeElement(ElementGraphic $element): self
     {
-        if ($this->elementGraphics->contains($elementGraphic)) {
-            $this->elementGraphics->removeElement($elementGraphic);
+        if ($this->elements->contains($element)) {
+            $this->elements->removeElement($element);
         }
-
         return $this;
     }
 

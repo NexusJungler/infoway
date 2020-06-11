@@ -41,9 +41,9 @@ class FilterMediasByTypeSubTool extends SubTool
                 else
                 {
 
-                    this.__parent.registerFiltersInParent({property: 'data-media_type', value: ($(e.currentTarget).hasClass("show-only-images")) ? 'image' : 'video'});
+                    this.__parent.registerFiltersInParent({property: 'data-media_type', value: ($(e.currentTarget).hasClass("show_only_images")) ? 'image' : 'video'});
 
-                    $(".filter.filter-media-by-type.active").removeClass("active");
+                    $(".filter.filter_media_by_type.active").removeClass("active");
 
                     $(e.currentTarget).addClass("active");
 

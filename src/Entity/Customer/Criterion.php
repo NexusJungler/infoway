@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity\Customer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,11 +16,14 @@ class Criterion
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"mouldSerialization"})
+     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"mouldSerialization"})
      */
     private $name;
 
@@ -35,20 +39,34 @@ class Criterion
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="CriterionList", inversedBy="criterions")
+     * @ORM\ManyToOne(targetEntity="CriterionsList", inversedBy="criterions", cascade={"persist"})
      * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
      */
     private $list;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="criterions",cascade={"persist"})
+     * @Groups({"mouldSerialization"})
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions")
+     * @ORM\ManyToMany(targetEntity="Site", mappedBy="criterions", cascade={"persist"} )
      */
     private $sites;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="ProgrammingMould", mappedBy="criterions")
+     * @Groups({"mouldSerialization"})
+     */
+    private $ProgrammingMoulds;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="LocalProgramming", mappedBy="criterions")
+     */
+    private $LocalProgrammings;
 
     /**
      * @ORM\Column(type="boolean")
@@ -61,6 +79,14 @@ class Criterion
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->position = 1 ;
         $this->selected = false ;
+        $this->ProgrammingMoulds = new ArrayCollection() ;
+        $this->LocalProgrammings = new ArrayCollection() ;
+    }
+
+    public function setId( int $id ): self{
+        $this->id = $id ;
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -92,6 +118,11 @@ class Criterion
         return $this;
     }
 
+//    /** @ORM\PostLoad */
+//    public function doStuffOnPostLoad()
+//    {
+//        dd('test');
+//    }
 
     /**
      * @return Collection|Product[]
@@ -101,14 +132,6 @@ class Criterion
         return $this->products;
     }
 
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-        }
-
-        return $this;
-    }
 
     public function removeProduct(Product $product): self
     {
@@ -127,14 +150,6 @@ class Criterion
         return $this->sites;
     }
 
-    public function addSite(Site $site): self
-    {
-        if (!$this->sites->contains($site)) {
-            $this->sites[] = $site;
-        }
-
-        return $this;
-    }
 
     public function removeSite(Site $site): self
     {
@@ -145,12 +160,12 @@ class Criterion
         return $this;
     }
 
-    public function getList(): ?CriterionList
+    public function getList(): ?CriterionsList
     {
         return $this->list;
     }
 
-    public function setList(?CriterionList $list): self
+    public function setList(?CriterionsList $list): self
     {
         $this->list = $list;
 
@@ -177,6 +192,82 @@ class Criterion
     public function setSelected(bool $selected): self
     {
         $this->selected = $selected;
+
+        return $this;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgrammingMould[]
+     */
+    public function getProgrammingMoulds(): Collection
+    {
+        return $this->ProgrammingMoulds;
+    }
+
+    public function addProgrammingMould(ProgrammingMould $ProgrammingMould): self
+    {
+        if (!$this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds[] = $ProgrammingMould;
+            $ProgrammingMould->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgrammingMould(ProgrammingMould $ProgrammingMould): self
+    {
+        if ($this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds->removeElement($ProgrammingMould);
+            $ProgrammingMould->removeCriterion($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LocalProgramming[]
+     */
+    public function getLocalProgrammings(): Collection
+    {
+        return $this->LocalProgrammings;
+    }
+
+    public function addLocalProgramming(LocalProgramming $LocalProgramming): self
+    {
+        if (!$this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings[] = $LocalProgramming;
+            $LocalProgramming->addCriterion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocalProgramming(LocalProgramming $LocalProgramming): self
+    {
+        if ($this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings->removeElement($LocalProgramming);
+            $LocalProgramming->removeCriterion($this);
+        }
 
         return $this;
     }

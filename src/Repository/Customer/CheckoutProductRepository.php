@@ -3,10 +3,9 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\CheckoutProduct;
-use App\Repository\MainRepository;
 use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 
 /**
@@ -15,18 +14,22 @@ use Doctrine\Persistence\ObjectManager;
  * @method CheckoutProduct[]    findAll()
  * @method CheckoutProduct[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CheckoutProductRepository extends ServiceEntityRepository
+class CheckoutProductRepository extends ServiceEntityRepository implements RepositoryInterface
 {
-
-    use MainRepository;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CheckoutProduct::class);
     }
 
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
+    }
+
     // /**
-    //  * @return CheckoutProduct[] Returns an array of CheckoutProduct objects
+    //  * @return Category[] Returns an array of Category objects
     //  */
     /*
     public function findByExampleField($value)
@@ -43,7 +46,7 @@ class CheckoutProductRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CheckoutProduct
+    public function findOneBySomeField($value): ?Category
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
@@ -53,5 +56,4 @@ class CheckoutProductRepository extends ServiceEntityRepository
         ;
     }
     */
-
 }

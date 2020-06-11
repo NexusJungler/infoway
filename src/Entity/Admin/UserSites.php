@@ -25,7 +25,7 @@ class UserSites
     private $site ;
     /**
      * Many features have one product. This is the owning side.
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="sites")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userSites")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;

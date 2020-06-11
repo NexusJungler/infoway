@@ -29,21 +29,22 @@ class Contact
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $phoneNumber;
+    private $mail;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    private $position;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="contacts")
-     * @ORM\JoinColumn(nullable=false)
+     * One Cart has One Customer.
+     * @ORM\OneToOne(targetEntity="Customer", inversedBy="contact")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;
 
@@ -76,38 +77,38 @@ class Contact
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
+    public function getMail(): ?string
     {
-        return $this->phoneNumber;
+        return $this->mail;
     }
 
-    public function setPhoneNumber(string $phoneNumber): self
+    public function setMail(string $mail): self
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->mail = $mail;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->email;
+        return $this->telephone;
     }
 
-    public function setEmail(string $email): self
+    public function setTelephone(string $telephone): self
     {
-        $this->email = $email;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getPosition(): ?string
     {
-        return $this->status;
+        return $this->position;
     }
 
-    public function setStatus(string $status): self
+    public function setPosition(string $position): self
     {
-        $this->status = $status;
+        $this->position = $position;
 
         return $this;
     }
@@ -117,7 +118,7 @@ class Contact
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): self
+    public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
 

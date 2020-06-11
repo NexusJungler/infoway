@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enseigne{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('customer') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main_customer">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Enseigne', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+    
+            </section>
+
+            <section class="wrapper_tabcontent">
+
+                <div id="setting-enseigne" class="tab-content current customer-show">
+
+                    <article class="tab-content-title">
+                        <h3 class="title">Enseigne</h3>
+                        {# <p>vous êtes Multi-enseigne</p> #}
+                    </article>
+
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <a href="{{ path('customers_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Enseigne</a>
+                                <a href="{{ path('customers_edit', {'id': customer.id}) }}" class="btn"><i class="far fa-edit"></i>Modifier</a>
+                                {{ include('settings/customers/_delete_form.html.twig') }}
+                                {# <button type="button" class="btn duplicate-enseigne hide-btn"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                <button type="button" class="btn modified-enseigne hide-btn"><i class="far fa-edit"></i>Modifier</button>
+                                <button type="button" class="btn delete-enseigne" data-tablelistdelete="enseigne"><i class="fas fa-trash"></i>Supprimer</button> #}
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="table customer-show-table">
+                        <table class="table-custome">
+                        <thead class="table-info thead-info">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Logo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content scrollbar-table">
+                                <tr>
+                                    <td>{{ customer.id }}</td>
+                                     <td>{{ customer.name }}</td>
+                                     <td>{{ customer.logo }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <article class="customer-show-btn">
+                        <a href="{{ path('customers_index') }}" class="btn">back to list</a>
+                    </article>
+                    
+
+                    
+
+                    {# <a href="{{ path('customers_edit', {'id': customer.id}) }}">edit</a> #}
+
+                    {# {{ include('settings/customers/_delete_form.html.twig') }} #}
+
+                </div>
+            
+            </section>
+
+        </div>
+    </main>
+
+{% endblock %}

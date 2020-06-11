@@ -2,74 +2,131 @@
 
 namespace App\Form;
 
-use App\Entity\Country;
-use App\Entity\Customer;
-use App\Entity\Site;
-use App\Entity\TimeZone;
+use App\Entity\Admin\Country;
+use App\Entity\Admin\TimeZone;
+use App\Entity\Admin\User;
+use App\Entity\Customer\Criterion;
+use App\Entity\Customer\Devise;
+use App\Entity\Customer\PricesGroup;
+use App\Entity\Customer\Screen;
+use App\Entity\Customer\Site;
+use App\Entity\Customer\Tag;
+use App\Form\Customer\NightProgrammingType;
+use App\Form\Customer\ScreenType;
+use App\Form\Customer\SiteScreenType;
+use App\Form\DataTransformer\SitesScreenToScreenTransformer;
+use App\Repository\Admin\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SiteType extends AbstractType
 {
+    private $userRepository;
+
+private $siteScreenToScreenTransformer ;
+    public function __construct(UserRepository $userRepository, SitesScreenToScreenTransformer $siteScreenToScreenTransformer)
+    {
+        $this->userRepository = $userRepository;
+        $this->siteScreenToScreenTransformer = $siteScreenToScreenTransformer ;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $customer = $options['customer'] ;
+        $creator =  $options['creator'] ;
+
+
         $builder
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Nom"
-                ]
-            ])
-            ->add('address', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Adresse"
-                ]
-            ])
-            ->add('postal_code', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Code postale"
-                ]
-            ])
-            ->add('phone_number', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Numero de telephone"
-                ]
-            ])
+            ->add('name')
+            ->add('adress')
+            ->add('postalCode')
+            ->add('city')
+            ->add('phoneNumber')
+            ->add('observations')
             ->add('country', EntityType::class, [
                 'class' => Country::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'by_reference' => false
             ])
-            ->add('city', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Ville"
-                ]
+            ->add('devise', EntityType::class, [
+                'class' => Devise::class,
+                'choice_label' => 'symbol',
             ])
-            ->add('customer', EntityType::class, [
-                'class' => Customer::class,
-                'choice_label' => 'name'
-            ])
-            ->add('description', TextareaType::class, [
-                'attr' => [
-                    'placeholder' => "Description",
-                    'rows' => '30',
-                    'cols' => '150',
-                ]
-            ])
-            ->add('time_zone', EntityType::class, [
+            ->add('timezone', EntityType::class,[
                 'class' => TimeZone::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'by_reference' => false
             ])
+            ->add('users', EntityType::class ,
+                [
+                    // looks for choices from this entity
+                    'class' => User::class,
+                    'choice_label' =>  function (User $user) {
+                        return $user->getFirstName() .' ' . $user->getLastName();
+                    },
+                    'choices' =>  $this->userRepository->getUsersWithRoleBellowUserByCustomer($customer, $creator) ,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ])
+            ->add('criterions',EntityType::class ,
+                [
+                    // looks for choices from this entity
+                    'class' => Criterion::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ])
+            ->add('tags',EntityType::class ,
+                [
+                    // looks for choices from this entity
+                    'class' => Tag::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ])
+            ->add('pricesGroup',EntityType::class ,
+                [
+                    // looks for choices from this entity
+                    'class' => PricesGroup::class,
+                    'choice_label' => 'name',
+                ])
+//            ->add('screens', EntityType::class)
+            ->add('siteScreens', CollectionType::class ,
+                [
+                    'entry_type' => SiteScreenType::class,
+                ])
+         //   ->add('nightProgrammingActivated', CheckboxType::class,)
+         //   ->add('nightProgramming',NightProgrammingType::class)
+//            ->add('tags')
         ;
+//
+//        $builder->get('screens')
+//            ->addModelTransformer( $this->siteScreenToScreenTransformer );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Site::class,
-            'translation_domain' => 'forms',
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => Site::class,
+        ])
+            ->setRequired([
+                'customer',
+                'creator'
+            ])
+        ;
     }
 }

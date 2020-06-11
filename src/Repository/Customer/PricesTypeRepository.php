@@ -3,10 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\PriceType;
-use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method PriceType|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,9 +14,6 @@ use Doctrine\Persistence\ObjectManager;
  */
 class PricesTypeRepository extends ServiceEntityRepository
 {
-
-    use MainRepository;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PriceType::class);

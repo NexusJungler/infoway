@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Site{% endblock %}
+
+{% block body %}
+    <h1>Create new Site</h1>
+
+    {{ form_start( screensListForm ) }}
+
+    {{ form_end( screensListForm )}}
+    {{ include('sites/_form.html.twig') }}
+
+    <a href="{{ path('sites_index') }}">back to list</a>
+{% endblock %}

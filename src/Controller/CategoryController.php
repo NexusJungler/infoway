@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Product;
 use App\Form\CategoryType;
-use App\Service\SessionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,9 +19,9 @@ class CategoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function show(SessionManager $sessionManager): Response
+    public function show(): Response
     {
-        $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+        $em = $this->getDoctrine()->getManager('kfc');
         $categories = $em->getRepository(Category::class)->findAll();
 
         return $this->render("categories/show.html.twig", [
@@ -37,7 +36,7 @@ class CategoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function create(Request $request, SessionManager $sessionManager): Response
+    public function create(Request $request): Response
     {
         $category = new Category();
         $category->setCreatedAt(new \DateTime());
@@ -47,7 +46,22 @@ class CategoryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $mediaFile = $form->get('logo')->getData();
+            if ($mediaFile) {
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $mediaFile->guessExtension();
+
+                try {
+                    $mediaFile->move(
+                        $this->getParameter('logoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $category->setLogo($newFilename);
+            }
+            $em = $this->getDoctrine()->getManager('kfc');
             $em->persist($category);
             $em->flush();
             return $this->redirectToRoute('categories::show');
@@ -66,9 +80,9 @@ class CategoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function edit(Request $request, Category $category, SessionManager $sessionManager): Response
+    public function edit(Request $request, Category $category): Response
     {
-        $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+        $em = $this->getDoctrine()->getManager('kfc');
         $products = $em->getRepository(Product::class)->findBy(['category' => $category]);
         foreach ($products as $product) {
             $category->addProduct($product);
@@ -80,8 +94,22 @@ class CategoryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // dd($category->getProducts());
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $mediaFile = $form->get('logo')->getData();
+            if ($mediaFile) {
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $mediaFile->guessExtension();
+
+                try {
+                    $mediaFile->move(
+                        $this->getParameter('logoDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+                $category->setLogo($newFilename);
+            }
+            $em = $this->getDoctrine()->getManager('kfc');
             $em->flush();
             return $this->redirectToRoute('categories::show');
         }
@@ -98,11 +126,11 @@ class CategoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function delete(Request $request, SessionManager $sessionManager): Response
+    public function delete(Request $request): Response
     {
         $categories = $request->request->get('categories');
         if($categories != []) {
-            $em = $this->getDoctrine()->getManager(strtolower( $sessionManager->get('userCurrentCustomer') ));
+            $em = $this->getDoctrine()->getManager('kfc');
             $rep = $em->getRepository( Category::class);
             foreach ($categories as $id => $val) {
                 $category = $rep->find($id);

@@ -5,10 +5,9 @@ import '../../css/products/product_price.scss';
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-$('.add-table').click(function () {
-    $('.prouct-price-content .add-popup').addClass('is-open');
-    $('.header').addClass('popup-add');
 
+$('.add-table').click(function () {
+    $('.add-popup').addClass('is-open');
     return false;
   });
 

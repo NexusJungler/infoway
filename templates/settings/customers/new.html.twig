@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une Enseigne{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('customer') }}
+{% endblock %}
+
+{% block body %}
+     <main class="main main_enseigne">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Création', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+
+                <div id="setting-enseigne" class="tab-content current customer">
+
+                    <article class="tab-content-title">
+                        <h3 class="title">Créer une Enseigne</h3>
+                        {# <p>vous êtes Multi-enseigne</p> #}
+                    </article>
+
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <a href="{{ path('customers_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Enseigne</a>
+                                <button type="button" class="btn duplicate-enseigne hide-btn"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                <button type="button" class="btn modified-enseigne hide-btn"><i class="far fa-edit"></i>Modifier</button>
+                                <button type="button" class="btn delete-enseigne" data-tablelistdelete="enseigne"><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+                        </div>
+                    </article> 
+
+                    <article class="content-create-customer"> 
+                         {% set errors = app.session.flashbag.get('error') %}
+
+                        {# {{ dump(errors) }} #}
+                        {% if  errors['contact'] is defined and errors['contact']['firstName'] is defined  %}
+                            {{ dump('ici') }}
+                        {% endif %}
+
+                        {{ include('settings/customers/_form.html.twig') }}
+
+                        {# <a href="{{ path('customers_index') }}0">back to list</a> #}
+                    <article>
+
+                </div>
+                
+            </section>
+
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('customer') }}
+{% endblock javascripts %} 

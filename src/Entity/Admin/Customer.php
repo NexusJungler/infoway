@@ -36,28 +36,12 @@ class Customer
     //Cette propriete sert a contenir tous les sites qu un user possede, contenu dans l objet Customer representant l enseigne contenant le site. Cela permettra d avoir un objet user qui contiendra des enseignes qui contiendront des sites
     private $sites ;
 
-    //Cette propriete sert a contenir le role appartenant a un user stocké dans l enseigne auquel il appartient
-    private $role;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $logo;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $address;
-
-    /**
-     * @ORM\Column(type="string", length=60, nullable=true)
-     */
-    private $postal_code;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $city;
 
     /**
      * Many Customers have Many Users.
@@ -65,49 +49,18 @@ class Customer
      */
     private $users;
 
-
     /**
-     * Une enseigne se situe dans un pays qui quant a lui peut apparaitre dans plusieurs enseignes
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * One Customer has One Cart.
+     * @ORM\OneToOne(targetEntity="Contact", mappedBy="customer", cascade={"persist"})
      */
-    private $country;
+    private $contact;
 
-
-    /**
-     * Une enseigne possede une timezone qui quant a elle peut apparaitre dans plusieurs enseignes
-     * @ORM\ManyToOne(targetEntity="TimeZone")
-     * @ORM\JoinColumn(name="timezone_id", referencedColumnName="id")
-     */
-    private $timeZone;
-
-    /**
-     * @ORM\Column(type="string", name="phone_number", length=255)
-     */
-    private $phoneNumber;
-
-    /**
-     * @ORM\Column(type="text", name="description")
-     */
-    private $description;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Contact", mappedBy="customer", orphanRemoval=true, cascade={"persist"})
-     */
-    private $contacts;
-
-    /**
-     * @ORM\OneToMany(targetEntity="FfmpegTasks", mappedBy="customer", orphanRemoval=true)
-     * @ORM\JoinColumn(name="upload_tasks")
-     */
-    private $uploadTasks;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->sites = new ArrayCollection();
-        $this->contacts = new ArrayCollection();
-        $this->uploadTasks = new ArrayCollection();
+
     }
 
 
@@ -306,73 +259,23 @@ class Customer
         return $this;
     }
 
-    /**
-     * @return Collection|Contact[]
-     */
-    public function getContacts(): Collection
+    public function getContact(): ?Contact
     {
-        return $this->contacts;
+        return $this->contact;
     }
 
-    public function addContact(Contact $contact): self
+    public function setContact(?Contact $contact): self
     {
-        if (!$this->contacts->contains($contact)) {
-            $this->contacts[] = $contact;
-            $contact->setCustomer($this);
+        $this->contact = $contact;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCustomer = null === $contact ? null : $this;
+        if ($contact->getCustomer() !== $newCustomer) {
+            $contact->setCustomer($newCustomer);
         }
 
         return $this;
     }
 
-    public function removeContact(Contact $contact): self
-    {
-        if ($this->contacts->contains($contact)) {
-            $this->contacts->removeElement($contact);
-            // set the owning side to null (unless already changed)
-            if ($contact->getCustomer() === $this) {
-                $contact->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function removeAllContacts()
-    {
-        $this->contacts->clear();
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|FfmpegTasks[]
-     */
-    public function getUploadTasks(): Collection
-    {
-        return $this->uploadTasks;
-    }
-
-    public function addUploadTask(FfmpegTasks $uploadTask): self
-    {
-        if (!$this->uploadTasks->contains($uploadTask)) {
-            $this->uploadTasks[] = $uploadTask;
-            $uploadTask->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUploadTask(FfmpegTasks $uploadTask): self
-    {
-        if ($this->uploadTasks->contains($uploadTask)) {
-            $this->uploadTasks->removeElement($uploadTask);
-            // set the owning side to null (unless already changed)
-            if ($uploadTask->getCustomer() === $this) {
-                $uploadTask->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
 
 }

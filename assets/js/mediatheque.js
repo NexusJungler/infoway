@@ -1,8 +1,4 @@
 require("../css/popups/popup.scss");
-require("../css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss");
-require("../css/popups/popup_media_info_sheet/popup_media_info_sheet.scss");
-require("../css/popups/popup_delete_media/popup_delete_media.scss");
-require("../css/popups/popup_product_association/popup_product_association.scss");
 
 import ToolBox from "./class/Tools/ToolBox";
 

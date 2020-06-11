@@ -1,6 +1,6 @@
 <section class="popup_container popup_associate_product_container">
 
-    <article class="popup popup_associate_product">
+    <article class="popup popup_associate_product association-popup">
 
         <div class="popup_header">
 
@@ -31,64 +31,47 @@
 
         <div class="popup_body">
 
-            <div class="popup_body_item container">
+        </div>
 
-                <div class="container_header">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title-container">
+                    <p class="title">Associer des produits au média : <span class="media_name"></span></p>
+                </div>
+                <div class="close-modal-container">
+                    <button type="button" class="btn close">X</button>
+                </div>
+            </div>
 
-                    <div class="left_side filters_container">
+            <div class="modal-body">
 
-                        <div class="filter filter_by_category">
-                            <select>
-                                <option value="">Tout afficher</option>
-                                {% for categorie in categories %}
-                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="filter filter_by_criterion">
-                            <select>
-                                <option value="">Tout afficher</option>
-                                {% for categorie in categories %}
-                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="filter filter_by_tag">
-                            <select>
-                                <option value="">Tout afficher</option>
-                                {% for categorie in categories %}
-                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="filter_validation_btn_container">
-                            <button type="button" class="btn filter_validation_btn">Filtrer</button>
-                        </div>
-
+                <div class="body-top">
+                    <div class="filter-left filter-by-category">
+                        <select class="product-category-choice">
+                            <option value="">Tout afficher</option>
+                            {% for categorie in categories %}
+                                <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
 
-                    <div class="right_side">
+                    <div class="filter-right filter-by-field">
                         <input type="search" name="search[product]" placeholder="Rechercher un élément..." required>
                     </div>
-
                 </div>
 
-                <div class="container_body">
+                <div class="body-middle">
 
-                    <div class="container_body_item product_choice_list_container">
+                    <section class="product-choice-list-container">
 
                         <table>
                             <thead>
-                                <tr>
-                                    <th><input type="checkbox" class="select_all_products"></th>
-                                    <th>Nom du produit</th>
-                                    <th>Description</th>
-                                    <th>Critères</th>
-                                    <th>TAGS</th>
-                                </tr>
+                            <tr>
+                                <th><input type="checkbox" class="select_all_products"></th>
+                                <th>Nom du produit</th>
+                                <th>Description</th>
+                                <th>TAGS</th>
+                            </tr>
                             </thead>
 
                             <tbody class="product-choice-list">
@@ -97,11 +80,6 @@
                                     <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
                                     <td class="product_name">{{ product.name }}</td>
                                     <td>{{ product.description }}</td>
-                                    <td>
-                                        {% for criterion in product.criterions %}
-                                            <span>{{ criterion.name }}</span>
-                                        {% endfor %}
-                                    </td>
                                     <td>
                                         {% for tag in product.tags %}
                                             <span>{{ tag.name }}</span>
@@ -112,21 +90,17 @@
                             </tbody>
                         </table>
 
-                    </div>
+                    </section>
 
-                    <div class="container_body_item chevron_right_container">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-
-                    <div class="container_body_item product_associated_list_container">
+                    <section class="product-associated-list-container">
 
                         <table>
 
                             <thead>
-                                <tr>
-                                    <th>Produits à associer</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>Produits à associer</th>
+                                <th></th>
+                            </tr>
                             </thead>
 
                             <tbody class="product-associated-list">
@@ -135,6 +109,18 @@
 
                         </table>
 
+                    </section>
+
+                </div>
+
+                <div class="body-bottom">
+
+                    <div class="cancel-btn-container">
+                        <button type="button" class="cancel close">Annuler</button>
+                    </div>
+
+                    <div class="validation-btn-container">
+                        <button type="button" class="validation-btn">Valider</button>
                     </div>
 
                 </div>
@@ -142,19 +128,6 @@
             </div>
 
         </div>
-
-        <div class="popup_footer">
-
-            <div class="actions_buttons_container">
-                <button class="btn close_modal_button" type="button">Annuler</button>
-            </div>
-
-            <div class="actions_buttons_container">
-                <button class="btn validate_association_btn" type="button">Valider</button>
-            </div>
-
-        </div>
-
     </article>
 
 </section>

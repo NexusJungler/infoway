@@ -59,20 +59,12 @@ class UploadCron
      */
     private $mediaTags;
 
-    private bool $mediaContainIncruste;
-
-    private array $encodeOutputFormatFolder;
-
-    private $mediaMimeType;
-
-    private $mediaIsArchived;
-
-    private $mediaOrientation;
-
     /**
      * UploadCron constructor.
      *
-     * @param array $taskInfo
+     * @param $customer_name
+     * @param $filename
+     * @param $mediatype
      * @param ManagerRegistry $managerRegistry If you give ManagerRegistry (Doctrine), this class can access all app EntityManager
      * @param ParameterBagInterface $parameterBag for access parameter (which is defined in config/services.yaml)
      */
@@ -83,11 +75,9 @@ class UploadCron
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
         $this->mediatype = $taskInfo['mediaType'];
         $this->fileUploadDate = $taskInfo['uploadDate'];
-        $this->mediaProducts = $taskInfo['mediaProducts'];
-        $this->mediaTags = $taskInfo['mediaTags'];
-        $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'];
-        $this->mediaMimeType = $taskInfo['mimeType'];
-        $this->mediaIsArchived = $taskInfo['isArchived'];
+        $this->mediaProducts = $taskInfo['mediaProducts'] ?? [];
+        $this->mediaTags = $taskInfo['mediaTags'] ?? [];
+        $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'] ?? false;
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -97,13 +87,7 @@ class UploadCron
 
         $filename = $taskInfo['fileName'];
 
-        $this->encodeOutputFormatFolder = [
-            '8k', '4k', 'HD+', 'HD', 'high', 'medium', 'low',
-        ];
-
-        $this->mediaOrientation = null;
-
-        // get dynamically the EntityManager based on customer name
+        // get dynamically the right EntityManager based on customer name
         $this->entityManager = $managerRegistry->getManager(strtolower($this->customer));
 
         //$this->repository = new media_rep($this->getCustomerBase($customer));
@@ -455,7 +439,6 @@ class UploadCron
         $resolution = $this->getVideoDimensions($video);
         $width = $resolution['width'];
         $height = $resolution['height'];
-        //dd($width, $height);
         $ratio = $width / $height;
         if($ratio > 1) {
             $this->syncOri = 'horizontal';
@@ -481,12 +464,8 @@ class UploadCron
             $old_path = $this->customer_dir . iconv('UTF-8', 'Windows-1252', 'VIDÉOS') . '/';
         }
 
-        $copySourceToFolder = "HD";
-
         switch ($ratio) {
             case 16 / 9:  // Plein Ecran Horizontal
-
-                $this->mediaOrientation = "horizontal";
 
                 if($width < 1920 && $height < 1080) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 1920 x 1080';
@@ -494,29 +473,12 @@ class UploadCron
                 }
 
                 if ($width > 1920 && $height > 1080) {
-
                     $max_size = true;
+                    $output_high = "1920*1080";
                     $HD = true; // On se prépare à copier la source dans 'HD' si la résolution dépasse le format high
-
-                    // 4k
-                    if($width === 3840 && $height === 2160) {
-                        $output_high = "3840*2160";
-                        $copySourceToFolder = "4k";
-                    }
-
-                    // 8k
-                    elseif($width === 7680 && $height === 4320) {
-                        $output_high = "7680*4320";
-                        $copySourceToFolder = "8k";
-                    }
-
-                    else {
-                        $output_high = "1920*1080";
-                    }
-
                 }
 
-                if ($width === 1920 && $height === 1080) {
+                if ($width == 1920 && $height == 1080) {
                     $max_size = false;
                     // On copie simplement la vidéo sans la réencoder dans les répertoires Tizen et LFD!
                     //dd($video, $this->destfolder . 'high/' . $this->filename . '.mp4');
@@ -534,8 +496,6 @@ class UploadCron
                 break;
 
             case 9 / 16:   // Plein Ecran Vertical
-
-                $this->mediaOrientation = "vertical";
 
                 if($width < 1080 && $height < 1920) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 1080 x 1920';
@@ -565,8 +525,6 @@ class UploadCron
 
             case 9 / 8:  // Demi Ecran Horizontal
 
-                $this->mediaOrientation = "horizontal";
-
                 if($width < 1080 && $height < 960) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 1080 x 960';
                     return false;
@@ -594,8 +552,6 @@ class UploadCron
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
-
-                $this->mediaOrientation = "horizontal";
 
                 if ($width < 960 && $height < 1080) {
                     $this->errors[] = 'permission denied - bad resolution - format minimum: 960 x 1080';
@@ -645,8 +601,13 @@ class UploadCron
                 }
                 if($HD) {
 
-                    // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
-                    copy($video, $this->destfolder . $copySourceToFolder . $this->filename . '.mp4');
+                    // if end with video/
+                    if (substr($this->destfolder, -strlen('video/')) === 'video/')
+                        copy($video, $this->destfolder . 'HD/' . $this->filename . '.mp4');
+
+                    else
+                        // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
+                        copy($video, $this->destfolder . 'video/HD/' . $this->filename . '.mp4');
                 }
             }
         }
@@ -688,8 +649,6 @@ class UploadCron
         switch ($ratio) {
             case 16 / 9:  // Plein Ecran Horizontal
 
-                $this->mediaOrientation = "horizontal";
-
                 if ($width >= 1920 && $height >= 1080) {
                     $output['high'][0] = 1920;
                     $output['high'][1] = 1080;
@@ -711,8 +670,6 @@ class UploadCron
                 break;
 
             case 9 / 16:   // Plein Ecran Vertical
-
-                $this->mediaOrientation = "vertical";
 
                 if ($width >= 1080 && $height >= 1920) {
                     $output['high'][0] = 1080;
@@ -736,8 +693,6 @@ class UploadCron
 
             case 9 / 8:  // Demi Ecran Horizontal
 
-                $this->mediaOrientation = "horizontal";
-
                 if ($width >= 1080 && $height >= 960) {
                     $output['high'][0] = 1080;
                     $output['high'][1] = 960;
@@ -759,8 +714,6 @@ class UploadCron
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
-
-                $this->mediaOrientation = "vertical";
 
                 if ($width >= 960 && $height >= 1080) {
                     $output['high'][0] = 960;
@@ -932,9 +885,6 @@ class UploadCron
                         //$newMedia->setType($this->mediatype);
                         $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
                             ->setType($this->mediatype)
-                            ->setMimeType($this->mediaMimeType)
-                            ->setOrientation($this->mediaOrientation)
-                            ->setIsArchived($this->mediaIsArchived)
                             ->setCreatedAt(new DateTime())
                             ->setDiffusionStart($this->fileDiffusionStart)
                             ->setDiffusionEnd($this->fileDiffusionEnd)
@@ -976,8 +926,10 @@ class UploadCron
                         ];
                     }
 
+
                     if ($audio != null) {
                         $data = $infofile['audio'];
+
                         if ($this->mediatype != 'them') {
                             $newVideo->setAudioCodec($data['codec_long_name']);
                             $newVideo->setAudioDebit((int)($data['bit_rate'] / 1000) . ' kbit/s');
@@ -1022,9 +974,6 @@ class UploadCron
                 $ratio = $this->EstablishFormat($width, $height);
                 $newImg->setName($this->filename)
                        ->setType($this->mediatype)
-                       ->setOrientation($this->mediaOrientation)
-                       ->setMimeType($this->mediaMimeType)
-                       ->setIsArchived($this->mediaIsArchived)
                        ->setRatio($ratio)
                        ->setContainIncruste($this->mediaContainIncruste)
                        ->setExtension($this->extension)

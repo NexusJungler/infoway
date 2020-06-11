@@ -172,15 +172,19 @@ class MediaInfoSheetHandler extends SubTool
                 type: "POST",
                 data: {mediaId: mediaId},
                 success: (response) => {
+
                     console.log(response); //debugger
-                    resolve(true);
+
                     this.__mediasInfos.push({ id: mediaId, infos: response, miniatureExist: null });
+
+                    resolve(true);
 
                 },
                 error: (response, status, error) => {
 
-                    console.error(response); //debugger
                     resolve(false);
+
+                    console.error(response); //debugger
 
                 },
             })

@@ -1,11 +1,5 @@
 monolog:
     handlers:
-        command: # custom console commands log config
-            type: stream
-            path:  "%kernel.logs_dir%/%kernel.environment%_command.log"
-            level: debug
-            channels: ["!event"]
-        
         main:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"

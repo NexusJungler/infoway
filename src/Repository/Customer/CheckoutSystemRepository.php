@@ -3,10 +3,9 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\CheckoutSystem;
-use App\Repository\MainRepository;
 use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 
 /**
@@ -15,18 +14,22 @@ use Doctrine\Persistence\ObjectManager;
  * @method CheckoutSystem[]    findAll()
  * @method CheckoutSystem[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CheckoutSystemRepository extends ServiceEntityRepository
+class CheckoutSystemRepository extends ServiceEntityRepository implements RepositoryInterface
 {
-
-    use MainRepository;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CheckoutSystem::class);
     }
 
+    public function setEntityManager(ObjectManager $entityManager): self
+    {
+        $this->_em = $entityManager;
+
+        return $this;
+    }
+
     // /**
-    //  * @return CheckoutSystem[] Returns an array of CheckoutSystem objects
+    //  * @return Category[] Returns an array of Category objects
     //  */
     /*
     public function findByExampleField($value)
@@ -43,7 +46,7 @@ class CheckoutSystemRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CheckoutSystem
+    public function findOneBySomeField($value): ?Category
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

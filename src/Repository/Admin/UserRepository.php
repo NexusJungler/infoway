@@ -6,6 +6,7 @@ use App\Entity\Admin\Action;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\Permission;
 use App\Entity\Admin\User;
+use App\Entity\Admin\UserRoles;
 use App\Entity\Customer\Role;
 use App\Entity\Customer\Site;
 use App\Service\ArraySearchRecursiveService;
@@ -36,11 +37,81 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
+    public function getUsersWithRoleBellowUserByCustomer(Customer $customer, User $user)
+    {
+
+        $customerEM = $this->_registry->getManager( $customer->getName() ) ;
+        $customerRoleRepo = $customerEM->getRepository(Role::class) ;
+
+        $allRolesAvailablesInCustomer = $customerRoleRepo->findAll() ;
+        $allRolesAvailableInCustomerWithIdAsKey = [] ;
+
+        foreach($allRolesAvailablesInCustomer as $roleAvailableInCustomer){
+
+            $allRolesAvailableInCustomerWithIdAsKey[ $roleAvailableInCustomer->getId() ] = $roleAvailableInCustomer ;
+        }
+
+        $userRoleIdInCustomer = $user->getUserRoles()->filter(function(UserRoles $userRole) use ( $customer ) {
+
+            return $userRole->getCustomer()->getName() === $customer->getName() ;
+        }) ;
+
+        if($userRoleIdInCustomer->count() <1 ) throw new \Error( 'Impossible to find User Role in Customer') ;
+        $userRoleIdInCustomer = $userRoleIdInCustomer[ 0 ] ;
+
+        $userRoleInCustomer = array_filter( $allRolesAvailablesInCustomer, function( Role $roleAvailableInCustomer ) use ( $userRoleIdInCustomer){
+
+            return $roleAvailableInCustomer->getId() === $userRoleIdInCustomer->getRoleId() ;
+        } ) ;
+
+        if( count( $userRoleInCustomer ) <  1 ) throw new \Error('Impossible to get Role in Role List in Customer ') ;
+        $userRoleInCustomer = $userRoleInCustomer[0] ;
+
+        $allRoleWithLevelBellowUser = array_filter( $allRolesAvailablesInCustomer , function( $roleAvailableInCustomer ) use ( $userRoleInCustomer ) {
+
+            return $roleAvailableInCustomer->getLevel() > $userRoleInCustomer->getLevel() ;
+        }) ;
+
+
+        $allRolesIdsWithLevelBellowUser = array_map( function( $roleWithLevelBellowUser ){
+
+            return $roleWithLevelBellowUser->getId() ;
+        } , $allRoleWithLevelBellowUser ) ;
+
+
+        $usersWithRoleBellowInDb = $this->createQueryBuilder('u')
+            ->leftJoin('u.userRoles', 'ur')
+            ->andWhere('ur.roleId IN (:rolesId)' )
+            ->andWhere('ur.customer = :customer')
+            ->setParameter('rolesId', $allRolesIdsWithLevelBellowUser)
+            ->setParameter('customer', $customer)
+            ->getQuery()
+            ->getResult() ;
+
+
+        foreach($usersWithRoleBellowInDb as $userWithRoleBellowInDb){
+
+            foreach( $userWithRoleBellowInDb->getUserRoles() as $userRoleEntry){
+
+                if ( $userRoleEntry->getCustomer()->getId() === $customer->getId() ) {
+
+                    if( isset( $allRolesAvailableInCustomerWithIdAsKey[$userRoleEntry->getRoleId()] ) ){
+
+                        $rolePossessedByUser = $allRolesAvailableInCustomerWithIdAsKey[ $userRoleEntry->getRoleId() ] ;
+                        $userWithRoleBellowInDb->addRole( $rolePossessedByUser , $customer ) ;
+                    }
+                }
+            }
+
+        }
+
+        return $usersWithRoleBellowInDb ;
+    }
     //Methode de recuperaton d un user present  recupere de la base admin avec ses sites recupere dans chaque base correspondante
     public function getUserWithSites(User $user){
 
         //Recuperation de tous les ids de chaque site appartenant à l'user importés  de la base admin
-        $userSites = $user->getSitesIds() ;
+        $userSites = $user->getUserSites() ;
 
 
         //creation du tableau contenant les ids de l user rangés par enseigne (en clé de tableau )  afin d effectuer une seule connection par enseigne quand on va aller chercher les objets site auxquels les ids appartiennent dans leur base

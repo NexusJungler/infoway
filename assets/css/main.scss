@@ -3,13 +3,14 @@
     width: 92%;
     left: 8%;
     position: relative;
-    z-index: 2;
+    // z-index: 2;
     padding-bottom: rem(80px);
-    background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
     .main-content {
         > section{
             padding-left: 4%;
-            
+        }
+        .wrapper_tabcontent{
+            padding-left: 6%;
         }
     }
         
@@ -49,7 +50,7 @@
             margin-left: 15px;
             margin-top: -5px;
             color: #283338;
-            font: 3rem 'segoe UI';
+            font-size: 3rem;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -202,11 +203,11 @@
             .jumbotrom-wrapper{
                 .page__title{
                     h1{
-                        font: 2rem 'segoe UI';
+                        font: 2rem ;
                         font-weight: bold;
                     }
                     h2{
-                        font: 2rem 'segoe UI';
+                        font: 2rem ;
                     }
                 } 
                 .search__form{
@@ -223,7 +224,7 @@
                         margin-top: 5px;
                     }
                     h2{
-                        font: 2rem 'segoe UI';
+                        font: 2rem ;
                     }
                 }  
             }

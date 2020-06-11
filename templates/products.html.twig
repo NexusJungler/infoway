@@ -5,7 +5,6 @@
     {{ encore_entry_link_tags('product') }}
 {% endblock %}
 
-
 {% block body %}
     <main class="main main-products">
 
@@ -19,10 +18,9 @@
                 <article class="wrapper-content">
                     <ul class="tabs">
                         <a href="{{ path('app:products') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:products' %}  current {% endif %}" data-tab="tab-products"> <p class="css-tab__label">Produits / prix</p></li></a>
-                        
-                        {# <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-categories"> <p class="css-tab__label">Catégories</p></li></a>
-                        <a href="{{ path('app:image') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-price"> <p class="css-tab__label">Groupe de Prix</p></li></a>
-                        <a href="{{ path('app:image') }}"><li class="tablinks active creer {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-create-date"> <p class="css-tab__label">Créer DATE</p></li></a> #}
+                        <a href="{{ path('app:categories') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:categories' %}  current {% endif %}" data-tab="tab-categories"> <p class="css-tab__label">Catégories</p></li></a>
+                        <a href="{{ path('pricesfactories::show') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'pricesfactories::show' %}  current {% endif %}" data-tab="tab-price"> <p class="css-tab__label">Groupe de Prix</p></li></a>
+                        {# <a href="{{ path('app:image') }}"><li class="tablinks active creer {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-create-date"> <p class="css-tab__label">Créer DATE</p></li></a> #}
                     </ul>
                 </article>
             </section> 
@@ -32,23 +30,6 @@
                     
                 {% endblock %}
             </section>
-
-        {# <section class="wrapper_tabcontent">
-
-       
-                
-            <article id="tab-categories" class="tab-content create-brand tab-create">
-                 {% include 'products/products_price.html.twig' %}
-            </article>
-
-            <article id="tab-price" class="tab-content  tab-create">
-            </article>
-
-            <article id="tab-create-date" class="tab-content  tab-create">
-            </article>
-            
-        </section>     #}
-
 
         </div>
 

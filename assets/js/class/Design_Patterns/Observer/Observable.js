@@ -18,13 +18,13 @@ class Observable
 
         this.__observers.push({ id: observer.identificator, observer: observer });
 
-        //console.log(`Info : new Observer (identificator: ${observer.identificator}) was recently registered in this Observable : '${this.__title}' !`);
+        console.log(`Info : new Observer (identificator: ${observer.identificator}) was recently registered in this Observable : '${this.__title}' !`);
     }
 
     unsubscribeAllObserver() {
         this.__observers = [];
 
-        //console.log(`Info : all Observers was removed from this Observable : '${this.__title}' !`);
+        console.log(`Info : all Observers was removed from this Observable : '${this.__title}' !`);
     }
 
     unsubscribe(observer) {
@@ -55,7 +55,7 @@ class Observable
 
         } );
 
-        //console.log(`Info : All Observer was notified by this Observable : ${this.__title} !`);
+        console.log(`Info : All Observer was notified by this Observable : ${this.__title} !`);
 
     }
 

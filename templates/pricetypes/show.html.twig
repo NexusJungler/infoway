@@ -1,33 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<main class="main main_setting">
+        <div class="main-content">
 
-    <div id="" class="debug">
-        <form method="post" action="{{ path('pricetypes::delete') }}">
-            <table id="list">
-                <thead>
-                <tr>
-                    <th>selection</th>
-                    <th>nom</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for priceType in types %}
-                    <tr>
-                        <td><input type="checkbox" name="priceTypes[{{ priceType.id }}]"></td>
-                        <td>{{ priceType.name }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </form>
-    </div>
+            <section class="wrapper_tabcontent">
+                <div id="" class="debug">
+                    <form method="post" action="{{ path('pricetypes::delete') }}">
+                        <table id="list">
+                            <thead>
+                            <tr>
+                                <th>selection</th>
+                                <th>nom</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for priceType in types %}
+                                <tr>
+                                    <td><input type="checkbox" name="priceTypes[{{ priceType.id }}]"></td>
+                                    <td>{{ priceType.name }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
 
-    <div>
-        <button><a href="{{ path('pricetype::create') }}">Ajouter</a></button>
-        <button><a id="edit" href="{{ path('pricetype::edit', {'type': 1}) }}">Modifier</a></button>
-        <button id="delete">Supprimer</button>
+                <div>
+                    <button><a href="{{ path('pricetype::create') }}">Ajouter</a></button>
+                    <button><a id="edit" href="{{ path('pricetype::edit', {'type': 1}) }}">Modifier</a></button>
+                    <button id="delete">Supprimer</button>
+                </div>
+            <section>
     </div>
+</main>       
+    
 
     {% block javascripts %}
        {# {{ encore_entry_script_tags('show_products') }} #}

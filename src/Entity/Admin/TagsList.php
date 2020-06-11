@@ -16,6 +16,7 @@ class TagsList
 
     private ArrayCollection $tags;
     private ArrayCollection $sites;
+    private ?Tag $tagToCreate ;
 
     /**
      * TagsList constructor.
@@ -26,7 +27,22 @@ class TagsList
     {
         $this->tags = new ArrayCollection();
         $this->sites = new ArrayCollection();
+        $this->tagToCreate = null;
     }
+
+
+    public function getTagToCreate(): ?Tag
+    {
+        return $this->tagToCreate;
+    }
+
+
+    public function setTagToCreate(?Tag $tagToCreate): self
+    {
+        $this->tagToCreate = $tagToCreate;
+        return $this;
+    }
+
 
     public function addTag(Tag $tag): self
     {

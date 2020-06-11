@@ -2,7 +2,10 @@
 
 namespace App\Entity\Customer;
 
+use App\Entity\Admin\Country;
+use App\Entity\Admin\Screen;
 use App\Entity\Admin\Customer;
+use App\Entity\Admin\TimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,22 +50,36 @@ class Site
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private $observations;
+
 
     /**
      * @ORM\Column(name="country_id",type="integer", nullable=true)
      */
     private $countryId;
 
+    private $country;
+
     /**
      * @ORM\Column(name="timezone_id",type="integer", nullable=true)
      */
     private $timezoneId;
 
+    private $timezone;
+
     /**
      * @ORM\Column(name="customer_id",type="integer")
      */
     private $customerId;
+
+    private $customer ;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Devise", cascade={"persist"})
+     * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
+     */
+    private $devise;
 
     /**
      * Many Groups have Many Users.
@@ -72,19 +89,66 @@ class Site
      */
     private $criterions;
 
-    private $customer ;
-
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="sites", cascade={"persist"})
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="sites",cascade={"persist"})
+     * @ORM\JoinTable(name="sites_tags")
+     *
      */
     private $tags;
 
-    public function __construct()
-    {
-        $this->tags = new ArrayCollection();
-        $this->criterions = new ArrayCollection();
-    }
+    private $users ;
 
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="PricesGroup", inversedBy="sites", cascade={"persist"})
+     * @ORM\JoinColumn(name="prices_group_id", referencedColumnName="id")
+     */
+    private $pricesGroup;
+
+
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Price")
+     * @ORM\JoinTable(name="sites_prices",
+     *      joinColumns={@ORM\JoinColumn(name="site_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="price_id", referencedColumnName="id")}
+     *      )
+     */
+    private $prices ;
+
+    private bool $nightProgrammingActivated = false ;
+
+    /**
+     * Many features have one product. This is the owning side.
+     * @ORM\OneToOne(targetEntity="NightProgramming")
+     * @ORM\JoinColumn(name="night_programming_id", referencedColumnName="id")
+     */
+    private $nightProgramming;
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="SiteScreen", mappedBy="site", cascade={"persist"})
+     */
+    private $siteScreens;
+
+
+    private $screens  ;
+
+    private $displaySettings ;
+    private $displaySpaces ;
+
+
+    public function __construct() {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criterions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->prices = new ArrayCollection() ;
+        $this->screens = new ArrayCollection() ;
+        $this->displaySettings = new ArrayCollection() ;
+        $this->displaySpaces = new ArrayCollection() ;
+        $this->siteScreens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,6 +166,7 @@ class Site
 
         return $this;
     }
+
 
     public function getAdress(): ?string
     {
@@ -127,6 +192,7 @@ class Site
         return $this;
     }
 
+
     public function getCity(): ?string
     {
         return $this->city;
@@ -151,15 +217,15 @@ class Site
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getCountry(): ?Country
     {
-        return $this->description;
+        return $this->country;
     }
 
-    public function setDescription(?string $description): self
+    public function setCountry(Country $country): self
     {
-        $this->description = $description;
-
+        $this->country = $country;
+        $this->countryId = $country->getId() ;
         return $this;
     }
 
@@ -171,6 +237,20 @@ class Site
     public function setCountryId(?int $countryId): self
     {
         $this->countryId = $countryId;
+
+        return $this;
+    }
+
+    public function getTimezone(): ?TimeZone
+    {
+        return $this->timezone;
+    }
+
+
+    public function setTimezone(TimeZone $timezone): self
+    {
+        $this->timezone = $timezone;
+        $this->timezoneId = $timezone->getId() ;
 
         return $this;
     }
@@ -206,36 +286,8 @@ class Site
 
     public function setCustomer(Customer $customer): void
     {
+        $this->setCustomerId( $customer->getId() ) ;
         $this->customer = $customer;
-    }
-
-    /**
-     * @return Collection|Tag[]
-     */
-    public function getTags(): Collection
-    {
-        return $this->tags;
-    }
-
-    public function addTag(Tag $tag): self
-    {
-
-        if (!$this->tags->contains($tag)) {
-            $this->tags[] = $tag;
-            $tag->addSite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTag(Tag $tag): self
-    {
-        if ($this->tags->contains($tag)) {
-            $this->tags->removeElement($tag);
-            $tag->removeSite($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -265,5 +317,208 @@ class Site
 
         return $this;
     }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
+
+        return $this;
+    }
+
+    public function getObservations(): ?string
+    {
+        return $this->observations;
+    }
+
+    public function setObservations(?string $observations): self
+    {
+        $this->observations = $observations;
+
+        return $this;
+    }
+
+    public function getDevise(): ?Devise
+    {
+        return $this->devise;
+    }
+
+    public function setDevise(?Devise $devise): self
+    {
+        $this->devise = $devise;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     */
+    public function setUsers(ArrayCollection $users): void
+    {
+        $this->users = $users;
+    }
+
+    public function getPricesGroup(): ?PricesGroup
+    {
+        return $this->pricesGroup;
+    }
+
+    public function setPricesGroup(?PricesGroup $pricesGroup): self
+    {
+        $this->pricesGroup = $pricesGroup;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Price[]
+     */
+    public function getPrices(): Collection
+    {
+        return $this->prices;
+    }
+
+    public function addPrice(Price $price): self
+    {
+        if (!$this->prices->contains($price)) {
+            $this->prices[] = $price;
+        }
+
+        return $this;
+    }
+
+    public function removePrice(Price $price): self
+    {
+        if ($this->prices->contains($price)) {
+            $this->prices->removeElement($price);
+        }
+
+        return $this;
+    }
+
+
+    public function getNightProgramming(): ?NightProgramming
+    {
+        return $this->nightProgramming;
+    }
+
+    public function setNightProgramming(?NightProgramming $nightProgramming): self
+    {
+        $this->nightProgramming = $nightProgramming;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNightProgrammingActivated(): bool
+    {
+        return $this->nightProgrammingActivated;
+    }
+
+    /**
+     * @param bool $nightProgrammingActivated
+     */
+    public function setNightProgrammingActivated(bool $nightProgrammingActivated): void
+    {
+        $this->nightProgrammingActivated = $nightProgrammingActivated;
+    }
+
+    /**
+     * @return Collection|Screen[]
+     */
+    public function getScreens(): Collection
+    {
+        return $this->screens;
+    }
+
+    public function setScreens(Collection $screens) : self {
+         $this->screens = $screens->filter( fn( Screen $screen ) =>  $screen );
+
+         return $this;
+    }
+    public function addScreen(Screen $screen): self
+    {
+        if (!$this->screens->contains($screen)) {
+            $this->screens[] = $screen;
+            $screen->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScreen(Screen $screen): self
+    {
+        if ($this->screens->contains($screen)) {
+            $this->screens->removeElement($screen);
+            // set the owning side to null (unless already changed)
+            if ($screen->getSite() === $this) {
+                $screen->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SiteScreen[]
+     */
+    public function getSiteScreens(): Collection
+    {
+        return $this->siteScreens;
+    }
+
+    public function addSiteScreen(SiteScreen $siteScreen): self
+    {
+        if (!$this->siteScreens->contains($siteScreen)) {
+            $this->siteScreens[] = $siteScreen;
+            $siteScreen->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSiteScreen(SiteScreen $siteScreen): self
+    {
+        if ($this->siteScreens->contains($siteScreen)) {
+            $this->siteScreens->removeElement($siteScreen);
+            // set the owning side to null (unless already changed)
+            if ($siteScreen->getSite() === $this) {
+                $siteScreen->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 }

@@ -39,7 +39,7 @@ class Category
     private $logo;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Customer\Product", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Customer\Product", mappedBy="category",cascade={"persist"})
      */
     private $products;
 

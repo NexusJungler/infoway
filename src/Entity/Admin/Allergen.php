@@ -27,9 +27,9 @@ class Allergen
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, name="pictos")
+     * @ORM\Column(type="string", length=255)
      */
-    private $picto;
+    private $pictogram;
 
     public function getId(): ?int
     {
@@ -60,14 +60,14 @@ class Allergen
         return $this;
     }
 
-    public function getPicto(): ?string
+    public function getPictogram(): ?string
     {
-        return $this->picto;
+        return $this->pictogram;
     }
 
-    public function setPicto(string $picto): self
+    public function setPictogram(string $pictogram): self
     {
-        $this->picto = $picto;
+        $this->pictogram = $pictogram;
 
         return $this;
     }

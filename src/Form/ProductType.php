@@ -4,18 +4,21 @@ namespace App\Form;
 
 use App\Entity\Admin\Allergen;
 use App\Entity\Customer\PriceType;
+use App\Repository\Admin\AllergenRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProductType extends AbstractType
 {
@@ -91,15 +94,33 @@ class ProductType extends AbstractType
                     'choice_label' => 'name',
                     'multiple' => true,
                     'required' => false,
-                    'label_attr' => array('class' => 'label-custome')
+                    'label_attr' => array('class' => 'label-custome'),
+                    'by_reference' => false
                 ]
             )
             */
-            ->add('logo', TextType::class, [
+            ->add('logo', FileType::class, [
+                'required'   => false,
                 'attr' => [
                     'class' => 'input-custome'
                 ],
                 'label' => 'Représentation graphique',
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'video/x-msvideo',
+                            'video/mpeg',
+                            'video/mp4',
+                            'video/quicktime',
+                            'video/x-ms-wmv'
+                        ],
+                        'mimeTypesMessage' => 'veuillez télécharger un media valide ',
+                    ])
+                ],
                 'label_attr' => array('class' => 'label-custome')])
             /*
             ->add('tags', CollectionType::class, [

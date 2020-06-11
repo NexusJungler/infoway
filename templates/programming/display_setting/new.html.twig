@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DisplaySetting{% endblock %}
+
+{% block body %}
+    <h1>Create new DisplaySetting</h1>
+
+    {{ include('programming/display_setting/_form.html.twig') }}
+
+    <a href="{{ path('programming_display_setting_index') }}">back to list</a>
+{% endblock %}

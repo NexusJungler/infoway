@@ -1,0 +1,28 @@
+<article class="wrapper">
+    <div class="wrapper-content">
+        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+        <ul class="tabs">
+            <a href="{{ path('products::show') }}">
+                <li class="{% if app.request.attributes.get('_route') == 'products::show' %}  current {% endif %}"  data-tab="tab-products"> 
+                    <p class="css-tab__label">Produits</p>
+                </li>
+            </a>
+            <a href="{{ path('categories::show') }}">
+                <li class="{% if app.request.attributes.get('_route') == 'categories::show' %}  current {% endif %}"  data-tab="tab-categories"> 
+                    <p class="css-tab__label">Catégories</p>
+                </li>
+            </a>
+            <a href="{{ path('pricesfactories::show') }}">
+                <li class="{% if app.request.attributes.get('_route') == 'pricesfactories::show' %}  current {% endif %}"  data-tab="tab-pricesfactories"> 
+                    <p class="css-tab__label">Prix</p>
+                </li>
+            </a>
+            <a href="{{ path('allergens::show') }}">
+                <li class="{% if app.request.attributes.get('_route') == 'allergens::show' %}  current {% endif %}"  data-tab="tab-products"> 
+                    <p class="css-tab__label">Allergènes</p>
+                </li>
+            </a>
+        </ul>
+        <div class="nav-next"><i class="fas fa-arrow-right"></i></div>
+    </div>
+</article>

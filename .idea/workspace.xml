@@ -2,13 +2,580 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.test" beforeDir="false" afterPath="$PROJECT_DIR$/.env.test" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/93928c7f-ec44-448e-9c67-54f4cd0143b2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/93928c7f-ec44-448e-9c67-54f4cd0143b2/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a8ddef2f-e141-4081-b8ab-6aa43d0e1d78.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a8ddef2f-e141-4081-b8ab-6aa43d0e1d78/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/new_app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/symfony2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERROR_CODE_HELP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SYMFONY_HELP.md" beforeDir="false" afterPath="$PROJECT_DIR$/SYMFONY_HELP.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display-down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display-down.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/dropdown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/dropdown.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/form.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/input-rdo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/input-rdo.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/popup.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/scrollbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/scrollbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/table.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome_icon/app-infoway.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome_icon/app-infoway.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/class/managers/clockManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/class/managers/clockManager.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/custom-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/custom_icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom_icon.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/fonts/app-infoway.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/app-infoway.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-italic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-italic.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/reset.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/reset.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/header_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header_menu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/home_page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/home_page.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/nav_left.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/nav_left.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/modal_message.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/modal_message.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/modal_message.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/modal_message.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/products.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/products/product_price.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/product_price.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings/create.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/create.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings/create_user.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings/setting_user.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/site.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/user/on_logged_out.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/user/on_logged_out.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/user/password_forget.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/user/password_forget.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/user/password_reset.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/user/password_reset.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/back-office_create-customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/back-office_create-customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Clock/Clock.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Clock/Clock.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observable.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observer.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Form/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Form/Form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Managers/ClockManager/ClockManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Managers/ClockManager/ClockManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Modals/Modal_message.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Modals/Modal_message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/Table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/tableDelete.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/tableDelete.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tabmenu/Tabmenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tabmenu/Tabmenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tags/Tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tags/Tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ArchivedMediasHandler/ArchivedMediasHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ArchivedMediasHandler/ArchivedMediasHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ClockTool/ClockTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ClockTool/ClockTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/CountryDataHandlerTool/CountryDataHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/CountryDataHandlerTool/CountryDataHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/CustomerCreatorHandler/CustomerCreatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/CustomerCreatorHandler/CustomerCreatorHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaDiffusionDateEditor/MediaDiffusionDateEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaDiffusionDateEditor/MediaDiffusionDateEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaInfosEditorTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaInfosEditorTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PermissionHandlerTool/PermissionHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PermissionHandlerTool/PermissionHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/SubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/SubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Validator/FormDataValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Validator/FormDataValidator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/checkbox/checkbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/checkbox/checkbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/image/Changeimage.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/image/Changeimage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Action/Action.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Action/Action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Clock/Clock.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Clock/Clock.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Feature/Feature.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Feature/Feature.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Permission/Permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Permission/Permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Subject/Subject.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Subject/Subject.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/User/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/User/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/create/create-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/create/create-user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/modal_message.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/modal_message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/product/product_price.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/product/product_price.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/setting.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/setting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/settings/setting_user.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/show_factories.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_factories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/show_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/user_password_forget.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/user_password_forget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/console" beforeDir="false" afterPath="$PROJECT_DIR$/bin/console" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/phpunit" beforeDir="false" afterPath="$PROJECT_DIR$/bin/phpunit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bootstrap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/doctrine_migrations_customer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine_migrations_customer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/doctrine_migrations_default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine_migrations_default.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/assets.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/assets.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/cache.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/cache.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/dev/debug.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/debug.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/dev/easy_log_handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/easy_log_handler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/dev/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/monolog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/dev/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/swiftmailer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/dev/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/web_profiler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine_migrations.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine_migrations.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/knp_paginator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/knp_paginator.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/prod/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/prod/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/monolog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/prod/routing.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/routing.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/prod/webpack_encore.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/webpack_encore.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/routing.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/routing.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/swiftmailer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/framework.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/monolog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/swiftmailer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/validator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/validator.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/web_profiler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/test/webpack_encore.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/webpack_encore.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/translation.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/translation.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/validator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/validator.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/vich_uploader.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/vich_uploader.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes/annotations.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/annotations.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes/dev/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/dev/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes/dev/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/dev/web_profiler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-italic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-italic.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_animated.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_animated.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_bordered-pulled.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_bordered-pulled.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_core.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_core.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_fixed-width.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_fixed-width.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_icons.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_icons.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_larger.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_larger.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_list.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_list.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_mixins.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_rotated-flipped.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_rotated-flipped.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_screen-reader.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_screen-reader.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_shims.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_stacked.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_stacked.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_variables.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_variables.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/brands.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/brands.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/fontawesome.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/fontawesome.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/regular.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/regular.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/solid.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/solid.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/v4-shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/v4-shims.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/categories.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/sponsors.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/sponsors.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_animated.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_animated.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_bordered-pulled.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_bordered-pulled.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_core.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_core.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_fixed-width.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_fixed-width.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_larger.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_larger.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_list.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_rotated-flipped.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_rotated-flipped.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_screen-reader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_screen-reader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_shims.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_stacked.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_stacked.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/brands.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/brands.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/fontawesome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/fontawesome.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/regular.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/regular.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/solid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/solid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/v4-shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/v4-shims.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/brands.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/brands.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/solid.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/solid.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/svgs/brands/keybase.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/svgs/brands/keybase.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-brands-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-regular-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-solid-900.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_animated.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_animated.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_bordered-pulled.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_bordered-pulled.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_core.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_core.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_fixed-width.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_fixed-width.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_icons.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_icons.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_larger.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_larger.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_list.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_list.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_mixins.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_rotated-flipped.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_rotated-flipped.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_screen-reader.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_screen-reader.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_shims.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_stacked.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_stacked.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_variables.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_variables.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/brands.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/brands.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/duotone.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/duotone.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/fontawesome.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/fontawesome.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/light.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/light.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/regular.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/regular.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/solid.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/solid.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/v4-shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/v4-shims.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/categories.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/sponsors.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/sponsors.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_animated.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_animated.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_bordered-pulled.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_bordered-pulled.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_core.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_core.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_fixed-width.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_fixed-width.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_larger.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_larger.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_list.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_rotated-flipped.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_rotated-flipped.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_screen-reader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_screen-reader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_shims.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_stacked.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_stacked.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/brands.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/brands.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/duotone.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/duotone.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/fontawesome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/fontawesome.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/light.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/light.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/regular.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/regular.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/solid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/solid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/v4-shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/v4-shims.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/brands.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/brands.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/duotone.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/duotone.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/light.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/light.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/solid.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/solid.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/brands/keybase.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/brands/keybase.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/duotone/spinner-third.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/duotone/spinner-third.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-brands-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-duotone-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-duotone-900.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-light-300.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-light-300.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-regular-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-solid-900.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/lib/jquery3.4.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/jquery3.4.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo/admin.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo/quick.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/upload/statistics.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Command/FfmpegLauncher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/FfmpegLauncher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CustomerController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ExpectedChangeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ExpectedChangeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PriceTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PriceTypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PricesFactoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PricesFactoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProductController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SettingController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/CustomerFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/CustomerFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Allergen.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Allergen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Contact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Country.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Country.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Customer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Entity.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Entity.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Feature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Feature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/FfmpegTasks.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/FfmpegTasks.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Perimeter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Perimeter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Permission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/TagsList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/TagsList.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/TimeZone.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/TimeZone.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/UserPermission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/UserPermission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/UserRoles.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/UserRoles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/UserSites.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/UserSites.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/CheckoutProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/CheckoutProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/CheckoutSystem.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/CheckoutSystem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Contact.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Contexte.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Contexte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Criterion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Criterion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/CriterionList.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Date.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Date.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ElementGraphic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ElementGraphic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ExpectedChange.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ExpectedChange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Image.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Image.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/MainPrice.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/MainPrice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Media.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/MediasList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/MediasList.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/PriceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/PriceType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/PricesFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/PricesFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ProductAllergens.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Role.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/RolePermissions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/RolePermissions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Site.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Site.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Synchro.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/SynchroPlaylist.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Tag.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Tag.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/TagCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/TagCategory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Video.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Video.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Search.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventListener/CustomerListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/CustomerListener.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventListener/UserListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/UserListener.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CategoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CategoryType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CreateCompanyPieceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CreateCompanyPieceType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CustomerCreationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CustomerCreationType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CustomerSearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CustomerSearchType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CustomerType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/MediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MediaType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/MediasListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MediasListType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/PriceTypeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PriceTypeType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/PricesFactoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PricesFactoryType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ProductType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProductType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/SalarySearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SalarySearchType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/SiteCreationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SiteCreationType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/SiteSearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SiteSearchType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/SiteType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SiteType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/TagType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Normalizer/ApiNormalizer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/AllergenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/AllergenRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/ContactRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/ContactRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/CountryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/CountryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/CustomerRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/CustomerRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/EntityRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/EntityRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/FeatureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/FeatureRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/FfmpegTasksRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/FfmpegTasksRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/PerimeterRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/PerimeterRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/PermissionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/PermissionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/RoleRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/TimeZoneRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/TimeZoneRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserPermissionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserPermissionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserRolesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserRolesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserSitesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserSitesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CategoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CheckoutProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CheckoutProductRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CheckoutSystemRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CheckoutSystemRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ContactRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ContexteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ContexteRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CriterionListRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CriterionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CriterionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DateRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DateRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ElementGraphicRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ElementGraphicRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ExpectedChangeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ExpectedChangeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ImageRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ImageRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/IncrusteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/IncrusteRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MainPriceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MainPriceRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesFactoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesFactoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesTypeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesTypeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductAllergensRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/RolePermissionsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/RolePermissionsRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/RoleRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SiteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SiteRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SynchroPlaylistRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SynchroRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagCategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagCategoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/VideoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/VideoRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/MainRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/MainRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/SearchRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SearchRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/LoginFormAuthenticator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ArrayHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ArrayHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ArraySearchRecursiveService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ArraySearchRecursiveService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/CriterionsHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CriterionsHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/DatabaseAccessHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/DatabaseAccessHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/DotEnvParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/DotEnvParser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/EmailSenderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EmailSenderService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/EmailVerificator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EmailVerificator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MediaUploaderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MediaUploaderService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MediasHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MediasHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/PaginatorService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PaginatorService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/PermissionsHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PermissionsHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/SessionManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SessionManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/TokenGeneratorService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TokenGeneratorService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UploadCron.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadCron.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UserHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TwigExtension/DateDiffExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/TwigExtension/DateDiffExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TwigExtension/StringToIntExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/TwigExtension/StringToIntExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/categories/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories/create.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/categories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/customer/create_customer.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/customer/edit_customer.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emails/email_account_confirmation.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/email_account_confirmation.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emails/email_reset_password.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/email_reset_password.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home-infoway.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home-infoway.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/home-company.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-company.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/home-enseigne.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-enseigne.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/home-info.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-info.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/zone-diffusion.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/zone-diffusion.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/info.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/info.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/create.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pricetypes/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricetypes/create.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pricetypes/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricetypes/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/create.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/price.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/products_price.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/programming.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/_userLoginForm.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/confirmInscription.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/confirmInscriptionEmail.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/resetPassword.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/resetPasswordEmail.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/setting.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/setting.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/creer-compagnie-division.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/creer-marque.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/creer-site.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/enseigne.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/gerer-compagnie-division.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/management-site.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/management-tags.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/marque.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/setting-user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/setting-user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/cancel_password_reset_request.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/cancel_password_reset_request.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/create.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/login_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/login_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/modify.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/modify.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/password_forget_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/password_forget_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/password_reset_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/password_reset_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/reset_password.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/reset_password.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/user_edit_permissions.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/user_edit_permissions.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/user_login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/user_login.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/user_password_forget.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/user_password_forget.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/user/user_show_all.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/user_show_all.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/site.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates/delete_entity/__delete_entity.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/delete_entity/__delete_entity.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates/flash_message/__flash_message.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/flash_message/__flash_message.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates/paginator/__paginator.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/paginator/__paginator.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/cancel_password_reset_request.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/create.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/login_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/modify.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/password_forget_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/password_reset_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/reset_password.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/user_edit_permissions.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/user_login.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/user_password_forget.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/user_show_all.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/bootstrap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/forms.fr.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/forms.fr.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/messages.fr.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/messages.fr.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +821,7 @@
       <workItem from="1591013756617" duration="123654000" />
       <workItem from="1591602900458" duration="70904000" />
       <workItem from="1591793805741" duration="13942000" />
-      <workItem from="1591812407722" duration="3722000" />
+      <workItem from="1591812407722" duration="10681000" />
     </task>
     <servers />
   </component>
@@ -349,11 +916,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="442" y="-963" width="1378" height="1066" key="dock-window-3/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589206255393" />
-    <state x="666" y="139" width="602" height="801" key="find.popup" timestamp="1591864600386">
+    <state x="666" y="139" width="602" height="801" key="find.popup" timestamp="1591866607715">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="668" y="-941" width="587" height="801" key="find.popup/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1588676933192" />
-    <state x="666" y="139" width="602" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591864600386" />
+    <state x="666" y="139" width="602" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591866607715" />
     <state x="2586" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590657509357" />
     <state x="2536" y="791" key="run.anything.popup" timestamp="1590599159773">
       <screen x="1920" y="0" width="1920" height="1080" />

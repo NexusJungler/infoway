@@ -1,3 +1,7 @@
+// import style css
+import "../css/groupe-prix.scss";
+import "../css/products/date/date.scss";
+
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
@@ -7,6 +11,7 @@ let factories = [];
 let selectedSites = [];
 let selectedFactories = [];
 let updatedPrices = {};
+let subheader_index = 2;
 
 let display_local_prices = function () {
     $.post('ajax/localprices', {sites: selectedSites}, function(response){
@@ -25,6 +30,9 @@ let display_main_prices = function () {
         nbr_dates = response.nbr_dates;
         factories = response.factories;
         products = response.products;
+        if(nbr_dates === 0) {
+            subheader_index = 1;
+        }
 
         let view = {head: '', body: ''};
         let rowspan = '';
@@ -36,11 +44,11 @@ let display_main_prices = function () {
             colspan = ' colspan="' + nbr_dates + '"';
         }
 
-        view.head += '<tr><th' + rowspan + '>Produit</th>';
-        view.head += '<th' + rowspan + '>Catégorie</th>';
-        view.head += '<th' + rowspan + '>Quantité</th>';
-        view.head += '<th' + rowspan + '>Type de prix</th>';
-        view.head += '<th' + rowspan + '>Tags</th>';
+        view.head += '<tr><th' + rowspan + ' ><p class="th-title"> Produit </p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">Form.</p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">Catégorie</p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">Type</p></th>';
+        view.head += '<th' + rowspan + '><p class="th-title">TAGS</p></th>';
 
         $.each(factories, function(i, factory){
             // let nbr_cells = Object.keys(factory.prices).length;
@@ -52,7 +60,7 @@ let display_main_prices = function () {
             view.head += '<tr>';
             $.each(factories, function(i, factory) {
                 for(const date in factory.prices) {
-                    view.head += '<td>' + date + '</td>';
+                    view.head += '<td class="col'+i+'">' + date + '</td>';
                 }
             });
             view.head += '</tr>';
@@ -66,7 +74,7 @@ let display_main_prices = function () {
                 view.body += '<td>' + product.amount + '</td>';
                 view.body += '<td>' + product.pricetype + '</td><td>';
                 $.each(product.tags, function(j, tag){
-                    view.body += '<span>' + tag + '</span>';
+                    view.body += '<span class="container-tags">' + tag + '</span>';
                 });
                 view.body += '</td>';
 
@@ -80,14 +88,14 @@ let display_main_prices = function () {
                             price_value = prices[product_id].day;
                             price_id_injection = ' data-price="' + prices[product_id].price  + '"';
                             if(date !== 'actuelle') {
-                                price_id_injection = ' class="changed" data-change="' + prices[product_id].change  + '"';
+                                price_id_injection = ' class="changed col-td'+j+'" data-change="' + prices[product_id].change  + '"';
                             }
                         } else {
                             if (typeof memory[factory.id][product_id] !== 'undefined') {
                                 price_value = memory[factory.id][product_id];
                             }
                         }
-                        view.body += '<td><input' + price_id_injection + ' type="text" name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
+                        view.body += '<td '+ price_id_injection +' class="col-td'+j+'" ><input' + price_id_injection + ' type="text" name="factories[' + factory.id + '][' + date + '][' + product_id + '][day]" value="' + price_value + '"></td>';
 
                         if(typeof memory[factory.id] === 'undefined') {
                             memory[factory.id] = {};
@@ -183,23 +191,32 @@ $(function() {
         }
 
         if(typeof $(this).data('change') !== 'undefined') {
-            if($(this).data('change') !== 'New') {
-                updatedPrices[factory][date][product]['change_id'] = $(this).data('change');
+            updatedPrices[factory][date][product]['change_id'] = $(this).data('change');
+            if ($(this).data('change') !== 'New') {
+
             }
+        }
 
-            let row = $(this).parents('tr');
-            // let row_index = $('#display_prices tr').index(row);
-            let col = $(this).parent();
-            let col_index = row.children().index(col);
+        // Récupération des coordonnées (x,y) de la sélection
+        let row = $(this).parents('tr');
+        // let row_index = $('#display_prices tr').index(row);
+        let col = $(this).parent();
+        let col_index = row.children().index(col);
 
+        let title = $('#display_prices tr:nth-child('+ subheader_index + ')').children(':nth-child(' + (col_index - 4) +')').html();
+        if(title === 'actuelle') {
+            updatedPrices[factory][date][product]['price_id'] = $(this).data('price');
+        } else {
+            // On modifie un prix à date
             let result = null; // correspondra aux nombres de cellules (td) qu'il faut remonter pour accéder aux prix de la factory (cellule immédiatement précédente non comprise)
             let title = '';
             let i = 5; // nombre de cellules correspondants aux informations du produit
             while (title !== 'actuelle') {
-                title = $('#display_prices tr:nth-child(2)').children(':nth-child(' + (col_index - i) + ')').html(); // Si aucune date future ==> sélection = tr:nth-child(1)
+                title = $('#display_prices tr:nth-child('+ subheader_index + ')').children(':nth-child(' + (col_index - i) + ')').html(); // Si aucune date future ==> sélection = tr:nth-child(1)
                 result = i - 5;
                 i++;
             }
+            // console.log(result);
             updatedPrices[factory][date][product]['price_id'] = row.children(':nth-child(' + (col_index - result) + ')').children().data('price');
         }
 

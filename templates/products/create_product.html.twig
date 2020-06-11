@@ -1,0 +1,191 @@
+{% extends 'products.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('product_price') }}
+{% endblock %}
+
+{% block maincontent %}
+
+    <section class="wrapper_tabcontent">
+
+        <article class=" tab-create tab-create-product current">
+
+            <article class="display product-display ">
+                <div class="display-content">
+                    <div class="tab-content-title">
+                        <h3 class="title">Créer votre Produit</h3>
+                    </div>
+                    <div class="display-btn">
+                        <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Modification à date</a>
+                    </div>
+                </div>
+            </article >
+
+            <form action="" method="post" name="product" id="create-product"> 
+                
+                <div class="form-content">
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label">Nom du produit</label>
+                        </div>
+                        <div class="row-right">
+                            <input type="text"  name="name"   placeholder="Chessy Trio" class="input-custome form-input" required/>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label">Nom du produit</label>
+                        </div>
+                        <div class="row-right">
+                            <div class="select" >
+                                <select class="select-list select-role" name="" >
+                                    <option>Choisir catégorie</option>
+                                    <option value="FingerFood">Finger Food</option>
+                                    <option value="FingerFood">Finger Food</option>
+                                </select>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="quantity">Quantité</label>
+                        </div>
+                        <div class="row-right">
+                            <input type="text"  name="quantity"  placeholder="X3" class="input-custome form-input-quantity" required/>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="description">Description</label>
+                        </div>
+                        <div class="row-right">
+                            <textarea type="text" name="description" id="description" value="" placeholder="Boules de fromage fondu au fenouillets"></textarea>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label">Nom du produit</label>
+                        </div>
+                        <div class="row-right">
+                            <div class="select" >
+                                <select class="select-list select-role" name=""  }}>
+                                    <option>Choisir catégorie</option>
+                                    <option value="FingerFood">Finger Food</option>
+                                    <option value="FingerFood">Finger Food</option>
+                                </select>
+                            </div>
+                        </div> 
+                    </div>
+                    
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label form-label-price" for="price1">prix groupe National 1</label>
+                        </div>
+                        <div class="row-right">
+                            <span class="info-price">Premium</span>
+                            <input type="currency"  name="price1" placeholder="12.90€" class="input-custome form-input-price" />
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label form-label-price" for="price2">prix groupe National 2</label>
+                        </div>
+                        <div class="row-right"> 
+                            <span class="info-price">Medium</span>
+                            <input type="currency"  name="price2" placeholder="13,90€" class="input-custome form-input-price" />
+                        </div> 
+                    </div>
+
+                        <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="tags">Tags</label>
+                        </div>
+                        <div class="row-right">
+                            <input type="text"  name="tags"  placeholder="Chessy Trio" class="input-custome" />
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="">Diffusé à partir du</label>
+                        </div>
+                        <div class="row-right">
+                            <span>DU</span>
+                            <input type="text"  name=""   placeholder="Chessy Trio" class="input-custome" required/>
+                            <span>AU</span>
+                            <input type="text"  name=""   placeholder="Chessy Trio" class="input-custome" required/>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="mentions">Mentions</label>
+                        </div>
+                        <div class="row-right">
+                            <textarea type="text" name="mentions" id="mentions" value="" placeholder="*Produit décongelé"></textarea>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="phone">visuels Produit</label>
+                        </div>
+                        <div class="row-right">
+                            <div class="row-visuals">
+                                <div class="product-visuals-btn"> 
+                                    <a class="btn" href="" role="button"><i class="fas fa-plus"></i>UPLOAD</a>
+                                    <a class="btn" href="" role="button"><i class="fas fa-plus"></i>Médiathèque</a>
+                                </div>
+                                <div class="product-visuals">
+                                    <div>
+                                        <div class="select" >
+                                            <select class="select-list select-role" name=""  }}>
+                                                <option>Image</option>
+                                                <option value="FingerFood">Finger Food</option>
+                                                <option value="FingerFood">Finger Food</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="phone">ID  de mappage système de caisse</label>
+                        </div>
+                        <div class="row-right">
+                            <span>#01</span>
+                            <input type="text"  name="name"   placeholder="Chessy Trio" class="input-custome form-input" required/>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="row-left">
+                            <label class="form-label" for="phone"></label>
+                        </div>
+                        <div class="row-right">
+                            <span>#02</span>
+                            <input type="text"  name="name"   placeholder="Chessy Trio" class="input-custome form-input" required/>
+                        </div> 
+                    </div>
+                </div>
+
+            </form>
+
+        <article>
+    <section>    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('product_price') }}
+{% endblock javascripts %}

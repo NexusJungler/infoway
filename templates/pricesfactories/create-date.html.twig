@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des dates{% endblock %}
+
+{% block stylesheets %}
+    {{ parent()}}
+    {{ encore_entry_link_tags('date') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main-date">
+
+        <div class="main-content">
+
+            <section class="jumbotron">
+                 {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': 'GROUPE DE PRIX', 'showSecondTitles': true } %}
+            </section>
+
+            <section class="wrapper">
+                <article class="wrapper-content">
+                    <ul class="tabs">
+                        <a href="{{ path('app:products') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:products' %}  current {% endif %}" data-tab="tab-products"> <p class="css-tab__label">Produits / prix</p></li></a>
+                        <a href="{{ path('app:categories') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'app:categories' %}  current {% endif %}" data-tab="tab-categories"> <p class="css-tab__label">Catégories</p></li></a>
+                        <a href="{{ path('pricetypes::show') }}"><li class="tablinks active {% if app.request.attributes.get('_route') == 'pricetypes::show' %}  current {% endif %}" data-tab="tab-price"> <p class="css-tab__label">Groupe de Prix</p></li></a>
+                        {# <a href="{{ path('app:image') }}"><li class="tablinks active creer {% if app.request.attributes.get('_route') == 'app:image' %}  current {% endif %}" data-tab="tab-create-date"> <p class="css-tab__label">Créer DATE</p></li></a> #}
+                    </ul>
+                </article>
+            </section> 
+
+
+            {% block  maincontent %}
+                <section class="wrapper_tabcontent wrapper-date">
+                    <div id="tab-price" class="tab-content current content-date">
+
+                        <article class="tab-content-title">
+                            <h3 class="title">Modification à date</h3>
+                        </article>
+
+                        <article class="display setting-display ">
+                            <div class="display-content">
+                                <div class="display-btn">
+                                    <a href="" class="btn btn-create-date" ><i class="fas fa-plus"></i>Ajouter</a>
+                                    <button type="button" class="btn modified-date"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn delete-date" data-tablelistdelete="date"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+                            </div>
+                        </article> 
+
+                        <article class="content-table-date table">
+
+                            <div class="content-right">
+                                <div class="title">
+                                    <p>Choisir une date existante</p>
+                                </div>
+                                
+                                <table class="table-custome">
+                                    <thead class="table-info thead-info">
+                                        <tr>
+                                            <th>Dates créer </th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        <tr >
+                                            <td>
+                                                <label class="container-input">12/05/2020
+                                                    <input type="checkbox" name="" class="chkbox-tag" id="" data-tag="">
+                                                    <span class="container-rdo-tags"></span>
+                                                </label>
+                                            </td>
+                                            <td class="container-tags-desc">
+                                                <p class="cercle-desc">Temps fort n°4<p>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td>
+                                                <label class="container-input">12/05/2020
+                                                    <input type="checkbox" name="" class="chkbox-tag" id="" data-tag="">
+                                                    <span class="container-rdo-tags"></span>
+                                                </label>
+                                            </td>
+                                            <td class="container-tags-desc">
+                                                <p class="cercle-desc">Temps fort n°4<p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="content-btn">
+                                    <button type="button" class="btn">Annuler</button>
+                                    <button type="button" class="btn">Modifier un prix à date</button>
+                                </div>
+
+                            </div>
+
+                            <div class="content-left">
+                                <div class="title"> 
+                                    <p>ou Créer une nouvelle date</p>
+                                </div>
+                                <div class="content-calendar">
+                                    <div class="content-input-date">
+                                        <input type="date">
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                                <div class="content-btn">
+                                    <button type="button" class="btn">Créer date</button>
+                                </div>
+                            </div>
+                            
+
+                        </article>
+
+                    </div>
+                </section>
+            {% endblock %}
+            
+
+        </div>
+
+    </main>
+{% endblock %}

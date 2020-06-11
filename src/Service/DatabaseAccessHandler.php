@@ -19,24 +19,19 @@ class DatabaseAccessHandler
 
     private EntityManagerInterface $__entityManager;
 
-    private string $__dsn;
-
-    private string $__serverVersion;
+    private ResultSetMapping $__rsm;
 
     private ArraySearchRecursiveService $__arraySearchRecursive;
 
-    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $entityManager)
+    private string $_project_dir;
+
+    public function __construct(ParameterBagInterface $parameterBagInterface, EntityManagerInterface $entityManager, string $project_dir)
     {
-        $this->__parameterBag = $parameterBag;
+        $this->__parameterBag = $parameterBagInterface;
         $this->__entityManager = $entityManager;
-
-        // if database info is registered as parameter (services.yaml)
-        //$this->__dsn = $parameterBag->get('db_driver') . "://" . $parameterBag->get('db_user') . ":" . $parameterBag->get('db_password') . "@" . $parameterBag->get('db_host') . ":" . $parameterBag->get('db_port');
-        //$this->__serverVersion = $parameterBag->get('db_version');
-
-        $this->__dsn = "mysql://root:root@localhost:3306";
-        $this->__serverVersion = "5.7";
+        $this->__rsm = new ResultSetMapping();
         $this->__arraySearchRecursive = new ArraySearchRecursiveService();
+        $this->_project_dir = $project_dir ;
     }
 
 
@@ -52,15 +47,22 @@ class DatabaseAccessHandler
         $statement->execute();
         $databaseNames = $statement->fetchAll();
 
-        return $this->__arraySearchRecursive->search($databaseName, $databaseNames) !== false;
+        return $this->__arraySearchRecursive->search($databaseName, $databaseNames) ;
     }
 
 
     public function createDatabase(string $databaseName): bool
     {
         $statement = $this->__entityManager->getConnection()->prepare("CREATE DATABASE " . $databaseName);
-
         return $statement->execute(); // TRUE on success or FALSE on failure
+    }
+
+    public function hydrateDb($databaseName){
+        exec( "cd $this->_project_dir/bin  && php console doctrine:schema:update -f --dump-sql --em=$databaseName", $output) ;
+
+        $success  = strpos(json_encode( $output ) ,'[OK] Database schema updated successfully!'  ) ;
+
+        return $success ;
     }
 
 
@@ -68,37 +70,24 @@ class DatabaseAccessHandler
     {
 
         $envVariables = DotEnvParser::envToArray($this->__parameterBag->get('env_file_path'));
+
         $databaseAccessUrlName = 'DATABASE_'. strtoupper($databaseName) . '_URL';
 
         if(!array_key_exists($databaseAccessUrlName, $envVariables))
         {
 
-            // check if the first character is number
-            // if yes, change it, because of .env don't accept that in first position of variable name
-            if(is_numeric($databaseName[0]) !== false)
-            {
-
-                if(!$this->replaceNumberByCardinal($databaseName[0]))
-                    throw new \Exception(sprintf("Error : Attempt to get cardinal value of '%s' but its cardinal value cannot be found !", $databaseName[0]));
-
-                $temp = $this->replaceNumberByCardinal(intval($databaseName[0])) . substr($databaseName, 1);
-
-                $url = strtoupper($temp . '_DATABASE_URL') . "=" . $this->__dsn . "/" . $databaseName . "?serverVersion=" . $this->__serverVersion;
-            }
-
-            else
-                $url = strtoupper($databaseName . '_DATABASE_URL') . "=" . $this->__dsn . "/" . $databaseName . "?serverVersion=" . $this->__serverVersion;
+            $databaseAccessUrlName  = $databaseAccessUrlName. "=mysql://root:root@localhost:3306/" . $databaseName . "?serverVersion=5.7";
 
             $file_content = file_get_contents($this->__parameterBag->get('env_file_path'));
 
-            $file_content .= PHP_EOL . $url;
+            $file_content .= PHP_EOL . $databaseAccessUrlName;
 
             if(!is_writable($this->__parameterBag->get('env_file_path')))
                 throw new CannotWriteFileException(sprintf("Error : The '%s' file is not writable !", $this->__parameterBag->get('env_file_path')));
 
             file_put_contents($this->__parameterBag->get('env_file_path'), $file_content);
 
-            $this->addConnexionInDoctrineFile($databaseName, $databaseAccessUrlName);
+            $this->addConnexionInDoctrineFile($databaseName, 'DATABASE_'. strtoupper($databaseName) . '_URL');
 
         }
 
@@ -125,9 +114,9 @@ class DatabaseAccessHandler
             ];
         }
 
-        if(!array_key_exists(ucfirst($databaseName), array_keys($doctrineConfig['doctrine']['orm']['entity_managers'])))
+        if(!array_key_exists(strtolower($databaseName), array_keys($doctrineConfig['doctrine']['orm']['entity_managers'])))
         {
-            $doctrineConfig['doctrine']['orm']['entity_managers'][ucfirst($databaseName)] = [
+            $doctrineConfig['doctrine']['orm']['entity_managers'][strtolower($databaseName)] = [
                 'connection' => $databaseName,
                 'mappings' => [
                     $databaseName => [
@@ -145,10 +134,6 @@ class DatabaseAccessHandler
             throw new CannotWriteFileException(sprintf("Internal Error : '%s' file is not writable !", $this->__parameterBag->get('doctrine_file_path')));
 
         file_put_contents($this->__parameterBag->get('doctrine_file_path'), Yaml::dump($doctrineConfig,10));
-
-        // ajout des tables
-        //exec("php bin/console doctrine:migrations:diff --em=[$databaseName] --configuration=/config/doctrine_migrations_customer.yaml");
-        //exec("php bin/console doctrine:migrations:migrate --em=[$databaseName] --configuration=/config/doctrine_migrations_customer.yaml");
 
         return true;
 

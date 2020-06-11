@@ -45,10 +45,39 @@ class Tag
      */
     private $sites;
 
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="ProgrammingMould", mappedBy="tags")
+     */
+    private $ProgrammingMoulds;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="LocalProgramming", mappedBy="tags")
+     */
+    private $LocalProgrammings;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="tags")
+     * @ORM\JoinTable(name="tags_medias")
+     */
+    private $medias ;
+
     public function __construct() {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ProgrammingMoulds = new ArrayCollection() ;
+        $this->LocalProgrammings = new ArrayCollection() ;
+        $this->medias = new ArrayCollection();
     }
+
+    public function setId( int $id ): self{
+
+        $this->id = $id ;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -142,6 +171,88 @@ class Tag
         if ($this->sites->contains($site)) {
             $this->sites->removeElement($site);
             $site->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgrammingMould[]
+     */
+    public function getProgrammingMoulds(): Collection
+    {
+        return $this->ProgrammingMoulds;
+    }
+
+    public function addProgrammingMould(ProgrammingMould $ProgrammingMould): self
+    {
+        if (!$this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds[] = $ProgrammingMould;
+            $ProgrammingMould->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgrammingMould(ProgrammingMould $ProgrammingMould): self
+    {
+        if ($this->ProgrammingMoulds->contains($ProgrammingMould)) {
+            $this->ProgrammingMoulds->removeElement($ProgrammingMould);
+            $ProgrammingMould->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LocalProgramming[]
+     */
+    public function getLocalProgrammings(): Collection
+    {
+        return $this->LocalProgrammings;
+    }
+
+    public function addLocalProgramming(LocalProgramming $LocalProgramming): self
+    {
+        if (!$this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings[] = $LocalProgramming;
+            $LocalProgramming->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocalProgramming(LocalProgramming $LocalProgramming): self
+    {
+        if ($this->LocalProgrammings->contains($LocalProgramming)) {
+            $this->LocalProgrammings->removeElement($LocalProgramming);
+            $LocalProgramming->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
         }
 
         return $this;

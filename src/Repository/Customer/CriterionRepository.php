@@ -2,26 +2,35 @@
 
 namespace App\Repository\Customer;
 
-use App\Entity\Customer\Cristerion;
 use App\Entity\Customer\Criterion;
 use App\Repository\MainRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Cristerion|null find($id, $lockMode = null, $lockVersion = null)
- * @method Cristerion|null findOneBy(array $criteria, array $orderBy = null)
- * @method Cristerion[]    findAll()
- * @method Cristerion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Criterion|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Criterion|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Criterion[]    findAll()
+ * @method Criterion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CriterionRepository extends ServiceEntityRepository
 {
-
     use MainRepository;
 
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Criterion::class);
+    }
+
+    public function getAnotherCriterionWithSameName( Criterion $criterion ) : ?Criterion{
+        return  $this->createQueryBuilder('c')
+            ->where('c.id !=  :id')
+            ->andWhere('c.name = :name')
+            ->setParameter('id', $criterion->getId() )
+            ->setParameter('name' , $criterion->getName() )
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
 
     // /**

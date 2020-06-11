@@ -1,5 +1,3 @@
 Invalid credentials.: Identifiants invalides
 Username could not be found.: Utilisateur introuvable
-Email could not be found.: Email est introuvable
 Authentication request could not be processed due to a system problem.: Erreur système interne
-Invalid CSRF token. : Token CSRF invalid

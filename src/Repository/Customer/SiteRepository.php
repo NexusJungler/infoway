@@ -2,11 +2,15 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Admin\Customer;
+use App\Entity\Admin\User;
+use App\Entity\Admin\UserSites;
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Site;
-use App\Repository\MainRepository;
+use App\Repository\Admin\UserSitesRepository;
+use Cassandra\Custom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 
 /**
  * @method Site|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,14 +20,59 @@ use Doctrine\Persistence\ObjectManager;
  */
 class SiteRepository extends ServiceEntityRepository
 {
+    private UserSitesRepository $userSiteRepo ;
 
-    use MainRepository;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, UserSitesRepository $userSiteRepo)
     {
+
+        $this->userSiteRepo = $userSiteRepo ;
         parent::__construct($registry, Site::class);
     }
 
+
+
+    public function getSitesByUserAndCustomer(User $user, Customer $customer){
+
+        $userSiteEntriesForCustomer = $this->userSiteRepo->getSitesByUserAndCustomer($user, $customer) ;
+
+        $siteIdsInCustomer = array_map(function(UserSites $siteEntry){
+            return $siteEntry->getSiteId() ;
+        }, $userSiteEntriesForCustomer) ;
+
+        return $this->findBy(['id' => $siteIdsInCustomer]) ;
+
+    }
+
+    public function getAllSitesIds() : array {
+
+        return array_map(
+            function( Site $site ){ return $site->getId() ; }
+            ,  $this->findAll() ) ;
+
+    }
+
+    public function getSitesWhereIdNotIn(array $ids){
+
+        return  $this->createQueryBuilder('s')
+            ->where('s.id NOT IN ( :ids )')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllSitesWhereCriterionNotAppear(Criterion $criterion){
+
+        $criterionSitesIds = $criterion->getSites()->filter(function(Site $site){
+            return $site->getId() ;
+        });
+
+        return $criterionSitesIds->count() <1 ? $this->findAll() : $this->getSitesWhereIdNotIn($criterionSitesIds->getValues() );
+    }
+
+    public function getTimeZoneByTimeZoneId(){
+
+    }
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

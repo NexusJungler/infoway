@@ -1,0 +1,365 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Produits {% endblock %}
+
+{% block stylesheets %}
+    {{ parent('app') }}
+    <link rel="stylesheet" href="select2.css">
+    <link rel="stylesheet" href="select2-bootstrap.css">
+    {{ encore_entry_link_tags('edit_product') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main_produits">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': 'Modifier', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+            
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-create tab-create-edit current ">
+
+                {{ form_start(form) }}
+
+                    <article class="display product-display ">
+                        <div class="display-content">
+                            <div class="tab-content-title">
+                                <h3 class="title"></h3>
+                            </div>
+                            {# <div class="display-btn">
+                                <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Modification à date</a>
+                            </div> #}
+                        </div>
+                    </article >
+
+                    <article class="form-content-product">
+                        <div class="form-content-product-left">
+                            <div class="row">
+                                <label class="label-custome"> Date</label>
+                                <div class="bloc-date">
+                                    <p>Actuellement</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {{ form_label(form.product.name) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.name) }}
+                                </div>
+                            </div>
+                            <div class="row row-category">
+                                {{ form_label(form.product.category) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.category) }}
+                                </div>
+                            </div>
+                            <div class="row row-amount">
+                                {{ form_label(form.product.amount) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.amount) }}
+                                </div>                              
+                            </div>
+                            <div class="row">
+                                {{ form_label(form.product.description) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.description) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                {{ form_label(form.product.criterions) }}
+                                <div class="row-col">
+                                    <button type="button" class="btn popup-criterions"><i class="fas fa-plus-circle"></i>Critères</button>
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.criterions) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# <div class="row">
+                                {{ form_label(form.product.criterions) }}
+                                <div class="row-col">
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.criterions) }}
+                                    </div>
+                                </div>
+                            </div> #}
+
+                            <div class="row">
+                                {{ form_label(form.product.tags) }}
+                                <div class="row-col">
+                                    <button type="button" class="btn popup-tags"><i class="fas fa-plus-circle"></i>TAGS</button>
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.tags) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# <div class="row">
+                                {{ form_label(form.product.tags) }}
+                                <div class="row-col">
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.tags) }}
+                                    </div>
+                                </div>
+                            </div> #}
+
+                            <div class="row">
+                                {{ form_label(form.product.allergens) }}
+                                <div class="row-col">
+                                    <button type="button" class="btn popup-allergens"><i class="fas fa-plus-circle"></i>Allergènes</button>
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.allergens) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                {{ form_label(form.product.allergens) }}
+                                <div class="row-col">
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.allergens) }}
+                                        {#
+                                        <div>
+                                            <label class="label-custome" for="allergens">Allergenes</label>
+                                            <select id="allergens" name="allergens[]" multiple="multiple">
+                                                {% for allergen in allergens %}
+                                                    {% set selected = '' %}
+                                                    {% if allergen in product_allergens %}
+                                                        {% set selected = 'selected' %}
+                                                    {% endif %}
+                                                    <option value="{{ allergen.id }}" {{ selected }}>{{ allergen.name }}</option>
+                                                {% endfor %}
+                                            </select>+
+                                        </div>
+                                        #}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-pricetype">
+                                {{ form_label(form.product.priceType) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.priceType) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="label-custome"></label>
+                                <div class="row-col">
+                                    <div id="factories_prices">
+                                        {% for price in form.prices %}
+                                            {% set factory = factories[loop.index-1] %}
+                                            <label class=""> Groupe Prix {{ factory.name }}</label>
+                                            {{ form_row(price) }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {# {{dump(form.checkoutMappings)}} #}
+                            <div class="row">
+                                <div id="checkout_mapping">
+                                    {% for mapping in form.checkoutMappings %}
+                                        {% set system = systems[loop.index-1] %}
+                                        <h1>Système de caisse {{ system.name }}</h1>
+                                        {{ form_row(mapping) }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="row row-date">
+                                <label class="label-custome" for="">Diffusé à partir du</label>
+
+                                <div class="row-col">
+                                    <span>DU</span>
+                                    {{ form_widget(form.product.start) }}
+                                    <span>AU</span>
+                                    {{ form_widget(form.product.end) }}
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                {{ form_label(form.product.note) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.note) }}
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                {{ form_label(form.product.logo) }}
+                                <div class="row-col">
+                                    {{ form_widget(form.product.logo) }}
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                {{ form_label(form.product.elements) }}
+                                <div class="row-col">
+                                    <div class="ManyToMany">
+                                        {{ form_widget(form.product.elements) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {#
+                            <div id="medias_association_with_context">
+                                <div id="upload_ajax">
+                                    <input type="file" name="new_graph">
+                                </div>
+                                <ul id="available_graphics">
+                                    {% for graphic in graphics %}
+                                        <li data-id="{{ graphic.id }}"><img src="/datas/medias/piece/{{ graphic.id }}.png" alt="{{ graphic.name }}"></li>
+                                    {% endfor %}
+                                </ul>
+                                <ul id="linked_graphics">
+                                    {% for graphic in linked_graphics %}
+                                        <li data-id="{{ graphic.id }}">
+                                            <img src="/datas/medias/piece/{{ graphic.id }}.png" alt="{{ graphic.name }}">
+                                            <select>
+                                                {% for context in contexts %}
+                                                    <option value="{{ context.id }}" {{ selected }}>{{ context.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            #}
+
+                        </div>
+                    </article>
+
+                {{ form_end(form) }}
+                </div>
+            </section>   
+
+        </div>
+    </main>    
+
+
+    <article class="add-popup add-popup-criterions ">
+        <div class="modal">
+
+            <div class="header-modal">
+                <p class="upload-title">Critères affectés à :</p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+
+            <div class="content-popup-criterions" >
+                {# <article class="content-criteres"> 
+                    <ul>
+                        {%  for criterions_list in criterions_lists  %}
+                            <li class="row-criterion">
+                                {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                <article> #}
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-add-site">Affecter au site</button>
+            </div>
+
+        </div>
+    </article>
+
+    <article class="add-popup add-popup-tags">
+        <div class="modal">
+
+            <div class="header-modal">
+                <p class="upload-title">Affecter tags à :</p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+
+            <div class="content-popup-tags">
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-add-site">Affecter au site</button>
+            </div>
+
+        </div>
+    </article>
+
+    <article class="add-popup add-popup-allergens">
+        <div class="modal">
+
+            <div class="header-modal">
+                <p class="upload-title">Affecter allergènes à :</p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+
+            <div class="content-popup-allergens table" >
+                <table class="table-custome">
+                    <thead>
+                    </thead>
+                    <tbody class="tbody">
+                        <tr>
+                            <td>
+                                <label class="container-input">
+                                <input type="checkbox">
+                                    {# {{ form_widget(tag, {'attr': {'class': 'chkbox-tag'}} ) }} #}
+                                    <span class="container-rdo-tags"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <img class="icon-allergen" src="" alt="">
+                            </td>
+                            <td>
+                                <p class="desc">Poissons et produits à base de poissons</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-add-site">Affecter au site</button>
+            </div>
+
+        </div>
+    </article>
+
+
+    {% block javascripts %}
+        {{ parent() }}
+        {# {{ encore_entry_script_tags('app') }} #}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+        <script>
+            $('.ManyToMany select').select2();
+        </script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $.datepicker.setDefaults($.datepicker.regional[ "fr" ]);
+                $.datepicker.formatDate( "dd-mm-yy", new Date());
+
+                /*
+                $.datepicker.setDefaults({
+                    showOn: "both",
+                    buttonImageOnly: true,
+                    buttonImage: "calendar.gif",
+                    buttonText: "Calendar"
+                });
+                */
+                $(".datepicker").datepicker({
+                    dateFormat: "dd-mm-yy",
+                    duration: "fast"
+                });
+            });
+        </script>
+        {{ encore_entry_script_tags('edit_product') }}
+    {% endblock javascripts %}
+{% endblock %}
+
+
