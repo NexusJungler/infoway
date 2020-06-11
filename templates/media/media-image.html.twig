@@ -1,10 +1,9 @@
 {% extends 'media.html.twig' %}
 
-
 {% block maincontent %}
-    <section class="wrapper_tabcontent">
-        <article id="picture" class="tab-content current">
-            <article class="display site-display ">
+    <article id="picture" class="tab-content current media-show">
+
+        <article class="display">
                 <div class="display-content" >
 
                     <div class="top">
@@ -15,7 +14,7 @@
 
                                 {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
                                     <div class="upload_btn_container container">
-                                        <button type="button" class="btn btn-upload add-table"><i class="fas fa-plus"></i>UPLOAD</button>
+                                        <button type="button" class="btn btn-upload add-table"><i class="fas fa-download"></i>UPLOAD</button>
                                     </div>
                                 {% endif %}
 
@@ -40,7 +39,7 @@
                             <div class="display-btn right_btns">
 
                                 <div class="container">
-                                    <span>Medias : </span>
+                                    <p>Medias : </p>
                                 </div>
 
                                 <div class="container">
@@ -74,12 +73,13 @@
                                 <div class="filter_by_orientation_or_type_container">
 
                                     <div class="filter_media_by_orientation show_only_horizontal_media filter">
-                                        <i class="fas fa-mobile"></i> <br>
+                                        <img src="{{ asset('/build/images/iconehoriz-1.svg') }}" alt="color_picker">
+                                        <br>
                                         <span>Horizontal</span>
                                     </div>
 
                                     <div class="filter_media_by_orientation show_only_vertical_media filter">
-                                        <i class="fas fa-mobile"></i> <br>
+                                        <img src="{{ asset('/build/images/iconehoriz-2.svg') }}" alt="color_picker"><br>
                                         <span>Vertical</span>
                                     </div>
 
@@ -267,6 +267,6 @@
             {% include "/popups/deletingMedia/popup_delete_media.html.twig" %}
 
         </article>
-    </section>
+
 
 {% endblock %}
