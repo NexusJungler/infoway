@@ -62,16 +62,11 @@ class MediaWaitingIncrustationHandler extends SubTool
 
                 if(mediasSelectedNumber === 0)
                 {
-                    if(!this.__$location.find('.redirect_to_module_incruste_button').hasClass('disabled'))
-                        this.__$location.find('.redirect_to_module_incruste_button').addClass('disabled');
-
                     this.__$location.find('.redirect_to_module_incruste_button').prop('disabled', true);
                 }
 
                 else
                 {
-                    //console.log("remove"); debugger
-                    this.__$location.find('.redirect_to_module_incruste_button').removeClass('disabled');
                     this.__$location.find('.redirect_to_module_incruste_button').prop('disabled', false);
                 }
 

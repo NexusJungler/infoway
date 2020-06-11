@@ -14,7 +14,10 @@
       .popup_body{
         height: 90%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
 
         .popup_body_item{
           height: 100%;

@@ -214,19 +214,6 @@
                         margin-right: 2%;
                     }
 
-                    button{
-
-                        &:not(.disabled){
-                            cursor: pointer;
-                        }
-
-                        &.disabled{
-                            background: #686868;
-                            cursor: not-allowed;
-                        }
-
-                    }
-
                 }
             }
 

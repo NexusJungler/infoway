@@ -95,8 +95,9 @@ class MediaInfoSheetHandler extends SubTool
                         this.showMediaAssociatedProducts(mediaInfos.products);
                     }
 
+                    $('.popup_loading_container').removeClass('is_open');
 
-                    //this.__$container.addClass('is_open');
+                    this.__$container.addClass('is_open');
 
                 }
 
@@ -174,8 +175,6 @@ class MediaInfoSheetHandler extends SubTool
                 type: "POST",
                 data: {mediaId: mediaId},
                 success: (response) => {
-
-                    //$('.popup_loading_container').removeClass('is_open');
 
                     console.log(response); //debugger
 
