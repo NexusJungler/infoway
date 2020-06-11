@@ -25,7 +25,7 @@ Encore
         //to: 'images/[path][name]_[hash:8].[ext]',
 
         // only copy files matching this pattern
-        pattern: /\.(png|jpg|jpeg|gif)$/
+        pattern: /\.(png|jpg|jpeg|gif|svg)$/
     })
 
     /*
@@ -44,7 +44,7 @@ Encore
     .addEntry('user_login', './assets/js/user_login.js')
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
-    
+
     /********* Settings *********/
     /** Customer **/
     .addEntry('customer', './assets/js/settings/customer.js')
@@ -68,7 +68,7 @@ Encore
 
     //media
     .addEntry('mediatheque', './assets/js/mediatheque.js')
-    
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

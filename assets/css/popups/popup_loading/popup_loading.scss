@@ -1,15 +1,26 @@
 .popup_loading_container{
-
   height: 300px;
-  width: 300px;
+  width: 500px;
   left: 30%;
 
-  .popup{
+  &.is_open{
 
-    &.is_open{
+    .popup{
+
+      .popup_header{
+        height: 10%;
+      }
 
       .popup_body{
-        height: 100%;
+        height: 90%;
+        display: flex;
+        flex-direction: row;
+
+        .popup_body_item{
+          height: 100%;
+          width: 50%;
+        }
+
       }
 
     }

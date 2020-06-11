@@ -32,7 +32,7 @@ class Tool {
             throw new Error(`Attempt to set toolbox to ${this.__name}, but toolbox must be instance of ToolBox`);
 
         this.__toolBox = toolBox;
-        //console.log(`ToolBox is now added in '${this.__name}' !`);
+        console.log(`ToolBox is now added in '${this.__name}' !`);
 
         return this;
     }
@@ -65,13 +65,13 @@ class Tool {
 
     enable()
     {
-        //console.log(`'${this.__name}' is enabled !`);
+        console.log(`'${this.__name}' is enabled !`);
         this.__isActived = true;
     }
 
     disable()
     {
-        //console.log(`'${this.__name}' is disabled !`);
+        console.log(`'${this.__name}' is disabled !`);
         this.__isActived = false;
     }
 

@@ -55,6 +55,20 @@ class Customer
      */
     private $contact;
 
+    /**
+     * Une enseigne se situe dans un pays qui quant a lui peut apparaitre dans plusieurs enseignes
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     */
+    private $country;
+
+
+    /**
+     * Une enseigne possede une timezone qui quant a elle peut apparaitre dans plusieurs enseignes
+     * @ORM\ManyToOne(targetEntity="TimeZone")
+     * @ORM\JoinColumn(name="timezone_id", referencedColumnName="id")
+     */
+    private $timeZone;
 
     public function __construct()
     {
@@ -67,23 +81,6 @@ class Customer
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRole():?Role
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param mixed $role
-     */
-    public function setRole(Role $role): self
-    {
-        $this->role = $role;
-        return $this;
     }
 
 
@@ -107,42 +104,6 @@ class Customer
     public function setLogo(string $logo): self
     {
         $this->logo = $logo;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getPostalCode(): ?string
-    {
-        return $this->postal_code;
-    }
-
-    public function setPostalCode(?string $postal_code): self
-    {
-        $this->postal_code = $postal_code;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
 
         return $this;
     }
@@ -231,30 +192,6 @@ class Customer
     public function setTimeZone(?TimeZone $timeZone): self
     {
         $this->timeZone = $timeZone;
-
-        return $this;
-    }
-
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
