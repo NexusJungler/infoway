@@ -112,9 +112,11 @@
                             justify-content: space-between;
 
                             .shortcut{
-                                width: 30%;
-                                height: 100%;
-                                background-color: #4F9BAE;
+                                width: 30px;
+                                height: 30px;
+                                background: #4F9BAE 0% 0% no-repeat padding-box;
+                                border: 0.4000000059604645px solid #707070;
+                                border-radius: 6px;
                                 color: #FFF;
                                 text-align: center;
 
@@ -311,11 +313,11 @@
                         background-color: #FF5722;
                         color: #FFF;
                         position: absolute;
-                        top: 0px;
+                        top: 1px;
                         right: -23px;
                         width: 18%;
                         padding: 5px 8px;
-                        height: 31px;
+                        height: 30px;
                         //
                         border-radius: 0 rem(6px) rem(6px) 0;
                         z-index: 0;
@@ -336,11 +338,11 @@
                         background-color: #4f9bae;
                         color: #FFF;
                         position: absolute;
-                        top: 0px;
+                        top: 1px;
                         right: -34px;
                         width: 25%;
                         padding: 5px 8px;
-                        height: 31px;
+                        height: 30px;
                         border-radius: 0 rem(6px) rem(6px) 0;
                         z-index: 0;
                         text-align: center;
@@ -432,12 +434,30 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
+                height: 29px;
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                border: 1px solid #C0CCD1;
+                border-radius: 6px;
+            }
+            .open_filter_content{
+                .btn{
+                    margin-right: 0px;
+                    i{
+                        margin-right: 0px;
+                    }
+                }
             }
 
             .filter_validation_btn_container {
 
                 .filter_validation_btn{
                     text-transform: uppercase;
+                    height: 31px;
+                    background: #899CA4 0% 0% no-repeat padding-box;
+                    box-shadow: 1px 2px 2px #00000029;
+                    border: 1px solid #899CA4;
+                    border-radius: 6px;
+                    color: white;
                 }
 
             }

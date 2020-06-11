@@ -8,6 +8,14 @@ let nameTags = [];
 // btn modification
 $(".modified-tag").addClass("hide-btn");
 
+$(".tags-poster input[type='checkbox']").each( function () {
+    if($(this).prop("checked")){
+        console.log($(this).prop("checked"));
+        $(".add-popup-edit").removeClass("hide-btn");
+    }
+    console.log($(this).prop("checked"));
+})
+
 $(".content-tags .tags-poster .chkbox-tag").change( function(){
     let nb_input_tags = $(".tags-poster input[type='checkbox']:checked").length;
     
