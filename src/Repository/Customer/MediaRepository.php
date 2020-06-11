@@ -168,7 +168,6 @@ class MediaRepository extends ServiceEntityRepository
                         'media_tags' => [],
                         'media_criterions' => [],
                         'media_categories' => [],
-                        'media_allergens' => [],
                         'miniature_exist' => $mediaMiniatureExist,
                     ];
 
@@ -179,6 +178,7 @@ class MediaRepository extends ServiceEntityRepository
 
                     foreach ($media->getProducts()->getValues() as $product)
                     {
+
                         $orderedMedias['medias'][$index]['media_products'][] = $product->getId();
 
                         if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))

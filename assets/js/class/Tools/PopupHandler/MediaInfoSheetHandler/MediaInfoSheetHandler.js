@@ -25,7 +25,7 @@ class MediaInfoSheetHandler extends SubTool
                     this.__toolIsActive = true;
 
                     const mediaId = $(e.currentTarget).parents('.card').attr('id').replace('media_', '');
-                    const customer = $(e.currentTarget).parents('.card').data('customer');
+                    const customer = $('.medias_list_container').data('customer');
 
                     let mediaInfosExist = false;
 

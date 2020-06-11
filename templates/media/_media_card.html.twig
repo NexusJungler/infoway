@@ -2,18 +2,10 @@
 
         data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}"
 
-        data-customer="{{ app.session.get('current_customer').name | lower }}"
-
         {% if (media_products is not empty) %}
             data-products="{{ media_products|join(', ') }}"
         {% else %}
             data-product="none"
-        {% endif %}
-
-        {% if (media_allergens is not empty) %}
-            data-allergens="{{ media_allergens|join(', ') }}"
-        {% else %}
-            data-allergens="none"
         {% endif %}
 
         {% if (media_categories is not empty) %}

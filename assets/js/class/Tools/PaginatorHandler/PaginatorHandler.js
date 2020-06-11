@@ -127,7 +127,7 @@ class PaginatorHandler extends Tool
 
         $.each( mediasInfos.medias, (index, mediaInfos) => {
 
-            let card = this.buildMediaCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories, tags: mediaInfos.media_tags, criterions: mediaInfos.media_criterions}, mediaInfos.media_type, mediasInfos.customer);
+            let card = this.buildMediaCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories, tags: mediaInfos.media_tags, criterions: mediaInfos.media_criterions}, mediaInfos.media_type, $('.medias_list_container').data('customer'));
             $(card).appendTo( container );
 
         } )
