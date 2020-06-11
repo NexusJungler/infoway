@@ -7,7 +7,7 @@ class PaginatorHandler extends Tool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$location = $('.pagination-container');
+        this.__$location = $('.pagination_container');
         this.pageNavigationIsActive = true;
     }
 
@@ -15,11 +15,11 @@ class PaginatorHandler extends Tool
     {
 
         const mediasDisplayedType = $(".main-media").data("media_displayed");
-        const numberOfMediasToDisplay= $("#displayed-elements-number-selection").val();
+        const numberOfMediasToDisplay= $("#displayed_elements_number_selection").val();
 
         page = parseInt(page);
 
-        $('.medias-list-container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
+        $('.medias_list_container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
 
         this.pageNavigationIsActive = false;
 
@@ -106,7 +106,7 @@ class PaginatorHandler extends Tool
     {
         if(active)
         {
-            this.__$location.find("#displayed-elements-number-selection").on("change.onDisplayedMediasNumberChange", e => {
+            this.__$location.find("#displayed_elements_number_selection").on("change.onDisplayedMediasNumberChange", e => {
 
                 this.reloadMediatheque();
 
@@ -114,7 +114,7 @@ class PaginatorHandler extends Tool
         }
         else
         {
-            this.__$location.find("#displayed-elements-number-selection").off("change.onDisplayedMediasNumberChange");
+            this.__$location.find("#displayed_elements_number_selection").off("change.onDisplayedMediasNumberChange");
         }
 
         return this;
@@ -123,16 +123,20 @@ class PaginatorHandler extends Tool
     rebuildMediasCards(mediasInfos)
     {
 
-        let container = $('<div class="medias-list-container">');
+        let container = $('.medias_list_container');
+        container.empty();
+
+        let cards = '';
 
         $.each( mediasInfos.medias, (index, mediaInfos) => {
 
-            let card = this.buildMediaCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories, tags: mediaInfos.media_tags, criterions: mediaInfos.media_criterions}, mediaInfos.media_type, mediasInfos.customer);
-            $(card).appendTo( container );
+            let card = this.buildMediaCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories, tags: mediaInfos.media_tags, criterions: mediaInfos.media_criterions}, mediaInfos.media_type, container.data('customer'));
+            cards += card;
+            //$(card).appendTo( container );
 
         } )
 
-        $('.medias-list-container').replaceWith(container);
+        container.html(cards);
 
     }
 
@@ -141,7 +145,7 @@ class PaginatorHandler extends Tool
 
         const dateIsComingSoon = ( this.getDaysDiffBetweenDates(media.diffusionEnd, new Date()) <= 14);
 
-        let card = `<div class="card" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" data-orientation="${media.orientation}"
+        let card = `<div class="card" id="media_${ media.id }" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" data-orientation="${media.orientation}"
 
                                 data-media_diff_start="${ this.reformateDate(media.diffusionStart, true, '/') }" data-media_diff_end="${ this.reformateDate(media.diffusionEnd, true, '/') }"
 
@@ -155,9 +159,9 @@ class PaginatorHandler extends Tool
                                  
                                  >
 
-                            <div class="card-header">
+                            <div class="card_header">
                                 <div class="select_media_input_container">
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="select_media_input">
                                 </div>
                                 
                                 <div class="media_actions_shortcuts_container">
@@ -170,7 +174,7 @@ class PaginatorHandler extends Tool
                                     </div>
                     
                                     <div class="shortcut">
-                                        <i class="fas fa-link"></i>
+                                        <i class="fas fa-link shortcut_product_association"></i>
                                     </div>
                     
                                     <div class="shortcut">
@@ -181,29 +185,29 @@ class PaginatorHandler extends Tool
                                 
                             </div>
                             
-                            <div class="card-body">
-                               <div class="media-miniature-container">`;
+                            <div class="card_body">
+                               <div class="media_miniature_container">`;
                             
         if(mediaType === 'image')
         {
-            card += `<img class="media-miniature" src="/miniatures/${ customer }/images/low/${ media.id }.png"
+            card += `<img class="media_miniature" src="/miniatures/${ customer }/images/low/${ media.id }.png"
                                         alt="/miniatures/${ customer }/images/low/${ media.id }.png">`
         }
         else
         {
-            card += `<video class="media-miniature">
+            card += `<video class="media_miniature">
                         <source src="/miniatures/${ customer }/videos/low/${ media.id }.mp4" type="${ media.mimeType }">
                     </video>`;
         }
 
         card += `</div>
-                 <div class="media-name-container">
+                 <div class="media_name_container">
                     <span>${ media.name }</span>
                  </div>
                                 
-                 <div class="media-associated-items-container">
+                 <div class="media_associated_items_container">
 
-                 <div class="media-criterions-container associated-item">`;
+                 <div class="media_criterions_container associated_item">`;
 
         if(media.products.length > 0)
         {
@@ -222,7 +226,7 @@ class PaginatorHandler extends Tool
             card += `<p>0 critères associés</p>`;
         }
 
-        card += `</div> <div class="media-tags-container associated-item">`;
+        card += `</div> <div class="media_tags_container associated_item">`;
 
         if(media.tags.length > 0)
         {
@@ -278,7 +282,7 @@ class PaginatorHandler extends Tool
     rebuildPageList(limit, currentPage)
     {
 
-        this.__$location.find('.pages-container').empty();
+        this.__$location.find('.pages_container').empty();
 
         if(limit > 1)
         {
@@ -305,7 +309,7 @@ class PaginatorHandler extends Tool
                 //$('<i class="fas fa-chevron-right page_navigation_arrow right"></i>').appendTo( $(".pages-container") );
             }
 
-            this.__$location.find('.pages-container').html( pageContainerContent );
+            this.__$location.find('.pages_container').html( pageContainerContent );
 
         }
 
@@ -316,11 +320,11 @@ class PaginatorHandler extends Tool
     rebuildNumberOfMediasDisplayedList(choices, selected)
     {
 
-        $('#displayed-elements-number-selection').empty();
+        $('#displayed_elements_number_selection').empty();
 
         choices.forEach( (choice) => {
 
-            $(`<option value="${choice}" ${ (choice === selected) ? 'selected' : '' }>${choice}</option>`).appendTo( $('#displayed-elements-number-selection') );
+            $(`<option value="${choice}" ${ (choice === selected) ? 'selected' : '' }>${choice}</option>`).appendTo( $('#displayed_elements_number_selection') );
 
         } )
 
@@ -332,11 +336,11 @@ class PaginatorHandler extends Tool
         {
             $("#medias_sortable_by_date").on("change.onMediasSortableByDateChange", e => {
 
-                const mediasCards = $(".medias-list-container .card");
+                const mediasCards = $(".medias_list_container .card");
 
                 mediasCards.sort( this.sortByDate('created_date', $(e.currentTarget).val()) );
 
-                $(".medias-list-container").html(mediasCards)
+                $(".medias_list_container").html(mediasCards)
 
             })
         }

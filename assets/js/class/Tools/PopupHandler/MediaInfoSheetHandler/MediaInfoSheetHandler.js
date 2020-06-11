@@ -10,6 +10,7 @@ class MediaInfoSheetHandler extends SubTool
         this.__$container = $('.popup_media_info_sheet_container');
         this.__$location = $('.popup_media_info_sheet');
         this.__mediasInfos = [];
+        this.__toolIsActive = false;
     }
 
     onClickOnMediaMiniatureShowMediaInfoSheet(active)
@@ -18,79 +19,86 @@ class MediaInfoSheetHandler extends SubTool
         {
             this.__parent.getMediasContainer().find('.media_miniature').on('click.onClickOnMediaMiniatureShowMediaInfoSheet', async(e) => {
 
-                const mediaId = $(e.currentTarget).parents('.card').attr('id').replace('media_', '');
-                const customer = $(e.currentTarget).parents('.card').data('customer');
-
-                let mediaInfosExist = false;
-
-                if(!this.mediaInfosIsAlreadyRegistered(mediaId))
-                    mediaInfosExist = await this.retrieveMediaAssociatedInfos(mediaId);
-
-                else
-                    mediaInfosExist = true;
-
-
-                const isImage = $(e.currentTarget).hasClass('miniature_image');
-
-                let miniature = null;
-
-                let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
-
-                if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
+                if(!this.__toolIsActive)
                 {
 
-                    if(await this.mediaFileExist(path))
-                    {
-                        miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
-                        this.getMediaRegisteredInfos(mediaId).miniatureExist = true;
-                    }
+                    this.__toolIsActive = true;
+
+                    const mediaId = $(e.currentTarget).parents('.card').attr('id').replace('media_', '');
+                    const customer = $('.medias_list_container').data('customer');
+
+                    let mediaInfosExist = false;
+
+                    if(!this.mediaInfosIsAlreadyRegistered(mediaId))
+                        mediaInfosExist = await this.retrieveMediaAssociatedInfos(mediaId);
+
                     else
+                        mediaInfosExist = true;
+
+
+                    const isImage = $(e.currentTarget).hasClass('miniature_image');
+
+                    let miniature = null;
+
+                    let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
+
+                    if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
                     {
-                        miniature = `<img class="media_miniature not_found" src="/build/images/no-available-image.png">`;
-                        this.getMediaRegisteredInfos(mediaId).miniatureExist = false;
+
+                        if(await this.mediaFileExist(path))
+                        {
+                            miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
+                            this.getMediaRegisteredInfos(mediaId).miniatureExist = true;
+                        }
+                        else
+                        {
+                            miniature = `<img class="media_miniature not_found" src="/build/images/no-available-image.png">`;
+                            this.getMediaRegisteredInfos(mediaId).miniatureExist = false;
+                        }
+
                     }
 
+                    else if(this.getMediaRegisteredInfos(mediaId).miniatureExist === false)
+                        miniature = `<img class="media_miniature not_found" src="/build/images/no-available-image.png">`;
+
+                    else
+                        miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
+
+
+
+                    if( isImage )
+                        this.__$location.find('.media_type').text('image');
+
+                    else
+                        this.__$location.find('.media_type').text('video');
+
+                    this.__$location.find('.media_miniature_container').html( miniature );
+                    this.__$location.find('.media_title').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
+                    this.__$location.find('.media_validity_container .media_diff_start').text( $(e.currentTarget).parents('.card').data('media_diff_start') );
+                    this.__$location.find('.media_validity_container .media_diff_end').text( $(e.currentTarget).parents('.card').data('media_diff_end') );
+
+                    if(this.getDaysDiffBetweenDates($(e.currentTarget).parents('.card').data('media_diff_end'), new Date()) <= 14)
+                        this.__$location.find('.media_validity_container .media_diff_end').addClass('date_coming_soon');
+
+                    this.__$location.find('.media_infos_bottom .media_name_container .media_name').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
+
+                    this.showMediaCharacteristics(mediaId, isImage);
+
+                    if(mediaInfosExist)
+                    {
+                        const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
+
+                        this.showMediaIncrustes(mediaInfos.incrustations);
+                        this.showMediaCriterions(mediaInfos.criterions);
+                        this.showMediaTags(mediaInfos.tags);
+                        this.showMediaAllergens(mediaInfos.allergens);
+                        this.showMediaAssociatedProducts(mediaInfos.products);
+                    }
+
+
+                    this.__$container.addClass('is_open');
+
                 }
-
-                else if(this.getMediaRegisteredInfos(mediaId).miniatureExist === false)
-                    miniature = `<img class="media_miniature not_found" src="/build/images/no-available-image.png">`;
-
-                else
-                    miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
-
-
-
-                if( isImage )
-                    this.__$location.find('.media_type').text('image');
-
-                else
-                    this.__$location.find('.media_type').text('video');
-
-                this.__$location.find('.media_miniature_container').html( miniature );
-                this.__$location.find('.media_title').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
-                this.__$location.find('.media_validity_container .media_diff_start').text( $(e.currentTarget).parents('.card').data('media_diff_start') );
-                this.__$location.find('.media_validity_container .media_diff_end').text( $(e.currentTarget).parents('.card').data('media_diff_end') );
-
-                if(this.getDaysDiffBetweenDates($(e.currentTarget).parents('.card').data('media_diff_end'), new Date()) <= 14)
-                    this.__$location.find('.media_validity_container .media_diff_end').addClass('date_coming_soon');
-
-                this.__$location.find('.media_infos_bottom .media_name_container .media_name').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
-
-                this.showMediaCharacteristics(mediaId, isImage);
-
-                if(mediaInfosExist)
-                {
-                    const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
-
-                    this.showMediaIncrustes(mediaInfos.incrustations);
-                    this.showMediaCriterions(mediaInfos.criterions);
-                    this.showMediaTags(mediaInfos.tags);
-                    this.showMediaAllergens(mediaInfos.allergens);
-                    this.showMediaAssociatedProducts(mediaInfos.products);
-                }
-
-
-                this.__$container.addClass('is_open');
 
             })
         }
@@ -107,6 +115,8 @@ class MediaInfoSheetHandler extends SubTool
         if(active)
         {
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
+
+                this.__toolIsActive = false;
 
                 this.__$container.removeClass('is_open');
                 this.__$location.find('.media_criterions_container').empty();
@@ -162,15 +172,19 @@ class MediaInfoSheetHandler extends SubTool
                 type: "POST",
                 data: {mediaId: mediaId},
                 success: (response) => {
+
                     console.log(response); //debugger
-                    resolve(true);
+
                     this.__mediasInfos.push({ id: mediaId, infos: response, miniatureExist: null });
+
+                    resolve(true);
 
                 },
                 error: (response, status, error) => {
 
-                    console.error(response); //debugger
                     resolve(false);
+
+                    console.error(response); //debugger
 
                 },
             })

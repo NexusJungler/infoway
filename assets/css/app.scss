@@ -44,7 +44,6 @@ img {
     display: none!important;
 }
 
-
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
@@ -56,7 +55,7 @@ img {
 
 @import 'custome/dropdown.scss';
 
-//@import 'Custome/display-down.scss';
+@import 'Custome/display_down1.scss';
 
 @import 'Custome/display_down.scss';
 

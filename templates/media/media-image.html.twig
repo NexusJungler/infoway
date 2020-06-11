@@ -1,9 +1,5 @@
 {% extends 'media.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('mediatheque') }}
-{% endblock %}
 
 {% block maincontent %}
     <section class="wrapper_tabcontent">
@@ -234,11 +230,11 @@
                         </div>
 
 
-                        <div class="medias_list_container">
+                        <div class="medias_list_container" data-customer="{{ (app.session.get('current_customer') is not null) ? app.session.get('current_customer').name | lower : '' }}">
 
                             {% for mediaInfos in mediasToDisplayed['medias'] %}
 
-                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'], 'media_allergens': mediaInfos['media_allergens'],
+                                {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],
                                     'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'],
                                     'media_type': mediaInfos['media_type'], 'miniature_exist': mediaInfos['miniature_exist'] } %}
 

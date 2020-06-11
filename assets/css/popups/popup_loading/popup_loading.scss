@@ -1,0 +1,19 @@
+.popup_loading_container{
+
+  height: 300px;
+  width: 300px;
+  left: 30%;
+
+  .popup{
+
+    &.is_open{
+
+      .popup_body{
+        height: 100%;
+      }
+
+    }
+
+  }
+
+}

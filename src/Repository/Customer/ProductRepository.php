@@ -2,13 +2,14 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\Site;
 use App\Repository\MainRepository;
 use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-
 /**
  * @method product|null find($id, $lockMode = null, $lockVersion = null)
  * @method product|null findOneBy(array $criteria, array $orderBy = null)
@@ -25,6 +26,7 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, product::class);
     }
 
+
     public function findProductWithTags($id)
     {
         return $this->createQueryBuilder('p')
@@ -34,32 +36,60 @@ class ProductRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
-        ;
+            ;
     }
+
 
     public function findProductsCriterions()
     {
 
         $productsCriterions = [];
-
         foreach ($this->findAll() as $product)
         {
 
+            $productsCriterions[$product->getName()] = [];
             $productsCriterions[$product->getId()] = [];
 
             foreach ($product->getCriterions()->getValues() as $criterion)
             {
+                $productsCriterions[$product->getName()][] = $criterion->getName();
                 $productsCriterions[$product->getId()][] = $criterion->getName();
             }
 
         }
 
         return $productsCriterions;
+    }
+
+    public function getAllProductsWhereCriterionDoesNotAppear(Criterion $criterion){
+
+        $criterionProductsIds = $criterion->getProducts()->filter(function(Product $product){
+            return $product->getId() ;
+        });
+
+        return $criterionProductsIds->count() <1 ? $this->findAll() : $this->getProductsWhereIdNotIn($criterionProductsIds->getValues() );
+    }
+
+
+    public function getProductsWhereIdNotIn(array $ids){
+
+        return  $this->createQueryBuilder('p')
+            ->where('p.id NOT IN ( :ids )')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getAllProductsIds() : array {
+
+        return array_map(
+            function( Product $product ){ return $product->getId() ; }
+            ,  $this->findAll() ) ;
 
     }
 
     // Eureka --> Surcharger la Méthode findAll() pour contrôler le lazy load !!
-
     // /**
     //  * @return product[] Returns an array of product objects
     //  */
@@ -76,7 +106,6 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
-
     /*
     public function findOneBySomeField($value): ?product
     {

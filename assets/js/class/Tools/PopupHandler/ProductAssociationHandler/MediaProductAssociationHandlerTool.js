@@ -9,13 +9,15 @@ class MediaProductAssociationHandlerTool extends SubTool
         super();
         //this.__name = "MediaProductAssociationHandlerTool";
         this.__name = this.constructor.name; // get name by constructor
-        this.__$productList = $('.associate_product-popup .product-choice-list');
-        this.__$associatedList = $('.associate_product-popup .product-associated-list');
+        this.__$productList = $('.popup_associate_product .product_choice_list');
+        this.__$associatedList = $('.popup_associate_product .product_associated_list');
         this.__$mediasCollection = $('.medias_collection');
-        this.__$location = $('.associate_product-popup');
+        this.__$container = $('.popup_associate_product_container');
+        this.__$location = $('.popup_associate_product');
         this.__currentMedia = null;
         this.__currentPos = null;
         this.__mediasAssociationInfo = [];
+        this.__isUpload = false;
     }
 
     addItemInList(item)
@@ -23,7 +25,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         if( this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).length < 1 )
         {
             let newItem = `<tr data-product_id="${ item.productId }" data-product_criterions="${ item.productCriterions }">
-                                            <td class="product-name">${ item.name }</td>
+                                            <td class="product_name">${ item.name }</td>
                                             <td><button class="remove_item">X</button></td>
                                         </tr>`;
 
@@ -34,7 +36,7 @@ class MediaProductAssociationHandlerTool extends SubTool
     removeItemFromList(item)
     {
         this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).remove();
-        $(`.edit_media_info .associated-products-container span[data-product='${ item.productId }']`).remove();
+        $(`.edit_media_info .associated_products_container span[data-product='${ item.productId }']`).remove();
     }
 
     updateMediaAssociatedProducts(mediaInfos)
@@ -48,13 +50,18 @@ class MediaProductAssociationHandlerTool extends SubTool
         else
             this.__mediasAssociationInfo[ registeredMediaInfosIndex ].products = mediaInfos.products;
 
-        let mediaIndex = this.__$mediasCollection.find(`.media_name[value='${ mediaInfos.media }']`).parents('li').data('index');
+        if(this.__isUpload)
+        {
 
-        $(`#medias_list_medias_${mediaIndex}_products input[type='checkbox']`).each( (index, input) => {
+            let mediaIndex = this.__$mediasCollection.find(`.media_name[value='${ mediaInfos.media }']`).parents('li').data('index');
 
-            $(input).attr('checked', ( mediaInfos.products.indexOf( parseInt($(input).val()) ) !== -1 ) );
+            $(`#medias_list_medias_${mediaIndex}_products input[type='checkbox']`).each( (index, input) => {
 
-        } )
+                $(input).attr('checked', ( mediaInfos.products.indexOf( parseInt($(input).val()) ) !== -1 ) );
+
+            } )
+
+        }
 
     }
 
@@ -63,11 +70,17 @@ class MediaProductAssociationHandlerTool extends SubTool
     {
         if(active)
         {
-            $('.medias-list-container').on('click.onClickOnProductAssociationShortcutShowModal', '.card ')
+            this.__parent.getMediasContainer().on('click.onClickOnProductAssociationShortcutShowModal', '.shortcut_product_association', e => {
+
+                this.__currentMedia = $(e.currentTarget).parents('card').find('.media_name');
+
+                this.__$container.addClass('is_open');
+
+            })
         }
         else
         {
-
+            this.__parent.getMediasContainer().off('click.onClickOnProductAssociationShortcutShowModal', '.media_miniature');
         }
 
         return this;
@@ -86,19 +99,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                 this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
 
                 // check if media is already associated with product (in this case, update popup)
-                let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
-                if(registeredMediaInfosIndex !== -1)
-                {
-                    this.__mediasAssociationInfo[ registeredMediaInfosIndex ].products.forEach( (id, index) => {
-
-                        const productId = id;
-                        this.__$productList.find(`tr[data-product_id='${ productId }'] .choice_product`).prop('checked', true);
-                        const productName = this.__$productList.find(`tr[data-product_id='${ id }'] .product_name`).text();
-                        const productCriterions = this.__$productList.find(`tr[data-product_id='${ id }']`).data('product_criterions');
-                        this.addItemInList( { name: productName, productId: productId, productCriterions: productCriterions } );
-
-                    } )
-                }
+                this.getMediaAssociationInfos();
 
                 this.__$location.find('.modal-title-container .media_name').text( this.__currentMedia );
                 this.__$location.fadeIn();
@@ -113,22 +114,45 @@ class MediaProductAssociationHandlerTool extends SubTool
         return this;
     }
 
+
+    getMediaAssociationInfos()
+    {
+
+        let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
+        if(registeredMediaInfosIndex !== -1)
+        {
+            this.__mediasAssociationInfo[ registeredMediaInfosIndex ].products.forEach( (id, index) => {
+
+                const productId = id;
+                this.__$productList.find(`tr[data-product_id='${ productId }'] .choice_product`).prop('checked', true);
+                const productName = this.__$productList.find(`tr[data-product_id='${ id }'] .product_name`).text();
+                const productCriterions = this.__$productList.find(`tr[data-product_id='${ id }']`).data('product_criterions');
+                this.addItemInList( { name: productName, productId: productId, productCriterions: productCriterions } );
+
+            } )
+        }
+
+    }
+
+
     onClickOnCloseButtonCloseProductAssociationModal(active)
     {
 
         if(active)
         {
-            $('.associate_product-popup .close').on('click.onClickOnCloseButtonCloseProductAssociationModal', e => {
+            $('.popup_associate_product .close_modal_button').on('click.onClickOnCloseButtonCloseProductAssociationModal', e => {
 
-                $('.add-popup').css({ 'z-index': '' });
-                this.__$location.fadeOut();
+                //$('.add-popup').css({ 'z-index': '' });
+                //this.__$location.fadeOut();
+
+                this.__$container.removeClass('is_open');
 
                 // reset
                 this.__$productList.find('.choice_product').prop('checked', false);
                 this.__$location.find('.select_all_products').prop('checked', false);
                 this.__$associatedList.empty();
 
-                if( $(e.currentTarget).hasClass('cancel') )
+                if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
                 {
                     this.updateMediaAssociatedProducts( { media: this.__currentMedia, products: [] } );
                 }
@@ -137,7 +161,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         }
         else
         {
-            $('.associate_product-popup .close').off('click.onClickOnCloseButtonCloseProductAssociationModal');
+            $('.popup_associate_product .close_modal_button').off('click.onClickOnCloseButtonCloseProductAssociationModal');
         }
 
         return this;
@@ -157,7 +181,7 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                     productsToMedia.push( $(element).data('product_id') );
 
-                    if( $(`.edit_media_info #${this.__currentPos} .associated-products-container span[data-product='${ $(element).data('product_id') }']`).length === 0 )
+                    if( this.__isUpload && $(`.edit_media_info #${this.__currentPos} .associated-products-container span[data-product='${ $(element).data('product_id') }']`).length === 0 )
                     {
                         $(`<span>`, {
                             text: $(element).find('.product-name').text(),
@@ -178,10 +202,10 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                 } );
 
-                if( this.__$associatedList.find('tr').length === 0 )
+                if( this.__isUpload && this.__$associatedList.find('tr').length === 0 )
                 {
-                    $(`.edit_media_info #${this.__currentPos} .associated-products-container`).empty();
-                    $(`.edit_media_info #${this.__currentPos} .criterions-affectation-container`).empty();
+                    $(`.edit_media_info #${this.__currentPos} .associated_products_container`).empty();
+                    $(`.edit_media_info #${this.__currentPos} .criterions_affectation_container`).empty();
                 }
 
                 this.updateMediaAssociatedProducts( { media: this.__currentMedia, products: productsToMedia } );
@@ -190,7 +214,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         }
         else
         {
-            $('.associate_product-popup .validation-btn').off('click.onClickOnValidationButtonAddProductInAssociateList');
+            $('.associate_product_popup .validation_btn').off('click.onClickOnValidationButtonAddProductInAssociateList');
         }
 
         return this;
@@ -283,7 +307,7 @@ class MediaProductAssociationHandlerTool extends SubTool
     {
         if(active)
         {
-            this.__$location.on('change.onCategorySelectionAddFilterOnProductList', '.product-category-choice', e => {
+            this.__$location.on('change.onCategorySelectionAddFilterOnProductList', '.product_category_choice', e => {
 
                 const category = $(e.currentTarget).val();
 
@@ -306,7 +330,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         }
         else
         {
-            this.__$location.off('change.onCategorySelectionAddFilterOnProductList', '.product-category-choice');
+            this.__$location.off('change.onCategorySelectionAddFilterOnProductList', '.product_category_choice');
         }
 
         return this;

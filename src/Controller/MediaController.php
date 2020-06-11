@@ -106,8 +106,6 @@ class MediaController extends AbstractController
 
             list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
 
-            $mediasToDisplayed['customer'] = strtolower($this->sessionManager->get('current_customer')->getName());
-
             return new JsonResponse([
                 'mediasToDisplayed' => $mediasToDisplayed,
                 'numberOfPages' => $numberOfPages,
@@ -122,7 +120,7 @@ class MediaController extends AbstractController
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
-        //dump($numberOfPages);
+        //dd($mediasToDisplayed);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');

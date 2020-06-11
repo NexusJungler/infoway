@@ -35,13 +35,13 @@ class MediaRepository extends ServiceEntityRepository
 
     use MainRepository;
 
-    private Serializer $serializer;
+private Serializer $serializer;
 
-    private MediasHandler $mediasHandler;
+private MediasHandler $mediasHandler;
 
-    private AllergenRepository $allergenRepository;
+private AllergenRepository $allergenRepository;
 
-    private ParameterBagInterface $parameterBag;
+private ParameterBagInterface $parameterBag;
 
     public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler, AllergenRepository $allergenRepository, ParameterBagInterface $parameterBag)
     {
@@ -71,12 +71,12 @@ class MediaRepository extends ServiceEntityRepository
     {
 
         $medias = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
-                            ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
-                            ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
-                            ->andWhere("( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = true AND i.incrustes IS EMPTY) ) OR (v.containIncruste = true AND v.incrustes IS EMPTY)")
-                            ->orderBy("m.id", "ASC")
-                            ->getQuery()
-                            ->getResult();
+            ->leftJoin(Image::class, "i", "WITH", "m.id = i.id")
+            ->leftJoin(Video::class, "v", "WITH", "m.id = v.id")
+            ->andWhere("( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = true AND i.incrustes IS EMPTY) ) OR (v.containIncruste = true AND v.incrustes IS EMPTY)")
+            ->orderBy("m.id", "ASC")
+            ->getQuery()
+            ->getResult();
 
         foreach ($medias as $media)
         {
@@ -158,8 +158,8 @@ class MediaRepository extends ServiceEntityRepository
                 {
 
                     $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                       $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
-                                                       . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+                        $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                        . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                     $orderedMedias['medias'][$index] = [
                         'media' => null,
@@ -168,7 +168,6 @@ class MediaRepository extends ServiceEntityRepository
                         'media_tags' => [],
                         'media_criterions' => [],
                         'media_categories' => [],
-                        'media_allergens' => [],
                         'miniature_exist' => $mediaMiniatureExist,
                     ];
 
@@ -179,6 +178,7 @@ class MediaRepository extends ServiceEntityRepository
 
                     foreach ($media->getProducts()->getValues() as $product)
                     {
+
                         $orderedMedias['medias'][$index]['media_products'][] = $product->getId();
 
                         if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))
@@ -195,7 +195,7 @@ class MediaRepository extends ServiceEntityRepository
                                 $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
                         }
 
-                        foreach ($product->getProductAllergens()->getValues() as $allergen)
+                        foreach ($product->getAllergens()->getValues() as $allergen)
                         {
                             if(!in_array($allergen->getAllergenId(), $orderedMedias['medias'][$index]['media_tags']))
                                 $orderedMedias['medias'][$index]['media_tags'][] = $allergen->getAllergenId();
@@ -275,7 +275,7 @@ class MediaRepository extends ServiceEntityRepository
                     $datas['tags'][] = $tag->getName();
             }
 
-            foreach ($product->getProductAllergens()->getValues() as $allergen)
+            foreach ($product->getAllergens()->getValues() as $allergen)
             {
                 $allergenId = $allergen->getAllergenId();
                 $allergen = $this->allergenRepository->find($allergenId);
@@ -310,8 +310,8 @@ class MediaRepository extends ServiceEntityRepository
     {
 
         $query = $this->_em->createQuery($query)
-                           ->setFirstResult($limit * ($page - 1))
-                           ->setMaxResults($limit);
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
 
         return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
 
