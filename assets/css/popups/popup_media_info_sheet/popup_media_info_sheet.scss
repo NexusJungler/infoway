@@ -1,15 +1,21 @@
 .popup_media_info_sheet_container{
   height: 1200px;
 
+  .popup_header{
+    height: 5%;
+    border: 1px solid #899CA4;
+    border-radius: 7px 7px 0 0;
+  }
+
+
+  .popup{
+
+  }
   &.is_open{
 
     .popup{
 
-      .popup_header{
-        height: 5%;
-        border: 1px solid #899CA4;
-        border-radius: 7px 7px 0 0;
-      }
+
 
       .popup_body{
         display: flex;

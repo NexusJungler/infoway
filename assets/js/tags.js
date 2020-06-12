@@ -7,15 +7,15 @@ import "../css/settings/tags/edit_tags.scss";
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-
+require('./tags/edit_tags.js');
+require('./tags/list_tags.js');
 
 /** page create tags**/
 
 
 $(function(){
 
-    require('./tags/edit_tags.js');
-    require('./tags/list_tags.js');
+
 
 //Search Filterable table
     $("#site-search").on("keyup", function() {

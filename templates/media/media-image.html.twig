@@ -58,13 +58,13 @@
                                     <button type="button" class="btn delete_media_btn media_action_btn" disabled><i class="fas fa-trash"></i>Supprimer</button>
                                 </div>
 
-                            </div>
+                            </div >
 
                         </div>
 
                     </div>
 
-                    <div class="body">
+                    <div class="body" >
 
                         <div class="filters_container">
 
@@ -114,61 +114,65 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-
                                     </div>
 
-                                    <div class="filter_by_products_container filter_by_characteristics_item">
+                                    <div class="filter_container ">
+                                        <div class="filter_by_products_container filter_by_characteristics_item">
 
-                                        <div class="apply_filter_container">
-                                            <input type="checkbox" class="apply_filter" data-target="products">
+                                            <div class="apply_filter_container">
+                                                <input type="checkbox" class="apply_filter" data-target="products">
+                                            </div>
+
+                                            <div class="filter_select_container">
+                                                <select id="filter_by_products">
+                                                    <option value="" selected>Produits</option>
+                                                    {% for product in products %}
+                                                        <option value="{{ product.id }}">{{ product.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
                                         </div>
 
-                                        <div class="filter_select_container">
-                                            <select id="filter_by_products">
-                                                <option value="" selected>Produits</option>
-                                                {% for product in products %}
-                                                    <option value="{{ product.id }}">{{ product.name }}</option>
-                                                {% endfor %}
-                                            </select>
+                                        <div class="filter_by_criterions_container filter_by_characteristics_item">
+
+                                            <div class="apply_filter_container">
+                                                <input type="checkbox" class="apply_filter" data-target="criterions">
+                                            </div>
+
+                                            <div class="filter_select_container">
+                                                <select id="filter_by_criterions">
+                                                    <option value="" selected>Critères</option>
+                                                    {% for criterion in criterions %}
+                                                        <option value="{{ criterion.id }}">{{ criterion.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
                                         </div>
 
+                                        <div class="filter_by_tags_container filter_by_characteristics_item">
+
+                                            <div class="apply_filter_container">
+                                                <input type="checkbox" class="apply_filter" data-target="tags">
+                                            </div>
+
+                                            <div class="filter_select_container">
+                                                <select id="filter_by_tags">
+                                                    <option value="" selected>Tags</option>
+                                                    {% for tag in tags %}
+                                                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </div>
                                     </div>
 
-                                    <div class="filter_by_criterions_container filter_by_characteristics_item">
 
-                                        <div class="apply_filter_container">
-                                            <input type="checkbox" class="apply_filter" data-target="criterions">
-                                        </div>
 
-                                        <div class="filter_select_container">
-                                            <select id="filter_by_criterions">
-                                                <option value="" selected>Critères</option>
-                                                {% for criterion in criterions %}
-                                                    <option value="{{ criterion.id }}">{{ criterion.name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="filter_by_tags_container filter_by_characteristics_item">
-
-                                        <div class="apply_filter_container">
-                                            <input type="checkbox" class="apply_filter" data-target="tags">
-                                        </div>
-
-                                        <div class="filter_select_container">
-                                            <select id="filter_by_tags">
-                                                <option value="" selected>Tags</option>
-                                                {% for tag in tags %}
-                                                    <option value="{{ tag.id }}">{{ tag.name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-
-                                    </div>
                                     <div class="open_filter_content">
-                                        <button class="btn " type="button"><i class="fas fa-plus"></i></button>
+                                        <button class="btn btn_show_filter btn_show_filter_open " type="button"><i class="fas fa-plus"></i></button>
                                     </div>
 
                                     <div class="filter_validation_btn_container">
@@ -178,6 +182,8 @@
                                 </div>
 
                             </div>
+
+
 
                             <div class="right_filter_container">
 
