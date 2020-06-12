@@ -13,7 +13,7 @@
                     <p class="title">Associer des produits au média :</p>
                 </div>
 
-                <div class="item medias_number_container">
+                <div class="item media_name_container">
                     <p class="media_name"></p>
                 </div>
 
@@ -78,10 +78,10 @@
 
                 <div class="container_body">
 
-                    <div class="container_body_item product_choice_list_container">
+                    <div class="container_body_item table products_choice_list_container">
 
-                        <table>
-                            <thead>
+                        <table class="table-custome">
+                            <thead class="thead-info">
                                 <tr>
                                     <th><input type="checkbox" class="select_all_products"></th>
                                     <th>Nom du produit</th>
@@ -91,18 +91,18 @@
                                 </tr>
                             </thead>
 
-                            <tbody class="product-choice-list">
+                            <tbody class="products_choice_list tbody tbody-content scrollbar-table">
                             {% for product in products %}
                                 <tr data-product_id="{{ product.id }}" data-category="{{ product.category.id }}" data-product_criterions="{{ productsCriterions[product.id] | join(', ') }}">
                                     <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
                                     <td class="product_name">{{ product.name }}</td>
                                     <td>{{ product.description }}</td>
-                                    <td>
+                                    <td class="criterions_col">
                                         {% for criterion in product.criterions %}
                                             <span>{{ criterion.name }}</span>
                                         {% endfor %}
                                     </td>
-                                    <td>
+                                    <td class="tags_col">
                                         {% for tag in product.tags %}
                                             <span>{{ tag.name }}</span>
                                         {% endfor %}
@@ -115,21 +115,21 @@
                     </div>
 
                     <div class="container_body_item chevron_right_container">
-                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-caret-right add_selected_products_in_associated_list"></i>
                     </div>
 
-                    <div class="container_body_item product_associated_list_container">
+                    <div class="container_body_item table products_associated_list_container">
 
-                        <table>
+                        <table class="table-custome">
 
-                            <thead>
+                            <thead class="thead-info">
                                 <tr>
-                                    <th>Produits à associer</th>
+                                    <th>Produits associés</th>
                                     <th></th>
                                 </tr>
                             </thead>
 
-                            <tbody class="product-associated-list">
+                            <tbody class="products_associated_list tbody tbody-content scrollbar-table">
 
                             </tbody>
 
@@ -150,7 +150,7 @@
             </div>
 
             <div class="actions_buttons_container">
-                <button class="btn validate_association_btn" type="button">Valider</button>
+                <button class="btn validate_association_btn" type="button" disabled>Valider</button>
             </div>
 
         </div>

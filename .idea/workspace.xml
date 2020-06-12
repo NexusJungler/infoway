@@ -3,10 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +257,7 @@
       <workItem from="1591013756617" duration="123654000" />
       <workItem from="1591602900458" duration="70904000" />
       <workItem from="1591793805741" duration="13942000" />
-      <workItem from="1591812407722" duration="30424000" />
+      <workItem from="1591812407722" duration="55109000" />
     </task>
     <servers />
   </component>
@@ -347,11 +352,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="442" y="-963" width="1378" height="1066" key="dock-window-3/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589206255393" />
-    <state x="666" y="139" width="602" height="801" key="find.popup" timestamp="1591883665402">
+    <state x="666" y="139" width="602" height="801" key="find.popup" timestamp="1591956874838">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="668" y="-941" width="587" height="801" key="find.popup/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1588676933192" />
-    <state x="666" y="139" width="602" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591883665402" />
+    <state x="666" y="139" width="602" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1591956874838" />
     <state x="2586" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590657509357" />
     <state x="2536" y="791" key="run.anything.popup" timestamp="1590599159773">
       <screen x="1920" y="0" width="1920" height="1080" />

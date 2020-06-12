@@ -5,7 +5,7 @@
         {% if (media_products is not empty) %}
             data-products="{{ media_products|join(', ') }}"
         {% else %}
-            data-product="none"
+            data-products="none"
         {% endif %}
 
         {% if (media_categories is not empty) %}
@@ -101,7 +101,7 @@
 
                 {% else %}
 
-                    <p>0 critères associés</p>
+                    <p>0 critères</p>
 
                 {% endif %}
 
@@ -117,7 +117,7 @@
 
                 {% else %}
 
-                    <p>0 tags associés</p>
+                    <p>0 tags</p>
 
                 {% endif %}
 

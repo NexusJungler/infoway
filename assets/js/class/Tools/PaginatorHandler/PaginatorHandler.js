@@ -139,6 +139,8 @@ class PaginatorHandler extends Tool
 
                 //this.reloadMediatheque();
 
+                $('.medias_list_container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
+
                 const mediasDisplayedType = $(".main-media").data("media_displayed");
 
                 this.pageNavigationIsActive = false;

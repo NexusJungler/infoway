@@ -1,11 +1,11 @@
 .popup_associate_product_container{
 
-  .popup{
+  &.is_open{
 
-    &.is_open{
+    .popup{
 
       .popup_header{
-        height: 5%;
+        height: 10%;
         border: 1px solid #899CA4;
         border-radius: 7px 7px 0 0;
       }
@@ -13,9 +13,10 @@
       .popup_body{
         display: flex;
         flex-direction: column;
-        background-color: #FFFFFF;
+        background-color: #F6F6F6;
         color: #000;
-        height: 90%;
+        height: 80%;
+        padding: 2rem;
 
         .popup_body_item{
           height: 100%;
@@ -27,6 +28,17 @@
               height: 10%;
               display: flex;
               flex-direction: row;
+
+              .filter_validation_btn_container{
+
+                .btn{
+                  cursor: pointer;
+                  background: #899CA4;
+                  border: none;
+                }
+
+              }
+
             }
 
             .container_body{
@@ -37,8 +49,9 @@
               .container_body_item{
                 height: 100%;
 
-                &.product_choice_list_container{
+                &.products_choice_list_container{
                   width: 1153px;
+                  max-width: 1153px;
 
                   table{
 
@@ -47,6 +60,37 @@
                     }
 
                     tbody{
+                      height: 606px;
+                      max-height: 606px;
+
+                      tr{
+                        height: 49px;
+                        background-color: #E0E3E4;
+
+                        &:nth-child(odd){
+                          background-color: #EAECED;
+
+                          td{
+                            border: 1px solid #EAECED;
+                          }
+
+                        }
+
+                        td{
+                          border: 1px solid #E0E3E4;
+
+                          &.criterions_col{
+                            width: 354px;
+                            max-width: 354px;
+                          }
+
+                          &.tags_col{
+                            width: 315px;
+                            max-width: 315px;
+                          }
+                        }
+
+                      }
 
                     }
 
@@ -55,19 +99,85 @@
                 }
 
                 &.chevron_right_container{
+                  width: 130px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
+                  i{
+                    font-size: 150px;
+                    color: #4D646D;
+                  }
 
                 }
 
-                &.product_associated_list_container{
+                &.products_associated_list_container{
                   width: 317px;
 
                   table{
 
                     thead{
                       height: 48px;
+
+                      tr{
+                        th{
+                          width: 100%;
+                        }
+                      }
+
                     }
 
                     tbody{
+                      height: 606px;
+                      max-height: 606px;
+
+                      tr {
+                        height: 49px;
+                        background-color: #F6F6F6;
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+
+                        &:nth-child(odd) {
+                          background-color: #FFF;
+                        }
+
+                        &.new_association{
+                          td{
+                            color: #4CAF50;
+                          }
+                        }
+
+                        &.dissociated{
+                          td{
+                            color: #FF0000;
+                            text-decoration: line-through;
+                          }
+                        }
+
+                        td{
+                          border: none;
+
+                          &.product_name_container{
+                            width: 90%;
+                            text-align: left;
+                          }
+
+                          &.dissociation_btn_container{
+                            width: 10%;
+
+                            button{
+                              background: #F57171;
+                              color: #FFF;
+                              border: 1px solid #FFF;
+                              border-radius: 25%;
+                            }
+
+                          }
+
+                        }
+
+                      }
 
                     }
 
@@ -86,7 +196,7 @@
       }
 
       .popup_footer{
-        height: 5%;
+        height: 10%;
       }
 
     }
