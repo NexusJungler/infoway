@@ -39,13 +39,14 @@ class MediaInfoSheetHandler extends SubTool
                     const isImage = $(e.currentTarget).hasClass('miniature_image');
 
                     let miniature = null;
+                    const mediaMediumMiniatureExist = $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist');
 
                     let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
 
                     if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
                     {
 
-                        if(await this.mediaFileExist(path))
+                        if(mediaMediumMiniatureExist)
                         {
                             miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
                             this.getMediaRegisteredInfos(mediaId).miniatureExist = true;

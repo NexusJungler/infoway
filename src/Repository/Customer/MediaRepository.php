@@ -157,9 +157,13 @@ private ParameterBagInterface $parameterBag;
                 foreach ($medias as $index => $media)
                 {
 
-                    $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                    $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
                         $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
                         . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+
+                    $mediaMiniatureMediumExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                          $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/medium/" . $media->getId() . "."
+                                                          . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                     $orderedMedias['medias'][$index] = [
                         'media' => null,
@@ -168,7 +172,8 @@ private ParameterBagInterface $parameterBag;
                         'media_tags' => [],
                         'media_criterions' => [],
                         'media_categories' => [],
-                        'miniature_exist' => $mediaMiniatureExist,
+                        'miniature_low_exist' => $mediaMiniatureLowExist,
+                        'miniature_medium_exist' => $mediaMiniatureMediumExist,
                     ];
 
                     foreach ($media->getTags()->getValues() as $tag)

@@ -53,10 +53,10 @@
 
     <div class="card_body">
 
-        <div class="media_miniature_container" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
-                {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
+        <div class="media_miniature_container" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
+                {% if media_type is same as('image') %} data-dpi="72" {% else %} data-codec="{{ media.videoCodec }}" {% endif%} >
 
-            {% if miniature_exist is same as(false) %}
+            {% if miniature_low_exist is same as(false) %}
 
                 <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
