@@ -50,8 +50,14 @@ img {
     @return #{$remSize}rem;
 }
 
-/************************* CUSTOM CSS  ***************************/
+/************************* Style CSS  ***************************/
+
+/** button style **/
+@import "general/button.scss";
+
+/** style table **/
 @import 'custome/table.scss';
+
 
 @import 'custome/dropdown.scss';
 
@@ -63,7 +69,6 @@ img {
 
 @import 'custome/form.scss';
 
-@import "custome/button.scss";
 
 
 /************************* CUSTOM ICON  ***************************/

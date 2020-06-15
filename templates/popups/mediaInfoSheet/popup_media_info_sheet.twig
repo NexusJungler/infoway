@@ -1,4 +1,4 @@
-<section class="popup_container popup_media_info_sheet_container">
+<section class="popup_container popup_media_info_sheet_container" id="popup_media_info_sheet_container">
 
     <article class="popup popup_media_info_sheet">
 
@@ -67,12 +67,12 @@
                                     <div class="icon_container">
                                         <i class="fas fa-euro-sign"></i>
                                     </div>
-                                    <span>Incrustations</span>
+                                    <span class="container_header_title">Incrustations</span>
                                 </div>
 
                                 <div class="container_body">
 
-                                    <table>
+                                    <table class="container_table_media">
                                         <thead>
                                             <tr>
                                                 <th></th>
@@ -104,7 +104,7 @@
                         <div class="container">
 
                             <div class="container_child">
-                                <span>Nom du produit :</span>
+                                <span class="container_child_title">Nom du produit :</span>
                             </div>
                             <div class="container_child media_name_container">
                                 <span class="media_name"></span>
@@ -115,7 +115,7 @@
                         <div class="container media_characteristics_container">
 
                             <div class="container_child">
-                                <span>Caractéristiques :</span>
+                                <span class="container_child_title">Caractéristiques :</span>
                             </div>
 
                             <div class="container_child">
@@ -127,7 +127,7 @@
                         <div class="container associated_data_container">
 
                             <div class="container_child">
-                                <span>Critères</span>
+                                <span class="container_child_criteres"> Critères</span>
                             </div>
 
                             <div class="container_child media_criterions_container">
@@ -138,7 +138,8 @@
 
                         <div class="container associated_data_container">
                             <div class="container_child">
-                                <span>TAGS</span>
+                                <p class="container_child_tags btn_tags" >
+                                    <span class="mini-cercle"><i class="fas fa-plus"></i></span>TAGS</p>
                             </div>
 
                             <div class="container_child media_tags_container">
@@ -148,7 +149,7 @@
 
                         <div class="container associated_data_container">
                             <div class="container_child">
-                                <span>Allergènes</span>
+                                <span class="container_child_allergenes">Allergènes</span>
                             </div>
 
                             <div class="container_child media_allergens_container">
@@ -159,8 +160,10 @@
                         <div class="container media_diffusion_spaces_container">
 
                             <div class="container_header">
-                                <img class="icon" src="{{ asset('/build/images/media_diffusion_icon.png') }}" alt="diffusion icon">
-                                <span>En diffusion sur : </span>
+                                <div class="icon_container">
+                                    <i class="fas fa-spinner"></i>
+                                </div>
+                                <span class="containeer_header_info" >En diffusion sur : </span>
                                 <i class="arrow fas fa-caret-up"></i>
                             </div>
 
@@ -180,7 +183,7 @@
                                 <div class="icon_container">
                                     <i class="icon fas fa-link"></i>
                                 </div>
-                                <span>Produits associés</span>
+                                <span class="container_header_title">Produits associés</span>
                             </div>
 
                             <div class="container_body">

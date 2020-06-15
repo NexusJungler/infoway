@@ -220,9 +220,9 @@ class MediaInfoSheetHandler extends SubTool
 
             let newElement= `<tr>
                                  <td>${productName}</td> 
-                                 <td><input type="checkbox" ${ incrustesTypes.includes('Prix') ? 'checked' : '' }></td>  
-                                 <td><input type="checkbox" ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }></td>  
-                                 <td><input type="checkbox" ${ incrustesTypes.includes('Texte') ? 'checked' : '' }></td>  
+                                 <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Prix') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
+                                 <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
+                                 <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Texte') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
                              </tr>`;
 
             $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )
@@ -249,7 +249,7 @@ class MediaInfoSheetHandler extends SubTool
 
         mediaTagsNames.forEach( (mediaTagName) => {
 
-            const newElement = `<span>${mediaTagName}</span>`;
+            const newElement = ` <p class="tag container-tags"> <span class="mini-cercle" style="background: ;"></span><span class="current-tags-name">${mediaTagName}</span></p>`;
 
             $(newElement).appendTo( this.__$location.find('.media_tags_container') );
 
