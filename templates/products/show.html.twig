@@ -2,7 +2,7 @@
 
 {% block title %} Produits {% endblock %}
 
-{% block stylesheets %}
+ {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('show_products') }}
 {% endblock %}
@@ -25,283 +25,206 @@
 
             <section class="wrapper_tabcontent">
                 <div id="tab-products" class="tab-content current content-product">
-                    <form method="post" action="{{ path('products::delete') }}" id="form_delete_product" class="table ">
-                        {#<article class="tab-content-title">#}
-                            {#<h3 class="title">Produits</h3>#}
-                        {#</article>#}
 
-                        <article class="display setting-display ">
-                            <div class="display-content">
+                    {#<article class="tab-content-title">#}
+                        {#<h3 class="title">Produits</h3>#}
+                    {#</article>#}
 
-                                <div class="display-content-columns">
-                                    <div class="display-content-poste">
-                                        <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                                        <div class="display-content-down">
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">Nom
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="nom">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">Format
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="format">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">Categorie
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="categorie">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">Description
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="description">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">Tags à choix unique
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="unique">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">tags
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="tags">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox"> Type de prix
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="type">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox">Allergène
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="allergene">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox"> Date de début
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="debut">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-                                            <div class="product-select-col">
-                                                <label class="mutliselect-chkbox"> Date de fin
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="fin">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            </div>
-
-                                        </div>
-                                    </div>
+                     <div class="display-columns">
+                        <div class="display-content">
+                            <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                            <div class="display-down">
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox">Nom
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="nom">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
                                 </div>
-
-                                <div class="display-btn">
-                                    <p>Produits : </p>
-                                    <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
-                                    <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
-                                    {#<button><a id="duplicate" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>#}
-                                    <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
-                                    <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Type de prix
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="type">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
                                 </div>
-
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox">Format
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="format">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox">tags
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="tags">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
                             </div>
-                        </article>
+                        </div>
+                    </div>
 
-                        <article class="content-product-show-table">
-                            <table id="list" class="table-custome ">
-                                <thead class="thead-info">
+                    <article class="display setting-display ">
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
+                                <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
+                                {#<button><a id="duplicate" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>#}
+                                <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
+                                <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+                        </div>
+                    </article>
 
-                                    <tr>
-                                        <th>
-                                            <label class="container-input">
-                                                <input type="checkbox" name="" class="chkbox-tag" id="" data-tag="">
-                                                <span class="container-rdo-tags"></span>
-                                            </label>
-                                        </th>
 
-                                        <th>
-                                            <select id="diff">
-                                                <option>Diff.</option>
-                                            </select>
-                                        </th>
+                    <select id="category">
+                        <option>TOUTES</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
 
-                                        <th class="nom">Nom</th>
+                    <form method="post" action="{{ path('products::delete') }}" class="table">
 
-                                        <th><i class="fas fa-pen"></i></th>
+                    
 
-                                        <th class="format">
-                                            <select id="form">
-                                                <option>Form.</option>
-                                                {#{% for category in categories %}#}
-                                                    {#<option value="{{ category.id }}">{{ category.name }}</option>#}
-                                                {#{% endfor %}#}
-                                            </select>
-                                        </th>
-
-                                        <th class="category">
-                                            <select id="category">
-                                                <option>Catégorie</option>
-                                                {% for category in categories %}
-                                                    <option value="{{ category.id }}">{{ category.name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </th>
-
-                                        <th class="description">Description</th>
-
-                                        <th>Critères</th>
-
-                                        <th class="tags">
-                                            <select id="form">
-                                                <option>tags</option>
-                                                {#{% for category in categories %}#}
-                                                    {#<option value="{{ category.id }}">{{ category.name }}</option>#}
-                                                {#{% endfor %}#}
-                                            </select>
-                                        </th>
-
-                                        <th class="type">type de prix</th>
-
-                                        <th class="allergenes">
-                                            <select id="form">
-                                                <option>Allergènes</option>
-                                                {#{% for category in categories %}#}
-                                                {#<option value="{{ category.id }}">{{ category.name }}</option>#}
-                                                {#{% endfor %}#}
-                                            </select>
-                                        </th>
-                                        <th >Date de dèbut</th>
-                                        <th class="fin" >Date de fin</th>
-                                        <th>Visuel</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tbody tbody-content scrollbar-table">
-                                {% for product in products %}
-                                    <tr>
-                                        <td>
-                                            <label class="container-input">
-                                                <input type="checkbox" class="chkbox-produits" name="products[{{ product.id }}]">
-                                                <span class="container-rdo-tags"></span>
-                                            </label>
-                                        </td>
-                                        <td><span class="bloc-icone"><i class="fas fa-spinner"></i></span></td>
-                                        <td class="nom">{{ product.name }}</td>
-                                        <td><i class="fas fa-pen"></i></td>
-                                        <td class="format">{{ product.amount }}</td>
-
-                                        {% if(product.category.name is defined)  %}
-                                            <td class="category">{{ product.category.name }}</td>
-                                        {% else %}
-                                            <td class="category">Orphelin</td>
-                                        {% endif %}
-
-                                        <td class="description" > <p>{{ product.description }}</p></td>
-                                        <td>{{ product.note }}</td>
-                                        <td class="tags" >
-                                            {% for tag in product.tags %}
-                                                <p class="container-tags">
-                                                    <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }}
-                                                </p>
-                                            {% endfor %}
-                                        </td>
-                                        <td class="type">{{ product.priceType.name }}</td>
-                                        <td class="allergenes">
-                                            {% for allergen in product.allergens %}
-                                                {# <span>{{ allergen.name }}</span> #}
-                                                <img src="/pictogram/{{ allergen.pictogram }}" alt="" class="image-td">
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{ product.start |date('Y-m-d') }}</td>
-                                        <td class="fin">{{ product.end |date('d-m-Y') }}</td>
-                                        <td><i class="fas fa-eye"></i></td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-
-                        </article>
-
+                        <table id="list" class="table-custome ">
+                            <thead class="thead-info">
+                                <tr>
+                                    <th>
+                                        <label class="container-input">
+                                            <input type="checkbox" name="" class="chkbox-tag" id="" data-tag="">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </th>
+                                    <th>Diff.</th>
+                                    <th class="nom">Nom</th>
+                                    <th><i class="fas fa-pen"></i></th>
+                                    <th>Form.</th>
+                                    <th>Catégorie</th>
+                                    <th>Description</th>
+                                    <th>mention</th>
+                                    <th>tags</th>
+                                    <th>type de prix</th>
+                                    <th>Allergènes</th>
+                                    <th>Date de fin</th>
+                                    <th>Visuel</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content scrollbar-table">
+                            {% for product in products %}
+                                <tr>
+                                    <td>
+                                        <label class="container-input">
+                                            <input type="checkbox" class="chkbox-produits" name="products[{{ product.id }}]">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </td>
+                                    <td><span class="bloc-icone"><i class="fas fa-spinner"></i></span></td>
+                                    <td class="nom">{{ product.name }}</td>
+                                    <td><i class="fas fa-pen"></i></td>
+                                    <td>{{ product.amount }}</td>
+                                    <td>{{ product.category.name }}</td>
+                                    <td>{{ product.description }}</td>
+                                    <td>{{ product.note }}</td>
+                                    <td class="tag">
+                                        {% for tag in product.tags %}
+                                        <p class="container-tags">
+                                            <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }} 
+                                        </p>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ product.priceType.name }}</td>
+                                    <td class="tag">
+                                        {% for allergen in product.allergens %}
+                                            {# <span>{{ allergen.name }}</span> #}
+                                            <img src="/pictogram/{{ allergen.pictogram }}" alt"" class="image-td">
+                                        {% endfor %}
+                                    </td>
+                                    {# <td>{{ product.start |date('Y-m-d') }}</td> #}
+                                    <td>{{ product.end |date('d-m-Y') }}</td>
+                                    <td><i class="fas fa-eye"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </form>
                 </div>
             </section>
 
+            <article class="add-popup add-popup2 upload_popup">
+
+                <div class="modal">
+
+                    <div class="header-modal">
+                        <div>
+                            <p class="upload-title"></p>
+                            <button type="button" class="btn btn-popupclose2 ">X</button>
+                        </div>
+                    </div>
+
+                    <div id="popup_properties" >
+        <h1>Sélectionnez les éléments du produit à conserver</h1>
+        <form action="{{ path('product::duplicate', {'product': 3}) }}" method="post">
+            <table class="center">
+                <tr>
+                    <td><input type="checkbox" name="product[category]"></td>
+                    <td>Catégorie</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[priceType]"></td>
+                    <td>Type de prix</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[amount]"></td>
+                    <td>Quantié</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[description]"></td>
+                    <td>Description</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[note]">
+                    </td><td>Mention</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[start]"></td>
+                    <td>Début de validité</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[end]"></td>
+                    <td>Fin de validité</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[tags]"></td>
+                    <td>Tags</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[allergens]"></td>
+                    <td>Allergènes</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="product[logo]"></td>
+                    <td>Logo</td>
+                </tr>
+            </table>
+            <button id="properties_validate" type="submit">Valider</button>
+        </form>
+    </div>
+
+                </div>
+            </article>
+
+
+
         </div>    
     <main>
+    
 
-    <section>
-        <article class="add-popup add-popup2 upload_popup">
+    
 
-            <div class="modal">
+    
 
-                <div class="header-modal">
-                    <div>
-                        <p class="upload-title"></p>
-                        <button type="button" class="btn btn-popupclose2 ">X</button>
-                    </div>
-                </div>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('show_products') }}
+    {% endblock javascripts %}
 
-                <div id="popup_properties" >
-                    <h1>Sélectionnez les éléments du produit à conserver</h1>
-                    <form action="{{ path('product::duplicate', {'product': 3}) }}" id="form_duplicate_product" method="post">
-                            <table class="center">
-                            <tr>
-                                <td><input type="checkbox" name="product[category]"></td>
-                                <td>Catégorie</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[priceType]"></td>
-                                <td>Type de prix</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[amount]"></td>
-                                <td>Quantié</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[description]"></td>
-                                <td>Description</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[note]">
-                                </td><td>Mention</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[start]"></td>
-                                <td>Début de validité</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[end]"></td>
-                                <td>Fin de validité</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[tags]"></td>
-                                <td>Tags</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[allergens]"></td>
-                                <td>Allergènes</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[logo]"></td>
-                                <td>Logo</td>
-                            </tr>
-                        </table>
-                        <button id="properties_validate" type="submit">Valider</button>
-                    </form>
-                </div>
-
-            </div>
-        </article>
-    </section>
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('show_products') }}
-{% endblock javascripts %}

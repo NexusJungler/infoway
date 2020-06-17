@@ -8,13 +8,11 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
             <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+            <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
+            {# <link href="node_modules/select2/dist/css/select2.min.css" rel="stylesheet" /> #}
             <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" rel="stylesheet">
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
             {{ encore_entry_link_tags('app') }}
-
-            {#<link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">#}
-            {# <link href="node_modules/select2/dist/css/select2.min.css" rel="stylesheet" /> #}
             {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
     </head>
@@ -35,7 +33,6 @@
                     <div class="hamburger"><div></div></div>
                 </div>
                 <div id="header__block">
-
                     <div class="header__block--left">
                         <div class="header__gradient-left">
                             <div class="logo__enseigne">
@@ -57,6 +54,27 @@
                             </div>
                         </div>
                     </div>
+{# 
+                    <div class="header__gradient-center">
+                        <div class="update">
+                            <img src="{{ asset('/build/images/Logo_SuperWildCoffee.png') }}" alt="Logo_SuperWildCoffee">
+                            <div class="all__enseigne-site">
+                                <form class="enseigne-site">
+                                    <select name="enseigne-site" id="enseigne-site">
+                                        <option value="">Sélectionner l'enseigne</option>
+                                    </select><br>
+                                    <p class="number__enseigne-site"><span >7</span>Sites<p>
+                                    <div>
+                                        <button class="update__all">Mettre à jour l'enseigne</button>  
+                                    </div>
+                                    <div>
+                                        <button class="btn-back"><span></span>Revenir</button>   
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div> #}
 
                     <div class="header__gradient-right">
                         <div class="all__site">
@@ -75,7 +93,6 @@
                             </div>
                         </div> 
                     </div>
-
                 </div>
 
                 <div class="header__block--right">
@@ -121,35 +138,27 @@
                             <li class="nav__menu-home active">
                                 <a href="/" class=""><i class="icon icon-picto-accueil"></i></a>
                             </li>
-                            <li class="nav-menu-hover">
+                            <li  class="nav-menu-hover">
                                 <a href="{{ path('customers_new') }}" ><span class="nav-menu-title">Configuration</span><i class="icon icon-picto-nav-sites"></i></a>
-
                                 <ul class="nav-sous-menu">
-                                    <li><a href="{{ path('customers_new') }}"><span> Enseignes </span></a></li>
-                                    <li><a href="{{ path('users:view') }}"><span> Utilisateurs </span></a></li>
-                                    <li><a href="{{ path('criterions_lists_index') }}"><span> Critères </span></a></li>
-                                    <li><a href="{{ path('tags_index') }}"><span> TAGS </span></a></li>
+                                    <li><a href=""><span >Marque</span></a></li>
+                                    <li><a href=""><span> Tags</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
-
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="{{ path('customers_new') }}"><span class="nav-mobile-title"> Configuration </span></a></li>
-                                    <li><a href="{{ path('customers_new') }}" ><span> Enseignes </span></a></li>
-                                    <li><a href="{{ path('users:view') }}"><span> Utilisateurs </span></a></li>
-                                    <li><a href="{{ path('criterions_lists_index') }}"><span> Critères </span></a></li>
-                                    <li><a href="{{ path('tags_index') }}"><span> TAGS </span></a></li>
+                                    <li><a href="{{ path('customers_new') }}"><span class="nav-mobile-title">Configuration</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
-
                             </li>
-
-                            <li class="nav-menu-hover">
+                            <li  class="nav-menu-hover">
                                 <a href="/site"><span class="nav-menu-title">Sites</span><i class="icon icon-picto-nav-sites"></i></a>
-
                                 <ul class="nav-sous-menu">
-                                    <li><a href=""><span>Prix</span></a></li>
-                                    <li><a href=""><span>Playlist/Room</span></a></li>
-                                    <li><a href=""><span>Info Ecrans</span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
-
                                 <ul class="nav-sous-menu-mobile">
                                     <li><a href="/site"><span class="nav-mobile-title">Sites</span></a></li>
                                     <li><a href=""><span >Prix</span></a></li>
@@ -157,24 +166,18 @@
                                     <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
                             </li>
-
                             <li class="nav-menu-hover">
                                 <a href="{{ path('products::show') }}"><span class="nav-menu-title">Produits</span><i class="icon icon-picto-produit"></i></a>
-
                                 <ul class="nav-sous-menu">
-                                    <li><a href="{{ path('products::show') }}"><span> Produits </span></a></li>
-                                    <li><a href="{{ path('categories::show') }}"><span> Catégories</span></a></li>
-                                    <li><a href="{{ path('pricesfactories::show') }}"><span> Prix </span></a></li>
-                                    <li><a href="{{ path('pricesfactories::show') }}"><span> Rupture </span></a></li>
-                                    <li><a href="{{ path('allergens::show') }}"><span> Allergènes </span></a></li>
+                                    <li><a href="" ><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
                                 <ul class="nav-sous-menu-mobile">
                                     <li><a href="{{ path('products::show') }}"><span class="nav-mobile-title">Produits</span></a></li>
-                                    {#<li><a href="{{ path('products::show') }}"><span> Produits </span></a></li>#}
-                                    <li><a href="{{ path('categories::show') }}"><span> Catégories</span></a></li>
-                                    <li><a href="{{ path('pricesfactories::show') }}"><span> Prix </span></a></li>
-                                    <li><a href="{{ path('pricesfactories::show') }}"><span> Rupture </span></a></li>
-                                    <li><a href="{{ path('allergens::show') }}"><span> Allergènes </span></a></li>
+                                    <li><a href=""><span >Prix</span></a></li>
+                                    <li><a href=""><span> Playlist/Room</span></a></li>
+                                    <li><a href=""><span >Info Ecrans</span></a></li>
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">
@@ -227,12 +230,12 @@
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-
+         <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
             {# <script src="node_modules/select2/dist/js/select2.min.js"></script>
             <script>
                     $(".ManyToMany select").select2();
             </script> #}
+            {{ encore_entry_script_tags('app') }}
             {#{{ encore_entry_script_tags('modal_message') }}#}
         {% endblock javascripts %}
 

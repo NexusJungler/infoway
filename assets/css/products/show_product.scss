@@ -1,27 +1,5 @@
 .content-product{
-    .display{
-        padding-top: 2rem;
-        .display-content {
-            display: flex;
-            margin-bottom: 10px;
-        }
-    }
-}
 
-.content-product{
-
-    .content-product-show-table{
-        margin-top: 3rem;
-    }
-    select{
-        border: 0;
-        background-color: transparent;
-        color: white;
-        outline: none;
-        option{
-            background: #899CA4 0% 0% no-repeat padding-box;
-        }
-    }
     .table{
          width: 100%;
         max-width: 1600px;
@@ -29,39 +7,32 @@
             .thead-info{
                 .container-input{
                     .container-rdo-tags {
-                        top: 0px;
-                        left: -5px;
+                        top: -13px;
+                        left: -7px;
                     }
                 }
                 th{
-                    padding: 0.5rem 0.5rem;
-                    width: 5%;
+                    width: 100%;
                     &:nth-child(1){
-                        width: 2%;
-                    }
-                    /** diff **/
-                    &:nth-child(2){
                         width: 3%;
-                        select{
-                            width: 50px;
-                        }
                     }
-                    /** nom **/
+                    &:nth-child(2){
+                        width: 4%;
+                    }
                     &:nth-child(3){
-                        width: 10.5%;
+                        width: 10%;
                     }
                     &:nth-child(4){
-                        width: 3%;
+                        width: 4%;
                     }
-                    /** form **/
                     &:nth-child(5){
-                        width: 4.5%;
+                        width: 5.5%;
                     }
                     &:nth-child(6){
-                        width: 7%;
+                        width: 8%;
                     }
                     &:nth-child(7){
-                        width: 9%;
+                        width: 8%;
                     }
                     &:nth-child(8){
                         width: 10%;
@@ -71,46 +42,33 @@
                     }
                     &:nth-child(10){
 
-                        width: 3%;
+                        width: 6%;
                     }
                     &:nth-child(11){
-                        width: 5%;
+                        width: 6%;
                     }
                     &:nth-child(12){
                         text-align: center;
-                        width: 6%;
+                        width: 13%;
                     }
                     &:nth-child(13){
-                        width: 6%;
-                    }
-                    &:nth-child(14){
-                        width: 3%;
+                        width: 4%;
                     }
                 }
             }
             .tbody{
                 .container-rdo-tags {
-                    top: 2px;
+                    top: -15px;
                     left: 2px;
                 }
-                tr{
-                    background: #FFFFFF 0% 0% no-repeat padding-box;
-                    &:nth-child(even){
-                        background: #DCECEF 0% 0% no-repeat padding-box;
-                    }
-                }
                 td{
-                    width: 5%;
                     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-                    font: 17px "Barlow";
-                    letter-spacing: 0px;
-                    color: #4D646D;
                     &:nth-child(1){
-                        width: 2%;
+                        width: 3%;
                     }
                     &:nth-child(2){
                         text-align: center;
-                        width: 3%;
+                        width: 4%;
                         .bloc-icone{
                             width: 26px;
                             height: 26px;
@@ -123,18 +81,16 @@
                         width: 10%;
                     }
                     &:nth-child(4){
-                        width: 3%;
-                    }
-                    &:nth-child(5){
-                        text-align: center;
                         width: 4%;
                     }
+                    &:nth-child(5){
+                        width: 5%;
+                    }
                     &:nth-child(6){
-                        width: 7%;
+                        width: 8%;
                     }
                     &:nth-child(7){
-                        width: 9%;
-                        font-size: 14px;
+                        width: 8%;
                     }
                     &:nth-child(8){
                         width: 10%;
@@ -143,21 +99,21 @@
                         width: 10%;
                     }
                     &:nth-child(10){
-                        width: 3%;
+                        width: 6%;
                     }
                     &:nth-child(11){
-                        width: 5%;
+                        width: 6%;
                     }
                     &:nth-child(12){
                         text-align: center;
-                        width: 6%;
+                        width: 13%;
                     }
                     &:nth-child(13){
-                        width: 6%;
+                        width: 4%;
                     }
-                     &:nth-child(14){
-                         width: 3%;
-                     }
+                    // &:nth-child(13){
+                    //     width: 6%;
+                    // }
                 }
             }
         }
