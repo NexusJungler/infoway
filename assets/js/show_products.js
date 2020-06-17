@@ -25,7 +25,7 @@ $(function() {
     });
 
     $("#delete").on("click", function() {
-        $('form').submit();
+        $('#form_delete_product').submit();
     });
 
     $("#category").on("change", function(){
@@ -42,10 +42,13 @@ $(function() {
             let html = '';
             $.each(response, function(i, product){
                 html += '<tr><td><input type="checkbox" name="products[' + product.id + ']"></td>';
+                html += '<td>' +' <span class="bloc-icone"><i class="fas fa-spinner"></i></span> ' + '</td>';
                 html += '<td>' + product.name + '</td>';
-                html += '<td>' + product.category.name + '</td>';
-                html += '<td>' + product.priceType.name + '</td>';
+                html += '<td> ' + '<i class="fas fa-pen"></i> '  + '</td>';
                 html += '<td>' + product.amount + '</td>';
+                html += '<td>' + product.category.name + '</td>';
+
+
                 if(product.description === null) {
                     product.description = '';
                 }
@@ -53,21 +56,25 @@ $(function() {
                     product.note = '';
                 }
                 html += '<td>' + product.description + '</td>'; // (product.description === null) ? '' : product.description
-                html += '<td>' + product.note + '</td>';
+                // html += '<td>' + product.note + '</td>';
                 html += '<td>' + product.start + '</td>';
                 html += '<td>' + product.end + '</td>';
+
                 html += '<td class="tag">';
                 $.each(product.tags, function(j, tag){
                    html += '<span>' + tag.name + '</span>';
                 });
                 html += '</td>';
+
+                html += '<td>' + product.priceType.name + '</td>';
                 // allergens
-                html += '<td class="tag">';
+                html += '<td class="allergenes">';
                 $.each(product.allergens, function(j, allergen){
                     html += '<span>' + allergen.name + '</span>';
                 });
                 html += '</td>';
-                html += '<td><img src="/logo/' + product.logo + '"></td></tr>';
+                // html += '<td><img src="/logo/' + product.logo + '"></td></tr>';
+                html += '</tr>';
             });
             $('#list tbody').html(html);
         });
