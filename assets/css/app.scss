@@ -20,13 +20,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    font-family: 'Bralow', normal;
+    font-family: 'Bralow';
     line-height: 1.625;
     margin: 0;
     padding: 0;
     color: #6F6F6F;
     background:  repeat-x #E2E2E2 ;
-    color: black;
+    //color: black;
+    outline: none;
 }
 
 a {
@@ -44,6 +45,7 @@ img {
     display: none!important;
 }
 
+
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
@@ -56,7 +58,7 @@ img {
 @import "general/button.scss";
 
 /** style table **/
-@import 'custome/table.scss';
+@import 'general/table';
 
 
 @import 'custome/dropdown.scss';
@@ -65,9 +67,9 @@ img {
 
 @import 'Custome/display_down.scss';
 
-@import 'custome/scrollbar.scss';
+@import 'general/scrollbar';
 
-@import 'custome/form.scss';
+@import 'general/form';
 
 
 

@@ -1,5 +1,5 @@
-@import '../../custome/input-rdo.scss';
-@import '../../custome/table.scss';
+@import '../../general/input-rdo';
+@import '../../general/table';
 @import '../../custome/popup.scss';
 
 /** Function for converting  px to rem **/
@@ -25,7 +25,6 @@
 }
 
 .edit-tags{
-    margin-left: 2.5%;
     .content-tags{
         display: flex;
         margin-top: 30px;
@@ -101,17 +100,6 @@
                 text-transform: uppercase;
             }
         }
-        // input{
-        //     width: 23px;
-        //     height: 23px;
-        //     background: #4D646D;
-        //     &:checked{
-        //         content: '✕';
-        //     }
-        // }
-
-        
-        
         .bloc-produits{
             margin-right: 30px;
             height: 550px;
@@ -161,16 +149,6 @@
                     }
                 }
             }
-            // .container-input .container-rdo {
-            //     position: absolute;
-            //     top: -1px;
-            //     left: 83%;
-            //     height: 23px;
-            //     width: 23px;
-            //     background-color: white;
-            //     border-radius: 3px;
-            //     border: 1px solid #4D646D;
-            // }
             .container-input .container-rdo {
                 position: absolute;
                 top: -1px;
@@ -195,7 +173,6 @@
                     background: none;
                 }
             }
-            // .container-input .container-rdo
         }
 
         .bloc-media{
@@ -379,8 +356,6 @@
             }
         }
     }
-
-
 
 }
 

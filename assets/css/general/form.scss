@@ -40,7 +40,7 @@
     padding-right: 22px;
     margin-bottom: 12px;
     cursor: pointer;
-    font: rem(15px) 'Barlow', medium;
+    font: rem(15px) 'Barlow';
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -167,8 +167,6 @@
     object-fit: contain;
 }
 
-
-
 /* test radio */
 
 .inputRdo {
@@ -216,7 +214,6 @@
     margin-left: 0.5rem;
 }
 
-
 .inputRdo input:checked ~ label {
     font: 0.9rem 'Barlow';
     letter-spacing: 0;
@@ -242,10 +239,6 @@
     visibility: hidden;
 }
 
-
-
-
-
 /* select-custome */
 .select-custome{
     border: 0.06rem solid #C0CCD1;
@@ -257,7 +250,6 @@
 }
 
 /* == button download file == */
-
 .btn-download-custome {
     background-color: #fff;
     padding: 0.3em 0.3rem 0.3rem 1rem;
@@ -271,8 +263,8 @@
 .btn-custome{
     width: 16%;
 }
-/* input file  */
 
+/* input file  */
 .file-custome{
     position: relative;
     margin-top: 0.25rem;
@@ -299,21 +291,8 @@
     left: 0px;
     z-index: 2;
 }
-/* .file-custome:after{
-     content:"\f07b";
-    width: 70px;
-    height: 32px;
-    color: #fff;
-    background-color: #f00;
-    position: absolute;
-    top: 0;
-    right: 0;
-    line-height: 30px;
-    text-align: center; 
-} */
 
 /* == Button Sumbit (ok) == */
-
 .form-btn-sumbit{
     width: 1.87rem;
     height: 1.87rem;
@@ -325,14 +304,12 @@
     margin-left: 0.8rem;
 }
 
-
 .mini-btn-right{
     width: 21px;
     height: 21px;
     background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
     border-radius: 3px;
     border: 0;
-
 }
 
 .mini-btn-right i{
@@ -354,16 +331,13 @@
 }
 
 /* == Tab form content btn == */
-
 .tab-content-btn-right{
     background-color: #E3E3E3;
     padding: 0.4rem 1rem;
     text-align: end;
 }
 
-
 /* == button hover == */
-
 .form-btn-sumbit:hover,
 .mini-btn-right:hover,
 .btn:hover,
@@ -372,7 +346,6 @@
 }
 
 /* == rounded == */
-
 .rounded {
     display: flex;
     background: #F57171 0% 0% no-repeat padding-box;
@@ -395,12 +368,6 @@
     border-radius: 50%;
     margin-right: 0.6rem;
 }
-
-
-
-
-
-
 
 .logo-icone {
     text-align: center;
