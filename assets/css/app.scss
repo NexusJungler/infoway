@@ -52,6 +52,8 @@ img {
     @return #{$remSize}rem;
 }
 
+
+
 /************************* Style CSS  ***************************/
 
 /** button style **/
@@ -62,8 +64,6 @@ img {
 
 
 @import 'custome/dropdown.scss';
-
-@import 'Custome/display_down1.scss';
 
 @import 'Custome/display_down.scss';
 
@@ -86,7 +86,7 @@ img {
 @import 'main.scss';
 // @import 'body_header.scss';
 
-/************************* BODYMENU WRAPPER CSS ***************************/
+/************************* BODY MENU WRAPPER CSS ***************************/
 @import 'menu_wrapper.scss';
 
 /************************* PAGE CSS ***************************/
