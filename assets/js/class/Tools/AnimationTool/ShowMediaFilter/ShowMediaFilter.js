@@ -52,7 +52,25 @@ class ShowMediaFilter extends SubTool
             this.__$container.find(".btn_show_filter").off("click.ClickShowFiltrer")
         }
 
+
+
+
         return this;
+    }
+
+    ClickOpenMenubord(active){
+        if(active){
+
+            $(".menu-list-table .accordion-toggle").click(function() {
+                $(this).next().toggleClass("open").slideToggle("fast");
+                $(this).toggleClass("active-tab .menu-link").toggleClass("active");
+
+                $(".menu-list-table .accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
+                $(".menu-list-table .accordion-toggle").not(jQuery(this)).removeClass("active-tab .menu-link").removeClass("active");
+            });
+
+
+        }
     }
 
 

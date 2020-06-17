@@ -3,6 +3,10 @@ import "../css/settings/tags/create_tags.scss";
 import "../css/settings/tags/list_tags.scss";
 import "../css/settings/tags/edit_tags.scss";
 
+// import listTags from "./tags/list_tags";
+//
+// let listtags = new listTags();
+
 // jquery 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
@@ -14,7 +18,6 @@ require('./tags/list_tags.js');
 
 
 $(function(){
-
 
 
 //Search Filterable table
@@ -55,13 +58,13 @@ $(function(){
 
     })
 
-// $addTagBtn.on("click", e =>{
+    // $addTagBtn.on("click", e =>{
 
-//     if ($("#tag_list_tagToCreate_name") === "TEXT") {
-//         $("#tag_list_tagToCreate_name").value('');
-//     }
+    //     if ($("#tag_list_tagToCreate_name") === "TEXT") {
+    //         $("#tag_list_tagToCreate_name").value('');
+    //     }
 
-// })
+    // })
 
     /**  **/
     $("#add_tag").on("click", function() {
@@ -94,5 +97,9 @@ $(function(){
         $(" .accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
         $(".accordion-toggle").not(jQuery(this)).removeClass("active-tab .menu-link").removeClass("active");
     });
+
+
+
+    // listtags.enable();
 
 });

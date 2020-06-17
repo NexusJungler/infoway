@@ -72,21 +72,7 @@ class Table  {
         })
     }
 
-    /**  DELETE COL  **/
-    onChangeDeleteCol(e){
 
-        let $checkBox = $(e.currentTarget) ;
-
-        let data_table_deleteCol = $(e.currentTarget).data("tabledeletecol")
-
-        if( $checkBox. is( ':checked' ) ){
-            $('.table-custome .table-info tr th.'+data_table_deleteCol).show();
-            $('.table-custome .tbody tr td.'+data_table_deleteCol).show();
-        } else{
-            $('.table-custome .table-info tr th.'+data_table_deleteCol).hide();
-            $('.table-custome .tbody tr td.'+data_table_deleteCol).hide();
-        }
-    }
 
     table() {	
         

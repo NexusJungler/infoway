@@ -30,37 +30,37 @@
                         {#<h3 class="title">Produits</h3>#}
                     {#</article>#}
 
-                     {#<div class="display-columns">#}
-                        {#<div class="display-content">#}
-                            {#<button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>#}
-                            {#<div class="display-down">#}
-                                {#<div class="product-select-col">#}
-                                    {#<label class="mutliselect-chkbox"> Tags optionnels#}
-                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
-                                        {#<span class="mutliselect-check"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-                                {#<div class="product-select-col">#}
-                                    {#<label class="mutliselect-chkbox"> Type de prix#}
-                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
-                                        {#<span class="mutliselect-check"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-                                {#<div class="product-select-col">#}
-                                    {#<label class="mutliselect-chkbox"> Prix Compagnie MEDIUM#}
-                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
-                                        {#<span class="mutliselect-check"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-                                {#<div class="product-select-col">#}
-                                    {#<label class="mutliselect-chkbox"> Prix Compagnie PREMIUM#}
-                                        {#<input type="checkbox"  checked name="satut"  data-satuts="status" value="">#}
-                                        {#<span class="mutliselect-check"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
+                     <div class="display-columns">
+                        <div class="display-content">
+                            <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                            <div class="display-down">
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox">Nom
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="nom">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox"> Type de prix
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="type">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox">Format
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="format">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                                <div class="product-select-col">
+                                    <label class="mutliselect-chkbox">tags
+                                        <input type="checkbox"  checked name="satut"  data-satuts="status" value="tags">
+                                        <span class="mutliselect-check"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <article class="display setting-display ">
                         <div class="display-content">
@@ -86,7 +86,7 @@
 
                     
 
-                        <table id="list" class="table-custome">
+                        <table id="list" class="table-custome ">
                             <thead class="thead-info">
                                 <tr>
                                     <th>
@@ -96,7 +96,7 @@
                                         </label>
                                     </th>
                                     <th>Diff.</th>
-                                    <th>Nom</th>
+                                    <th class="nom">Nom</th>
                                     <th><i class="fas fa-pen"></i></th>
                                     <th>Form.</th>
                                     <th>Catégorie</th>
@@ -119,7 +119,7 @@
                                         </label>
                                     </td>
                                     <td><span class="bloc-icone"><i class="fas fa-spinner"></i></span></td>
-                                    <td>{{ product.name }}</td>
+                                    <td class="nom">{{ product.name }}</td>
                                     <td><i class="fas fa-pen"></i></td>
                                     <td>{{ product.amount }}</td>
                                     <td>{{ product.category.name }}</td>

@@ -261,7 +261,11 @@ private ParameterBagInterface $parameterBag;
                 $productIncrustes[$product->getName()][] = $incruste->getTypeIncruste();
             }
 
-            $datas['incrustations'][] = $productIncrustes;
+            if($productIncrustes !== [])
+                $datas['incrustations'][] = $productIncrustes;
+
+            else
+                $datas['incrustations'] = $productIncrustes;
 
             foreach ($product->getCriterions()->getValues() as $criterion)
             {
@@ -272,7 +276,10 @@ private ParameterBagInterface $parameterBag;
             foreach ($product->getTags()->getValues() as $tag)
             {
                 if(!in_array($tag->getName(), $datas['tags']))
-                    $datas['tags'][] = $tag->getName();
+                    $datas['tags'][] = [
+                        'name' => $tag->getName(),
+                        'color' => $tag->getColor(),
+                    ];
             }
 
             foreach ($product->getAllergens()->getValues() as $allergen)

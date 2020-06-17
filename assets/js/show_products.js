@@ -96,12 +96,28 @@ $(function() {
 
     
    $('#duplicate').click(function () {
-    $('.add-popup2').addClass('is-open');
-    return false;
+        $('.add-popup2').addClass('is-open');
+        return false;
   });
 
-$('.btn-popupclose2').click(function () {
-    $('.add-popup2').removeClass('is-open');
-});
+    $('.btn-popupclose2').click(function () {
+        $('.add-popup2').removeClass('is-open');
+    });
+
+
+    $('.content-product .display-content input[type="checkbox"]').on("change" , function (e) {
+
+        let $checkBox = $(e.currentTarget);
+        let table_hidden_Col = $(e.currentTarget).val();
+
+        if( $checkBox. is( ':checked' ) ){
+            $('.content-product .table-custome thead tr th.'+table_hidden_Col).show();
+            $('.content-product .table-custome .tbody tr td.'+table_hidden_Col).show();
+        } else{
+            $('.content-product .table-custome thead tr th.'+table_hidden_Col).hide();
+            $('.content-product .table-custome .tbody tr td.'+table_hidden_Col).hide();
+        }
+    });
+
 
 });

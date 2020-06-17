@@ -8,8 +8,6 @@ class popup{
 
     }
 
-
-
     onClickOpenConfimationPopup(active) {
         if(active){
             $('.btn-popup-delete-criterion').on('click.onClickOpenPopup', function(){

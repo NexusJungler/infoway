@@ -23,7 +23,7 @@ $(function(){
         })
     })
 
-//delete
+    //delete
     $(".content-criteres-bloc").on("click", ".delete-row", function(){
         var button_id = $(this).attr("id");
 
@@ -31,11 +31,9 @@ $(function(){
     });
 
 
-
-
     $(".btn-popup-edit-criterion").addClass("btn_hidden");
 
-// btn modification
+    // btn modification
     $(".row-criterion input[type='checkbox']").each( function () {
         if($(this).prop("checked")){
             console.log($(this).prop("checked"));
@@ -58,8 +56,6 @@ $(function(){
             $(".btn-popup-edit-criterion").addClass("btn_hidden");
         }
     })
-
-
 
 
     addTagBtn.on('click', e =>{

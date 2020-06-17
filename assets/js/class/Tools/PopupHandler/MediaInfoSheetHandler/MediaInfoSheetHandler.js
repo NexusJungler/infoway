@@ -213,21 +213,27 @@ class MediaInfoSheetHandler extends SubTool
     showMediaIncrustes(mediaIncrustations)
     {
 
-        mediaIncrustations.forEach( (mediaIncrustation) => {
+        if(mediaIncrustations.length > 0)
+        {
 
-            const productName = Object.keys(mediaIncrustation);
-            const incrustesTypes = Object.values(mediaIncrustation)[0];
+            mediaIncrustations.forEach( (mediaIncrustation) => {
 
-            let newElement= `<tr>
+                const productName = Object.keys(mediaIncrustation);
+                const incrustesTypes = Object.values(mediaIncrustation)[0];
+
+                let newElement= `<tr>
                                  <td>${productName}</td> 
                                  <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Prix') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
                                  <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
                                  <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Texte') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
                              </tr>`;
 
-            $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )
+                $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )
 
-        } )
+            } )
+
+        }
+
 
     }
 
@@ -244,12 +250,12 @@ class MediaInfoSheetHandler extends SubTool
 
     }
 
-    showMediaTags(mediaTagsNames)
+    showMediaTags(mediaTags)
     {
 
-        mediaTagsNames.forEach( (mediaTagName) => {
-
-            const newElement = ` <p class="tag container-tags"> <span class="mini-cercle" style="background: ;"></span><span class="current-tags-name">${mediaTagName}</span></p>`;
+        mediaTags.forEach( (mediaTag) => {
+            console.log(mediaTag)
+            const newElement = ` <p class="tag container-tags"> <span class="mini-cercle" style="background: ${mediaTag['color']};"></span><span class="current-tags-name">${mediaTag['name']}</span></p>`;
 
             $(newElement).appendTo( this.__$location.find('.media_tags_container') );
 
