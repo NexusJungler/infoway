@@ -1,0 +1,42 @@
+.btn--bluecanard {
+  //height: rem(31px);
+  padding: 0.3rem 0.4rem;
+  color:white;
+  border : none;
+  border-radius: .3rem;
+  //font: rem(17px) 'Barlow', lighter;
+  background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  //border: rem(1px) solid #FFFFFF;
+  //border-radius: rem(6px);
+  //margin-right: rem(10px);
+  &:hover {
+    background: transparent linear-gradient(180deg, #395C65 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+  }
+}
+
+.btn--classic{
+  border: 1px solid grey;
+  border-radius: .3rem;
+  padding: .1rem .8rem;
+  color: grey;
+  text-transform: uppercase;
+}
+.btn--blue-horizon{
+  background-color: #899ca4;
+  border: 1px solid #4D646D;
+  color: white;
+  padding: 5px 12px;
+}
+.btn--blueminuit{
+  background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0.06rem 0.13rem 0.13rem #00000029;
+  border: 0.06rem solid #306D7C;
+  border-radius: 0.19rem;
+  padding: 0.06rem 0.5rem 0.2rem;
+  font: 1rem 'Barlow', medium;
+  color: #ffffff;
+  &:hover {
+    background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+  }
+}

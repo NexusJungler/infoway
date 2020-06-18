@@ -1,0 +1,26 @@
+{% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_entry_entries_entry_widget %}
+
+    {% set currentMedia  = form.vars.media %}
+{#    {% set currentMedia = form.parent.vars.media %}#}
+{#    {{ dump(currentMedia) }}#}
+{#    {{ form_label(form) }}#}
+    {{ form_widget(form,{'attr': {'class': 'broadcast_slot__content__playlists__datas'}}) }}
+    <div class="broadcast_slot__content__playlists__visuel">
+        <img src="{{ asset('build/medias/images/low/' ~ currentMedia.name ~ '.' ~ currentMedia.extension ) }}">
+        <div class="broadcast_slot__content__playlists__visuel__infos">
+            <span>{{ currentMedia.name }}</span>
+        </div>
+    </div>
+
+    {#            {{ parent() }}#}
+
+    {#            {{ dump(form.displays) }}#}
+    {#            {{ form_widget(form.displays.broadcastSlots) }}#}
+    {#            <div class="broadcast_slot__content__playlists__visuel">#}
+    {#                <img src="{{ asset('build/medias/images/low/' ~ currentMedia.name ~ '.' ~ currentMedia.extension ) }}">#}
+    {#                <div class="broadcast_slot__content__playlists__visuel__infos">#}
+    {#                    <span>{{ currentMedia.name }}</span>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#      //      {{ form_widget(form.displays) }}#}
+{% endblock %}

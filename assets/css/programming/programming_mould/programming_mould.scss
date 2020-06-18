@@ -1,0 +1,126 @@
+form#new_programming_mould_form{
+  div.mould_diffusion_timeline{
+  margin : 3rem 0rem;
+  }
+  div.display_form{
+    background-color: white;
+    div.display_form__select_timeslot{
+      display: flex;
+      justify-content: center;
+      background-color: #4d646d;
+      padding : .8rem 0;
+      label:first-child{
+        color: #C0CCD1;
+        font-style: italic;
+        margin-right: 1rem;
+      }
+    }
+    div.broadcast_slot__infos{
+      background-color: #c0ccd1 ;
+      padding : .8rem 0;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      div.broadcast_slot__infos__name{
+        background-color: #F57171;
+        padding:0 2rem;
+        display: inline-block;
+        color:white;
+      }
+      span.broadcast_slot__infos__menu__unwrap{
+        position: absolute;
+        right: .6rem;
+        font-size: 20px;
+        color: #7A8F97;
+      }
+      div.broadcast_slot__infos__menu--left{
+        display: flex;
+        position: absolute;
+        left: 0;
+        margin-left:1.5rem ;
+
+        i.broadcast_slot__infos__menushow{
+          color: #4d646d ;
+          margin-right : 1rem;
+          margin-left : .5rem;
+        }
+
+        div.broadcast_slot__infos__menu--left--hidden{
+          background-color: white;
+          border: 1px solid #7A8F97;
+          padding : .5rem;
+          width: 220px;
+          display: none;
+          p, ul{
+            padding-left:.4rem;
+          }
+          p{
+            background-color: #A9D9E3;
+          }
+        }
+
+      }
+    }
+    div.broadcast_slot__content{
+      display: flex;
+
+      div.broadcast_slot__content__timeline-container{
+        display: flex;
+        flex-direction: column;
+        width : 4rem;
+        align-items: center;
+        div.broadcast_slot__content__timeline{
+          content: '';
+          flex-grow: 1;
+          width: 20%;
+          background: #f57171;
+          border-radius: 2rem;
+        }
+      }
+      div.broadcast_slot__content__criterions{
+        width : 10rem ;
+      }
+      div.broadcast_slot__content__playlists{
+        display: flex;
+        div.broadcast_slot__content__playlists__playlist{
+          display: flex;
+          flex-direction: column;
+          .playlist__position{
+            display: none;
+          }
+          .broadcast_slot__content__playlists__datas{
+            display: none;
+          }
+          .broadcast_slot__content__playlists__visuel{
+            display: flex;
+            flex-direction: column;
+            margin-top: 1.5rem;
+            margin-right: 1.5rem;
+            margin-bottom : 1.5rem;
+            width: 172px;
+            img{
+              width: 172px;
+              height: 97px;
+              border: 1px solid #707070;
+              margin: 0;
+            }
+            .broadcast_slot__content__playlists__visuel__infos{
+              margin: 0;
+              top: 0;
+              text-align: center;
+              background-color: #F6F6F6;
+              border: 1px solid #C0CCD1;
+              height: 1.3rem;
+              display: flex;
+              justify-content: center;
+              span{
+                font-size: .8rem;
+              }
+            }
+          }
+
+        }
+      }
+    }
+  }
+}

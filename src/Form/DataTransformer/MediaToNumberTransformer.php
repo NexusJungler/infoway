@@ -37,8 +37,10 @@ return $media->getId();
 }
 
 
-public function reverseTransform($mediaId)
+public function reverseTransform( $mediaId )
 {
+
+  //  dd($mediaId);
 // no issue number? It's optional, so that's ok
 if (!$mediaId) {
 return;
@@ -47,8 +49,9 @@ return;
 $media = $this->entityManager
 ->getRepository(Media::class)
 // query for the issue with this id
-->find($mediaId)
+->find( $mediaId )
 ;
+
 
 if (null === $media) {
 // causes a validation error

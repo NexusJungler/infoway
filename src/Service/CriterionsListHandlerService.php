@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Admin\Customer;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\CriterionsList;
-use App\Errors\Customer\ExistingCriterionsListNameError;
+use App\Errors\CriterionsList\ExistingCriterionsListNameError;
 use App\Errors\CriterionsList\MinimumCriterionsInListNonReachedError;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
@@ -63,7 +63,6 @@ class CriterionsListHandlerService
 
     public function handleCriterionsInList( CriterionsList $criterionsList ) {
 
-        $criterionPositionInlist = 0 ;
         $basicCriterion = $criterionsList->getBasicCriterion();
 
         $criterionsListArray  = $criterionsList->getCriterions()->getValues() ;
@@ -73,6 +72,8 @@ class CriterionsListHandlerService
              array_splice($criterionsListArray, $indexOfBasicCriterionInlist,1) ;
              array_unshift($criterionsListArray,$basicCriterion );
         }
+
+        $criterionPositionInlist = 0 ;
 
         foreach($criterionsListArray as $criterion){
 

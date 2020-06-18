@@ -52,6 +52,15 @@ class MediaRepository extends ServiceEntityRepository
         $result = $row[0];
         return $result;
     }
+
+    public function getAllDisplayableMediasTypes(){
+
+        $sql = "SELECT `media_type` FROM `media` WHERE `diffusable` GROUP BY `media_type`";
+        $query = $this->getEntityManager()->getConnection()->prepare( $sql ) ;
+        $query->execute( );
+        return array_values($query->fetchAll( PDO::FETCH_COLUMN ));
+
+    }
     public function selectAllImagesAndVideosFromMedia()
     {
         try

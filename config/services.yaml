@@ -49,7 +49,6 @@ services:
             $logoDir : '%logoDirectory%'
             $project_dir : '%project_dir%'
 
-
     session.flash_bag:
         class: Symfony\Component\HttpFoundation\Session\Flash\AutoExpireFlashBag
 

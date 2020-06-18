@@ -25,6 +25,10 @@
     display: flex;
 }
 
+.none{
+    display: none;
+}
+
 .bloc-form-content .bloc-form-row-flex{
     display: flex;
 }

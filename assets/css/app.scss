@@ -42,6 +42,10 @@ img {
     display: none!important;
 }
 
+.rounded-border{
+    border-radius: .2rem;
+}
+
 
 
 /** Function for converting  px to rem **/
@@ -53,7 +57,7 @@ img {
 /************************* CUSTOM CSS  ***************************/
 @import 'custome/table.scss';
 
-@import 'custome/dropdown.scss';
+@import 'custome/multi-select.scss';
 
 @import 'custome/display_down.scss';
 

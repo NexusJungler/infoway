@@ -7,6 +7,7 @@ use App\Entity\Customer\DisplaySetting;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\DisplaySpace;
 use App\Entity\Customer\Tag;
+use App\Repository\Customer\MediaRepository;
 use App\Repository\Customer\ProgrammingMouldRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,7 +23,15 @@ class ProgrammingMouldType extends AbstractType
     private bool $allowPlaylistCreation = true ;
     private bool $allowDisplaySettingChoice = true ;
     private bool $allowModelChoice = false ;
+    private bool $allowAllowedMediaTypeChoice = false ;
+    private MediaRepository $mediaRepository ;
 
+
+    public function __construct(MediaRepository $mediaRepository)
+    {
+        $this->mediaRepository = $mediaRepository ;
+       // dd($test);
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,6 +40,7 @@ class ProgrammingMouldType extends AbstractType
         $this->allowDisplaySettingChoice = $options['allowDisplaySettingChoice'] ;
         $this->allowPlaylistCreation = $options['allowPlaylistCreation'] ;
         $this->allowModelChoice = $options['allowModelChoice'] ;
+        $this->allowAllowedMediaTypeChoice = $options['allowAllowedMediaTypeChoice'] ;
 
         if( $this->allowDisplaySettingChoice ) {
             $builder->add('displaySetting', EntityType::class, [
@@ -39,6 +49,25 @@ class ProgrammingMouldType extends AbstractType
             ]) ;
         }
 
+        if( $this->allowAllowedMediaTypeChoice ){
+
+            $displayablesMedias = $this->mediaRepository->getAllDisplayableMediasTypes();
+
+            $displayablesMediasValuesToDisplay = array_map(
+                function( $mediaType){
+                    return ucfirst($mediaType).'s';
+                },
+                $displayablesMedias
+            );
+
+            $displayablesMediasChoices = array_combine( $displayablesMediasValuesToDisplay , $displayablesMedias )  ;
+
+            $builder->add('allowedMediasTypes', ChoiceType::class, [
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => $displayablesMediasChoices
+            ]) ;
+        }
         $builder
             ->add('name') ;
 //            ->add('startAt')
@@ -90,15 +119,18 @@ class ProgrammingMouldType extends AbstractType
             'data_class' => ProgrammingMould::class,
             'allowPlaylistCreation' => true,
             'allowDisplaySettingChoice'    => true,
-            'allowModelChoice' => false
+            'allowModelChoice' => false,
+            'allowAllowedMediaTypeChoice' => true
         ]);
         $resolver->setRequired([
             'allowPlaylistCreation' ,
             'allowDisplaySettingChoice',
-            'allowModelChoice'
+            'allowModelChoice',
+            'allowAllowedMediaTypeChoice'
         ]);
         $resolver->setAllowedTypes('allowPlaylistCreation','bool') ;
         $resolver->setAllowedTypes('allowDisplaySettingChoice','bool') ;
         $resolver->setAllowedTypes('allowModelChoice','bool') ;
+        $resolver->setAllowedTypes('allowAllowedMediaTypeChoice','bool') ;
     }
 }

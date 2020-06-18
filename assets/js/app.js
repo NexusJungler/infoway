@@ -3,7 +3,9 @@ import '../css/general/reset.scss';
 import '../css/app.scss';
 
 // css
+
 require('../css/custom-style.css');
+require('../css/buttons/buttons.scss');
 require('../css/class/managers/clockManager.css');
 require('../css/debug.css');
 

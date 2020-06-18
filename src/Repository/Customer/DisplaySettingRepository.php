@@ -5,6 +5,7 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\DisplaySetting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method DisplaySetting|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,12 @@ class DisplaySettingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, DisplaySetting::class);
     }
+
+    // /**
+    //  * @return DisplaySetting[] Returns an array of DisplaySetting objects
+    //  */
+
+
 
     // /**
     //  * @return DisplaySetting[] Returns an array of DisplaySetting objects

@@ -19,6 +19,16 @@ class DisplaySpaceRepository extends ServiceEntityRepository
         parent::__construct($registry, DisplaySpace::class);
     }
 
+    public function getAllDisplaySpacesNameIndexedById()
+    {
+
+        $displaceSpacesFounded = $this->createQueryBuilder('d')
+            ->select('d.id','d.name')
+            ->getQuery()
+            ->getResult();
+
+        return array_column($displaceSpacesFounded, 'name', 'id');
+    }
     // /**
     //  * @return DisplaySpace[] Returns an array of DisplaySpace objects
     //  */

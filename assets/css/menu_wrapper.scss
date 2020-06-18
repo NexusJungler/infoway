@@ -140,12 +140,12 @@
     padding-left: 2.5%;
     padding-right: 5%;
     .tab-content-title {
-        display: flex;
+        display: inline-block;
         padding-top: 0.5rem;
         h3{
             color: #4F9BAE;
             font: 2.2rem 'Barlow', bold;
-            display: flex;
+            display: inline-block;
             font-weight: 800;
             &::after {
                 content: '';

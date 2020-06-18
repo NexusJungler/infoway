@@ -463,7 +463,7 @@
             }
             &:first-child{
                 padding: 15px 10px 0px 10px;
-                background: #C0CCD1 0% 0% no-repeat padding-box;
+                
                 
                 .row{
                     &:first-child{
@@ -482,6 +482,10 @@
                     
                 }
             }
+        }
+        .row-color{
+            padding: 15px 10px 0px 10px;
+            background: #C0CCD1 0% 0% no-repeat padding-box;
         }
         .row-multiple{
             margin-top: 10px;

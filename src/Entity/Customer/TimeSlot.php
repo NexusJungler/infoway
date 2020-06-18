@@ -17,6 +17,12 @@ class TimeSlot
      */
     private $id;
 
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
     /**
      * @ORM\Column(type="time")
      * @Groups({"mouldSerialization"})

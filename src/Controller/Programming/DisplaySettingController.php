@@ -73,7 +73,8 @@ class DisplaySettingController extends AbstractController
         $optionsToPassToForm = [
             'allowPlaylistCreation' => false,
             'allowDisplaySettingChoice' => false,
-            'allowModelChoice'   => true
+            'allowModelChoice'   => true ,
+            'allowAllowedMediaTypeChoice' => true
         ];
 
         $form = $this->createForm(ProgrammingMouldType::class, $ProgrammingMould, $optionsToPassToForm );

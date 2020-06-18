@@ -1,4 +1,4 @@
-.dropdown{
+/*.multi-select{
     width: 65%;
     .logo-icone{
         padding-top: 0.1rem;
@@ -68,9 +68,33 @@
             padding: 0 0.2rem 0.1px 0px;
         }  
     }
+}*/
+
+.multi-select{
+  width: 15rem;
+  background-color: white;
+  font-size: 14px;
+  .multi-select-content{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    margin: .2rem 0;
+    .multi-select-choices-container{
+      position: absolute;
+      left: 0;
+    }
+    .multi-select-unwrapper{
+      padding: 0 .2rem;
+      background-color: #c0ccd1;
+      margin: 0 .2rem;
+      display: flex;
+      i{
+        font-size: 20px;
+        color: white;
+      }
+    }
+  }
 }
-
-
 
 
   

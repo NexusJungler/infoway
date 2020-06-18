@@ -15,11 +15,11 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
     .copyFiles({
-        from: './assets/images',
+        from: './assets/medias',
 
         // copying without versioning
         // target path, relative to the output dir
-        to: 'images/[path][name].[ext]',
+        to: 'medias/[path][name].[ext]',
 
         // copying with versioning
         // if versioning is enabled, add the file hash too
@@ -58,6 +58,7 @@ Encore
 
     /********* Product *********/
     .addEntry('product', './assets/js/product.js')
+    .addEntry('programming_mould', './assets/js/programming/programming_mould.js')
     .addEntry('product_price', './assets/js/product/product_price.js')
     .addEntry('date', './assets/js/date.js')
     .addEntry('show_factories', './assets/js/show_factories.js')
@@ -68,6 +69,7 @@ Encore
     .addEntry('edit_product', './assets/js/edit_product.js')
 
     //media
+    .addEntry('add_media_window', './assets/js/medias/add_media_window.js')
     .addEntry('mediatheque', './assets/js/mediatheque.js')
     
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

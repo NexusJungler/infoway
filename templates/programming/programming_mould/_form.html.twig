@@ -1,4 +1,73 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{% form_theme form 'form/form_media_in_playlist.html.twig' %}
+
+{% block content %}
+
+{{ form_start(form, {'attr': {'id': 'new_programming_mould_form'}}) }}
+
+    <div class="mould_diffusion_timeline">
+        <a class="btn--classic">Aujourdh'ui</a>
+    </div>
+    <div class="displays_forms_container">
+        {% for display in form.displays %}
+
+            <div class="display_form">
+                <div class="display_form__select_timeslot">
+                    {{ form_label(display.timeSlots) }}
+                    <div class="multi-select rounded-border">
+                        <div class="multi-select-content">
+                            <div class="multi-select-choices-container">
+                                <ul id="down-site-associate">
+                                 {{ form_widget(display.timeSlots) }}
+                                </ul>
+                            </div>
+                            <div class="multi-select-unwrapper">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for broadcastSlot in  display.broadcastSlots %}
+                {% set currentBroadcast = broadcastSlot.vars.data %}
+                <div class="broadcast_slot__infos">
+                    <div class="broadcast_slot__infos__menu--left">
+                        <div class="broadcast_slot__infos__menu--left--visible">
+                            <button class="broadcast_slot__infos__btn rounded-border btn--blue-horizon">Infos des medias</button>
+                            <i class="fas fa-plus broadcast_slot__infos__menushow"></i>
+                        </div>
+                        <div class="broadcast_slot__infos__menu--left--hidden">
+                            <p>Copier créneau vers...</p>
+                            <ul>
+                                <li><a href="">Calendrier</a></li>
+                                <li><a href="">ex: Liste des médias</a></li>
+                                <li><a href="">etc</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="broadcast_slot__infos__name rounded-border">{{ currentBroadcast.timeSlot.startAt|date('H') ~ 'h-' ~ currentBroadcast.timeSlot.endAt|date('H') ~ 'h' }} </div>
+
+                    <span class="broadcast_slot__infos__menu__unwrap"><i class="fas fa-sort-up"></i></span>
+                </div>
+                <div class="broadcast_slot__content">
+                    <div class="broadcast_slot__content__timeline-container">
+                        <span>{{currentBroadcast.timeSlot.startAt|date('H') ~ 'h'}}</span>
+                        <div class="broadcast_slot__content__timeline"></div>
+                        <span>{{currentBroadcast.timeSlot.endAt|date('H') ~ 'h'}}</span>
+                    </div>
+                    <div class="broadcast_slot__content__criterions">
+
+                    </div>
+                    <div class="broadcast_slot__content__playlists">
+                        {% for playlist in  broadcastSlot.playlists %}
+                            {{ form_widget(playlist, {'attr': {'class': 'broadcast_slot__content__playlists__playlist'}}) }}
+
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+{% endblock %}
