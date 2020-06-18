@@ -83,7 +83,34 @@
             font-size: rem(15px);
             margin-right: rem(8px);
         }
+        /* delete after */
         .tags-table{
+            position: relative;
+            height: rem(31px);
+            width: rem(108px);
+            background: #F57171 0% 0% no-repeat padding-box;
+            box-shadow: rem(2px) rem(2px) rem(2px) #00000029;
+            border: rem(1px) solid #FFFFFF;
+            border-radius: rem(6px) 0 0 rem(6px);
+            color: #FFFFFF;
+            font-size: rem(18px);
+            &::before{
+                content: '';
+                position: absolute;
+                left: rem(10px);
+                top: rem(10px);
+                width: rem(9px);
+                height: rem(9px);
+                background:#e8e4e4 0% 0% no-repeat padding-box;
+                box-shadow: rem(2px) rem(2px) rem(2px) #00000029;
+                border: rem(1px) solid #FFFFFF;
+                opacity: 1;
+                border-radius: 50%;
+                margin-right: 0.6rem;
+            }
+        }
+
+        .btn-tags{
             position: relative;
             height: rem(31px);
             width: rem(108px);

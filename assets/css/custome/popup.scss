@@ -6,13 +6,17 @@
 
 .add-popup {
     position: absolute;
-    height: 70%;
+    //height: 105%;
+    //width: 109.1%;
+    height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.7);
     align-items: center;
     pointer-events: none;
     opacity: 0;
-    top:rem(151px);
+    //top: -8.1rem;
+    //left: -10rem;
+    top: 0;
     left: 0;
     z-index:10000;
     // transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
@@ -64,11 +68,15 @@
     }
 }
 
+
+
 .popup-confirmation{
     .add-popup{
         background: transparent;
         width: 100%;
-
+        top: 0rem;
+        left: 0rem;
+        height: 100%;
         .modal {
               margin: 0 auto;
               margin-top: 10%;
@@ -102,7 +110,7 @@
                   border: 0;
                   height: 16px;
                   width: 18px;
-                  i{
+                  i,svg{
                       right: 3px;
                       color: #F57171;
                       font-size: 22px;
