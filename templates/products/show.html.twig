@@ -51,7 +51,7 @@
                                             </div>
                                             <div class="product-select-col">
                                                 <label class="mutliselect-chkbox">Categorie
-                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="categorie">
+                                                    <input type="checkbox"  checked name="satut"  data-satuts="status" value="category">
                                                     <span class="mutliselect-check"></span>
                                                 </label>
                                             </div>
@@ -101,6 +101,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                {#<select id="category">#}
+                                    {#<option value="">Toute</option>#}
+                                    {#{% for category in categories %}#}
+                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
+                                    {#{% endfor %}#}
+                                {#</select>#}
 
                                 <div class="display-btn">
                                     <p>Produits : </p>
@@ -114,6 +120,8 @@
 
                             </div>
                         </article>
+
+
 
                         <article id="checkbox_verification" class="content-product-show-table">
                             <table id="list" class="table-custome ">
@@ -170,7 +178,7 @@
 
                                         <th class="type">type de prix</th>
 
-                                        <th class="allergenes">
+                                        <th class="allergene">
                                             <select id="form">
                                                 <option>Allergènes</option>
                                                 {#{% for category in categories %}#}
@@ -178,7 +186,7 @@
                                                 {#{% endfor %}#}
                                             </select>
                                         </th>
-                                        <th >Date de dèbut</th>
+                                        <th class="debut" >Date de dèbut</thclass>
                                         <th class="fin" >Date de fin</th>
                                         <th>Visuel</th>
                                     </tr>
@@ -213,13 +221,13 @@
                                             {% endfor %}
                                         </td>
                                         <td class="type">{{ product.priceType.name }}</td>
-                                        <td class="allergenes">
+                                        <td class="allergene">
                                             {% for allergen in product.allergens %}
                                                 {# <span>{{ allergen.name }}</span> #}
                                                 <img src="/pictogram/{{ allergen.pictogram }}" alt="" class="image-td">
                                             {% endfor %}
                                         </td>
-                                        <td>{{ product.start |date('Y-m-d') }}</td>
+                                        <td class="debut">{{ product.start |date('Y-m-d') }}</td>
                                         <td class="fin">{{ product.end |date('d-m-Y') }}</td>
                                         <td><i class="fas fa-eye"></i></td>
                                     </tr>

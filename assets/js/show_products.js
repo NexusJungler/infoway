@@ -40,14 +40,18 @@ $(function() {
             let response = JSON.parse(list);
             let html = '';
             $.each(response, function(i, product){
-                html += '<tr><td><input type="checkbox" name="products[' + product.id + ']"></td>';
+                html += '<tr>' +
+                    '<td>' +
+                        '<label class="container-input"> ' +
+                            '<input type="checkbox" name="products[\' + product.id + \']"> ' +
+                            '<span class="container-rdo-tags"></span>' +
+                        '</label>' +
+                    '</td>';
                 html += '<td>' +' <span class="bloc-icone"><i class="fas fa-spinner"></i></span> ' + '</td>';
                 html += '<td>' + product.name + '</td>';
                 html += '<td> ' + '<i class="fas fa-pen"></i> '  + '</td>';
                 html += '<td>' + product.amount + '</td>';
                 html += '<td>' + product.category.name + '</td>';
-
-
                 if(product.description === null) {
                     product.description = '';
                 }
@@ -55,13 +59,16 @@ $(function() {
                     product.note = '';
                 }
                 html += '<td>' + product.description + '</td>'; // (product.description === null) ? '' : product.description
-                // html += '<td>' + product.note + '</td>';
-                html += '<td>' + product.start + '</td>';
-                html += '<td>' + product.end + '</td>';
+                html += '<td>' + product.note + '</td>';
+
+
 
                 html += '<td class="tag">';
                 $.each(product.tags, function(j, tag){
-                   html += '<span>' + tag.name + '</span>';
+                   html += '<p class="container-tags"> ' +
+                       '<span class="mini-cercle" style="background:'+ tag.color + ';"> ' +
+                       '</span>' +  tag.name + '</p>';
+                       // '<span>' + tag.name + '</span>';
                 });
                 html += '</td>';
 
@@ -72,7 +79,10 @@ $(function() {
                     html += '<span>' + allergen.name + '</span>';
                 });
                 html += '</td>';
-                // html += '<td><img src="/logo/' + product.logo + '"></td></tr>';
+                html += '<td>' + product.start + '</td>';
+                html += '<td>' + product.end + '</td>';
+                html += '<td><i class="fas fa-eye"></i></td>';
+                // html += '<td> <img src="/logo/' + product.logo + '"></td></tr>';
                 html += '</tr>';
             });
             $('#list tbody').html(html);

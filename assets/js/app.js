@@ -30,11 +30,18 @@ global.$ = global.jQuery = $;
 
 //jqueryValidat
 require('../js/jqueryValidate/jquery.validate.js');
-
 require('../js/tags.js');
 
-let popupconfirmation = new popupConfirmation();
-popupconfirmation.enable();
+
+
+$(function() {
+
+    let popupconfirmation = new popupConfirmation();
+    popupconfirmation.enable();
+
+});
+
+
 
 // Tabs Menu
 let tab_menu = new Tabmenu();
