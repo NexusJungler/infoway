@@ -25,7 +25,7 @@
 
             <section class="wrapper_tabcontent">
                 <div id="tab-products" class="tab-content current content-product">
-                    <form method="post" action="{{ path('products::delete') }}" id="form_delete_product" class="table ">
+                    <form method="post" action="{{ path('products::delete') }}" id="form_delete_product" class="table">
                         {#<article class="tab-content-title">#}
                             {#<h3 class="title">Produits</h3>#}
                         {#</article>#}
@@ -105,16 +105,17 @@
                                 <div class="display-btn">
                                     <p>Produits : </p>
                                     <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
-                                    <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
+                                    <button type="button" class="btn popup_comfirmation_edit btn_hidden" ><i class="far fa-edit"></i> Modifier</button>
                                     {#<button><a id="duplicate" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>#}
-                                    <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
-                                    <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                    <button type="button" class="btn btn_hidden" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
+                                    <button type="button" class="btn popup_comfirmation_delete btn_hidden" ><i class="fas fa-trash"></i>Supprimer</button>
+                                    <button type="button" class="btn-tags btn_hidden">TAG</button>
                                 </div>
 
                             </div>
                         </article>
 
-                        <article class="content-product-show-table">
+                        <article id="checkbox_verification" class="content-product-show-table">
                             <table id="list" class="table-custome ">
                                 <thead class="thead-info">
 
@@ -232,73 +233,116 @@
                 </div>
             </section>
 
+            <section class="popup-confirmation">
+
+                <article class="add-popup add_popup_confirmation_delete">
+                    <div class="modal">
+                        <div class="header-modal">
+                            <p class="upload-title">Configuration de la suppression</p>
+                            <button type="button" class=" btn-close close_popup_confirmation_delete"><i class="fas fa-window-close"></i></button>
+                        </div>
+                        <div class="content-modal" >
+                            <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                            <div class="selected-name-list" >
+                            </div>
+                        </div>
+                        <div class="footer-modal">
+                            <button type="button" class="btn" id="delete">OUI</button>
+                            <button type="button" class="btn close_popup_confirmation_delete">NON</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="add-popup add_popup_confirmation_edit">
+                    <div class="modal">
+                        <div class="header-modal">
+                            <p class="upload-title">modification</p>
+                            <button type="button" class="btn-close close_popup_confirmation_edit"><i class="fas fa-window-close"></i></button>
+                        </div>
+                        <div class="content-modal" >
+                            <p>voulez vous modifier ?</p>
+                            <div class="selected-name-list" >
+                            </div>
+                        </div>
+                        <div class="footer-modal">
+                            <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i>OUI</a></button>
+                            <button type="button" class="btn close_popup_confirmation_edit">NON</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="add-popup upload_popup popup_product_duplicate">
+
+                    <div class="modal">
+                        <div class="header-modal">
+                            <p class="upload-title">Duliquer</p>
+                            <button type="button" class="btn-close btn popup_product_duplicate_close "><i class="fas fa-window-close"></i></button>
+                        </div>
+
+                        <form action="{{ path('product::duplicate', {'product': 3}) }}" id="form_duplicate_product" method="post">
+                            <div class="content-modal">
+                                <div class="selected-name-list"></div>
+                                <div id="popup_properties" >
+
+                                    <h2>Sélectionnez les éléments du produit à conserver</h2>
+                                    <table class="center">
+                                        <tr>
+                                            <td><input type="checkbox" name="product[category]"></td>
+                                            <td>Catégorie</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[priceType]"></td>
+                                            <td>Type de prix</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[amount]"></td>
+                                            <td>Quantié</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[description]"></td>
+                                            <td>Description</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[note]">
+                                            </td><td>Mention</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[start]"></td>
+                                            <td>Début de validité</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[end]"></td>
+                                            <td>Fin de validité</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[tags]"></td>
+                                            <td>Tags</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[allergens]"></td>
+                                            <td>Allergènes</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="product[logo]"></td>
+                                            <td>Logo</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="footer-modal">
+                                <button type="submit" id="properties_validate" class="btn" >Valider</button>
+                                <button type="submit" class="btn popup_product_duplicate_close" >Annuler</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </article>
+            </section>
+
         </div>    
     <main>
-
-    <section>
-        <article class="add-popup add-popup2 upload_popup">
-
-            <div class="modal">
-
-                <div class="header-modal">
-                    <div>
-                        <p class="upload-title"></p>
-                        <button type="button" class="btn btn-popupclose2 ">X</button>
-                    </div>
-                </div>
-
-                <div id="popup_properties" >
-                    <h1>Sélectionnez les éléments du produit à conserver</h1>
-                    <form action="{{ path('product::duplicate', {'product': 3}) }}" id="form_duplicate_product" method="post">
-                            <table class="center">
-                            <tr>
-                                <td><input type="checkbox" name="product[category]"></td>
-                                <td>Catégorie</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[priceType]"></td>
-                                <td>Type de prix</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[amount]"></td>
-                                <td>Quantié</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[description]"></td>
-                                <td>Description</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[note]">
-                                </td><td>Mention</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[start]"></td>
-                                <td>Début de validité</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[end]"></td>
-                                <td>Fin de validité</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[tags]"></td>
-                                <td>Tags</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[allergens]"></td>
-                                <td>Allergènes</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="product[logo]"></td>
-                                <td>Logo</td>
-                            </tr>
-                        </table>
-                        <button id="properties_validate" type="submit">Valider</button>
-                    </form>
-                </div>
-
-            </div>
-        </article>
-    </section>
 {% endblock %}
 
 {% block javascripts %}
