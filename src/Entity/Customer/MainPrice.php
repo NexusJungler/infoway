@@ -17,13 +17,13 @@ class MainPrice
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\PricesFactory", inversedBy="product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\PricesFactory", inversedBy="product", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $factory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Product", cascade={"persist"})
      */
     private $product;
 

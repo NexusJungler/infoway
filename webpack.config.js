@@ -57,7 +57,7 @@ Encore
 
     /********* Product *********/
     .addEntry('product', './assets/js/product.js')
-    .addEntry('product_price', './assets/js/product/product_price.js')
+    // .addEntry('product_price', './assets/js/product/product_price.js')
     .addEntry('date', './assets/js/date.js')
     .addEntry('show_factories', './assets/js/show_factories.js')
     .addEntry('show_products', './assets/js/show_products.js')

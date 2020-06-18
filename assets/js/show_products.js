@@ -1,10 +1,9 @@
-// import style css
+/** import style css  **/
+// require('../css/debug.css'); Si css spécifique à la page!
 import "../css/products/show_product.scss";
-
+import  "../css/popups/popup_duplicate_product/popup_duplicate_product.scss"
 const $ = require('jquery');
 global.$ = global.jQuery = $;
-
-// require('../css/debug.css'); Si css spécifique à la page!
 
 let selectedProduct = null;
 
@@ -101,15 +100,7 @@ $(function() {
 
     });
 
-    
-   $('#duplicate').click(function () {
-        $('.add-popup2').addClass('is-open');
-        return false;
-  });
 
-    $('.btn-popupclose2').click(function () {
-        $('.add-popup2').removeClass('is-open');
-    });
 
 
     $('.content-product .display-content input[type="checkbox"]').on("change" , function (e) {
@@ -126,5 +117,48 @@ $(function() {
         }
     });
 
+
+    $(".popup_comfirmation_edit").addClass("btn_hidden");
+//btn delete
+    $(".popup_comfirmation_delete").addClass("btn_hidden");
+
+
+    $("#checkbox_verification input[type='checkbox']").each(function () {
+        if ($(this).prop("checked")) {
+            $(".popup_comfirmation_edit").removeClass("btn_hidden");
+            $(".popup_comfirmation_delete").removeClass("btn_hidden");
+        }
+        console.log($(this).prop("checked"));
+    });
+
+    $("#checkbox_verification input[type='checkbox']").change(function () {
+        let nb_input_tags = $("#checkbox_verification input[type='checkbox']:checked").length;
+
+        /** Btn Modifaction tags **/
+        if (nb_input_tags === 1) {
+            $(".popup_comfirmation_edit").prop('disabled', false);
+            $(".popup_comfirmation_edit").removeClass("btn_hidden");
+
+            $("#duplicate").prop('disabled', false);
+            $("#duplicate").removeClass("btn_hidden");
+        } else {
+            $(".popup_comfirmation_edit").prop('disabled', true);
+            $(".popup_comfirmation_edit").addClass("btn_hidden");
+
+            $("#duplicate").prop('disabled', true);
+            $("#duplicate").addClass("btn_hidden");
+        }
+
+        /** Btn delete tags **/
+        if (nb_input_tags > 0) {
+            $(".popup_comfirmation_delete").prop('disabled', false);
+            $(".popup_comfirmation_delete").removeClass("btn_hidden");
+
+        } else {
+            $(".popup_comfirmation_delete").prop('disabled', true);
+            $(".popup_comfirmation_delete").addClass("btn_hidden");
+        }
+
+    });
 
 });

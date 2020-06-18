@@ -19,11 +19,6 @@ class Navbar {
                  $('.menu .nav').addClass('nav-active');
 
                  $('.main ').addClass('active-main');
-                // $('.menu .nav').animate({
-                //     width: '12%',
-                // },'slow', 'linear', function() {
-                // //        $('.menu .nav').addClass('nav-active');
-                // });
 
                 $('.menu .nav .nav-sous-menu').show();
                 $('.menu .nav .nav-menu > li .nav-sous-menu-mobile').hide();
@@ -33,11 +28,6 @@ class Navbar {
 
                  $('.menu .nav').removeClass('nav-active');
                  $('.main ').removeClass('active-main');
-            //     $('.menu .nav').animate({
-            //         width: '8%',
-            //     },'slow', 'linear', function() {
-            //           $('.menu .nav').removeClass('nav-active');
-            //    });
 
                 $('.menu .nav .nav-sous-menu').hide();
                 $('.menu .nav .nav-menu > li .nav-sous-menu-mobile').show();

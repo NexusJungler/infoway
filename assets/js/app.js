@@ -10,6 +10,8 @@ require('../css/debug.css');
 
 // import JS
 import '@fortawesome/fontawesome-free/js/all.js';
+
+
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";
 import {Tabmenu} from "./class/Tabmenu/Tabmenu";
 import {Changeimage} from "./class/image/Changeimage";
@@ -19,16 +21,20 @@ import {Navbar} from "./class/Navbar/Navbar";
 
 import {Form} from "./class/Form/Form";
 import ToolBox from "./class/Tools/ToolBox";
-
+import popupConfirmation from "./popup/popup_confirmation";
 
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-//jqueryValidate
+
+//jqueryValidat
 require('../js/jqueryValidate/jquery.validate.js');
 
 require('../js/tags.js');
+
+let popupconfirmation = new popupConfirmation();
+popupconfirmation.enable();
 
 // Tabs Menu
 let tab_menu = new Tabmenu();
