@@ -43,7 +43,7 @@ $(function() {
                 html += '<tr>' +
                     '<td>' +
                         '<label class="container-input"> ' +
-                            '<input type="checkbox" name="products[\' + product.id + \']"> ' +
+                            '<input type="checkbox" name="products[' + product.id + ']"> ' +
                             '<span class="container-rdo-tags"></span>' +
                         '</label>' +
                     '</td>';
@@ -60,9 +60,6 @@ $(function() {
                 }
                 html += '<td>' + product.description + '</td>'; // (product.description === null) ? '' : product.description
                 html += '<td>' + product.note + '</td>';
-
-
-
                 html += '<td class="tag">';
                 $.each(product.tags, function(j, tag){
                    html += '<p class="container-tags"> ' +
@@ -71,7 +68,6 @@ $(function() {
                        // '<span>' + tag.name + '</span>';
                 });
                 html += '</td>';
-
                 html += '<td>' + product.priceType.name + '</td>';
                 // allergens
                 html += '<td class="allergenes">';
@@ -111,9 +107,7 @@ $(function() {
     });
 
 
-
-
-    $('.content-product .display-content input[type="checkbox"]').on("change" , function (e) {
+    $('.content-product .display-content ').on("change","input[type='checkbox']" , function (e) {
 
         let $checkBox = $(e.currentTarget);
         let table_hidden_Col = $(e.currentTarget).val();
@@ -133,7 +127,7 @@ $(function() {
     $(".popup_comfirmation_delete").addClass("btn_hidden");
 
 
-    $("#checkbox_verification input[type='checkbox']").each(function () {
+    $("#checkbox_verification ").on("each","input[type='checkbox']" ,function () {
         if ($(this).prop("checked")) {
             $(".popup_comfirmation_edit").removeClass("btn_hidden");
             $(".popup_comfirmation_delete").removeClass("btn_hidden");
@@ -141,7 +135,7 @@ $(function() {
         console.log($(this).prop("checked"));
     });
 
-    $("#checkbox_verification input[type='checkbox']").change(function () {
+    $("#checkbox_verification ").on("change","input[type='checkbox']" ,function () {
         let nb_input_tags = $("#checkbox_verification input[type='checkbox']:checked").length;
 
         /** Btn Modifaction tags **/
@@ -170,5 +164,35 @@ $(function() {
         }
 
     });
+
+    $('.content-product-show-table table tbody tr').show();
+
+
+    $('.filter').change(function(){
+
+        $('.content-product-show-table table tbody tr').hide();
+
+        let formatFlag = 0;
+        let formatValue = $('#form').val();
+
+        $('.content-product-show-table table.table-custome tr').each(function() {
+
+            if(formatValue == 0){
+                formatFlag  = 1;
+            }
+            else if(formatValue == $(this).find('td.format').data('format')){
+                formatFlag  = 1;
+            }
+            else{
+                formatFlag  = 0;
+            }
+
+            if(formatFlag  ){
+                $(this).show();
+            }
+
+        });
+    });
+
 
 });
