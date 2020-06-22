@@ -2,93 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/css/general/button.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/general/form.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/general/input-rdo.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/general/popup.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/general/scrollbar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/general/table.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/popups/popup_duplicate_product/popup_duplicate_product.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/products/allergene/allergenes.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/AnimateTool.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/popup/popup_confirmation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Back_office/AdminCustomerController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Back_office/AdminUserController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_allergens.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_criterion.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_tags.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/popups/productDuplicate/popup_product_incrustes_duplicate.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome_icon/app-infoway.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome_icon/app-infoway.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/custom-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/custom_icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom_icon.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/fonts/app-infoway.eot" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/app-infoway.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/fonts/app-infoway.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/app-infoway.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/fonts/app-infoway.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/app-infoway.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/fonts/app-infoway.woff" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/app-infoway.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/groupe-prix.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/groupe-prix.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/home_page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/home_page.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media/media_image.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/media_image.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/nav_left.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/nav_left.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/product_price.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/product_price.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/show_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/show_product.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/create_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/create_tags.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/edit_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/edit_tags.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tabmenu/Tabmenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tabmenu/Tabmenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/CustomerCreatorHandler/CustomerCreatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/CustomerCreatorHandler/CustomerCreatorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/create/create-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/create/create-user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/criterion.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/criterion.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/product/product_price.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/product/product_price.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_categories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/tags/list_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/tags/list_tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Settings/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Customer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/MainPrice.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/MainPrice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FfmpegSchedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/allergens/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/allergens/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/categories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/loadingPopup/popup_loading.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/loadingPopup/popup_loading.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products/test-multi-form2.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/test-multi-form2.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,7 +260,7 @@
       <workItem from="1591602900458" duration="70904000" />
       <workItem from="1591793805741" duration="13942000" />
       <workItem from="1591812407722" duration="55109000" />
-      <workItem from="1592812843064" duration="21787000" />
+      <workItem from="1592812843064" duration="25903000" />
     </task>
     <servers />
   </component>

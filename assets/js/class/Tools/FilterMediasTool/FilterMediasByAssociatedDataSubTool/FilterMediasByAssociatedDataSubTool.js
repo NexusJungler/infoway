@@ -1,14 +1,20 @@
 import SubTool from "../../SubTool";
 
-class FilterMediasByCharacteristicsSubTool extends SubTool
+class FilterMediasByAssociatedDataSubTool extends SubTool
 {
 
     constructor()
     {
         super();
         this.__name = this.constructor.name;
-        this.__$container = $(".filter_by_characteristics_container");
+        this.__$container = $(".filters_by_associated_data_container");
         this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
+        this.__$target = null;
+    }
+
+    setFilterTarget($target)
+    {
+        this.__$target = $target;
     }
 
     onClickOnFilterValidationButton(active)
@@ -24,9 +30,7 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
                 console.log(filters); //debugger
 
-                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
-
-                this.__parent.getMediasContainer().find(`.card${ filters }`).removeClass("hidden");
+                this.applyFilters(filters);
 
             })
         }
@@ -36,6 +40,27 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
         }
 
         return this;
+    }
+
+    applyFilters(filters)
+    {
+
+        switch (this.__$target)
+        {
+
+            case "card":
+            default:
+                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
+
+                this.__parent.getMediasContainer().find(`.card${ filters }`).removeClass("hidden");
+                break;
+
+            case "association_popup_item":
+                console.log(filters); debugger
+                break;
+
+        }
+
     }
 
     getActivedFilters()
@@ -127,4 +152,4 @@ class FilterMediasByCharacteristicsSubTool extends SubTool
 
 }
 
-export default FilterMediasByCharacteristicsSubTool;
+export default FilterMediasByAssociatedDataSubTool;

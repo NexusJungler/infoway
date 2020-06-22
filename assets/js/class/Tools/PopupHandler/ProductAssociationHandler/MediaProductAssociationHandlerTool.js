@@ -93,6 +93,15 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                 this.__parent.getMediasContainer().find(`.card#${this.__currentMediaId}`).attr('data-products', mediaAssociationInfos.join(', '));
 
+                this.__$associatedList.find(`tr.dissociated`).each( (index, element) => {
+
+                    this.__$productsList.find(`tr[data-product_id='${ $(element).data('product_id') }'] .choice_product`).prop('checked', false);
+                    $(element).remove();
+
+                } );
+
+                this.__$associatedList.find(`tr.new_association`).removeClass('new_association');
+
             },
             error: (response, status, error) => {
 
@@ -227,6 +236,9 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                 //this.rebuildMediaProductsAssociatedList(mediaProductsAssociatedIds);
 
+                this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByAssociatedDataSubTool')
+                                                                      .setFilterTarget('association_popup_item');
+
                 this.__$container.addClass('is_open');
 
             })
@@ -304,6 +316,8 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                     this.__$container.removeClass('is_open');
 
+                    this.getToolBox().getTool('FilterMediasTool').removeAllFilters();
+
                     // reset
                     this.__$productsList.find('.choice_product').prop('checked', false);
                     this.__$location.find('.select_all_products').prop('checked', false);
@@ -333,16 +347,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         {
             this.__$location.find('.validate_association_btn').on('click.onClickOnValidationButtonUpdateMediaAssociatedInfos', e => {
 
-                this.__$associatedList.find(`tr.dissociated`).each( (index, element) => {
-
-                    this.__$productsList.find(`tr[data-product_id='${ $(element).data('product_id') }'] .choice_product`).prop('checked', false);
-                    $(element).remove();
-
-                } );
-
-                this.__$associatedList.find(`tr.new_association`).removeClass('new_association');
-
-                const mediaAssociatedProducts = $.map( this.__$associatedList.find('tr'), (element) =>  $(element).data('product_id'));
+                const mediaAssociatedProducts = $.map( this.__$productsList.find('.choice_product:checked'), (element) =>  $(element).parents('tr').data('product_id'));
 
                 this.updateMediaAssociatedProducts(mediaAssociatedProducts);
 

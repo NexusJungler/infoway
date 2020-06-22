@@ -1,7 +1,7 @@
 import Tool from "../Tool";
 import FilterMediasByTypeSubTool from "./FilterMediasByTypeSubTool/FilterMediasByTypeSubTool";
 import FilterMediasByOrientationSubTool from "./FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool";
-import FilterMediasByCharacteristicsSubTool from "./FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool";
+import FilterMediasByAssociatedDataSubTool from "./FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool";
 
 class FilterMediasTool extends Tool
 {
@@ -13,7 +13,7 @@ class FilterMediasTool extends Tool
         this.__subTools = [
             new FilterMediasByTypeSubTool(),
             new FilterMediasByOrientationSubTool(),
-            new FilterMediasByCharacteristicsSubTool(),
+            new FilterMediasByAssociatedDataSubTool(),
         ];
         this.__anFilterIsActive = false;
         this.__activeFilters = [];
@@ -144,6 +144,12 @@ class FilterMediasTool extends Tool
         else
             this.__activeFilters.splice(this.getRegisteredFilterIndex(filter), 1);
 
+    }
+
+    removeAllFilters()
+    {
+        this.__anFilterIsActive = false;
+        this.__activeFilters = [];
     }
 
     removeFilterByProperty(property)

@@ -35,7 +35,7 @@
 
                 <div class="container_header">
 
-                    <div class="left_side filters_container">
+                    <div class="left_side filters_container filters_by_associated_data_container">
 
                         <div class="filter filter_by_category">
                             <select>
@@ -49,8 +49,8 @@
                         <div class="filter filter_by_criterion">
                             <select>
                                 <option value="">Tout afficher</option>
-                                {% for categorie in categories %}
-                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                                {% for criterion in criterions %}
+                                    <option value="{{ criterion.id }}">{{ criterion.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -58,8 +58,8 @@
                         <div class="filter filter_by_tag">
                             <select>
                                 <option value="">Tout afficher</option>
-                                {% for categorie in categories %}
-                                    <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                                {% for tag in tags %}
+                                    <option value="{{ tag.id }}">{{ tag.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -70,8 +70,12 @@
 
                     </div>
 
-                    <div class="right_side">
-                        <input type="search" name="search[product]" placeholder="Rechercher un élément..." required>
+                    <div class="right_side filters_container">
+
+                        <div class="search_element_container">
+                            <input type="search" class="filter" name="search[product]" placeholder="Rechercher un élément..." required>
+                        </div>
+
                     </div>
 
                 </div>

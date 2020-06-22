@@ -8,7 +8,7 @@ class ShowMediaFilter extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$container = $(".filter_by_characteristics_container");
+        this.__$container = $(".left_filter_container .filters_by_associated_data_container");
     }
 
 
@@ -27,14 +27,14 @@ class ShowMediaFilter extends SubTool
                     console.log("goo");
                     this.__$container.find('.filter_container').addClass("filter_active");
                     this.__$container.find('.btn').removeClass("btn_show_filter_open");
-                    $(e.currentTarget).find('svg').removeClass('fa-plus').addClass('fa-minus');
+                    $(e.currentTarget).find('i').removeClass('fa-plus').addClass('fa-minus');
                     width = "70%" ;
 
                 } else {
                     console.log("goo5544");
                     this.__$container.find('.filter_container').removeClass("filter_active");
                     this.__$container.find('.btn').addClass("btn_show_filter_open");
-                    $(e.currentTarget).find('svg').removeClass('fa-minus').addClass('fa-plus');
+                    $(e.currentTarget).find('i').removeClass('fa-minus').addClass('fa-plus');
                     width = "30%" ;
                 }
 
