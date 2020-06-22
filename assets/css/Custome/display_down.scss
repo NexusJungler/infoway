@@ -13,6 +13,7 @@
     .display-content{
         display: flex;
         margin-bottom: 40px;
+        flex-direction: column;
         .display-content-columns{
             display: flex;
             .drop-btn{

@@ -1,7 +1,7 @@
 /** SCSS **/
 import '../css/general/reset.scss';
 import '../css/app.scss';
-import "@fortawesome/fontawesome-free/css/all.css";
+// import "@fortawesome/fontawesome-free/css/all.css";
 
 // css
 require('../css/custom-style.css');
@@ -9,7 +9,7 @@ require('../css/class/managers/clockManager.css');
 require('../css/debug.css');
 
 // import JS
-import '@fortawesome/fontawesome-free/js/all.js';
+// import '@fortawesome/fontawesome-free/js/all.js';
 
 
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";
