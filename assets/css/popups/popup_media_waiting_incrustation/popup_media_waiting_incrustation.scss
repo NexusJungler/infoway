@@ -1,8 +1,8 @@
 .popup_medias_waiting_incrustation_container{
 
-    &.is_open {
+    .popup {
 
-        .popup{
+        &.is_open{
 
             .popup_header{
 
@@ -212,6 +212,19 @@
 
                     &:not(:last-child){
                         margin-right: 2%;
+                    }
+
+                    button{
+
+                        &:not(.disabled){
+                            cursor: pointer;
+                        }
+
+                        &.disabled{
+                            background: #686868;
+                            cursor: not-allowed;
+                        }
+
                     }
 
                 }

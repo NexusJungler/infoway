@@ -1222,7 +1222,7 @@ class UserController extends AbstractController
            dump($sessionManager);
        ($sessionManager->get('current_customer') === null) ? $sessionManager->set('current_customer', $customer) : $sessionManager->replace('current_customer', $customer);
        //dd($sessionManager->get('current_customer'));
-       //dd($sessionManager);
+       dd($sessionManager);
        return new Response("200 OK");
 
    }

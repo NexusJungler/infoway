@@ -26,7 +26,6 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response, Session\SessionInterface};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -63,11 +62,11 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
+     * @Route(path="/mediatheque/{mediasDisplayedType}", name="media::showMediatheque", methods={"GET", "POST"},
      * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
+    public function showMediatheque(Request $request, string $mediasDisplayedType)
     {
 
         $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
@@ -91,7 +90,19 @@ class MediaController extends AbstractController
         if($request->isXmlHttpRequest() AND $request->isMethod("POST"))
         {
 
-            $this->updateMediathequeMediasNumber($request->request->get('numberOfMediasToDisplay'));
+            if($request->request->get('numberOfMediasToDisplay') !== null)
+            {
+
+                $number = intval($request->request->get('numberOfMediasToDisplay'));
+
+                if(!is_int($number))
+                    throw new Exception(sprintf("'numberOfMediasDisplayedInMediatheque' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+                ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
+                    $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
+                    $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
+
+            }
 
             list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
 
@@ -99,20 +110,17 @@ class MediaController extends AbstractController
                 'mediasToDisplayed' => $mediasToDisplayed,
                 'numberOfPages' => $numberOfPages,
                 'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
-                'userMediasDisplayedChoice' => $this->sessionManager->get('mediatheque_medias_number'),
+                'userMediasDisplayedChoice' => $this->sessionManager->get('numberOfMediasDisplayedInMediatheque'),
             ]);
 
         }
 
-        if($this->sessionManager->get('mediatheque_medias_number') === null)
-            $this->sessionManager->set('mediatheque_medias_number', 15);
+        if($this->sessionManager->get('numberOfMediasDisplayedInMediatheque') === null)
+            $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', 15);
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
         //dd($mediasToDisplayed);
-
-        if(empty($mediasToDisplayed))
-            throw new NotFoundHttpException(sprintf("No media(s) found for this page !"));
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
@@ -138,6 +146,7 @@ class MediaController extends AbstractController
             return $this->saveMediaCharacteristic($request);
         }
 
+
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $mediasDisplayedType, // will be used by js for get authorized extensions for upload
             'uploadIsAuthorizedOnPage' => $uploadIsAuthorizedOnPage,
@@ -152,7 +161,6 @@ class MediaController extends AbstractController
             'numberOfPages' => $numberOfPages,
             'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
             'archivedMedias' => $allArchivedMedias,
-            'currentPage' => $page,
         ]);
 
     }
@@ -521,12 +529,40 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/update/mediatheque/medias/number", name="media::updateNumberOfMediasDisplayedInMediatheque", methods={"POST"})
+     * @Route(path="/update/media/{id}/associated/products", name="media::updateMediaAssociatedProducts", methods={"POST"})
+     * @param Request $request
      */
-    public function updateNumberOfMediasDisplayedInMediatheque(Request $request)
+    public function updateMediaAssociatedProducts(Request $request, int $id)
     {
 
-        $this->updateMediathequeMediasNumber($request->request->get('numberOfMediasToDisplay'));
+        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $mediaRepo = $manager->getRepository(Media::class);
+        $productRepo = $manager->getRepository(Product::class);
+        $media = $mediaRepo->find($id);
+
+        if(!$media)
+            throw new Exception(sprintf("No media found with id : '%s'", $id));
+
+        //dump($request->request->get('productsToAssociation'), $media->getProducts()->getValues());
+
+        $media->getProducts()->clear();
+
+        foreach ($request->request->get('productsToAssociation') as $productId)
+        {
+
+            $product = $productRepo->find($productId);
+            if(!$product)
+                throw new Exception(sprintf("No product found with id : '%s'", $productId));
+
+            $media->addProduct($product);
+
+        }
+
+        //dd($media->getProducts()->getValues());
+
+        $manager->flush();
+
+        return new Response( "200 OK" );
 
     }
 
@@ -701,7 +737,7 @@ class MediaController extends AbstractController
 
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('mediatheque_medias_number');
+        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
 
         $mediasDisplayedType = $request->get('mediasDisplayedType');
 
@@ -770,20 +806,6 @@ class MediaController extends AbstractController
             $numberOfPages,
             $numberOfMediasAllowedToDisplayed,
         ];
-
-    }
-
-    private function updateMediathequeMediasNumber($number)
-    {
-
-        $number = intval($number);
-
-        if(!is_int($number))
-            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
-
-        ( $this->sessionManager->get('mediatheque_medias_number') !== null ) ?
-            $this->sessionManager->replace('mediatheque_medias_number', $number) :
-            $this->sessionManager->set('mediatheque_medias_number', $number);
 
     }
 

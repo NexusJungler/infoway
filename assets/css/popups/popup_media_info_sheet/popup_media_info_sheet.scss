@@ -1,380 +1,489 @@
 .popup_media_info_sheet_container{
-  height: 1200px;
+    height: 1200px;
 
-  &.is_open{
-
-    .popup{
-
-      .popup_header{
+    .popup_header{
         height: 5%;
         border: 1px solid #899CA4;
         border-radius: 7px 7px 0 0;
-      }
-
-      .popup_body{
-        display: flex;
-        flex-direction: column;
-        background-color: #FFFFFF;
-        color: #000;
-        height: 90%;
-        overflow-y: auto;
-
-        .popup_body_item{
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-
-          &.media_infos_container{
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            padding-left: 1.6%;
-
-            .container_header{
-
-              .icon_container{
-                background-color: #4F9BAE;
-                color: #FFF;
-
-              }
-
-            }
-
-            .media_infos_item{
-              width: 100%;
-
-              &.media_infos_top{
-                height: 60%;
-              }
-
-              &.media_infos_bottom{
-                height: 40%;
-              }
-
-            }
-
-            .media_infos_top{
-              display: flex;
-              flex-direction: column;
-
-              .media_infos_top_item{
-                display: flex;
-                flex-direction: row;
-                width: 100%;
-
-                &.media_infos_top_item_top{
-                  height: 10%;
-                  display: flex;
-                  flex-direction: row;
-                  align-items: center;
-                  margin-top: 1%;
-                  margin-bottom: 1%;
-
-                  .media_type{
-                    color: #899CA4  ;
-                    text-transform: uppercase;
-                    font-size: 48px;
-
-                    &::after{
-                      content: '';
-                      border-right: 2px solid #899CA4;;
-                      height: 20px;
-                      margin: auto 20px auto 20px;
-                    }
-
-                  }
-
-                  .media_title{
-                    font-size: 28px;
-                  }
-
-                }
-
-                &.media_infos_top_item_bottom{
-                  display: flex;
-                  flex-direction: row;
-                  height: 90%;
-
-                  .side{
-                    height: 100%;
-
-                    &.left_side{
-                      width: 70%;
-
-                      .media_miniature_container{
-                        height: 100%;
-                        width: 100%;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        background-color: #899CA4;
-
-                        .media_miniature{
-                          max-width: 100%;
-                          max-height: 100%;
-                          object-fit: contain;
-
-                          &.not_found{
-                            width: 100%;
-                            height: 100%;
-                          }
-
-                        }
-
-                      }
-
-                    }
-
-                    &.right_side{
-                      width: 30%;
-                      padding-left: 3%;
-
-                      .container_header{
-                        display: flex;
-                        flex-direction: row;
-
-                      }
-
-                      .media_validity_container{
-                        display: flex;
-                        flex-direction: column;
-
-                        .container_header{
-                          width: 90%;
-
-                          .icon_container{
-
-                            &.date_coming_soon{
-                              background-color: #F57171;
-                            }
-
-                          }
-
-                        }
-
-                        .container_body{
-                          text-align: left;
-                          background-color: #F6F6F6;
-                          width: 90%;
-
-                          span{
-                            color: #899CA4;
-
-                            &.date-coming-soon{
-                              color: #F57171;
-                            }
-
-                          }
-
-                        }
-
-                      }
-
-                      .media_incrustations_container{
-                        width: 426px;
-                        height: 296px;
-                        margin-top: 10%;
-
-                        .container_body{
-                          width: 100%;
-                          height: 100%;
-                          border: 1px solid #C0CCD1;
-                          border-radius: 6px;
-                          overflow-y: auto;
-
-                          &.empty{
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: center;
-                            align-items: center;
-                            background-color: #899CA4;
-                            color: #FFF;
-                          }
-
-                        }
-
-                      }
-
-                    }
-
-                  }
-
-                }
-
-              }
-
-            }
-
-            .media_infos_bottom{
-              display: flex;
-              flex-direction: row;
-              margin-top: 2%;
-
-              .side{
-                height: 100%;
-
-                .container{
-                  display: flex;
-                  flex-direction: row;
-                  text-align: left;
-                  margin-top: 1%;
-                  margin-bottom: 1%;
-
-                  .container_child:first-child{
-                    width: 12%;
-                  }
-
-                  .container_child:last-child{
-                    width: 88%;
-                  }
-
-                }
-
-                &.left_side{
-                  width: 70%;
-
-                  .media_name_container{
-                    height: 38px;
-                    border: 1px solid #C0CCD1;
-                    border-radius: 9px;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    padding-left: 1%;
-                    padding-right: 1%;
-
-                    .media_name{
-                      text-align: left;
-                      width: 100%;
-                    }
-
-                  }
-
-                  .media_characteristics span:not(:first-child){
-                    margin-left: 2%;
-                  }
-
-                  .container.associated_data_container{
-                    border: 1px solid #899CA4;
-                    border-radius: 6px;
-                    height: 64px;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-
-                    .container_child:first-child{
-                      width: 10%;
-                      background-color: #EBEBEB;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      border-radius: 6px 0 0 6px;
-                      height: 100%;
-                    }
-
-                    .container_child:last-child{
-                      width: 90%;
-                      text-align: left;
-                    }
-
-                  }
-
-                  .media_diffusion_spaces_container{
-                    margin-top: 3%;
-                    height: 35px;
-                    display: flex;
-                    flex-direction: column;
-
-                    .container_header{
-                      width: 100%;
-                      background-color: #F6F6F6;
-                      text-align: left;
-                      display: flex;
-                      flex-direction: row;
-                      vertical-align: middle;
-                      border: 1px solid #C0CCD1;
-                      border-radius: 6px 6px 0 0;
-                      align-items: center;
-                      padding-right: 1%;
-                      padding-left: 1%;
-
-                      .icon{
-                        background-color: #4F9BAE;
-                        width: 15px;
-                        height: 15px;
-                        border: 0.5px solid #707070;
-                        border-radius: 3px;
-                      }
-
-                      .arrow{
-                        text-align: right;
-                      }
-
-                    }
-
-                  }
-
-                }
-
-                &.right_side{
-                  width: 30%;
-                  padding-left: 3%;
-
-                  .media_products_associated_container{
-                    width: 426px;
-                    height: 296px;
-
-                    .container_header{
-                      display: flex;
-                      flex-direction: row;
-                    }
-
-                    .container_body{
-                      width: 100%;
-                      height: 100%;
-                      border: 1px solid #C0CCD1;
-                      border-radius: 6px;
-                      overflow-y: auto;
-
-                      table{
-                        width: 100%;
-
-                        tr{
-                          background-color: #F6F6F6;
-                          width: 100%;
-                          text-align: left;
-
-                          &:nth-child(odd){
-                            background-color: #EBECEC;
-                          }
-
-                        }
-
-                      }
-
-                    }
-
-                  }
-
-                }
-
-              }
-
-            }
-
-          }
-
-        }
-
-      }
-
-      .popup_footer{
-        height: 5%;
-
-      }
-
     }
 
-  }
+    &.is_open{
 
+        .popup{
+
+            .popup_body{
+                display: flex;
+                flex-direction: column;
+                background-color: #FFFFFF;
+                color: #000;
+                height: 90%;
+                overflow-y: auto;
+
+                .popup_body_item{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    &.media_infos_container{
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        padding-left: 2%;
+                        .container_header{
+                            margin-bottom: 10px;
+                            .container_header_title{
+                                font: 35px "Barlow";
+                                letter-spacing: 0px;
+                                color: #306D7C;
+                            }
+                            .icon_container{
+                                width: 30px;
+                                height: 30px;
+                                background-color: #4F9BAE;
+                                color: #FFF;
+                                border-radius: 6px;
+                                margin-right: 10px;
+
+                                i{
+                                    font-size: 22px;
+                                    padding: 4px 3px;
+                                }
+                            }
+
+
+                        }
+
+                        .media_infos_item{
+                            width: 100%;
+                                &.media_infos_top{
+                                    height: 60%;
+                                }
+
+                            &.media_infos_bottom{
+                                height: 40%;
+                            }
+                        }
+
+                        .media_infos_top{
+                            display: flex;
+                            flex-direction: column;
+
+                            .media_infos_top_item{
+                                display: flex;
+                                flex-direction: row;
+                                width: 100%;
+                                &.media_infos_top_item_top{
+                                    height: 10%;
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
+                                    margin-top: 1%;
+                                    margin-bottom: 1%;
+                                    .media_type{
+                                        color: #899CA4  ;
+                                        text-transform: uppercase;
+                                        font: 48px "Barlow" ;
+                                        letter-spacing: 0px;
+                                        &::after{
+                                            content: '';
+                                            border-right: 2px solid #899CA4;;
+                                             height: 20px;
+                                            margin: auto 20px auto 20px;
+                                        }
+                                    }
+                                    .media_title{
+                                        font: 28px "Barlow" ;
+                                        color: #4D646D;
+                                    }
+                                }
+
+                                &.media_infos_top_item_bottom{
+                                    display: flex;
+                                    flex-direction: row;
+                                    height: 90%;
+                                    .side{
+                                        height: 100%;
+                                        &.left_side{
+                                            width: 70%;
+                                            .media_miniature_container{
+                                                height: 100%;
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                background-image: repeating-linear-gradient(45deg, black 12%, white 13%);
+                                                .media_miniature{
+                                                    max-width: 100%;
+                                                    max-height: 100%;
+                                                    object-fit: contain;
+                                                    &.not_found{
+                                                        width: 100%;
+                                                        height: 100%;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        &.right_side{
+                                            width: 30%;
+                                            padding-left: 3%;
+                                            .container_header{
+                                                display: flex;
+                                                flex-direction: row;
+                                            }
+
+                                            .media_validity_container{
+                                                display: flex;
+                                                flex-direction: column;
+                                                .container_header{
+                                                    width: 90%;
+                                                    span{
+                                                        font: 23px "Barlow";
+                                                        letter-spacing: 0px;
+                                                        color: #306D7C;
+                                                    }
+                                                    .icon_container{
+                                                        &.date_coming_soon{
+                                                          background-color: #F57171;
+                                                        }
+                                                    }
+                                                }
+                                                .container_body{
+                                                    text-align: left;
+                                                    background-color: #F6F6F6;
+                                                    width: 90%;
+                                                    color: #899CA4;
+                                                    font:19px "Barlow" ;
+                                                    span{
+                                                        letter-spacing: 1px;
+                                                        &.date-coming-soon{
+                                                            color: #F57171;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            .media_incrustations_container{
+                                                width: 426px;
+                                                height: 296px;
+                                                margin-top: 10%;
+                                                .container_header{
+                                                    .icon_container{
+                                                        position: relative;
+                                                        top: 6px;
+                                                    }
+                                                }
+                                                .container_table_media{
+                                                    width: 100%;
+                                                    thead{
+                                                        font:16px "Barlow" ;
+                                                        letter-spacing: 0px;
+                                                        color: #899CA4;
+                                                        th{
+                                                            &:nth-child(1){
+                                                                width: 50%;
+                                                            }
+                                                            &:nth-child(n+2){
+                                                                padding: 3px 0;
+                                                                 width: 15%;
+                                                            }
+                                                            //&:last-child{
+                                                            //    padding-right: 50px;
+                                                            //}
+                                                        }
+                                                    }
+                                                    .media_incrustations_list{
+                                                        .container-input .container-rdo-tags {
+                                                            top: 2px;
+                                                            left: 16px;
+                                                        }
+                                                        tr{
+                                                            background: #F6F6F6 0% 0% no-repeat padding-box;
+                                                            &:nth-child(even){
+                                                                background: #FFFFFF 0% 0% no-repeat padding-box;
+                                                            }
+                                                        }
+                                                        td{
+                                                            padding: 5px 15px 6px 15px;
+                                                            position: relative;
+                                                            text-align: center;
+
+
+                                                            &:nth-child(1){
+                                                                width: 50%;
+                                                                text-align: left;
+                                                                font: 16px "Barlow" ;
+                                                                letter-spacing: 0px;
+                                                                color: #4D646D;
+                                                            }
+                                                            &:nth-child(n+2){
+                                                                width: 15%;
+                                                            }
+
+                                                            input[type="checkbox"] {
+                                                                position: absolute;
+                                                                opacity: 0;
+                                                                cursor: pointer;
+                                                                height: 0;
+                                                                width: 0;
+
+                                                                &:checked ~ .custom_checkbox {
+                                                                    background-color: #4F9BAE;
+                                                                }
+
+                                                            }
+
+                                                            .custom_checkbox{
+                                                                position: absolute;
+                                                                top: 15%;
+                                                                left: 40%;
+                                                                width: 17px;
+                                                                height: 17px;
+                                                                background-color: #FFF;
+                                                                border: 1px solid #4D646D;
+
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+                                                .container_body{
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    border: 1px solid #C0CCD1;
+                                                    border-radius: 6px;
+                                                    overflow-y: auto;
+                                                    &.empty{
+                                                        display: flex;
+                                                        flex-direction: row;
+                                                        justify-content: center;
+                                                        align-items: center;
+                                                        background-color: #899CA4;
+                                                        color: #FFF;
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .media_infos_bottom{
+                            display: flex;
+                            flex-direction: row;
+                            margin-top: 2%;
+
+                            .side{
+                                height: 100%;
+
+                                .container{
+                                    display: flex;
+                                    flex-direction: row;
+                                    text-align: left;
+                                    margin-top: 1.5%;
+                                    margin-bottom: 1%;
+                                    .container_child{
+                                        .container_child_title{
+                                            font: 20px "Barlow" ;
+                                            letter-spacing: 0px;
+                                            color: #4D646D;
+                                        }
+                                        .container-tags{
+                                            width: 10%;
+                                        }
+                                    }
+                                    .container_child_tags{
+                                        text-align: center;
+                                        background: #2696AE 0% 0% no-repeat padding-box;
+                                        position: relative;
+                                        height: 31px;
+                                        width: 108px;
+                                        box-shadow: 2px 2px 2px #00000029;
+                                        border: 1px solid #FFFFFF;
+                                        border-radius: 6px 0 0 6px;
+                                        color: #FFFFFF;
+                                        font-size: 18px;
+                                        .mini-cercle {
+                                            position: absolute;
+                                            left: 5px;
+                                            top: 6px;
+                                            width: 16px;
+                                            height: 16px;
+                                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                                            border: 1px solid #707070;
+                                            border-radius: 50%;
+                                            margin-right: 0.6rem;
+                                            i{
+                                                position: absolute;
+                                                color: #2696AE;
+                                                font-size: 11px;
+                                                left: 2px;
+                                                top: 1px;
+                                            }
+                                        }
+
+                                    }
+                                    .container_child:first-child{
+                                        width: 16%;
+                                    }
+
+                                    .container_child:last-child{
+                                        width: 88%;
+                                    }
+                                }
+
+                                &.left_side{
+                                    width: 70%;
+                                    .media_name_container{
+                                        height: 38px;
+                                        border: 1px solid #C0CCD1;
+                                        border-radius: 9px;
+                                        display: flex;
+                                        flex-direction: row;
+                                        align-items: center;
+                                        padding-left: 1%;
+                                        padding-right: 1%;
+                                        .media_name{
+                                            text-align: left;
+                                            width: 100%;
+                                            font:20px "Barlow" ;
+                                            letter-spacing: 0px;
+                                            color: #4D646D
+                                        }
+                                    }
+                                    .media_characteristics{
+                                        font: 18px "Barlow";
+                                        color: #4D646D;
+                                    }
+                                    .media_characteristics span:not(:first-child){
+                                        margin-left: 2%;
+
+                                    }
+                                    .container.associated_data_container{
+                                        border: 1px solid #899CA4;
+                                        border-radius: 6px;
+                                        height: 64px;
+                                        display: flex;
+                                        flex-direction: row;
+                                        align-items: center;
+
+                                        .container_child:first-child{
+                                            width: 13%;
+                                            background-color: #EBEBEB;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            border-radius: 6px 0 0 6px;
+                                            height: 100%;
+                                        }
+                                        .media_tags_container{
+                                            padding: 10px;
+                                        }
+
+                                        .container_child:last-child{
+                                            width: 90%;
+                                              text-align: left;
+                                        }
+                                        .container_child_criteres,
+                                        .container_child_allergenes{
+                                            text-align: center;
+                                            padding: 0px 15px;
+                                            background: #899CA4 0% 0% no-repeat padding-box;
+                                            box-shadow: 1px 2px 2px #00000029;
+                                            border: 1px solid #FFFFFF;
+                                            border-radius: 6px;
+                                            width: 108px;
+                                        }
+
+                                    }
+                                    .media_diffusion_spaces_container{
+                                        margin-top: 3%;
+                                        height: 35px;
+                                        display: flex;
+                                        flex-direction: column;
+
+                                        .container_header{
+                                            width: 100%;
+                                            height: 35px;
+                                            background-color: #F6F6F6;
+                                            text-align: left;
+                                            display: flex;
+                                            flex-direction: row;
+                                            vertical-align: middle;
+                                            border: 1px solid #C0CCD1;
+                                            border-radius: 6px 6px 0 0;
+                                            align-items: center;
+                                            padding-right: 1%;
+                                            padding-left: 1%;
+                                            .icon_container{
+                                                width: 23px;
+                                                height: 23px;
+                                                i{
+                                                    font-size: 15px;
+                                                }
+                                            }
+                                            .containeer_header_info{
+                                                font: 19px "Barlow" ;
+                                                letter-spacing: 0px;
+                                                color: #4D646D;
+                                            }
+                                            .arrow{
+                                                text-align: right;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &.right_side{
+                                    width: 30%;
+                                    padding-left: 3%;
+
+                                    .media_products_associated_container{
+                                        width: 426px;
+                                        height: 296px;
+                                        .container_header{
+                                            display: flex;
+                                            flex-direction: row;
+                                            .icon_container{
+                                                position: relative;
+                                                top: 6px;
+                                            }
+                                        }
+
+                                        .container_body{
+                                            width: 100%;
+                                            height: 100%;
+                                            border: 1px solid #C0CCD1;
+                                            border-radius: 6px;
+                                            overflow-y: auto;
+
+                                            table{
+                                                width: 100%;
+                                                tr{
+                                                    background-color: #F6F6F6;
+                                                    width: 100%;
+                                                    text-align: left;
+
+                                                    &:nth-child(odd){
+                                                        background-color: #EBECEC;
+                                                    }
+                                                    td{
+                                                        padding: 5px 15px 6px;
+                                                        font: 16px "Barlow";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .popup_footer{
+                height: 5%;
+            }
+        }
+    }
 }

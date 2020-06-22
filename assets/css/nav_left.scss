@@ -96,7 +96,6 @@ nav {
     background: linear-gradient(#343434 0%, #4E5E63 10%);
     z-index: 5;
     // transition: width 0.8s ease-in;
-    
 
     &.nav-active{
         // transition: width 0.8s ease-in;
@@ -141,7 +140,6 @@ nav {
                         width: rem(45px);
                     }
                 }
-
             }
             .nav-menu-title{
                 display: block;
@@ -263,7 +261,6 @@ nav {
             }
 
             /** sous menu **/
-    
             .nav-sous-menu{
                 display: none;
                 padding:0;
@@ -288,7 +285,6 @@ nav {
                         padding: rem(4px);
                         font-family: verdana;
                         font-size: 0.7em;
-                        
                     }
                     &:hover{
                         cursor: pointer;
@@ -303,7 +299,6 @@ nav {
             }
 
             /**  sous menu mobile **/
-
             .nav-sous-menu-mobile{
                 position: absolute;
                 overflow: hidden;
@@ -351,16 +346,12 @@ nav {
                 }
             }
         }
-        
-        
     }
 }
-
 
 /* MEDIA QUERY */
 
 /** tablette **/
-
 @media (max-width: rem(900px))  {
     nav {
         &.nav-active{

@@ -21,14 +21,14 @@
                 <h3>Affecté aux <span class="title-bold">produits</span> :</h3>
             </div>
 
-            <table class="table-assigned">
-                <thead class="thead-assigned">
+            <table class="table-associations">
+                <thead class="thead-associations">
                     <tr>
                         <th>Produits</th>
                         <th>Ajouter Produits : <button type="button" class="btn btn-open-popup_product"><i class="fas fa-align-justify"></i>Produits</button></th>
                     </tr>
                 </thead>
-                <tbody class="tbody-assigned scrollbar-table">
+                <tbody class="thead-associations scrollbar-table">
                 {#{%  if form.products | length < 1  %}  {{ form_row(form.products) }} {% endif %}#}
                     {% for product in form.products %}
                         {%  set currentProduct =  form.products.vars.choices[product.vars.value].data %}
@@ -59,14 +59,14 @@
                 <h3>Affecté aux <span class="title-bold">sites</span> :</h3>
             </div>
 
-            <table class="table-assigned">
-                <thead class="thead-assigned">
+            <table class="table-associations">
+                <thead class="thead-associations">
                     <tr>
                         <th>Site</th>
                         <th>Ajouter sites : <button type="button" class="btn btn-open-popup_site"><i class="fas fa-align-justify"></i>Sites</button></th>
                     </tr>
                 </thead>
-                <tbody class="tbody-assigned scrollbar-table">
+                <tbody class="thead-associations scrollbar-table">
                 {#{%  if form.sites|length < 1  %}  {{ form_row(form.sites) }} {% endif %}#}
                     {% for site in form.sites %}
                         {%  set currentSite =  form.sites.vars.choices[site.vars.value].data %}

@@ -1,3 +1,6 @@
+import "../css/products/category/show_categories.scss"
+
+
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 

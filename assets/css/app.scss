@@ -20,13 +20,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    font-family: 'Bralow', normal;
+    font-family: 'Bralow';
     line-height: 1.625;
     margin: 0;
     padding: 0;
     color: #6F6F6F;
     background:  repeat-x #E2E2E2 ;
-    color: black;
+    outline: none;
+}
+
+.overflow_hide{
+    overflow: hidden;
 }
 
 a {
@@ -44,26 +48,32 @@ img {
     display: none!important;
 }
 
+
 /** Function for converting  px to rem **/
 @function rem($size) {
     $remSize: $size / 16px;
     @return #{$remSize}rem;
 }
 
-/************************* CUSTOM CSS  ***************************/
-@import 'custome/table.scss';
+
+
+/************************* Style CSS  ***************************/
+
+/** button style **/
+@import "general/button.scss";
+
+/** style table **/
+@import 'general/table';
+
 
 @import 'custome/dropdown.scss';
 
-@import 'Custome/display_down1.scss';
-
 @import 'Custome/display_down.scss';
 
-@import 'custome/scrollbar.scss';
+@import 'general/scrollbar';
 
-@import 'custome/form.scss';
+@import 'general/form';
 
-@import "custome/button.scss";
 
 
 /************************* CUSTOM ICON  ***************************/
@@ -79,7 +89,7 @@ img {
 @import 'main.scss';
 // @import 'body_header.scss';
 
-/************************* BODYMENU WRAPPER CSS ***************************/
+/************************* BODY MENU WRAPPER CSS ***************************/
 @import 'menu_wrapper.scss';
 
 /************************* PAGE CSS ***************************/
@@ -97,5 +107,5 @@ img {
 /** MEDIA **/
 @import 'media.scss';
 
-@import 'allergenes.scss';
+@import 'products/allergene/allergenes';
 

@@ -158,12 +158,12 @@ private ParameterBagInterface $parameterBag;
                 {
 
                     $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                        $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
-                        . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+                                                          $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                          . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                     $mediaMiniatureMediumExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                          $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/medium/" . $media->getId() . "."
-                                                          . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+                                                             $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/medium/" . $media->getId() . "."
+                                                             . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                     $orderedMedias['medias'][$index] = [
                         'media' => null,

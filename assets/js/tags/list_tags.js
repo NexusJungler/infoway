@@ -1,101 +1,160 @@
-// jquery 
+
+
+
+
+// jquery
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-/** page list tags**/
-let nameTags = [];
+$(function() {
+    /** page list tags**/
+    let nameTags = [];
 
 // btn modification
-$(".modified-tag").addClass("hide-btn");
-
-$(".content-tags .tags-poster .chkbox-tag").change( function(){
-    let nb_input_tags = $(".tags-poster input[type='checkbox']:checked").length;
-    
-    /** Btn Modifaction tags **/
-
-    if(  nb_input_tags === 1 ){
-        $(".modified-tag").prop('disabled', false)
-        $(".modified-tag").removeClass("hide-btn");
-    }else{
-        $(".modified-tag").prop('disabled', true)
-        $(".modified-tag").addClass("hide-btn");
-    }
-
-})
-
+    $(".modified-tag").addClass("hide-btn");
 //btn delete
-$(".delete-tag-popup").addClass("hide-btn");
+    $(".delete-tag-popup").addClass("hide-btn");
 
-$(".content-tags .tags-poster .chkbox-tag").change( function(){
-    let nb_input = $(".tags-poster input[type='checkbox']:checked").length;
-    
-    /** Btn delete tags **/
-    if( nb_input > 0 ){
-        $(".delete-tag-popup").prop('disabled', false)
-        $(".delete-tag-popup").removeClass("hide-btn");
-        
+    $(".tags-poster input[type='checkbox']").each(function () {
+        if ($(this).prop("checked")) {
+            $(".modified-tag").removeClass("hide-btn");
+            $(".delete-tag-popup").removeClass("hide-btn");
+        }
+        console.log($(this).prop("checked"));
+    })
 
-    }else{
-        $(".delete-tag-popup").prop('disabled', true)
-        $(".delete-tag-popup").addClass("hide-btn");
+    $(".content-tags .tags-poster .chkbox-tag").change(function () {
+        let nb_input_tags = $(".tags-poster input[type='checkbox']:checked").length;
 
-    }
-})
+        /** Btn Modifaction tags **/
+        if (nb_input_tags === 1) {
+            $(".modified-tag").prop('disabled', false)
+            $(".modified-tag").removeClass("hide-btn");
+        } else {
+            $(".modified-tag").prop('disabled', true)
+            $(".modified-tag").addClass("hide-btn");
+        }
+
+        /** Btn delete tags **/
+        if (nb_input_tags > 0) {
+            $(".delete-tag-popup").prop('disabled', false)
+            $(".delete-tag-popup").removeClass("hide-btn");
+
+        } else {
+            $(".delete-tag-popup").prop('disabled', true)
+            $(".delete-tag-popup").addClass("hide-btn");
+        }
+
+    })
+
 
 // popup modification
-$('.modified-tag').click(function () {
-    $('.add-popup-edit').addClass('is-open');
+    $('.modified-tag').click(function () {
+        $('.add-popup-edit').addClass('is-open');
 
-    $.each($(".tags-poster input[type='checkbox']:checked"), (index, input) => {
-        let selectedTagName = $(input).parents("td").find(".current-tags-name").text();
-        if(nameTags.indexOf(selectedTagName) === -1){
-            nameTags.push(selectedTagName);
-        }
-    });
-    
-    nameTags.forEach(nameTag =>{
-        if($(`.content-modal .selected-tags-list p[text="${nameTag}"]`).length === 0 ){
-            $("<p>" + nameTag + "</p>").appendTo($(".content-modal .selected-tags-list"));
-        }
-    });
-    return false;
-});
+        $.each($(".tags-poster input[type='checkbox']:checked"), (index, input) => {
+            let selectedTagName = $(input).parents("td").find(".current-tags-name").text();
+            if (nameTags.indexOf(selectedTagName) === -1) {
+                nameTags.push(selectedTagName);
+            }
+        });
 
-$('.btn-popupclose').click( () => {
-    $('.add-popup-edit').removeClass('is-open');
-    $(".content-modal .selected-tags-list ").empty();
-    nameTags=[];
-});
+        nameTags.forEach(nameTag => {
+            if ($(`.content-modal .selected-tags-list p[text="${nameTag}"]`).length === 0) {
+                $("<p>" + nameTag + "</p>").appendTo($(".content-modal .selected-tags-list"));
+            }
+        });
+        return false;
+    });
+
+    $('.btn-popupclose').click(() => {
+        $('.add-popup-edit').removeClass('is-open');
+        $(".content-modal .selected-tags-list ").empty();
+        nameTags = [];
+    });
 
 
 // popup delete
-$('.delete-tag-popup').click(function () {
-    $('.add-popup-delete').addClass('is-open');
+    $('.delete-tag-popup').click(function () {
+        $('.add-popup-delete').addClass('is-open');
 
-    $.each($(".tags-poster input[type='checkbox']:checked"), (index, input) => {
-        let selectedTagName = $(input).parents("td").find(".current-tags-name").text();
-        if(nameTags.indexOf(selectedTagName) === -1){
-            nameTags.push(selectedTagName);
-        }
+        $.each($(".tags-poster input[type='checkbox']:checked"), (index, input) => {
+            let selectedTagName = $(input).parents("td").find(".current-tags-name").text();
+            if (nameTags.indexOf(selectedTagName) === -1) {
+                nameTags.push(selectedTagName);
+            }
+        });
+
+        nameTags.forEach(nameTag => {
+            if ($(`.content-modal .selected-tags-list p[text="${nameTag}"]`).length === 0) {
+                $("<p>" + nameTag + "</p>").appendTo($(".content-modal .selected-tags-list"));
+            }
+        });
+        return false;
     });
 
-    nameTags.forEach(nameTag =>{
-        if($(`.content-modal .selected-tags-list p[text="${nameTag}"]`).length === 0 ){
-            $("<p>" + nameTag + "</p>").appendTo($(".content-modal .selected-tags-list"));
-        }
+    $('.btn-popupclose').click(() => {
+        $('.add-popup-delete').removeClass('is-open');
+        $(".content-modal .selected-tags-list ").empty();
+        nameTags = [];
     });
-    return false;
-});
-
-$('.btn-popupclose').click( () => {
-    $('.add-popup-delete').removeClass('is-open');
-    $(".content-modal .selected-tags-list ").empty();
-    nameTags=[];
-});
 
 // recupere les couleur et afficher sur les tags
-$("ul.tags_list").on('change', ".tags-color" , function(e){
-    $(this).parents('ul.tags_list li ').find( '.color_input' ).css("background-color",this.value);
+    $("ul.tags_list").on('change', ".tags-color", function (e) {
+        $(this).parents('ul.tags_list li ').find('.color_input').css("background-color", this.value);
+    })
+
+
 })
+
+
+// class listTags{
+//
+//     enable(){
+//         this.onClickShowCriterionBase(true);
+//         this.onClickOpenPopup(true);
+//     }
+//     disable(){
+//         this.onClickShowCriterionBase(false);
+//         this.onClickOpenPopup(false);
+//
+//     }
+//
+//     onClickShowCriterionBase(active) {
+//         if(active){
+//             $("#criterions_list_basicCriterionUsed input[type=radio]").on('click.onClickShowCriterionBase', function(){
+//                 if ($(this).val() === "1" ) {
+//                     $(".row-define-criterion").addClass("active");
+//                 }else{
+//                     $(".row-define-criterion").removeClass("active");
+//                     $("#criterions_list_basicCriterionUsed_1").is(':checked');
+//                 }
+//             })
+//
+//         }else{
+//             $("#criterions_list_basicCriterionUsed input[type=radio]").off('click.onClickShowCriterionBase');
+//         }
+//     }
+//
+//     onClickOpenPopup(active) {
+//         if(active){
+//             $('.btn-open-popup_product').on('click.onClickOpenPopup', function(){
+//                 $('.add-popup-produits').addClass('is-open');
+//                 return false;
+//             })
+//             $('.btn-open-popup_site').on('click.onClickOpenPopup', function(){
+//                 $('.add-popup-site').addClass('is-open');
+//                 return false;
+//             })
+//
+//         }else{
+//             $(".btn-open-popup_product").off('click.onClickOpenPopup');
+//             $(".btn-open-popup_site").off('click.onClickOpenPopup');
+//         }
+//     }
+//
+// }
+//
+// export default listTags;
 
 

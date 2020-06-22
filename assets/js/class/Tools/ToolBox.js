@@ -9,6 +9,7 @@ import FilterMediasTool from "./FilterMediasTool/FilterMediasTool";
 import MediaWaitingIncrustationHandler from "./PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
 import PopupHandler from "./PopupHandler/PopupHandler";
 import MediaDeletingHandler from "./PopupHandler/MediaDeletingHandler/MediaDeletingHandler";
+import AnimateTool from "./AnimationTool/AnimateTool";
 
 class ToolBox
 {
@@ -36,6 +37,7 @@ class ToolBox
             new FilterMediasTool(),
             new PopupHandler(),
             new MediaDeletingHandler(),
+            new AnimateTool(),
         ];
     }
 

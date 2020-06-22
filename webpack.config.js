@@ -44,7 +44,7 @@ Encore
     .addEntry('user_login', './assets/js/user_login.js')
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
-
+    
     /********* Settings *********/
     /** Customer **/
     .addEntry('customer', './assets/js/settings/customer.js')
@@ -57,7 +57,7 @@ Encore
 
     /********* Product *********/
     .addEntry('product', './assets/js/product.js')
-    .addEntry('product_price', './assets/js/product/product_price.js')
+    // .addEntry('product_price', './assets/js/product/product_price.js')
     .addEntry('date', './assets/js/date.js')
     .addEntry('show_factories', './assets/js/show_factories.js')
     .addEntry('show_products', './assets/js/show_products.js')
@@ -68,7 +68,7 @@ Encore
 
     //media
     .addEntry('mediatheque', './assets/js/mediatheque.js')
-
+    
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

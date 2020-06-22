@@ -1,6 +1,6 @@
 <section class="popup_container popup_associate_product_container">
 
-    <article class="popup popup_associate_product">
+    <article class="popup popup_associate_product association_popup">
 
         <div class="popup_header">
 
@@ -92,30 +92,30 @@
                             </thead>
 
                             <tbody class="products_choice_list tbody tbody-content scrollbar-table">
-                            {% for product in products %}
-                                <tr data-product_id="{{ product.id }}" data-category="{{ product.category.id }}" data-product_criterions="{{ productsCriterions[product.id] | join(', ') }}">
-                                    <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
-                                    <td class="product_name">{{ product.name }}</td>
-                                    <td>{{ product.description }}</td>
-                                    <td class="criterions_col">
-                                        {% for criterion in product.criterions %}
-                                            <span>{{ criterion.name }}</span>
-                                        {% endfor %}
-                                    </td>
-                                    <td class="tags_col">
-                                        {% for tag in product.tags %}
-                                            <span>{{ tag.name }}</span>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                {% for product in products %}
+                                    <tr data-product_id="{{ product.id }}" data-category="{{ product.category.id }}" data-product_criterions="{{ productsCriterions[product.id] | join(', ') }}">
+                                        <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
+                                        <td class="product_name">{{ product.name }}</td>
+                                        <td>{{ product.description }}</td>
+                                        <td class="criterions_col">
+                                            {% for criterion in product.criterions %}
+                                                <span>{{ criterion.name }}</span>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="tags_col">
+                                            {% for tag in product.tags %}
+                                                <span>{{ tag.name }}</span>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
 
                     </div>
 
                     <div class="container_body_item chevron_right_container">
-                        <i class="fas fa-caret-right add_selected_products_in_associated_list"></i>
+                        <i class="fas fa-caret-right update_media_associated_products_list"></i>
                     </div>
 
                     <div class="container_body_item table products_associated_list_container">
@@ -143,7 +143,7 @@
 
         </div>
 
-        <div class="popup_footer">
+        <div class="popup_footer popup_item_container">
 
             <div class="actions_buttons_container">
                 <button class="btn close_modal_button" type="button">Annuler</button>

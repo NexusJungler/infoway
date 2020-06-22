@@ -15,11 +15,11 @@ class PaginatorHandler extends Tool
     {
 
         const mediasDisplayedType = $(".main-media").data("media_displayed");
-        //const numberOfMediasToDisplay= $("#displayed_elements_number_selection").val();
+        const numberOfMediasToDisplay= $("#displayed_elements_number_selection").val();
 
-        window.location = `/mediatheque/${mediasDisplayedType}/${page}`;
+        page = parseInt(page);
 
-        /*$('.medias_list_container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
+        $('.medias_list_container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
 
         this.pageNavigationIsActive = false;
 
@@ -39,7 +39,7 @@ class PaginatorHandler extends Tool
                 this.getToolBox().getTool('PopupHandler').getAgainMediaListContainer();
 
             },
-        });*/
+        })
 
     }
 
@@ -72,54 +72,25 @@ class PaginatorHandler extends Tool
             this.__$location.on('click.onClickOnArrowNavigateToPage', '.page_navigation_arrow', e => {
 
                 let currentPage = $('.page.current_page');
-                let currentPageText = parseInt( $('.page.current_page').text() );
 
-                if( ( $(e.currentTarget).hasClass('prev') && currentPage.prev('a.page').length > 0) ||
-                    ( $(e.currentTarget).hasClass('next') && currentPage.next('a.page').length > 0) )
+                if( $(e.currentTarget).hasClass('prev') )
                 {
-
-                    let nextOrPrevPage = ( $(e.currentTarget).hasClass('prev') ) ? currentPage.prev('a.page') : currentPage.next('a.page');
-
-                    currentPage.removeClass('current_page');
-
-                    if(nextOrPrevPage.text() === '...')
+                    if(currentPage.prev('a').length > 0)
                     {
-                        nextOrPrevPage.text( ($(e.currentTarget).hasClass('prev')) ? currentPageText  - 1 : currentPageText  + 1 );
-                    }
-
-                    nextOrPrevPage.addClass('current_page');
-                    this.reloadMediatheque( nextOrPrevPage.text() );
-
-                }
-
-
-
-                /*if( $(e.currentTarget).hasClass('prev') )
-                {
-                    if(currentPage.prev('a.page').length > 0)
-                    {
-
-
+                        currentPage.removeClass('current_page');
+                        currentPage.prev('a').addClass('current_page');
+                        this.reloadMediatheque( currentPage.prev('a').text() );
                     }
                 }
                 else if( $(e.currentTarget).hasClass('next') )
                 {
-                    if(currentPage.next('a.page').length > 0)
+                    if(currentPage.next('a').length > 0)
                     {
-
-                        let nextPage = currentPage.next('a.page');
-
                         currentPage.removeClass('current_page');
-
-                        if(nextPage.text() === '...')
-                        {
-                            nextPage.text(currentPageText  - 1);
-                        }
-
-                        nextPage.addClass('current_page');
-                        this.reloadMediatheque( nextPage.text() );
+                        currentPage.next('a').addClass('current_page');
+                        this.reloadMediatheque( currentPage.next('a').text() );
                     }
-                }*/
+                }
 
             })
         }
@@ -137,31 +108,7 @@ class PaginatorHandler extends Tool
         {
             this.__$location.find("#displayed_elements_number_selection").on("change.onDisplayedMediasNumberChange", e => {
 
-                //this.reloadMediatheque();
-
-                $('.medias_list_container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
-
-                const mediasDisplayedType = $(".main-media").data("media_displayed");
-
-                this.pageNavigationIsActive = false;
-
-                $.ajax({
-                    url: `/mediatheque/${mediasDisplayedType}`,
-                    type: "POST",
-                    data: { 'mediasDisplayedType': mediasDisplayedType, 'page': 1, 'numberOfMediasToDisplay': $(e.currentTarget).val() },
-                    success: (response) => {
-
-                        console.log(response);
-
-                        this.rebuildMediasCards(response.mediasToDisplayed);
-                        this.rebuildPageList(response.numberOfPages, page);
-                        this.rebuildNumberOfMediasDisplayedList(response.numberOfMediasAllowedToDisplayed, response.userMediasDisplayedChoice);
-
-                        this.getToolBox().getTool('FilterMediasTool').getAgainMediaListContainer();
-                        this.getToolBox().getTool('PopupHandler').getAgainMediaListContainer();
-
-                    },
-                });
+                this.reloadMediatheque();
 
             })
         }
@@ -183,10 +130,7 @@ class PaginatorHandler extends Tool
 
         $.each( mediasInfos.medias, (index, mediaInfos) => {
 
-            let card = this.buildMediaCard(mediaInfos.media, mediaInfos.media_type, mediaInfos.miniature_exist, {products: mediaInfos.media_products,
-                categories: mediaInfos.media_categories, tags: mediaInfos.media_tags,
-                criterions: mediaInfos.media_criterions}, mediaInfos.media_type);
-
+            let card = this.buildMediaCard(mediaInfos.media, {products: mediaInfos.media_products, categories: mediaInfos.media_categories, tags: mediaInfos.media_tags, criterions: mediaInfos.media_criterions}, mediaInfos.media_type, container.data('customer'));
             cards += card;
             //$(card).appendTo( container );
 
@@ -196,10 +140,9 @@ class PaginatorHandler extends Tool
 
     }
 
-    buildMediaCard(media, mediaType, mediaMiniatureExist = false, media_associated_infos = { products: [], categories: [], tags: [], criterions: [] })
+    buildMediaCard(media, media_associated_infos = { products: [], categories: [], tags: [], criterions: [] }, mediaType, customer)
     {
 
-        const customer = $('.medias_list_container').data('customer');
         const dateIsComingSoon = ( this.getDaysDiffBetweenDates(media.diffusionEnd, new Date()) <= 14);
 
         let card = `<div class="card" id="media_${ media.id }" data-created_date="${ this.reformateDate(media.createdAt) }" data-media_type="${mediaType}" data-orientation="${media.orientation}"
@@ -244,25 +187,18 @@ class PaginatorHandler extends Tool
                             
                             <div class="card_body">
                                <div class="media_miniature_container">`;
-
-        if(mediaMiniatureExist)
+                            
+        if(mediaType === 'image')
         {
-            if(mediaType === 'image')
-            {
-                card += `<img class="media_miniature miniature_image" src="/miniatures/${ customer }/images/low/${ media.id }.png"
+            card += `<img class="media_miniature" src="/miniatures/${ customer }/images/low/${ media.id }.png"
                                         alt="/miniatures/${ customer }/images/low/${ media.id }.png">`
-            }
-            else
-            {
-                card += `<video class="media_miniature miniature_video">
-                        <source src="/miniatures/${ customer }/videos/low/${ media.id }.mp4" type="${ media.mimeType }">
-                    </video>`;
-            }
         }
         else
-            card += `<img class="media_miniature miniature_${mediaType}" src="/build/images/no-available-image.png"
-                                        alt="/build/images/no-available-image.png">`
-
+        {
+            card += `<video class="media_miniature">
+                        <source src="/miniatures/${ customer }/videos/low/${ media.id }.mp4" type="${ media.mimeType }">
+                    </video>`;
+        }
 
         card += `</div>
                  <div class="media_name_container">
@@ -351,34 +287,27 @@ class PaginatorHandler extends Tool
         if(limit > 1)
         {
 
-            let page = window.location.href.match(/\d*$/);
             let url = window.location.href;
-            if(page[0] !== '')
-            {
-                url = url.replace(/\d*$/, '');
-                console.log(url);
-                console.log(page);
-            }
-
-            let numberOfPagesToDisplayBeforeHidePages = 4;
 
             let pageContainerContent = '';
 
-            pageContainerContent += '<i class="fas fa-chevron-left page_navigation_arrow prev"></i>';
+            if(currentPage > 1)
+            {
+                pageContainerContent += '<i class="fas fa-chevron-left page_navigation_arrow prev"></i>';
+                //$('<i class="fas fa-chevron-left page_navigation_arrow left"></i>').appendTo( $(".pages-container") );
+            }
 
             for (let i = 1; i <= limit ; i++)
             {
-
-                if(i < numberOfPagesToDisplayBeforeHidePages || i === currentPage || i === limit)
-                    pageContainerContent += `<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${url + i}">${i}</a>`;
-
-                else if(i === numberOfPagesToDisplayBeforeHidePages)
-                    pageContainerContent += `<a class='page' href="">...</a>`;
-
+                pageContainerContent += `<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${ url + '/' + i}">${i}</a>`;
                 //$(`<a class='page ${ (i === currentPage) ? 'current_page' : '' }' href="${ url + '/' + i}">${i}</a>`).appendTo( $(".pages-container") );
             }
 
-            pageContainerContent += '<i class="fas fa-chevron-right page_navigation_arrow next"></i>';
+            if(limit > currentPage)
+            {
+                pageContainerContent += '<i class="fas fa-chevron-right page_navigation_arrow next"></i>';
+                //$('<i class="fas fa-chevron-right page_navigation_arrow right"></i>').appendTo( $(".pages-container") );
+            }
 
             this.__$location.find('.pages_container').html( pageContainerContent );
 

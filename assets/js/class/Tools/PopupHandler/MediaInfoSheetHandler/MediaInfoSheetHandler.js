@@ -167,6 +167,7 @@ class MediaInfoSheetHandler extends SubTool
     retrieveMediaAssociatedInfos(mediaId)
     {
 
+        $('.popup_loading_container .loading_message').text('Chargement du contenu en cours...');
         $('.popup_loading_container').addClass('is_open');
 
         return new Promise( (resolve, reject) => {
@@ -224,9 +225,9 @@ class MediaInfoSheetHandler extends SubTool
 
             let newElement= `<tr>
                                  <td>${productName}</td> 
-                                 <td><input type="checkbox" ${ incrustesTypes.includes('Prix') ? 'checked' : '' }></td>  
-                                 <td><input type="checkbox" ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }></td>  
-                                 <td><input type="checkbox" ${ incrustesTypes.includes('Texte') ? 'checked' : '' }></td>  
+                                 <td><input type="checkbox" disabled ${ incrustesTypes.includes('Prix') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
+                                 <td><input type="checkbox" disabled ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
+                                 <td><input type="checkbox" disabled ${ incrustesTypes.includes('Texte') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
                              </tr>`;
 
             $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )

@@ -1,4 +1,4 @@
-<div class="card" id="media_{{ media.id }}" data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}" data-orientation="{{ media.orientation }}"
+<div class="card card_{{ media_type }}" id="media_{{ media.id }}"  data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}" data-orientation="{{ media.orientation }}"
 
         data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}"
 
@@ -28,7 +28,10 @@
 
     <div class="card_header">
         <div class="select_media_input_container">
-            <input type="checkbox" class="select_media_input">
+            <label class="container-input">
+                <input type="checkbox" class="select_media_input">
+                <span class="container-rdo-tags"></span>
+            </label>
         </div>
 
         <div class="media_actions_shortcuts_container">
@@ -45,7 +48,7 @@
             </div>
 
             <div class="shortcut">
-                <i class="far fa-clock"></i>
+                <i class="fas fa-spinner"></i>
             </div>
 
         </div>
@@ -53,10 +56,10 @@
 
     <div class="card_body">
 
-        <div class="media_miniature_container" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
-                {% if media_type is same as('image') %} data-dpi="72" {% else %} data-codec="{{ media.videoCodec }}" {% endif%} >
+        <div class="media_miniature_container media_{{ media.orientation }}" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
+                {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
 
-            {% if miniature_low_exist is same as(false) %}
+            {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
 
                 <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
@@ -64,14 +67,26 @@
 
                 {% if media_type is same as('image') %}
 
-                    <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                    <div class="media_container_img">
+                        <div class="media_container_arrows">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                             alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                    </div>
+
 
                 {% elseif media_type is same as('video') %}
 
-                    <video class="media_miniature miniature_video">
-                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
-                    </video>
+                    <div class="media_container_video">
+                        <div class="media_container_arrows">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <video class="media_miniature miniature_video">
+                            <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
+                        </video>
+                    </div>
+
 
                 {% endif %}
 
@@ -101,7 +116,7 @@
 
                 {% else %}
 
-                    <p>0 critères</p>
+                    <p>0 critères </p>
 
                 {% endif %}
 
@@ -112,12 +127,15 @@
                 {% if media.tags is not empty %}
 
                     {% for tag in media.tags %}
-                        <p class="tag"><span></span> {{ tag.name }}</p>
+                        <p class="tag container-tags">
+                            <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                            <span class="current-tags-name">{{ tag.name }}</span>
+                        </p>
                     {% endfor %}
 
                 {% else %}
 
-                    <p>0 tags</p>
+                    <p>0 tags </p>
 
                 {% endif %}
 

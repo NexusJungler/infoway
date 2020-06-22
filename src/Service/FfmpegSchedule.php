@@ -214,6 +214,9 @@ class FfmpegSchedule
                             continue;
                         }
 
+                        // ce fichier c'est pour les videos
+                        // lors de l'enregistrement en base
+
                         $taskInfo = [
                             'fileName' => $video,
                             'customerName' => $customer_name,
@@ -222,6 +225,7 @@ class FfmpegSchedule
                             'extension' => $taskMediaInfo['extension'],
                             'mediaProducts' => $taskMediaInfo['products'],
                             'mediaTags' => $taskMediaInfo['tags'],
+                            //'mediaTagsColor' => $taskMediaInfo['tags.color']
                         ];
 
                         $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
@@ -249,6 +253,8 @@ class FfmpegSchedule
                         'extension' => $taskMediaInfo['extension'],
                         'mediaProducts' => $taskMediaInfo['products'],
                         'mediaTags' => $taskMediaInfo['tags'],
+                        //'mediaTagsColor' => $taskMediaInfo['tags.color']
+
                     ];
                     $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
                     $errors = $encoding->getErrors();

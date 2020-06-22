@@ -23,15 +23,13 @@ class MediaProductAssociationHandlerTool extends SubTool
     addItemInAssociatedList(item)
     {
 
-        if(this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).length > 0
-            && this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).hasClass('dissociated'))
+        if(this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).length > 0)
         {
 
             this.__$productsList.find(`tr[data-product_id='${ item.productId }'] .choice_product`).prop('checked', true);
 
-            this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).removeClass('dissociated').addClass('new_association');
+            this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).removeClass('dissociated').removeClass('new_association');
             this.__$associatedList.find(`tr[data-product_id="${ item.productId }"] .dissociation_btn_container button`).show();
-
 
         }
 
@@ -59,43 +57,75 @@ class MediaProductAssociationHandlerTool extends SubTool
 
     }
 
-    removeItemFromList(productId)
+    removeItemFromAssociatedList(productId, removeElementFromList = false)
     {
 
         this.__$associatedList.find(`tr[data-product_id="${ productId }"]`).removeClass('new_association').addClass('dissociated');
-        //this.__$productsList.find(`tr[data-product_id='${ productId }'] .choice_product`).prop('checked', false);
+        this.__$productsList.find(`tr[data-product_id='${ productId }'] .choice_product`).prop('checked', false);
         this.__$associatedList.find(`tr[data-product_id="${ productId }"] .dissociation_btn_container button`).hide();
 
+        if(removeElementFromList)
+            this.__$associatedList.find(`tr[data-product_id="${ productId }"]`).remove();
 
         this.handleMediaInfosModification();
 
-        //this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).remove();
         //$(`.edit_media_info .associated_products_container span[data-product='${ item.productId }']`).remove();
     }
 
-    updateMediaAssociatedProducts(mediaInfos)
+    updateMediaAssociatedProducts(mediaAssociationInfos = [])
+    {
+
+        let mediaId = this.__currentMediaId.replace('media_', '');
+
+        $('.popup_loading_container .loading_message').text('Enregistrement des modifications en cours...');
+
+        $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
+
+        $.ajax({
+            url: `/update/media/${ mediaId }/associated/products`,
+            type: "POST",
+            data: {productsToAssociation: mediaAssociationInfos},
+            success: (response) => {
+
+                //console.log(response); debugger
+
+                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+
+                this.__parent.getMediasContainer().find(`.card#${this.__currentMediaId}`).attr('data-products', mediaAssociationInfos.join(', '));
+
+            },
+            error: (response, status, error) => {
+
+                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+
+                alert("Erreur interne durant l'enregistrements !");
+
+                console.error(response); debugger
+
+            },
+        });
+
+    }
+
+
+    updateUploadMediaAssociatedProducts(mediaAssociationInfos)
     {
 
         let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === mediaInfos.media );
 
         if( registeredMediaInfosIndex === -1 )
-            this.__mediasAssociationInfo.push( mediaInfos );
+            this.__mediasAssociationInfo.push( mediaAssociationInfos );
 
         else
-            this.__mediasAssociationInfo[ registeredMediaInfosIndex ].products = mediaInfos.products;
+            this.__mediasAssociationInfo[ registeredMediaInfosIndex ].products = mediaAssociationInfos.products;
 
-        if(this.__isUpload)
-        {
+        let mediaIndex = this.__$mediasCollection.find(`.media_name[value='${ mediaAssociationInfos.media }']`).parents('li').data('index');
 
-            let mediaIndex = this.__$mediasCollection.find(`.media_name[value='${ mediaInfos.media }']`).parents('li').data('index');
+        $(`#medias_list_medias_${mediaIndex}_products input[type='checkbox']`).each( (index, input) => {
 
-            $(`#medias_list_medias_${mediaIndex}_products input[type='checkbox']`).each( (index, input) => {
+            $(input).attr('checked', ( mediaAssociationInfos.products.indexOf( parseInt($(input).val()) ) !== -1 ) );
 
-                $(input).attr('checked', ( mediaInfos.products.indexOf( parseInt($(input).val()) ) !== -1 ) );
-
-            } )
-
-        }
+        } )
 
     }
 
@@ -128,19 +158,32 @@ class MediaProductAssociationHandlerTool extends SubTool
     }
 
 
-    onClickOnChevronAddSelectedProductsInAssociatedList(active)
+    onClickOnChevronUpdateMediaAssociatedProductsList(active)
     {
         if(active)
         {
-            this.__$location.find('.add_selected_products_in_associated_list').on('click.onClickOnChevronAddSelectedProductsInAssociatedList', e => {
 
+            this.__$location.find('.update_media_associated_products_list').on('click.onClickOnChevronUpdateMediaAssociatedProductsList', e => {
 
+                this.__$productsList.find(`input[type='checkbox'].choice_product`).each( (index, element) => {
+
+                    let productId = $(element).parents('tr').data('product_id');
+                    let productName = $(element).parents('tr').find('.product_name').text();
+                    let productCriterions = $(element).parents('tr').data('product_criterions');
+
+                    if( $(element).is(':checked') )
+                        this.addItemInAssociatedList({ productId: productId, productCriterions: productCriterions, name: productName });
+
+                    else
+                        this.removeItemFromAssociatedList(productId);
+
+                } );
 
             })
         }
         else
         {
-            this.__$location.find('.add_selected_products_in_associated_list').off('click.onClickOnChevronAddSelectedProductsInAssociatedList');
+            this.__$location.find('.update_media_associated_products_list').off('click.onClickOnChevronUpdateMediaAssociatedProductsList');
         }
 
         return this;
@@ -255,16 +298,22 @@ class MediaProductAssociationHandlerTool extends SubTool
                 //$('.add-popup').css({ 'z-index': '' });
                 //this.__$location.fadeOut();
 
-                this.__$container.removeClass('is_open');
-
-                // reset
-                this.__$productsList.find('.choice_product').prop('checked', false);
-                this.__$location.find('.select_all_products').prop('checked', false);
-                this.__$associatedList.empty();
-
-                if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
+                if( ( (this.__$associatedList.find('.new_association').length > 0 || this.__$associatedList.find('.dissociated').length > 0 ) && confirm("Vous n'avez pas validés vos dernières modifications ! Voulez-vous vraiment continuer ?") ) ||
+                    (this.__$associatedList.find('.new_association').length === 0 && this.__$associatedList.find('.dissociated').length === 0) )
                 {
-                    this.updateMediaAssociatedProducts( { media: this.__currentMedia, products: [] } );
+
+                    this.__$container.removeClass('is_open');
+
+                    // reset
+                    this.__$productsList.find('.choice_product').prop('checked', false);
+                    this.__$location.find('.select_all_products').prop('checked', false);
+                    this.__$associatedList.empty();
+
+                    if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
+                    {
+                        this.updateUploadMediaAssociatedProducts( { media: this.__currentMedia, products: [] } );
+                    }
+
                 }
 
             })
@@ -293,8 +342,13 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                 this.__$associatedList.find(`tr.new_association`).removeClass('new_association');
 
+                const mediaAssociatedProducts = $.map( this.__$associatedList.find('tr'), (element) =>  $(element).data('product_id'));
 
-                this.handleMediaInfosModification();
+                this.updateMediaAssociatedProducts(mediaAssociatedProducts);
+
+                this.__$location.find('.validate_association_btn').attr('disabled', true);
+
+                // this.handleMediaInfosModification();
 
                 /*let productsToMedia = [];
                 this.__$associatedList.find('tr').each( (index, element) => {
@@ -348,7 +402,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         {
             this.__$associatedList.on('click.onClickOnProductDissociationButton', '.dissociation_btn', e => {
 
-                this.removeItemFromList( $(e.currentTarget).parents('tr').data('product_id') );
+                this.removeItemFromAssociatedList( $(e.currentTarget).parents('tr').data('product_id') );
 
                 /*
                 let button = $(e.currentTarget);
@@ -383,7 +437,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                         const productName = $(input).data('product_name');
                         const productId = $(input).parents('tr').data('product_id');
                         const productCriterions = $(input).parents('tr').data('product_criterions');
-                        this.addItemInAssociatedList( { name: productName, productId: productId, productCriterions: productCriterions } );
+                        //this.addItemInAssociatedList( { name: productName, productId: productId, productCriterions: productCriterions } );
                     } );
                 }
                 else
@@ -410,9 +464,9 @@ class MediaProductAssociationHandlerTool extends SubTool
     {
         if(active)
         {
-            this.__$productsList.on('change.onClickOnAddProductInListCheckbox', '.choice_product', e => {
+            this.__$productsList.find('.choice_product').on('change.onClickOnAddProductInListCheckbox', e => {
 
-                const productName = $(e.currentTarget).data('product_name');
+                /*const productName = $(e.currentTarget).data('product_name');
                 const productId = $(e.currentTarget).parents('tr').data('product_id');
                 const productCriterions = $(e.currentTarget).parents('tr').data('product_criterions');
 
@@ -420,7 +474,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                     this.addItemInAssociatedList( {name: productName, productId: productId, productCriterions: productCriterions} );
 
                 else
-                    this.removeItemFromList(productId);
+                    this.removeItemFromAssociatedList(productId);*/
 
                 if(this.__$productsList.find('.choice_product:checked').length === 0)
                     this.__$location.find('.select_all_products').prop('checked', false);
@@ -437,7 +491,6 @@ class MediaProductAssociationHandlerTool extends SubTool
 
     handleMediaInfosModification()
     {
-
 
         this.__$location.find('.validate_association_btn').attr('disabled', ( (this.__$associatedList.find('tr.dissociated').length === 0)
             && (this.__$associatedList.find('tr.new_association').length === 0)  ) );
@@ -487,7 +540,7 @@ class MediaProductAssociationHandlerTool extends SubTool
     {
         super.enable();
 
-        this.onClickOnChevronAddSelectedProductsInAssociatedList(true)
+        this.onClickOnChevronUpdateMediaAssociatedProductsList(true)
             .onClickOnValidationButtonUpdateMediaAssociatedInfos(true)
             .onClickOnProductDissociationButton(true)
             .onClickOnSelectAllButtonSelectAllProducts(true)
@@ -503,7 +556,7 @@ class MediaProductAssociationHandlerTool extends SubTool
     {
         super.disable();
 
-        this.onClickOnChevronAddSelectedProductsInAssociatedList(false)
+        this.onClickOnChevronUpdateMediaAssociatedProductsList(false)
             .onClickOnValidationButtonUpdateMediaAssociatedInfos(false)
             .onClickOnProductDissociationButton(false)
             .onClickOnSelectAllButtonSelectAllProducts(false)

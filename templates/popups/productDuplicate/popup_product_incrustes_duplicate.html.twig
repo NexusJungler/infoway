@@ -1,0 +1,62 @@
+<article class="add-popup add-popup2 upload_popup">
+
+    <div class="modal">
+
+        <div class="header-modal">
+            <div>
+                <p class="upload-title"></p>
+                <button type="button" class="btn btn-popupclose2 ">X</button>
+            </div>
+        </div>
+
+        <div id="popup_properties" >
+            <h1>Sélectionnez les éléments du produit à conserver</h1>
+            <form action="{{ path('product::duplicate', {'product': 3}) }}" id="form_duplicate_product" method="post">
+                <table class="center">
+                    <tr>
+                        <td><input type="checkbox" name="product[category]"></td>
+                        <td>Catégorie</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[priceType]"></td>
+                        <td>Type de prix</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[amount]"></td>
+                        <td>Quantié</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[description]"></td>
+                        <td>Description</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[note]">
+                        </td><td>Mention</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[start]"></td>
+                        <td>Début de validité</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[end]"></td>
+                        <td>Fin de validité</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[tags]"></td>
+                        <td>Tags</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[allergens]"></td>
+                        <td>Allergènes</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="product[logo]"></td>
+                        <td>Logo</td>
+                    </tr>
+                </table>
+                <button id="properties_validate" type="submit">Valider</button>
+            </form>
+        </div>
+
+    </div>
+</article>
