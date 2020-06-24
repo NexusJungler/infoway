@@ -26,6 +26,7 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response, Session\SessionInterface};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -62,11 +63,15 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}", name="media::showMediatheque", methods={"GET", "POST"},
+     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
      * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
+     * @param Request $request
+     * @param string $mediasDisplayedType
+     * @param int $page
+     * @return Response
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType)
+    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
     {
 
         $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
@@ -88,40 +93,15 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
-        if($request->isXmlHttpRequest() AND $request->isMethod("POST"))
-        {
-
-            if($request->request->get('numberOfMediasToDisplay') !== null)
-            {
-
-                $number = intval($request->request->get('numberOfMediasToDisplay'));
-
-                if(!is_int($number))
-                    throw new Exception(sprintf("'numberOfMediasDisplayedInMediatheque' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
-
-                ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
-                    $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
-                    $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
-
-            }
-
-            list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
-
-            return new JsonResponse([
-                'mediasToDisplayed' => $mediasToDisplayed,
-                'numberOfPages' => $numberOfPages,
-                'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
-                'userMediasDisplayedChoice' => $this->sessionManager->get('numberOfMediasDisplayedInMediatheque'),
-            ]);
-
-        }
-
-        if($this->sessionManager->get('numberOfMediasDisplayedInMediatheque') === null)
-            $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', 15);
+        if($this->sessionManager->get('mediatheque_medias_number') === null)
+            $this->sessionManager->set('mediatheque_medias_number', 15);
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
-        //dd($mediasToDisplayed);
+        if(empty($mediasToDisplayed))
+            throw new NotFoundHttpException(sprintf("No media(s) found for this page !"));
+
+        //dd($numberOfPages);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
@@ -623,6 +603,17 @@ class MediaController extends AbstractController
 
     }
 
+    /**
+     * @Route(path="/update/mediatheque/medias/number", name="media::updateNumberOfMediasDisplayedInMediatheque", methods={"POST"})
+     */
+    public function updateNumberOfMediasDisplayedInMediatheque(Request $request)
+    {
+
+        $this->updateMediathequeMediasNumber($request->request->get('mediatheque_medias_number'));
+
+        return new Response( "200 OK" );
+
+    }
 
     private function saveMediaCharacteristic(Request $request)
     {
@@ -795,11 +786,11 @@ class MediaController extends AbstractController
 
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
+        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('mediatheque_medias_number');
 
         $mediasDisplayedType = $request->get('mediasDisplayedType');
 
-        $page = intval($request->request->get('page'));
+        $page = intval($request->get('page'));
 
         if($page < 1)
             $page = 1;
@@ -833,9 +824,9 @@ class MediaController extends AbstractController
             $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType, $page, $numberOfMediasDisplayedInMediatheque);
 
         $numberOfPages = $mediasToDisplayed['numberOfPages'];
-        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
+        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['mediatheque_medias_number'];
         unset($mediasToDisplayed['numberOfPages']);
-        unset($mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
+        unset($mediasToDisplayed['mediatheque_medias_number']);
 
         if($serializeResults)
         {
@@ -864,6 +855,20 @@ class MediaController extends AbstractController
             $numberOfPages,
             $numberOfMediasAllowedToDisplayed,
         ];
+
+    }
+
+    private function updateMediathequeMediasNumber($number)
+    {
+
+        $number = intval($number);
+
+        if(!is_int($number))
+            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+        ( $this->sessionManager->get('mediatheque_medias_number') !== null ) ?
+            $this->sessionManager->replace('mediatheque_medias_number', $number) :
+            $this->sessionManager->set('mediatheque_medias_number', $number);
 
     }
 

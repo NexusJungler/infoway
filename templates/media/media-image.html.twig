@@ -205,7 +205,7 @@
                                     <div class="select">
                                         <select id="displayed_elements_number_selection">
                                             {% for choice in numberOfMediasAllowedToDisplayed %}
-                                                <option value="{{ choice }}" {% if choice is same as(app.session.get('numberOfMediasDisplayedInMediatheque')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
+                                                <option value="{{ choice }}" {% if choice is same as(app.session.get('mediatheque_medias_number')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -215,28 +215,43 @@
 
                                     {% if numberOfPages > 1 %}
 
-                                        {% for i in 1..numberOfPages %}
+                                        {% if numberOfPages > 1 %}
 
-                                            {% if loop.first or loop.last %}
-                                                <a class="page {% if loop.first %}current_page{% endif %}" href="">{{ i }}</a>
-                                            {% endif %}
+                                            <i class="fas fa-chevron-left page_navigation_arrow prev"></i>
 
-                                            {% if not loop.first and not loop.last %}
+                                            {# nombre de page a afficher avant de cacher et remplacer par des '...' #}
+                                            {% set numberOfPagesToDisplayBeforeHidePages = 4 %}
 
-                                                {% if i < 3 %}
-                                                    <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+                                            {% for i in 1..numberOfPages %}
 
-                                                {% else %}
+                                                {% if i < numberOfPagesToDisplayBeforeHidePages or loop.last or i is same as(app.request.get('page')|string_to_int) %}
 
-                                                    <span>...</span>
+                                                    <a class="page {% if i is same as(app.request.get('page')|string_to_int) %}current_page{% endif %}" href="{{ path('media::showMediatheque', {'mediasDisplayedType': media_displayed, 'page': i}) }}">{{ i }}</a>
+
+                                                {% elseif i is same as(numberOfPagesToDisplayBeforeHidePages) %}
+
+                                                    <a class="page" href="">...</a>
 
                                                 {% endif %}
 
-                                            {% endif %}
+                                                {#{% if not loop.first and not loop.last %}
 
-                                        {% endfor %}
+                                                    {% if i < 3 %}
+                                                        <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
 
-                                        <i class="fas fa-chevron-right page_navigation_arrow next"></i>
+                                                    {% else %}
+
+                                                        <span>...</span>
+
+                                                    {% endif %}
+
+                                                {% endif %}#}
+
+                                            {% endfor %}
+
+                                            <i class="fas fa-chevron-right page_navigation_arrow next"></i>
+
+                                        {% endif %}
 
                                     {% endif %}
 

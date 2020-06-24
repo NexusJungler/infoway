@@ -147,7 +147,7 @@ private ParameterBagInterface $parameterBag;
                 // sert pour choisir le nombre de media à afficher sur la page
                 for($i = 5; $i <= $medias->count()+5; $i+=5)
                 {
-                    $orderedMedias['numberOfMediasAllowedToDisplayed'][] = $i;
+                    $orderedMedias['mediatheque_medias_number'][] = $i;
                 }
 
                 $orderedMedias['medias'] = [];
