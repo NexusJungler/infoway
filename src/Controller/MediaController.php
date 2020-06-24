@@ -528,26 +528,50 @@ class MediaController extends AbstractController
         return new JsonResponse($datas);
     }
 
+
     /**
-     * @Route(path="/update/media/{id}/associated/products", name="media::updateMediaAssociatedProducts", methods={"POST"})
+     * @Route(path="/update/media/{id}/associated/{data}", name="media::updateMediaAssociatedData", methods={"POST"},
+     * requirements={"id": "\d+", "data": "[a-z]+"})
      * @param Request $request
+     * @param int $id
      */
-    public function updateMediaAssociatedProducts(Request $request, int $id)
+    public function updateMediaAssociatedData(Request $request, int $id, string $data)
     {
 
         $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
-        $productRepo = $manager->getRepository(Product::class);
         $media = $mediaRepo->find($id);
 
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
-        //dump($request->request->get('productsToAssociation'), $media->getProducts()->getValues());
+        if($data === 'products')
+            return $this->updateMediaAssociatedProducts($request->request->get('productsToAssociation'), $manager, $media);
+
+        else if($data === 'tags')
+            return $this->updateMediaAssociatedTags($request->request->get('tagsToAssociation'), $manager, $media);
+
+        else
+            throw new Exception(sprintf("Unrecognized 'data' parameter value ! Expected 'products' or 'tags', but '%s' given ", $data));
+
+    }
+
+
+    /**
+     * @param array $productsToAssociation
+     * @param ObjectManager $manager
+     * @param Media $media
+     * @return Response
+     * @throws Exception
+     */
+    private function updateMediaAssociatedProducts(array $productsToAssociation, ObjectManager &$manager, Media &$media)
+    {
+
+        $productRepo = $manager->getRepository(Product::class);
 
         $media->getProducts()->clear();
 
-        foreach ($request->request->get('productsToAssociation') as $productId)
+        foreach ($productsToAssociation as $productId)
         {
 
             $product = $productRepo->find($productId);
@@ -565,6 +589,38 @@ class MediaController extends AbstractController
         return new Response( "200 OK" );
 
     }
+
+    /**
+     * @param array $tagsToAssociation
+     * @param ObjectManager $manager
+     * @param Media $media
+     */
+    private function updateMediaAssociatedTags(array $tagsToAssociation, ObjectManager &$manager, Media &$media)
+    {
+
+        $tagRepo = $manager->getRepository(Tag::class);
+
+        $media->getTags()->clear();
+
+        foreach ($tagsToAssociation as $tagId)
+        {
+
+            $tag = $tagRepo->find($tagId);
+            if(!$tag)
+                throw new Exception(sprintf("No tag found with id : '%s'", $tagId));
+
+            $media->addTag($tag);
+
+        }
+
+        //dd($media->getProducts()->getValues());
+
+        $manager->flush();
+
+        return new Response( "200 OK" );
+
+    }
+
 
     private function saveMediaCharacteristic(Request $request)
     {

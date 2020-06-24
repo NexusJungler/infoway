@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,6 +253,8 @@
       <workItem from="1591793805741" duration="13942000" />
       <workItem from="1591812407722" duration="55109000" />
       <workItem from="1592812843064" duration="25903000" />
+      <workItem from="1592986189096" duration="55000" />
+      <workItem from="1592986275094" duration="1533000" />
     </task>
     <servers />
   </component>

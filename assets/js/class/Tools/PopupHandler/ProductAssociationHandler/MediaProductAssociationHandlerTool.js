@@ -82,7 +82,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
 
         $.ajax({
-            url: `/update/media/${ mediaId }/associated/products`,
+            url: `/update/media/${mediaId}/associated/products`,
             type: "POST",
             data: {productsToAssociation: mediaAssociationInfos},
             success: (response) => {
