@@ -10,7 +10,7 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
         this.__$container = $(".filters_by_associated_data_container");
         this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
         this.__$target = "card";
-        this.__$targetContainer = this.__$container;
+        this.__$targetContainer = $('.medias_list_container');
     }
 
     setFilterTarget($target, $targetContainer)
@@ -53,9 +53,9 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
             case "card":
             default:
-                this.__$targetContainer.find(`.card`).addClass("hidden");
+                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
 
-                this.__$targetContainer.find(`.card${ filters }`).removeClass("hidden");
+                this.__parent.getMediasContainer().find(`.card${ filters }`).removeClass("hidden");
                 break;
 
             case "association_popup_item":
@@ -74,12 +74,12 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
         this.__characteristics.forEach( characteristic => {
 
-            if(this.__$targetContainer.find(`.filter_by_${characteristic}`).length > 0)
+            if(this.__$container.find(`.filter_by_${characteristic}`).length > 0)
             {
 
                 const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
 
-                const value = this.__$targetContainer.find(`.filter_by_${characteristic}`).val();
+                const value = this.__$container.find(`.filter_by_${characteristic}`).val();
 
                 if(value !== '')
                 {
@@ -97,77 +97,15 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
             }
 
-
-
-            // const applyFilterCheckbox = this.__$container.find(`.apply_filter[data-target='${characteristic}']`);
-
-            /*if(applyFilterCheckbox.is(':checked'))
-            {
-
-                let value = $(`#filter_by_${characteristic}`).val();
-
-                if(value === '' && filterIsRegistered)
-                    this.__parent.removeFilterByProperty('data-' + characteristic);
-
-                else
-                {
-
-                    if(value !== '')
-                    {
-
-                        if(!filterIsRegistered)
-                            this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
-
-                        else
-                            this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
-
-                    }
-
-                }
-
-            }
-            else
-            {
-                if(filterIsRegistered)
-                    this.__parent.removeFilterByProperty('data-' + characteristic);
-            }*/
-
         } )
 
         return this.__parent.getActivedFilters();
-    }
-
-    onCharacteristicsSelectChangeCheckedValue(active)
-    {
-
-        if(active)
-        {
-            this.__$container.find('select').on('change.onCharacteristicsSelectChangeCheckedValue', e => {
-
-                const select = $(e.currentTarget);
-
-                if(select.val() === '')
-                    select.parent().prev('.apply_filter_container').find('.apply_filter').prop('checked', false);
-
-                else
-                    select.parent().prev('.apply_filter_container').find('.apply_filter').prop('checked', true);
-
-            })
-        }
-        else
-        {
-            this.__$container.find('select').off('change.onCharacteristicsSelectChangeCheckedValue');
-        }
-
-        return this;
-
     }
 
     enable()
     {
         super.enable();
         this.onClickOnFilterValidationButton(true)
-            .onCharacteristicsSelectChangeCheckedValue(true)
         ;
     }
 
@@ -175,7 +113,6 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
     {
         super.disable();
         this.onClickOnFilterValidationButton(false)
-            .onCharacteristicsSelectChangeCheckedValue(false)
         ;
     }
 
