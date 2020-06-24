@@ -72,8 +72,8 @@
 
                     <div class="right_side filters_container">
 
-                        <div class="search_element_container">
-                            <input type="search" class="filter" name="search[product]" placeholder="Rechercher un élément..." required>
+                        <div class="search_element_container filter_with_search_container">
+                            <input type="search" class="filter filter_with_search" name="search[product]" placeholder="Rechercher un élément...">
                         </div>
 
                     </div>
@@ -99,17 +99,33 @@
                                 {% for product in products %}
                                     <tr data-product_id="{{ product.id }}" data-tags="{{ productsTags[product.id]['ids'] | join(', ') }}" data-categories="{{ product.category.id }}" data-criterions="{{ productsCriterions[product.id]['ids'] | join(', ') }}">
                                         <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
-                                        <td class="product_name">{{ product.name }}</td>
-                                        <td>{{ product.description }}</td>
+                                        <td class="product_name"><span>{{ product.name }}</span></td>
+                                        <td><span>{{ product.description }}</span></td>
                                         <td class="criterions_col">
-                                            {% for criterion in product.criterions %}
-                                                <span>{{ criterion.name }}</span>
-                                            {% endfor %}
+                                            {% if product.criterions | length < 1 %}
+
+                                                <span>Aucun critères</span>
+
+                                            {% else %}
+
+                                                {% for criterion in product.criterions %}
+                                                    <span>{{ criterion.name }}</span>
+                                                {% endfor %}
+
+                                            {% endif%}
                                         </td>
                                         <td class="tags_col">
-                                            {% for tag in product.tags %}
-                                                <span>{{ tag.name }}</span>
-                                            {% endfor %}
+                                            {% if product.tags | length < 1 %}
+
+                                                <span>Aucun tags</span>
+
+                                            {% else %}
+
+                                                {% for tag in product.tags %}
+                                                    <span>{{ tag.name }}</span>
+                                                {% endfor %}
+
+                                            {% endif%}
                                         </td>
                                     </tr>
                                 {% endfor %}

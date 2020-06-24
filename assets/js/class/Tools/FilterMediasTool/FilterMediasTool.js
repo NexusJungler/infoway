@@ -2,6 +2,7 @@ import Tool from "../Tool";
 import FilterMediasByTypeSubTool from "./FilterMediasByTypeSubTool/FilterMediasByTypeSubTool";
 import FilterMediasByOrientationSubTool from "./FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool";
 import FilterMediasByAssociatedDataSubTool from "./FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool";
+import FilterMediasWithSearchBarSubTool from "./FilterMediasWithSearchBarSubTool/FilterMediasWithSearchBarSubTool";
 
 class FilterMediasTool extends Tool
 {
@@ -14,6 +15,7 @@ class FilterMediasTool extends Tool
             new FilterMediasByTypeSubTool(),
             new FilterMediasByOrientationSubTool(),
             new FilterMediasByAssociatedDataSubTool(),
+            new FilterMediasWithSearchBarSubTool(),
         ];
         this.__anFilterIsActive = false;
         this.__activeFilters = [];

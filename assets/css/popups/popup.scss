@@ -108,6 +108,21 @@
 
         .popup_body{
           height: 80%;
+
+          table{
+
+            tbody.list{
+
+              tr{
+                td.highlight *{
+                  background: #FFFF00;
+                }
+              }
+
+            }
+
+          }
+
         }
 
         .popup_footer{

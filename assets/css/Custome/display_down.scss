@@ -261,6 +261,10 @@
     flex-direction: row;
     width: 100%;
 
+    input.filter{
+        cursor: default;
+    }
+
     .filter {
         cursor: pointer;
         span{

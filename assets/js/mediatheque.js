@@ -22,6 +22,7 @@ toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
 toolBox.getTool("FilterMediasTool").activeSubTool("FilterMediasByTypeSubTool")
                                             .activeSubTool("FilterMediasByOrientationSubTool")
                                             .activeSubTool("FilterMediasByAssociatedDataSubTool")
+                                            .activeSubTool("FilterMediasWithSearchBarSubTool")
 ;
 
 
