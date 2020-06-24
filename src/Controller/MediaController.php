@@ -83,7 +83,8 @@ class MediaController extends AbstractController
         $categories = $categoryRepo->findAll();
         $tags = $tagRepo->findAll();
         $criterions = $criterionRepo->findAll();
-        $productsCriterions = $productRepo->findProductsCriterions();
+        $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
+        $productsTags = $productRepo->findProductsAssociatedDatas('tags');
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
@@ -155,6 +156,7 @@ class MediaController extends AbstractController
             'tags' => $tags,
             'criterions' => $criterions,
             'productsCriterions' => $productsCriterions,
+            'productsTags' => $productsTags,
             'uploadMediaForm' => $uploadMediaForm->createView(),
             'mediasWaitingForIncrustation' => $mediasWaitingForIncrustation,
             'mediasToDisplayed' => $mediasToDisplayed,

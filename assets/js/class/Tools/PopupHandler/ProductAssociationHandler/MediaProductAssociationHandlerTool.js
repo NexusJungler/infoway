@@ -15,6 +15,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         this.__$location = $('.popup_associate_product');
         this.__currentMedia = null;
         this.__currentMediaId = null;
+        this.__currentMediaTags = null;
         this.__currentPos = null;
         this.__mediasAssociationInfo = [];
         this.__isUpload = false;
@@ -206,6 +207,7 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                 this.__currentMediaId = $(e.currentTarget).parents('.card').attr('id');
                 this.__currentMedia = $(e.currentTarget).parents('.card').find('.media_name').text();
+                this.__currentMediaTags = $(e.currentTarget).parents('.card').data('tags');
 
                 this.__$location.find('.media_name_container .media_name').text( this.__currentMedia );
 
@@ -237,7 +239,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                 //this.rebuildMediaProductsAssociatedList(mediaProductsAssociatedIds);
 
                 this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByAssociatedDataSubTool')
-                                                                      .setFilterTarget('association_popup_item');
+                                                                      .setFilterTarget('association_popup_item', this.__$container);
 
                 this.__$container.addClass('is_open');
 

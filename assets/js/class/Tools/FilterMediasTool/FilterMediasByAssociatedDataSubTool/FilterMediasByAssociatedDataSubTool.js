@@ -9,12 +9,15 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
         this.__name = this.constructor.name;
         this.__$container = $(".filters_by_associated_data_container");
         this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
-        this.__$target = null;
+        this.__$target = "card";
+        this.__$targetContainer = this.__$container;
     }
 
-    setFilterTarget($target)
+    setFilterTarget($target, $targetContainer)
     {
         this.__$target = $target;
+
+        this.__$targetContainer = $targetContainer;
     }
 
     onClickOnFilterValidationButton(active)
@@ -50,13 +53,16 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
             case "card":
             default:
-                this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
+                this.__$targetContainer.find(`.card`).addClass("hidden");
 
-                this.__parent.getMediasContainer().find(`.card${ filters }`).removeClass("hidden");
+                this.__$targetContainer.find(`.card${ filters }`).removeClass("hidden");
                 break;
 
             case "association_popup_item":
-                console.log(filters); debugger
+
+                this.__$targetContainer.find(`tbody.list tr`).addClass("hidden");
+
+                this.__$targetContainer.find(`tbody.list tr${ filters }`).removeClass("hidden");
                 break;
 
         }
@@ -68,11 +74,34 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
         this.__characteristics.forEach( characteristic => {
 
-            const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
+            if(this.__$targetContainer.find(`.filter_by_${characteristic}`).length > 0)
+            {
 
-            const applyFilterCheckbox = this.__$container.find(`.apply_filter[data-target='${characteristic}']`);
+                const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
 
-            if(applyFilterCheckbox.is(':checked'))
+                const value = this.__$targetContainer.find(`.filter_by_${characteristic}`).val();
+
+                if(value !== '')
+                {
+
+                    if(!filterIsRegistered)
+                        this.__parent.registerNewFilter({'property': 'data-' + characteristic, 'value': value});
+
+                    else
+                        this.__parent.replaceAnRegisteredFilter({'property': 'data-' + characteristic, 'value': value});
+
+                }
+                else
+                    if(filterIsRegistered)
+                        this.__parent.removeFilterByProperty('data-' + characteristic);
+
+            }
+
+
+
+            // const applyFilterCheckbox = this.__$container.find(`.apply_filter[data-target='${characteristic}']`);
+
+            /*if(applyFilterCheckbox.is(':checked'))
             {
 
                 let value = $(`#filter_by_${characteristic}`).val();
@@ -101,7 +130,7 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
             {
                 if(filterIsRegistered)
                     this.__parent.removeFilterByProperty('data-' + characteristic);
-            }
+            }*/
 
         } )
 

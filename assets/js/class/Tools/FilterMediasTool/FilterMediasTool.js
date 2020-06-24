@@ -156,7 +156,7 @@ class FilterMediasTool extends Tool
     {
 
         if(!this.findFilterByProperty(property))
-            throw new Error(``);
+            throw new Error(`Attempt to remove an filter, but this filter is not registered ! Use 'registerNewFilter' for register it`);
 
         this.__activeFilters.splice(this.getFilterIndexByProperty(property), 1);
 
