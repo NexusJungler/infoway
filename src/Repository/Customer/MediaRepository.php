@@ -259,14 +259,12 @@ private ParameterBagInterface $parameterBag;
         {
             $datas['products'][] = $product->getName();
 
-            $productIncrustes = [];
 
             foreach ($product->getIncrustes()->getValues() as $incruste)
             {
-                $productIncrustes[$product->getName()][] = $incruste->getTypeIncruste();
+                $datas['incrustations'][$product->getName()][] = $incruste->getTypeIncruste();
             }
 
-            $datas['incrustations'][] = $productIncrustes;
 
             foreach ($product->getCriterions()->getValues() as $criterion)
             {

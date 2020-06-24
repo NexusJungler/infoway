@@ -218,10 +218,10 @@ class MediaInfoSheetHandler extends SubTool
     showMediaIncrustes(mediaIncrustations)
     {
 
-        mediaIncrustations.forEach( (mediaIncrustation) => {
+        $.each( mediaIncrustations, (key, incrustation) => {
 
-            const productName = Object.keys(mediaIncrustation);
-            const incrustesTypes = Object.values(mediaIncrustation)[0];
+            const productName = key;
+            const incrustesTypes = Object.values(incrustation);
 
             let newElement= `<tr>
                                  <td>${productName}</td> 
@@ -230,7 +230,7 @@ class MediaInfoSheetHandler extends SubTool
                                  <td><input type="checkbox" disabled ${ incrustesTypes.includes('Texte') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
                              </tr>`;
 
-            $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )
+            $(newElement).appendTo( this.__$location.find('.media_incrustations_list') );
 
         } )
 

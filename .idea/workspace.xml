@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +165,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
@@ -181,11 +179,11 @@
       <recent name="C:\laragon\www\infoway\new_app\src\Controller\Settings" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\MediaInfoSheetHandler" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PaginatorHandler" />
       <recent name="C:\laragon\www\new_app\assets\images" />
       <recent name="C:\laragon\www\new_app\assets\css\popups" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\ProductAssociationHandler" />
-      <recent name="C:\laragon\www\new_app\templates\popups\associations\product_association" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -256,7 +254,7 @@
       <workItem from="1591812407722" duration="55109000" />
       <workItem from="1592812843064" duration="25903000" />
       <workItem from="1592986189096" duration="55000" />
-      <workItem from="1592986275094" duration="24092000" />
+      <workItem from="1592986275094" duration="25746000" />
     </task>
     <servers />
   </component>
