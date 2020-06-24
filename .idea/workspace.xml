@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +21,9 @@
       <list>
         <option value="Yaml" />
         <option value="Twig" />
-        <option value="Twig File" />
         <option value="SCSS File" />
         <option value="JavaScript File" />
+        <option value="Twig File" />
       </list>
     </option>
   </component>
@@ -254,7 +255,7 @@
       <workItem from="1591812407722" duration="55109000" />
       <workItem from="1592812843064" duration="25903000" />
       <workItem from="1592986189096" duration="55000" />
-      <workItem from="1592986275094" duration="25746000" />
+      <workItem from="1592986275094" duration="30315000" />
     </task>
     <servers />
   </component>
@@ -349,11 +350,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="442" y="-963" width="1378" height="1066" key="dock-window-3/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589206255393" />
-    <state x="666" y="139" width="891" height="801" key="find.popup" timestamp="1593005326899">
+    <state x="604" y="279" width="891" height="801" key="find.popup" timestamp="1593019292701">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="668" y="-941" width="587" height="801" key="find.popup/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1588676933192" />
-    <state x="666" y="139" width="891" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1593005326899" />
+    <state x="604" y="279" width="891" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1593019292701" />
     <state x="2586" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590657509357" />
     <state x="2536" y="791" key="run.anything.popup" timestamp="1590599159773">
       <screen x="1920" y="0" width="1920" height="1080" />

@@ -147,6 +147,40 @@ class MediaController extends AbstractController
 
     }
 
+    /**
+     * @Route(path="/edit/media/{id}", name="media::editMedia", methods={"GET", "POST"},
+     * requirements={"id": "\d+"})
+     */
+    public function editMedia(Request $request, int $id)
+    {
+
+        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $manager = $this->getDoctrine()->getManager($managerName);
+
+        $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
+        $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
+        $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
+        $incrusteRepo = $manager->getRepository(Incruste::class)->setEntityManager( $manager );
+        $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
+
+        $products = $productRepo->findAll();
+        $tags = $tagRepo->findAll();
+        $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
+        $productsTags = $productRepo->findProductsAssociatedDatas('tags');
+
+        $media = $mediaRepo->find($id);
+
+        if(!$media)
+            throw new Exception(sprintf("No media found with id : '%s'", $id));
+
+        $media->media_type = ($media instanceof Video) ? 'video' : 'image';
+
+        return $this->render("media/media-image.html.twig", [
+
+        ]);
+
+    }
+
 
     /**
      * @Route(path="/upload/media", name="media::uploadMedia", methods={"POST"})
@@ -392,18 +426,17 @@ class MediaController extends AbstractController
 
     }
 
-
     /**
-     * @Route(path="/remove/media", name="media::removeMedia", methods={"POST"})
+     * @Route(path="/remove/media/{id}", name="media::removeMedia", methods={"POST"},
+     * requirements={"id": "\d+"})
      */
-    public function removeMedia(Request $request)
+    public function removeMedia(Request $request, int $id)
     {
 
         $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        $id = $request->request->get('media');
         //dd($id);
         $media = $mediaRepository->find($id);
 

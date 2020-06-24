@@ -1,0 +1,224 @@
+<div class="col">
+
+    <div class="left_side side media_miniature_container media_{{ media.orientation }}">
+
+        {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
+
+            <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+
+        {% else %}
+
+            {% if media.media_type is same as('image') %}
+
+                <div class="media_container_img">
+                    <div class="media_container_arrows">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                </div>
+
+
+            {% elseif media.media_type is same as('video') %}
+
+                <div class="media_container_video">
+                    <div class="media_container_arrows">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <video class="media_miniature miniature_video">
+                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
+                    </video>
+                </div>
+
+
+            {% endif %}
+
+        {% endif %}
+
+        {% if action is defined and actio is same as('edit') %}
+        <button type="button" class="btn">Mettreà jour le média</button>
+        {% endif %}
+
+    </div>
+
+    <div class="right_side side">
+
+        <div class="media_validity_container">
+            <div class="container_header">
+                <div class="icon_container">
+                    <i class="far fa-clock"></i>
+                </div>
+                <span>Date de validité</span>
+            </div>
+
+            <div class="container_body">
+                {% if action is defined and actio is same as('edit') %}
+                    <div class="media_diff_start_container">
+                        {{ form_label(form.diffusionStart, {'attr': {'class': 'input_label'}}) }}
+                        {{ form_widget(form.diffusionStart, {'attr': {'class': 'media_diff_start_input'}}) }}
+                    </div>
+
+                    <div class="media_diff_end_container">
+                        {{ form_label(form.diffusionEnd, {'attr': {'class': 'input_label'}}) }}
+                        {{ form_widget(form.diffusionEnd, {'attr': {'class': 'media_diff_end_input'}}) }}
+                    </div>
+                {% else %}
+                    <span class="media_diff_start">{{ media.diffusionStart }}</span> au <span class="media_diff_end">{{ media.diffusionEnd }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="container media_incrustations_container">
+
+            <div class="container_header">
+                <div class="icon_container">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+                <span class="container_header_title">Incrustations</span>
+
+                {% if action is defined and actio is same as('edit') %}
+                    <button type="button" class="btn">Incruster PRIX</button>
+                {% endif %}
+            </div>
+
+            <div class="container_body">
+
+                <table class="container_table_media">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Prix</th>
+                        <th>Rupture</th>
+                        <th>Texte</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="media_incrustations_list">
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="col">
+
+    <div class="left_side side">
+
+        <div class="container">
+            <div class="container_child">
+                <span class="container_child_title">Nom du produit :</span>
+            </div>
+            <div class="container_child media_name_container">
+                {% if action is defined and actio is same as('edit') %}
+                    {{ form_widget(form.name, {'attr': {'class': 'media_name'}}) }}
+                {% else %}
+                    <span class="media_name"></span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="container media_characteristics_container">
+            <div class="container_child">
+                <span class="container_child_title">Caractéristiques :</span>
+            </div>
+            <div class="container_child">
+                <p class="media_characteristics">{% if action is defined and actio is same as('edit') %} {{ media.characteristics }} {% endif %}</p>
+            </div>
+        </div>
+
+        <div class="container associated_data_container">
+            <div class="container_child">
+                <span class="container_child_criteres"> Critères</span>
+            </div>
+            <div class="container_child media_criterions_container">
+
+                {% if action is defined and actio is same as('edit') %}
+
+                    {% for criterion in media_criterions %}
+
+                        <span>{{ criterion }}</span>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="container associated_data_container">
+            <div class="container_child">
+                <p class="container_child_tags btn_tags" >
+                    <span class="mini-cercle"><i class="fas fa-plus"></i></span>TAGS</p>
+            </div>
+            <div class="container_child media_tags_container">
+
+                {% if action is defined and actio is same as('edit') %}
+
+                    {% for tag in media_tags %}
+
+                        <span>{{ tag }}</span>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="container associated_data_container">
+            <div class="container_child">
+                <span class="container_child_allergenes">Allergènes</span>
+            </div>
+            <div class="container_child media_allergens_container">
+
+                {% if action is defined and actio is same as('edit') %}
+
+                    
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="right_side side">
+
+        <div class="media_products_associated_container">
+            <div class="container_header">
+                <div class="icon_container">
+                    <i class="icon fas fa-link"></i>
+                </div>
+                <span class="container_header_title">Produits associés</span>
+            </div>
+            <div class="container_body">
+                <table class="media_products_list">
+
+                    {% if action is defined and actio is same as('edit') %}
+
+                        {% for product in media.products %}
+
+                            <tr>
+                                <td>{{ product.name }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="col">
+
+</div>
