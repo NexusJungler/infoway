@@ -78,8 +78,6 @@ class MediaProductAssociationHandlerTool extends SubTool
 
         let mediaId = this.__currentMediaId.replace('media_', '');
 
-        $('.popup_loading_container .loading_message').text('Enregistrement des modifications en cours...');
-
         $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
 
         $.ajax({

@@ -89,11 +89,11 @@ class MediaInfoSheetHandler extends SubTool
                     {
                         const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
 
-                        this.showMediaIncrustes(mediaInfos.incrustations);
-                        this.showMediaCriterions(mediaInfos.criterions);
-                        this.showMediaTags(mediaInfos.tags);
-                        this.showMediaAllergens(mediaInfos.allergens);
-                        this.showMediaAssociatedProducts(mediaInfos.products);
+                        this.showMediaIncrustes(mediaInfos.media_incrustations);
+                        this.showMediaCriterions(mediaInfos.media_criterions);
+                        this.showMediaTags(mediaInfos.media_tags);
+                        this.showMediaAllergens(mediaInfos.media_allergens);
+                        this.showMediaAssociatedProducts(mediaInfos.media_products);
                     }
 
                     $('.popup_loading_container').removeClass('is_open');

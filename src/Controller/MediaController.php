@@ -14,6 +14,7 @@ use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
+use App\Form\Customer\EditMediaType;
 use App\Form\MediasListType;
 use App\Repository\Admin\CustomerRepository;
 use App\Repository\Admin\FfmpegTasksRepository;
@@ -46,6 +47,8 @@ class MediaController extends AbstractController
 
     private ParameterBagInterface $parameterBag;
 
+    private MediasHandler $mediasHandler;
+
     public function __construct(SessionManager $sessionManager, ParameterBagInterface $parameterBag)
     {
 
@@ -60,6 +63,7 @@ class MediaController extends AbstractController
 
         $this->sessionManager = $sessionManager;
         $this->parameterBag = $parameterBag;
+        $this->mediasHandler = new MediasHandler($this->parameterBag);
     }
 
     /**
@@ -148,10 +152,10 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/edit/media/{id}", name="media::editMedia", methods={"GET", "POST"},
+     * @Route(path="/edit/media/{id}", name="media::edit", methods={"GET", "POST"},
      * requirements={"id": "\d+"})
      */
-    public function editMedia(Request $request, int $id)
+    public function edit(Request $request, int $id)
     {
 
         $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
@@ -160,23 +164,59 @@ class MediaController extends AbstractController
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
         $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
-        $incrusteRepo = $manager->getRepository(Incruste::class)->setEntityManager( $manager );
-        $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
+        $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
 
-        $products = $productRepo->findAll();
-        $tags = $tagRepo->findAll();
+
         $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
         $productsTags = $productRepo->findProductsAssociatedDatas('tags');
 
+        $mediaInfos = $mediaRepo->getMediaInfosForEdit($id);
+
         $media = $mediaRepo->find($id);
-
         if(!$media)
-            throw new Exception(sprintf("No media found with id : '%s'", $id));
+            throw new Exception(sprintf("No media can be found with this id : '%s'", $id));
 
-        $media->media_type = ($media instanceof Video) ? 'video' : 'image';
+        $form = $this->createForm(EditMediaType::class, $media, [
+            'tagRepo' => $tagRepo,
+            'mediaRepo' => $mediaRepo,
+        ]);
 
-        return $this->render("media/media-image.html.twig", [
+        $media->media_type = ($media instanceof Video) ? 'video': 'image';
 
+        $popupsFiltersContent = $this->getPopupFiltersContent();
+
+        //dd($mediaInfos, $media, $form->createView());
+
+        $characteristics = [
+            'size' => $media->getWidth() . '*' . $media->getHeight() . ' px',
+            'extension' => $media->getExtension(),
+        ];
+
+        if($media instanceof Video)
+            $characteristics['codec'] = $media->getVideoCodec();
+
+        else
+            $characteristics['dpi'] = '72 dpi';
+
+        $media->characteristics = $characteristics;
+
+        return $this->render("media/edit_media.html.twig", [
+            'products' => $popupsFiltersContent['products'],
+            'tags' =>$popupsFiltersContent['tags'],
+            'categories' => $popupsFiltersContent['categories'],
+            'criterions' => $popupsFiltersContent['criterions'],
+            'productsCriterions' =>$productsCriterions,
+            'productsTags' =>$productsTags,
+            'mediaInfos' =>$mediaInfos,
+            'form' => $form->createView(),
+            'media' => $media,
+            'media_type' => ($media instanceof Video) ? 'video': 'image',
+            'media_characteristics' => $characteristics,
+            'media_incrustations' => $mediaInfos['media_incrustations'],
+            'media_criterions' => $mediaInfos['media_criterions'],
+            'media_tags' => $mediaInfos['media_tags'],
+            'media_allergens' => $mediaInfos['media_allergens'],
+            'action' => 'edit',
         ]);
 
     }
@@ -215,13 +255,11 @@ class MediaController extends AbstractController
         $real_file_extension = $splash[1];
         $fileType = strstr($mimeType, '/', true);
 
-        $mediasHandler = new MediasHandler($this->parameterBag);
-
         $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if($mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
+        if($this->mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
             return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
 
         elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
@@ -289,7 +327,7 @@ class MediaController extends AbstractController
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
-            $dpi = $mediasHandler->getImageDpi($miniaturePath);
+            $dpi = $this->mediasHandler->getImageDpi($miniaturePath);
 
             //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
 
@@ -343,7 +381,7 @@ class MediaController extends AbstractController
                 'isArchived' => false,
             ];
 
-            list($width, $height, $codec) = $mediasHandler->getVideoDimensions($path);
+            list($width, $height, $codec) = $this->mediasHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
             // a CRON will do task after
@@ -523,24 +561,12 @@ class MediaController extends AbstractController
     public function retrieveMediaInfosForPopup(Request $request)
     {
 
-        $mediaId = intval( $request->request->get('mediaId') );
+        $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) )
+                                         ->getRepository(Media::class);
 
-        if($mediaId === 0)
-            throw new Exception(sprintf("Invalid media id given ! No media can be found with this id : '%s'", $mediaId));
+        $mediaInfos = $mediaRepo->getMediaInfosForInfoSheetPopup(intval( $request->request->get('mediaId') ));
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
-        $mediaRepo = $manager->getRepository(Media::class);
-
-        try
-        {
-            $datas = $mediaRepo->getMediaInfosForInfoSheetPopup($mediaId);
-        }
-        catch (Exception $e)
-        {
-            dd($e->getMessage());
-        }
-
-        return new JsonResponse($datas);
+        return new JsonResponse($mediaInfos);
     }
 
 
@@ -904,5 +930,29 @@ class MediaController extends AbstractController
             $this->sessionManager->set('mediatheque_medias_number', $number);
 
     }
+
+    /**
+     * Return an array which contain all filter content
+     * @return array
+     */
+    private function getPopupFiltersContent()
+    {
+
+        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $manager = $this->getDoctrine()->getManager($managerName);
+        $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
+        $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
+        $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
+        $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
+
+        return [
+            'products' => $productRepo->findAll(),
+            'tags' => $tagRepo->findAll(),
+            'categories' => $categoryRepo->findAll(),
+            'criterions' => $criterionRepo->findAll(),
+        ];
+
+    }
+
 
 }

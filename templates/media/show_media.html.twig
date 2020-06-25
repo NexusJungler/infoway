@@ -1,4 +1,12 @@
+{% if app.request.attributes.get('_route') is same as('media::edit') %}
+
+    {{ form_start(form) }}
+
+{% endif %}
+
 <div class="col">
+
+
 
     <div class="left_side side media_miniature_container media_{{ media.orientation }}">
 
@@ -8,35 +16,33 @@
 
         {% else %}
 
-            {% if media.media_type is same as('image') %}
+            {% if media_type is defined and media_type is same as('image') %}
 
                 <div class="media_container_img">
                     <div class="media_container_arrows">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </div>
                     <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
                 </div>
 
-
-            {% elseif media.media_type is same as('video') %}
+            {% elseif media_type is defined and media_type is same as('video') %}
 
                 <div class="media_container_video">
                     <div class="media_container_arrows">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </div>
                     <video class="media_miniature miniature_video">
-                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
+                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
                     </video>
                 </div>
-
 
             {% endif %}
 
         {% endif %}
 
-        {% if action is defined and actio is same as('edit') %}
-        <button type="button" class="btn">Mettreà jour le média</button>
+        {% if app.request.attributes.get('_route') is same as('media::edit') %}
+            <button type="button" class="btn">Mettre à jour le média</button>
         {% endif %}
 
     </div>
@@ -52,18 +58,18 @@
             </div>
 
             <div class="container_body">
-                {% if action is defined and actio is same as('edit') %}
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
                     <div class="media_diff_start_container">
-                        {{ form_label(form.diffusionStart, {'attr': {'class': 'input_label'}}) }}
-                        {{ form_widget(form.diffusionStart, {'attr': {'class': 'media_diff_start_input'}}) }}
+                        {{ form_label(form.diffusionStart) }}
+                        {{ form_widget(form.diffusionStart) }}
                     </div>
 
                     <div class="media_diff_end_container">
-                        {{ form_label(form.diffusionEnd, {'attr': {'class': 'input_label'}}) }}
-                        {{ form_widget(form.diffusionEnd, {'attr': {'class': 'media_diff_end_input'}}) }}
+                        {{ form_label(form.diffusionEnd) }}
+                        {{ form_widget(form.diffusionEnd) }}
                     </div>
                 {% else %}
-                    <span class="media_diff_start">{{ media.diffusionStart }}</span> au <span class="media_diff_end">{{ media.diffusionEnd }}</span>
+                    <span class="media_diff_start">{{ media.diffusionStart | date('d/m/Y') }}</span> au <span class="media_diff_end">{{ media.diffusionEnd | date('d/m/Y') }}</span>
                 {% endif %}
             </div>
         </div>
@@ -76,7 +82,7 @@
                 </div>
                 <span class="container_header_title">Incrustations</span>
 
-                {% if action is defined and actio is same as('edit') %}
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
                     <button type="button" class="btn">Incruster PRIX</button>
                 {% endif %}
             </div>
@@ -94,6 +100,30 @@
                     </thead>
 
                     <tbody class="media_incrustations_list">
+
+                    {% if media_incrustations is defined %}
+
+                        {% for productName, incrusteTypes in media_incrustations %}
+
+                            <tr>
+                                <td>{{ productName }}</td>
+                                <td>
+                                    <input type="checkbox" disabled {{ ('Prix' in incrusteTypes) ? 'checked': '' }}>
+                                    <span class="custom_checkbox"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" disabled {{ ('Rupture' in incrusteTypes) ? 'checked': '' }}>
+                                    <span class="custom_checkbox"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" disabled {{ ('Texte' in incrusteTypes) ? 'checked': '' }}>
+                                    <span class="custom_checkbox"></span>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% endif %}
 
                     </tbody>
                 </table>
@@ -114,7 +144,7 @@
                 <span class="container_child_title">Nom du produit :</span>
             </div>
             <div class="container_child media_name_container">
-                {% if action is defined and actio is same as('edit') %}
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
                     {{ form_widget(form.name, {'attr': {'class': 'media_name'}}) }}
                 {% else %}
                     <span class="media_name"></span>
@@ -127,7 +157,9 @@
                 <span class="container_child_title">Caractéristiques :</span>
             </div>
             <div class="container_child">
-                <p class="media_characteristics">{% if action is defined and actio is same as('edit') %} {{ media.characteristics }} {% endif %}</p>
+                <p class="media_characteristics">
+                    {% if app.request.attributes.get('_route') is same as('media::edit') %} {{ media_characteristics | join(', ') }} {% endif %}
+                </p>
             </div>
         </div>
 
@@ -137,7 +169,7 @@
             </div>
             <div class="container_child media_criterions_container">
 
-                {% if action is defined and actio is same as('edit') %}
+                {% if media_criterions is defined %}
 
                     {% for criterion in media_criterions %}
 
@@ -157,7 +189,7 @@
             </div>
             <div class="container_child media_tags_container">
 
-                {% if action is defined and actio is same as('edit') %}
+                {% if media_tags is defined %}
 
                     {% for tag in media_tags %}
 
@@ -165,6 +197,12 @@
 
                     {% endfor %}
 
+                {% endif %}
+
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
+                    <div style="display: none">
+                        {{ form_widget(form.tags) }}
+                    </div>
                 {% endif %}
 
             </div>
@@ -176,9 +214,11 @@
             </div>
             <div class="container_child media_allergens_container">
 
-                {% if action is defined and actio is same as('edit') %}
+                {% if media_allergens is defined %}
 
-                    
+                    {% for allergen in media_allergens %}
+                        <span>{{ allergen }}</span>
+                    {% endfor %}
 
                 {% endif %}
 
@@ -199,16 +239,18 @@
             <div class="container_body">
                 <table class="media_products_list">
 
-                    {% if action is defined and actio is same as('edit') %}
+                    {% for product in media.products %}
 
-                        {% for product in media.products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                        </tr>
 
-                            <tr>
-                                <td>{{ product.name }}</td>
-                            </tr>
+                    {% endfor %}
 
-                        {% endfor %}
-
+                    {% if app.request.attributes.get('_route') is same as('media::edit') %}
+                        <div style="display: none">
+                            {{ form_widget(form.products) }}
+                        </div>
                     {% endif %}
 
                 </table>
@@ -221,4 +263,20 @@
 
 <div class="col">
 
+    <div class="left_side side diffusion_zone_container">
+
+    </div>
+
+    <div class="right_side side sites_container">
+
+    </div>
+
 </div>
+
+{% if app.request.attributes.get('_route') is same as('media::edit') %}
+
+    <button type="submit" class="btn">Valider</button>
+
+    {{ form_end(form) }}
+
+{% endif %}

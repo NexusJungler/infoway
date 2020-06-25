@@ -5,6 +5,7 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Repository\Admin\AllergenRepository;
 use App\Repository\MainRepository;
@@ -35,13 +36,13 @@ class MediaRepository extends ServiceEntityRepository
 
     use MainRepository;
 
-private Serializer $serializer;
+    private Serializer $serializer;
 
-private MediasHandler $mediasHandler;
+    private MediasHandler $mediasHandler;
 
-private AllergenRepository $allergenRepository;
+    private AllergenRepository $allergenRepository;
 
-private ParameterBagInterface $parameterBag;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ManagerRegistry $registry, MediasHandler $mediasHandler, AllergenRepository $allergenRepository, ParameterBagInterface $parameterBag)
     {
@@ -60,6 +61,37 @@ private ParameterBagInterface $parameterBag;
         $this->allergenRepository = $allergenRepository;
         $this->parameterBag = $parameterBag;
     }
+
+    /**
+     * Return all tags which is associated with edia and media products
+     * @param Media $media
+     * @return Tag[]
+     */
+    public function getMediaAssociatedTags(Media $media)
+    {
+
+        $tags = [];
+
+        foreach ($media->getTags()->getValues() as $tag)
+        {
+            $tags[] = $tag;
+        }
+
+        foreach ($media->getProducts()->getValues() as $product)
+        {
+
+            foreach ($product->getTags()->getValues() as $tag)
+            {
+                if(!in_array($tag, $tags))
+                    $tags[] = $tag;
+            }
+
+        }
+
+        return $tags;
+
+    }
+
 
     /**
      * Renvoie un tableau contenant tout les médias qui doivent contenir des incrustes mais qui ne contiennent pas encore d'incruste
@@ -241,84 +273,19 @@ private ParameterBagInterface $parameterBag;
     public function getMediaInfosForInfoSheetPopup(int $mediaId)
     {
 
-        $media = $this->find($mediaId);
-
-        if(!$media)
-            throw new Exception(sprintf("No media found"));
-
-        $datas = [
-            'incrustations' => [],
-            'products' => [],
-            'criterions' => [],
-            'tags' => [],
-            'allergens'=> [],
-            'diffusionSpaces'=> []
-        ];
-
-        foreach ($media->getProducts()->getValues() as $product)
-        {
-            $datas['products'][] = $product->getName();
-
-
-            foreach ($product->getIncrustes()->getValues() as $incruste)
-            {
-                $datas['incrustations'][$product->getName()][] = $incruste->getTypeIncruste();
-            }
-
-
-            foreach ($product->getCriterions()->getValues() as $criterion)
-            {
-                if(!in_array($criterion->getName(), $datas['criterions']))
-                    $datas['criterions'][] = $criterion->getName();
-            }
-
-            foreach ($product->getTags()->getValues() as $tag)
-            {
-                if(!in_array($tag->getName(), $datas['tags']))
-                    $datas['tags'][] = $tag->getName();
-            }
-
-            foreach ($product->getAllergens()->getValues() as $allergen)
-            {
-                $allergenId = $allergen->getAllergenId();
-                $allergen = $this->allergenRepository->find($allergenId);
-                if(!$allergen)
-                    throw new Exception(sprintf("No allergen found with id : '%s'", $allergenId));
-
-                if(!in_array($allergen->getName(), $datas['allergens']))
-                    $datas['allergens'][] = $allergen->getName();
-            }
-
-        }
-
-        return $datas;
+        return $this->getMediaInfos($mediaId);
 
     }
 
 
-    private function getTagsByMedia(Media $media)
+    public function getMediaInfosForEdit(int $mediaId)
     {
-
-
-
-    }
-
-    /**
-     * @param string $query
-     * @param int $page
-     * @param int $limit
-     * @return Paginator
-     */
-    private function paginate(string $query, int $page = 1, int $limit = 15)
-    {
-
-        $query = $this->_em->createQuery($query)
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
-
-        return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
+        // surcharger le retour de la fonction ?
+        return $this->getMediaInfos($mediaId);
 
     }
+
+
 
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
@@ -819,7 +786,6 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $final = $this->getFileName($exp[0]);
         return $final;
     }
-
     public function eraseMedia($id, $type) {
         $sql = '
                     DELETE FROM media
@@ -886,7 +852,6 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $result = $query->execute(array('id' => $id));
         // dump($result);
     }
-
     public function getProgByPlaylist($playlist) {
         $sql = "SELECT * FROM programmation INNER JOIN main_schedule ON main_schedule.id = programmation.schedule WHERE playlist = :playlist";
         $sql = "SELECT * FROM programmation INNER JOIN main_schedule ON main_schedule.id = programmation.schedule WHERE playlist = :playlist";
@@ -1019,39 +984,87 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $result = $query->fetch(\PDO::FETCH_ASSOC);
         return $result;
     }
+
     private function deleteProg($id) {
         $sql = "DELETE FROM programmation WHERE id = :which";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(['which' => $id]);
     }
 
-
-    // /**
-    //  * @return Media[] Returns an array of Media objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    private function getMediaInfos(int $mediaId)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Media
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $media = $this->find($mediaId);
+
+        if(!$media)
+            throw new Exception(sprintf("No media can be found with this id : '%s'", $mediaId));
+
+        $infos = [
+            'media_diff_start' => $media->getDiffusionStart()->format('d/m/Y'),
+            'media_diff_end' => $media->getDiffusionEnd()->format('d/m/Y'),
+            'media_incrustations' => [],
+            'media_products' => [],
+            'media_criterions' => [],
+            'media_tags' => [],
+            'media_allergens'=> [],
+            'diffusionSpaces'=> []
+        ];
+
+        foreach ($media->getTags()->getValues() as $tag)
+        {
+            if(!in_array($tag->getName(), $infos['media_tags']))
+                $infos['media_tags'][] = $tag->getName();
+        }
+
+        foreach ($media->getProducts()->getValues() as $product)
+        {
+
+            $infos['media_products'][] = $product->getName();
+
+
+            foreach ($product->getIncrustes()->getValues() as $incruste)
+            {
+                $infos['media_incrustations'][$product->getName()][] = $incruste->getTypeIncruste();
+            }
+
+
+            foreach ($product->getCriterions()->getValues() as $criterion)
+            {
+                if(!in_array($criterion->getName(), $infos['media_criterions']))
+                    $infos['media_criterions'][] = $criterion->getName();
+            }
+
+            foreach ($product->getTags()->getValues() as $tag)
+            {
+                if(!in_array($tag->getName(), $infos['media_tags']))
+                    $infos['media_tags'][] = $tag->getName();
+            }
+
+            foreach ($product->getAllergens()->getValues() as $allergen)
+            {
+                $allergenId = $allergen->getAllergenId();
+                $allergen = $this->allergenRepository->find($allergenId);
+                if(!$allergen)
+                    throw new Exception(sprintf("No allergen found with id : '%s'", $allergenId));
+
+                if(!in_array($allergen->getName(), $infos['media_allergens']))
+                    $infos['media_allergens'][] = $allergen->getName();
+            }
+
+        }
+
+        return $infos;
+
     }
-    */
+    private function paginate(string $query, int $page = 1, int $limit = 15)
+    {
+
+        $query = $this->_em->createQuery($query)
+                           ->setFirstResult($limit * ($page - 1))
+                           ->setMaxResults($limit);
+
+        return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
+
+    }
+
 }
