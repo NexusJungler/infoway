@@ -68,7 +68,8 @@ Encore
 
     //media
     .addEntry('mediatheque', './assets/js/mediatheque.js')
-    
+    .addEntry('edit_media', './assets/js/edit_media.js')
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

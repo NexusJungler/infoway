@@ -35,11 +35,17 @@ class EditMediaType extends AbstractType
                 ])
 
                 ->add('diffusionStart', DateType::class,[
-
+                    'widget' => 'single_text',
+                    'input_format' => 'd-m-Y',
+                    'label' => 'Du',
+                    'choice_translation_domain' => true,
                 ])
 
                 ->add('diffusionEnd', DateType::class,[
-
+                    'widget' => 'single_text',
+                    'input_format' => 'd-m-Y',
+                    'label' => 'Au',
+                    'choice_translation_domain' => true,
                 ])
 
                 ->add('tags', EntityType::class, [

@@ -2,6 +2,12 @@
 
 {% block title "Modification - Média" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('edit_media') }}
+{% endblock %}
+
+
 {% block maincontent %}
 
     <article id="picture" class="tab-content current media-show">
@@ -9,7 +15,7 @@
         <div class="tab_content_body_top">
 
             <div class="tab_content_body_top_item container tab_content_body_title_container">
-                <p class="tab_content_body_title">ModifierMédia</p>
+                <p class="tab_content_body_title">Modifier Média</p>
                 <p class="media_name">{{ media.name }}</p>
             </div>
 
@@ -60,3 +66,7 @@
 
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('edit_media') }}
+{% endblock %}

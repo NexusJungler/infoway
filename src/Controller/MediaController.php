@@ -181,6 +181,15 @@ class MediaController extends AbstractController
             'mediaRepo' => $mediaRepo,
         ]);
 
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+
+            dd($media);
+
+        }
+
         $media->media_type = ($media instanceof Video) ? 'video': 'image';
 
         $popupsFiltersContent = $this->getPopupFiltersContent();
@@ -217,6 +226,7 @@ class MediaController extends AbstractController
             'media_tags' => $mediaInfos['media_tags'],
             'media_allergens' => $mediaInfos['media_allergens'],
             'action' => 'edit',
+            'sousTitle' => 'Modifier',
         ]);
 
     }

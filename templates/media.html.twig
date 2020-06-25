@@ -10,7 +10,7 @@
         <div class="main-content">
 
             <section class="jumbotron">
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Médiathèque' } %}
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Médiathèque', 'sousTitle': (sousTitle is defined) ? sousTitle : '' } %}
             </section>
 
             <section class="wrapper">

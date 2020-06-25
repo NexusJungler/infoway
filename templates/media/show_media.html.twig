@@ -4,46 +4,44 @@
 
 {% endif %}
 
-<div class="col">
+<div class="col top">
 
+    <div class="left_side side">
 
+        <div class="media_miniature_container {{ (media is defined) ? 'media_' ~ media.orientation: '' }}">
 
-    <div class="left_side side media_miniature_container media_{{ media.orientation }}">
+            <div class="media_container_{{ (media_type is defined and media_type is same as('image')) ? 'img' : 'video' }}">
 
-        {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
+                {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
 
-            <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                    <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
-        {% else %}
+                {% else %}
 
-            {% if media_type is defined and media_type is same as('image') %}
+                    {% if media_type is defined and media_type is same as('image') %}
 
-                <div class="media_container_img">
-                    <div class="media_container_arrows">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </div>
-                    <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
-                </div>
+                        <div class="media_container_arrows">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/medium/{{ media.id }}.png"
+                             alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/medium/{{ media.id }}.png">
 
-            {% elseif media_type is defined and media_type is same as('video') %}
+                    {% elseif media_type is defined and media_type is same as('video') %}
 
-                <div class="media_container_video">
-                    <div class="media_container_arrows">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </div>
-                    <video class="media_miniature miniature_video">
-                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
-                    </video>
-                </div>
+                        <div class="media_container_arrows">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <video class="media_miniature miniature_video">
+                            <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/medium/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                        </video>
 
-            {% endif %}
+                    {% endif %}
 
-        {% endif %}
+                {% endif %}
 
-        {% if app.request.attributes.get('_route') is same as('media::edit') %}
-            <button type="button" class="btn">Mettre à jour le média</button>
-        {% endif %}
+            </div>
+
+        </div>
 
     </div>
 
@@ -69,7 +67,7 @@
                         {{ form_widget(form.diffusionEnd) }}
                     </div>
                 {% else %}
-                    <span class="media_diff_start">{{ media.diffusionStart | date('d/m/Y') }}</span> au <span class="media_diff_end">{{ media.diffusionEnd | date('d/m/Y') }}</span>
+                    <span class="media_diff_start">{{ (media is defined) ? media.diffusionStart | date('d/m/Y') : '' }}</span> au <span class="media_diff_end">{{ (media is defined) ? media.diffusionEnd | date('d/m/Y') : '' }}</span>
                 {% endif %}
             </div>
         </div>
@@ -77,14 +75,24 @@
         <div class="container media_incrustations_container">
 
             <div class="container_header">
-                <div class="icon_container">
-                    <i class="fas fa-euro-sign"></i>
+
+                <div class="container_header_child">
+
+                    <div class="icon_container">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                    <span class="container_header_title">Incrustations</span>
+
                 </div>
-                <span class="container_header_title">Incrustations</span>
 
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
-                    <button type="button" class="btn">Incruster PRIX</button>
+
+                    <div class="container_header_child btn_container">
+                        <button type="button" class="btn">Incruster PRIX</button>
+                    </div>
+
                 {% endif %}
+
             </div>
 
             <div class="container_body">
@@ -135,7 +143,15 @@
 
 </div>
 
+{% if app.request.attributes.get('_route') is same as('media::edit') %}
 <div class="col">
+    <div class="media_update_btn_container">
+        <button type="button" class="btn">Mettre à jour le média</button>
+    </div>
+</div>
+{% endif %}
+
+<div class="col middle">
 
     <div class="left_side side">
 
@@ -239,13 +255,17 @@
             <div class="container_body">
                 <table class="media_products_list">
 
-                    {% for product in media.products %}
+                    {% if media is defined %}
 
-                        <tr>
-                            <td>{{ product.name }}</td>
-                        </tr>
+                        {% for product in media.products %}
 
-                    {% endfor %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% endif %}
 
                     {% if app.request.attributes.get('_route') is same as('media::edit') %}
                         <div style="display: none">
@@ -261,7 +281,7 @@
 
 </div>
 
-<div class="col">
+<div class="col bottom">
 
     <div class="left_side side diffusion_zone_container">
 
@@ -275,7 +295,9 @@
 
 {% if app.request.attributes.get('_route') is same as('media::edit') %}
 
+<div class="col">
     <button type="submit" class="btn">Valider</button>
+</div>
 
     {{ form_end(form) }}
 

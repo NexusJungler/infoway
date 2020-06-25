@@ -7,11 +7,11 @@
             </div>
             <h1> {{ pageTitle }} </h1>
         </div>
-        
+
         <div class="page__title-content-info">
-            {% if showSecondTitles is defined and showSecondTitles is same as(true) %}
-            <span class="page__tilte-cercle"></span>
-            <h2 id="settings" class="tab-content current">{{ sousTitle }}</h2>
+            {% if sousTitle is defined and sousTitle is not empty %}
+                <span class="page__tilte-cercle"></span>
+                <h2 id="settings" class="tab-content current">{{ sousTitle }}</h2>
             {% endif %}
         </div>
         
