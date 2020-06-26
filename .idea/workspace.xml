@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media/edit_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/edit_media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media/media_image.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/media_image.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TwigExtension/DateDiffExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/TwigExtension/DateDiffExtension.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +254,7 @@
       <workItem from="1592812843064" duration="25903000" />
       <workItem from="1592986189096" duration="55000" />
       <workItem from="1592986275094" duration="52289000" />
-      <workItem from="1593160202047" duration="10864000" />
+      <workItem from="1593160202047" duration="11211000" />
     </task>
     <servers />
   </component>
