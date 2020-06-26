@@ -7,17 +7,18 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$container = $(".filters_by_associated_data_container");
+        this.__$currentContainer = $(".filters_by_associated_data_container");
         this.__characteristics = ['categories', 'products', 'criterions', 'tags'];
-        this.__$target = "card";
-        this.__$targetContainer = $('.medias_list_container');
+        this.__target = "card";
+        //this.__$targetContainer = $('.medias_list_container');
     }
 
-    setFilterTarget($target, $targetContainer)
+    setFilterTarget(target, $filtersContainer)
     {
-        this.__$target = $target;
+        this.__target = target;
 
-        this.__$targetContainer = $targetContainer;
+        this.__$currentContainer = $filtersContainer;
+        debugger
     }
 
     onClickOnFilterValidationButton(active)
@@ -25,7 +26,7 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
         if(active)
         {
-            this.__$container.find(".filter_validation_btn").on("click.onClickOnFilterValidationButton", e => {
+            this.__$currentContainer.find(".filter_validation_btn").on("click.onClickOnFilterValidationButton", e => {
 
                 e.preventDefault();
 
@@ -48,7 +49,7 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
     applyFilters(filters)
     {
 
-        switch (this.__$target)
+        switch (this.__target)
         {
 
             case "card":
@@ -60,9 +61,9 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
             case "association_popup_item":
 
-                this.__$targetContainer.find(`tbody.list tr`).addClass("hidden");
+                $('.association_popup_container.is_open').find(`tbody.list tr`).addClass("hidden");
 
-                this.__$targetContainer.find(`tbody.list tr${ filters }`).removeClass("hidden");
+                $('.association_popup_container.is_open').find(`tbody.list tr${ filters }`).removeClass("hidden");
                 break;
 
         }
@@ -74,12 +75,12 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
         this.__characteristics.forEach( characteristic => {
 
-            if(this.__$container.find(`.filter_by_${characteristic}`).length > 0)
+            if(this.__$currentContainer.find(`.filter_by_${characteristic}`).length > 0)
             {
 
                 const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
 
-                const value = this.__$container.find(`.filter_by_${characteristic}`).val();
+                const value = this.__$currentContainer.find(`.filter_by_${characteristic}`).val();
 
                 if(value !== '')
                 {

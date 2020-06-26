@@ -514,7 +514,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         {
             this.__$location.on('change.onCategorySelectionAddFilterOnProductList', '.product_category_choice', e => {
 
-                const category = $(e.currentTarget).val();
+                /*const category = $(e.currentTarget).val();
 
                 this.__$productsList.find(`tr`).each( (index, item) => {
 
@@ -529,7 +529,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                     else
                         $(item).fadeIn();
 
-                } );
+                } );*/
 
             })
         }

@@ -105,7 +105,7 @@
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
 
                     <div class="container_header_child btn_container">
-                        <button type="button" class="btn">Incruster PRIX</button>
+                        <button type="button" class="btn"><i class="fas fa-euro-sign"></i> Incruster PRIX</button>
                     </div>
 
                 {% endif %}
@@ -273,6 +273,12 @@
                     <span class="container_header_title">Produits associés</span>
                 </div>
 
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
+                    <div class="container_header_child btn_container">
+                        <button type="button" class="btn product_association_btn"><i class="fas fa-link"></i> Produits associés</button>
+                    </div>
+                {% endif %}
+
             </div>
             <div class="container_body table">
                 <table class="media_products_list table-custome">
@@ -293,13 +299,13 @@
 
                     </tbody>
 
-                    {% if app.request.attributes.get('_route') is same as('media::edit') %}
-                        <div style="display: none">
-                            {{ form_widget(form.products) }}
-                        </div>
-                    {% endif %}
-
                 </table>
+
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
+                    <div style="display: none">
+                        {{ form_widget(form.products) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
