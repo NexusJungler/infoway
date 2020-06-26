@@ -1,7 +1,7 @@
 import Tool from "../../../Tool";
 import SubTool from "../../../SubTool";
 
-class MediaProductAssociationHandlerTool extends SubTool
+class ProductAssociationHandlerTool extends SubTool
 {
 
     constructor()
@@ -127,7 +127,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                 if( $(`.media_products_list tr[data-product_id='${productId}']`).length === 0 )
                     $(`<tr data-product_id="${productId}"><td>${ this.__$productsList.find(`tr[data-product_id='${productId}'] td.product_name`).text() }</td></tr>`).appendTo( $('.media_products_list') );
 
-            } )
+            } );
 
         }
 
@@ -156,7 +156,7 @@ class MediaProductAssociationHandlerTool extends SubTool
     updateUploadMediaAssociatedProducts(mediaAssociationInfos)
     {
 
-        let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === mediaInfos.media );
+        /*let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === mediaInfos.media );
 
         if( registeredMediaInfosIndex === -1 )
             this.__mediasAssociationInfo.push( mediaAssociationInfos );
@@ -170,7 +170,7 @@ class MediaProductAssociationHandlerTool extends SubTool
 
             $(input).attr('checked', ( mediaAssociationInfos.products.indexOf( parseInt($(input).val()) ) !== -1 ) );
 
-        } )
+        } )*/
 
     }
 
@@ -315,6 +315,46 @@ class MediaProductAssociationHandlerTool extends SubTool
     }
 
 
+    onClickOnCloseButtonCloseProductAssociationModal(active)
+    {
+
+        if(active)
+        {
+            $('.popup_associate_product .close_modal_button').on('click.onClickOnCloseButtonCloseProductAssociationModal', e => {
+
+                //$('.add-popup').css({ 'z-index': '' });
+                //this.__$location.fadeOut();
+
+                if( ( (this.__$associatedList.find('.new_association').length > 0 || this.__$associatedList.find('.dissociated').length > 0 ) && confirm("Vous n'avez pas validés vos dernières modifications ! Voulez-vous vraiment continuer ?") ) ||
+                    (this.__$associatedList.find('.new_association').length === 0 && this.__$associatedList.find('.dissociated').length === 0) )
+                {
+
+                    this.__$container.removeClass('is_open');
+
+                    this.getToolBox().getTool('FilterMediasTool').removeAllFilters();
+
+                    // reset
+                    this.__$productsList.find('.choice_product').prop('checked', false);
+                    this.__$location.find('.select_all_products').prop('checked', false);
+                    this.__$associatedList.empty();
+
+                    if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
+                    {
+                        this.updateUploadMediaAssociatedProducts( { media: this.__currentMediaName, products: [] } );
+                    }
+
+                }
+
+            })
+        }
+        else
+        {
+            $('.popup_associate_product .close_modal_button').off('click.onClickOnCloseButtonCloseProductAssociationModal');
+        }
+
+        return this;
+    }
+
     initializePopupContent(mediaProductsAssociatedIds)
     {
 
@@ -362,47 +402,6 @@ class MediaProductAssociationHandlerTool extends SubTool
             } )
         }
 
-    }
-
-
-    onClickOnCloseButtonCloseProductAssociationModal(active)
-    {
-
-        if(active)
-        {
-            $('.popup_associate_product .close_modal_button').on('click.onClickOnCloseButtonCloseProductAssociationModal', e => {
-
-                //$('.add-popup').css({ 'z-index': '' });
-                //this.__$location.fadeOut();
-
-                if( ( (this.__$associatedList.find('.new_association').length > 0 || this.__$associatedList.find('.dissociated').length > 0 ) && confirm("Vous n'avez pas validés vos dernières modifications ! Voulez-vous vraiment continuer ?") ) ||
-                    (this.__$associatedList.find('.new_association').length === 0 && this.__$associatedList.find('.dissociated').length === 0) )
-                {
-
-                    this.__$container.removeClass('is_open');
-
-                    this.getToolBox().getTool('FilterMediasTool').removeAllFilters();
-
-                    // reset
-                    this.__$productsList.find('.choice_product').prop('checked', false);
-                    this.__$location.find('.select_all_products').prop('checked', false);
-                    this.__$associatedList.empty();
-
-                    if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
-                    {
-                        this.updateUploadMediaAssociatedProducts( { media: this.__currentMediaName, products: [] } );
-                    }
-
-                }
-
-            })
-        }
-        else
-        {
-            $('.popup_associate_product .close_modal_button').off('click.onClickOnCloseButtonCloseProductAssociationModal');
-        }
-
-        return this;
     }
 
     onClickOnValidationButtonUpdateMediaAssociatedInfos(active)
@@ -643,4 +642,4 @@ class MediaProductAssociationHandlerTool extends SubTool
 
 }
 
-export default MediaProductAssociationHandlerTool;
+export default ProductAssociationHandlerTool;

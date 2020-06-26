@@ -43,13 +43,6 @@
           display: flex;
           flex-direction: row;
 
-          &::after{
-            content: '';
-            border-right: 1px solid #FFF;
-            margin-left: 20px;
-            height: 20px;
-            margin: auto 0 auto 20px;
-          }
         }
 
       }
@@ -162,3 +155,4 @@
 @import "popup_media_waiting_incrustation/popup_media_waiting_incrustation";
 @import "popup_association/popup_association";
 @import "popup_association/product_association/popup_product_association";
+@import "popup_association/tag_association/popup_tag_association";

@@ -1,52 +1,123 @@
-<article class="associate_tag-popup association-popup hidden">
+<section class="popup_container association_popup_container popup_associate_tag_container">
 
-    <div class="modal">
-        <div class="modal-header">
-            <div class="modal-title-container">
-                <p>TAGS à affecter à : <span class="media_name"></span></p>
+    <article class="popup popup_associate_tag association_popup">
+
+        <div class="popup_header">
+
+            <div class="left_side popup_header_item">
+                <div class="item icon-container">
+                    <i class="fas fa-link icon"></i>
+                </div>
+
+                <div class="item title_container">
+                    <p class="title">TAGS à affecter à :</p>
+                </div>
+
+                <div class="item media_name_container">
+                    <p class="media_name"></p>
+                </div>
+
             </div>
-            <div class="close-modal-container">
-                <button type="button" class="btn close">X</button>
+
+            <div class="right_side popup_header_item">
+
+                <div class="item close_popup_button_container">
+                    <button type="button" class="close_modal_button">X</button>
+                </div>
+
             </div>
+
         </div>
 
-        <div class="modal-body">
+        <div class="popup_body">
 
-            <div class="body-middle">
+            <div class="popup_body_item container">
 
-                <div class="tags-list-container">
+                <div class="container_body">
+
                     <table>
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th><button type="button" class="create-tag-button">Créer TAG</button></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody class="tags-list">
-                        {% for tag in tags %}
-                            <tr data-tag_id="{{ tag.id }}">
-                                <td><input type="checkbox" class="choice_tag"></td>
-                                <td class="tag-name"><p>{{ tag.name }}</p></td>
-                                <td><p>{{ tag.description }}</p></td>
+                            <tr>
+                                <th></th>
+                                <th><button class="btn">Créer TAG</button></th>
+                                <th></th>
                             </tr>
-                        {% endfor %}
+                        </thead>
+                        <tbody class="tag_list">
+                            {% for tag in tags %}
+                                <tr data-tag_id="{{ tag.id }}">
+                                    <td><input type="checkbox" class="choice_tag"></td>
+                                    <td><span>{{ tag.name }}</span></td>
+                                    <td>
+                                        <div class="tag_description_container">
+                                            {{ tag.description }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
-                </div>
 
-            </div>
-
-            <div class="body-bottom">
-
-                <div class="validation-btn-container">
-                    <button type="button" class="validation-btn">Affecter au produit</button>
                 </div>
 
             </div>
 
         </div>
 
-    </div>
+        {#<div class="modal">
 
-</article>
+            <div class="modal-body">
+
+                <div class="body-middle">
+
+                    <div class="tags-list-container">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th><button type="button" class="create-tag-button">Créer TAG</button></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody class="tags-list">
+                            {% for tag in tags %}
+                                <tr data-tag_id="{{ tag.id }}">
+                                    <td><input type="checkbox" class="choice_tag"></td>
+                                    <td class="tag-name"><p>{{ tag.name }}</p></td>
+                                    <td><p>{{ tag.description }}</p></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="body-bottom">
+
+                    <div class="validation-btn-container">
+                        <button type="button" class="validation-btn">Affecter au produit</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>#}
+
+
+        <div class="popup_footer popup_item_container">
+
+            <div class="actions_buttons_container">
+                <button class="btn close_modal_button cancel" type="button">Annuler</button>
+            </div>
+
+            <div class="actions_buttons_container">
+                <button class="btn validate_association_btn" type="button" disabled>Affecter</button>
+            </div>
+
+        </div>
+
+    </article>
+
+</section>

@@ -1,6 +1,6 @@
 import SubTool from "../../SubTool";
-import MediaTagAssociationHandlerTool from "./TagAssociationHandler/MediaTagAssociationHandlerTool";
-import MediaProductAssociationHandlerTool from "./ProductAssociationHandler/MediaProductAssociationHandlerTool";
+import ProductAssociationHandlerTool from "./ProductAssociationHandler/ProductAssociationHandlerTool";
+import TagAssociationHandlerTool from "./TagAssociationHandler/TagAssociationHandlerTool";
 
 class AssociationPopupHandler extends SubTool
 {
@@ -10,8 +10,8 @@ class AssociationPopupHandler extends SubTool
         super();
         this.__name = this.constructor.name;
         this.__subTools = [
-            new MediaTagAssociationHandlerTool(),
-            new MediaProductAssociationHandlerTool(),
+            new TagAssociationHandlerTool(),
+            new ProductAssociationHandlerTool(),
         ];
 
         this.__$mediasContainer = $(".medias_list_container");

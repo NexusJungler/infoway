@@ -1,7 +1,7 @@
 import Tool from "../../../Tool";
 import SubTool from "../../../SubTool";
 
-class MediaTagAssociationHandlerTool extends SubTool
+class TagAssociationHandlerTool extends SubTool
 {
 
     constructor()
@@ -9,11 +9,22 @@ class MediaTagAssociationHandlerTool extends SubTool
         super();
         this.__name = this.constructor.name;
         this.__$mediasCollection = $('.medias_collection');
-        this.__$location = $('.associate_tag-popup');
+        this.__$container = $('.popup_associate_tag_container');
+        this.__$location = $('.popup_associate_tag');
         this.__$tagsList = $('.tags-list');
-        this.__currentMedia = null;
-        this.__currentPos = null;
+        //this.__currentMedia = null;
+        this.__currentMediaName = null;
+        this.__currentMediaId = null;
         this.__mediasAssociationInfo = [];
+        this.__isUpload = false;
+    }
+
+    initializePopupContent()
+    {
+
+        this.__$location.find('.media_name').text( this.__currentMediaName );
+        this.__$container.addClass('is_open');
+
     }
 
     onClickOnTagAssociationButtonShowModal(active)
@@ -22,9 +33,18 @@ class MediaTagAssociationHandlerTool extends SubTool
         if(active)
         {
 
-            $('.modal .edit_media_info').on("click.onClickOnTagAssociationButtonShowModal", ".associate-tag", e => {
+            $('.tag_association_btn').on("click.onClickOnTagAssociationButtonShowModal", e => {
 
-                $('.add-popup').css({ 'z-index': '0' });
+                if( $('.popup_upload_container.is_open').length === 0 )
+                {
+
+                    this.__currentMediaName = $('.media_name_container .media_name').val();
+
+                }
+
+                this.initializePopupContent();
+
+                /*$('.add-popup').css({ 'z-index': '0' });
                 this.__currentMedia = $(e.currentTarget).data('media');
                 this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
 
@@ -40,14 +60,14 @@ class MediaTagAssociationHandlerTool extends SubTool
                 }
 
                 this.__$location.find('.modal-title-container .media_name').text( this.__currentMedia );
-                this.__$location.fadeIn();
+                this.__$location.fadeIn();*/
 
             })
 
         }
         else
         {
-            $('.modal .edit_media_info').off("click.onClickOnTagAssociationButtonShowModal", ".associate-tag");
+            $('.tag_association_btn').off("click.onClickOnTagAssociationButtonShowModal");
         }
 
         return this;
@@ -58,25 +78,23 @@ class MediaTagAssociationHandlerTool extends SubTool
 
         if(active)
         {
-            this.__$location.find('.close').on('click.onClickOnCloseButtonCloseTagAssociationModal', e => {
+            this.__$location.find('.close_modal_button').on('click.onClickOnCloseButtonCloseTagAssociationModal', e => {
 
-                $('.add-popup').css({ 'z-index': '' });
-                $(".associate_tag-popup").fadeOut();
-
+                this.__$container.removeClass('is_open');
 
                 // reset
-                this.__$location.find('.modal-body .choice_tag').prop('checked', false);
+                this.__$location.find('.choice_tag').prop('checked', false);
 
-                if( $(e.currentTarget).hasClass('cancel') )
+                if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
                 {
-                    this.updateMediaAssociatedTags( { media: this.__currentMedia, products: [] } );
+                    //this.updateMediaAssociatedTags( { media: this.__currentMedia, products: [] } );
                 }
 
             })
         }
         else
         {
-            this.__$location.find('.close').off('click.onClickOnCloseButtonCloseTagAssociationModal');
+            this.__$location.find('.close_modal_button').off('click.onClickOnCloseButtonCloseTagAssociationModal');
         }
 
         return this;
@@ -92,7 +110,7 @@ class MediaTagAssociationHandlerTool extends SubTool
                 let tagsToMedia = [];
                 this.__$tagsList.find('.choice_tag').each( (index, element) => {
 
-                    $(`.edit_media_info #${this.__currentPos}`).addClass('unregistered');
+                    /*$(`.edit_media_info #${this.__currentPos}`).addClass('unregistered');
 
                     if( $(element).is(':checked') )
                     {
@@ -109,12 +127,12 @@ class MediaTagAssociationHandlerTool extends SubTool
                     else
                     {
                         $(`.edit_media_info #${this.__currentPos} .associated-tags-container span[data-tag_id='${ $(element).parents('tr').data('tag_id') }']`).remove();
-                    }
+                    }*/
 
 
                 } );
 
-                this.updateMediaAssociatedTags( { media: this.__currentMedia, tags: tagsToMedia } );
+                //this.updateMediaAssociatedTags( { media: this.__currentMedia, tags: tagsToMedia } );
 
             })
         }
@@ -129,7 +147,7 @@ class MediaTagAssociationHandlerTool extends SubTool
     updateMediaAssociatedTags(mediaInfos)
     {
 
-        let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === mediaInfos.media );
+        /*let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === mediaInfos.media );
 
         if( registeredMediaInfosIndex === -1 )
             this.__mediasAssociationInfo.push( mediaInfos );
@@ -143,7 +161,7 @@ class MediaTagAssociationHandlerTool extends SubTool
 
             $(input).attr('checked', ( mediaInfos.tags.indexOf( parseInt($(input).val()) ) !== -1 ) );
 
-        } )
+        } )*/
 
     }
 
@@ -167,4 +185,4 @@ class MediaTagAssociationHandlerTool extends SubTool
 
 }
 
-export default MediaTagAssociationHandlerTool;
+export default TagAssociationHandlerTool;
