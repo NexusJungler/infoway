@@ -18,7 +18,7 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
         this.__target = target;
 
         this.__$currentContainer = $filtersContainer;
-        debugger
+
     }
 
     onClickOnFilterValidationButton(active)

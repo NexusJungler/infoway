@@ -8,7 +8,7 @@
 
     <div class="left_side side">
 
-        <div class="media_miniature_container {{ (media is defined) ? 'media_' ~ media.orientation: '' }}">
+        <div class="media_miniature_container {{ (media is defined) ? 'media_' ~ media.orientation : '' }}" data-media_id="{{ media.id }}">
 
             <div class="media_container_{{ (media_type is defined and media_type is same as('image')) ? 'img' : 'video' }}">
 
@@ -281,15 +281,15 @@
 
             </div>
             <div class="container_body table">
-                <table class="media_products_list table-custome">
+                <table class="table-custome">
 
-                    <tbody class="tbody tbody-content scrollbar-table">
+                    <tbody class="media_products_list tbody tbody-content scrollbar-table">
 
                     {% if media is defined %}
 
                         {% for product in media.products %}
 
-                            <tr>
+                            <tr data-product_id="{{ product.id }}">
                                 <td>{{ product.name }}</td>
                             </tr>
 
@@ -302,7 +302,7 @@
                 </table>
 
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
-                    <div style="display: none">
+                    <div class="media_available_products_list_container" style="display: none">
                         {{ form_widget(form.products) }}
                     </div>
                 {% endif %}

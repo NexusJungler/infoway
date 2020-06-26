@@ -13,7 +13,7 @@ class MediaProductAssociationHandlerTool extends SubTool
         this.__$mediasCollection = $('.medias_collection');
         this.__$container = $('.popup_associate_product_container');
         this.__$location = $('.popup_associate_product');
-        this.__currentMedia = null;
+        this.__currentMediaName = null;
         this.__currentMediaId = null;
         this.__currentMediaTags = null;
         this.__currentPos = null;
@@ -37,19 +37,26 @@ class MediaProductAssociationHandlerTool extends SubTool
         else if( this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).length === 0 )
         {
 
-            this.__$productsList.find(`tr[data-product_id='${ item.productId }'] .choice_product`).prop('checked', true);
+            let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMediaName );
 
-            let newLine = $(`<tr data-product_id="${ item.productId }" data-product_criterions="${ item.productCriterions }"></tr>`);
+            if(registeredMediaInfosIndex !== -1)
+            {
 
-            let mediaProductsIds = $(`.card#${this.__currentMediaId}`).attr('data-products');
+                this.__$productsList.find(`tr[data-product_id='${ item.productId }'] .choice_product`).prop('checked', true);
 
-            if(!mediaProductsIds.includes(item.productId))
-                newLine.addClass('new_association');
+                let newLine = $(`<tr data-product_id="${ item.productId }" data-product_criterions="${ item.productCriterions }"></tr>`);
 
-            $(`<td class="product_name_container"><span class="product_name">${ item.name }</span></td>
-               <td class="dissociation_btn_container"><button class="dissociation_btn">X</button></td>`).appendTo( newLine );
+                let mediaProductsIds = this.__mediasAssociationInfo[registeredMediaInfosIndex].products;
 
-            $(newLine).appendTo(this.__$associatedList);
+                if(!mediaProductsIds.includes(item.productId))
+                    newLine.addClass('new_association');
+
+                $(`<td class="product_name_container"><span class="product_name">${ item.name }</span></td>
+                   <td class="dissociation_btn_container"><button class="dissociation_btn">X</button></td>`).appendTo( newLine );
+
+                $(newLine).appendTo(this.__$associatedList);
+
+            }
 
         }
 
@@ -76,45 +83,75 @@ class MediaProductAssociationHandlerTool extends SubTool
     updateMediaAssociatedProducts(mediaAssociationInfos = [])
     {
 
-        let mediaId = this.__currentMediaId.replace('media_', '');
+        if( this.__currentMediaId !== null )
+        {
 
-        $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
+            let mediaId = this.__currentMediaId.replace('media_', '');
 
-        $.ajax({
-            url: `/update/media/${mediaId}/associated/products`,
-            type: "POST",
-            data: {productsToAssociation: mediaAssociationInfos},
-            success: (response) => {
+            $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
 
-                //console.log(response); debugger
+            $.ajax({
+                url: `/update/media/${mediaId}/associated/products`,
+                type: "POST",
+                data: {productsToAssociation: mediaAssociationInfos},
+                success: (response) => {
 
-                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+                    //console.log(response); debugger
 
-                this.__parent.getMediasContainer().find(`.card#${this.__currentMediaId}`).attr('data-products', mediaAssociationInfos.join(', '));
+                    $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
 
-                this.__$associatedList.find(`tr.dissociated`).each( (index, element) => {
+                    this.__parent.getMediasContainer().find(`.card#${this.__currentMediaId}`).attr('data-products', mediaAssociationInfos.join(', '));
 
-                    this.__$productsList.find(`tr[data-product_id='${ $(element).data('product_id') }'] .choice_product`).prop('checked', false);
-                    $(element).remove();
+                    this.updateAssociatedListItemState();
 
-                } );
+                },
+                error: (response, status, error) => {
 
-                this.__$associatedList.find(`tr.new_association`).removeClass('new_association');
+                    $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
 
-            },
-            error: (response, status, error) => {
+                    alert("Erreur interne durant l'enregistrements !");
 
-                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+                    console.error(response); debugger
 
-                alert("Erreur interne durant l'enregistrements !");
+                },
+            });
 
-                console.error(response); debugger
+        }
+        else
+        {
 
-            },
-        });
+            mediaAssociationInfos.map( (productId) => {
+
+                $(`.media_available_products_list_container #edit_media_products_${productId}`).attr('checked', true);
+
+                if( $(`.media_products_list tr[data-product_id='${productId}']`).length === 0 )
+                    $(`<tr data-product_id="${productId}"><td>${ this.__$productsList.find(`tr[data-product_id='${productId}'] td.product_name`).text() }</td></tr>`).appendTo( $('.media_products_list') );
+
+            } )
+
+        }
 
     }
 
+    updateAssociatedListItemState()
+    {
+
+        this.__$associatedList.find(`tr.dissociated`).each( (index, element) => {
+
+            if( $(`.media_products_list tr[data-product_id='${ $(element).data('product_id') }']`).length > 0 )
+            {
+                $(`.media_available_products_list_container #edit_media_products_${ $(element).data('product_id') }`).removeAttr('checked');
+                $(`.media_products_list tr[data-product_id='${ $(element).data('product_id') }']`).remove();
+            }
+
+            this.__$productsList.find(`tr[data-product_id='${ $(element).data('product_id') }'] .choice_product`).prop('checked', false);
+            $(element).remove();
+
+        } );
+
+        this.__$associatedList.find(`tr.new_association`).removeClass('new_association');
+
+    }
 
     updateUploadMediaAssociatedProducts(mediaAssociationInfos)
     {
@@ -204,10 +241,10 @@ class MediaProductAssociationHandlerTool extends SubTool
             this.__parent.getMediasContainer().on('click.onClickOnProductAssociationShortcutShowModal', '.shortcut_product_association', e => {
 
                 this.__currentMediaId = $(e.currentTarget).parents('.card').attr('id');
-                this.__currentMedia = $(e.currentTarget).parents('.card').find('.media_name').text();
+                this.__currentMediaName = $(e.currentTarget).parents('.card').find('.media_name').text();
                 this.__currentMediaTags = $(e.currentTarget).parents('.card').data('tags');
 
-                this.__$location.find('.media_name_container .media_name').text( this.__currentMedia );
+                this.__$location.find('.media_name_container .media_name').text( this.__currentMediaName );
 
                 let mediaProductsAssociatedIds = [];
 
@@ -217,29 +254,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                 else
                     mediaProductsAssociatedIds.push( $(e.currentTarget).parents('.card').attr('data-products') );
 
-                // if media is associate with products
-                if( mediaProductsAssociatedIds.length > 0 && mediaProductsAssociatedIds[0] !== 'none' )
-                {
-
-                    mediaProductsAssociatedIds.forEach( (mediaProductId) => {
-
-                        //console.log(mediaProductsAssociatedIds); debugger
-
-                        let productName = this.__$productsList.find(`tr[data-product_id='${mediaProductId}'] .product_name`).text();
-                        let productCriterions = this.__$productsList.find(`tr[data-product_id='${mediaProductId}']`).data('product_criterions');
-
-                        this.addItemInAssociatedList({ productId: mediaProductId, productCriterions: productCriterions, name: productName });
-
-                    } );
-
-                }
-
-                //this.rebuildMediaProductsAssociatedList(mediaProductsAssociatedIds);
-
-                this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByAssociatedDataSubTool')
-                                                                      .setFilterTarget('association_popup_item', this.__$container);
-
-                this.__$container.addClass('is_open');
+                this.initializePopupContent(mediaProductsAssociatedIds);
 
             })
         }
@@ -257,16 +272,36 @@ class MediaProductAssociationHandlerTool extends SubTool
 
         if(active)
         {
-            $('.modal .edit_media_info').on("click.onClickOnAssociationButtonShowModal", ".associate_product", e => {
+            $('.product_association_btn').on("click.onClickOnAssociationButtonShowModal", e => {
+
+                if( $('.media_products_list').length > 0 )
+                {
+
+                    this.__currentMediaName = $('.tab_content_body_title_container .media_name').text();
+                    this.__$location.find('.media_name_container .media_name').text( this.__currentMediaName );
+
+                    let mediaProductsAssociatedIds = [];
+
+                    $('.media_products_list').find('tr').each( (index, tr) => {
+
+                        mediaProductsAssociatedIds.push( $(tr).data('product_id') );
+
+                    } )
+
+                    this.__mediasAssociationInfo.push( { media: this.__currentMediaName, products: mediaProductsAssociatedIds } );
+
+                    this.initializePopupContent(mediaProductsAssociatedIds);
+
+                }
 
                 /*$('.add-popup').css({ 'z-index': '-30' });
-                this.__currentMedia = $(e.currentTarget).data('media');
+                this.__currentMediaName = $(e.currentTarget).data('media');
                 this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
 
                 // check if media is already associated with product (in this case, update popup)
                 this.getMediaAssociationInfos();
 
-                this.__$location.find('.modal-title-container .media_name').text( this.__currentMedia );
+                this.__$location.find('.modal-title-container .media_name').text( this.__currentMediaName );
                 this.__$location.fadeIn();*/
 
             })
@@ -280,10 +315,40 @@ class MediaProductAssociationHandlerTool extends SubTool
     }
 
 
+    initializePopupContent(mediaProductsAssociatedIds)
+    {
+
+        // if media is associate with products
+        if( mediaProductsAssociatedIds.length > 0 && mediaProductsAssociatedIds[0] !== 'none' )
+        {
+
+            mediaProductsAssociatedIds.forEach( (mediaProductId) => {
+
+                //console.log(mediaProductsAssociatedIds); debugger
+
+                let productName = this.__$productsList.find(`tr[data-product_id='${mediaProductId}'] .product_name`).text();
+                let productCriterions = this.__$productsList.find(`tr[data-product_id='${mediaProductId}']`).data('product_criterions');
+
+                this.addItemInAssociatedList({ productId: mediaProductId, productCriterions: productCriterions, name: productName });
+
+            } );
+
+        }
+
+        //this.rebuildMediaProductsAssociatedList(mediaProductsAssociatedIds);
+
+        this.getToolBox().getTool('FilterMediasTool').getSubTool('FilterMediasByAssociatedDataSubTool')
+            .setFilterTarget('association_popup_item', this.__$container);
+
+        this.__$container.addClass('is_open');
+
+    }
+
+
     getMediaAssociationInfos()
     {
 
-        let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
+        let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMediaName );
         if(registeredMediaInfosIndex !== -1)
         {
             this.__mediasAssociationInfo[ registeredMediaInfosIndex ].products.forEach( (id, index) => {
@@ -325,7 +390,7 @@ class MediaProductAssociationHandlerTool extends SubTool
 
                     if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
                     {
-                        this.updateUploadMediaAssociatedProducts( { media: this.__currentMedia, products: [] } );
+                        this.updateUploadMediaAssociatedProducts( { media: this.__currentMediaName, products: [] } );
                     }
 
                 }
@@ -350,6 +415,8 @@ class MediaProductAssociationHandlerTool extends SubTool
                 const mediaAssociatedProducts = $.map( this.__$productsList.find('.choice_product:checked'), (element) =>  $(element).parents('tr').data('product_id'));
 
                 this.updateMediaAssociatedProducts(mediaAssociatedProducts);
+
+                this.updateAssociatedListItemState();
 
                 this.__$location.find('.validate_association_btn').attr('disabled', true);
 
@@ -389,7 +456,7 @@ class MediaProductAssociationHandlerTool extends SubTool
                     $(`.edit_media_info #${this.__currentPos} .criterions_affectation_container`).empty();
                 }
 
-                this.updateMediaAssociatedProducts( { media: this.__currentMedia, products: productsToMedia } );*/
+                this.updateMediaAssociatedProducts( { media: this.__currentMediaName, products: productsToMedia } );*/
 
             })
         }
