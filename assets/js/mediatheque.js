@@ -12,8 +12,7 @@ toolBox.activeTool("PaginatorHandler")
 
 toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
                                         .activeSubTool("MediaWaitingIncrustationHandler")
-                                        .activeSubTool("MediaProductAssociationHandlerTool")
-                                        .activeSubTool("MediaTagAssociationHandlerTool")
+                                        .activeSubTool("AssociationPopupHandler", ["all"])
                                         .activeSubTool("UploadHandlerTool")
                                         .activeSubTool("MediaDeletingHandler")
 ;

@@ -1,11 +1,8 @@
-import Tool from "../Tool";
-import MediaInfoSheetHandler from "./MediaInfoSheetHandler/MediaInfoSheetHandler";
-import MediaWaitingIncrustationHandler from "./MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
-import UploadHandlerTool from "./UploadHandlerTool/UploadHandlerTool";
-import MediaDeletingHandler from "./MediaDeletingHandler/MediaDeletingHandler";
-import AssociationPopupHandler from "./AssociationPopupHandler/AssociationPopupHandler";
+import SubTool from "../../SubTool";
+import MediaTagAssociationHandlerTool from "./TagAssociationHandler/MediaTagAssociationHandlerTool";
+import MediaProductAssociationHandlerTool from "./ProductAssociationHandler/MediaProductAssociationHandlerTool";
 
-class PopupHandler extends Tool
+class AssociationPopupHandler extends SubTool
 {
 
     constructor()
@@ -13,14 +10,12 @@ class PopupHandler extends Tool
         super();
         this.__name = this.constructor.name;
         this.__subTools = [
-            new MediaInfoSheetHandler(),
-            new MediaWaitingIncrustationHandler(),
-            new UploadHandlerTool(),
-            new MediaDeletingHandler(),
-            new AssociationPopupHandler(),
+            new MediaTagAssociationHandlerTool(),
+            new MediaProductAssociationHandlerTool(),
         ];
 
         this.__$mediasContainer = $(".medias_list_container");
+
     }
 
     getAgainMediaListContainer()
@@ -54,7 +49,7 @@ class PopupHandler extends Tool
 
     }
 
-    activeSubTool(subToolName, subToolToolsToActive = [])
+    activeSubTool(subToolName)
     {
 
         if(!this.subToolIsRegistered(subToolName))
@@ -63,21 +58,6 @@ class PopupHandler extends Tool
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
         this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
-
-        if(subToolToolsToActive.length > 0)
-        {
-
-            subToolToolsToActive.map( (subToolToolToActive) => {
-
-                if(subToolToolToActive === "all")
-                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeAllSubTools();
-
-                else
-                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeSubTool(subToolToolToActive);
-
-            } )
-
-        }
 
         return this;
     }
@@ -112,6 +92,7 @@ class PopupHandler extends Tool
         super.disable();
     }
 
+
 }
 
-export default PopupHandler;
+export default AssociationPopupHandler;

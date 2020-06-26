@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,19 +174,19 @@
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\new_app\assets\css\popups\popup_association\product_association" />
-      <recent name="C:\laragon\www\new_app\templates\popups\upload" />
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler" />
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools" />
-      <recent name="C:\laragon\www\infoway\new_app\src\Controller\Settings" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\MediaInfoSheetHandler" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PaginatorHandler" />
       <recent name="C:\laragon\www\new_app\assets\images" />
       <recent name="C:\laragon\www\new_app\assets\css\popups" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\ProductAssociationHandler" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\AssociationPopupHandler" />
+      <recent name="C:\laragon\www\new_app\assets\css\popups\popup_association\product_association" />
+      <recent name="C:\laragon\www\new_app\templates\popups\upload" />
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler" />
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -256,7 +258,7 @@
       <workItem from="1592812843064" duration="25903000" />
       <workItem from="1592986189096" duration="55000" />
       <workItem from="1592986275094" duration="52289000" />
-      <workItem from="1593160202047" duration="17972000" />
+      <workItem from="1593160202047" duration="19477000" />
     </task>
     <servers />
   </component>

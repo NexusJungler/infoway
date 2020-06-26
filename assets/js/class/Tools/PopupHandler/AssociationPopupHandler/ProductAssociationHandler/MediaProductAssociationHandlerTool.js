@@ -1,5 +1,5 @@
-import Tool from "../../Tool";
-import SubTool from "../../SubTool";
+import Tool from "../../../Tool";
+import SubTool from "../../../SubTool";
 
 class MediaProductAssociationHandlerTool extends SubTool
 {
