@@ -1053,6 +1053,8 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         }
 
+        //dd($infos);
+
         return $infos;
 
     }

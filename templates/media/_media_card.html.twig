@@ -35,7 +35,7 @@
         </div>
 
         <div class="media_actions_shortcuts_container">
-            <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date_coming_soon{% endif %}">
+            <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now < 0 or media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}alert_date{% endif %}">
                 <i class="far fa-clock"></i>
             </div>
 
