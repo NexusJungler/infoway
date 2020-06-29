@@ -261,6 +261,10 @@
     flex-direction: row;
     width: 100%;
 
+    input.filter{
+        cursor: default;
+    }
+
     .filter {
         cursor: pointer;
         span{
@@ -298,7 +302,8 @@
 
         }
 
-        .filter_by_characteristics_container {
+
+        .filters_by_associated_data_container {
             background-color: #E3E3E3;
             border: 1px solid #C0CCD1;
             display: flex;
@@ -307,7 +312,8 @@
             justify-content: space-around;
             align-items: center;
 
-            .filter_by_characteristics_item{
+
+            .filters_by_associated_data_item{
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
@@ -346,7 +352,7 @@
                 opacity: 0;
                 transition: width 2s;
                 overflow: hidden;
-                .filter_by_characteristics_item{
+                .filters_by_associated_data_item{
                     margin-right: 20px;
                 }
             }

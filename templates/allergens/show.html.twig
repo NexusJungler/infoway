@@ -7,6 +7,7 @@
     {{ encore_entry_link_tags('show_allergens') }}
 {% endblock %}
 
+
 {% block body %}
 
     <main class="main main_setting">    
@@ -26,6 +27,7 @@
 
             <section class="wrapper_tabcontent">
                 <div id="tab-products" class="tab-content current content-allergens">
+
 
                     <article class="display setting-display ">
                         <div class="display-content">
@@ -67,6 +69,7 @@
                     <article class="content-allergens-show table">
 
                         <div id="" class="content-allergens-show-left " >
+
                             <form method="post" action="{{ path('allergens::delete') }}">
                                 <table id="list" class="table-custome" >
                                     <thead class="thead-info">
@@ -89,6 +92,7 @@
                                                         <span class="mini-cercle" style="background: blanchedalmond ;"></span>TF05
                                                     </p>
                                                 </td>
+
                                             </tr>
                                     </tbody>
                                 </table>
@@ -107,6 +111,7 @@
                                             <th>
                                             {#<th></th>#}
                                         </tr>
+
                                     </thead>
                                     <tbody class="tbody tbody-content scrollbar-table">
                                     {% for allergen in allergens %}
@@ -134,7 +139,7 @@
     
 
     {% block javascripts %}
-    {{ encore_entry_script_tags('show_allergens') }}
+        {{ encore_entry_script_tags('show_allergens') }}
     {% endblock javascripts %}
 
 {% endblock %}

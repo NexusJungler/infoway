@@ -1,10 +1,9 @@
 import Tool from "../Tool";
 import MediaInfoSheetHandler from "./MediaInfoSheetHandler/MediaInfoSheetHandler";
 import MediaWaitingIncrustationHandler from "./MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
-import MediaProductAssociationHandlerTool from "./ProductAssociationHandler/MediaProductAssociationHandlerTool";
-import MediaTagAssociationHandlerTool from "./TagAssociationHandler/MediaTagAssociationHandlerTool";
 import UploadHandlerTool from "./UploadHandlerTool/UploadHandlerTool";
 import MediaDeletingHandler from "./MediaDeletingHandler/MediaDeletingHandler";
+import AssociationPopupHandler from "./AssociationPopupHandler/AssociationPopupHandler";
 
 class PopupHandler extends Tool
 {
@@ -16,10 +15,9 @@ class PopupHandler extends Tool
         this.__subTools = [
             new MediaInfoSheetHandler(),
             new MediaWaitingIncrustationHandler(),
-            new MediaProductAssociationHandlerTool(),
-            new MediaTagAssociationHandlerTool(),
             new UploadHandlerTool(),
             new MediaDeletingHandler(),
+            new AssociationPopupHandler(),
         ];
 
         this.__$mediasContainer = $(".medias_list_container");
@@ -56,7 +54,8 @@ class PopupHandler extends Tool
 
     }
 
-    activeSubTool(subToolName)
+
+    activeSubTool(subToolName, subToolToolsToActive = [])
     {
 
         if(!this.subToolIsRegistered(subToolName))
@@ -65,6 +64,22 @@ class PopupHandler extends Tool
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
         this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
+
+
+        if(subToolToolsToActive.length > 0)
+        {
+
+            subToolToolsToActive.map( (subToolToolToActive) => {
+
+                if(subToolToolToActive === "all")
+                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeAllSubTools();
+
+                else
+                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeSubTool(subToolToolToActive);
+
+            } )
+
+        }
 
         return this;
     }

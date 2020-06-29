@@ -1,0 +1,67 @@
+.popup_associate_tag_container{
+
+  &.is_open{
+
+    .popup{
+      width: 732px;
+      height: 448px;
+
+      .popup_header{
+        height: 10%;
+        border: 1px solid #899CA4;
+        border-radius: 7px 7px 0 0;
+      }
+
+      .popup_body{
+        height: 75%;
+        width: 100%;
+
+        .container{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .container_body{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3%;
+
+            table{
+              width: 100%;
+
+              tbody{
+                .tag_description_container{
+                  height: 30px;
+                  border: 1px solid #899CA4;
+                  border-radius: 9px;
+                  background: #FFF;
+
+                }
+
+                td{
+                  padding-bottom: 2%;
+                }
+              }
+
+            }
+          }
+
+        }
+
+      }
+
+      .popup_footer{
+        height: 15%;
+        background: #EBEBEB;
+      }
+
+    }
+
+  }
+
+}

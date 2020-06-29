@@ -1,0 +1,24 @@
+.association_popup {
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -12%;
+  z-index: 30;
+
+  .popup_body, .popup_footer{
+    background-color: #F6F6F6;
+    width: 100%;
+  }
+
+  &.popup_associate_product{
+
+  }
+
+  &.popup_associate_tag{
+
+  }
+
+}

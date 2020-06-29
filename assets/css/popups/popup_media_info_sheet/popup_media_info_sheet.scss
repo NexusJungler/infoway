@@ -142,7 +142,8 @@
                                                         color: #306D7C;
                                                     }
                                                     .icon_container{
-                                                        &.date_coming_soon{
+
+                                                        &.alert_date{
                                                           background-color: #F57171;
                                                         }
                                                     }
@@ -204,6 +205,10 @@
                                                         }
                                                         td{
                                                             padding: 5px 15px 6px 15px;
+
+                                                            position: relative;
+                                                            text-align: center;
+
                                                             &:nth-child(1){
                                                                 width: 50%;
                                                                 text-align: left;
@@ -214,6 +219,31 @@
                                                             &:nth-child(n+2){
                                                                 width: 15%;
                                                             }
+
+                                                            input[type="checkbox"] {
+                                                                position: absolute;
+                                                                opacity: 0;
+                                                                cursor: pointer;
+                                                                height: 0;
+                                                                width: 0;
+
+                                                                &:checked ~ .custom_checkbox {
+                                                                    background-color: #4F9BAE;
+                                                                }
+
+                                                            }
+
+                                                            .custom_checkbox{
+                                                                position: absolute;
+                                                                top: 15%;
+                                                                left: 40%;
+                                                                width: 17px;
+                                                                height: 17px;
+                                                                background-color: #FFF;
+                                                                border: 1px solid #4D646D;
+
+                                                            }
+
                                                         }
                                                     }
                                                 }

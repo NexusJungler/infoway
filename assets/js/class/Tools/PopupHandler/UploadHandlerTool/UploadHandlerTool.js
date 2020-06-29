@@ -424,15 +424,16 @@ class UploadHandlerTool extends SubTool
         return this;
     }
 
-    async cancelUploadedMedia(media)
+    async cancelUploadedMedia(mediaId)
     {
 
         return new Promise( (resolve, reject) => {
 
             $.ajax({
-                url: "/remove/media",
+
+                url: `/remove/media/${mediaId}`,
                 type: "POST",
-                data: {media: media},
+                data: {},
                 success: (response) => {
                     console.log(response); //debugger
                     resolve(true);

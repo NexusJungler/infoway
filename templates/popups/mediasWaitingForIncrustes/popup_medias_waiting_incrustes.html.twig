@@ -91,7 +91,8 @@
                                 </td>
                                 <td class="media_associated_criterions_col">
                                     <div class="media_criterions_container container">
-                                        {% if (media.products.values is empty) or (media.products.values| length is same as(1) and productsCriterions[media.products.values[0].id] is empty)  %}
+
+                                        {% if (media.products.values is empty) or (media.products.values| length is same as(1) and productsCriterions[media.products.values[0].id]['names'] is empty)  %}
 
                                             <span class="container_child">Aucun critère</span>
 
@@ -99,7 +100,8 @@
 
                                             {% for product in media.products.values %}
 
-                                                {% for criterion in productsCriterions[product.id] %}
+
+                                                {% for criterion in productsCriterions[product.id]['names'] %}
                                                     <span class="container_child">{{ criterion }}</span>
                                                 {% endfor %}
 

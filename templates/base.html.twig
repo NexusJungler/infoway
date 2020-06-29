@@ -11,8 +11,11 @@
             <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" rel="stylesheet">
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">	
+
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             {{ encore_entry_link_tags('app') }}
+
+            {#<link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">#}
             {# <link href="node_modules/select2/dist/css/select2.min.css" rel="stylesheet" /> #}
             {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
@@ -227,7 +230,9 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
-            <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>	
+
+            <script src="https://kit.fontawesome.com/fe6070e42e.js" crossorigin="anonymous"></script>
+
             {# <script src="node_modules/select2/dist/js/select2.min.js"></script>
             <script>
                     $(".ManyToMany select").select2();

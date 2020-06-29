@@ -14,6 +14,7 @@ use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
+use App\Form\Customer\EditMediaType;
 use App\Form\MediasListType;
 use App\Repository\Admin\CustomerRepository;
 use App\Repository\Admin\FfmpegTasksRepository;
@@ -26,6 +27,7 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response, Session\SessionInterface};
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -45,6 +47,9 @@ class MediaController extends AbstractController
 
     private ParameterBagInterface $parameterBag;
 
+
+    private MediasHandler $mediasHandler;
+
     public function __construct(SessionManager $sessionManager, ParameterBagInterface $parameterBag)
     {
 
@@ -59,14 +64,19 @@ class MediaController extends AbstractController
 
         $this->sessionManager = $sessionManager;
         $this->parameterBag = $parameterBag;
+        $this->mediasHandler = new MediasHandler($this->parameterBag);
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}", name="media::showMediatheque", methods={"GET", "POST"},
+     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
      * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
+     * @param Request $request
+     * @param string $mediasDisplayedType
+     * @param int $page
+     * @return Response
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType)
+    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
     {
 
         $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
@@ -83,44 +93,21 @@ class MediaController extends AbstractController
         $categories = $categoryRepo->findAll();
         $tags = $tagRepo->findAll();
         $criterions = $criterionRepo->findAll();
-        $productsCriterions = $productRepo->findProductsCriterions();
+
+        $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
+        $productsTags = $productRepo->findProductsAssociatedDatas('tags');
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
-        if($request->isXmlHttpRequest() AND $request->isMethod("POST"))
-        {
-
-            if($request->request->get('numberOfMediasToDisplay') !== null)
-            {
-
-                $number = intval($request->request->get('numberOfMediasToDisplay'));
-
-                if(!is_int($number))
-                    throw new Exception(sprintf("'numberOfMediasDisplayedInMediatheque' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
-
-                ( $this->sessionManager->get('numberOfMediasDisplayedInMediatheque') !== null ) ?
-                    $this->sessionManager->replace('numberOfMediasDisplayedInMediatheque', $number) :
-                    $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', $number);
-
-            }
-
-            list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request, true);
-
-            return new JsonResponse([
-                'mediasToDisplayed' => $mediasToDisplayed,
-                'numberOfPages' => $numberOfPages,
-                'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
-                'userMediasDisplayedChoice' => $this->sessionManager->get('numberOfMediasDisplayedInMediatheque'),
-            ]);
-
-        }
-
-        if($this->sessionManager->get('numberOfMediasDisplayedInMediatheque') === null)
-            $this->sessionManager->set('numberOfMediasDisplayedInMediatheque', 15);
+        if($this->sessionManager->get('mediatheque_medias_number') === null)
+            $this->sessionManager->set('mediatheque_medias_number', 15);
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
-        //dd($mediasToDisplayed);
+        if(empty($mediasToDisplayed))
+            throw new NotFoundHttpException(sprintf("No media(s) found for this page !"));
+
+        //dd($numberOfPages);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
@@ -155,12 +142,93 @@ class MediaController extends AbstractController
             'tags' => $tags,
             'criterions' => $criterions,
             'productsCriterions' => $productsCriterions,
+            'productsTags' => $productsTags,
             'uploadMediaForm' => $uploadMediaForm->createView(),
             'mediasWaitingForIncrustation' => $mediasWaitingForIncrustation,
             'mediasToDisplayed' => $mediasToDisplayed,
             'numberOfPages' => $numberOfPages,
             'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
             'archivedMedias' => $allArchivedMedias,
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/edit/media/{id}", name="media::edit", methods={"GET", "POST"},
+     * requirements={"id": "\d+"})
+     */
+    public function edit(Request $request, int $id)
+    {
+
+        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $manager = $this->getDoctrine()->getManager($managerName);
+
+        $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
+        $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
+        $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
+        $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
+
+
+        $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
+        $productsTags = $productRepo->findProductsAssociatedDatas('tags');
+
+        $mediaInfos = $mediaRepo->getMediaInfosForEdit($id);
+
+        $media = $mediaRepo->find($id);
+        if(!$media)
+            throw new Exception(sprintf("No media can be found with this id : '%s'", $id));
+
+        $form = $this->createForm(EditMediaType::class, $media, [
+            'tagRepo' => $tagRepo,
+            'mediaRepo' => $mediaRepo,
+        ]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+
+            dd($media);
+
+        }
+
+        $media->media_type = ($media instanceof Video) ? 'video': 'image';
+
+        $popupsFiltersContent = $this->getPopupFiltersContent();
+
+        //dd($mediaInfos, $media, $form->createView());
+
+        $characteristics = [
+            'size' => $media->getWidth() . '*' . $media->getHeight() . ' px',
+            'extension' => $media->getExtension(),
+        ];
+
+        if($media instanceof Video)
+            $characteristics['codec'] = $media->getVideoCodec();
+
+        else
+            $characteristics['dpi'] = '72 dpi';
+
+        $media->characteristics = $characteristics;
+
+        return $this->render("media/edit_media.html.twig", [
+            'products' => $popupsFiltersContent['products'],
+            'tags' =>$popupsFiltersContent['tags'],
+            'categories' => $popupsFiltersContent['categories'],
+            'criterions' => $popupsFiltersContent['criterions'],
+            'productsCriterions' =>$productsCriterions,
+            'productsTags' =>$productsTags,
+            'mediaInfos' =>$mediaInfos,
+            'form' => $form->createView(),
+            'media' => $media,
+            'media_type' => ($media instanceof Video) ? 'video': 'image',
+            'media_characteristics' => $characteristics,
+            'media_incrustations' => $mediaInfos['media_incrustations'],
+            'media_criterions' => $mediaInfos['media_criterions'],
+            'media_tags' => $mediaInfos['media_tags'],
+            'media_allergens' => $mediaInfos['media_allergens'],
+            'action' => 'edit',
+            'sousTitle' => 'Modifier',
         ]);
 
     }
@@ -199,13 +267,12 @@ class MediaController extends AbstractController
         $real_file_extension = $splash[1];
         $fileType = strstr($mimeType, '/', true);
 
-        $mediasHandler = new MediasHandler($this->parameterBag);
 
         $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if($mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
+        if($this->mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
             return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
 
         elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
@@ -273,7 +340,8 @@ class MediaController extends AbstractController
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
-            $dpi = $mediasHandler->getImageDpi($miniaturePath);
+
+            $dpi = $this->mediasHandler->getImageDpi($miniaturePath);
 
             //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
 
@@ -327,7 +395,8 @@ class MediaController extends AbstractController
                 'isArchived' => false,
             ];
 
-            list($width, $height, $codec) = $mediasHandler->getVideoDimensions($path);
+
+            list($width, $height, $codec) = $this->mediasHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
             // a CRON will do task after
@@ -410,18 +479,18 @@ class MediaController extends AbstractController
 
     }
 
-
     /**
-     * @Route(path="/remove/media", name="media::removeMedia", methods={"POST"})
+     * @Route(path="/remove/media/{id}", name="media::removeMedia", methods={"POST"},
+     * requirements={"id": "\d+"})
      */
-    public function removeMedia(Request $request)
+    public function removeMedia(Request $request, int $id)
     {
 
         $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        $id = $request->request->get('media');
+
         //dd($id);
         $media = $mediaRepository->find($id);
 
@@ -508,26 +577,119 @@ class MediaController extends AbstractController
     public function retrieveMediaInfosForPopup(Request $request)
     {
 
-        $mediaId = intval( $request->request->get('mediaId') );
 
-        if($mediaId === 0)
-            throw new Exception(sprintf("Invalid media id given ! No media can be found with this id : '%s'", $mediaId));
+        $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) )
+                                         ->getRepository(Media::class);
+
+        $mediaInfos = $mediaRepo->getMediaInfosForInfoSheetPopup(intval( $request->request->get('mediaId') ));
+
+        return new JsonResponse($mediaInfos);
+    }
+
+
+    /**
+     * @Route(path="/update/media/{id}/associated/{data}", name="media::updateMediaAssociatedData", methods={"POST"},
+     * requirements={"id": "\d+", "data": "[a-z]+"})
+     * @param Request $request
+     * @param int $id
+     */
+    public function updateMediaAssociatedData(Request $request, int $id, string $data)
+    {
 
         $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
+        $media = $mediaRepo->find($id);
 
-        try
-        {
-            $datas = $mediaRepo->getMediaInfosForInfoSheetPopup($mediaId);
-        }
-        catch (Exception $e)
-        {
-            dd($e->getMessage());
-        }
+        if(!$media)
+            throw new Exception(sprintf("No media found with id : '%s'", $id));
 
-        return new JsonResponse($datas);
+        if($data === 'products')
+            return $this->updateMediaAssociatedProducts($request->request->get('productsToAssociation'), $manager, $media);
+
+        else if($data === 'tags')
+            return $this->updateMediaAssociatedTags($request->request->get('tagsToAssociation'), $manager, $media);
+
+        else
+            throw new Exception(sprintf("Unrecognized 'data' parameter value ! Expected 'products' or 'tags', but '%s' given ", $data));
+
     }
 
+
+    /**
+     * @param array $productsToAssociation
+     * @param ObjectManager $manager
+     * @param Media $media
+     * @return Response
+     * @throws Exception
+     */
+    private function updateMediaAssociatedProducts(array $productsToAssociation, ObjectManager &$manager, Media &$media)
+    {
+
+        $productRepo = $manager->getRepository(Product::class);
+
+        $media->getProducts()->clear();
+
+        foreach ($productsToAssociation as $productId)
+        {
+
+            $product = $productRepo->find($productId);
+            if(!$product)
+                throw new Exception(sprintf("No product found with id : '%s'", $productId));
+
+            $media->addProduct($product);
+
+        }
+
+        //dd($media->getProducts()->getValues());
+
+        $manager->flush();
+
+        return new Response( "200 OK" );
+
+    }
+
+    /**
+     * @param array $tagsToAssociation
+     * @param ObjectManager $manager
+     * @param Media $media
+     */
+    private function updateMediaAssociatedTags(array $tagsToAssociation, ObjectManager &$manager, Media &$media)
+    {
+
+        $tagRepo = $manager->getRepository(Tag::class);
+
+        $media->getTags()->clear();
+
+        foreach ($tagsToAssociation as $tagId)
+        {
+
+            $tag = $tagRepo->find($tagId);
+            if(!$tag)
+                throw new Exception(sprintf("No tag found with id : '%s'", $tagId));
+
+            $media->addTag($tag);
+
+        }
+
+        //dd($media->getProducts()->getValues());
+
+        $manager->flush();
+
+        return new Response( "200 OK" );
+
+    }
+
+    /**
+     * @Route(path="/update/mediatheque/medias/number", name="media::updateNumberOfMediasDisplayedInMediatheque", methods={"POST"})
+     */
+    public function updateNumberOfMediasDisplayedInMediatheque(Request $request)
+    {
+
+        $this->updateMediathequeMediasNumber($request->request->get('mediatheque_medias_number'));
+
+        return new Response( "200 OK" );
+
+    }
 
     private function saveMediaCharacteristic(Request $request)
     {
@@ -700,11 +862,11 @@ class MediaController extends AbstractController
 
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('numberOfMediasDisplayedInMediatheque');
+        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('mediatheque_medias_number');
 
         $mediasDisplayedType = $request->get('mediasDisplayedType');
 
-        $page = intval($request->request->get('page'));
+        $page = intval($request->get('page'));
 
         if($page < 1)
             $page = 1;
@@ -738,9 +900,9 @@ class MediaController extends AbstractController
             $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque($mediasDisplayedType, $page, $numberOfMediasDisplayedInMediatheque);
 
         $numberOfPages = $mediasToDisplayed['numberOfPages'];
-        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['numberOfMediasAllowedToDisplayed'];
+        $numberOfMediasAllowedToDisplayed = $mediasToDisplayed['mediatheque_medias_number'];
         unset($mediasToDisplayed['numberOfPages']);
-        unset($mediasToDisplayed['numberOfMediasAllowedToDisplayed']);
+        unset($mediasToDisplayed['mediatheque_medias_number']);
 
         if($serializeResults)
         {
@@ -768,6 +930,44 @@ class MediaController extends AbstractController
             $mediasToDisplayed,
             $numberOfPages,
             $numberOfMediasAllowedToDisplayed,
+        ];
+
+    }
+
+
+    private function updateMediathequeMediasNumber($number)
+    {
+
+        $number = intval($number);
+
+        if(!is_int($number))
+            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+        ( $this->sessionManager->get('mediatheque_medias_number') !== null ) ?
+            $this->sessionManager->replace('mediatheque_medias_number', $number) :
+            $this->sessionManager->set('mediatheque_medias_number', $number);
+
+    }
+
+    /**
+     * Return an array which contain all filter content
+     * @return array
+     */
+    private function getPopupFiltersContent()
+    {
+
+        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $manager = $this->getDoctrine()->getManager($managerName);
+        $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
+        $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
+        $tagRepo = $manager->getRepository(Tag::class)->setEntityManager( $manager );
+        $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
+
+        return [
+            'products' => $productRepo->findAll(),
+            'tags' => $tagRepo->findAll(),
+            'categories' => $categoryRepo->findAll(),
+            'criterions' => $criterionRepo->findAll(),
         ];
 
     }

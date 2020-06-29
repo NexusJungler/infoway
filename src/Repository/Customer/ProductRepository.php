@@ -10,6 +10,9 @@ use App\Repository\RepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
+
+use Exception;
+
 /**
  * @method product|null find($id, $lockMode = null, $lockVersion = null)
  * @method product|null findOneBy(array $criteria, array $orderBy = null)
@@ -40,26 +43,52 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
-    public function findProductsCriterions()
+
+    public function findProductsAssociatedDatas(string $data = 'tags')
     {
 
-        $productsCriterions = [];
+        $productsAssociatedDatas = [];
         foreach ($this->findAll() as $product)
         {
 
-            $productsCriterions[$product->getName()] = [];
-            $productsCriterions[$product->getId()] = [];
+            $productsAssociatedDatas[$product->getId()] = [
+                'ids' => [],
+                'names' => [],
+            ];
 
-            foreach ($product->getCriterions()->getValues() as $criterion)
+            if($data === 'tags')
             {
-                $productsCriterions[$product->getName()][] = $criterion->getName();
-                $productsCriterions[$product->getId()][] = $criterion->getName();
+
+                foreach ($product->getTags()->getValues() as $tag)
+                {
+                    $productsAssociatedDatas[$tag->getId()]['ids'][] = $tag->getId();
+                    $productsAssociatedDatas[$tag->getId()]['names'][] = $tag->getName();
+                }
+
             }
+
+            elseif ($data === 'criterions')
+            {
+
+                foreach ($product->getCriterions()->getValues() as $criterion)
+                {
+                    $productsAssociatedDatas[$product->getId()]['ids'][] = $criterion->getId();
+                    $productsAssociatedDatas[$product->getId()]['names'][] = $criterion->getName();
+                }
+
+            }
+
+            else
+                throw new Exception(sprintf("Unrecognized 'data' parameter value ! Expected 'tags' or 'criterions', but '%s' given ", $data));
+
 
         }
 
-        return $productsCriterions;
+        //dd($productsAssociatedDatas);
+
+        return $productsAssociatedDatas;
     }
+
 
     public function getAllProductsWhereCriterionDoesNotAppear(Criterion $criterion){
 

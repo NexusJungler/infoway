@@ -40,12 +40,15 @@ class MediaInfoSheetHandler extends SubTool
 
                     let miniature = null;
 
+                    const mediaMediumMiniatureExist = $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist');
+
                     let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
 
                     if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
                     {
 
-                        if(await this.mediaFileExist(path))
+
+                        if(mediaMediumMiniatureExist)
                         {
                             miniature = (isImage) ? `<img class="media_miniature" src="${path}">` : `<video class="media_miniature" controls> <source src="${path}" type="video/mp4"> </video>`;
                             this.getMediaRegisteredInfos(mediaId).miniatureExist = true;
@@ -88,13 +91,15 @@ class MediaInfoSheetHandler extends SubTool
                     {
                         const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
 
-                        this.showMediaIncrustes(mediaInfos.incrustations);
-                        this.showMediaCriterions(mediaInfos.criterions);
-                        this.showMediaTags(mediaInfos.tags);
-                        this.showMediaAllergens(mediaInfos.allergens);
-                        this.showMediaAssociatedProducts(mediaInfos.products);
+
+                        this.showMediaIncrustes(mediaInfos.media_incrustations);
+                        this.showMediaCriterions(mediaInfos.media_criterions);
+                        this.showMediaTags(mediaInfos.media_tags);
+                        this.showMediaAllergens(mediaInfos.media_allergens);
+                        this.showMediaAssociatedProducts(mediaInfos.media_products);
                     }
 
+                    $('.popup_loading_container').removeClass('is_open');
 
                     this.__$container.addClass('is_open');
 
@@ -165,6 +170,10 @@ class MediaInfoSheetHandler extends SubTool
     retrieveMediaAssociatedInfos(mediaId)
     {
 
+
+        $('.popup_loading_container .loading_message').text('Chargement du contenu en cours...');
+        $('.popup_loading_container').addClass('is_open');
+
         return new Promise( (resolve, reject) => {
 
             $.ajax({
@@ -213,27 +222,22 @@ class MediaInfoSheetHandler extends SubTool
     showMediaIncrustes(mediaIncrustations)
     {
 
-        if(mediaIncrustations.length > 0)
-        {
 
-            mediaIncrustations.forEach( (mediaIncrustation) => {
+        $.each( mediaIncrustations, (key, incrustation) => {
 
-                const productName = Object.keys(mediaIncrustation);
-                const incrustesTypes = Object.values(mediaIncrustation)[0];
+            const productName = key;
+            const incrustesTypes = Object.values(incrustation);
 
-                let newElement= `<tr>
+            let newElement= `<tr>
                                  <td>${productName}</td> 
-                                 <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Prix') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
-                                 <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
-                                 <td><label class="container-input"><input type="checkbox" ${ incrustesTypes.includes('Texte') ? 'checked' : '' }><span class="container-rdo-tags"></span></label></td>  
+                                 <td><input type="checkbox" disabled ${ incrustesTypes.includes('Prix') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
+                                 <td><input type="checkbox" disabled ${ incrustesTypes.includes('Rupture') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
+                                 <td><input type="checkbox" disabled ${ incrustesTypes.includes('Texte') ? 'checked' : '' }><span class="custom_checkbox"></span></td>  
                              </tr>`;
 
-                $(newElement).appendTo( this.__$location.find('.media_incrustations_list') )
+            $(newElement).appendTo( this.__$location.find('.media_incrustations_list') );
 
-            } )
-
-        }
-
+        } )
 
     }
 
@@ -250,12 +254,13 @@ class MediaInfoSheetHandler extends SubTool
 
     }
 
-    showMediaTags(mediaTags)
+
+    showMediaTags(mediaTagsNames)
     {
 
-        mediaTags.forEach( (mediaTag) => {
-            console.log(mediaTag)
-            const newElement = ` <p class="tag container-tags"> <span class="mini-cercle" style="background: ${mediaTag['color']};"></span><span class="current-tags-name">${mediaTag['name']}</span></p>`;
+        mediaTagsNames.forEach( (mediaTagName) => {
+
+            const newElement = `<span>${mediaTagName}</span>`;
 
             $(newElement).appendTo( this.__$location.find('.media_tags_container') );
 

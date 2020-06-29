@@ -5,7 +5,8 @@
         {% if (media_products is not empty) %}
             data-products="{{ media_products|join(', ') }}"
         {% else %}
-            data-product="none"
+
+            data-products="none"
         {% endif %}
 
         {% if (media_categories is not empty) %}
@@ -35,7 +36,8 @@
         </div>
 
         <div class="media_actions_shortcuts_container">
-            <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}date_coming_soon{% endif %}">
+
+            <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now < 0 or media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}alert_date{% endif %}">
                 <i class="far fa-clock"></i>
             </div>
 
@@ -56,10 +58,11 @@
 
     <div class="card_body">
 
-        <div class="media_miniature_container media_{{ media.orientation }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
+
+        <div class="media_miniature_container media_{{ media.orientation }}" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
                 {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
 
-            {% if miniature_exist is same as(false) %}
+            {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
 
                 <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 

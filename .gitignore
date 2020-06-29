@@ -1,11 +1,17 @@
 
 ###> symfony/framework-bundle ###
+
+/.idea/*
 /.env.local
 /.env.local.php
 /.env.*.local
 /public/bundles/
+/public/build/
+/public/lib/
+/public/fonts/
 /var/
 /vendor/
+/assets/medias/
 /assets/images
 /assets/css/fontawesome
 /assets/js/fontawesome

@@ -1,7 +1,8 @@
 import Tool from "../Tool";
 import FilterMediasByTypeSubTool from "./FilterMediasByTypeSubTool/FilterMediasByTypeSubTool";
 import FilterMediasByOrientationSubTool from "./FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool";
-import FilterMediasByCharacteristicsSubTool from "./FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool";
+import FilterMediasByAssociatedDataSubTool from "./FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool";
+import FilterMediasWithSearchBarSubTool from "./FilterMediasWithSearchBarSubTool/FilterMediasWithSearchBarSubTool";
 
 class FilterMediasTool extends Tool
 {
@@ -13,7 +14,8 @@ class FilterMediasTool extends Tool
         this.__subTools = [
             new FilterMediasByTypeSubTool(),
             new FilterMediasByOrientationSubTool(),
-            new FilterMediasByCharacteristicsSubTool(),
+            new FilterMediasByAssociatedDataSubTool(),
+            new FilterMediasWithSearchBarSubTool(),
         ];
         this.__anFilterIsActive = false;
         this.__activeFilters = [];
@@ -146,11 +148,17 @@ class FilterMediasTool extends Tool
 
     }
 
+    removeAllFilters()
+    {
+        this.__anFilterIsActive = false;
+        this.__activeFilters = [];
+    }
+
     removeFilterByProperty(property)
     {
 
         if(!this.findFilterByProperty(property))
-            throw new Error(``);
+            throw new Error(`Attempt to remove an filter, but this filter is not registered ! Use 'registerNewFilter' for register it`);
 
         this.__activeFilters.splice(this.getFilterIndexByProperty(property), 1);
 

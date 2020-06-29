@@ -25,7 +25,8 @@ Encore
         //to: 'images/[path][name]_[hash:8].[ext]',
 
         // only copy files matching this pattern
-        pattern: /\.(png|jpg|jpeg|svg)$/
+
+        pattern: /\.(png|jpg|jpeg|gif|svg)$/
     })
 
     /*
@@ -68,7 +69,9 @@ Encore
 
     //media
     .addEntry('mediatheque', './assets/js/mediatheque.js')
-    
+
+    .addEntry('edit_media', './assets/js/edit_media.js')
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
