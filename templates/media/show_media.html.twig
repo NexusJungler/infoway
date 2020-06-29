@@ -286,12 +286,23 @@
 
                     <tbody class="media_products_list tbody tbody-content scrollbar-table">
 
-                    {% if media is defined %}
+                    {% if media is defined and app.request.attributes.get('_route') is not same as('media::edit') %}
 
                         {% for product in media.products %}
 
                             <tr data-product_id="{{ product.id }}">
                                 <td>{{ product.name }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
+
+                        {% for product in form.products %}
+
+                            <tr data-product_id="{{ product.vars.name }}" class="{{ (product.vars.data is same as(false)) ? 'hidden': '' }}">
+                                <td class="hidden">{{ form_widget(product, { 'attr': { 'class': 'product_checkbox' } }) }}</td>
+                                <td class="product_name">{{ form_label(product) }}</td>
                             </tr>
 
                         {% endfor %}
@@ -302,11 +313,6 @@
 
                 </table>
 
-                {% if app.request.attributes.get('_route') is same as('media::edit') %}
-                    <div class="media_available_products_list_container" style="display: none">
-                        {{ form_widget(form.products) }}
-                    </div>
-                {% endif %}
             </div>
         </div>
 

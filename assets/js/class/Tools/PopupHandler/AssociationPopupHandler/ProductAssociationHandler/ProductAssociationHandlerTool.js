@@ -122,10 +122,11 @@ class ProductAssociationHandlerTool extends SubTool
 
             mediaAssociationInfos.map( (productId) => {
 
-                $(`.media_available_products_list_container #edit_media_products_${productId}`).attr('checked', true);
+                $(`.media_products_list tr[data-product_id='${productId}'] .product_checkbox`).attr('checked', true);
+                $(`.media_products_list tr[data-product_id='${productId}']`).removeClass('hidden');
 
-                if( $(`.media_products_list tr[data-product_id='${productId}']`).length === 0 )
-                    $(`<tr data-product_id="${productId}"><td>${ this.__$productsList.find(`tr[data-product_id='${productId}'] td.product_name`).text() }</td></tr>`).appendTo( $('.media_products_list') );
+                /*if( $(`.media_products_list tr[data-product_id='${productId}']`).length === 0 )
+                    $(`<tr data-product_id="${productId}"><td>${ this.__$productsList.find(`tr[data-product_id='${productId}'] td.product_name`).text() }</td></tr>`).appendTo( $('.media_products_list') );*/
 
             } );
 
@@ -140,8 +141,14 @@ class ProductAssociationHandlerTool extends SubTool
 
             if( $(`.media_products_list tr[data-product_id='${ $(element).data('product_id') }']`).length > 0 )
             {
-                $(`.media_available_products_list_container #edit_media_products_${ $(element).data('product_id') }`).removeAttr('checked');
-                $(`.media_products_list tr[data-product_id='${ $(element).data('product_id') }']`).remove();
+
+                const productId = $(element).data('product_id');
+
+                /*$(`.media_available_products_list_container #edit_media_products_${ $(element).data('product_id') }`).removeAttr('checked');
+                $(`.media_products_list tr[data-product_id='${ $(element).data('product_id') }']`).remove();*/
+
+                $(`.media_products_list tr[data-product_id='${productId}'] .product_checkbox`).attr('checked', false);
+                $(`.media_products_list tr[data-product_id='${productId}']`).addClass('hidden');
             }
 
             this.__$productsList.find(`tr[data-product_id='${ $(element).data('product_id') }'] .choice_product`).prop('checked', false);
@@ -284,7 +291,8 @@ class ProductAssociationHandlerTool extends SubTool
 
                     $('.media_products_list').find('tr').each( (index, tr) => {
 
-                        mediaProductsAssociatedIds.push( $(tr).data('product_id') );
+                        if( !$(tr).hasClass('hidden') )
+                            mediaProductsAssociatedIds.push( $(tr).data('product_id') );
 
                     } )
 
