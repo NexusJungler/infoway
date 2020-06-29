@@ -1,7 +1,7 @@
 import Tool from "../../Tool";
 import SubTool from "../../SubTool";
 
-class MediaDeletingHandler extends SubTool
+class MediaDeletingButtonHandler extends SubTool
 {
 
     constructor()
@@ -13,28 +13,6 @@ class MediaDeletingHandler extends SubTool
         this.__$location = $(".popup_delete_medias");
     }
 
-    onMediaSelectionAndDeselectionChangeMediaActionsButtonsState(active)
-    {
-        if(active)
-        {
-            this.__parent.getMediasContainer().on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input", e => {
-
-                if(this.__parent.getMediasContainer().find(".select_media_input:checked").length === 0)
-                    $('.media_action_btn').attr('disabled', true);
-
-                else
-                    $('.media_action_btn').removeAttr('disabled');
-
-            })
-        }
-        else
-        {
-            this.__parent.getMediasContainer().off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input");
-        }
-
-        return this;
-    }
-
     onClickOnDeletingButtonShowPopup(active)
     {
 
@@ -42,21 +20,30 @@ class MediaDeletingHandler extends SubTool
         {
             $('.delete_media_btn').on('click.onClickOnDeletingButtonShowPopup', e => {
 
-                if(this.__parent.getMediasContainer().find('.select_media_input_container .select_media_input:checked').length > 0)
+                const mediaName = $('.media_name_container .media_name').text() || $('.media_name_container .media_name').val();
+
+                $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
+
+                let mediaId = null;
+
+                if( $('.medias_list_container').length > 0 )
                 {
+
                     this.__parent.getMediasContainer().find('.select_media_input_container .select_media_input:checked').each( (index, input) => {
 
-                        const mediaId = $(input).parents('.card').attr('id').replace('media_', '');
-                        const mediaName = $(input).parents('.card').find('.media_name_container .media_name').text();
-
-                        $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
-
+                        mediaId = $(input).parents('.card').attr('id').replace('media_', '');
                         this.__mediasToDelete.push({ id: mediaId });
 
                     } )
 
-                    this.__$container.addClass('is_open');
                 }
+                else
+                {
+                    mediaId = $('.media_miniature_container').data('media_id');
+                    this.__mediasToDelete.push({ id: mediaId });
+                }
+
+                this.__$container.addClass('is_open');
 
             })
         }
@@ -156,8 +143,7 @@ class MediaDeletingHandler extends SubTool
     enable()
     {
         super.enable();
-        this.onMediaSelectionAndDeselectionChangeMediaActionsButtonsState(true)
-            .onClickOnDeletingButtonShowPopup(true)
+        this.onClickOnDeletingButtonShowPopup(true)
             .onClickOnPopupCloseButton(true)
             .onClickOnConfirmationButtonDeleteMedia(true)
         ;
@@ -166,8 +152,7 @@ class MediaDeletingHandler extends SubTool
     disable()
     {
         super.disable();
-        this.onMediaSelectionAndDeselectionChangeMediaActionsButtonsState(false)
-            .onClickOnDeletingButtonShowPopup(false)
+        this.onClickOnDeletingButtonShowPopup(false)
             .onClickOnPopupCloseButton(false)
             .onClickOnConfirmationButtonDeleteMedia(false)
         ;
@@ -175,4 +160,4 @@ class MediaDeletingHandler extends SubTool
 
 }
 
-export default MediaDeletingHandler;
+export default MediaDeletingButtonHandler;

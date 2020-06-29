@@ -3,10 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ArchivedMediasHandler/ArchivedMediasHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ArchivedMediasHandler/ArchivedMediasHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediathequeActionButtonHandler/MediaDeletingButtonHandler/MediaDeletingButtonHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +27,8 @@
         <option value="Yaml" />
         <option value="Twig" />
         <option value="Twig File" />
-        <option value="JavaScript File" />
         <option value="SCSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -173,19 +177,19 @@
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler" />
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\MediathequeActionButtonHandler" />
+      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\AssociationPopupHandler" />
+      <recent name="C:\laragon\www\new_app\assets\css\popups\popup_association\product_association" />
+      <recent name="C:\laragon\www\new_app\templates\popups\upload" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\MediaInfoSheetHandler" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PaginatorHandler" />
       <recent name="C:\laragon\www\new_app\assets\images" />
       <recent name="C:\laragon\www\new_app\assets\css\popups" />
       <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\ProductAssociationHandler" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\AssociationPopupHandler" />
-      <recent name="C:\laragon\www\new_app\assets\css\popups\popup_association\product_association" />
-      <recent name="C:\laragon\www\new_app\templates\popups\upload" />
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler" />
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -258,7 +262,7 @@
       <workItem from="1592986189096" duration="55000" />
       <workItem from="1592986275094" duration="52289000" />
       <workItem from="1593160202047" duration="25878000" />
-      <workItem from="1593418631242" duration="13341000" />
+      <workItem from="1593418631242" duration="16315000" />
     </task>
     <servers />
   </component>

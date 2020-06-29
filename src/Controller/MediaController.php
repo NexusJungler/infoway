@@ -491,6 +491,8 @@ class MediaController extends AbstractController
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
+        dd("ok");
+        
         /*
         // delete source
         $root = $this->getParameter('project_dir') . '/../node_file_system/';

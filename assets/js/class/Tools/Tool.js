@@ -7,6 +7,7 @@ class Tool {
         this.__name = null;
         this.__isActived = false;
         this.__toolBox = null;
+        this.__subTools = [];
     }
 
     getName()
