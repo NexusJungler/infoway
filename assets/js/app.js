@@ -25,6 +25,7 @@ const $ = require('jquery');
 
 global.$ = global.jQuery = $;
 
+
 //jqueryValidate
 require('../js/jqueryValidate/jquery.validate.js');
 

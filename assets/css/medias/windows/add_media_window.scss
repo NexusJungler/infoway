@@ -10,6 +10,10 @@ input[type="date"]{
   border-radius: .3rem;
   font-size: 1.2rem;
 }
+li input[type="checkbox"]{
+  margin-left:0 ;
+  margin-right : .5rem;
+}
 
 ::-webkit-calendar-picker-indicator{
   margin-left: 0;
@@ -85,51 +89,76 @@ input[type="date"]{
       display: flex;
       padding: 1rem 1.5rem;
       background-color: #899CA4;
+      #add_media__body__sort__media-type {
+        flex-basis: 60%;
+
+        button{
+          font-size: 1rem;
+          background-color: #4D646D;
+          width: 7rem;
+          height: 1.8rem;
+          border-radius: .2rem;
+          color: white;
+          border: 1px solid #4D646D;
+          box-shadow: 0px 3px 6px #00000029;
+        }
+        input{
+          display: none;
+        }
+      }
       #add_media__body__sort__filter{
         display: flex;
         align-items: baseline;
         flex:1;
-        #add_media__body__sort__media-type {
-          flex-basis: 60%;
-
-          button{
-            font-size: 1rem;
-            background-color: #4D646D;
-            width: 7rem;
-            height: 1.8rem;
-            border-radius: .2rem;
-            color: white;
-            border: 1px solid #4D646D;
-            box-shadow: 0px 3px 6px #00000029;
+        [data-filter]{
+          position: relative;
+          padding: 0 .5rem;
+          ul{
+            position: absolute;
+            width: 100%;
+            background-color: #899ca4;
+            padding: .5rem;
+            left: 0;
+            transform: scaleY(1);
+            transform-origin: -50% 0;
+            transition: .05s;
+            li.filter-choice{
+              display: flex;
+              align-self: center;
+              margin-top: .5rem;
+              input{
+                flex-grow: 1;
+                margin: 0;
+              }
+              label{
+                width : 6rem;
+                height: 1.5rem;
+                font-size: .8rem;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                text-transform: uppercase;
+              }
+            }
           }
-          input{
-            display: none;
+        }
+        #add_media__body__sort__filter__criterions {
+          label{
+            background-color: #C1E4EB;
+            border : 1px solid #4D646D;
+            border-radius: .3rem;
           }
         }
         #add_media__body__sort__filter__tags{
-          #add_media_tags{
-            display: none;
-          }
           label{
             background-color: #F6F6F6;
             border: 1px solid #4D646D;
             padding: 0.3rem;
             border-radius: 1rem 0 0 1rem;
-            width: 6rem;
-            height: 1.5rem;
-            font-size: .8rem;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-          }
-          input{
-            width: 1.5rem;
-            margin: 0;
           }
         }
         .add_media__body__sort__filter__unwrap{
-          margin-right: 2rem;
-          padding-left: 1.5rem;
+          padding-right: 2rem;
           button{
             font-size: 1rem;
             position: relative;
@@ -180,9 +209,16 @@ input[type="date"]{
     }
     #add_media__body__programming{
       margin: 1.5rem 2rem;
+      li{
+        display: flex;
+        align-items: center;
+      }
       #add_media__body__programming__medias{
         padding-bottom: 1.5rem;
         overflow-x: scroll;
+        overflow-y: hidden;
+        height: 14rem;
+
 
         .add_media__body__programming__medias__thumbnail{
           padding: .5rem;
@@ -249,53 +285,80 @@ input[type="date"]{
           }
 
         }
-        #add_media__body__programming__infos__form{
-          display: flex;
-          flex-direction: column;
-          padding:1rem 2rem;
-          background-color: white;
-          label{
-              font-size: .7rem;
-          }
-          label:only-of-type{
-            color:#899CA4;
-            font-size: 1.1rem;
-            margin-right: .8rem;
-          }
-          #add_media__body__programming__infos__form__additional{
+        #add_media__body__programming__infos__body{
+          max-height: 15rem;
+          overflow: hidden;
+          transition : max-height .5s;
+          #add_media__body__programming__infos__form{
             display: flex;
-            justify-content: space-between;
-            #add_media__body__programming__infos__form__additional__screen{
+            flex-direction: column;
+            padding:1rem 2rem;
+            background-color: white;
+
+            label:only-of-type{
+              color:#899CA4;
+              font-size: 1.1rem;
+              margin-right: .8rem;
+            }
+
+            li label{
+              color : black !important;
+              margin-right: 0 !important;
+              font-weight: bold;
+            }
+            li, li label{
+              font-size: .7rem !important ;
+            }
+            #add_media__body__programming__infos__form__timeslots{
               display: flex;
-              #add_media__body__programming__infos__form__additional__screen__list{
-                display: flex;
-                align-items: center;
+              ul#add_media__body__programming__infos__form__timeslots__list{
+                li {
+                  display: inline-flex;
+                  flex-direction: column;
+                  align-items: center;
+                  .add_media__body__programming__infos__form__timeslots__list__timeslot__head{
+                    display: flex;
+                    align-items: center;
+                  }
+                }
+
               }
             }
-            #add_media__body__programming__infos__form__additional__days{
+            #add_media__body__programming__infos__form__additional{
               display: flex;
-              #add_media__body__programming__infos__form__additional__days__list{
+              justify-content: space-between;
+              #add_media__body__programming__infos__form__additional__screen{
                 display: flex;
-                align-items: center;
+                #add_media__body__programming__infos__form__additional__screen__list{
+                  display: flex;
+                  align-items: center;
+                }
               }
-            }
-            #add_media__body__programming__infos__form__additional__date{
-              display: flex;
-              label{
-                margin: 0;
+              #add_media__body__programming__infos__form__additional__days{
+                display: flex;
+                #add_media__body__programming__infos__form__additional__days__list{
+                  display: flex;
+                  align-items: center;
+                }
               }
-              input[type="date"]{
-                margin-right: 1rem;
+              #add_media__body__programming__infos__form__additional__date{
+                display: flex;
+                label{
+                  margin: 0;
+                }
+                input[type="date"]{
+                  margin-right: 1rem;
+                }
               }
             }
           }
-        }
-        #add_media__body__programming__infos__actions{
-          justify-content: center;
-          display: flex;
-          margin-top: 2.2rem;
-          button{
-            margin:0 .8rem;
+          #add_media__body__programming__infos__actions{
+            justify-content: center;
+            display: flex;
+            margin-top: 2.2rem;
+            button{
+              margin:0 .8rem;
+            }
           }
         }
       }

@@ -8,6 +8,10 @@
     {{ encore_entry_link_tags('add_media_window') }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('programming_mould') }}
+{% endblock %}
 {% block body %}
 <main class="main main_programming">
     <div class="main-content">
@@ -35,7 +39,7 @@
                     <article class="display setting-display ">
                         <div class="display-content">
                             <div class="display-btn">
-                                <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Ajouter un media</a></button>
+                                <button type="button" id="button__add_media" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Ajouter un media</a></button>
                                 <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Remplacer un media</button>
                                 <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer un media</button>
                             </div>

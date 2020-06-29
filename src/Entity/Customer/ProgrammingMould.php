@@ -341,6 +341,13 @@ class ProgrammingMould
         return $this;
     }
 
+    public function setAllowedMediasTypes(array $allowedMediasTypes): self
+    {
+        $this->allowedMediasTypes = $allowedMediasTypes;
+
+        return $this;
+    }
+
 
 
 

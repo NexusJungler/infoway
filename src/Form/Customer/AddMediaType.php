@@ -28,6 +28,7 @@ class AddMediaType extends AbstractType
     private ArrayCollection $mediasToDisplay ;
     private ArrayCollection $tagsList ;
     private ArrayCollection $criterionsList  ;
+    private ArrayCollection $availablesTimeSlots ;
     private array $allowedMediasTypes ;
     private int $screensQty ;
 
@@ -36,12 +37,15 @@ class AddMediaType extends AbstractType
         $this->allowedMediasTypes = [] ;
         $this->tagsList = new ArrayCollection() ;
         $this->criterionsList = new ArrayCollection() ;
+        $this->availablesTimeSlots = new ArrayCollection() ;
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $this->mediasToDisplay =  $options[ 'mediasToDisplay' ] ;
         $this->allowedMediasTypes = $options[ 'allowedMediasTypes' ] ;
         $this->screensQty = $options['screensQty'] ;
+        $this->availablesTimeSlots = $options['availablesTimeSlots'] ;
 
         $this->mediasToDisplay = $this->mediasToDisplay->filter( fn( Media $media) => $media ) ;
 
@@ -77,6 +81,9 @@ class AddMediaType extends AbstractType
                 'choice_label' => function(Criterion $criterion) {
                     return $criterion->getName();
                 },
+                'choice_value' => function (Criterion $criterion) {
+                    return $criterion->getId() ;
+                },
                 'label' => false,
                 'multiple' => true,
                 'expanded' => true
@@ -85,6 +92,9 @@ class AddMediaType extends AbstractType
                 'choices' => $this->tagsList ,
                 'choice_label' => function(Tag $tag) {
                     return $tag->getName();
+                },
+                'choice_value' => function (Tag $tag) {
+                    return $tag->getId() ;
                 },
                 'label' => false,
                 'multiple' => true,
@@ -98,7 +108,8 @@ class AddMediaType extends AbstractType
                 'label' => 'Programmation Avancée',
                 'minStartDate' => $this->generateMinStartDate( $this->mediasToDisplay ),
                 'maxEndDate' => $this->generateMaxEndDate( $this->mediasToDisplay ),
-                'screensQty' => $this->screensQty
+                'screensQty' => $this->screensQty,
+                'availablesTimeSlots' => $this->availablesTimeSlots
             ])
 
         ;
@@ -149,10 +160,12 @@ class AddMediaType extends AbstractType
     {
         $resolver->setDefaults([
             'mediasToDisplay' => new ArrayCollection(),
+            'availablesTimeSlots' => new ArrayCollection(),
             'allowedMediasTypes' => [] ,
             'data_class' => null,
         ]);
         $resolver->setRequired([
+            'availablesTimeSlots',
             'mediasToDisplay',
             'allowedMediasTypes',
             'screensQty'

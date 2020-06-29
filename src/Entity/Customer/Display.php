@@ -24,11 +24,23 @@ class Display
      */
     private $broadcastSlots;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $startAt;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $endAt;
+
 
     public function __construct()
     {
         $this->playlists = new ArrayCollection();
         $this->broadcastSlots = new ArrayCollection();
+        $this->startAt = new \DateTime('NOW');
+        $this->endAt = new \DateTime('NOW');
     }
 
     public function __clone()
@@ -69,6 +81,30 @@ class Display
                 $broadcastSlot->setDisplay(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartAt(): ?\DateTimeInterface
+    {
+        return $this->startAt;
+    }
+
+    public function setStartAt(\DateTimeInterface $startAt): self
+    {
+        $this->startAt = $startAt;
+
+        return $this;
+    }
+
+    public function getEndAt(): ?\DateTimeInterface
+    {
+        return $this->endAt;
+    }
+
+    public function setEndAt(\DateTimeInterface $endAt): self
+    {
+        $this->endAt = $endAt;
 
         return $this;
     }

@@ -41,6 +41,15 @@ img {
 .hidden{
     display: none!important;
 }
+.flatten-mh{
+    max-height: 0 !important;
+}
+.flatten-s{
+    transform: scaleY(0) !important;
+}
+.none{
+    display: none!important;
+}
 
 .rounded-border{
     border-radius: .2rem;

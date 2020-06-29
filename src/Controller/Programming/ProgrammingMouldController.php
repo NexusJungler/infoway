@@ -117,6 +117,7 @@ class ProgrammingMouldController extends AbstractController
 
         foreach( $programmingMouldFromSession->getTimeSlots() as $timeSlot ) {
 
+            $entityManager->persist( $timeSlot );
             $newProgrammingMould->addTimeSlot( $timeSlot ) ;
 
             $broadcastSlot = new BroadcastSlot() ;
@@ -159,12 +160,13 @@ class ProgrammingMouldController extends AbstractController
 
 
 //        dd($programmingMouldToCreate);
-
         $optionsToPassToAddMediasForm = [
             'mediasToDisplay' => new ArrayCollection( array_values( $mediasPickablesIndexedById ) ),
             'allowedMediasTypes' => $newProgrammingMould->getAllowedMediasTypes(),
-            'screensQty' => $newProgrammingMould->getDisplaySetting()->getScreensQuantity()
+            'screensQty' => $newProgrammingMould->getDisplaySetting()->getScreensQuantity(),
+            'availablesTimeSlots' => $newProgrammingMould->getTimeSlots()
         ];
+
         $addMediaForm = $this->createForm(AddMediaType::class, [], $optionsToPassToAddMediasForm );
 
 

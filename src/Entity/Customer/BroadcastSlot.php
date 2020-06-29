@@ -43,6 +43,8 @@ class BroadcastSlot
      */
     private $timeSlot;
 
+
+
     public function __construct()
     {
         $this->playlists = new ArrayCollection();

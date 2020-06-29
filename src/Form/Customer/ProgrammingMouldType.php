@@ -2,11 +2,13 @@
 
 namespace App\Form\Customer;
 
+use App\Entity\Customer\BroadcastSlot;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\DisplaySetting;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\DisplaySpace;
 use App\Entity\Customer\Tag;
+use App\Entity\Customer\TimeSlot;
 use App\Repository\Customer\MediaRepository;
 use App\Repository\Customer\ProgrammingMouldRepository;
 use Doctrine\ORM\EntityRepository;
@@ -16,6 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProgrammingMouldType extends AbstractType
@@ -32,6 +37,7 @@ class ProgrammingMouldType extends AbstractType
         $this->mediaRepository = $mediaRepository ;
        // dd($test);
     }
+
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -76,6 +82,10 @@ class ProgrammingMouldType extends AbstractType
         if( $this->allowPlaylistCreation ) {
             $builder->add('displays', CollectionType::class , [
                 'entry_type' => DisplayType::class,
+                'allow_add' => true,
+                'entry_options' => [
+                    'programming' => $builder->getData()
+                ]
             ]);
         }
 
@@ -108,9 +118,17 @@ class ProgrammingMouldType extends AbstractType
             ]);
         }
 
-        $builder->add('timeslots', CollectionType::class, [
+        $builder->add('timeSlots', CollectionType::class, [
             'entry_type' => TimeSlotType::class
         ] ) ;
+
+    }
+
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->children['displays']->vars['prototype']->children['broadcastSlots']->vars['display_prototype'] = false ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

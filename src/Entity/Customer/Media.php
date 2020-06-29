@@ -75,6 +75,8 @@ class Media
      */
     private $tags;
 
+    private $criterions;
+
     /**
      * Many Groups have Many Users.
      * @ORM\ManyToMany(targetEntity="Product", mappedBy="medias", cascade={"persist"})
@@ -250,6 +252,41 @@ class Media
 
         return $this;
     }
+    /**
+     * @return Collection|Criterion[]
+     */
+    public function getCriterions(): Collection
+    {
+        return $this->criterions;
+    }
+
+    /**
+     * @return self
+     */
+    public function setCriterions( Collection $criterions ): self
+    {
+        $this->criterions = $criterions ;
+        return $this;
+    }
+
+    public function addCriterion(Criterion $criterion): self
+    {
+        if (! $this->criterions->contains( $criterion ) ) {
+            $this->criterions[] = $criterion;
+        }
+
+        return $this;
+    }
+
+    public function removeCriterion(Criterion $criterion): self
+    {
+        if ($this->criterions->contains( $criterion ) ) {
+            $this->criterions->removeElement( $criterion );
+        }
+
+        return $this;
+    }
+
 
     /**
      * @return Collection|Product[]

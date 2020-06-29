@@ -13,6 +13,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType ;
 
@@ -20,7 +22,7 @@ class AdvancedProgrammingType extends AbstractType
 {
     private ArrayCollection $availablesTimeSlots ;
     private int $screensQty ;
-    private $days = [ 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi','Samedi', 'Dimanche' ];
+    private $days = [ 1 => 'Lundi', 2 => 'Mardi', 3 => 'Mercredi', 4 => 'Jeudi', 5 => 'Vendredi',6 => 'Samedi', 7=> 'Dimanche' ];
     private \DateTime $minStartDate ;
     private \DateTime $maxEndDate ;
 
@@ -38,12 +40,11 @@ class AdvancedProgrammingType extends AbstractType
         $this->screensQty =  $options['screensQty'] ;
 
         $builder
-            ->add('timeSlot', EntityType::class, [
-                'class' => TimeSlot::class,
+            ->add('timeSlot', ChoiceType::class, [
                 'choices' => $this->availablesTimeSlots ,
                 'choice_label' => 'name',
                 'expanded' => true,
-                'multiple' => false,
+                'multiple' => true,
                 'label'   => 'Sur les créneaux: '
             ])
             ->add('days', ChoiceType::class, [
@@ -71,12 +72,23 @@ class AdvancedProgrammingType extends AbstractType
         ;
     }
 
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $timeSlotFormView = $view->children['timeSlot'];
+        $timeSlotsChoices = $timeSlotFormView->vars['choices'] ;
+
+        foreach( $timeSlotFormView->children as $index => $timeSlotEntryFormView ){
+            $timeSlotEntryFormView->vars['object'] = $timeSlotsChoices[ $index ]->data ;
+        }
+        parent::finishView($view, $form, $options);
+    }
+
     public function buildScreenChoiceArray( int $screensQty ){
         $screenChoiceArray = [] ;
         for($i = 1; $i <= $screensQty; $i++){
-            $screenChoiceArray[] = $i;
+            $screenChoiceArray[ $i ] = $i;
         }
-        return array_flip( $screenChoiceArray ) ;
+        return $screenChoiceArray  ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {

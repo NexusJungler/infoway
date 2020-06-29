@@ -1,0 +1,204 @@
+{% form_theme form 'form/form_media_in_playlist.html.twig' %}
+
+{% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_entry_entries_entry_widget %}
+
+    {% set currentMedia  = form.vars.media %}
+
+    {{ form_widget(form.positionInPlaylist,{'attr': {'class': 'broadcast_slot__playlist__entry__index_choice'}}) }}
+    <li class="broadcast_slot__content__playlists__visuel broadcast_slot__playlist__entry__visual" >
+        {{ mediaElement( currentMedia ) }}
+        <div class="broadcast_slot__content__playlists__visuel__infos">
+            {{ form_widget(form.media,{'attr': {'class': "broadcast_slot__playlist__entry__visual_choice"} } ) }}
+            <span>{{ currentMedia.name }}</span>
+        </div>
+    </li>
+
+{% endblock %}
+
+{% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_entry_entries_widget %}
+
+    {% if form is empty %}
+        <p class="broadcast_slot__playlist__entry__visual__none">Aucun Visuel</p>
+    {% else %}
+    <ul class="playlist__playlist_entries">
+    {% for entry in form %}
+        {{ form_widget( entry ) }}
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}
+{#{% block  _programming_mould_timeSlots_widget %}#}
+
+{#{% block %}#}
+{% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_widget %}
+    <div class="broadcast_slot__content__playlists">
+        {% if form is empty %}
+            <p class="broadcast_slot__content__playlists__none">Aucune playlist</p>
+        {% else %}
+            <ul class="broadcast_slot__content__playlists__list">
+                {% for playlist in  form %}
+                    {{ form_widget( playlist, { 'attr': { 'class': 'broadcast_slot__content__playlists__playlist broadcast_slot__playlist' }} ) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+{% endblock %}
+{#{% block %}#}
+
+{% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_entry_widget %}
+    <li>
+        {{ form_widget( form, { 'attr': { 'class': 'broadcast_slot__content__playlists__playlist broadcast_slot__playlist' }} ) }}
+    </li>
+{% endblock %}
+
+{% block _programming_mould_displays_entry_broadcastSlots_entry_widget %}
+
+    {% set currentBroadcast = form.vars.data %}
+    <div>
+        <div class="broadcast_slot__infos">
+            <div class="broadcast_slot__infos__menu--left">
+                <div class="broadcast_slot__infos__menu--left--visible">
+                    <button class="broadcast_slot__infos__btn rounded-border btn--blue-horizon">Infos des medias</button>
+                    <i class="fas fa-plus broadcast_slot__infos__menushow"></i>
+                </div>
+                <div class="broadcast_slot__infos__menu--left--hidden">
+                    <p>Copier créneau vers...</p>
+                    <ul>
+                        <li><a href="">Calendrier</a></li>
+                        <li><a href="">ex: Liste des médias</a></li>
+                        <li><a href="">etc</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="broadcast_slot__infos__slot rounded-border">
+                {% set currentTimeSlot =  form.timeSlot.vars.data %}
+                    <h3 class="broadcast_slot__infos__slot__name">{% if currentTimeSlot %}{{ currentTimeSlot.name  }}{% endif %}{{ form_widget( form.timeSlot, { 'attr' : { 'disabled' : true, 'class' :'none time_slot__name'  } } ) }}</h3>
+                    <div class="broadcast_slot__infos__slot__times">
+                        <span class="broadcast_slot__infos__slot__times__start_at">{% if currentTimeSlot %}{{ currentTimeSlot.startAt | date('H:i') }}{% endif %}</span>
+                        <span class="broadcast_slot__infos__slot__times__end_at">{% if currentTimeSlot %}{{ currentTimeSlot.endAt | date('H:i') }}{% endif %}</span>
+                    </div>
+            </div>
+
+            {#                        {{ form_widget( broadcastSlot.timeSlot ) }}#}
+            {#                        <span>{{ currentBroadcast.timeSlot.startAt|date('H') ~ 'h-' ~ currentBroadcast.timeSlot.endAt|date('H') ~ 'h' }}</span> </div>#}
+
+            <span class="broadcast_slot__infos__menu__unwrap"><i class="fas fa-sort-up"></i></span>
+        </div>
+        <div class="broadcast_slot__content">
+            <div class="broadcast_slot__content__timeline-container">
+                <span>{{ currentBroadcast ? currentBroadcast.timeSlot.startAt|date('H') ~ 'h' : ''}}</span>
+                <div class="broadcast_slot__content__timeline"></div>
+                <span>{{currentBroadcast ? currentBroadcast.timeSlot.endAt|date('H') ~ 'h' : ''}}</span>
+            </div>
+            <div class="broadcast_slot__content__criterions">
+
+            </div>
+            {{ form_widget( form.playlists ) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block _programming_mould_displays_entry_widget %}
+    <li class="display_form" >
+        <div class="display_form__infos">
+            <div class="display_form__infos__dates">
+                <div class="display_form__infos__dates__start display_form__infos__date"  >
+                    {{ form_label(form.startAt) }}
+                    <span>{{ form.startAt.vars.value }}</span>
+                    {{ form_widget(form.startAt, {'attr' : { 'disabled' : true , 'class' : 'none programming__broadcast__start_at__choices' } } ) }}
+                </div>
+                <div class="display_form__infos__dates__end display_form__infos__date">
+                    {{ form_label(form.endAt) }}
+                    <span>{{ form.endAt.vars.value }}</span>
+                    {{ form_widget(form.endAt, { 'attr': {'disabled' : true,'class' : 'none programming__broadcast__end_at__choices' }} ) }}
+                </div>
+            </div>
+            <div class="display_form__infos__select_timeslot">
+                {{ form_label( form.timeSlots ) }}
+                <div class="multi-select rounded-border">
+                    <div class="multi-select-content">
+                        <div class="multi-select-choices-container">
+                            <ul id="down-site-associate" class="programming__timeslots">
+                                {% for timeslot in form.timeSlots %}
+                                    <li class="programming__timeslots__timeslot">
+                                        {{ form_widget( timeslot ) }}
+                                        {{ form_label( timeslot ) }}
+                                    </li>
+                                {% endfor %}
+{#                                {{ form_widget(form.timeSlots) }}#}
+                            </ul>
+                        </div>
+                        <div class="multi-select-unwrapper">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#                    <div class="display_form__infos__select_sites"><button>Sites</button></div>#}
+        </div>
+
+        {{ form_widget( form.broadcastSlots  ) }}
+    </li>
+
+{% endblock  %}
+
+{% block _programming_mould_displays_entry_broadcastSlots_widget %}
+{#    {% dump(form.vars.prototype) %}#}
+
+    <ul class="programming__broadcast__slots" {% if form.vars['display_prototype'] %}data-prototype="{{ form_widget(form.vars.prototype)|e('html_attr') }}{% endif %}">
+        {% for broadcastSlot in  form %}
+            <li class="broadcast_slot">
+                {{ form_widget( broadcastSlot) }}
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block _programming_mould_displays_widget %}
+
+    <ul class="displays_forms_container" data-prototype="{{ form_widget(form.vars.prototype)|e('html_attr') }}">
+        {% for display in form %}
+            {{ form_widget( display ) }}
+        {% endfor %}
+    </ul>
+
+{% endblock  %}
+
+{% block _programming_mould_timeSlots_widget %}
+
+<ul class="mould__infos__timeslots mould__timeslots">
+    {% for timeSlot in form %}
+        {{ form_widget( timeSlot ) }}
+    {% endfor %}
+</ul>
+
+{% endblock  %}
+
+{% block _programming_mould_timeSlots_entry_widget %}
+
+    <li class="mould__timeslots__timeslot none">
+        <h3>{{ form_widget( form.name, {'attr' : {'class' :'time_slot__name mould__timeslots__timeslot__name__choice disabled' }} ) }}</h3>
+        <span>{{ form_widget( form.startAt, {'attr' : {'class' :'time_slot__start_at mould__timeslots__timeslot__startAt__choice disabled' }} ) }}</span>
+        <span>{{ form_widget( form.endAt, {'attr' : {'class' :'time_slot__end_at mould__timeslots__timeslot__startAt__choice disabled' }} ) }}</span>
+    </li>
+
+{% endblock %}
+
+{% block _programming_mould_widget %}
+
+    <div class="mould__infos" >
+        {{ form_widget(form.timeSlots) }}
+    </div>
+
+    <div class="mould_diffusion_timeline">
+        <a class="btn--classic">Aujourdh'ui</a>
+    </div>
+
+    {{ form_widget(form.displays) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{% endblock %}
+

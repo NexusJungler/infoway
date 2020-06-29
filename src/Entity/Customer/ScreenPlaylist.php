@@ -30,12 +30,6 @@ class ScreenPlaylist
      */
     private $entries;
 
-    /**
-     * One Product has One Shipment.
-     * @ORM\OneToOne(targetEntity="TimeSlot")
-     * @ORM\JoinColumn(name="timeSlot_id", referencedColumnName="id")
-     */
-    private $timeSlot;
 
     public function __construct()
     {
@@ -59,20 +53,7 @@ class ScreenPlaylist
         return $this;
     }
 
-
-    public function getTimeSlot(): ?TimeSlot
-    {
-        return $this->timeSlot;
-    }
-
-    public function setTimeSlot(?TimeSlot $timeSlot): self
-    {
-        $this->timeSlot = $timeSlot;
-
-        return $this;
-    }
-
-
+    
     /**
      * @return Collection|ScreenPlaylistEntry[]
      */
