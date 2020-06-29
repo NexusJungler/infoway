@@ -8,7 +8,15 @@
 
     <div class="left_side side">
 
-        <div class="media_miniature_container {{ (media is defined) ? 'media_' ~ media.orientation : '' }}" data-media_id="{{ media.id }}">
+        {% if media is defined %}
+
+        <div class="media_miniature_container media_{{ media.orientation }}" data-media_id="{{ media.id }}">
+
+        {% else %}
+
+        <div class="media_miniature_container">
+
+        {% endif %}
 
             <div class="media_container_{{ (media_type is defined and media_type is same as('image')) ? 'img' : 'video' }}">
 
@@ -27,6 +35,7 @@
                              alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/medium/{{ media.id }}.png">
 
                     {% elseif media_type is defined and media_type is same as('video') %}
+
 
                         <div class="media_container_arrows">
                             <i class="fas fa-expand-arrows-alt"></i>
@@ -221,22 +230,29 @@
                     <span class="mini-cercle"><i class="fas fa-plus"></i></span>TAGS
                 </p>
             </div>
-            <div class="container_child media_tags_container">
+            <div class="container_child media_tags_list">
 
-                {% if media_tags is defined %}
+                {% if media_tags is defined and app.request.attributes.get('_route') is not same as('media::edit') %}
 
                     {% for tag in media_tags %}
 
-                        <span>{{ tag }}</span>
+                        <div class="tag_container">
+                            <span>{{ tag }}</span>
+                        </div>
 
                     {% endfor %}
 
-                {% endif %}
+                {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
 
-                {% if app.request.attributes.get('_route') is same as('media::edit') %}
-                    <div style="display: none">
-                        {{ form_widget(form.tags) }}
-                    </div>
+                    {% for tag in form.tags %}
+
+                        <div class="tag_container {% if tag.vars.data is same as(false) %}hidden{% endif %}" data-tag_id="{{ tag.vars.name }}">
+                            <span class="hidden">{{ form_widget(tag, { 'attr': { 'class': 'tag_checkbox' } }) }}</span>
+                            <span data-tag_id="{{ tag.vars.name }}">{{ form_label(tag) }}</span>
+                        </div>
+
+                    {% endfor %}
+
                 {% endif %}
 
             </div>
@@ -300,7 +316,7 @@
 
                         {% for product in form.products %}
 
-                            <tr data-product_id="{{ product.vars.name }}" class="{{ (product.vars.data is same as(false)) ? 'hidden': '' }}">
+                            <tr data-product_id="{{ product.vars.name }}" {% if product.vars.data is same as(false) %} class="hidden" {% endif %}>
                                 <td class="hidden">{{ form_widget(product, { 'attr': { 'class': 'product_checkbox' } }) }}</td>
                                 <td class="product_name">{{ form_label(product) }}</td>
                             </tr>

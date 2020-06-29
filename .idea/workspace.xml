@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/ProductAssociationHandler/ProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/ProductAssociationHandler/ProductAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +258,7 @@
       <workItem from="1592986189096" duration="55000" />
       <workItem from="1592986275094" duration="52289000" />
       <workItem from="1593160202047" duration="25878000" />
-      <workItem from="1593418631242" duration="1866000" />
+      <workItem from="1593418631242" duration="13341000" />
     </task>
     <servers />
   </component>

@@ -63,7 +63,7 @@ class EditMediaType extends AbstractType
                 ->add('tags', EntityType::class, [
                     'class' => Tag::class,
                     'choice_label' =>  'name',
-                    'choices' => $this->__mediaRepo->getMediaAssociatedTags($options['data']),
+                    //'choices' => $this->__mediaRepo->getMediaAssociatedTags($options['data']),
                     'multiple' => true,
                     'expanded' => true,
                     'by_reference' => false
