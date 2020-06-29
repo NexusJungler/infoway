@@ -172,7 +172,7 @@
 {% if app.request.attributes.get('_route') is same as('media::edit') %}
     <div class="col">
         <div class="media_update_btn_container">
-            <button type="button" class="btn">Mettre à jour le média</button>
+            <button type="button" class="btn media_replacement_btn">Mettre à jour le média</button>
         </div>
     </div>
 {% endif %}
@@ -353,6 +353,8 @@
 <div class="col save_media_edit_btn_container">
     <button type="submit" class="btn save_media_edit_btn">Valider</button>
 </div>
+
+{% include "/popups/mediaReplacementPopup/popup_media_replacement.html.twig" %}
 
     {{ form_end(form) }}
 

@@ -285,7 +285,31 @@ class MediaRepository extends ServiceEntityRepository
 
     }
 
+    /**
+     * @param array $exceptions
+     * @return Media[]
+     */
+    public function getAllMediasExcept(array $exceptions)
+    {
 
+        $medias = [];
+
+        foreach ($this->findAll() as $media)
+        {
+            if( !in_array($media, $exceptions) )
+            {
+                $customerName = $this->getEntityManager()->getConnection()->getDatabase();
+                $media->media_low_miniature_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                                $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                                . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+
+                $media->media_type = ($media instanceof Image) ? 'image': 'video';
+                $medias[] = $media;
+            }
+        }
+
+        return $medias;
+    }
 
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {

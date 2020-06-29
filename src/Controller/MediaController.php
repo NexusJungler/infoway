@@ -176,6 +176,8 @@ class MediaController extends AbstractController
         if(!$media)
             throw new Exception(sprintf("No media can be found with this id : '%s'", $id));
 
+        $medias = $mediaRepo->getAllMediasExcept([$media]);
+
         $form = $this->createForm(EditMediaType::class, $media, [
             'tagRepo' => $tagRepo,
             'mediaRepo' => $mediaRepo,
@@ -189,8 +191,6 @@ class MediaController extends AbstractController
             dd($media);
 
         }
-
-        $media->media_type = ($media instanceof Video) ? 'video': 'image';
 
         $popupsFiltersContent = $this->getPopupFiltersContent();
 
@@ -207,8 +207,6 @@ class MediaController extends AbstractController
         else
             $characteristics['dpi'] = '72 dpi';
 
-        $media->characteristics = $characteristics;
-
         return $this->render("media/edit_media.html.twig", [
             'products' => $popupsFiltersContent['products'],
             'tags' =>$popupsFiltersContent['tags'],
@@ -219,6 +217,7 @@ class MediaController extends AbstractController
             'mediaInfos' =>$mediaInfos,
             'form' => $form->createView(),
             'media' => $media,
+            'medias' => $medias,
             'media_type' => ($media instanceof Video) ? 'video': 'image',
             'media_characteristics' => $characteristics,
             'media_incrustations' => $mediaInfos['media_incrustations'],

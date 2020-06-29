@@ -10,6 +10,7 @@ import MediaWaitingIncrustationHandler from "./PopupHandler/MediaWaitingIncrusta
 import PopupHandler from "./PopupHandler/PopupHandler";
 import AnimateTool from "./AnimationTool/AnimateTool";
 import MediathequeActionButtonHandler from "./MediathequeActionButtonHandler/MediathequeActionButtonHandler";
+import MediaReplacementPopupHandler from "./PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler";
 
 class ToolBox
 {
@@ -38,6 +39,7 @@ class ToolBox
             new PopupHandler(),
             new MediathequeActionButtonHandler(),
             new AnimateTool(),
+            new MediaReplacementPopupHandler(),
         ];
     }
 
