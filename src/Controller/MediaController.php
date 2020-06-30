@@ -610,6 +610,17 @@ class MediaController extends AbstractController
 
 
     /**
+     * @Route(path="get/media/{id}/programming/infos", name="media::getProgrammingInfos", methods={"POST"})
+     */
+    public function getProgrammingInfos(Request $request, int $id)
+    {
+
+        
+
+    }
+
+
+    /**
      * @param array $productsToAssociation
      * @param ObjectManager $manager
      * @param Media $media

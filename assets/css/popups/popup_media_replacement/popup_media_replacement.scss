@@ -1,0 +1,192 @@
+.popup_media_replacement_container{
+
+  &.is_open{
+
+    height: 890px;
+    //width: 1710px;
+
+    .popup{
+
+      .popup_header{
+        height: 6%;
+        border: 1px solid #899CA4;
+        border-radius: 7px 7px 0 0;
+
+        .left_side{
+
+          .item{
+
+            &.title_container{
+
+              &::after{
+                content: '';
+                border-right: 1px solid #FFF;
+                height: 20px;
+                margin: auto 0 auto 20px;
+              }
+            }
+
+            &.subtitle_container{
+              color: #B7C4C9;
+            }
+
+          }
+
+        }
+
+      }
+
+      .popup_body{
+        background: #F6F6F6;
+        height: 88%;
+
+        .popup_body_item{
+          display: flex;
+          flex-direction: column;
+          max-height: 100%;
+          max-width: 100%;
+
+          .container_header{
+            background: #899CA4;
+            color: #FFF;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            padding: 1%;
+            max-width: 100%;
+            //height: 10%;
+            height: 77px;
+
+            .filters_container{
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              flex-wrap: nowrap;
+
+              .filters_by_associated_data_container{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+              }
+
+              .filter_with_search{
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+                border: 0.5px solid #C0CCD1;
+                border-radius: 6px;
+                height: 35px;
+              }
+
+            }
+
+          }
+
+          .container_body{
+            //height: 90%;
+            display: flex;
+            flex-direction: row;
+            height: 706px;
+            max-height: 100%;
+            overflow-x: auto;
+            padding: 1%;
+            max-width: 100%;
+
+            .side{
+              max-height: 100%;
+
+              &.left_side{
+                width: 25%;
+                background: #A5D5DF;
+                display: flex;
+                flex-direction: column;
+                margin-right: 2%;
+              }
+
+              &.right_side{
+                width: 75%;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+
+                .media_substitute_name_container{
+                  text-align: left;
+                }
+
+                .substitutes_container{
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  overflow-y: auto;
+                  width: 1260px;
+                  height: 50%;
+                  max-height: 50%;
+                  margin-bottom: 2%;
+
+                  .card{
+                    width: 244px;
+                    height: 90%;
+                    border: 1px solid #C0CCD1;
+                    background: #E3E3E3;
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: 2%;
+
+                    .card_header{
+                      text-align: left;
+                    }
+
+                    .card_body{
+
+                      .substitute_miniature_container{
+                        width: 241px;
+                        height: 136px;
+
+                        .container{
+                          height: 100%;
+                          width: 100%;
+
+                          .substitute_miniature{
+                            max-width: 100%;
+                            max-height: 100%;
+                          }
+
+                        }
+
+                      }
+
+                    }
+
+                  }
+
+                }
+
+                .replacement_infos_setting_container{
+                  display: flex;
+                  flex-direction: row;
+                  background: #FFFFFF 0% 0% no-repeat padding-box;
+                  border: 1px solid #C0CCD1;
+                  width: 100%;
+                  height: 50%;
+                  max-height: 50%;
+                  font-size: 26px;
+                  color: #4D646D;
+                }
+
+              }
+            }
+
+          }
+
+        }
+
+      }
+
+      .popup_footer{
+        height: 6%;
+      }
+
+    }
+
+  }
+
+}

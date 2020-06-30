@@ -1,0 +1,1 @@
+require('../../css/medias/windows/add_media_window.scss');

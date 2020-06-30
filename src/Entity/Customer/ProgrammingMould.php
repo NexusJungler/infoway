@@ -90,6 +90,11 @@ class ProgrammingMould
 
     private ?ProgrammingMould $model = null;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $allowedMediasTypes = [];
+
     public function __construct() {
         $this->criterions = new ArrayCollection() ;
         $this->tags = new ArrayCollection() ;
@@ -308,6 +313,43 @@ class ProgrammingMould
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getAllowedMediasTypes(): array
+    {
+        return $this->allowedMediasTypes;
+    }
+
+    /**
+     * @return array
+     */
+    public function removeAllowedMediasType(string $alllowedMediasType): self
+    {
+        $indexOfAllowedMediaTypeInArray = array_search( $alllowedMediasType, $this->allowedMediasTypes);
+        if( false !== $indexOfAllowedMediaTypeInArray ) { unset( $this->allowedMediasTypes[ $indexOfAllowedMediaTypeInArray ] ) ; } ;
+
+        return $this ;
+    }
+
+    public function addAllowedMediasType(string $alllowedMediasType): self
+    {
+        $indexOfAllowedMediaTypeInArray = array_search( $alllowedMediasType, $this->allowedMediasTypes);
+        if( true !== $indexOfAllowedMediaTypeInArray ) { $this->allowedMediasTypes[] =  $alllowedMediasType ; } ;
+
+        return $this;
+    }
+
+    public function setAllowedMediasTypes(array $allowedMediasTypes): self
+    {
+        $this->allowedMediasTypes = $allowedMediasTypes;
+
+        return $this;
+    }
+
+
+
 
 
 }

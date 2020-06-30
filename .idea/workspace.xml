@@ -3,12 +3,35 @@
   <component name="ChangeListManager">
     <list default="true" id="e7456abf-8a02-46f9-907f-76c0f3e727e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/edit_media.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/edit_media.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/custom-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_replacement/popup_media_replacement.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_replacement/popup_media_replacement.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Programming/DisplaySettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Programming/DisplaySettingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Programming/DisplaySpaceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Programming/DisplaySpaceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Programming/ProgrammingMouldController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Programming/ProgrammingMouldController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Display.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Display.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Media.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ProgrammingMould.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ProgrammingMould.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ScreenPlaylist.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ScreenPlaylist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/TimeSlot.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/TimeSlot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Customer/DisplayType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/DisplayType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ProgrammingMouldType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ProgrammingMouldType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistEntryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistEntryType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Customer/TimeSlotType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/TimeSlotType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DisplaySettingRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DisplaySettingRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DisplaySpaceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DisplaySpaceRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/media/edit_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/edit_media.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/popups/mediaReplacementPopup/popup_media_replacement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaReplacementPopup/popup_media_replacement.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +192,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
@@ -183,11 +206,11 @@
       <recent name="C:\laragon\www\new_app\templates\popups\upload" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\MediaInfoSheetHandler" />
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PaginatorHandler" />
-      <recent name="C:\laragon\www\new_app\assets\images" />
-      <recent name="C:\laragon\www\new_app\assets\css\popups" />
-      <recent name="C:\laragon\www\new_app\assets\js\class\Tools\PopupHandler\ProductAssociationHandler" />
+      <recent name="C:\laragon\www\new_app\templates" />
+      <recent name="C:\laragon\www\new_app\assets\css" />
+      <recent name="C:\laragon\www\new_app\templates\media" />
+      <recent name="C:\laragon\www\new_app\assets\js\medias" />
+      <recent name="C:\laragon\www\new_app\assets\js" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -260,7 +283,7 @@
       <workItem from="1592986189096" duration="55000" />
       <workItem from="1592986275094" duration="52289000" />
       <workItem from="1593160202047" duration="25878000" />
-      <workItem from="1593418631242" duration="22726000" />
+      <workItem from="1593418631242" duration="45045000" />
     </task>
     <servers />
   </component>
@@ -355,11 +378,11 @@
       <screen x="2" y="-1080" width="1920" height="1080" />
     </state>
     <state x="442" y="-963" width="1378" height="1066" key="dock-window-3/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1589206255393" />
-    <state x="2421" y="79" width="891" height="801" key="find.popup" timestamp="1593168080299">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="531" y="162" width="891" height="801" key="find.popup" timestamp="1593534554465">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="668" y="-941" width="587" height="801" key="find.popup/0.0.1280.720/-1920.-574.1920.1080/2.-1080.1920.1080@2.-1080.1920.1080" timestamp="1588676933192" />
-    <state x="2421" y="79" width="891" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1593168080299" />
+    <state x="531" y="162" width="891" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1593534554465" />
     <state x="2586" y="139" width="587" height="801" key="find.popup/1920.0.1920.1080/0.0.1920.1080@1920.0.1920.1080" timestamp="1590657509357" />
     <state x="2536" y="791" key="run.anything.popup" timestamp="1590599159773">
       <screen x="1920" y="0" width="1920" height="1080" />

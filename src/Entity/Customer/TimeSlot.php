@@ -17,6 +17,12 @@ class TimeSlot
      */
     private $id;
 
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
     /**
      * @ORM\Column(type="time")
      * @Groups({"mouldSerialization"})
@@ -60,6 +66,18 @@ class TimeSlot
     public function setEndAt(\DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

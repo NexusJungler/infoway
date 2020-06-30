@@ -1,4 +1,8 @@
-{{ form_start(form) }}
+{% form_theme form 'programming/programming_mould/form/_programming_mould_form.html.twig' %}
+
+{% block content %}
+{{ form_start(form, {'attr': {'id': 'new_programming_mould_form'}}) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+{% endblock %}

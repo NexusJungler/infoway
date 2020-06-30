@@ -27,9 +27,15 @@ class ScreenPlaylistType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('screenPosition')
+            ->add('screenPosition',NumberType::class,[
+                'attr' => ['class' => 'playlist__position'],
+                'label' => false
+            ])
             ->add('entries', CollectionType::class,[
                 'entry_type' => ScreenPlaylistEntryType::class,
+                'attr' => ['class' => 'playlist__playlist_entries'],
+                'entry_options' => ['label' => false],
+                'label' => false
             ])
         ;
     }

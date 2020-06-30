@@ -1,5 +1,6 @@
 var Encore = require('@symfony/webpack-encore');
 
+
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -7,6 +8,9 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
+    .autoProvideVariables({
+        moment: 'moment',
+    })
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
@@ -70,6 +74,8 @@ Encore
     .addEntry('mediatheque', './assets/js/mediatheque.js')
     .addEntry('edit_media', './assets/js/edit_media.js')
 
+    .addEntry('programming_mould', './assets/js/programming/programming_mould.js')
+    .addEntry('add_media_window', './assets/js/medias/add_media_window.js')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

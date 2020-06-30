@@ -107,6 +107,11 @@ class Media
     private $containIncruste;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $diffusable = false;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Incruste", inversedBy="media")
      */
     private $incrustes;
@@ -341,6 +346,18 @@ class Media
     public function setContainIncruste(bool $containIncruste): self
     {
         $this->containIncruste = $containIncruste;
+
+        return $this;
+    }
+
+    public function getDiffusable(): ?bool
+    {
+        return $this->diffusable;
+    }
+
+    public function setDiffusable(bool $diffusable): self
+    {
+        $this->diffusable = $diffusable;
 
         return $this;
     }
