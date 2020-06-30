@@ -7,6 +7,7 @@ use App\Entity\Customer\Display;
 use App\Entity\Customer\ScreenPlaylist;
 use App\Entity\Customer\TimeSlot;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,10 +21,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BroadcastSlotType extends AbstractType
 {
-    private ArrayCollection $timeSlotsChoices ;
+    private Collection $timeSlotsChoices ;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $this->timeSlotsChoices = $options['timeSlotsChoices'] ;
         $this->timeSlotsChoices = $this->timeSlotsChoices->filter( fn( TimeSlot $timeSlot ) => $timeSlot );
 

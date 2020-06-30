@@ -58,19 +58,14 @@ class AdvancedProgrammingSetting{
         try{
             let mediaObject = new Media();
 
-            console.log( $mediaHTML )
-            debugger ;
             let id = $mediaHTML.find('input.medias__choices__id').val()
             let name = $mediaHTML.find('label.medias__choices__name').text()
             let src = $mediaHTML.find('img').prop('src')
-
 
             mediaObject.name = name ;
             mediaObject.id = id ;
             mediaObject.src = src ;
 
-            console.log( id, name, src )
-            debugger;
             return mediaObject ;
 
         }catch( e ){ console.log( e ) }
@@ -122,8 +117,6 @@ class AdvancedProgrammingSetting{
     }
     refreshSelectedTimeSlots(){
         try{
-            console.log( this._$timeSlotsInputs )
-            debugger ;
                 this._$timeSlotsInputs
                     .filter( ( index, timeSlotInput ) => timeSlotInput.checked )
                     .each( ( index, timeSlotInputSelected ) => { this.addSelectedTimeSlot( this.genereTimeSlotFromHTML( $( timeSlotInputSelected ) ) ) } )
@@ -168,10 +161,40 @@ class AdvancedProgrammingSetting{
 
     }
 
+    hydrateBroadcastWithSelectedInfos( broadcast ){
+
+        this._selectedTimeSlots.forEach( timeSlot => {
+            let currentBroadcastSlot = new BroadcastSlot()
+            currentBroadcastSlot.timeSlot = timeSlot
+
+            this._selectedScreens.forEach( selectedScreen => {
+                let currentPlaylist = new ScreenPlaylist()
+                currentPlaylist.screenPosition = selectedScreen
+
+                this._selectedMedias.forEach( ( selectedMedia, index )  => {
+                    let playlistEntry = new PlaylistEntry()
+                    playlistEntry.media = selectedMedia
+                    playlistEntry.positionInPlaylist = index + 1
+
+                    currentPlaylist.addEntry( playlistEntry )
+                })
+
+                currentBroadcastSlot.addPlaylist( currentPlaylist )
+
+            })
+
+            broadcast.addBroadcastSlot( currentBroadcastSlot )
+
+        })
+
+        return broadcast
+    }
     genereProgrammingFromSettings( ){
         let weekdaysBroadcasting = []
 
         for( let i = 1 ; i <= 7 ; i++ ){ weekdaysBroadcasting.push( this._selectedDays.includes( i ) ) }
+
+        let sevenDaysAWeekBroadcasting = ! weekdaysBroadcasting.includes( false )
 
         let daysRemaining = this.selectedEndDate.diff( this.selectedStartDate, 'days')
 
@@ -182,6 +205,7 @@ class AdvancedProgrammingSetting{
         let programmingGenerated = new Programming()
         let currentBroadcast = null ;
 
+    if( ! sevenDaysAWeekBroadcasting ) {
 
         while( daysRemaining >= 0 || ! searchBroadcasting ){
 
@@ -197,30 +221,7 @@ class AdvancedProgrammingSetting{
                 currentBroadcast = new Broadcast()
 
                 currentBroadcast.startAt = moment( currentDate )
-
-                this._selectedTimeSlots.forEach( timeSlot => {
-                    let currentBroadcastSlot = new BroadcastSlot()
-                    currentBroadcastSlot.timeSlot = timeSlot
-
-
-                    this._selectedScreens.forEach( selectedScreen => {
-                        let currentPlaylist = new ScreenPlaylist()
-                        currentPlaylist.screenPosition = selectedScreen
-
-                        this._selectedMedias.forEach( ( selectedMedia, index )  => {
-                            let playlistEntry = new PlaylistEntry()
-                            playlistEntry.media = selectedMedia
-                            playlistEntry.positionInPlaylist = index + 1
-
-                            currentPlaylist.addEntry( playlistEntry )
-                        })
-
-                        currentBroadcastSlot.addPlaylist( currentPlaylist )
-
-                    })
-
-                    currentBroadcast.addBroadcastSlot( currentBroadcastSlot )
-                })
+                currentBroadcast = this.hydrateBroadcastWithSelectedInfos( currentBroadcast )
 
                 programmingGenerated.addBroadcast( currentBroadcast )
 
@@ -237,7 +238,16 @@ class AdvancedProgrammingSetting{
             daysRemaining = daysRemaining - dayDiff
             currentIndex = dayDiff
         }
+    }else {
+        let newBroadcast = new Broadcast()
 
+        newBroadcast.startAt = moment( this.selectedStartDate )
+        newBroadcast.endAt = moment( this.selectedEndDate )
+
+        newBroadcast = this.hydrateBroadcastWithSelectedInfos( newBroadcast )
+
+        programmingGenerated.addBroadcast( newBroadcast )
+    }
         console.log( programmingGenerated )
         debugger ;
         return programmingGenerated
@@ -254,12 +264,12 @@ class AdvancedProgrammingSetting{
                     this.refreshSelectedStartDate()
                     this.refreshSelectedEndDate()
                     this.refreshSelectedTimeSlots()
-                    console.log( this )
-                    debugger ;
-                    this.generatedProgramming = this.genereProgrammingFromSettings()
-                    programmingInterface.addProgramming( this.generatedProgramming )
 
-                    debugger ;
+                    this.generatedProgramming = this.genereProgrammingFromSettings()
+
+                    programmingInterface.addProgramming( this.generatedProgramming )
+                    programmingInterface.refreshInterface()
+
                 })
             }else{ this._$comfirm.off('click.onClickApplyProgramming') }
         }catch( e ){ console.log( e ) }

@@ -7,6 +7,7 @@ use App\Entity\Customer\ScreenPlaylistEntry;
 use App\Form\DataTransformer\MediaToNumberTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -28,33 +29,39 @@ class ScreenPlaylistEntryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
         $builder
             ->add('positionInPlaylist')
-            ->add('media',NumberType::class)
+            ->add('media',TextType::class)
+
+
             ->addEventListener(
             FormEvents::PRE_SET_DATA,
             [$this, 'onPreSetDataAttachMedia']
             );
 
+
         $builder
             ->get('media')
             ->addModelTransformer( $this->transformer ) ;
         ;
+
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['media'] = $this->mediaLoaded;
-        parent::buildView($view, $form, $options);
+
+//        parent::buildView($view, $form, $options);
     }
 
     public function onPreSetDataAttachMedia(FormEvent $event)
     {
        $screenPlaylistEntry = $event->getData() ;
-        $media = $screenPlaylistEntry->getMedia();
-        if($media !== null){
-            $this->mediaLoaded = $media ;
-        }
+       if( $screenPlaylistEntry !== null ){
+           if( $screenPlaylistEntry->getMedia() !== null ){ $this->mediaLoaded = $screenPlaylistEntry->getMedia() ; }
+       }
     }
     public function configureOptions(OptionsResolver $resolver)
     {

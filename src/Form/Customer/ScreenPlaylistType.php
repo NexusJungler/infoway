@@ -33,6 +33,7 @@ class ScreenPlaylistType extends AbstractType
             ])
             ->add('entries', CollectionType::class,[
                 'entry_type' => ScreenPlaylistEntryType::class,
+                'allow_add' => true,
                 'attr' => ['class' => 'playlist__playlist_entries'],
                 'entry_options' => ['label' => false],
                 'label' => false

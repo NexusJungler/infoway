@@ -11,8 +11,8 @@ class PlaylistEntry {
         return this._positionInPlaylist;
     }
 
-    set positionInPlaylist(value) {
-        this._positionInPlaylist = value;
+    set positionInPlaylist( positionInPlaylist ) {
+        this._positionInPlaylist = positionInPlaylist;
     }
 
     get media() {

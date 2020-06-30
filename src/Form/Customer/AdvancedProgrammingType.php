@@ -8,6 +8,7 @@ use App\Entity\Customer\Site;
 use App\Entity\Customer\TimeSlot;
 use App\Object\Customer\SitesList;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType ;
 
 class AdvancedProgrammingType extends AbstractType
 {
-    private ArrayCollection $availablesTimeSlots ;
+    private Collection $availablesTimeSlots ;
     private int $screensQty ;
     private $days = [ 1 => 'Lundi', 2 => 'Mardi', 3 => 'Mercredi', 4 => 'Jeudi', 5 => 'Vendredi',6 => 'Samedi', 7=> 'Dimanche' ];
     private \DateTime $minStartDate ;

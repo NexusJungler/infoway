@@ -20,6 +20,7 @@ class TimeSlot{
     }
 
     set startAt( startAt ) {
+        if( ! moment.isMoment( startAt ) || startAt._f  !== 'HHmmss') throw new Error( 'invalid property' )
         this._startAt = startAt
     }
 
@@ -28,7 +29,8 @@ class TimeSlot{
     }
 
     set endAt( endAt ) {
-        this._endAt = moment( endAt, 'HHmmss');
+        if( ! moment.isMoment( endAt ) || endAt._f  !== 'HHmmss') throw new Error( 'invalid property' )
+        this._endAt =  endAt
     }
 
     get name() {

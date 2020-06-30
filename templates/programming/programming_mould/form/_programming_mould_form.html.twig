@@ -2,16 +2,21 @@
 
 {% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_entry_entries_entry_widget %}
 
-    {% set currentMedia  = form.vars.media %}
+    {% set currentMedia  = form.vars.media ?? null %}
+    {% set playlistEntry =  form.vars.data ?? null %}
+
+<div class="broadcast_slot__playlist__entry" data-posinplaylist="{{ playlistEntry ? playlistEntry.positionInPlaylist : '' }}">
 
     {{ form_widget(form.positionInPlaylist,{'attr': {'class': 'broadcast_slot__playlist__entry__index_choice'}}) }}
-    <li class="broadcast_slot__content__playlists__visuel broadcast_slot__playlist__entry__visual" >
-        {{ mediaElement( currentMedia ) }}
+    <div class="playlist__media broadcast_slot__content__playlist__media broadcast_slot__playlist__entry__visual" >
+        {{ mediaElement( currentMedia , { attr : { class : 'playlist__media__visual' }  } ) }}
         <div class="broadcast_slot__content__playlists__visuel__infos">
             {{ form_widget(form.media,{'attr': {'class': "broadcast_slot__playlist__entry__visual_choice"} } ) }}
             <span>{{ currentMedia.name }}</span>
         </div>
-    </li>
+    </div>
+</div>
+
 
 {% endblock %}
 
@@ -38,7 +43,9 @@
         {% else %}
             <ul class="broadcast_slot__content__playlists__list">
                 {% for playlist in  form %}
+                <li class="broadcast_slot__content__playlists__list__item">
                     {{ form_widget( playlist, { 'attr': { 'class': 'broadcast_slot__content__playlists__playlist broadcast_slot__playlist' }} ) }}
+                </li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -48,13 +55,13 @@
 {#{% block %}#}
 
 {% block _programming_mould_displays_entry_broadcastSlots_entry_playlists_entry_widget %}
-    <li>
-        {{ form_widget( form, { 'attr': { 'class': 'broadcast_slot__content__playlists__playlist broadcast_slot__playlist' }} ) }}
-    </li>
+    {% set playlist = form.vars.data ?? null %}
+        {{ form_widget( form, { 'attr': { 'class': 'broadcast_slot__content__playlists__playlist broadcast_slot__playlist', 'data-screenpos' : playlist.screenPosition }} ) }}
 {% endblock %}
 
 {% block _programming_mould_displays_entry_broadcastSlots_entry_widget %}
 
+    {{ dump(form) }}
     {% set currentBroadcast = form.vars.data %}
     <div>
         <div class="broadcast_slot__infos">
@@ -74,10 +81,10 @@
             </div>
             <div class="broadcast_slot__infos__slot rounded-border">
                 {% set currentTimeSlot =  form.timeSlot.vars.data %}
-                    <h3 class="broadcast_slot__infos__slot__name">{% if currentTimeSlot %}{{ currentTimeSlot.name  }}{% endif %}{{ form_widget( form.timeSlot, { 'attr' : { 'disabled' : true, 'class' :'none time_slot__name'  } } ) }}</h3>
+                    <h3 class="broadcast_slot__infos__slot__name">{% if currentTimeSlot %}{{ currentTimeSlot.name  }}{% endif %}{{ form_widget( form.timeSlot, { 'attr' : {  'class' :'none time_slot__name'  } } ) }}</h3>
                     <div class="broadcast_slot__infos__slot__times">
-                        <span class="broadcast_slot__infos__slot__times__start_at">{% if currentTimeSlot %}{{ currentTimeSlot.startAt | date('H:i') }}{% endif %}</span>
-                        <span class="broadcast_slot__infos__slot__times__end_at">{% if currentTimeSlot %}{{ currentTimeSlot.endAt | date('H:i') }}{% endif %}</span>
+                        <span class="broadcast_slot__infos__slot__times__start_at time_slot__start_at">{% if currentTimeSlot %}{{ currentTimeSlot.startAt | date('H:i') }}{% endif %}</span>
+                        <span class="broadcast_slot__infos__slot__times__end_at time_slot__end_at">{% if currentTimeSlot %}{{ currentTimeSlot.endAt | date('H:i') }}{% endif %}</span>
                     </div>
             </div>
 
@@ -102,18 +109,18 @@
 {% endblock %}
 
 {% block _programming_mould_displays_entry_widget %}
-    <li class="display_form" >
+    <li class="display_form" id="{{ form.vars.id }}" data-index="{{ form.vars.name }}">
         <div class="display_form__infos">
             <div class="display_form__infos__dates">
                 <div class="display_form__infos__dates__start display_form__infos__date"  >
                     {{ form_label(form.startAt) }}
                     <span>{{ form.startAt.vars.value }}</span>
-                    {{ form_widget(form.startAt, {'attr' : { 'disabled' : true , 'class' : 'none programming__broadcast__start_at__choices' } } ) }}
+                    {{ form_widget(form.startAt, {'attr' : {   'class' : 'none programming__broadcast__start_at__choices' } } ) }}
                 </div>
                 <div class="display_form__infos__dates__end display_form__infos__date">
                     {{ form_label(form.endAt) }}
                     <span>{{ form.endAt.vars.value }}</span>
-                    {{ form_widget(form.endAt, { 'attr': {'disabled' : true,'class' : 'none programming__broadcast__end_at__choices' }} ) }}
+                    {{ form_widget(form.endAt, { 'attr': {'class' : 'none programming__broadcast__end_at__choices' }} ) }}
                 </div>
             </div>
             <div class="display_form__infos__select_timeslot">

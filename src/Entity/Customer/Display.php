@@ -20,7 +20,7 @@ class Display
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="BroadcastSlot", mappedBy="display")
+     * @ORM\OneToMany(targetEntity="BroadcastSlot", mappedBy="display", cascade={"persist"})
      */
     private $broadcastSlots;
 

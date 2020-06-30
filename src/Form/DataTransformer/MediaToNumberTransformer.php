@@ -42,7 +42,7 @@ public function reverseTransform( $mediaId )
 
   //  dd($mediaId);
 // no issue number? It's optional, so that's ok
-if (!$mediaId) {
+if ( ! is_numeric( $mediaId ) ) {
 return;
 }
 

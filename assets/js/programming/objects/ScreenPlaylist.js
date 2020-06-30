@@ -21,7 +21,10 @@ class ScreenPlaylist{
 
     addEntry( entry ) {
         if( ! entry instanceof PlaylistEntry )throw new Error('invalid argument type')
-        if( ! this._entries.includes( entry ) )this._entries.push( entry )
+        if( ! this._entries.includes( entry ) ){
+            this._entries.push( entry )
+            entry.positionInPlaylist = this._entries.length
+        }
     }
 }
 

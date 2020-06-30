@@ -10,6 +10,7 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\Tag;
 use App\Object\Customer\SitesList;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
@@ -25,10 +26,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddMediaType extends AbstractType
 {
-    private ArrayCollection $mediasToDisplay ;
-    private ArrayCollection $tagsList ;
-    private ArrayCollection $criterionsList  ;
-    private ArrayCollection $availablesTimeSlots ;
+    private Collection $mediasToDisplay ;
+    private Collection $tagsList ;
+    private Collection $criterionsList  ;
+    private Collection $availablesTimeSlots ;
     private array $allowedMediasTypes ;
     private int $screensQty ;
 
