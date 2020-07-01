@@ -7,8 +7,8 @@ class MediaReplacementPopupHandler extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$container = $('.popup_media_replacement_container');
-        this.__$location = $('.popup_media_replacement');
+        this.__$container = $('.popup_media_remplacement_basic_container');
+        this.__$location = $('.popup_media_remplacement_basic');
         this.__replacementInfos = {
             mediaId: null,
             replaceByMediaId: null,
@@ -35,7 +35,7 @@ class MediaReplacementPopupHandler extends SubTool
         return new Promise( (resolve, reject) => {
 
             $.ajax({
-                url: `get/media/${mediaId}/programming/infos`,
+                url: `/get/media/${mediaId}/programming/infos`,
                 type: "POST",
                 data: {},
                 success: (response) => {
@@ -69,6 +69,10 @@ class MediaReplacementPopupHandler extends SubTool
                 $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
 
                 this.__replacementInfos.mediaId = $('.col.top .media_miniature_container').data('media_id');
+
+                const mediaName = $('.col.middle .media_name_container .media_name').text() || $('.col.middle .media_name_container .media_name').val();
+
+                $(`<p class="media_name"> ${ mediaName } </p>`).appendTo( this.__$location.find('.media_name_container') );
 
                 this.initializePopupContent( await this.getMediaProgrammingInfos( this.__replacementInfos.mediaId ) );
 

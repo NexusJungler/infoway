@@ -40,7 +40,7 @@ class UserRepository extends ServiceEntityRepository
     public function getUsersWithRoleBellowUserByCustomer(Customer $customer, User $user)
     {
 
-        $customerEM = $this->_registry->getManager( $customer->getName() ) ;
+        $customerEM = $this->_registry->getManager( strtolower($customer->getName()) ) ;
         $customerRoleRepo = $customerEM->getRepository(Role::class) ;
 
         $allRolesAvailablesInCustomer = $customerRoleRepo->findAll() ;
@@ -169,7 +169,7 @@ class UserRepository extends ServiceEntityRepository
 
             //on recupere le nom de l enseigne auquel le role est atitré et l'id du  role en question
             $roleCustomer = $userRole->getCustomer();
-            $siteCustomerName = $roleCustomer->getName();
+            $siteCustomerName = strtolower($roleCustomer->getName());
             $userRoleId = $userRole->getRoleId();
 
             //on va chercher le manager de la base stockant l objet role de l id recuperé ,  on va chercher le repository de l entité role en question et on va chercher le l object role lié à l id  dans sa base

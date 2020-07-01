@@ -19,7 +19,7 @@ class AddMediaWindow{
 
         this._advancedProgrammingSetting = new AdvancedProgrammingSetting()
         this._advancedProgrammingSetting.$mediasInputs = this.$medias.find('.medias__choices__id') ;
-        console.log(this._$closeIcon)
+
     }
 
     active( active, programmingInterface ){

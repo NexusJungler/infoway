@@ -1,6 +1,6 @@
-<section class="popup_container popup_media_replacement_container">
+<section class="popup_container popup_media_remplacement_in_prog_container">
 
-    <article class="popup popup_media_replacement">
+    <article class="popup popup_media_remplacement_in_prog">
 
         <div class="popup_header">
 
@@ -86,32 +86,36 @@
 
                     <div class="side left_side">
 
-                        <div class="media_miniature_container">
+                        <div class="media_miniature_container container">
 
                         </div>
 
-                        <div class="media_name_container">
+                        <div class="media_name_container container">
 
                         </div>
 
-                        <div class="media_criterions_container">
+                        <div class="media_associated_datas_container container">
 
-                        </div>
+                            <div class="media_criterions_container">
 
-                        <div class="media_tags_container">
+                            </div>
+
+                            <div class="media_tags_container">
+
+                            </div>
 
                         </div>
 
                         <div class="media_diffusion_location_container container">
 
-                            <div class="">
+                            <div class="container_header">
                                 <div class="icon_container">
                                     <i class="fas fa-spinner"></i>
                                 </div>
                                 <span class="container_header_info" >En diffusion sur </span>
                             </div>
 
-                            <div class="">
+                            <div class="container_body">
 
                             </div>
 
@@ -186,43 +190,43 @@
 
                         </div>
 
-                        <div class="replacement_infos_setting_container">
+                        <div class="remplacement_infos_setting_container">
 
-                            <div class="col left">
-                                <p>Remplacé dans :</p>
-                            </div>
+                            <div class="side left_side">
 
-                            <div class="col middle">
+                                <div class="left_row helper_container">
 
-                                <div class="col replacement_location_container">
+                                    <p class="helper">Remplacé dans :</p>
 
-                                    <div class="replace_on_current_screen_replacement_container">
+                                </div>
+
+                                <div class="right_row">
+
+                                    <div class="col remplacement_location_container">
+
                                         <label>
-                                            <input type="radio" class="media_replacement_location" value="current_screen" name="media_replacement[location]"> cet écran
+                                            <input type="radio" class="media_remplacement_location" value="current_screen" name="media_remplacement[location]"> cet écran
                                         </label>
+
+                                        <label>
+                                            <input type="radio" class="media_remplacement_location" value="current_prog" name="media_remplacement[location]"> cette prog.
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" class="media_remplacement_location" value="all_prog" name="media_remplacement[location]"> toutes les prog.
+                                        </label>
+
                                     </div>
 
-                                    <div class="replace_on_current_programmation_replacement_container">
-                                        <label>
-                                            <input type="radio" class="media_replacement_location" value="current_prog" name="media_replacement[location]"> cette prog.
-                                        </label>
-                                    </div>
+                                    <div class="col others_programmations_list_container">
 
-                                    <div class="replace_on_current_programmation_replacement_container">
-                                        <label>
-                                            <input type="radio" class="media_replacement_location" value="all_prog" name="media_replacement[location]"> toutes les prog.
-                                        </label>
                                     </div>
 
                                 </div>
 
-                                <div class="col others_programmations_list_container">
-
-                                </div>
-
                             </div>
 
-                            <div class="col right">
+                            <div class="side right_side">
 
                                 <div class="row">
                                     <div class="icon_container">
@@ -231,16 +235,16 @@
                                     <span>Date</span>
                                 </div>
 
-                                <div class="row replacement_date_container">
+                                <div class="row remplacement_date_container">
 
                                     <div class="col">
                                         <label>
-                                            Du <input type="date" class="replacement_date_start" name="media_replacement[date][start]">
+                                            Du <input type="date" class="remplacement_date_start" name="media_remplacement[date][start]">
                                         </label>
                                     </div>
                                     <div class="col">
                                         <label>
-                                            Au <input type="date" class="replacement_date_end" name="media_replacement[date][end]">
+                                            Au <input type="date" class="remplacement_date_end" name="media_remplacement[date][end]">
                                         </label>
                                     </div>
 

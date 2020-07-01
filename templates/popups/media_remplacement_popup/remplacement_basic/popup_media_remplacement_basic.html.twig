@@ -1,0 +1,225 @@
+<section class="popup_container popup_media_remplacement_basic_container">
+
+    <article class="popup popup_media_remplacement_basic">
+
+        <div class="popup_header">
+
+            <div class="left_side popup_header_item">
+                <div class="item icon-container">
+                    <i class="icon icon-picto-mediathque"></i>
+                </div>
+
+                <div class="item title_container">
+                    <p class="title">Substitution de média</p>
+                </div>
+
+                <div class="item subtitle_container">
+                    <p class="subtitle"></p>
+                </div>
+
+            </div>
+
+            <div class="right_side popup_header_item">
+
+                <div class="item close_popup_button_container">
+                    <button type="button" class="close_modal_button">X</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="popup_body">
+
+            <div class="popup_body_item container">
+
+                <div class="container_body">
+
+                    <div class="side left_side">
+
+                        <div class="media_name_container container">
+
+                        </div>
+
+                        <div class="media_diffusion_validity_date_container">
+
+                        </div>
+
+                        <div class="media_miniature_and_infos_container">
+
+                            <div class="media_miniature_container container">
+
+                            </div>
+
+                            <div class="media_associated_datas_container container">
+
+                                <div class="media_criterions_container">
+
+                                </div>
+
+                                <div class="media_tags_container">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="remplacement_location_label_container">
+
+                            <p class="remplacement_location_label">Le média sera remplacé dans :</p>
+
+                        </div>
+
+                        <div class="remplacement_location_choices_container">
+
+                            {#<label>
+                                <input type="radio" name="" value="">
+                            </label>#}
+
+                        </div>
+
+                        <div class="media_diffusion_programmation_list_container">
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Groupes</th>
+                                        <th>Sites</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="media_diffusion_programmation_list">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="side right_side">
+
+                        <div class="container">
+
+                            <div class="container_header">
+                                <p>Sera remplacé par :</p>
+
+                                <div class="media_substitute_name_container">
+                                    <p class="media_substitute_name"></p>
+                                </div>
+                            </div>
+
+                            <div class="container_body">
+
+                                <div class="substitutes_container">
+
+                                    <div class="substitutes_filters_container">
+
+                                    </div>
+
+                                    <div class="card_container">
+
+                                        {% for media in medias %}
+
+                                            <div class="card substitute" data-media_id="{{ media.id }}">
+
+                                                <div class="card_body">
+
+                                                    <div class="substitute_miniature_container">
+
+                                                        {% if media.media_low_miniature_exist is same as(false) %}
+
+                                                            <div class="media_container_{{ (media_type is same as ('image')) ? 'img' : 'video' }} container">
+                                                                <div class="media_container_arrows">
+                                                                    <i class="fas fa-expand-arrows-alt"></i>
+                                                                </div>
+                                                                <img class="substitute_miniature substitute_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                                                            </div>
+
+                                                        {% else %}
+
+                                                            {% if media.media_type is same as('image') %}
+
+                                                                <div class="media_container_img container">
+                                                                    <div class="media_container_arrows">
+                                                                        <i class="fas fa-expand-arrows-alt"></i>
+                                                                    </div>
+                                                                    <img class="substitute_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                                                                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
+                                                                </div>
+
+
+                                                            {% elseif media.media_type is same as('video') %}
+
+                                                                <div class="media_container_video container">
+                                                                    <div class="media_container_arrows">
+                                                                        <i class="fas fa-expand-arrows-alt"></i>
+                                                                    </div>
+                                                                    <video class="substitute_miniature miniature_video"controls>
+                                                                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                                                                    </video>
+                                                                </div>
+
+                                                            {% endif %}
+
+                                                        {% endif %}
+
+                                                    </div>
+
+                                                    <div class="substitute_name_container">
+                                                        <span class="substitute_name">{{ media.name }}</span>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="remplacement_infos_setting_date_container">
+
+                                    <div class="remplacement_infos_setting_date">
+
+                                        <label>
+                                            DU <input type="date" class="media_remplacement_start_date">
+                                        </label>
+
+                                        <label>
+                                            AU <input type="date" class="media_remplacement_start_date">
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="container_footer">
+
+                                <div class="actions_buttons_container">
+                                    <button class="btn close_modal_button cancel" type="button">Annuler</button>
+                                </div>
+
+                                <div class="actions_buttons_container">
+                                    <button class="btn validate_association_btn" type="button" disabled>Valider</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</section>

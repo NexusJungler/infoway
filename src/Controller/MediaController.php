@@ -615,7 +615,7 @@ class MediaController extends AbstractController
     public function getProgrammingInfos(Request $request, int $id)
     {
 
-        
+        dd(78);
 
     }
 

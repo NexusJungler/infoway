@@ -17,9 +17,11 @@ use App\Form\Customer\ProgrammingMouldType;
 use App\Repository\Customer\DisplaySettingRepository;
 use App\Repository\Customer\DisplaySpaceRepository;
 use App\Repository\Customer\ProgrammingMouldRepository;
+use App\Serializer\Normalizer\EmptyDateTimeNormalizer;
 use App\Serializer\Normalizer\IgnoreNotAllowedNulledAttributeNormalizer;
 use App\Service\FlashBagHandler;
 use Doctrine\Common\Collections\ArrayCollection;
+use Proxies\__CG__\App\Entity\Customer\Playlist;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -124,8 +126,7 @@ class ProgrammingMouldController extends AbstractController
             for( $i=1 ; $i<=$newProgrammingMould->getDisplaySetting()->getScreensQuantity(); $i++ ){
                 $screenPlaylist  = new ScreenPlaylist() ;
                 $screenPlaylistENtry = new ScreenPlaylistEntry();
-                $screenPlaylistENtry->setMedia($this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => 47
-                                                                                                            ]));
+                $screenPlaylistENtry->setMedia($this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => 47]));
                 $screenPlaylistENtry->setPositionInPlaylist( 1 );
                 $screenPlaylist->addEntry( $screenPlaylistENtry );
                 $screenPlaylist->setScreenPosition( $i ) ;
@@ -170,7 +171,6 @@ class ProgrammingMouldController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-         //   dd($newProgrammingMould);
 
             $entityManager->persist( $newProgrammingMould );
             $entityManager->flush();
@@ -201,20 +201,52 @@ class ProgrammingMouldController extends AbstractController
     /**
      * @Route("/{id}/edit", name="programming_programming_mould_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, ProgrammingMould $ProgrammingMould): Response
+    public function edit(Request $request, ProgrammingMould $ProgrammingMould, DisplaySpaceRepository $displaySpaceRepo): Response
     {
         $form = $this->createForm(ProgrammingMouldType::class, $ProgrammingMould);
         $form->handleRequest($request);
+        $allDisplaySpacesName = $displaySpaceRepo->getAllDisplaySpacesNameIndexedById();
+
+        $mediasPickables = new ArrayCollection() ;
+        $mediasPickablesIndexedById = [] ;
+
+        foreach( $ProgrammingMould->getCriterions() as $criterion ){
+            foreach($criterion->getProducts() as $product){
+
+                foreach($product->getMedias() as $media){
+                    if( ! in_array( $media , $mediasPickablesIndexedById ) ) $mediasPickablesIndexedById[ $media->getId() ] = $media ;
+                };
+            }
+        }
+
+        foreach( $ProgrammingMould->getTags() as $tag){
+            foreach( $tag->getMedias() as $media ) {
+                if( ! in_array( $media , $mediasPickablesIndexedById ) ) $mediasPickablesIndexedById[ $media->getId() ] = $media ;
+            }
+        }
+
+        $optionsToPassToAddMediasForm = [
+            'mediasToDisplay' => new ArrayCollection( array_values( $mediasPickablesIndexedById ) ),
+            'allowedMediasTypes' => $ProgrammingMould->getAllowedMediasTypes(),
+            'screensQty' => $ProgrammingMould->getDisplaySetting()->getScreensQuantity(),
+            'availablesTimeSlots' => $ProgrammingMould->getTimeSlots()
+        ];
+
+        $addMediaForm = $this->createForm(AddMediaType::class, [], $optionsToPassToAddMediasForm );
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+
+            $this->getDoctrine()->getManager('kfc')->flush();
 
             return $this->redirectToRoute('programming_programming_mould_index');
         }
 
         return $this->render('programming/programming_mould/edit.html.twig', [
-            'programming_mould' => $ProgrammingMould,
+            'programmingMould' => $ProgrammingMould,
             'form' => $form->createView(),
+            'allDisplaySpacesName' => $allDisplaySpacesName,
+            'addMediaForm' => $addMediaForm->createView()
         ]);
     }
 

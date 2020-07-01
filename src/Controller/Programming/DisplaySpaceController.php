@@ -51,7 +51,7 @@ class DisplaySpaceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager( strtolower($currentCustomer->getName()) );
+            $entityManager = $this->getDoctrine()->getManager( $currentCustomer->getName() );
             $entityManager->persist($displaySpace);
             $entityManager->flush();
 
