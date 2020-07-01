@@ -1016,8 +1016,8 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         foreach ($media->getTags()->getValues() as $tag)
         {
-            if(!in_array($tag->getName(), $infos['media_tags']))
-                $infos['media_tags'][] = $tag->getName();
+            if(!in_array($tag, $infos['media_tags']))
+                $infos['media_tags'][] = $tag;
         }
         foreach ($media->getProducts()->getValues() as $product)
         {
@@ -1039,8 +1039,8 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
             foreach ($product->getTags()->getValues() as $tag)
             {
-                if(!in_array($tag->getName(), $infos['media_tags']))
-                    $infos['media_tags'][] = $tag->getName();
+                if(!in_array($tag, $infos['media_tags']))
+                    $infos['media_tags'][] = $tag;
             }
 
             foreach ($product->getAllergens()->getValues() as $allergen)

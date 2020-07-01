@@ -1,16 +1,14 @@
 .popup_container{
-    margin-top: 8%;
     position: absolute;
-    height: 650px;
-    width: 1654px;
-    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
     align-items: center;
     pointer-events: none;
     opacity: 0;
-    top: 10%;
-    left: 0.5%;
-    z-index: 10000;
-    transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+    top: 0;
+    left: 0;
+    z-index:9;
 
   .popup_header{
     background: #4D646D 0% 0% no-repeat padding-box;
@@ -42,14 +40,6 @@
         &.title_container{
           display: flex;
           flex-direction: row;
-
-          &::after{
-            content: '';
-            border-right: 1px solid #FFF;
-            margin-left: 20px;
-            height: 20px;
-            margin: auto 0 auto 20px;
-          }
 
         }
 
@@ -92,8 +82,8 @@
 
       .popup{
 
-        transform: translate(0px, -100px);
-        transition: all 0.9s cubic-bezier(0.59, -0.17, 0.3, 1.67);
+        //transform: translate(0px, -100px);
+        //transition: all 0.9s cubic-bezier(0.59, -0.17, 0.3, 1.67);
         position: relative;
         padding: 30px;
         width: 100%;
@@ -105,11 +95,10 @@
         box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
         padding: 0;
         border-radius: 7px 7px 0 0;
-
+        margin: 0 auto;
 
         .popup_body{
           height: 80%;
-
 
           table{
 
@@ -128,8 +117,8 @@
         }
 
         .popup_footer{
-          height: 10%;
-          max-height: 10%;
+          height: 13%;
+          max-height: 13%;
           display: flex;
           flex-direction: row;
           justify-content: center;
@@ -139,7 +128,6 @@
 
             button{
               cursor: pointer;
-
 
               &:disabled{
                 background: #C0CCD1;

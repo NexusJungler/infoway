@@ -14,55 +14,55 @@
         display: flex;
         margin-bottom: 40px;
         flex-direction: column;
-        .display-content-columns{
-            display: flex;
-            .drop-btn{
-                background-color: #FFFFFF ;
-                padding: 0.2rem 0.9rem;
-                border: rem(1px) solid #4D646D;
-                border-radius: rem(6px);
-                font: rem(16px);
-                height: rem(31px);
-                max-width: 100%;
-                text-align: left;
-                .drop-btn-icone{
-                    position: absolute;
-                    right: rem(8px);
-                    top: rem(-5px);
-                    color: #899CA4;
-                    font-size: rem(30px);
-                }
-            }
-            .display-content-down{
-                display: none;
-                position: absolute;
-                background-color: #f9f9f9;
-                min-width: 100%;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-                padding: rem(6px);
-            }
+    }
+    .display-content-columns{
+        display: flex;
+    }
+    .drop-btn{
+        background-color: #FFFFFF ;
+        padding: 0.2rem 0.9rem;
+        border: rem(1px) solid #4D646D;
+        border-radius: rem(6px);
+        font: rem(16px);
+        height: rem(31px);
+        max-width: 100%;
+        text-align: left;
+        .drop-btn-icone{
+            position: absolute;
+            right: rem(8px);
+            top: rem(-5px);
+            color: #899CA4;
+            font-size: rem(30px);
+        }
+    }
+    .display-content-down{
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 100%;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        padding: rem(6px);
+    }
 
-            .display-content-poste,
-            .display-dates{
-                position: relative;
-                display: inline-block;
-                &:hover .display-content-down {
-                    display: block;
-                }
-            }
-            .display-content-poste{
-                margin-right: 2rem;
-                .drop-btn{
-                    width: rem(210px);
+    .display-content-poste,
+    .display-dates{
+        position: relative;
+        display: inline-block;
+        &:hover .display-content-down {
+            display: block;
+        }
+    }
+    .display-content-poste{
+        //margin-right: 2rem;
+        .drop-btn{
+            width: rem(210px);
 
-                }
-            }
-            .display-dates{
-                .drop-btn{
-                    width: rem(115px);
-                }
-            }
+        }
+    }
+    .display-dates{
+        .drop-btn{
+            width: rem(115px);
         }
     }
 
@@ -242,6 +242,7 @@
 
                 }
                 button{
+                    border-color: white ;
                     &:disabled{
                         background: #C0CCD1;
                         cursor: not-allowed;
@@ -286,14 +287,17 @@
             width: 30%;
             justify-content: space-around;
             text-align: center;
-            padding: 5px;
+            padding: 13px 5px;
             i{
                 font-size: 30px;
-                color: #00B8F5;
+                color: #C0CCD1;
             }
 
             .filter.active {
-                border: 3px solid #00B8F5;;
+                //border: 3px solid #00B8F5;
+                i{
+                    color: #00B8F5;
+                }
             }
 
             .filter.show_only_horizontal_media i {
@@ -302,16 +306,14 @@
 
         }
 
-
         .filters_by_associated_data_container {
             background-color: #E3E3E3;
             border: 1px solid #C0CCD1;
             display: flex;
             flex-direction: row;
-            width: 30%;
+            width: 35%;
             justify-content: space-around;
             align-items: center;
-
 
             .filters_by_associated_data_item{
                 display: flex;
@@ -357,9 +359,10 @@
                 }
             }
             .filter_active{
-                width: 53%;
+                width: 50%;
                 display: flex;
                 opacity: 1;
+                overflow: inherit;
             }
 
         }

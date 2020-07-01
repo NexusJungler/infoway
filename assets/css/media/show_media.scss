@@ -1,6 +1,52 @@
 .media-show{
-    .display {
-        padding-top: 2.5rem;
+    //.display {
+    //    padding-top: 2.5rem;
+    //
+    //}
+    .display-content-poste{
+        .drop-btn{
+            border: 1px solid #C0CCD1;
+            font: 16px "Barlow";
+            width: 10rem;
+        }
+        .drop-width{
+            width: 8rem;
+        }
+    }
+
+}
+
+.filters_by_associated_data_container{
+    .container-input{
+        margin-left: 20px;
+        .container-rdo{
+            left: -20px;
+            font: 16px "Barlow";
+            color: #4D646D;
+
+        }
+        .container-rdo {
+            position: absolute;
+            top: -1px;
+            left: 30px;
+            height: 23px;
+            width: 23px;
+            background-color:  white;
+            border-radius: 3px;
+            border: 1px solid #4D646D;
+
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+                top: 1px;
+                left: 1px;
+                width: 19px;
+                height: 19px;
+                border-radius: 3px;
+                background: #53B3C7;
+            }
+        }
     }
 }
 
@@ -93,7 +139,6 @@
                     }
 
                 }
-
 
                 .shortcut_diff_date_modification.alert_date {
                     background-color: #F57171;

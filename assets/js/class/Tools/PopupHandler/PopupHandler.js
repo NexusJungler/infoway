@@ -54,7 +54,6 @@ class PopupHandler extends Tool
 
     }
 
-
     activeSubTool(subToolName, subToolToolsToActive = [])
     {
 
@@ -64,7 +63,6 @@ class PopupHandler extends Tool
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
         this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
-
 
         if(subToolToolsToActive.length > 0)
         {

@@ -9,43 +9,52 @@
 
 
 {% block maincontent %}
-
     <article id="picture" class="tab-content current media-show">
 
-        <div class="tab_content_body_top">
-
-            <div class="tab_content_body_top_item container tab_content_body_title_container">
-                <p class="tab_content_body_title">Modifier Média</p>
+        <div id="tab-products" class="tab-content current content-product">
+            <article class="tab-content-title">
+                <h3 class="title">Modifier Média</h3>
                 <p class="media_name">{{ media.name }}</p>
-            </div>
+            </article>
 
-            <div class="tab_content_body_top_item container actions_buttons_container">
+            <article class="display setting-display ">
+                <div class="display-content">
 
-                <div class="container">
-                    <p>Medias : </p>
+                    <div class="display-btn">
+                        <p>Mèdias : </p>
+                        <button type="button" class="btn duplicate_media_btn media_action_btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
+                        <button type="button" class="btn btn-tags  media_action_btn tag_association_btn">TAG</button>
+                        <button type="button" class="btn popup_comfirmation_delete delete_media_btn media_action_btn" ><i class="fas fa-trash"></i>Supprimer</button>
+
+                    </div>
+
                 </div>
-
-                <div class="container">
-                    <button type="button" class="btn duplicate_media_btn media_action_btn" disabled><i class="fas fa-plus"></i>Dupliquer</button>
-                </div>
-
-                <div class="container">
-                    <button type="button" class="btn tags-table media_action_btn tag_association_btn">TAG</button>
-                </div>
-
-                <div class="container">
-                    <button type="button" class="btn delete_media_btn media_action_btn"><i class="fas fa-trash"></i>Supprimer</button>
-                </div>
-
-            </div>
-
+            </article>
         </div>
+
+        {#<div class="tab_content_body_top">#}
+            {#<div class="tab_content_body_top_item container tab_content_body_title_container">#}
+                {#<p class="tab_content_body_title"></p>#}
+            {#</div>#}
+            {#<div class="tab_content_body_top_item container actions_buttons_container">#}
+                {#<div class="container">#}
+                    {#<p>Medias : </p>#}
+                {#</div>#}
+                {#<div class="container">#}
+                    {#<button type="button" class="btn " disabled><i class="fas fa-plus"></i>Dupliquer</button>#}
+                {#</div>#}
+                {#<div class="container">#}
+                    {#<button type="button" class="btn tags-table">TAG</button>#}
+                {#</div>#}
+                {#<div class="container">#}
+                    {#<button type="button" class="btn "><i class="fas fa-trash"></i>Supprimer</button>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
 
 
         <div class="tab_content_body">
-
             {% include "/media/show_media.html.twig" %}
-
         </div>
 
     </article>
@@ -56,9 +65,9 @@
 
     {% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}
 
-    {% include "/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" %}
+    {#{% include "/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" %}#}
 
-    {% include "/popups/deletingMedia/popup_delete_media.html.twig" %}
+    {#{% include "/popups/deletingMedia/popup_delete_media.html.twig" %}#}
 
 {% endblock %}
 

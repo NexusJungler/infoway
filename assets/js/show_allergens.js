@@ -1,6 +1,3 @@
-import "../css/products/allergens/show_allergens.scss";
-
-
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 

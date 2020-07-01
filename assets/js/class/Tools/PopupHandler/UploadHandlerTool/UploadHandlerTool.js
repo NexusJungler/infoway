@@ -430,7 +430,6 @@ class UploadHandlerTool extends SubTool
         return new Promise( (resolve, reject) => {
 
             $.ajax({
-
                 url: `/remove/media/${mediaId}`,
                 type: "POST",
                 data: {},

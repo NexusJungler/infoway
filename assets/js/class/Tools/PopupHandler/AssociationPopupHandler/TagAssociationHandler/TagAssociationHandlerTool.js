@@ -24,6 +24,7 @@ class TagAssociationHandlerTool extends SubTool
 
         this.__$location.find('.media_name').text( this.__currentMediaName );
         this.__$container.addClass('is_open');
+        $("html").animate({ scrollTop: 0 }, "slow");
 
     }
 

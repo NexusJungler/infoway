@@ -39,14 +39,12 @@ class MediaInfoSheetHandler extends SubTool
                     const isImage = $(e.currentTarget).hasClass('miniature_image');
 
                     let miniature = null;
-
                     const mediaMediumMiniatureExist = $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist');
 
                     let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
 
                     if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
                     {
-
 
                         if(mediaMediumMiniatureExist)
                         {
@@ -90,7 +88,6 @@ class MediaInfoSheetHandler extends SubTool
                     if(mediaInfosExist)
                     {
                         const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
-
 
                         this.showMediaIncrustes(mediaInfos.media_incrustations);
                         this.showMediaCriterions(mediaInfos.media_criterions);
@@ -170,7 +167,6 @@ class MediaInfoSheetHandler extends SubTool
     retrieveMediaAssociatedInfos(mediaId)
     {
 
-
         $('.popup_loading_container .loading_message').text('Chargement du contenu en cours...');
         $('.popup_loading_container').addClass('is_open');
 
@@ -222,7 +218,6 @@ class MediaInfoSheetHandler extends SubTool
     showMediaIncrustes(mediaIncrustations)
     {
 
-
         $.each( mediaIncrustations, (key, incrustation) => {
 
             const productName = key;
@@ -253,7 +248,6 @@ class MediaInfoSheetHandler extends SubTool
         } )
 
     }
-
 
     showMediaTags(mediaTagsNames)
     {

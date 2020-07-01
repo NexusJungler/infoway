@@ -15,7 +15,6 @@ class PaginatorHandler extends Tool
     {
 
         const mediasDisplayedType = $(".main-media").data("media_displayed");
-
         //const numberOfMediasToDisplay= $("#displayed_elements_number_selection").val();
 
         window.location = `/mediatheque/${mediasDisplayedType}/${page}`;
@@ -40,7 +39,6 @@ class PaginatorHandler extends Tool
                 this.getToolBox().getTool('PopupHandler').getAgainMediaListContainer();
 
             },
-
         });*/
 
     }
@@ -74,7 +72,6 @@ class PaginatorHandler extends Tool
             this.__$location.on('click.onClickOnArrowNavigateToPage', '.page_navigation_arrow', e => {
 
                 let currentPage = $('.page.current_page');
-
                 let currentPageText = parseInt( $('.page.current_page').text() );
 
                 if( ( $(e.currentTarget).hasClass('prev') && currentPage.prev('a.page').length > 0) ||
@@ -107,7 +104,6 @@ class PaginatorHandler extends Tool
                 }
                 else if( $(e.currentTarget).hasClass('next') )
                 {
-
                     if(currentPage.next('a.page').length > 0)
                     {
 
@@ -140,7 +136,6 @@ class PaginatorHandler extends Tool
         if(active)
         {
             this.__$location.find("#displayed_elements_number_selection").on("change.onDisplayedMediasNumberChange", e => {
-
 
                 $('.medias_list_container').html("<h1 style='text-align: center; font-weight: bold; width: 100%;'>Chargement en cours...</h1>");
 
@@ -208,7 +203,6 @@ class PaginatorHandler extends Tool
 
         $.each( mediasInfos.medias, (index, mediaInfos) => {
 
-
             let card = this.buildMediaCard(mediaInfos.media, mediaInfos.media_type, mediaInfos.miniature_exist, {products: mediaInfos.media_products,
                 categories: mediaInfos.media_categories, tags: mediaInfos.media_tags,
                 criterions: mediaInfos.media_criterions}, mediaInfos.media_type);
@@ -270,7 +264,6 @@ class PaginatorHandler extends Tool
                             
                             <div class="card_body">
                                <div class="media_miniature_container">`;
-
 
         if(mediaMiniatureExist)
         {

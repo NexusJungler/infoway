@@ -2,11 +2,10 @@
 
 {% block title %} Allergènes {% endblock %}
 
- {% block stylesheets %}
+{# {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('show_allergens') }}
-{% endblock %}
-
+    {{ encore_entry_link_tags('show_factories') }}
+{% endblock %} #}
 
 {% block body %}
 
@@ -26,8 +25,7 @@
             </section>
 
             <section class="wrapper_tabcontent">
-                <div id="tab-products" class="tab-content current content-allergens">
-
+                <div id="tab-products" class="tab-content current allergenes">
 
                     <article class="display setting-display ">
                         <div class="display-content">
@@ -66,10 +64,9 @@
                         </div>
                     </article>
 
-                    <article class="content-allergens-show table">
+                    <article class=" content-allergenes-show table">
 
-                        <div id="" class="content-allergens-show-left " >
-
+                        <div id="" class="content-allergenes-show-left " >
                             <form method="post" action="{{ path('allergens::delete') }}">
                                 <table id="list" class="table-custome" >
                                     <thead class="thead-info">
@@ -84,34 +81,24 @@
                                     <tbody class="tbody tbody-content scrollbar-table">
                                             <tr>
                                                 <td><input type="checkbox" name=""></td>
-                                                <td>Donut Chocolat</td>
-                                                <td>pain fourré au chocolat</td>
-                                                <td> Gamme TOUS </td>
-                                                <td>
-                                                    <p class="container-tags">
-                                                        <span class="mini-cercle" style="background: blanchedalmond ;"></span>TF05
-                                                    </p>
-                                                </td>
-
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                     </tbody>
                                 </table>
                             </form>
                         </div>
 
-                        <div class="content-allergens-show-right">
+                        <div class="content-allergenes-show-right">
                             <form method="post" action="{{ path('allergens::delete') }}">
                                 <table id="list" class="table-custome" >
                                     <thead class="thead-info">
-                                        <tr>
-                                            <th><label class="mutliselect-chkbox"> Allergènes du produit
-                                                    <input type="checkbox"  name="satut"   value="Allergènes du produit">
-                                                    <span class="mutliselect-check"></span>
-                                                </label>
-                                            <th>
-                                            {#<th></th>#}
-                                        </tr>
+                                    <tr>
+                                        <th>Select.<th>
+                                        <th>Allergènes du produit</th>
 
+                                    </tr>
                                     </thead>
                                     <tbody class="tbody tbody-content scrollbar-table">
                                     {% for allergen in allergens %}
@@ -139,7 +126,7 @@
     
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('show_allergens') }}
+    {{ encore_entry_script_tags('show_products') }}
     {% endblock javascripts %}
 
 {% endblock %}

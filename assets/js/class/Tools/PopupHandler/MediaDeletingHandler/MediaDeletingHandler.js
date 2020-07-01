@@ -22,6 +22,7 @@ class MediaDeletingHandler extends SubTool
                 if(this.__parent.getMediasContainer().find(".select_media_input:checked").length === 0)
                     $('.media_action_btn').attr('disabled', true);
 
+
                 else
                     $('.media_action_btn').removeAttr('disabled');
 
@@ -77,7 +78,6 @@ class MediaDeletingHandler extends SubTool
                 let mediaDeleted = 0;
                 let mediasToDeleteNumber = this.__mediasToDelete.length;
 
-
                 $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
 
                 this.__mediasToDelete.forEach( (mediaToDelete) => {
@@ -85,7 +85,6 @@ class MediaDeletingHandler extends SubTool
                     const mediaId = mediaToDelete.id;
 
                     $.ajax({
-
                        url: `/remove/media/${mediaId}`,
                         type: "POST",
                         data: {},
@@ -97,7 +96,6 @@ class MediaDeletingHandler extends SubTool
                             if(mediaDeleted === mediasToDeleteNumber)
                             {
 
-
                                 $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
 
                                 this.resetPopup();
@@ -107,7 +105,6 @@ class MediaDeletingHandler extends SubTool
 
                         },
                         error: (response, status, error) => {
-
 
                             $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
 

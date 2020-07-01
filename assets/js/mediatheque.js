@@ -1,5 +1,5 @@
 require("../css/popups/popup.scss");
-require("../css/media/media_image.scss");
+require("../css/media/show_media.scss");
 
 import ToolBox from "./class/Tools/ToolBox";
 
@@ -12,7 +12,6 @@ toolBox.activeTool("PaginatorHandler")
 
 toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
                                         .activeSubTool("MediaWaitingIncrustationHandler")
-
                                         .activeSubTool("AssociationPopupHandler", ["all"])
                                         .activeSubTool("UploadHandlerTool")
                                         .activeSubTool("MediaDeletingHandler")
@@ -21,7 +20,6 @@ toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
 
 toolBox.getTool("FilterMediasTool").activeSubTool("FilterMediasByTypeSubTool")
                                             .activeSubTool("FilterMediasByOrientationSubTool")
-
                                             .activeSubTool("FilterMediasByAssociatedDataSubTool")
                                             .activeSubTool("FilterMediasWithSearchBarSubTool")
 ;

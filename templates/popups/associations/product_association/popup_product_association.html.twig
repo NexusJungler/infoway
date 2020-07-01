@@ -1,14 +1,13 @@
-
-<section class="popup_container association_popup_container popup_associate_product_container">
+<section class="popup_container association_popup_container popup_associate_product_container is_open">
 
     <article class="popup popup_associate_product association_popup">
 
         <div class="popup_header">
 
             <div class="left_side popup_header_item">
-                <div class="item icon-container">
-                    <i class="fas fa-link icon"></i>
-                </div>
+                {#<div class="item icon-container">#}
+                    {#<i class="fas fa-link icon"></i>#}
+                {#</div>#}
 
                 <div class="item title_container">
                     <p class="title">Associer des produits au média :</p>
@@ -88,9 +87,14 @@
                         <table class="table-custome">
                             <thead class="thead-info">
                                 <tr>
-                                    <th><input type="checkbox" class="select_all_products"></th>
+                                    <th>
+                                        <label class="container-input">
+                                            <input type="checkbox" class="select_all_products">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </th>
                                     <th>Nom du produit</th>
-                                    <th>Description</th>
+                                    <th><p>Description</p></th>
                                     <th>Critères</th>
                                     <th>TAGS</th>
                                 </tr>
@@ -99,9 +103,14 @@
                             <tbody class="products_choice_list list tbody tbody-content scrollbar-table">
                                 {% for product in products %}
                                     <tr data-product_id="{{ product.id }}" data-tags="{{ productsTags[product.id]['ids'] | join(', ') }}" data-categories="{{ product.category.id }}" data-criterions="{{ productsCriterions[product.id]['ids'] | join(', ') }}">
-                                        <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
+                                        <td>
+                                            <label class="container-input">
+                                                <input type="checkbox" class="choice_product" data-product_name="{{ product.name }}">
+                                                <span class="container-rdo-tags"></span>
+                                            </label>
+                                        </td>
                                         <td class="product_name"><span>{{ product.name }}</span></td>
-                                        <td><span>{{ product.description }}</span></td>
+                                        <td><span class="product_description">{{ product.description }}</span></td>
                                         <td class="criterions_col">
                                             {% if product.criterions | length < 1 %}
 
@@ -123,7 +132,10 @@
                                             {% else %}
 
                                                 {% for tag in product.tags %}
-                                                    <span>{{ tag.name }}</span>
+                                                    <p class="container-tags">
+                                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                                        <span class="current-tags-name">{{ tag.name }}</span>
+                                                    </p>
                                                 {% endfor %}
 
                                             {% endif%}
@@ -155,7 +167,6 @@
                             </tbody>
 
                         </table>
-
 
                     </div>
 

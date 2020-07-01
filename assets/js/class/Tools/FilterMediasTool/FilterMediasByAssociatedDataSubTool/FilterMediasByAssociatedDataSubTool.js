@@ -80,7 +80,18 @@ class FilterMediasByAssociatedDataSubTool extends SubTool
 
                 const filterIsRegistered = this.__parent.findFilterByProperty('data-' + characteristic);
 
-                const value = this.__$currentContainer.find(`.filter_by_${characteristic}`).val();
+                console.log(filterIsRegistered);
+
+                const value = this.__$currentContainer.find(`.filter_by_${characteristic} input:checked`).val();
+
+                console.log(value);
+
+                // for (const i=0, iLen= value.length; i<iLen; i++) {
+                //
+                //
+                //
+                // }
+
 
                 if(value !== '')
                 {

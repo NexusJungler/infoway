@@ -126,14 +126,6 @@
     }
 }
 
-// .tab-content{
-//     margin-left: 2.5%;
-// }
-
-// .tab-content.current{
-//     display: block;
-//     margin-left: 2.5%;
-// }
 
 /*****************************************************  WRAPPER CONTENT  *****************************************************************/
 
@@ -150,10 +142,10 @@
             font-weight: 800;
             &::after {
                 content: '';
-                border-left: 0.15rem solid #4F9BAE;    
+                border-left: 0.15rem solid #4F9BAE;
                 position: relative;
-                margin: 0.3rem 0.5rem;
-                height: 100%;
+                margin: 0.1rem 0.6rem;
+                height: 78%;
             }
         }
         p{
