@@ -2,9 +2,14 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Customer\BroadcastSlot;
+use App\Entity\Customer\Display;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\ProgrammingMould;
+use App\Entity\Customer\ScreenPlaylist;
+use App\Entity\Customer\ScreenPlaylistEntry;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Repository\Admin\AllergenRepository;
@@ -309,6 +314,24 @@ class MediaRepository extends ServiceEntityRepository
         }
 
         return $medias;
+    }
+
+
+    public function getMediaProgrammingMouldList(Media $media)
+    {
+
+        return $this->_em->createQueryBuilder()->select("prog_moulds")
+                                               ->distinct()
+                                               ->from(ProgrammingMould::class, "prog_moulds")
+                                               ->innerJoin(Display::class, 'display', 'WITH', 'prog_moulds.id = display.id')
+                                               ->innerJoin(BroadcastSlot::class, 'broadcastSlot', 'WITH', 'broadcastSlot.display = display.id')
+                                               ->innerJoin(ScreenPlaylist::class, 'screenPlaylist', 'WITH', 'screenPlaylist.id = broadcastSlot.id')
+                                               ->innerJoin(ScreenPlaylistEntry::class, 'screenPlaylistEntry', 'WITH', 'screenPlaylistEntry.playlist = screenPlaylist.id')
+                                               ->innerJoin(Media::class, 'media', 'WITH', 'media = :media')
+                                               ->setParameter('media', $media)
+                                               ->getQuery()
+                                               ->getResult();
+
     }
 
 

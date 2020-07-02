@@ -9,6 +9,7 @@ class MediaReplacementPopupHandler extends SubTool
         this.__name = this.constructor.name;
         this.__$container = $('.popup_media_remplacement_basic_container');
         this.__$location = $('.popup_media_remplacement_basic');
+        this.__$mediaSubstitutesContainer = $('.substitutes_container .card_container');
         this.__replacementInfos = {
             mediaId: null,
             replaceByMediaId: null,
@@ -22,10 +23,38 @@ class MediaReplacementPopupHandler extends SubTool
         };
     }
 
-    initializePopupContent(mediaProgrammingInfos)
+    initializePopupContent(mediaInfos)
     {
 
-        console.table( mediaProgrammingInfos ); debugger
+        console.table( mediaInfos ); debugger
+        let mediaType = $('.media_miniature').parents('.media_miniature_container').data('media_type');
+        console.log(mediaType); debugger
+// Substitution de media | Menuboard / 5 ECR NAT Gouter / Ecran 3
+        if(mediaInfos.mediaMiniatureExist === false)
+        {
+            $('.col.top .media_miniature_container .media_miniature').clone(true).appendTo( this.__$location.find('.media_miniature_container') );
+        }
+        else
+        {
+            let miniature = '';
+
+            if(mediaType === 'image')
+            {
+                miniature = `<img class="media_miniature miniature_img" src="/miniatures/${ mediaInfos.customer }/images/low/${ this.__replacementInfos.mediaId }.png"
+                             alt="/miniatures/${ mediaInfos.customer }/images/low/${ this.__replacementInfos.mediaId }.png" />`;
+            }
+            else
+            {
+                miniature = `<video class="media_miniature miniature_video" controls>
+                                <source src="/miniatures/${ mediaInfos.customer }/videos/low/${ this.__replacementInfos.mediaId }.mp4" type="video/mp4">          
+                             </video>`;
+            }
+
+            $(miniature).appendTo( this.__$location.find('.media_miniature_container') );
+        }
+
+        $('.media_criterions_container').clone(true).appendTo( this.__$location.find('.media_associated_datas_container') );
+        $('.media_tags_list').clone(true).appendTo( this.__$location.find('.media_associated_datas_container') );
 
     }
 
@@ -95,6 +124,8 @@ class MediaReplacementPopupHandler extends SubTool
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
 
                 this.__$container.removeClass('is_open');
+                this.__$location.find('.media_substitute_name').text('');
+                this.__$mediaSubstitutesContainer.find('.card.selected').removeClass('selected');
 
             })
         }
@@ -125,6 +156,38 @@ class MediaReplacementPopupHandler extends SubTool
         return this;
     }
 
+    onClickOnSubstitute(active)
+    {
+        if(active)
+        {
+            this.__$mediaSubstitutesContainer.find('.card').on('click.onClickOnSubstitute', e => {
+
+                const cardSelected = $(e.currentTarget);
+
+                if(cardSelected.hasClass('selected'))
+                {
+                    cardSelected.removeClass('selected');
+                    this.__$location.find('.media_substitute_name').text('');
+                }
+                else
+                {
+
+                    this.__$mediaSubstitutesContainer.find('.card.selected').removeClass('selected');
+                    cardSelected.addClass('selected');
+
+                    this.__$location.find('.media_substitute_name').text( cardSelected.find('.substitute_name').text() );
+
+                }
+
+            })
+        }
+        else
+        {
+            this.__$mediaSubstitutesContainer.find('.card').off('click.onClickOnSubstitute');
+        }
+
+        return this;
+    }
 
     enable()
     {
@@ -132,6 +195,7 @@ class MediaReplacementPopupHandler extends SubTool
         this.onClickOnReplacementButton(true)
             .onClickOnPopupCloseButton(true)
             .onReplacementLocationChange(true)
+            .onClickOnSubstitute(true)
         ;
     }
 
@@ -141,6 +205,7 @@ class MediaReplacementPopupHandler extends SubTool
         this.onClickOnReplacementButton(false)
             .onClickOnPopupCloseButton(false)
             .onReplacementLocationChange(false)
+            .onClickOnSubstitute(false)
         ;
     }
 

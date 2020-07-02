@@ -8,6 +8,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Criterion;
+use App\Entity\Customer\Image;
 use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
@@ -615,7 +616,23 @@ class MediaController extends AbstractController
     public function getProgrammingInfos(Request $request, int $id)
     {
 
-        dd(78);
+        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $mediaRepo = $manager->getRepository(Media::class);
+        $media = $mediaRepo->find($id);
+        if(!$media)
+            throw new Exception(sprintf("No media found with id : '%s'", $id));
+
+        $customerName = strtolower($this->sessionManager->get('current_customer')->getName());
+
+        $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                    $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                    . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+
+        return new JsonResponse([
+            'mediaMiniatureExist' => $mediaMiniatureExist,
+            'customer' => $customerName,
+            'mediaProgrammingMouldList' => $mediaRepo->getMediaProgrammingMouldList($media)
+        ]);
 
     }
 
