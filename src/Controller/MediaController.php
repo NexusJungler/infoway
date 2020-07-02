@@ -628,12 +628,41 @@ class MediaController extends AbstractController
                     $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
                     . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
+        $mediaProgrammingMouldList = $this->serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
+
         return new JsonResponse([
             'mediaMiniatureExist' => $mediaMiniatureExist,
             'customer' => $customerName,
-            'mediaProgrammingMouldList' => $mediaRepo->getMediaProgrammingMouldList($media)
+            'mediaProgrammingMouldList' => $mediaProgrammingMouldList
         ]);
 
+    }
+
+    /**
+     * @Route(path="/replace/media/{location}", name="media::replaceMedia", methods={"POST", "GET"}, requirements={"location": "mediatheuqe|programmation"})
+     */
+    public function replaceMedia(Request $request, string $location)
+    {
+
+        if($location === "mediatheque")
+            return $this->replaceMediaInMediatheque($request);
+
+        else
+            return $this->replaceMediaInProgrammation($request);
+
+    }
+
+
+    private function replaceMediaInMediatheque(Request &$request)
+    {
+
+        dd($request);
+
+    }
+
+    private function replaceMediaInProgrammation(Request &$request)
+    {
+        dd($request);
     }
 
 

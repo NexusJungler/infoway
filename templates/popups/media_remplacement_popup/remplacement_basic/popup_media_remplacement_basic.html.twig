@@ -10,11 +10,15 @@
                 </div>
 
                 <div class="item title_container">
-                    <p class="title">Substitution de média</p>
+                    <p class="title">Médiathèque</p>
                 </div>
 
                 <div class="item subtitle_container">
-                    <p class="subtitle"></p>
+                    <p class="subtitle">Remplacer un média</p>
+                </div>
+
+                <div class="item media_name_container">
+                    <p class="media_name"></p>
                 </div>
 
             </div>
@@ -33,68 +37,78 @@
 
             <div class="popup_body_item container">
 
+                <div class="container_header">
+
+                    <div class="side left_side filters_container filter_by_media_category_container">
+
+                        <button type="button" class="btn show_only_images">Images</button>
+                        <button type="button" class="btn show_only_videos">Vidéos</button>
+                        <button type="button" class="btn show_only_synchros">Synchros</button>
+                        <button type="button" class="btn show_only_web_service" disabled>Service Web</button>
+                        <button type="button" class="btn show_only_external_source" disabled>Sources Ext.</button>
+                        <button type="button" class="btn show_only_thematic" disabled>Thématiques</button>
+                        <button type="button" class="btn show_only_template">Templates</button>
+
+                    </div>
+
+                    <div class="side right_side filters_container">
+
+                        <select class="filter_by_categories">
+                            <option value="">Tout afficher</option>
+                            {% for categorie in categories %}
+                                <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select class="filter_by_criterions">
+                            <option value="">Tout afficher</option>
+                            {% for criterion in criterions %}
+                                <option value="{{ criterion.id }}">{{ criterion.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select class="filter_by_tags">
+                            <option value="">Tout afficher</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.id }}">{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="button" class="btn filter_validation_btn">Filtrer</button>
+
+                        <input type="search" class="filter filter_with_search" name="search[product]" placeholder="Rechercher un élément...">
+
+                    </div>
+
+                </div>
+
                 <div class="container_body">
 
                     <div class="side left_side">
+
+                        <div>
+                            <p>Média sélectionné :</p>
+                        </div>
+
+                        <div class="media_miniature_container container">
+
+                        </div>
 
                         <div class="media_name_container container">
 
                         </div>
 
-                        <div class="media_diffusion_validity_date_container">
+                        <div class="media_associated_datas_container container">
 
-                        </div>
-
-                        <div class="media_miniature_and_infos_container">
-
-                            <div class="media_miniature_container container">
+                            <div class="media_criterions_container">
 
                             </div>
 
-                            <div class="media_associated_datas_container container">
-
-                                {#<div class="media_criterions_container">
-
-                                </div>
-
-                                <div class="media_tags_container">
-
-                                </div>#}
+                            <div class="media_tags_container">
 
                             </div>
 
                         </div>
-
-                        <div class="remplacement_location_label_container">
-
-                            <p class="remplacement_location_label">Le média sera remplacé dans :</p>
-
-                        </div>
-
-                        <div class="remplacement_location_choices_container">
-
-                            {#<label>
-                                <input type="radio" name="" value="">
-                            </label>#}
-
-                        </div>
-
-                        <div class="media_diffusion_programmation_list_container">
-
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Groupes</th>
-                                        <th>Sites</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="media_diffusion_programmation_list">
-
-                                </tbody>
-                            </table>
-
-                        </div>
-
                     </div>
 
                     <div class="side right_side">
@@ -103,7 +117,6 @@
 
                             <div class="container_header">
                                 <p>Sera remplacé par :</p>
-
                                 <div class="media_substitute_name_container">
                                     <p class="media_substitute_name"></p>
                                 </div>
@@ -113,99 +126,78 @@
 
                                 <div class="substitutes_container">
 
-                                    <div class="substitutes_filters_container">
+                                    {% for media in medias %}
 
-                                    </div>
+                                        <div class="card substitute" data-media_id="{{ media.id }}">
 
-                                    <div class="card_container">
+                                            <div class="card_header">
+                                                <input type="checkbox" class="choice_substitute">
+                                            </div>
 
-                                        {% for media in medias %}
+                                            <div class="card_body">
 
-                                            <div class="card substitute" data-media_id="{{ media.id }}">
+                                                <div class="substitute_miniature_container">
 
-                                                <div class="card_body">
+                                                    {% if media.media_low_miniature_exist is same as(false) %}
 
-                                                    <div class="substitute_miniature_container">
+                                                        <img class="substitute_miniature substitute_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
-                                                        {% if media.media_low_miniature_exist is same as(false) %}
+                                                    {% else %}
 
-                                                            <div class="media_container_{{ (media_type is same as ('image')) ? 'img' : 'video' }} container">
+                                                        {% if media.media_type is same as('image') %}
+
+                                                            <div class="media_container_img container">
                                                                 <div class="media_container_arrows">
                                                                     <i class="fas fa-expand-arrows-alt"></i>
                                                                 </div>
-                                                                <img class="substitute_miniature substitute_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                                                                <img class="media_miniature substitute_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                                                                     alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
                                                             </div>
 
-                                                        {% else %}
 
-                                                            {% if media.media_type is same as('image') %}
+                                                        {% elseif media.media_type is same as('video') %}
 
-                                                                <div class="media_container_img container">
-                                                                    <div class="media_container_arrows">
-                                                                        <i class="fas fa-expand-arrows-alt"></i>
-                                                                    </div>
-                                                                    <img class="substitute_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                                                                         alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ media.id }}.png">
+                                                            <div class="media_container_video container">
+                                                                <div class="media_container_arrows">
+                                                                    <i class="fas fa-expand-arrows-alt"></i>
                                                                 </div>
-
-
-                                                            {% elseif media.media_type is same as('video') %}
-
-                                                                <div class="media_container_video container">
-                                                                    <div class="media_container_arrows">
-                                                                        <i class="fas fa-expand-arrows-alt"></i>
-                                                                    </div>
-                                                                    <video class="substitute_miniature miniature_video"controls>
-                                                                        <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
-                                                                    </video>
-                                                                </div>
-
-                                                            {% endif %}
+                                                                <video class="media_miniature substitute_miniature miniature_video"controls>
+                                                                    <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                                                                </video>
+                                                            </div>
 
                                                         {% endif %}
 
-                                                    </div>
+                                                    {% endif %}
 
-                                                    <div class="substitute_name_container">
-                                                        <span class="substitute_name">{{ media.name }}</span>
-                                                    </div>
+                                                </div>
 
+                                                <div class="substitute_name_container">
+                                                    <p class="substitute_name">{{ media.name }}</p>
                                                 </div>
 
                                             </div>
 
-                                        {% endfor %}
+                                        </div>
 
-                                    </div>
-
-                                </div>
-
-                                <div class="remplacement_infos_setting_date_container">
-
-                                    <div class="remplacement_infos_setting_date">
-
-                                        <label>
-                                            DU <input type="date" class="media_remplacement_start_date">
-                                        </label>
-
-                                        <label>
-                                            AU <input type="date" class="media_remplacement_start_date">
-                                        </label>
-
-                                    </div>
+                                    {% endfor %}
 
                                 </div>
 
                             </div>
 
-                            <div class="container_footer">
+                            <div class="container_footer {{ (app.request.attributes.get('_route') is same as('programming_programming_mould_new'))? 'prog_footer' : '' }}">
 
-                                <div class="actions_buttons_container">
-                                    <button class="btn close_modal_button cancel" type="button">Annuler</button>
-                                </div>
+                                <div class="remplacement_infos_setting_date_container">
 
-                                <div class="actions_buttons_container">
-                                    <button class="btn validate_association_btn" type="button" disabled>Valider</button>
+                                    <label>
+                                        Du <input type="date" class="remplacement_date_choice_input remplacement_date_start">
+                                    </label>
+
+                                    <label>
+                                        Au <input type="date" class="remplacement_date_choice_input remplacement_date_end">
+                                    </label>
+
                                 </div>
 
                             </div>
@@ -216,6 +208,18 @@
 
                 </div>
 
+            </div>
+
+        </div>
+
+        <div class="popup_footer">
+
+            <div class="actions_buttons_container">
+                <button class="btn close_modal_button cancel" type="button">Annuler</button>
+            </div>
+
+            <div class="actions_buttons_container">
+                <button class="btn validate_remplacement_btn" type="button" disabled>Remplacer</button>
             </div>
 
         </div>

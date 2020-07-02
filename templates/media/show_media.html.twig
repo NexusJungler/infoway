@@ -10,11 +10,11 @@
 
         {% if media is defined %}
 
-        <div class="media_miniature_container media_{{ media.orientation }}" data-media_id="{{ media.id }}" data-media_type="{{ media_type }}">
+        <div class="media_miniature_container media_{{ media.orientation }}" data-customer="{{ app.session.get('current_customer').name| lower }}" data-media_id="{{ media.id }}" data-media_type="{{ media_type }}">
 
         {% else %}
 
-        <div class="media_miniature_container">
+        <div class="media_miniature_container" data-customer="{{ app.session.get('current_customer').name| lower }}">
 
         {% endif %}
 

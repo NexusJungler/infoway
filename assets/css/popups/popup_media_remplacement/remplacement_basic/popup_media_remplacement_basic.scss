@@ -2,7 +2,7 @@
 
   &.is_open{
 
-    height: 863px;
+    height: 700px;
     width: 1431px;
 
     .popup{
@@ -37,12 +37,12 @@
       }
 
       .popup_body{
-        height: 94%;
+        height: 88%;
         background: #E3E3E3;
 
         .popup_body_item{
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           height: 840px;
           width: 100%;
           max-height: 100%;
@@ -58,6 +58,7 @@
             max-width: 100%;
             //height: 10%;
             height: 77px;
+            max-height: 10%;
 
             /*.filters_container{
               display: flex;
@@ -84,15 +85,14 @@
           }
 
           .container_body{
-            //height: 90%;
             display: flex;
             flex-direction: row;
-            height: 100%;
-            max-height: 100%;
             overflow-x: auto;
             padding: 1%;
             width: 100%;
             max-width: 100%;
+            max-height: 90%;
+            height: 560px;
 
             .side{
               max-height: 100%;
@@ -103,8 +103,7 @@
                 width: 35%;
                 margin-right: 2%;
                 padding: 3% 2%;
-                background: #F6F6F6 0% 0% no-repeat padding-box;
-                border-radius: 6px;
+                background: rgba(165, 213, 223, 0.5);
 
                 .container:not(:last-child){
                   margin-bottom: 3%;
@@ -155,29 +154,6 @@
 
                 }
 
-                .media_diffusion_location_container{
-                  height: 229px;
-                  display: flex;
-                  flex-direction: column;
-                  color: #4D646D;
-
-                  .container_header{
-                    height: 10%;
-                    align-items: center;
-                    background: #EBEBEB 0% 0% no-repeat padding-box;
-                    border: 1px solid #C0CCD1;
-                    color: inherit;
-                  }
-
-                  .container_body{
-                    height: 90%;
-                    align-items: center;
-                    background: #FFFFFF 0% 0% no-repeat padding-box;
-                    color: inherit;
-                  }
-
-                }
-
               }
 
               &.right_side{
@@ -195,12 +171,13 @@
                   color: #9BABB2;
 
                   .container_header{
-                    height: 10%;
+                    height: 15%;
+                    max-height: 15%;
                     text-align: left;
                     background: inherit;
-                    font-size: 36px;
                     color: #9BABB2;
                     align-items: center;
+                    font-size: 26px;
 
                     .media_substitute_name_container{
                       height: 48px;
@@ -222,125 +199,81 @@
                   }
 
                   .container_body{
-                    height: 84%;
+                    //height: 55%;
+                    max-height: 55%;
                     display: flex;
                     flex-direction: column;
 
                     .substitutes_container{
+                      height: 260px;
+                      max-height: 100%;
                       display: flex;
                       flex-direction: row;
-                      justify-content: start;
-                      overflow-y: auto;
+                      flex-wrap: nowrap;
+                      padding: 0 1% 0 1%;
+                      justify-content: space-between;
+                      width: 1260px;
                       max-width: 100%;
-                      height: 487px;
-                      margin-bottom: 2%;
-                      max-height: 80%;
-                      flex-wrap: wrap;
+                      overflow: auto;
 
-                      .substitutes_filters_container{
+                      /*.substitutes_filters_container{
                         height: 58px;
                         max-height: 10%;
                         width: 100%;
                         background: #9BABB2 0% 0% no-repeat padding-box;
-                      }
+                      }*/
 
-                      .card_container{
-                        height: 90%;
-                        width: 100%;
+                      .card{
+                        width: 225px;
+                        height: 210px;
+                        max-height: 90%;
+                        max-width: 50%;
+                        border: 1px solid #C0CCD1;
+                        background: #E3E3E3;
                         display: flex;
-                        flex-direction: row;
-                        flex-wrap: wrap;
-                        background: #F6F6F6 0% 0% no-repeat padding-box;
-                        padding: 5% 1% 0 1%;
-                        justify-content: space-between;
+                        flex-direction: column;
+                        cursor: pointer;
+                        margin: 0 5% 0 0;
 
-                        .card{
-                          width: 192px;
-                          height: 1024px;
-                          max-height: 30%;
-                          border: 1px solid #C0CCD1;
-                          background: #E3E3E3;
-                          display: flex;
-                          flex-direction: column;
-                          margin-bottom: 5%;
-                          cursor: pointer;
-
-                          &.selected{
-                            border: 3px solid #2598AE;
-                            cursor: default;
-                          }
+                        &.selected{
+                          border: 3px solid #2598AE;
+                          cursor: default;
+                        }
 
 
-                          .card_header{
-                            text-align: left;
-                          }
+                        .card_header{
+                          text-align: left;
+                        }
 
-                          .card_body{
-                            height: 90%;
+                        .card_body{
+                          height: 90%;
 
-                            .substitute_miniature_container{
-                              width: 192px;
-                              height: 108px;
-                              max-width: 100%;
-                              max-height: 100%;
+                          .substitute_miniature_container{
+                            width: 192px;
+                            height: 108px;
+                            max-width: 100%;
+                            max-height: 100%;
 
-                              .container{
-                                height: 100%;
-                                width: 100%;
-                                position: relative;
+                            .container{
+                              height: 100%;
+                              width: 100%;
+                              position: relative;
 
-                                .media_container_arrows{
-                                  position: absolute;
-                                }
+                              .media_container_arrows{
+                                position: absolute;
+                              }
 
-                                .substitute_miniature{
-                                  max-width: 100%;
-                                  max-height: 100%;
-                                }
-
+                              .substitute_miniature{
+                                max-width: 100%;
+                                max-height: 100%;
                               }
 
                             }
 
-                            .substitute_name_container{
-                              height: 10%;
-                            }
-
                           }
 
-                        }
-
-                      }
-
-                    }
-
-                    .remplacement_infos_setting_date_container{
-                      display: flex;
-                      flex-direction: row;
-                      width: 100%;
-                      justify-content: flex-end;
-                      max-height: 20%;
-
-                      .remplacement_infos_setting_date{
-                        display: flex;
-                        flex-direction: row;
-                        width: 45%;
-                        justify-content: center;
-                        align-items: center;
-                        height: 69px;
-                        max-height: 100%;
-                        font-size: 17px;
-                        color: #4D646D;
-                        background: #F6F6F6 0% 0% no-repeat padding-box;
-                        border: 1px solid #899CA4;
-                        border-radius: 6px;
-                        margin-bottom: 3%;
-
-                        label{
-                          color: #A4B4BB;
-
-                          &:not(:last-child){
-                            margin-right: 3%;
+                          .substitute_name_container{
+                            height: 10%;
                           }
 
                         }
@@ -355,15 +288,50 @@
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-end;
-                    height: 6%;
+                    height: 30%;
+                    max-height: 30%;
+                    align-items: center;
 
-                    .actions_buttons_container{
+                    .remplacement_infos_setting_date_container{
+                      display: flex;
+                      flex-direction: row;
+                      width: 45%;
+                      justify-content: center;
+                      align-items: center;
+                      height: 69px;
+                      max-height: 100%;
+                      font-size: 17px;
+                      color: #4D646D;
+                      background: #F6F6F6 0% 0% no-repeat padding-box;
+                      border: 1px solid #899CA4;
+                      border-radius: 6px;
+
+                      label{
+                        color: #A4B4BB;
+
+                        &:not(:last-child){
+                          margin-right: 3%;
+                        }
+
+                      }
+
+                      .remplacement_date_choice_input{
+
+                        &.empty{
+                          border: 3px solid #F27171;
+                        }
+
+                      }
+
+                    }
+
+                    /*.actions_buttons_container{
 
                       &:not(:last-child){
                         margin-right: 3%;
                       }
 
-                    }
+                    }*/
 
                   }
 
@@ -377,6 +345,10 @@
 
         }
 
+      }
+
+      .popup_footer{
+        height: 6%;
       }
 
     }

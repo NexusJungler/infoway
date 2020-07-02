@@ -5,6 +5,7 @@ import UploadHandlerTool from "./UploadHandlerTool/UploadHandlerTool";
 import MediaDeletingButtonHandler from "../MediathequeActionButtonHandler/MediaDeletingButtonHandler/MediaDeletingButtonHandler";
 import AssociationPopupHandler from "./AssociationPopupHandler/AssociationPopupHandler";
 import ParentTool from "../ParentTool";
+import MediaReplacementPopupHandler from "./MediaReplacementPopupHandler/MediaReplacementPopupHandler";
 
 class PopupHandler extends ParentTool
 {
@@ -17,7 +18,7 @@ class PopupHandler extends ParentTool
             new MediaInfoSheetHandler(),
             new MediaWaitingIncrustationHandler(),
             new UploadHandlerTool(),
-            //new MediaDeletingButtonHandler(),
+            //new MediaReplacementPopupHandler(),
             new AssociationPopupHandler(),
         ];
     }
