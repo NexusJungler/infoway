@@ -8,136 +8,352 @@
 {% endblock %}
 
 {% block body %}
-    <main class="main main_product">
-        <div class="main-content">
+<main class="main main_product">
+    <div class="main-content">
 
-            <section class="jumbotron">
+        <section class="jumbotron">
 
-                {% block settingtitle %}
-                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': '', 'showSecondTitles': false } %}
-                {% endblock %}
+            {% block settingtitle %}
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS', 'sousTitle': '', 'showSecondTitles': false } %}
+            {% endblock %}
 
-                {% block wrapper %}
-                    {% include 'wrapper/wrapper_produits.html.twig'  %}
-                {% endblock %}
-                
-            </section>
+            {% block wrapper %}
+                {% include 'wrapper/wrapper_produits.html.twig'  %}
+            {% endblock %}
 
+        </section>
 
+        <section class="wrapper_tabcontent">
+            <div id="tab-products" class="tab-content current content-product">
+                <form method="post" action="{{ path('products::delete') }}" id="form_delete_product" class="table">
+                    {#<article class="tab-content-title">#}
+                    {#<h3 class="title">Produits</h3>#}
+                    {#</article>#}
 
-            <section class="popup-confirmation">
+                    <article class="display setting-display ">
+                        <div class="display-content">
 
-                <article class="add-popup add_popup_confirmation_delete">
-                    <div class="modal">
-                        <div class="header-modal">
-                            <p class="upload-title">Configuration de la suppression</p>
-                            <button type="button" class=" btn-close close_popup_confirmation_delete"><i class="fas fa-window-close"></i></button>
-                        </div>
-                        <div class="content-modal" >
-                            <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
-                            <div class="selected-name-list" >
-                            </div>
-                        </div>
-                        <div class="footer-modal">
-                            <button type="button" class="btn" id="delete">OUI</button>
-                            <button type="button" class="btn close_popup_confirmation_delete">NON</button>
-                        </div>
-                    </div>
-                </article>
+                            <div class="display-content-columns">
+                                <div class="display-content-poste">
+                                    <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                    <div class="display-content-down">
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Nom
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="nom">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Format
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="format">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Categorie
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="category">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Description
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="description">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Tags à choix unique
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="unique">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">tags
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="tags">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Type de prix
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="type">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Allergène
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="allergene">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Date de début
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="debut">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Date de fin
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="fin">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
 
-                <article class="add-popup add_popup_confirmation_edit">
-                    <div class="modal">
-                        <div class="header-modal">
-                            <p class="upload-title">modification</p>
-                            <button type="button" class="btn-close close_popup_confirmation_edit"><i class="fas fa-window-close"></i></button>
-                        </div>
-                        <div class="content-modal" >
-                            <p>voulez vous modifier ?</p>
-                            <div class="selected-name-list" >
-                            </div>
-                        </div>
-                        <div class="footer-modal">
-                            <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i>OUI</a></button>
-                            <button type="button" class="btn close_popup_confirmation_edit">NON</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="add-popup upload_popup popup_product_duplicate">
-
-                    <div class="modal">
-                        <div class="header-modal">
-                            <p class="upload-title">Duliquer</p>
-                            <button type="button" class="btn-close btn popup_product_duplicate_close "><i class="fas fa-window-close"></i></button>
-                        </div>
-
-                        <form action="{{ path('product::duplicate', {'product': 3}) }}" id="form_duplicate_product" method="post">
-                            <div class="content-modal">
-                                <div class="selected-name-list"></div>
-                                <div id="popup_properties" >
-
-                                    <h2>Sélectionnez les éléments du produit à conserver</h2>
-                                    <table class="center">
-                                        <tr>
-                                            <td><input type="checkbox" name="product[category]"></td>
-                                            <td>Catégorie</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[priceType]"></td>
-                                            <td>Type de prix</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[amount]"></td>
-                                            <td>Quantié</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[description]"></td>
-                                            <td>Description</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[note]">
-                                            </td><td>Mention</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[start]"></td>
-                                            <td>Début de validité</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[end]"></td>
-                                            <td>Fin de validité</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[tags]"></td>
-                                            <td>Tags</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[allergens]"></td>
-                                            <td>Allergènes</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="product[logo]"></td>
-                                            <td>Logo</td>
-                                        </tr>
-                                    </table>
+                                    </div>
                                 </div>
                             </div>
+                            {#<select id="category">#}
+                            {#<option value="">Toute</option>#}
+                            {#{% for category in categories %}#}
+                            {#<option value="{{ category.id }}">{{ category.name }}</option>#}
+                            {#{% endfor %}#}
+                            {#</select>#}
 
-                            <div class="footer-modal">
-                                <button type="submit" id="properties_validate" class="btn" >Valider</button>
-                                <button type="submit" class="btn popup_product_duplicate_close" >Annuler</button>
+                            <div class="display-btn">
+                                <p>Produits : </p>
+                                <button type="button" class="btn" ><a href="{{ path('product::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
+                                <button type="button" class="btn popup_comfirmation_edit btn_hidden" ><i class="far fa-edit"></i> Modifier</button>
+                                {#<button><a id="duplicate" href="{{ path('product::duplicate', {'product': 1}) }}">Dupliquer</a></button>#}
+                                <button type="button" class="btn btn_hidden" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
+                                <button type="button" class="btn popup_comfirmation_delete btn_hidden" ><i class="fas fa-trash"></i>Supprimer</button>
+                                <button type="button" class="btn-tags btn_hidden">TAG</button>
                             </div>
 
-                        </form>
+                        </div>
+                    </article>
+
+
+
+                    <article id="checkbox_verification" class="content-product-show-table">
+                        <table id="list" class="table-custome ">
+                            <thead class="thead-info">
+
+                            <tr>
+                                <th>
+                                    <label class="container-input">
+                                        <input type="checkbox" name="" class="chkbox-tag" id="" data-tag="">
+                                        <span class="container-rdo-tags"></span>
+                                    </label>
+                                </th>
+
+                                <th>
+                                    <select id="diff">
+                                        <option>Diff.</option>
+                                    </select>
+                                </th>
+
+                                <th class="nom">Nom</th>
+
+                                <th><i class="fas fa-pen"></i></th>
+
+                                <th class="format">
+                                    <select id="form">
+                                        <option>Form.</option>
+                                        {#{% for category in categories %}#}
+                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    </select>
+                                </th>
+
+                                <th class="category">
+                                    <select id="category">
+                                        <option>Catégorie</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </th>
+
+                                <th class="description">Description</th>
+
+                                <th>Critères</th>
+
+                                <th class="tags">
+                                    <select id="form">
+                                        <option>tags</option>
+                                        {#{% for category in categories %}#}
+                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    </select>
+                                </th>
+
+                                <th class="type">type de prix</th>
+
+                                <th class="allergene">
+                                    <select id="form">
+                                        <option>Allergènes</option>
+                                        {#{% for category in categories %}#}
+                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    </select>
+                                </th>
+                                <th class="debut" >Date de dèbut</thclass>
+                                <th class="fin" >Date de fin</th>
+                                <th>Visuel</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbody tbody-content scrollbar-table">
+                            {% for product in products %}
+                                <tr>
+                                    <td>
+                                        <label class="container-input">
+                                            <input type="checkbox" class="chkbox-produits" name="products[{{ product.id }}]">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </td>
+                                    <td><span class="bloc-icone"><i class="fas fa-spinner"></i></span></td>
+                                    <td class="nom">{{ product.name }}</td>
+                                    <td><i class="fas fa-pen"></i></td>
+                                    <td class="format">{{ product.amount }}</td>
+
+                                    {% if(product.category.name is defined)  %}
+                                        <td class="category">{{ product.category.name }}</td>
+                                    {% else %}
+                                        <td class="category">Orphelin</td>
+                                    {% endif %}
+
+                                    <td class="description" > <p>{{ product.description }}</p></td>
+                                    <td>{{ product.note }}</td>
+                                    <td class="tags" >
+                                        {% for tag in product.tags %}
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }}
+                                            </p>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="type">{{ product.priceType.name }}</td>
+                                    <td class="allergene">
+                                        {% for allergen in product.allergens %}
+                                            {# <span>{{ allergen.name }}</span> #}
+                                            <img src="/pictogram/{{ allergen.pictogram }}" alt="" class="image-td">
+                                        {% endfor %}
+                                    </td>
+                                    <td class="debut">{{ product.start |date('Y-m-d') }}</td>
+                                    <td class="fin">{{ product.end |date('d-m-Y') }}</td>
+                                    <td><i class="fas fa-eye"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </article>
+
+                </form>
+            </div>
+        </section>
+
+        <section class="popup-confirmation">
+
+            <article class="add-popup add_popup_confirmation_delete">
+                <div class="modal">
+                    <div class="header-modal">
+                        <p class="upload-title">Configuration de la suppression</p>
+                        <button type="button" class=" btn-close close_popup_confirmation_delete"><i class="fas fa-window-close"></i></button>
+                    </div>
+                    <div class="content-modal" >
+                        <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                        <div class="selected-name-list" >
+                        </div>
+                    </div>
+                    <div class="footer-modal">
+                        <button type="button" class="btn" id="delete">OUI</button>
+                        <button type="button" class="btn close_popup_confirmation_delete">NON</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="add-popup add_popup_confirmation_edit">
+                <div class="modal">
+                    <div class="header-modal">
+                        <p class="upload-title">modification</p>
+                        <button type="button" class="btn-close close_popup_confirmation_edit"><i class="fas fa-window-close"></i></button>
+                    </div>
+                    <div class="content-modal" >
+                        <p>voulez vous modifier ?</p>
+                        <div class="selected-name-list" >
+                        </div>
+                    </div>
+                    <div class="footer-modal">
+                        <button type="button" class="btn" ><a id="edit" href="{{ path('product::edit', {'product': 1}) }}"><i class="far fa-edit"></i>OUI</a></button>
+                        <button type="button" class="btn close_popup_confirmation_edit">NON</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="add-popup upload_popup popup_product_duplicate">
+
+                <div class="modal">
+                    <div class="header-modal">
+                        <p class="upload-title">Duliquer</p>
+                        <button type="button" class="btn-close btn popup_product_duplicate_close "><i class="fas fa-window-close"></i></button>
                     </div>
 
-                </article>
-            </section>
+                    <form action="{{ path('product::duplicate', {'product': 3}) }}" id="form_duplicate_product" method="post">
+                        <div class="content-modal">
+                            <div class="selected-name-list"></div>
+                            <div id="popup_properties" >
 
-        </div>    
+                                <h2>Sélectionnez les éléments du produit à conserver</h2>
+                                <table class="center">
+                                    <tr>
+                                        <td><input type="checkbox" name="product[category]"></td>
+                                        <td>Catégorie</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[priceType]"></td>
+                                        <td>Type de prix</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[amount]"></td>
+                                        <td>Quantié</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[description]"></td>
+                                        <td>Description</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[note]">
+                                        </td><td>Mention</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[start]"></td>
+                                        <td>Début de validité</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[end]"></td>
+                                        <td>Fin de validité</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[tags]"></td>
+                                        <td>Tags</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[allergens]"></td>
+                                        <td>Allergènes</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="product[logo]"></td>
+                                        <td>Logo</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="footer-modal">
+                            <button type="submit" id="properties_validate" class="btn" >Valider</button>
+                            <button type="submit" class="btn popup_product_duplicate_close" >Annuler</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </article>
+        </section>
+
+    </div>
     <main>
-{% endblock %}
+        {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('show_products') }}
+        {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('show_products') }}
 {% endblock javascripts %}

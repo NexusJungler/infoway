@@ -26,123 +26,127 @@
             data-tags="none"
         {% endif %} >
 
-    <div class="card_header">
-        <div class="select_media_input_container">
-            <label class="container-input">
-                <input type="checkbox" class="select_media_input">
-                <span class="container-rdo-tags"></span>
-            </label>
+    <div class="card_content">
+        <div class="card_header">
+            <div class="select_media_input_container">
+                <label class="container-input">
+                    <input type="checkbox" class="select_media_input">
+                    <span class="container-rdo-tags"></span>
+                </label>
+            </div>
+
+            <div class="media_actions_shortcuts_container">
+                <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now < 0 or media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}alert_date{% endif %}">
+                    <i class="far fa-clock"></i>
+                </div>
+
+                <div class="shortcut">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+
+                <div class="shortcut">
+                    <i class="fas fa-link shortcut_product_association"></i>
+                </div>
+
+                <div class="shortcut">
+                    <i class="fas fa-spinner"></i>
+                </div>
+
+            </div>
         </div>
 
-        <div class="media_actions_shortcuts_container">
-            <div class="shortcut shortcut_diff_date_modification {% if media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now < 0 or media.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}alert_date{% endif %}">
-                <i class="far fa-clock"></i>
+        <div class="card_body">
+
+            <div class="media_miniature_container media_{{ media.orientation }}" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
+                    {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
+
+                {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
+
+                    <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+
+                {% else %}
+
+                    {% if media_type is same as('image') %}
+
+                        <div class="media_container_img">
+                            <div class="media_container_arrows">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </div>
+                            <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                                 alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                        </div>
+
+
+                    {% elseif media_type is same as('video') %}
+
+                        <div class="media_container_video">
+                            <div class="media_container_arrows">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </div>
+                            <video class="media_miniature miniature_video">
+                                <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
+                            </video>
+                        </div>
+
+
+                    {% endif %}
+
+                {% endif %}
+
             </div>
 
-            <div class="shortcut">
-                <i class="fas fa-euro-sign"></i>
+            <div class="media_name_container">
+                <span class="media_name">{{ media.name }}</span>
             </div>
 
-            <div class="shortcut">
-                <i class="fas fa-link shortcut_product_association"></i>
-            </div>
+            <div class="media_associated_items_container">
 
-            <div class="shortcut">
-                <i class="fas fa-spinner"></i>
+                <div class="media_criterions_container associated_item">
+
+                    {% if media.products is not empty %}
+
+                        {% for product in media.products %}
+
+                            {% for criterion in product.criterions %}
+
+                                <p class="criterion"><span></span>{{ criterion.name }}</p>
+
+                            {% endfor%}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 critères </p>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="media_tags_container associated_item">
+
+                    {% if media.tags is not empty %}
+
+                        {% for tag in media.tags %}
+                            <p class="tag container-tags">
+                                <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                <span class="current-tags-name">{{ tag.name }}</span>
+                            </p>
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 tags </p>
+
+                    {% endif %}
+
+                </div>
+
             </div>
 
         </div>
     </div>
 
-    <div class="card_body">
 
-        <div class="media_miniature_container media_{{ media.orientation }}" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
-                {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
-
-            {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
-
-                <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
-
-            {% else %}
-
-                {% if media_type is same as('image') %}
-
-                    <div class="media_container_img">
-                        <div class="media_container_arrows">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </div>
-                        <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                             alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
-                    </div>
-
-
-                {% elseif media_type is same as('video') %}
-
-                    <div class="media_container_video">
-                        <div class="media_container_arrows">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </div>
-                        <video class="media_miniature miniature_video">
-                            <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
-                        </video>
-                    </div>
-
-
-                {% endif %}
-
-            {% endif %}
-
-        </div>
-
-        <div class="media_name_container">
-            <span class="media_name">{{ media.name }}</span>
-        </div>
-
-        <div class="media_associated_items_container">
-
-            <div class="media_criterions_container associated_item">
-
-                {% if media.products is not empty %}
-
-                    {% for product in media.products %}
-
-                        {% for criterion in product.criterions %}
-
-                            <p class="criterion"><span></span>{{ criterion.name }}</p>
-
-                        {% endfor%}
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <p>0 critères </p>
-
-                {% endif %}
-
-            </div>
-
-            <div class="media_tags_container associated_item">
-
-                {% if media.tags is not empty %}
-
-                    {% for tag in media.tags %}
-                        <p class="tag container-tags">
-                            <span class="mini-cercle" style="background: {{tag.color}};"></span>
-                            <span class="current-tags-name">{{ tag.name }}</span>
-                        </p>
-                    {% endfor %}
-
-                {% else %}
-
-                    <p>0 tags </p>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
-    </div>
 
 </div>

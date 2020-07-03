@@ -43,8 +43,8 @@
                     {{form_widget(form.basicCriterion.name, {'attr': {'class': 'input-custome', ' placeholder' : 'Critère de base'}})}}
                 </div>
                 <div class="row">
-                {{ form_label(form.basicCriterion.name, 'description :',  {'label_attr': {'class': 'form-label'}} )  }}
-                {{form_widget(form.basicCriterion.description, {'attr': {'class': 'input-custome',' placeholder' : 'Gamme de base valable pour Halal et Pas Halal'} } )}}
+                    {{ form_label(form.basicCriterion.name, 'Description :',  {'label_attr': {'class': 'form-label'}} )  }}
+                    {{form_widget(form.basicCriterion.description, {'attr': {'class': 'input-custome',' placeholder' : 'Gamme de base valable pour Halal et Pas Halal'} } )}}
                 </div>
             </div>
 
@@ -62,8 +62,7 @@
             
              <div class="content-criteres-bloc">
                 <ul class="tags criterion_list" data-prototype="{{ form_widget(form.criterions.vars.prototype)|e('html_attr') }}" data-widget-tags="{{ '<li class="row-criteres"></li>'|e }}">
-                    {{dump(form)}}
-                    {% for criterion in form.criterions  %}   
+                    {% for criterion in form.criterions  %}
                     <li class="row-criteres " >
                         <div >
                             <div id="{{criterion.vars.id}}">
@@ -79,6 +78,7 @@
                                     {{ form_widget(criterion.name, {'attr': {'class': 'input-custome',' placeholder' : ' ', }})  }}
                                 </div>
                                 <div >
+                                    {#{{ form_label(criterion.description, 'Description :',  {'label_attr': {'class': 'form-label'}} )  }}#}
                                     {{ form_widget(criterion.description, {'attr': {'class': 'input-custome-desc',' placeholder' : ''}}) }}
                                 </div>
                             </div>   
