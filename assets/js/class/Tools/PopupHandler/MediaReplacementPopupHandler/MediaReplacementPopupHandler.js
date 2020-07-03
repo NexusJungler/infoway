@@ -263,7 +263,7 @@ class MediaReplacementPopupHandler extends SubTool
                     this.__replacementInfos.remplacementDate.start = this.__$location.find('.remplacement_date_start').val();
                     this.__replacementInfos.remplacementDate.end = this.__$location.find('.remplacement_date_end').val();
 
-                    if(confirm("Attention ! Cet action est définitive. Êtres-vous sûr de vouloir continuer ?"))
+                    if(confirm("Le média sera remplacé puis supprimé, cet action est définitive ! Êtres-vous sûr de vouloir continuer ?"))
                         this.sendRemplacementDatas();
                 }
 
