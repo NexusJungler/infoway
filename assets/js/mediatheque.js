@@ -15,7 +15,7 @@ toolBox.getTool("PopupHandler").activeSubTool("MediaInfoSheetHandler")
                                         .activeSubTool("MediaWaitingIncrustationHandler")
                                         .activeSubTool("AssociationPopupHandler", ["all"])
                                         .activeSubTool("UploadHandlerTool")
-                                        //.activeSubTool("MediaDeletingButtonHandler")
+                                        .activeSubTool("MediaExpandedMiniatureDisplayHandler")
 ;
 
 
