@@ -10,7 +10,7 @@
 
         {% if media is defined %}
 
-        <div class="media_miniature_container media_{{ media.orientation }}" data-customer="{{ app.session.get('current_customer').name| lower }}" data-media_id="{{ media.id }}" data-media_type="{{ media_type }}">
+        <div class="media_miniature_container media_{{ media.orientation }}" data-customer="{{ app.session.get('current_customer').name| lower }}" data-media_id="{{ media.id }}" data-file_type="{{ file_type }}" data-media_type="{{ media.type }}">
 
         {% else %}
 
@@ -18,15 +18,15 @@
 
         {% endif %}
 
-            <div class="media_container_{{ (media_type is defined and media_type is same as('image')) ? 'img' : 'video' }}">
+            <div class="media_container_{{ (file_type is defined and file_type is same as('image')) ? 'img' : 'video' }}">
 
-                {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
+                {% if miniature_medium_exist is defined and miniature_medium_exist is same as(false) %}
 
-                    <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                    <img class="media_miniature miniature_{{ file_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
                 {% else %}
 
-                    {% if media_type is defined and media_type is same as('image') %}
+                    {% if file_type is defined and file_type is same as('image') %}
 
                         <div class="media_container_arrows">
                             <i class="fas fa-expand-arrows-alt"></i>
@@ -34,7 +34,7 @@
                         <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/medium/{{ media.id }}.png"
                              alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/medium/{{ media.id }}.png">
 
-                    {% elseif media_type is defined and media_type is same as('video') %}
+                    {% elseif file_type is defined and file_type is same as('video') %}
 
 
                         <div class="media_container_arrows">
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="input_coontainer">
-                            {{ form_widget(form.diffusionStart) }}
+                            {{ form_widget(form.diffusionStart, {'attr': {'class': 'media_diff_start'}}) }}
                         </div>
                     </div>
 
@@ -87,12 +87,12 @@
                         </div>
 
                         <div class="input_coontainer">
-                            {{ form_widget(form.diffusionEnd) }}
+                            {{ form_widget(form.diffusionEnd, {'attr': {'class': 'media_diff_end'}}) }}
                         </div>
                     </div>
                 {% else %}
                     <div class="container_body_child">
-                        <span class="media_diff_start">{{ (media is defined) ? media.diffusionStart | date('d/m/Y') : '' }}</span> au <span class="media_diff_end">{{ (media is defined) ? media.diffusionEnd | date('d/m/Y') : '' }}</span>
+                        <span class="media_diff_start">{{ (media is defined) ? media.diffusionStart | date('d/m/Y H:i') : '' }}</span> au <span class="media_diff_end">{{ (media is defined) ? media.diffusionEnd | date('d/m/Y H:i') : '' }}</span>
                     </div>
                 {% endif %}
             </div>
@@ -183,7 +183,7 @@
 
         <div class="container">
             <div class="container_child">
-                <span class="container_child_title">Nom du produit :</span>
+                <span class="container_child_title">Nom du média :</span>
             </div>
             <div class="container_child media_name_container">
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}

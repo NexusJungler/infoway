@@ -171,11 +171,11 @@ class MediaController extends AbstractController
         $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
         $productsTags = $productRepo->findProductsAssociatedDatas('tags');
 
-        $mediaInfos = $mediaRepo->getMediaInfosForEdit($id);
-
         $media = $mediaRepo->find($id);
         if(!$media)
             throw new Exception(sprintf("No media can be found with this id : '%s'", $id));
+
+        $mediaInfos = $mediaRepo->getMediaInfosForEdit($id);
 
         $medias = $mediaRepo->getAllMediasExcept([$media]);
 
@@ -183,6 +183,12 @@ class MediaController extends AbstractController
             'tagRepo' => $tagRepo,
             'mediaRepo' => $mediaRepo,
         ]);
+
+        $currentCustomerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+
+        $miniature_medium_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
+                                              (($media instanceof Image) ? 'images': 'videos') . "/medium/". $media->getId() . "." .
+                                              ( ($media instanceof Image) ? 'png' : 'mp4' ));
 
         $form->handleRequest($request);
 
@@ -219,7 +225,7 @@ class MediaController extends AbstractController
             'form' => $form->createView(),
             'media' => $media,
             'medias' => $medias,
-            'media_type' => ($media instanceof Video) ? 'video': 'image',
+            'file_type' => ($media instanceof Video) ? 'video': 'image',
             'media_characteristics' => $characteristics,
             'media_incrustations' => $mediaInfos['media_incrustations'],
             'media_criterions' => $mediaInfos['media_criterions'],
@@ -227,6 +233,7 @@ class MediaController extends AbstractController
             'media_allergens' => $mediaInfos['media_allergens'],
             'action' => 'edit',
             'sousTitle' => 'Modifier',
+            'miniature_medium_exist' => $miniature_medium_exist,
         ]);
 
     }
@@ -639,30 +646,60 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/replace/media/{location}", name="media::replaceMedia", methods={"POST", "GET"}, requirements={"location": "mediatheuqe|programmation"})
+     * @Route(path="/replace/media/in/{location}", name="media::replaceMedia", methods={"POST", "GET"}, requirements={"location": "mediatheque|programmation"})
      */
     public function replaceMedia(Request $request, string $location)
     {
 
-        if($location === "mediatheque")
-            return $this->replaceMediaInMediatheque($request);
+        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $mediaRepo = $manager->getRepository(Media::class);
 
-        else
-            return $this->replaceMediaInProgrammation($request);
+        $mediaToReplace = $mediaRepo->find($request->request->get('remplacementDatas')['mediaToReplaceId']);
+        $mediaSubstitute = $mediaRepo->find($request->request->get('remplacementDatas')['substituteId']);
 
-    }
+        if(!$mediaToReplace || !$mediaSubstitute)
+            throw new Exception(sprintf("No media found with '%s' id !",
+                                        (!$mediaToReplace) ? $request->request->get('remplacementDatas')['mediaToReplaceId'] :
+                                            $request->request->get('remplacementDatas')['substituteId']));
 
+        $fileType = $request->request->get('remplacementDatas')['fileType'];
 
-    private function replaceMediaInMediatheque(Request &$request)
-    {
+        $currentCustomerName = strtolower($this->sessionManager->get('current_customer')->getNAme());
 
-        dd($request);
+        $remplacementDates = [
+            'start' => $request->request->get('remplacementDatas')['remplacementDate']['start'],
+            'end' => $request->request->get('remplacementDatas')['remplacementDate']['end'],
+        ];
 
-    }
+        $now = new DateTime('now');
+        $mediaReplaceStartDate = new DateTime($remplacementDates['start']);
 
-    private function replaceMediaInProgrammation(Request &$request)
-    {
-        dd($request);
+        dump($mediaReplaceStartDate === $now || $now > $mediaReplaceStartDate);
+
+        if( $mediaReplaceStartDate === $now || $now > $mediaReplaceStartDate )
+        {
+            $mediaRepo->replaceAllMediaOccurrences($mediaToReplace, $mediaSubstitute);
+
+            $qualities = ['low', 'medium', 'high', 'HD'];;
+
+            foreach ($qualities as $quality)
+            {
+
+                $source = $this->parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
+                . $fileType . "/" . $quality . "/" . $mediaToReplace->getId() . "." . ( ($fileType === 'image') ? 'png': 'mp4' );
+
+                dd($source);
+
+            }
+
+        }
+
+        // @TODO: else remplacement à date (utiliser entité Date
+
+        $manager->flush();
+
+        dd($request->request);
+
     }
 
 

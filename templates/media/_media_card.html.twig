@@ -1,4 +1,4 @@
-<div class="card card_{{ media_type }}" id="media_{{ media.id }}"  data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-media_type="{{ media_type }}" data-orientation="{{ media.orientation }}"
+<div class="card card_{{ file_type }}" id="media_{{ media.id }}"  data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-file_type="{{ file_type }}" data-orientation="{{ media.orientation }}"
 
         data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}"
 
@@ -57,15 +57,15 @@
     <div class="card_body">
 
         <div class="media_miniature_container media_{{ media.orientation }}" data-miniature_medium_exist="{{ (miniature_medium_exist is defined and miniature_medium_exist is same as(true)) ? 'true' : 'false' }}" data-size="{{ media.width }}*{{ media.height }}" data-extension="{{ media.extension }}"
-                {% if media_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
+                {% if file_type is same as('image') %} data-dpi="72" {% else%} data-codec="{{ media.videoCodec }}" {% endif%} >
 
             {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
 
-                <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                <img class="media_miniature miniature_{{ file_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
             {% else %}
 
-                {% if media_type is same as('image') %}
+                {% if file_type is same as('image') %}
 
                     <div class="media_container_img">
                         <div class="media_container_arrows">
@@ -76,7 +76,7 @@
                     </div>
 
 
-                {% elseif media_type is same as('video') %}
+                {% elseif file_type is same as('video') %}
 
                     <div class="media_container_video">
                         <div class="media_container_arrows">

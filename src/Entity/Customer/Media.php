@@ -73,6 +73,7 @@ class Media
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media")
+     * @ORM\JoinTable(name="medias_tags")
      */
     private $tags;
 

@@ -21,7 +21,7 @@ class Incruste
     /**
      * @ORM\ManyToMany(targetEntity="Media", mappedBy="incrustes")
      */
-    private $media;
+    private $medias;
 
     /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="incrustes")
@@ -87,7 +87,7 @@ class Incruste
 
     public function __construct()
     {
-        $this->media = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,26 +110,39 @@ class Incruste
     /**
      * @return Collection|Media[]
      */
-    public function getMedia(): Collection
+    public function getMedias(): Collection
     {
-        return $this->media;
+        return $this->medias;
     }
 
-    public function addMedium(Media $medium): self
+    public function addMedia(Media $media): self
     {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->addIncruste($this);
+        if (!$this->medias->contains($media)) {
+            $this->medias[] = $media;
+            $media->addIncruste($this);
         }
 
         return $this;
     }
 
-    public function removeMedium(Media $medium): self
+    public function removeMedia(Media $media): self
     {
-        if ($this->media->contains($medium)) {
-            $this->media->removeElement($medium);
-            $medium->removeIncruste($this);
+        if ($this->medias->contains($media)) {
+            $this->medias->removeElement($media);
+            $media->removeIncruste($this);
+        }
+
+        return $this;
+    }
+
+    public function replaceMedia(Media $mediaToReplace, Media $substitute)
+    {
+        if ($this->medias->contains($mediaToReplace)) {
+            $this->medias->removeElement($mediaToReplace);
+        }
+
+        if (!$this->medias->contains($substitute)) {
+            $this->medias[] = $substitute;
         }
 
         return $this;

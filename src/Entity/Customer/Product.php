@@ -92,8 +92,7 @@ class Product
     private $product_allergens;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Media", inversedBy="products", cascade={"persist"})
-     * @ORM\JoinTable(name="products_medias")
+     * @ORM\ManyToMany(targetEntity="Media", mappedBy="products", cascade={"persist"})
      */
     private $medias;
 
@@ -395,6 +394,18 @@ class Product
         return $this;
     }
 
+    public function replaceMedia(Media $mediaToReplace, Media $substitute)
+    {
+        if ($this->medias->contains($mediaToReplace)) {
+            $this->medias->removeElement($mediaToReplace);
+        }
+
+        if (!$this->medias->contains($substitute)) {
+            $this->medias[] = $substitute;
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection|ElementGraphic[]

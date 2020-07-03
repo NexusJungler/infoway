@@ -146,11 +146,11 @@
 
                                             {% if media.media_low_miniature_exist is same as(false) %}
 
-                                                <img class="substitute_miniature substitute_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                                                <img class="substitute_miniature substitute_{{ media.file_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
                                             {% else %}
 
-                                                {% if media.media_type is same as('image') %}
+                                                {% if media.file_type is same as('image') %}
 
                                                     <div class="media_container_img container">
                                                         <div class="media_container_arrows">
@@ -161,7 +161,7 @@
                                                     </div>
 
 
-                                                {% elseif media.media_type is same as('video') %}
+                                                {% elseif media.file_type is same as('video') %}
 
                                                     <div class="media_container_video container">
                                                         <div class="media_container_arrows">

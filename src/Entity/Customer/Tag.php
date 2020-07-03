@@ -58,8 +58,7 @@ class Tag
     private $LocalProgrammings;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Media", inversedBy="tags")
-     * @ORM\JoinTable(name="tags_medias")
+     * @ORM\ManyToMany(targetEntity="Media", mappedBy="tags")
      */
     private $medias ;
 
@@ -258,7 +257,18 @@ class Tag
         return $this;
     }
 
+    public function replaceMedia(Media $mediaToReplace, Media $substitute)
+    {
+        if ($this->medias->contains($mediaToReplace)) {
+            $this->medias->removeElement($mediaToReplace);
+        }
 
+        if (!$this->medias->contains($substitute)) {
+            $this->medias[] = $substitute;
+        }
+
+        return $this;
+    }
 
 
 }

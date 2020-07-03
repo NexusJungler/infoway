@@ -120,12 +120,12 @@ class MediaRepository extends ServiceEntityRepository
 
             if($media instanceof Image)
             {
-                $media->media_type = 'image';
+                $media->file_type = 'image';
             }
 
             else
             {
-                $media->media_type = 'video';
+                $media->file_type = 'video';
             }
 
         }
@@ -204,7 +204,7 @@ class MediaRepository extends ServiceEntityRepository
 
                     $orderedMedias['medias'][$index] = [
                         'media' => null,
-                        'media_type' => ($media instanceof Image) ? 'image': 'video',
+                        'file_type' => ($media instanceof Image) ? 'image': 'video',
                         'media_products' => [],
                         'media_tags' => [],
                         'media_criterions' => [],
@@ -308,7 +308,7 @@ class MediaRepository extends ServiceEntityRepository
                                                                 $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
                                                                 . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
-                $media->media_type = ($media instanceof Image) ? 'image': 'video';
+                $media->file_type = ($media instanceof Image) ? 'image': 'video';
                 $medias[] = $media;
             }
         }
@@ -331,6 +331,25 @@ class MediaRepository extends ServiceEntityRepository
                                                ->setParameter('media', $media)
                                                ->getQuery()
                                                ->getResult();
+
+    }
+
+
+    public function replaceAllMediaOccurrences(Media $mediaToReplace, Media $substitute)
+    {
+
+        $sql = "UPDATE media_product SET media_product.media_id = :newMedia WHERE media_product.media_id = :oldMedia;
+                UPDATE media_tag SET media_tag.media_id = :newMedia WHERE media_tag.media_id = :oldMedia;
+                UPDATE media_incruste SET media_incruste.media_id = :newMedia WHERE media_incruste.media_id = :oldMedia;
+                UPDATE screen_playlist_entries SET screen_playlist_entries.media_id = :newMedia WHERE screen_playlist_entries.media_id = :oldMedia;
+                DELETE FROM media WHERE media.id = :oldMedia
+                ";
+
+        return $this->_em->getConnection()->prepare($sql)
+                         ->execute([
+                                       'newMedia' => $substitute->getId(),
+                                       'oldMedia' => $mediaToReplace->getId()
+                                   ]);
 
     }
 

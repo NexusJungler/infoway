@@ -41,13 +41,14 @@
 
                     <div class="side left_side filters_container filter_by_media_category_container">
 
-                        <button type="button" class="btn show_only_images">Images</button>
-                        <button type="button" class="btn show_only_videos">Vidéos</button>
-                        <button type="button" class="btn show_only_synchros">Synchros</button>
+                        <button type="button" class="btn show_only_image">Images</button>
+                        <button type="button" class="btn show_only_video">Vidéos</button>
+                        <button type="button" class="btn show_only_synchro">Synchros</button>
                         <button type="button" class="btn show_only_web_service" disabled>Service Web</button>
                         <button type="button" class="btn show_only_external_source" disabled>Sources Ext.</button>
                         <button type="button" class="btn show_only_thematic" disabled>Thématiques</button>
                         <button type="button" class="btn show_only_template">Templates</button>
+                        <button type="button" class="btn show_only_local_medias">Local</button>
 
                     </div>
 
@@ -140,11 +141,11 @@
 
                                                     {% if media.media_low_miniature_exist is same as(false) %}
 
-                                                        <img class="substitute_miniature substitute_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                                                        <img class="substitute_miniature substitute_{{ file_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
                                                     {% else %}
 
-                                                        {% if media.media_type is same as('image') %}
+                                                        {% if media.file_type is same as('image') %}
 
                                                             <div class="media_container_img container">
                                                                 <div class="media_container_arrows">
@@ -155,7 +156,7 @@
                                                             </div>
 
 
-                                                        {% elseif media.media_type is same as('video') %}
+                                                        {% elseif media.file_type is same as('video') %}
 
                                                             <div class="media_container_video container">
                                                                 <div class="media_container_arrows">
@@ -191,11 +192,11 @@
                                 <div class="remplacement_infos_setting_date_container">
 
                                     <label>
-                                        Du <input type="date" class="remplacement_date_choice_input remplacement_date_start">
+                                        Du <input type="datetime-local" class="remplacement_date_choice_input remplacement_date_start">
                                     </label>
 
                                     <label>
-                                        Au <input type="date" class="remplacement_date_choice_input remplacement_date_end">
+                                        Au <input type="datetime-local" class="remplacement_date_choice_input remplacement_date_end">
                                     </label>
 
                                 </div>
@@ -216,6 +217,10 @@
 
             <div class="actions_buttons_container">
                 <button class="btn close_modal_button cancel" type="button">Annuler</button>
+            </div>
+
+            <div class="actions_buttons_container">
+                <button class="btn upload_substitute_btn" type="button">Uplpoader</button>
             </div>
 
             <div class="actions_buttons_container">
