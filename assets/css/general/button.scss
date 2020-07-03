@@ -1,33 +1,41 @@
+
 /* == button == */
+button{
+    &:disabled{
+
+        cursor: not-allowed;
+    }
+}
 
 .btn{
-    height: 31px;
+    height: 3.1rem;
     background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
     border: 0.06rem solid #306D7C;
-    padding: 0.20rem 0.5rem 0.4rem;
-    font: 1rem 'Barlow', medium;
+    padding: 0.30rem 0.7rem 0.6rem;
+    font: 1.6rem 'Barlow', medium;
     color: #ffffff;
-    margin-right: 10px;
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 6px;
+    margin-right: 1rem;
+    box-shadow: 0 0.3rem 0.6rem #00000029;
+    border-radius: 0.6rem;
     &:hover{
         background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
     }
     i{
-        margin-right: 10px;
+        margin-right: 1rem;
     }
+
 }
 
 .btn_file{
-    height: 31px;
+    //height: 31px;
     border: 0.06rem solid #306D7C;
-    padding: 0.20rem 0.5rem 0.4rem;
-    font: 0.9rem 'Barlow', medium;
+    padding: 0.30rem 0.7rem 0.6rem;
+    font: 1.6rem 'Barlow', medium;
     color: #ffffff;
-    margin-right: 10px;
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 6px;
-    letter-spacing: 0px;
+    margin-right: 1rem;
+    box-shadow: 0 0.3rem 0.6rem #00000029;
+    border-radius: 0.6rem;
+    letter-spacing: 0;
     //&:hover{
     //    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
     //}
@@ -36,20 +44,47 @@
     }
 }
 
+.btn-tags{
+    position: relative;
+    width: 9.75rem;
+    background: #F57171 0% 0% no-repeat padding-box;
+    box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
+    border: 0.0625rem solid #FFFFFF;
+    padding: 0.6rem 0.7rem;
+    border-radius: 1rem 0 0 1rem;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    padding: 0.6rem;
+    &::before{
+        content: '';
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        width: 0.9rem;
+        height: 0.9rem;
+        background:#e8e4e4 0% 0% no-repeat padding-box;
+        box-shadow: 0.2rem 0.2rem 0.2rem  #00000029;
+        border : $border--radius--white;
+        opacity: 1;
+        border-radius: 50%;
+        margin-right: 0.6rem;
+    }
+}
 
 .btn_hidden{
-  pointer-events: none;
-  background: #ABBBC0;
-  border: rem(1px) solid #FFFFFF;
+    //pointer-events: none;
+    background: #ABBBC0;
+    border: 0.1rem solid #FFFFFF;
+    cursor: not-allowed;
 }
 
 .content-btn_center{
-     margin-top: 35px;
+     margin-top: 3.5rem;
      text-align: center;
  }
 
 .content-btn_left{
-    margin-top: 35px;
+    margin-top: 3.5rem;
     text-align: left;
 }
 

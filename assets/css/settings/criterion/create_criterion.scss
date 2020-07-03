@@ -7,14 +7,14 @@
 .create-criteres{
     .form-criterion-content{
         width: 100%;
-        max-width: 87.5rem;
+        max-width: 130rem;
         margin: 0 auto;
     }
 }
 
 .create-criteres{
     .form-content{
-        margin: 2rem auto ;
+        margin: 4rem auto ;
         padding: 0;
         .row{
             padding: 1rem 20px;
@@ -24,7 +24,7 @@
             .form-label{
                 padding-top: 0.3rem;
                 color: #283338;
-                font: 1rem "Barlow";
+                font: 1.5rem "Barlow";
             }
             &:first-child{
                 padding: 1rem 10px 0px 10px;
@@ -33,7 +33,7 @@
                 .row{
                     .form-label{
                         width: 38%;
-                        margin-right: 19px;
+                        margin-right: 1.9rem;
                     }
                     &:first-child{
                         width: 30%;
@@ -42,19 +42,19 @@
                         width: 70%;
                         .form-label{
                             width: auto;
-                            margin-right: 19px;
+                            margin-right: 1.9rem;
                         }
                     }
                 }
             }
             &:nth-child(n+2){
                 color: #283338;
-                font: 1rem "Barlow";
+                font: 1.5rem "Barlow";
                 .row{
                     padding: 0;
                     &:first-child{
                         width: 10%;
-                        margin-right: 19px;
+                        margin-right: 1.9rem;
                     }
                     &:nth-child(2){
                         width: 18%;
@@ -66,7 +66,7 @@
                         width: 58%;
                         .form-label{
                             text-align: end;
-                            margin-right: 20px;
+                            margin-right: 2rem;
                             width: 26%;
                         }
                         .input-custome{
@@ -83,18 +83,18 @@
 
         .btn-save{
             background: #E3E3E3 0% 0% no-repeat padding-box;
-            padding: 10px;
+            padding: 1rem;
             text-align: center;
         }
     }
 
     .row-multiple{
-        margin-top: 10px;
+        margin-top: 1rem;
         .form-label{
             width: 18%;
         }
         .input-custome{
-            width: 250px;
+            width: 25rem;
         }
     }
 
@@ -113,13 +113,13 @@
         .container-input {
             
             .container-rdo {
-                top: 11px;
-                left: 10px;
-                height: 14px;
-                width: 14px;
+                top: 1.1rem;
+                left: 1rem;
+                height: 1.4rem;
+                width: 1.4rem;
                 &::after{
-                    width: 10px;
-                    height: 10px;
+                    width: 1rem;
+                    height: 1rem;
                 }
             }
         }
@@ -132,27 +132,27 @@
 
 .create-criteres{
     .content-criteres{
-        margin-bottom: 40px;
+        margin-bottom: 4rem;
         .title{
             width:25%;
             text-align: right;
-            font: 18px 'Barlow';
+            font: 1.8rem 'Barlow';
             color: #899CA4;
         }    
         .content-criteres-bloc{
             height: 100%;
-            max-height: 250px;
+            max-height: 25rem;
             overflow: auto;
             display: block;
             .criterion_list{
                 height: 100%;
-                max-height: 250px;
+                max-height: 25rem;
                 overflow: auto;
                 display: block;
             }
             .row-criteres{    
                 display: flex;
-                padding: 1rem 20px;
+                padding: 1rem 2rem;
                  div{
                     display: contents;
                     
@@ -160,45 +160,45 @@
                 label{
                     width: 10%;
                     display: inline-block;
-                    font: 18px 'Barlow';
+                    font: 1.8rem 'Barlow';
                     color: #899CA4;
                 }
                 .input-custome{
-                    width: 250px;
-                    height: 1.5625rem;
+                    width: 23rem;
+                    height: 2rem;
                     margin: 0 2.5rem 0 1.25rem;
                     border: 0.06rem solid #4D646D;
                 }
                 .input-custome-desc {
-                    width: 650px;
+                    width: 65rem;
                     max-width: 100%;
-                    height: 1.5625rem;
+                    height: 2rem;
                     padding: 0em 0rem 0rem 1rem;
                     border: 0.06rem solid #899CA4;
                     border-radius: 0.4rem;
-                    margin-right: 40px;
-                    font: 16px 'Barlow';
+                    margin-right: 4rem;
+                    font: 1.6rem 'Barlow';
                 }
                 
             }
             .delete-row{
-                width: 23px;
-                height: 23px;
+                width: 2.3rem;
+                height: 2.3rem;
                 background: #BFCCD1;
                 padding: 0rem 0rem 0.2rem;
-                font-size: 17px;
+                font-size: 1.7rem;
                 border: 0;
             }
         }
         .container-input{
             .container-rdo{
-                top: 4px;
-                left: 25px;
-                height: 16px;
-                width: 16px;
+                top: 0.4rem;
+                left: 2.5rem;
+                height: 1.6rem;
+                width: 1.6rem;
                 &:after{
-                    width: 12px;
-                    height: 12px;
+                    width: 1.2rem;
+                    height: 1.2rem;
                 }
             }
         }
@@ -207,12 +207,12 @@
             width: 28.5%;
             text-align: right;
             .btn{
-                width: 250px;
+                width: 25rem;
                 position: relative;
                 i{
                     position: absolute;
-                    left: 6px;
-                    top:3.5px;
+                    left: 0.6rem;
+                    top:0.35rem;
                 }
             }
         }
@@ -225,7 +225,7 @@
     justify-content: center;
     position: relative;
     margin-left: 1rem;
-    width: 170px;
+    width: 17rem;
     input{
         display: none;
     }
@@ -237,14 +237,14 @@
         flex: 3.34;
         cursor: pointer;
         transition: 250ms;
-        font: 18px "Barlow" ;
+        font: 1.8rem "Barlow" ;
         color: #4D646D;
         &.rating-label-non {
-            right: -15px;
+            right: -1.5rem;
             text-align: left;
         }
         &.rating-label-oui {
-            left: -20px;
+            left: -2rem;
             text-align: right;
         }
     }
@@ -252,21 +252,21 @@
 
 .toggle-rating-pill {
 	position: relative;
-	height: 26px;
-	width: 54px;
+	height: 2.6rem;
+	width: 5.4rem;
 	background: #899CA4 0% 0% no-repeat padding-box;
-	border-radius: 500px;
+	border-radius: 50rem;
 	transition: all 250ms;
 }
 
 .smile-rating-toggle {
 	position: absolute;
-	width: 22px;
-	height: 22px;
+	width: 2.2rem;
+	height: 2.2rem;
     background-color: white;
-    top:2px;
-	left: 60px;
-	border-radius: 500px;
+    top: 0.2rem;
+	left: 6rem;
+	border-radius: 50rem;
 	transition: all 250ms;
 	z-index: 4;
 }
@@ -281,7 +281,7 @@
     font-weight: 700;
 }
 #criterions_list_basicCriterionUsed_1:checked~.smile-rating-toggle {
-    left: 88px;
+    left: 8.8rem;
 }
 
 #criterions_list_basicCriterionUsed_1:checked~.toggle-rating-pill {
@@ -291,12 +291,12 @@
 .content-criteres-bloc {
     .container-input{
         .container-rdo{
-            top: 4px;
-            height: 19px;
-            width: 19px;
+            top: 0.4rem;
+            height: 1.9rem;
+            width: 1.9rem;
             &:after{
-                width: 15px;
-                height: 15px;
+                width: 1.5rem;
+                height: 1.5rem;
             }
         }
     }

@@ -1,7 +1,7 @@
 /****************************************************** CONTAINER ********************************************************************/
 #container {
     position: relative;
-    top: rem(130px);
+    top: 13rem;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -22,8 +22,8 @@
         left: 0;
         z-index: 2;
         cursor: pointer;
-        width: rem(50px);
-        height: rem(35px);
+        width: 5rem;
+        height: 3.5rem;
         opacity: 0;
     } 
     .hamburger {
@@ -31,7 +31,7 @@
         top: 0;
         left: 0;
         z-index: 1;
-        width: rem(55px);
+        width: 5.5rem;
         padding: 1rem;
         display: flex;
         align-items: center;
@@ -39,7 +39,7 @@
         & > div{
             position: relative;
             width: 100%;
-            height: rem(5px);
+            height: 0.5rem;
             background-color: #4F9BAE;
             display: flex;
             align-items: center;
@@ -50,14 +50,14 @@
                 content: "";
                 position: absolute;
                 z-index: 1;
-                top: rem(-10px);
+                top: -1rem;
                 width: 100%;
-                height: rem(5px);
+                height: 0.5rem;
                 background: inherit;
             }
         }
         & > div::after {
-            top: rem(10px);
+            top: 1rem;
         }
     }
 
@@ -103,25 +103,22 @@ nav {
 
         /** Menu  **/
         .nav-menu{
-            padding: rem(10px) 0;
+            padding: 1rem 0;
             & > li {
-                margin-bottom: rem(0px);
-                padding: rem(0px);
+                margin-bottom: 0rem;
+                padding: 0rem;
                 border: 0;
                 a{  
                     display: flex;
-                    padding: rem(10px) rem(10px);
+                    padding: 1rem ;
                     height: auto;
                     i.icon{
-                        font-size: rem(15px);
+                        font-size: 1.5rem;
                         transform: scale(1);
                     } 
                 }
                 .nav-menu-title{
-                    font-size: rem(16px);
-                    // transition: all 500ms linear;
-                    // position: absolute;
-                    // left: 10px;
+                    font-size: 1.6rem;
                     display: block
                 }
                 &:hover{
@@ -129,15 +126,15 @@ nav {
                 }
             }
             & > li.nav__menu-home{
-                margin-bottom: rem(5px);
-                border: rem(0.3px) solid #87C4D1;
+                margin-bottom: 0.5rem;
+                border: 0.03rem solid #87C4D1;
                 a{
                     justify-content: center;
-                    padding: rem(6px) 0 rem(12px) 0;
+                    padding: 0.6rem 0 1.2rem 0;
                     .icon-iy-airplay{
-                        font-size: rem(39px);
-                        height: rem(39px);
-                        width: rem(45px);
+                        font-size: 3.9rem;
+                        height: 3.9rem;
+                        width: 4.5rem;
                     }
                 }
             }
@@ -166,12 +163,12 @@ nav {
         text-align: center;
         position: relative;
         z-index: 1;
-        padding: rem(10px) 0;
+        padding: 1rem 0;
 
         .active{
             cursor: pointer;
             background: #4F9BAE 0% 0% no-repeat padding-box;
-            border: rem(0.3px) solid #87C4D1;
+            border: 0.03rem solid #87C4D1;
             color: white;
             i{
                 color: white;
@@ -179,51 +176,48 @@ nav {
         }
 
         li.nav__menu-home{
-            margin-bottom: rem(10px);
+            margin-bottom: 1rem;
             a{
-                padding-bottom: rem(5px);
+                padding-bottom: 0.5rem;
                 justify-content: center;
                 .icon-iy-airplay{
-                    font-size: rem(39px);
-                    height: rem(39px);
-                    width: rem(45px);
+                    font-size: 3.9rem;
+                    height: 3.9rem;
+                    width: 4.5rem;
                 }
             }
         }
         .nav-menu-title{
             display: none;
-            // position: absolute;
-            // left: -200px;
         }
         & > .nav-menu-hover{
             // transition: all 300ms linear;
             &:hover{
                 cursor: pointer;
                     background: #4F9BAE 0% 0% no-repeat padding-box;
-                    border: rem(0.3px) solid #87C4D1;
+                    border: 0.03rem solid #87C4D1;
                     border-right: 0;
                     color: white;
                     i{
                         color: white;
                     }
                 .nav-sous-menu-mobile{
-                    // overflow: inherit;
                     opacity: 1;
                     display: block;
                     position: absolute;
-                    width: rem(170px);
+                    width: 17rem;
                     transition: all 500ms linear;
                     left: 100%;
-                    top: rem(0.5px);
+                    top: 0.05rem;
                     z-index: 5;
                     li{
                         height: auto;
                     }
                     a{
-                        padding: rem(18.5px);
+                        padding: 1.85rem;
                     }
                     span{
-                        font-size: rem(16px);
+                        font-size: 1.6rem;
                         display: block;
                         color: white;
                     }
@@ -234,26 +228,25 @@ nav {
             position: relative;
             cursor: pointer;
             color: #FFFFFF;
-            font: rem(16px);
+            font: 1.6rem;
             display: block;
-            margin-bottom: rem(10px);
+            margin-bottom: 1rem;
             
             a{
                 display: block;
-                padding: rem(10.5px);
+                padding: 1.05rem;
                 align-items: center;
                 flex-direction: row;
                 justify-content: space-between;
                 i{  
                     color: #899CA4;
-                    font-size: 26px;
+                    font-size: 2.6rem;
                     // transition: all .2s ease-in-out;
                 }
             }
             &:hover{
                 cursor: pointer;
                 background: #4F9BAE 0% 0% no-repeat padding-box;
-                // border: rem(0.3px) solid #87C4D1;
                 color: white;
                 i{
                     color: white;
@@ -282,14 +275,14 @@ nav {
                         display:block;
                         text-decoration: none;
                         color: #fff;
-                        padding: rem(4px);
+                        padding: 0.4rem;
                         font-family: verdana;
                         font-size: 0.7em;
                     }
                     &:hover{
                         cursor: pointer;
                         background: #4F9BAE 0% 0% no-repeat padding-box;
-                        border: rem(0.3px) solid #87C4D1;
+                        border: 0.03rem solid #87C4D1;
                         color: white;
                         i{
                             color: white;
@@ -328,7 +321,7 @@ nav {
                     &:hover{
                         cursor: pointer;
                         background: #4F9BAE 0% 0% no-repeat padding-box;
-                        border: rem(0.3px) solid #87C4D1;
+                        border: 0.03rem solid #87C4D1;
                         color: white;
                         i{
                             color: white;
@@ -336,7 +329,7 @@ nav {
                     }
                     &:nth-child(1){
                         background: #4F9BAE 0% 0% no-repeat padding-box;
-                        border: rem(0.3px) solid #87C4D1;
+                        border: 0.03rem solid #87C4D1;
                         border-left: 0;
 
                     }

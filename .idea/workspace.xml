@@ -3,276 +3,40 @@
   <component name="ChangeListManager">
     <list default="true" id="b237bda7-15f6-4ae8-877d-6e58489f2c4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/button.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display-down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display-down.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down1.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/dropdown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/dropdown.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/form.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/input-rdo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/input-rdo.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/popup.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/scrollbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/scrollbar.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/table.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome_icon/app-infoway.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome_icon/app-infoway.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/allergenes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/allergenes.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/app_register.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app_register.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/class/managers/clockManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/class/managers/clockManager.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/custom-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/custom_icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom_icon.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/debug.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/debug.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-italic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-italic.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/fonts/barlow-v4-latin-regular.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/bralow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/bralow.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/general/button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/button.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/general/form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/form.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/general/input-rdo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/input-rdo.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/general/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/popup.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/reset.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/reset.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/general/scrollbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/scrollbar.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/general/table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/table.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/groupe-prix.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/groupe-prix.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/header_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header_menu.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/home_page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/home_page.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/media/edit_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/edit_media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media/media_image.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/show_media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/media/show_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/show_media.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/modals/modal_message.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/modals/modal_message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/modals/modal_message.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/modals/modal_message.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/nav_left.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/nav_left.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/modal_message.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/modal_message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/modal_message.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/modal_message.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_duplicate_product/popup_duplicate_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_duplicate_product/popup_duplicate_product.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_loading/popup_loading.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_loading/popup_loading.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/allergene/allergenes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/allergene/allergenes.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/date/date.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/date/date.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/edit_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/edit_product.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/product_price.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/product_price.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/show_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/show_product.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/create.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/create.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/edit_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/edit_criterion.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/customer/create_customer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/customer/create_customer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/customer/list_customer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/customer/list_customer.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/settings_user.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/settings_user.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/create_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/create_tags.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/edit_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/edit_tags.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/user/create_user.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/user/create_user.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/site.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/user/on_logged_out.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/user/on_logged_out.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/user/password_forget.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/user/password_forget.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/user/password_reset.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/user/password_reset.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app_login.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app_login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/app_register.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app_register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/back-office_create-customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/back-office_create-customer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Clock/Clock.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Clock/Clock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observable.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observer.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Design_Patterns/Observer/Observer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Form/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Form/Form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Managers/ClockManager/ClockManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Managers/ClockManager/ClockManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Modals/Modal_message.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Modals/Modal_message.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/tableDelete.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/tableDelete.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tabmenu/Tabmenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tabmenu/Tabmenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tags/Tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tags/Tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/AnimateTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/AnimateTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ArchivedMediasHandler/ArchivedMediasHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ArchivedMediasHandler/ArchivedMediasHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ClockTool/ClockTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ClockTool/ClockTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/CountryDataHandlerTool/CountryDataHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/CountryDataHandlerTool/CountryDataHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/CustomerCreatorHandler/CustomerCreatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/CustomerCreatorHandler/CustomerCreatorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByTypeSubTool/FilterMediasByTypeSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasWithSearchBarSubTool/FilterMediasWithSearchBarSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasWithSearchBarSubTool/FilterMediasWithSearchBarSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaDiffusionDateEditor/MediaDiffusionDateEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaDiffusionDateEditor/MediaDiffusionDateEditor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaInfosEditorTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/MediaInfosEditors/MediaInfosEditorTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PermissionHandlerTool/PermissionHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PermissionHandlerTool/PermissionHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/AssociationPopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/AssociationPopupHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/ProductAssociationHandler/ProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/ProductAssociationHandler/ProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaInfoSheetHandler/MediaInfoSheetHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/SubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/SubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/Tool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/ToolBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Translator/Translator.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Translator/Translator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Validator/FormDataValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Validator/FormDataValidator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/checkbox/checkbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/checkbox/checkbox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/image/Changeimage.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/image/Changeimage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Action/Action.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Action/Action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Clock/Clock.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Clock/Clock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Feature/Feature.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Feature/Feature.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Permission/Permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Permission/Permission.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/Subject/Subject.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/Subject/Subject.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/objects/User/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/objects/User/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/create/create-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/create/create-user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/criterion.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/criterion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/edit_media.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/edit_media.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/edit_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/edit_product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jqueryValidate/jquery.validate.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/mediatheque.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/mediatheque.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/modal_message.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/modal_message.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/permission.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/popup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/popup/popup_confirmation.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/popup/popup_confirmation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/product/product_price.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/product/product_price.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/setting.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/setting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/settings/criterion/createCriterion.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/settings/criterion/createCriterion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/settings/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/settings/customer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_allergens.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_allergens.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_categories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_factories.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_factories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_pricetypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_pricetypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/tags/edit_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/tags/edit_tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/tags/list_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/tags/list_tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/user_password_forget.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/user_password_forget.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/image/HD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/image/high" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/image/low" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/image/medium" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/video/HD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/video/high" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/video/low" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/miniatures/kfc/video/medium" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Tagss/management-tags.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Tagss/management-tags.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/allergens/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/allergens/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/allergens/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/allergens/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/categories/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories/create.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/categories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/checkoutsystems/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/checkoutsystems/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/checkoutsystems/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/checkoutsystems/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/criterion_list/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/criterion_list/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/criterion_list/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/criterion_list/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/customerb/create_customer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/customerb/create_customer.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/customerb/edit_customer.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/customerb/edit_customer.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/email_account_confirmation.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/email_account_confirmation.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/email_reset_password.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/email_reset_password.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/user.accountConfirmation.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/user.accountConfirmation.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/user.resetPassword.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/user.resetPassword.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/form/form_div_layout.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form/form_div_layout.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home-infoway.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home-infoway.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/home-company.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-company.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/home-enseigne.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-enseigne.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/home-info.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-info.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/zone-diffusion.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/zone-diffusion.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/info.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/info.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/edit_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/edit_media.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/loadingPopup/popup_loading.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/loadingPopup/popup_loading.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/popup-confirmation-delete.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/popup-confirmation-delete.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_allergens.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_allergens.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_criterion.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_criterion.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_tags.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_tags.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/productDuplicate/popup_product_incrustes_duplicate.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/productDuplicate/popup_product_incrustes_duplicate.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/create-date.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/create-date.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricetypes/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricetypes/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricetypes/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricetypes/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products/create_product.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/create_product.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/products/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products/test-multi-form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/test-multi-form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/products/test-multi-form2.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/test-multi-form2.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_setting/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_setting/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_setting/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_setting/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_setting/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_setting/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_setting/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_setting/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_setting/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_setting/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_setting/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_setting/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_space/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_space/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_space/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_space/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_space/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_space/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_space/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_space/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_space/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_space/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/display_space/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/display_space/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming/programming_mould/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming/programming_mould/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/setting.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/setting.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions/_delete_form.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/_criterions_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/_criterions_list.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/_delete_form.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/setting-user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/setting-user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/_edit_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/_edit_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/site.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sites/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sites/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sites/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sites/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sites/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sites/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sites/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sites/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sites/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sites/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sites/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sites/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates/delete_entity/__delete_entity.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/delete_entity/__delete_entity.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates/flash_message/__flash_message.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/flash_message/__flash_message.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates/paginator/__paginator.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/paginator/__paginator.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/test/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/test/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/wrapper/wrapper_produits.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/wrapper/wrapper_produits.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/wrapper/wrapper_settings.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/wrapper/wrapper_settings.html.twig" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/public/build/" />
     <ignored path="$PROJECT_DIR$/vendor/behat/transliterator/" />
@@ -421,82 +185,42 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/media/edit_media.html.twig">
+        <entry file="file://$PROJECT_DIR$/templates/media/media-image.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="63" column="72" selection-start-line="63" selection-end-line="64" />
+            <state relative-caret-position="438">
+              <caret line="297" selection-start-line="297" selection-end-line="297" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/home.html.twig">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/media/_media_card.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1278">
+              <caret line="28" column="28" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss">
+        <entry file="file://$PROJECT_DIR$/assets/css/media/show_media.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="126" column="41" selection-start-line="126" selection-end-line="127" />
-              <folding>
-                <element signature="e#2408#3015#0" />
-              </folding>
+            <state relative-caret-position="158">
+              <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig">
+        <entry file="file://$PROJECT_DIR$/assets/css/Custome/display_down.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="96" column="58" selection-start-line="96" selection-start-column="58" selection-end-line="96" selection-end-column="58" />
-              <folding>
-                <element signature="n#style#0;n#span#0;n#p#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#article#0;n#section#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="64" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="785">
-              <caret line="96" column="38" selection-start-line="96" selection-start-column="38" selection-end-line="96" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/popups/popup.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1686">
-              <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/media/edit_media.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1457">
-              <caret line="78" column="28" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
+            <state relative-caret-position="-63">
+              <caret line="334" column="34" selection-start-line="334" selection-start-column="34" selection-end-line="334" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -513,18 +237,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>6 ecr</find>
-      <find>En diffusion sur</find>
-      <find>media_container_video&quot;</find>
-      <find>media_name</find>
-      <find>tab_content_body_title</find>
-      <find>left_side</find>
-      <find>_ac</find>
-      <find>display-content-poste</find>
-      <find>filters_by_associated_data_containe</find>
-      <find>filters_by_associated_data_container</find>
-      <find>filter_by_</find>
-      <find>container_body_child</find>
       <find>media_incrustations_container</find>
       <find>btn</find>
       <find>media_name_container</find>
@@ -540,19 +252,31 @@
       <find>19%</find>
       <find>popup_associate_tag</find>
       <find>media_action_btn</find>
-      <find>.container</find>
-      <find>tag_association_btn</find>
       <find>_btn</find>
+      <find>px</find>
+      <find>criterions_list_criterions_</find>
+      <find>0.4rem</find>
+      <find>font</find>
+      <find>3.1rem</find>
+      <find>container</find>
+      <find>tag_association_btn</find>
+      <find>.container</find>
+      <find>show_only_horizontal_media filter</find>
+      <find>show_only_horizontal_media</find>
+      <find>filter_media_by_orientation</find>
+      <find>filters_by_associated_data_container</find>
+      <find>home_enseignes-col</find>
+      <find>medias_list_container</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>.thead-associations</replace>
     </replaceStrings>
     <dirStrings>
-      <dir>C:\laragon\www\infoway\assets\js\class\Tools</dir>
-      <dir>C:\laragon\www\infoway\assets</dir>
       <dir>C:\laragon\www\infoway\templates</dir>
       <dir>C:\laragon\www\infoway</dir>
+      <dir>C:\laragon\www\infoway\assets</dir>
+      <dir>C:\laragon\www\infoway\assets\js\class\Tools</dir>
       <dir>C:\laragon\www\infoway\assets\css</dir>
     </dirStrings>
   </component>
@@ -562,57 +286,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/assets/js/app.js" />
-        <option value="$PROJECT_DIR$/assets/css/products/show_product.scss" />
-        <option value="$PROJECT_DIR$/assets/js/show_products.js" />
-        <option value="$PROJECT_DIR$/assets/css/products/category/show_category.scss" />
-        <option value="$PROJECT_DIR$/assets/js/show_categories.js" />
-        <option value="$PROJECT_DIR$/assets/css/general/button.scss" />
-        <option value="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" />
-        <option value="$PROJECT_DIR$/templates/categories/show.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/products/allergene/allergenes.scss" />
-        <option value="$PROJECT_DIR$/assets/css/products/allergene/show_allergenes.scss" />
-        <option value="$PROJECT_DIR$/templates/allergens/show.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/products/allergens/show_allergens.scss" />
-        <option value="$PROJECT_DIR$/templates/products/create.html.twig" />
-        <option value="$PROJECT_DIR$/templates/media/_media_card.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/show_allergens.js" />
-        <option value="$PROJECT_DIR$/assets/js/mediatheque.js" />
-        <option value="$PROJECT_DIR$/assets/css/media.scss" />
-        <option value="$PROJECT_DIR$/assets/css/general/table.scss" />
-        <option value="$PROJECT_DIR$/templates/base.html.twig" />
-        <option value="$PROJECT_DIR$/webpack.config.js" />
-        <option value="$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig" />
-        <option value="$PROJECT_DIR$/templates/home/home-info.html.twig" />
-        <option value="$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig" />
-        <option value="$PROJECT_DIR$/assets/css/app.scss" />
-        <option value="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js" />
         <option value="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" />
-        <option value="$PROJECT_DIR$/assets/css/Custome/display_down.scss" />
         <option value="$PROJECT_DIR$/assets/css/media/media_image.scss" />
-        <option value="$PROJECT_DIR$/assets/css/general/input-rdo.scss" />
-        <option value="$PROJECT_DIR$/templates/media/media-image.html.twig" />
-        <option value="$PROJECT_DIR$/templates/products/show.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/menu_wrapper.scss" />
-        <option value="$PROJECT_DIR$/assets/css/media/show_media.scss" />
         <option value="$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php" />
         <option value="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" />
         <option value="$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss" />
         <option value="$PROJECT_DIR$/assets/css/header_menu.scss" />
-        <option value="$PROJECT_DIR$/assets/css/general/popup.scss" />
         <option value="$PROJECT_DIR$/templates/media.html.twig" />
         <option value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js" />
         <option value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js" />
         <option value="$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss" />
         <option value="$PROJECT_DIR$/templates/media/show_media.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/media/edit_media.scss" />
         <option value="$PROJECT_DIR$/assets/css/popups/popup_loading/popup_loading.scss" />
         <option value="$PROJECT_DIR$/assets/css/popups/popup.scss" />
         <option value="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" />
         <option value="$PROJECT_DIR$/templates/popups/loadingPopup/popup_loading.twig" />
+        <option value="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" />
+        <option value="$PROJECT_DIR$/assets/css/nav_left.scss" />
+        <option value="$PROJECT_DIR$/assets/css/main.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/customer/create_customer.scss" />
+        <option value="$PROJECT_DIR$/assets/css/custom-style.css" />
+        <option value="$PROJECT_DIR$/assets/css/menu_wrapper.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" />
+        <option value="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/settings/criterion/edit_criterion.scss" />
+        <option value="$PROJECT_DIR$/assets/js/criterion.js" />
+        <option value="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" />
+        <option value="$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/general/form.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/tags/create_tags.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/tags/edit_tags.scss" />
+        <option value="$PROJECT_DIR$/assets/css/general/scrollbar.scss" />
+        <option value="$PROJECT_DIR$/assets/css/general/input-rdo.scss" />
+        <option value="$PROJECT_DIR$/assets/css/general/popup.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/create.scss" />
+        <option value="$PROJECT_DIR$/assets/css/settings/settings_user.scss" />
+        <option value="$PROJECT_DIR$/assets/css/allergenes.scss" />
+        <option value="$PROJECT_DIR$/assets/css/general/table.scss" />
+        <option value="$PROJECT_DIR$/templates/products/show.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/media/edit_media.scss" />
+        <option value="$PROJECT_DIR$/templates/categories/show.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/app.scss" />
+        <option value="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" />
         <option value="$PROJECT_DIR$/templates/media/edit_media.html.twig" />
         <option value="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" />
+        <option value="$PROJECT_DIR$/assets/css/general/button.scss" />
+        <option value="$PROJECT_DIR$/src/Controller/AppController.php" />
+        <option value="$PROJECT_DIR$/templates/media/_media_card.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/Custome/display_down.scss" />
+        <option value="$PROJECT_DIR$/templates/media/media-image.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/media/show_media.scss" />
       </list>
     </option>
   </component>
@@ -738,7 +462,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1928" />
+    <option name="x" value="-2039" />
     <option name="y" value="-8" />
     <option name="width" value="1557" />
     <option name="height" value="1037" />
@@ -772,117 +496,42 @@
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="Custome" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
               <item name="media" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="popup_association" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="popup_association" type="462c0819:PsiDirectoryNode" />
-              <item name="product_association" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="popup_loading" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="products" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-              <item name="tags" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="Tools" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="Tools" type="462c0819:PsiDirectoryNode" />
-              <item name="PopupHandler" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="Tools" type="462c0819:PsiDirectoryNode" />
-              <item name="PopupHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="AssociationPopupHandler" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="Tools" type="462c0819:PsiDirectoryNode" />
-              <item name="PopupHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="AssociationPopupHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="TagAssociationHandler" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="categories" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="checkoutsystems" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
@@ -894,68 +543,7 @@
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="associations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="associations" type="462c0819:PsiDirectoryNode" />
-              <item name="product_association" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="associations" type="462c0819:PsiDirectoryNode" />
-              <item name="tag_association" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="popups" type="462c0819:PsiDirectoryNode" />
-              <item name="loadingPopup" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="pricesfactories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="pricetypes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="products" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-              <item name="tags" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
@@ -1043,12 +631,12 @@
       <workItem from="1592208997148" duration="116617000" />
       <workItem from="1592816785031" duration="11742000" />
       <workItem from="1593440070056" duration="7883000" />
-      <workItem from="1593505669413" duration="42192000" />
+      <workItem from="1593505669413" duration="86309000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="267352000" />
+    <option name="totallyTimeSpent" value="311469000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
@@ -1108,347 +696,329 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/css/general/table.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="40" column="35" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home-infoway.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home/home-info.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="82" selection-start-line="14" selection-start-column="82" selection-end-line="14" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/var/cache/dev/twig/13/133333969e4056ed8d1d8ac21c8cac990399c084dd320ace9a008cb90c8f3104.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="123" column="27" selection-start-line="123" selection-start-column="27" selection-end-line="123" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="72" column="51" selection-start-line="72" selection-start-column="41" selection-end-line="72" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/edit_media.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="32" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/popups/mediaInfoSheet/popup_media_info_sheet.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="26" selection-start-line="21" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/Custome/display_down.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5">
-          <caret line="324" column="42" selection-start-line="324" selection-start-column="42" selection-end-line="324" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/mediatheque.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/popups/mediasWaitingForIncrustes/popup_medias_waiting_incrustes.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1646">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/web-forms2.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="606" column="24" selection-start-line="606" selection-start-column="24" selection-end-line="606" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByAssociatedDataSubTool/FilterMediasByAssociatedDataSubTool.js">
+    <entry file="file://$PROJECT_DIR$/assets/css/general/form.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
-          <caret line="84" column="16" selection-start-line="84" selection-start-column="16" selection-end-line="84" selection-end-column="21" />
+          <caret line="90" column="15" selection-start-line="90" selection-start-column="15" selection-end-line="90" selection-end-column="15" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/settings/tags/_form.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/criterion.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1581">
+          <caret line="93" column="27" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/general/scrollbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/general/bralow.scss">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/css/general/input-rdo.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+        <state relative-caret-position="1476">
+          <caret line="107" column="1" selection-start-line="107" selection-start-column="1" selection-end-line="107" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/products/create_date.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/tags/new.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/tags/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pricesfactories/create-date.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pricesfactories/show.html.twig">
+    <entry file="file://$PROJECT_DIR$/assets/css/general/reset.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pricetypes/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/menu_wrapper.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="129" column="4" selection-start-line="129" selection-start-column="4" selection-end-line="129" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/media/show_media.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="4" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/products/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/products.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/media/media-image.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4848">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repository/Customer/MediaRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="1020" column="9" selection-start-line="1020" selection-start-column="9" selection-end-line="1020" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/header_menu.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-122">
-          <caret line="482" selection-start-line="482" selection-end-line="483" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/Custome/popup.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1003">
-          <caret line="7" column="12" lean-forward="true" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        <state relative-caret-position="258">
+          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/css/general/popup.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="16" selection-end-column="18" />
+        <state relative-caret-position="881">
+          <caret line="136" selection-start-line="136" selection-end-line="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/settings/create.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="98" column="1" selection-start-line="98" selection-start-column="1" selection-end-line="98" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/settings/settings_user.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="31" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/allergenes.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/app_register.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/groupe-prix.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/media.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1275" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Customer/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="126" column="34" selection-start-line="126" selection-start-column="20" selection-end-line="126" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3640">
-          <caret line="217" column="27" selection-start-line="217" selection-start-column="27" selection-end-line="217" selection-end-column="27" />
+        <state relative-caret-position="442">
+          <caret line="221" column="18" selection-start-line="221" selection-start-column="18" selection-end-line="221" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/products/test-multi-form2.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/Custome/display-down.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/allergens/show.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-714" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/categories/show.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="36" column="75" selection-start-line="36" selection-start-column="75" selection-end-line="36" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/Custome/button.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/general/table.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="18" selection-start-line="1" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/media/edit_media.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="102" column="11" selection-start-line="102" selection-start-column="11" selection-end-line="102" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/products/show_product.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="45" column="31" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/products/category/show_categories.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/media.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/media/_media_card.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="130" column="61" selection-start-line="130" selection-start-column="61" selection-end-line="130" selection-end-column="61" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#1;n#div#2;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_association/popup_association.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="51" column="16" lean-forward="true" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/tags/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="42" column="42" lean-forward="true" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaDeletingHandler/MediaDeletingHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-765">
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="561">
+          <caret line="33" column="32" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
+        <state relative-caret-position="37">
+          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool.js">
+    <entry file="file://$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="34">
+          <caret line="2" column="69" selection-start-line="2" selection-start-column="69" selection-end-line="2" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1686">
-          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/public/build/settings-user.css">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_loading/popup_loading.scss">
+    <entry file="file://$PROJECT_DIR$/public/build/edit_product.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="25" selection-start-column="25" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="785">
-          <caret line="96" column="38" selection-start-line="96" selection-start-column="38" selection-end-line="96" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/popups/loadingPopup/popup_loading.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="56" selection-start-column="56" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/media/show_media.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1071">
-          <caret line="200" column="60" selection-start-line="200" selection-start-column="60" selection-end-line="200" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/media/edit_media.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1457">
-          <caret line="78" column="28" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="64" selection-end-column="44" />
+        <state relative-caret-position="-918">
+          <caret line="7" column="27" lean-forward="true" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/media/edit_media.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="63" column="72" selection-start-line="63" selection-end-line="64" />
+        <state relative-caret-position="680">
+          <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig">
+    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/AssociationPopupHandler/AssociationPopupHandler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="96" column="58" selection-start-line="96" selection-start-column="58" selection-end-line="96" selection-end-column="58" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#p#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#article#0;n#section#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="312">
+          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss">
+    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/PopupHandler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="126" column="41" selection-start-line="126" selection-end-line="127" />
-          <folding>
-            <element signature="e#2408#3015#0" />
-          </folding>
+        <state relative-caret-position="-147">
+          <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="27" column="38" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/products/edit_product.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/Custome/display_down1.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/media/show_media.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3400">
+          <caret line="200" column="60" selection-start-line="200" selection-start-column="60" selection-end-line="200" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/products/show.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="125" column="42" selection-start-line="125" selection-start-column="42" selection-end-line="125" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/home_page.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home-infoway.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/general/button.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/Custome/display_down.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-63">
+          <caret line="334" column="34" selection-start-line="334" selection-start-column="34" selection-end-line="334" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home.html.twig">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/media/_media_card.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1278">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/media/media-image.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="297" selection-start-line="297" selection-end-line="297" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/media/show_media.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
         </state>
       </provider>
     </entry>

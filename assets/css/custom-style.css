@@ -141,15 +141,15 @@
 }
 
 /* input custome */
-.input-custome{
-    background-color: #fff;
-    padding: 0.3em 0.3rem 0.3rem 1rem;
-    border: 0.06rem solid #C0CCD1;
-    border-radius: 0.4rem;
-    font: 0.9rem 'Barlow', italic;
-    color: #4D646D;
-    width: 65%;
-}    
+/*.input-custome{*/
+    /*background-color: #fff;*/
+    /*padding: 0.3em 0.3rem 0.3rem 1rem;*/
+    /*border: 0.06rem solid #C0CCD1;*/
+    /*border-radius: 0.4rem;*/
+    /*font: 1.5rem 'Barlow', italic;*/
+    /*color: #4D646D;*/
+    /*width: 65%;*/
+/*}    */
 
 /* Label custome */
 

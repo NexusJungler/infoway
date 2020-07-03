@@ -1,71 +1,63 @@
-@import '../../general/input-rdo';
-
-/** Function for converting  px to rem **/
-@function rem($size) {
-    $remSize: $size / 16px;
-    @return #{$remSize}rem;
-}
-
 .border-input{
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: rem(1px) solid #C0CCD1;
-    border-radius: 9px;
-    height: 30px;
+    border: 0.1rem solid #C0CCD1;
+    border-radius: 0.9rem;
+    height: 3rem;
 }
 
 .create-tags{
     margin-left: 2.5%;
     .content-tags{
-        width: 1000px;
+        width: 100rem;
         max-width: 100%;
-        margin: 30px auto;
-        border: 1px solid #899CA4;
-        border-radius: 7px 7px 0px 0px;
+        margin: 3rem auto;
+        border: 0.1rem solid #899CA4;
+        border-radius: 0.7rem 0.7rem 0 0;
     }
 
     .row{
         display: flex;
         .tags-color{
             position: relative;
-            top: 5px;
-            left: 20px;
-            width: 24px;
-            height: 23px;
+            top: 0.5rem;
+            left: 2rem;
+            width: 2.4rem;
+            height: 2.3rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 5rem;
             background: none;
         }
         input[type="color"]::-webkit-color-swatch-wrapper {
             padding: 0;
         }
         input[type="color"]::-webkit-color-swatch {
-            border: solid 1px #000; /*change color of the swatch border here*/
-            border-radius: 40px;
+            border: solid 0.1rem #000; /*change color of the swatch border here*/
+            border-radius: 4rem;
         }
         .tags-input{
             @extend .border-input;
-            width: 110px;
+            width: 11rem;
             max-width: 100%;
-            padding: 6px 10px;
-            font:  16px 'Barlow';
+            padding: 0.6rem 1rem;
+            font:  1.6rem 'Barlow';
             color: black;
 
         }
         .tags-desc{
             @extend .border-input;
-            width: 530px;
+            width: 53rem;
             max-width: 100%;
-            padding: 6px 10px;
-            font:  16px 'Barlow' ;
+            padding: 0.6rem 1rem;
+            font:  1.6rem 'Barlow' ;
 
         }
     }
 
     .bloc-create-tags{
         background: #C0CCD1 0% 0% no-repeat padding-box;
-        border-bottom: 1px solid #899CA4;
-        border-radius: 7px 7px 0px 0px;
-        padding: 40px 36px ;
+        border-bottom: 0.1rem solid #899CA4;
+        border-radius: 0.7rem 0.7rem 0 0;
+        padding: 4rem 3.6rem ;
         .row{
             width: 85%;
             div{
@@ -76,14 +68,18 @@
                     width: 65%;
                 }
             }
+            label{
+                font:  1.6rem 'Barlow';
+                padding: 0.3rem;
+            }
             .tags-input{
-                margin-left: 45px;
-                padding: 4px 10px;
-                font:  16px 'Barlow';
+                margin-left: 4.5rem;
+                padding: 0.6rem 1rem;
+                font:  1.6rem 'Barlow';
             }
             .tags-desc{
-                margin-left: 20px;
-                margin-right: 15px;
+                margin-left: 2rem;
+                margin-right: 1.5rem;
             }
             div{
                 &:nth-child(2){
@@ -101,35 +97,37 @@
         ul{
             background-color: white;
             display: flex;
-            height: 36px;
-            padding: 3px;
+            height: 3.6rem;
+            padding: 0.3rem;
             li{
+                font:  1.6rem 'Barlow';
                 &:nth-child(1){
                     width: 10%;
                     text-align: center;
                 }
                 &:nth-child(2){
                     text-align: center;
-                    width: 17%;
+                    width: 19%;
+                    padding: 0.6rem 4rem;
                 }
 
                 &:nth-child(3){
                     width: 40%;
                     text-align: left;
-                    padding-left: 20px;
+                    padding: 0.6rem 0.2rem;
                 }
             }
         }
     }
     .tags_list{
         height: 100%;
-        max-height: 300px;
+        max-height: 30rem;
         overflow: auto;
         display: block;
         padding-left: 0;
         li{
-            margin-top: 15px;
-            margin-bottom: 15px;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
             div{
                 display: flex;
                 div{
@@ -137,8 +135,8 @@
                         display: none;
                     }
                     &:nth-child(1){
-                        margin-left:40px;
-                        margin-right: 60px;
+                        margin-left: 4rem;
+                        margin-right: 6rem;
                     }
                     &:nth-child(2){
                         position: relative;
@@ -147,72 +145,70 @@
                             display: none;
                         }
                         .color_input{
-                            top: 7px;
-                            left: 7px;
+                            top: 0.7rem;
+                            left: 0.7rem;
                             position: absolute;
-                            height: 16px;
-                            width: 16px;
+                            height: 1.6rem;
+                            width: 1.6rem;
                             border-radius: 50%;
                             background-color: black;
                         }
                         .tags-input{
-                            width: 120px;
+                            width: 12rem;
                             max-width: 100%;
-                            padding-left: 28px;
-                            border-radius: 15px 9px 9px 15px;
+                            padding-left: 2.8rem;
+                            border-radius: 1.5rem 0.9rem 0.9rem 1.5rem;
                         }
                         &::after{
 
                         }
                     }
                     &:nth-child(3){
-                        margin-left:50px;
+                        margin-left: 5rem;
                     }
 
 
                 }
                 .tags-color {
                     position: relative;
-                    top: 4px;
-                    left: 1px;
-                    width: 22px;
-                    height: 20px;
+                    top: 0.4rem;
+                    left: 0.1rem;
+                    width: 2.2rem;
+                    height: 2rem;
                     border: none;
-                    border-radius: 50px;
+                    border-radius: 5rem;
                     background: none;
                 }
             }
         }
     }
     .bloc-site{
-        margin: 50px auto 20px;
+        margin: 5rem auto 2rem;
         .content-site{
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
             display: flex;
             .title-site{
-                margin-right: 20px;
-                margin-left: 20px;
-                font:  22px  ;
+                margin-right: 2rem;
+                margin-left: 2rem;
+                font-size: 2.2rem;
             }
             .content-search{
-                position: relative;
                 position: absolute;
-                right: 20px;
+                right: 2rem;
                 .search{
                     position: relative;
-                    width: 270px;
+                    width: 27rem;
                     background: #FFFFFF 0 0 no-repeat padding-box;
-                    border: 1px solid #4D646D;
-                    border-radius: 9px;
-                    padding: 6px 6px 6px 6px;
+                    border: 0.1rem solid #4D646D;
+                    border-radius: 0.9rem;
+                    padding: 0.6rem;
                 }
                 i{
                     position: relative;
-                    // right: 8px;
-                    top: 3px;
+                    top: 0.3rem;
                     color: #B1C1C8;
-                    font-size: 20px;
+                    font-size: 2rem;
                 }
             }
 
@@ -222,33 +218,35 @@
     .table-site{
         table{
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
         }
 
         .container-input{
             .container-rdo{
-                top: 5px;
+                top: 0.5rem;
                 left: 26%;
-                width: 17px;
-                height: 17px;
+                width: 1.7rem;
+                height: 1.7rem;
                 &:after{
-                    width: 13px;
-                    height: 13px;
+                    width: 1.3rem;
+                    height: 1.3rem;
                 }
             }
         }
         thead{
             background: #FFFFFF 0% 0% no-repeat padding-box;
             th{
-                padding: 1px 10px 14px 10px;
+                padding: 0.1rem 1rem 1.4rem ;
+                font:  1.6rem 'Barlow';
+
                 .trace{
                     // width: 29px;
                     // height: 29px;
                     // background: #4D646D 0% 0% no-repeat padding-box;
                     // border: 1px solid #E3E3E3;
                     i{
-                        font-size: 35px;
-                        top: 8px;
+                        font-size: 3.5rem;
+                        top: 0.8rem;
                         position: relative;
                         transition-duration: 0.8s;
                         transition-property: transform;
@@ -257,7 +255,6 @@
                 
                 &:nth-child(1){
                     width: 5%;
-                    // display: contents;
                 }
                 &:nth-child(2){
                     width: 20%;
@@ -270,13 +267,13 @@
         }
         tbody{
             background: #F6F6F6 0% 0% no-repeat padding-box;
-            height: 350px;
-            max-height: 350px;
+            height: 35rem;
+            max-height: 35rem;
             display: none;
             overflow: auto;
             border: 0;
             tr{
-                height: 53px;
+                height: 5.3rem;
                 &:nth-child(1){
                     background: #EBEBEB 0% 0% no-repeat padding-box;
                 }
@@ -285,7 +282,7 @@
                 }
             }
             td{
-                padding: 10px;
+                padding: 1rem;
                 &:nth-child(1){
                     width: 5%;
                     text-align: center;
@@ -302,7 +299,7 @@
     }
 
     .btn-tag-enregistrer{
-        padding: 10px 0;
+        padding: 1rem 0;
         background: #EBEBEB 0% 0% no-repeat padding-box;
         text-align: center;
     }
@@ -314,8 +311,8 @@
 }
 
 .bloc-color{
-    height: 20px;
-    width: 20px;
+    height: 2rem;
+    width: 2rem;
 }
 
 
@@ -326,7 +323,7 @@
         .bloc-create-tags{
             .row{
                 .tags-desc{
-                    width: 430px;
+                    width: 43rem;
                 }
             }
         }
@@ -341,12 +338,6 @@
             }
         }
 
-        // .table-site .container-input .container-rdo {
-        //     top: 5px;
-        //     left: 65px;
-        //     width: 17px;
-        //     height: 17px;
-        // }
     }
 }
 
@@ -354,12 +345,12 @@
     .create-tags{
 
         .bloc-create-tags .row .tags-desc {
-            width: 230px;
+            width: 23rem;
         }
 
         .row{
             .tags-desc{
-                width: 230px;
+                width: 23rem;
             }
         }
 
@@ -375,25 +366,16 @@
         }
 
         .bloc-site .content-site {
-            margin-left: 60px;
-            margin-bottom: 20px;
+            margin-left: 6rem;
+            margin-bottom: 2rem;
             display: flex;
         }
 
-        // .table-site .container-input .container-rdo {
-        //     top: 5px;
-        //     left: 35px;
-        //     width: 17px;
-        //     height: 17px;
-        // }
+
     }
 }
 
 
-
-// .active{
-//     display: contents;
-// }
 .open{
     display: contents;
 }

@@ -1,9 +1,12 @@
+$border--radius--white : 0.1rem solid #FFFFFF;
+$border--radius--grey : 0.1rem solid #4D646D;
+
 .display{
-    padding-top: rem(15px);
+    padding-top: 1.5rem;
     position: relative;
     &::after {
         content: '';
-        top: rem(1px);
+        top: 1rem;
         left: 0%;
         width: 100%;
         border: rem(1px) solid #4D646D;
@@ -21,18 +24,17 @@
     .drop-btn{
         background-color: #FFFFFF ;
         padding: 0.2rem 0.9rem;
-        border: rem(1px) solid #4D646D;
-        border-radius: rem(6px);
-        font: rem(16px);
-        height: rem(31px);
+        border: $border--radius--grey;
+        border-radius: 0.6rem;
+        font: 3.1rem;
         max-width: 100%;
         text-align: left;
         .drop-btn-icone{
             position: absolute;
-            right: rem(8px);
-            top: rem(-5px);
+            right: 0.8rem;
+            top: -0.5rem;
             color: #899CA4;
-            font-size: rem(30px);
+            font-size: 3rem;
         }
     }
     .display-content-down{
@@ -40,44 +42,24 @@
         position: absolute;
         background-color: #f9f9f9;
         min-width: 100%;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0 0.8rem 1.6rem 0 rgba(0,0,0,0.2);
         z-index: 1;
-        padding: rem(6px);
+        padding: 0.6rem;
     }
 
-    .display-content-poste,
-    .display-dates{
-        position: relative;
-        display: inline-block;
-        &:hover .display-content-down {
-            display: block;
-        }
-    }
-    .display-content-poste{
-        //margin-right: 2rem;
-        .drop-btn{
-            width: rem(210px);
 
-        }
-    }
-    .display-dates{
-        .drop-btn{
-            width: rem(115px);
-        }
-    }
 
 
     .display-btn{
         display: flex;
-        position: absolute;
-        right: 0;
+        justify-content: flex-end;
         &::after{
-            border: rem(1px) solid #4D646D;
+            border:  $border--radius--grey;
         }
         p{
             margin-right: 1rem;
-            margin-top: rem(5px);
-            font: rem(20px) 'Barlow', lighter;
+            margin-top: 0.5rem;
+            font: 2rem 'Barlow';
         }
 
         svg{
@@ -87,172 +69,158 @@
         /* delete after */
         .tags-table{
             position: relative;
-            height: rem(31px);
-            width: rem(108px);
+            height: 3.1rem;
+            width: 10.8rem;
             background: #F57171 0% 0% no-repeat padding-box;
-            box-shadow: rem(2px) rem(2px) rem(2px) #00000029;
-            border: rem(1px) solid #FFFFFF;
-            border-radius: rem(6px) 0 0 rem(6px);
+            box-shadow: 0.2rem 0.2rem 0.2rem  #00000029;
+            border: 0.1rem solid #FFFFFF;
+            border-radius: 0.6rem 0 0 0.6rem;
             color: #FFFFFF;
-            font-size: rem(18px);
+            font-size: 1.8rem;
             &::before{
                 content: '';
                 position: absolute;
-                left: rem(10px);
-                top: rem(10px);
-                width: rem(9px);
-                height: rem(9px);
+                left: 1rem;
+                top: 1rem;
+                width: 0.9rem;
+                height: 0.9rem;
                 background:#e8e4e4 0% 0% no-repeat padding-box;
-                box-shadow: rem(2px) rem(2px) rem(2px) #00000029;
-                border: rem(1px) solid #FFFFFF;
+                box-shadow: 0.2rem 0.2rem 0.2rem  #00000029;
+                border : $border--radius--white;
                 opacity: 1;
                 border-radius: 50%;
                 margin-right: 0.6rem;
             }
         }
 
-        .btn-tags{
-            position: relative;
-            height: rem(31px);
-            width: rem(108px);
-            background: #F57171 0% 0% no-repeat padding-box;
-            box-shadow: rem(2px) rem(2px) rem(2px) #00000029;
-            border: rem(1px) solid #FFFFFF;
-            border-radius: rem(6px) 0 0 rem(6px);
-            color: #FFFFFF;
-            font-size: rem(18px);
-            &::before{
-                content: '';
-                position: absolute;
-                left: rem(10px);
-                top: rem(10px);
-                width: rem(9px);
-                height: rem(9px);
-                background:#e8e4e4 0% 0% no-repeat padding-box;
-                box-shadow: rem(2px) rem(2px) rem(2px) #00000029;
-                border: rem(1px) solid #FFFFFF;
-                opacity: 1;
-                border-radius: 50%;
-                margin-right: 0.6rem;
-            }
-        }
+
     }
 }
 
+.display-content-poste,
+.display-dates{
+    position: relative;
+    display: inline-block;
+    &:hover .display-content-down {
+        display: block;
+    }
+}
+.display-content-poste{
+    .drop-btn{
+        width: 21rem;
+    }
+}
+.display-dates{
+    .drop-btn{
+        width: 11.5rem;
+    }
+}
 
-.display{
+/* new */
 
-    .top{
-        font:16px "Barlow" ;
+.display-btn{
+    padding-top: 5rem;
+    position: relative;
+    &::after {
+        content: '';
+        top: 1rem;
+        left: 0;
         width: 100%;
-        margin-bottom: 1%;
-        &::after {
-            content: '';
-            //top: rem(5px);
-            left: 0%;
-            width: 99%;
-            border: rem(1px) solid #4D646D;
-            position: relative;
-            display: block;
-        }
+        border:0.1rem solid #4D646D;
+        position: relative;
+        display: block;
+    }
 
-        .actions_btn_container {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 1%;
+    .display-btn-content{
+        width: 100%;
+        display: flex;
+        .display-content_title{
+            margin-right: 1rem;
+            margin-top: 0.5rem;
+            font: 2rem 'Barlow';
+        }
+    }
+
+    .display-btn_col{
+        display: flex;
+    }
+    .display-btn-content_left{
+        width: 50%;
+    }
+
+    .display-btn-content_rignt{
+        width: 50%;
+        justify-content: flex-end;
+    }
+
+
+
+    /* MEDIA */
+    .actions_btn_container{
+        button{
+            border-color: white ;
+            &:disabled{
+                background: #C0CCD1;
+                cursor: not-allowed;
+            }
+        }
+        .display-btn-content_left{
+
             .container{
                 &:nth-child(1){
                     margin-right: 1%;
                 }
                 &:nth-child(2){
-                    margin-right: 4%;
+                    margin-right: 5%;
                 }
             }
 
-            .left_btns, .right_btns{
-                display: flex;
-                flex-direction: row;
-            }
 
-            .left_btns{
-                width: 60%;
-
+            .show_media_waiting_incrustation_container  {
+                position: relative;
                 .btn{
-                    border: 1px solid #FFFFFF;
-                }
-                .show_media_waiting_incrustation_container  {
+                    z-index: 1;
                     position: relative;
-                    .btn{
-                        z-index: 1;
-                        position: relative;
-                    }
-                    .media_waiting_incrustation_number {
-                        background-color: #FF5722;
-                        color: #FFF;
-                        position: absolute;
-                        top: 1px;
-                        right: -23px;
-                        width: 18%;
-                        padding: 5px 8px;
-                        height: 30px;
-                        //
-                        border-radius: 0 rem(6px) rem(6px) 0;
-                        z-index: 0;
-                        text-align: center;
-                        font:16px "Barlow" ;
-                    }
-
                 }
-
-                .show_archived_media_container{
-                    position: relative;
-                    .btn{
-                        z-index: 1;
-                        position: relative;
-                        margin-right: 0;
-                    }
-                    .archived_medias_number {
-                        background-color: #4f9bae;
-                        color: #FFF;
-                        position: absolute;
-                        top: 1px;
-                        right: -34px;
-                        width: 25%;
-                        padding: 5px 8px;
-                        height: 30px;
-                        border-radius: 0 rem(6px) rem(6px) 0;
-                        z-index: 0;
-                        text-align: center;
-                        font: 16px "Barlow";
-                    }
+                .media_waiting_incrustation_number {
+                    background-color: #FF5722;
+                    color: #FFF;
+                    position: absolute;
+                    top: 0.1rem;
+                    right: -3rem;
+                    width: 20%;
+                    padding: 0.5rem 0.8rem;
+                    height: 3rem;
+                    border-radius: 0 0.6rem 0.6rem 0;
+                    z-index: 0;
+                    text-align: center;
+                    font: 1.6rem "Barlow" ;
                 }
-
             }
 
-            .right_btns{
-                width: 40%;
-
+            .show_archived_media_container{
+                position: relative;
                 .btn{
-                    margin: 0;
+                    z-index: 1;
+                    position: relative;
+                    margin-right: 0;
                 }
-                .container{
-                    margin-right: 2%;
-
-
+                .archived_medias_number {
+                    background-color: #4f9bae;
+                    color: #FFF;
+                    position: absolute;
+                    top: 0.1rem;
+                    right: -3.5rem;
+                    width: 25%;
+                    padding: 0.5rem 0.8rem;
+                    height: 3rem;
+                    border-radius: 0 0.6rem 0.6rem 0;
+                    z-index: 0;
+                    text-align: center;
+                    font: 1.6rem "Barlow" ;
                 }
-                button{
-                    border-color: white ;
-                    &:disabled{
-                        background: #C0CCD1;
-                        cursor: not-allowed;
-                    }
-                }
-
             }
-
         }
-
     }
 }
 
@@ -288,6 +256,7 @@
             justify-content: space-around;
             text-align: center;
             padding: 13px 5px;
+            height: 7.3rem;
             i{
                 font-size: 30px;
                 color: #C0CCD1;
@@ -314,6 +283,7 @@
             width: 35%;
             justify-content: space-around;
             align-items: center;
+            height: 7.3rem;
 
             .filters_by_associated_data_item{
                 display: flex;
@@ -381,6 +351,7 @@
             width: 41%;
 
             .container{
+                margin-top: 1rem;
                 width: 50%;
             }
 
