@@ -680,7 +680,7 @@ class MediaController extends AbstractController
         {
             $mediaRepo->replaceAllMediaOccurrences($mediaToReplace, $mediaSubstitute);
 
-            $qualities = ['low', 'medium', 'high', 'HD'];;
+            /*$qualities = ['low', 'medium', 'high', 'HD'];;
 
             foreach ($qualities as $quality)
             {
@@ -688,9 +688,10 @@ class MediaController extends AbstractController
                 $source = $this->parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
                 . $fileType . "/" . $quality . "/" . $mediaToReplace->getId() . "." . ( ($fileType === 'image') ? 'png': 'mp4' );
 
-                dd($source);
+                if(file_exists($source))
+                    unset($source);
 
-            }
+            }*/
 
         }
 

@@ -335,15 +335,17 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
-    public function replaceAllMediaOccurrences(Media $mediaToReplace, Media $substitute)
+    public function replaceAllMediaOccurrences(Media $mediaToReplace, Media $substitute, bool $deleteMediaToReplace = false)
     {
 
         $sql = "UPDATE media_product SET media_product.media_id = :newMedia WHERE media_product.media_id = :oldMedia;
                 UPDATE media_tag SET media_tag.media_id = :newMedia WHERE media_tag.media_id = :oldMedia;
                 UPDATE media_incruste SET media_incruste.media_id = :newMedia WHERE media_incruste.media_id = :oldMedia;
                 UPDATE screen_playlist_entries SET screen_playlist_entries.media_id = :newMedia WHERE screen_playlist_entries.media_id = :oldMedia;
-                DELETE FROM media WHERE media.id = :oldMedia
                 ";
+
+        if($deleteMediaToReplace)
+            $sql .= "DELETE FROM media WHERE media.id = :oldMedia";
 
         return $this->_em->getConnection()->prepare($sql)
                          ->execute([
