@@ -15,8 +15,9 @@ class MediaReplacementPopupHandler extends SubTool
 
         ];
 
-        this.__currentMediaInfos= {
+        this.__currentMediaInfos = {
             id: null,
+            name: null,
             customer: null,
             type: null,
             extension: null,
@@ -146,6 +147,7 @@ class MediaReplacementPopupHandler extends SubTool
 
                 this.__currentMediaInfos = {
                     id: this.__replacementInfos.mediaToReplaceId,
+                    name: mediaNameText,
                     customer: $('.media_miniature').parents('.media_miniature_container').data('customer'),
                     type: ($('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image') ? 'images' : 'videos',
                     extension: ( $('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image' ) ? 'png' : 'mp4',
@@ -167,19 +169,26 @@ class MediaReplacementPopupHandler extends SubTool
         return this;
     }
 
+    closePopup()
+    {
+
+        this.__$container.removeClass('is_open');
+        this.__$location.find('.media_substitute_name').text('');
+        this.__$mediaSubstitutesContainer.find('.card.selected .choice_substitute').prop('checked', false);
+        this.__$mediaSubstitutesContainer.find('.card.selected').removeClass('selected');
+        this.__$location.find('.validate_remplacement_btn').attr('disabled', true);
+        this.__$location.find('.remplacement_infos_setting_date_container input.remplacement_date_choice_input').removeClass('empty');
+        this.__$location.find('.media_associated_datas_container').empty();
+
+    }
+
     onClickOnPopupCloseButton(active)
     {
         if(active)
         {
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
 
-                this.__$container.removeClass('is_open');
-                this.__$location.find('.media_substitute_name').text('');
-                this.__$mediaSubstitutesContainer.find('.card.selected').removeClass('selected');
-                this.__$mediaSubstitutesContainer.find('.card.selected .choice_substitute').prop('checked', false);
-                this.__$location.find('.validate_remplacement_btn').attr('disabled', true);
-                this.__$location.find('.remplacement_infos_setting_date_container input.remplacement_date_choice_input').removeClass('empty');
-                this.__$location.find('.media_associated_datas_container').empty();
+                this.closePopup();
 
             })
         }
@@ -263,7 +272,7 @@ class MediaReplacementPopupHandler extends SubTool
                     this.__replacementInfos.remplacementDate.start = this.__$location.find('.remplacement_date_start').val();
                     this.__replacementInfos.remplacementDate.end = this.__$location.find('.remplacement_date_end').val();
 
-                    if(confirm("Le média sera remplacé puis supprimé, cet action est définitive ! Êtres-vous sûr de vouloir continuer ?"))
+                    if(confirm(`Le média '${ this.__currentMediaInfos.name }' sera remplacé puis archivé ! Êtres-vous sûr de vouloir continuer ?`))
                         this.sendRemplacementDatas();
                 }
 
@@ -288,7 +297,7 @@ class MediaReplacementPopupHandler extends SubTool
             data: {remplacementDatas: this.__replacementInfos},
             success: (response) => {
                 alert("Success !");
-                this.__$container.removeClass('is_open');
+                this.closePopup();
             },
             error: (response) => {
                 alert("Error !");

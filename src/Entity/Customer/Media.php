@@ -72,7 +72,7 @@ class Media
     private $width;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media", cascade={"remove"})
      * @ORM\JoinTable(name="medias_tags")
      */
     private $tags;
@@ -118,12 +118,14 @@ class Media
     private $incrustes;
 
 
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->incrustes = new ArrayCollection();
+        $this->a = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -386,6 +388,11 @@ class Media
             $this->incrustes->removeElement($incruste);
         }
 
+        return $this;
+    }
+
+    public function __clone()
+    {
         return $this;
     }
 

@@ -338,10 +338,11 @@ class MediaRepository extends ServiceEntityRepository
     public function replaceAllMediaOccurrences(Media $mediaToReplace, Media $substitute, bool $deleteMediaToReplace = false)
     {
 
-        $sql = "UPDATE media_product SET media_product.media_id = :newMedia WHERE media_product.media_id = :oldMedia;
-                UPDATE media_tag SET media_tag.media_id = :newMedia WHERE media_tag.media_id = :oldMedia;
-                UPDATE media_incruste SET media_incruste.media_id = :newMedia WHERE media_incruste.media_id = :oldMedia;
-                UPDATE screen_playlist_entries SET screen_playlist_entries.media_id = :newMedia WHERE screen_playlist_entries.media_id = :oldMedia;
+        $sql = "UPDATE media_product SET media_product.media_id = :substituteId WHERE media_product.media_id = :mediaToReplaceId;
+                UPDATE media_tag SET media_tag.media_id = :substituteId WHERE media_tag.media_id = :mediaToReplaceId;
+                UPDATE media_incruste SET media_incruste.media_id = :substituteId WHERE media_incruste.media_id = :mediaToReplaceId;
+                UPDATE screen_playlist_entries SET screen_playlist_entries.media_id = :substituteId WHERE screen_playlist_entries.media_id = :mediaToReplaceId;
+                UPDATE media SET media.is_archived = true WHERE media.id = :mediaToReplaceId
                 ";
 
         if($deleteMediaToReplace)
@@ -349,8 +350,8 @@ class MediaRepository extends ServiceEntityRepository
 
         return $this->_em->getConnection()->prepare($sql)
                          ->execute([
-                                       'newMedia' => $substitute->getId(),
-                                       'oldMedia' => $mediaToReplace->getId()
+                                       'substituteId' => $substitute->getId(),
+                                       'mediaToReplaceId' => $mediaToReplace->getId()
                                    ]);
 
     }

@@ -676,8 +676,9 @@ class MediaController extends AbstractController
 
         dump($mediaReplaceStartDate === $now || $now > $mediaReplaceStartDate);
 
-        if( $mediaReplaceStartDate === $now || $now > $mediaReplaceStartDate )
+        if( $now >= $mediaReplaceStartDate )
         {
+
             $mediaRepo->replaceAllMediaOccurrences($mediaToReplace, $mediaSubstitute);
 
             /*$qualities = ['low', 'medium', 'high', 'HD'];;

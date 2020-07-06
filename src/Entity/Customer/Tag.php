@@ -58,7 +58,7 @@ class Tag
     private $LocalProgrammings;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Media", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Media", mappedBy="tags", cascade={"refresh"})
      */
     private $medias ;
 
