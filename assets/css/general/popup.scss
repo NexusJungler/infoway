@@ -11,11 +11,11 @@
     z-index:10000;
     // transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
     &.is-open {
-      opacity: 1;
-      pointer-events: auto;
-      .modal {
-        // transform: translate(0px, 0px);
-      }
+        opacity: 1;
+        pointer-events: auto;
+        .modal {
+            // transform: translate(0px, 0px);
+        }
     }
 }
 
@@ -33,13 +33,13 @@
     overflow: hidden;
     box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.4);
     .lead {
-      font-size: 2.4rem;
-      margin-top: 1rem;
+        font-size: 2.4rem;
+        margin-top: 1rem;
     }
     .tagline {
-      margin-bottom: 4rem;
-      color: firebrick;
-      font-size: 1.8rem;
+        margin-bottom: 4rem;
+        color: firebrick;
+        font-size: 1.8rem;
     }
     .close-btn {
         position: absolute;
@@ -53,8 +53,8 @@
         cursor: pointer;
         // transition: all 0.3s ease-in-out;
         &:hover {
-            // transform: scale(1.2);
-        }
+             // transform: scale(1.2);
+         }
     }
 }
 
@@ -118,19 +118,19 @@
                 display: block;
                 overflow: auto;
           }
-      }
-      .footer-modal{
-          background: #E3E3E3 0% 0% no-repeat padding-box;
-          padding: 1.1rem;
-          .delete-tag{
-              margin-right: 2rem;
-          }
-          .btn{
-              background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
-              &:hover{
-                  background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
-              }
-          }
-      }
-  }
+        }
+        .footer-modal{
+            background: #E3E3E3 0% 0% no-repeat padding-box;
+            padding: 1.1rem;
+            .delete-tag{
+                margin-right: 2rem;
+            }
+            .btn{
+                background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+                &:hover{
+                    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+                }
+            }
+        }
+    }
 }

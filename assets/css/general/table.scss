@@ -1,7 +1,7 @@
 $border--radius : 0.6rem ;
 $color--dark--grey : #4D646D ;
 
-/******************************************************** TABLE **********************************************************************/
+/****************************************************** TABLE *******************************************************/
 
 .table{
     width: 100%;
@@ -19,13 +19,13 @@ $color--dark--grey : #4D646D ;
         .thead-info,
         .thead-content {
             position: relative;
-            background: #899CA4 0% 0% no-repeat padding-box;
+            background: #899CA4 0 0 no-repeat padding-box;
             border-top: 0.1rem solid  $color--dark--grey;
             border-left: 0.1rem solid  $color--dark--grey;
             width: calc( 100% - 1.8rem );
             &::after{
                 content: "";
-                background: #899CA4 0% 0% no-repeat padding-box;
+                background: #899CA4 0 0 no-repeat padding-box;
                 height: 100%;
                 width: 1.8rem;
                 position: absolute;
@@ -49,46 +49,40 @@ $color--dark--grey : #4D646D ;
                     font: 1.4rem 'Barlow';
                 }
                 input{
-                    margin: 0px ;
-                    margin-right: 0.5rem;
+                    margin: 0 0.5rem 0 0 ;
                 }
             }
         }
 
         .tbody-content{
-
             border: 0.1rem solid #4D646D;
             tr:nth-child(2n+2) {
-                background: #ffffff 0% 0% no-repeat padding-box;
+                background: #ffffff 0 0 no-repeat padding-box;
             }
             td {
                 padding: 0.2rem 0.5rem 0.6rem 0.5rem;
                 border-right: 0.1rem solid #AAAAAA;
-                width: 27.3rem;
+                width: 20%;
                 &:first-child{
                     width: 15%;
                 }
                 input{
-                    margin: 0;
-                    margin-right: 1.5rem;
+                    margin: 0 1.5rem 0 0;
                 }
             }
         }
     }
 }
 
-
 .table{
     .table-associations{
         width: 100%;
-
         thead, tbody tr{
             display: table;
             width: 100%;
             table-layout: fixed;
             color: #4D646D;
         }
-
         .thead-associations{
             background: #C0CCD1 0% 0% no-repeat padding-box;
             border: 0.1rem solid #899CA4;
@@ -117,7 +111,7 @@ $color--dark--grey : #4D646D ;
             overflow: auto;
             display: block;
             border: 0.1rem solid #899CA4;
-            border-top: 0px;
+            border-top: 0;
             .content-assigned-image{
                 width: 17.1rem;
                 height: 10.9rem;
@@ -132,9 +126,8 @@ $color--dark--grey : #4D646D ;
                     border-radius: $border--radius;
                 }
             }
-
             tr{
-                font-size: 17px;
+                font-size: 1.7rem;
                 td{
                     padding: 1rem;
                     &:nth-child(1){
@@ -183,10 +176,3 @@ $color--dark--grey : #4D646D ;
         }
     }
 }
-
-
-
-
-
-
-

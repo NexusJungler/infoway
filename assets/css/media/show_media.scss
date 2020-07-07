@@ -7,7 +7,7 @@
         .drop-btn{
             border: 0.1rem solid #C0CCD1;
             font: 1.6rem "Barlow";
-            width: 1rem;
+            //width: 1rem;
         }
         .drop-width{
             width: 0.8rem;
@@ -17,22 +17,27 @@
 }
 
 .filters_by_associated_data_container{
+    .display-content-down{
+        padding: 1rem 2.6rem;
+        .product-select-col{
+            padding: 0.5rem;
+        }
+    }
     .container-input{
-        margin-left: 2rem;
-
+        font: 1.6rem "Barlow";
+        color: #4D646D;
+        text-align: left;
         .container-rdo{
             left: -2rem;
-            font: 1.6rem "Barlow";
-            color: #4D646D;
+
 
         }
         .container-rdo {
             position: absolute;
-            top: -0.1rem;
-            left: 3rem;
-            height: 2.3rem;
-            width: 2.3rem;
-            background-color:  white;
+            top: 0.4rem;
+            height: 1.5rem;
+            width: 1.5rem;
+            background-color: white;
             border-radius: 0.3rem;
             border: 0.1rem solid #4D646D;
 
@@ -42,8 +47,8 @@
                 display: none;
                 top: 0.1rem;
                 left: 0.1rem;
-                width: 1.9rem;
-                height: 1.9rem;
+                width: 1.1rem;
+                height: 1.1rem;
                 border-radius: 0.3rem;
                 background: #53B3C7;
             }
@@ -58,6 +63,7 @@
     padding: 5px;
     margin: 3% auto 0% auto;
     height: 100%;
+    max-height: 100rem;
     max-height: 100rem;
     overflow: auto;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
