@@ -74,10 +74,12 @@ class UploadCron
         $this->customer = $taskInfo['customerName'];
         $this->customer_dir = $this->getCustomerDirectory($this->customer);
         $this->mediatype = $taskInfo['mediaType'];
+        $this->mediaMimeType = $taskInfo['mimeType'];
         $this->fileUploadDate = $taskInfo['uploadDate'];
         $this->mediaProducts = $taskInfo['mediaProducts'] ?? [];
         $this->mediaTags = $taskInfo['mediaTags'] ?? [];
         $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'] ?? false;
+        $this->mediaOrientation = null;
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -316,6 +318,9 @@ class UploadCron
                     $medium_size = true;
                 }
                 $output_low = "160*90";
+
+                $this->mediaOrientation = 'Horizontal';
+
                 break;
 
             case 9 / 16:   // Plein Ecran Vertical
@@ -331,6 +336,9 @@ class UploadCron
                     $medium_size = true;
                 }
                 $output_low = "90*160";
+
+                $this->mediaOrientation = 'Vertical';
+
                 break;
 
             case 9 / 8:  // Demi Ecran Horizontal
@@ -346,6 +354,9 @@ class UploadCron
                     $output_medium = "720*640";
                 }
                 $output_low = "90*80";
+
+                $this->mediaOrientation = 'Horizontal';
+
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
@@ -361,6 +372,9 @@ class UploadCron
                     $output_medium = "640*720";
                 }
                 $output_low = "80*90";
+
+                $this->mediaOrientation = 'Vertical';
+
                 break;
 
             default:
@@ -493,6 +507,9 @@ class UploadCron
                     $medium_size = true;
                 }
                 $output_low = "160*90";
+
+                $this->mediaOrientation = 'Horizontal';
+
                 break;
 
             case 9 / 16:   // Plein Ecran Vertical
@@ -521,6 +538,9 @@ class UploadCron
                     $medium_size = true;
                 }
                 $output_low = "90*160";
+
+                $this->mediaOrientation = 'Vertical';
+
                 break;
 
             case 9 / 8:  // Demi Ecran Horizontal
@@ -549,6 +569,9 @@ class UploadCron
                     $output_medium = "720*640";
                 }
                 $output_low = "90*80";
+
+                $this->mediaOrientation = 'Horizontal';
+
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
@@ -577,6 +600,9 @@ class UploadCron
                     $output_medium = "640*720";
                 }
                 $output_low = "80*90";
+
+                $this->mediaOrientation = 'Vertical';
+
                 break;
 
             default:
@@ -889,6 +915,9 @@ class UploadCron
                             ->setDiffusionStart($this->fileDiffusionStart)
                             ->setDiffusionEnd($this->fileDiffusionEnd)
                             ->setContainIncruste($this->mediaContainIncruste)
+                            ->setOrientation($this->mediaOrientation)
+                            ->setMimeType($this->mediaMimeType)
+                            ->setIsArchived(false)
                             ->setHeight($data['height'])
                             ->setWidth($data['width'])
                             ->setName($file)
@@ -977,6 +1006,9 @@ class UploadCron
                        ->setRatio($ratio)
                        ->setContainIncruste($this->mediaContainIncruste)
                        ->setExtension($this->extension)
+                       ->setOrientation($this->mediaOrientation)
+                       ->setMimeType($this->mediaMimeType)
+                       ->setIsArchived(false)
                        ->setWidth($width)
                        ->setHeight($height)
                        ->setSize($size)

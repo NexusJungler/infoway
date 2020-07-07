@@ -1,3 +1,5 @@
+{#{% form_theme uploadMediaForm 'popups/upload/__form_theme/__form_theme.twig' %}#}
+
 <section class="popup_container popup_upload_container is_open">
 
     <article class="popup popup_upload">
@@ -101,9 +103,17 @@
                         </tr>
                     </thead>
 
-                    <tbody class="file_to_characterisation_list">
-
+                    {#{{ form_start(uploadMediaForm) }}
+                    <tbody class="file_to_characterisation_list medias_collection">
+                    {{ form_row(uploadMediaForm) }}
                     </tbody>
+                    {{ form_end(uploadMediaForm) }}#}
+                    <form id="medias_list_form" name="medias_list">
+                        <tbody class="file_to_characterisation_list medias_collection">
+
+                        </tbody>
+                    </form>
+
                 </table>
 
             </div>

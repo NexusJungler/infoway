@@ -112,6 +112,7 @@ class MediaController extends AbstractController
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
         $mediaList = new MediasList();
+/*        $mediaList->addMedia( $mediaRepo->find(47) ) ;*/
 
         $uploadMediaForm = $this->createForm(MediasListType::class, $mediaList, [
             'attr' => [
@@ -348,13 +349,17 @@ class MediaController extends AbstractController
 
             //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
 
+
             $response = [
                 'id' => $media->getId(),
+                'fileName' => $name,
+                'fileNameWithoutExtension' => $media->getName(),
                 'extension' => $media->getExtension(),
                 'height' => $media->getHeight(),
                 'width' => $media->getWidth(),
                 'dpi' => $dpi,
-                'type' => 'image',
+                'miniatureExist' => file_exists($miniaturePath),
+                'fileType' => 'image',
                 'customer' => $customerName,
                 //'highestFormat' => $highestFormat,
             ];
@@ -379,6 +384,7 @@ class MediaController extends AbstractController
                   ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
+                  ->setOrientation(" ") // le serializer oblige à avoir une valeur
                   ->setType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
@@ -415,7 +421,7 @@ class MediaController extends AbstractController
                 'codec' => $codec ?? null,
                 'type' => 'video',
                 'customer' => $customerName,
-                'mimeType' => $mimeType,
+                'mimeType' => 'video/mp4',
                 //'highestFormat' => $highestFormat,
             ];
 
@@ -449,21 +455,21 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . "." . $media->getExtension();
-            $mimeType = finfo_file($finfo, $path);
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . ".mp4";
 
             $response = [
                 'status' => 'Finished',
                 'id' => $media->getId(),
+                'miniatureExist' => file_exists($path),
                 'extension' => $media->getExtension(),
                 'fileName' => $task->getFilename(),
+                'fileNameWithoutExtension' => $media->getName(),
                 'height' => $media->getHeight(),
                 'width' => $media->getWidth(),
                 'codec' => $media->getVideoCodec(),
-                'type' => 'video',
+                'fileType' => 'video',
                 'customer' => $customerName,
-                'mimeType' => $mimeType,
+                'mimeType' => 'video/mp4',
                 'name' => $media->getName()
             ];
 

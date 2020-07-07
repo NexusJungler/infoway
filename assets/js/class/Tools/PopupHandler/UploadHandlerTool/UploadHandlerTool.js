@@ -266,18 +266,14 @@ class UploadHandlerTool extends SubTool
     {
         this.__$container.removeClass('is_open');
 
-        $('.upload-file-list').empty();
-        $('.media_list tbody').empty();
-
-        $('.start_upload_button').fadeOut()
-
-        $(".upload-title").text("Préparation de l'Upload");
-        $(".files_selection").fadeIn();
-        $(".edit_media_info").fadeOut();
+        this.__$location.find('.upload_step_title').text("Préparation de l'upload");
 
         this.__filesToUpload = [];
         this.__$mediasCollection.empty();
         this.__uploadAuthorized = false;
+        this.__$fileToUploadList.empty();
+        this.__$fileToCharacterisationList.empty();
+        this.showStep(1);
     }
 
     onClickOnModalCloseButtonsCloseModal(active)
@@ -602,13 +598,16 @@ class UploadHandlerTool extends SubTool
     addNewItemInMediaCollection(item)
     {
         console.log(item); //debugger
-        if( $('.medias-list-to-upload').find(`.media_name[value='${ item.fileName }']`).length === 0 )
+        if( this.__$fileToCharacterisationList.find(`.media_name[value='${ item.fileName }']`).length === 0 )
         {
+
+
+            this.__$fileToCharacterisationList.find(`.media_name[value='${ item.fileName }']`).parents('tr')
 
             let list = this.__$mediasCollection;
             //console.log(item); debugger
             // Try to find the counter of the list or use the length of the list
-            let counter = list.children().length;
+            let counter = this.__$fileToCharacterisationList.children('tr').length;
 
             // grab the prototype template
             let newWidget = list.attr('data-prototype');
@@ -625,6 +624,10 @@ class UploadHandlerTool extends SubTool
             // create a new list element and add it to the list
             let newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
             newElem.attr( 'data-index', counter );
+
+            newElem.find(`#medias_list_medias_${ counter }`).css( { 'display': 'flex', 'flex-direction': 'row' } )
+
+            newElem.find('.media_id, .media_type, .media_extension').parent().remove();
 
             // put data in input
             //newElem.find('.media_name').val(fileName);
@@ -650,7 +653,7 @@ class UploadHandlerTool extends SubTool
             newElem.find(`.media_diffusion_date_end #medias_list_medias_${counter}_diffusionEnd_year`).html(this.rebuildYearFieldContent(counter, {type: 'end', choice: year + 30}));
 
             //console.log(newElem); debugger
-            newElem.appendTo(list);
+            newElem.appendTo( this.__$fileToCharacterisationList );
             //console.log(list); debugger
 
             // Increase the counter
@@ -682,19 +685,15 @@ class UploadHandlerTool extends SubTool
                                     <p><i class="fas fa-trash-alt cancel-upload" style="display: none"></i>${fileToUpload.name}</p>
                                 </td>
                                 
-                                <td class="file_progress_bar_container file-upload-state-col">
+                                <td class="file_progress_bar_container">
                                     <progress class="progress_bar" id="progress_${index}" max="100" value="0"></progress>
                                 </td>
                                 
-                                <td class="media-choice-input-col" style="display: none">
-                                    <input type="checkbox" class="choice-media" data-media="">
-                                </td>
-                                
-                                <td class="preview-container">
+                                <td>
                                     <span class="upload_state"></span>
                                 </td>
                                 
-                                <td class="edit-name-container">
+                                <td>
                                     
                                 </td>
                                 
@@ -704,47 +703,43 @@ class UploadHandlerTool extends SubTool
             {
 
                 html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered">
-                                <td class="file-name-container uploaded-file-name-col">
-                                    <p><i class="fas fa-trash-alt cancel-upload" style="display: none"></i>${fileToUpload.name}</p>
+                                <td>
+                                    <p>${fileToUpload.name}</p>
                                 </td>
                                 
-                                <td class="file_progress_bar_container file-upload-state-col">
+                                <td class="file_progress_bar_container">
                                     <progress class="progress_bar" id="progress_${index}" max="100" value="0"></progress>
                                 </td>
                                 
-                                <td class="media-choice-input-col" style="display: none">
-                                    <input type="checkbox" class="choice-media" data-media="">
-                                </td>
-                                
-                                <td class="preview-container">
+                                <td>
                                     <span class="upload_state"></span>
                                 </td>
                                 
-                                <td class="characteristic-container">
+                                <td>
                                     
                                 </td>
                                 
-                                <td class="edit-name-container">
+                                <td>
                                     
                                 </td>
                                 
-                                <td class="media-diff-date-container">
+                                <td>
                                     
                                 </td>
                                         
-                                <td class="criterions-affectation-container">
+                                <td>
                                     
                                 </td>        
                                         
-                                <td class="tags-affectation-container">
+                                <td>
                                     
                                 </td>
                                         
-                                <td class="products-affectation-container">
+                                <td>
                                     
                                 </td>
                                         
-                                <td class="contain-incrustations-container">
+                                <td>
                                     
                                 </td>
                                 
@@ -778,17 +773,9 @@ class UploadHandlerTool extends SubTool
 
                     let uploadFinished = 0;
 
-                    /*$(".files_selection").fadeOut();
-                    $(".edit_media_info").fadeIn();
-
-                    $(".files_selection table tbody").empty();*/
-
                     this.__$fileToUploadList.empty();
 
                     this.__$location.find('.upload_step_title').text("Médias à caractériser");
-
-                    //$(".upload-title").text("Médias à caractériser");
-                    //$(".modal-upload-download").fadeIn();
 
                     //console.log(this.__filesToUpload.length); debugger
                     // for each file in upload list
@@ -846,22 +833,22 @@ class UploadHandlerTool extends SubTool
 
                                 response = JSON.parse(response);
 
-                                if(response.type === 'image')
+                                if(response.fileType === 'image')
                                 {
 
                                     let mediaInfos = {
                                         id: response.id,
                                         customer: response.customer,
                                         index: fileToUpload.index,
-                                        type: response.type,
-                                        fileName: fileToUpload.file.name,
-                                        name: fileName,
+                                        fileType: response.fileType,
+                                        fileName: response.fileName,
+                                        fileNameWithoutExtension: response.fileNameWithoutExtension,
                                         extension: response.extension,
                                         height: response.height,
                                         width: response.width,
                                         dpi: response.dpi,
-                                        mimeType: response.mimeType,
-                                        highestFormat: response.highestFormat,
+                                        miniatureExist: response.miniatureExist,
+                                        //highestFormat: response.highestFormat,
                                     };
 
                                     this.__filesToUpload.splice(index , 1);
@@ -878,9 +865,9 @@ class UploadHandlerTool extends SubTool
                                         $('<i>', { class: 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
 
                                     // new item
-                                    this.addNewItemInMediaCollection( {id: response.id, fileName: fileName, extension: fileExtension, type: mediaInfos.type} );
+                                    //this.addNewItemInMediaCollection( { id: response.id, fileName: fileName, extension: fileExtension, type: mediaInfos.type } );
 
-                                    this.showMediaCharacteristic(mediaInfos);
+                                    this.showMediaInfoForEdit(mediaInfos);
 
                                     $('.edit-btn-container').fadeIn();
 
@@ -918,14 +905,16 @@ class UploadHandlerTool extends SubTool
 
                                             $(`#upload_${fileToUpload.index}`).removeClass("valid_download");
 
-                                            this.addNewItemInMediaCollection( {id: videoEncodingResult.id, fileName: fileName, extension: videoEncodingResult.extension, type: videoEncodingResult.type} );
+                                            //this.addNewItemInMediaCollection( {id: videoEncodingResult.id, fileName: fileName, extension: videoEncodingResult.extension, type: videoEncodingResult.type} );
 
                                             let videoInfos = {
                                                 id: videoEncodingResult.id,
                                                 customer: videoEncodingResult.customer,
                                                 index: fileToUpload.index,
-                                                type: videoEncodingResult.type,
+                                                fileType: videoEncodingResult.type,
                                                 fileName: videoEncodingResult.fileName,
+                                                fileNameWithoutExtension: videoEncodingResult.fileNameWithoutExtension,
+                                                miniatureExist: videoEncodingResult.miniatureExist,
                                                 name: videoEncodingResult.name,
                                                 extension: videoEncodingResult.extension,
                                                 height: videoEncodingResult.height,
@@ -933,12 +922,10 @@ class UploadHandlerTool extends SubTool
                                                 dpi: videoEncodingResult.dpi,
                                                 codec: videoEncodingResult.codec,
                                                 mimeType: videoEncodingResult.mimeType,
-                                                highestFormat: videoEncodingResult.highestFormat,
+                                                //highestFormat: videoEncodingResult.highestFormat,
                                             };
 
-                                            this.showMediaCharacteristic(videoInfos);
-
-                                            $('.edit-btn-container').fadeIn();
+                                            this.showMediaInfoForEdit(videoInfos);
 
                                         }
                                         else
@@ -1063,88 +1050,114 @@ class UploadHandlerTool extends SubTool
 
     }
 
-    showMediaCharacteristic(mediaInfos)
+    showElementGraphicInfos(elementGraphicInfos)
     {
 
-        //console.log(mediaInfos); debugger
+        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> </td>
+                     <td>
+                        <progress class="progress_bar" id="progress_${ index }" max="100" value="100"></progress>
+                        <i class="fas fa-check" aria-hidden="true"></i>
+                     </td>
+                     <td> 
+                        ${ elementGraphicInfos.preview } 
+                        <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="95" aria-hidden="true"></i>
+                     </td>
+                     <td> 
+                        <input type="text" name="medias_list[medias][${index}][name]" class="form_input fileName" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
+                     </td>`;
 
-        this.__mediaInfos.push(mediaInfos);
+    }
 
-        $(`#upload_${mediaInfos.index} .choice-media`).attr('data-media', mediaInfos.index);
+    showMediaInfos(mediaInfos, preview)
+    {
 
-        // show miniatures
-        $(`#upload_${mediaInfos.index} .preview-container`).empty();
-        let preview = null;
-
-        if(mediaInfos.type === 'image')
-            preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/images/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.png" />`;
-
-        else
-            preview = `<video class="preview" controls>
-                            <source src="/miniatures/${mediaInfos.customer}/videos/low/${mediaInfos.id}.${mediaInfos.extension}" type="${mediaInfos.mimeType}">
-                       </video>`;
-
-        preview +=  `<i class="fas fa-expand-alt expand-miniature" data-media_id="${mediaInfos.id}"></i>`;
-
-        $(preview).appendTo( $(`#upload_${mediaInfos.index} .preview-container`) );
-
-        // show characteristics
-        let characteristics = `<span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.type === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>`;
-        $(characteristics).appendTo( $(`#upload_${mediaInfos.index} .characteristic-container`) );
-
-
-        // show input for edit media name
-        let nameEditorInput = `<span class="error hidden"></span> <br> <input type="text" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.name}" required>`;
-        $(nameEditorInput).appendTo( $(`#upload_${mediaInfos.index} .edit-name-container`) )
-
-
-        // show input for edit media diffusion dates
         let now = new Date();
         let month = (now.getMonth() + 1);
         month = (month < 10) ? '0' + month : month;
         let day = (now.getDate() < 10 ) ? '0' + now.getDate() : now.getDate();
         let year = now.getFullYear();
 
-        let mediaDiffusionDatesEditorInputs = `<div class="diff-start-container">
-                                                    <span class="error hidden"></span> <br> 
-                                                    <label for="media_${mediaInfos.index}_diff_start">Du</label>
-                                                    <input type="date" id="media_${mediaInfos.index}_diff_start" class="diffusion_dates start form_input" value="${year}-${month}-${day}">
-                                               </div>
+        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ mediaInfos.fileName }</p> </td>
+                <td>
+                    <progress class="progress_bar" id="progress_${ mediaInfos.index }" max="100" value="100"></progress>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </td>
+                <td> 
+                    ${ preview } 
+                    <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="95" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.type === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
+                </td>
+                <td> <span class="error hidden"></span> <br> <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
+                <td> 
+                    <div class="diff_start_container">
+                        <span class="error hidden"></span> <br> 
+                        <label for="media_${mediaInfos.index}_diff_start">Du</label>
+                        <input type="date" name="medias_list[medias][${mediaInfos.index}][diffusionStart]" id="media_${mediaInfos.index}_diff_start" class="diffusion_dates start form_input" value="${year}-${month}-${day}">
+                   </div>
 
-                                               <div class="diff-end-container">
-                                                    <span class="error hidden"></span> <br> 
-                                                    <label for="media_${mediaInfos.index}_diff_end">Au</label>
-                                                    <input type="date" id="media_${mediaInfos.index}_diff_end" class="diffusion_dates end form_input" min="${year}-${month}-${day}" value="${year + 10}-${month}-${day}">
-                                               </div>`;
+                   <div class="diff_end_container">
+                        <span class="error hidden"></span> <br> 
+                        <label for="media_${mediaInfos.index}_diff_end">Au</label>
+                        <input type="date" name="medias_list[medias][${mediaInfos.index}][diffusionEnd]" id="media_${mediaInfos.index}_diff_end" class="diffusion_dates end form_input" min="${year}-${month}-${day}" value="${year + 10}-${month}-${day}">
+                   </div>
+                </td>
+                <td class="associated_criterions_container">
+                
+                </td>
+                <td class="tags_affectation_container"> <button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">TAGS</button><div class="associated-tags-container"></div> </td>
+                <td class="products_affectation_container"> <button type="button" class="associate-product association-btn" data-media="${mediaInfos.name}">Associer</button><div class="associated-products-container"></div> </td>
+                <td> 
+                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="1">Oui</label> 
+                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input choice_media_contain_incruste" checked value="0">Non</label>
+                </td>`;
+    }
 
-        $(mediaDiffusionDatesEditorInputs).appendTo( $(`#upload_${mediaInfos.index} .media-diff-date-container`) )
+    showMediaInfoForEdit(mediaInfos)
+    {
 
-        // show criteres association button
-        //let criterionsAssociationButton = `<button type="button" class="associate-criterion" data-media="${mediaInfos.name}">Critères</button><div class="associated-criterions-container"></div>`;
-        let criterionsAssociationButton = `<div class="associated-criterions-container"></div>`;
-        $(criterionsAssociationButton).appendTo( $(`#upload_${mediaInfos.index} .criterions-affectation-container`) );
+        //console.log(mediaInfos); debugger
 
-        // show tags association button
-        let tagsAssociationButton = `<button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">TAGS</button><div class="associated-tags-container"></div>`;
-        $(tagsAssociationButton).appendTo( $(`#upload_${mediaInfos.index} .tags-affectation-container`) );
+        const index = mediaInfos.index;
 
-        // show products association button
-        let productsAssociationButton = `<button type="button" class="associate-product association-btn" data-media="${mediaInfos.name}">Associer</button><div class="associated-products-container"></div>`;
+        this.__mediaInfos.push(mediaInfos);
 
-        $(productsAssociationButton).appendTo( $(`#upload_${mediaInfos.index} .products-affectation-container`) );
+        $(`#upload_${mediaInfos.index} .choice_media`).attr('data-media', mediaInfos.index);
 
-        // show input (type radio) for inscrustes
-        let containIncrustationsInput = `<div class="choice-media-contain-incruste-container">
-                                            <label class=""><input type="radio" name="media_${mediaInfos.index}_contain_incrustations" class="form_input choice-media-contain-incruste" value="yes">Oui</label> 
-                                            <label class=""><input type="radio" name="media_${mediaInfos.index}_contain_incrustations" class="form_input choice-media-contain-incruste" checked value="no">Non</label>
-                                         </div>
-                                         
-                                         <div class="add-price-incruste-btn-container" style="display: none">
-                                            <button type="button" class="add-price-incruste-btn">Incruster Prix</button>
-                                         </div>
-                                         `;
+        // show miniatures
+        $(`#upload_${mediaInfos.index} .preview_container`).empty();
 
-        $(containIncrustationsInput).appendTo( $(`#upload_${mediaInfos.index} .contain-incrustations-container`) );
+        let preview = null;
+
+        if(mediaInfos.miniatureExist)
+        {
+
+            if(mediaInfos.fileType === 'image')
+                preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/images/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.id}.png" />`;
+
+            else
+                preview = `<video class="preview" controls>
+                            <source src="/miniatures/${mediaInfos.customer}/videos/low/${mediaInfos.id}.mp4" type="${mediaInfos.mimeType}">
+                       </video>`;
+
+        }
+        else
+            preview = `<img class="media_miniature miniature_${ mediaInfos.fileType }" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">`;
+
+
+
+        let html = `<tr data-index="${ index }" id="upload_${ index }" class="unregistered">`;
+
+        if( this.__uploadMediaType === 'element_graphic' )
+            html += this.showElementGraphicInfos({ fileName: mediaInfos.fileName, preview: preview, fileNameWithoutExtension: mediaInfos.fileNameWithoutExtension });
+
+        else
+            html += this.showMediaInfos(mediaInfos, preview);
+
+        html += `</tr>`;
+
+        this.__$fileToCharacterisationList.find(`#upload_${mediaInfos.index}`).replaceWith( $(html) );
 
     }
 
@@ -1168,6 +1181,20 @@ class UploadHandlerTool extends SubTool
         }
 
         return options;
+    }
+
+    onMediaInfoEditingFormSubmit(active)
+    {
+        if(active)
+        {
+
+        }
+        else
+        {
+
+        }
+
+        return this;
     }
 
     checkMediaNameValidity(mediaName)
@@ -1603,6 +1630,7 @@ class UploadHandlerTool extends SubTool
             .onFileDropAddFileInUploadList(true)
             .onClickOnRemoveFileButtonRemoveFileFromUploadList(true)
             .onClickOnStartUploadButton(true)
+            .onMediaInfoEditingFormSubmit(true)
         ;
     }
 
@@ -1634,6 +1662,7 @@ class UploadHandlerTool extends SubTool
             .onFileDropAddFileInUploadList(false)
             .onClickOnRemoveFileButtonRemoveFileFromUploadList(false)
             .onClickOnStartUploadButton(false)
+            .onMediaInfoEditingFormSubmit(false)
         ;
     }
 

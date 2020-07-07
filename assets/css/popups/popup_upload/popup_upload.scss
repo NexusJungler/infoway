@@ -210,6 +210,22 @@
 
           &.step_2{
 
+            table{
+
+              thead{
+
+              }
+
+              tbody.file_to_characterisation_list{
+
+                input[type=checkbox]{
+                  display: none;
+                }
+
+              }
+
+            }
+
           }
 
           &.step_3{
