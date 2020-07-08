@@ -2,6 +2,8 @@
 
 {% block title "Modification - Média" %}
 
+{% block class "main-edit_media " %}
+
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('edit_media') }}
@@ -59,15 +61,18 @@
 
     </article>
 
-    {#{% include "/popups/loadingPopup/popup_loading.twig" %}#}
+    {% include "/popups/loading_popup/popup_loading.twig" %}
 
-    {#{% include "/popups/associations/product_association/popup_product_association.html.twig" %}#}
+    {% include "/popups/associations/product_association/popup_product_association.html.twig" %}
 
-    {#{% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}#}
+    {% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}
 
-    {#{% include "/popups/mediaExpandedMiniaturePopup/media_expanded_miniature_popup.html.twig" %}#}
+    {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
 
-    {#{% include "/popups/deletingMedia/popup_delete_media.html.twig" %}#}
+    {% include "/popups/deleting_media/popup_delete_media.html.twig" %}
+
+    {% include "/popups/media_remplacement_popup/remplacement_basic/popup_media_remplacement_basic.html.twig" %}
+
 
 {% endblock %}
 

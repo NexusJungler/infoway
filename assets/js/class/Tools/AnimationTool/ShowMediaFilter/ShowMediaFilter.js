@@ -65,7 +65,7 @@ class ShowMediaFilter extends SubTool
                     this.__$openFilter.find(".open_filter").removeClass("open_filter_show");
                     $(e.currentTarget).find('i').removeClass('fa-plus').addClass('fa-minus');
                     this.__$openFilter.find('.filter_container_association_open').css({"display":""})
-                    // this.__$openFilter.find('.filter').show();
+                    this.__$openFilter.find('.filter').show();
                     width = "100%" ;
 
                 } else {
@@ -73,7 +73,7 @@ class ShowMediaFilter extends SubTool
                     this.__$openFilter.find('.filter_container_association_open').removeClass("filter_active");
                     this.__$openFilter.find(".open_filter").addClass("open_filter_show");
                     $(e.currentTarget).find('i').removeClass('fa-minus').addClass('fa-plus');
-                    // this.__$openFilter.find('.filter').hide();
+                    this.__$openFilter.find('.filter').hide();
                     width = "0%" ;
                 }
 

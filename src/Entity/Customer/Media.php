@@ -72,7 +72,8 @@ class Media
     private $width;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media", cascade={"remove"})
+     * @ORM\JoinTable(name="medias_tags")
      */
     private $tags;
 
@@ -107,9 +108,15 @@ class Media
     private $containIncruste;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $diffusable = false;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Incruste", inversedBy="media")
      */
     private $incrustes;
+
 
 
     public function __construct()
@@ -345,6 +352,18 @@ class Media
         return $this;
     }
 
+    public function getDiffusable(): ?bool
+    {
+        return $this->diffusable;
+    }
+
+    public function setDiffusable(bool $diffusable): self
+    {
+        $this->diffusable = $diffusable;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Incruste[]
      */
@@ -368,6 +387,11 @@ class Media
             $this->incrustes->removeElement($incruste);
         }
 
+        return $this;
+    }
+
+    public function __clone()
+    {
         return $this;
     }
 

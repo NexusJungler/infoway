@@ -1,0 +1,148 @@
+
+<div id="add_media" class="none">
+<div id="add_media__head">
+    <div id="add_media__head__title">
+        <i class="fas fa-images"></i>
+        <h2>Mediateque</h2>
+        <h3>Ajouter un média</h3>
+    </div>
+    <div id="add_media__head__actions">
+        <button id="add_media__head__actions__close">
+          <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+<div id="add_media__body">
+    {{ form_start( addMediaForm, {'attr': {'id': 'add_media_form'}}) }}
+    <div id="add_media__body__sort">
+            <div id="add_media__body__sort__media-type">
+                {% for allowedMediaType in addMediaForm.allowedMediasTypes  %}
+                    {{ form_widget( allowedMediaType ) }}
+                    <button>{{ form_label( allowedMediaType ) }}</button>
+                {% endfor %}
+            </div>
+        <div id="add_media__body__sort__filter">
+            <div id="add_media__body__sort__filter__criterions" data-filter="criterions">
+                <div id="add_media__body__sort__filter__criterions__button" class="add_media__body__sort__filter__unwrap">
+                    <button class="btn--bluecanard">Critères</button>
+                </div>
+                <ul id="add_media__body__sort__filter__criterions__list" class="flatten-s">
+                    {%  for criterion in addMediaForm.criterions %}
+                        <li class="filter-choice">
+                            {{ form_label( criterion ) }}
+                            {{ form_widget( criterion ) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {{ form_widget( addMediaForm.criterions ) }}
+            </div>
+            <div id="add_media__body__sort__filter__tags" data-filter="tags" >
+                <div id="add_media__body__sort__filter__tags__button" class="add_media__body__sort__filter__unwrap">
+                    <button class="btn--bluecanard">Tags</button>
+                </div>
+                <ul id="add_media__body__sort__filter__tags__list" class="flatten-s">
+                    {%  for tag in addMediaForm.tags %}
+                        <li class="filter-choice">
+                            {{ form_label( tag ) }}
+                            {{ form_widget( tag ) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button id="add_media__body__sort__filter__comfirm" class="comfirm">Filtrer</button>
+        </div>
+        <div id="add_media__body__sort__search">
+            {{ form_widget( addMediaForm.search ) }}
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+    <div id="add_media__body__programming">
+        <div id="add_media__body__programming__medias">
+        {% for media in  addMediaForm.medias %}
+            {% set currentMedia = media.vars.object %}
+
+            <article class="add_media__body__programming__medias__thumbnail medias__choices" data-tags="{{ currentMedia.tags | encodeIds }}" data-criterions="{{ currentMedia.criterions | encodeIds }}">
+                <div class="add_media__body__programming__medias__thumbnail__top-banner">
+                    {{ form_widget( media, {'attr': {'class': 'medias__choices__id'}} ) }}
+                    <span>24/03/2020 au 12/04/2020</span>
+                </div>
+                <img src="{{ asset('build/medias/images/low/' ~ currentMedia.name ~ '.' ~ currentMedia.extension ) }}">
+                {{ form_label( media , null,  {'label_attr': {'class': 'medias__choices__name'}} ) }}
+            </article>
+        {% endfor %}
+        </div>
+        <div id="add_media__body__programming__infos">
+            <div id="add_media__body__programming__infos__banner--top">
+                <button id="add_media__body__programming__infos__show">{{ form_label( addMediaForm.programming ) }}</button>
+                <p>(ex: Ajouter plusieurs médias à une date souhaitée)</p>
+            </div>
+            <div id="add_media__body__programming__infos__body" class="flatten-mh">
+                <div id="add_media__body__programming__infos__form" >
+                    <div id="add_media__body__programming__infos__form__timeslots">
+                        {{ form_label( addMediaForm.programming.timeSlot )  }}
+                        <ul id="add_media__body__programming__infos__form__timeslots__list">
+                            {% for timeslot in addMediaForm.programming.timeSlot %}
+                                {%  set currentTimeSlot =  timeslot.vars.object %}
+                                <li class="add_media__body__programming__infos__form__timeslots__list__timeslot add_media__programming__timeslot" data-id="{{ currentTimeSlot.id }}" data-startat="{{ currentTimeSlot.startAt | date('H:i') }}" data-endat="{{ currentTimeSlot.endAt | date('H:i') }}">
+                                    <div class="add_media__body__programming__infos__form__timeslots__list__timeslot__head">
+                                        {{ form_widget( timeslot , { 'attr' : { 'class' : 'advanced_programming__time_slot__choices' } } ) }}
+                                        {{ form_label( timeslot ) }}
+                                    </div>
+                                    <span>{{currentTimeSlot.startAt|date('H')}} h à {{ currentTimeSlot.endAt|date('H') }} h</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div id="add_media__body__programming__infos__form__additional">
+                        <div id="add_media__body__programming__infos__form__additional__days">
+                            {{ form_label( addMediaForm.programming.days ) }}
+                            <ul id="add_media__body__programming__infos__form__additional__days__list">
+                                {% for day in  addMediaForm.programming.days %}
+                                    <li>
+                                        {{ form_label( day ) }}
+                                        {{ form_widget( day, {'attr' : { 'class' : 'advanced_programming__days__choices'}} ) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div id="add_media__body__programming__infos__form__additional__screen">
+                            {{ form_label( addMediaForm.programming.screen ) }}
+                            <ul id="add_media__body__programming__infos__form__additional__screen__list">
+                                {% for screen in  addMediaForm.programming.screen %}
+                                    <li>
+                                        {{ form_label( screen ) }}
+                                        {{ form_widget( screen, { 'attr' : { 'class' : 'advanced_programming__screens__choices' } } ) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div id="add_media__body__programming__infos__form__additional__date">
+                            <div>
+                                {{ form_label( addMediaForm.programming.startDate ) }}
+                                {{ form_widget( addMediaForm.programming.startDate, {'attr' : { 'class' : 'advanced_programming__start_date__choice'} } ) }}
+                            </div>
+                            <div>
+                                {{ form_label( addMediaForm.programming.endDate ) }}
+                                {{ form_widget( addMediaForm.programming.endDate, {'attr' : { 'class' : 'advanced_programming__end_date__choice'} } ) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="add_media__body__programming__infos__actions">
+                    <button class="cancel btn--blueminuit">Annuler</button>
+                    <button class="comfirm btn--bluecanard">Comfirmer</button>
+                </div>
+            </div>
+        </div>
+
+
+{#        {{ form_widget( addMediaForm.medias ) }}#}
+    </div>
+
+{#    {% for mediaForm in addMediaForm.medias  %}#}
+{#        {% set currentMedia =  mediaForm.vars.object %}#}
+{#        {{ dump( currentMedia ) }}#}
+{#    {% endfor %}#}
+    {{ form_end( addMediaForm ) }}
+</div>
+</div>

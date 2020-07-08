@@ -3,13 +3,14 @@ import UploadHandlerTool from "./PopupHandler/UploadHandlerTool/UploadHandlerToo
 import {ClockManager} from "../Managers/ClockManager/ClockManager";
 import ProductAssociationHandlerTool from "./PopupHandler/AssociationPopupHandler/ProductAssociationHandler/ProductAssociationHandlerTool";
 import TagAssociationHandlerTool from "./PopupHandler/AssociationPopupHandler/TagAssociationHandler/TagAssociationHandlerTool";
-import ArchivedMediasHandlerTool from "./ArchivedMediasHandler/ArchivedMediasHandlerTool";
+import ArchivedMediasHandlerTool from "./PopupHandler/ArchivedMediasHandler/ArchivedMediasHandlerTool";
 import PaginatorHandler from "./PaginatorHandler/PaginatorHandler";
 import FilterMediasTool from "./FilterMediasTool/FilterMediasTool";
 import MediaWaitingIncrustationHandler from "./PopupHandler/MediaWaitingIncrustationHandler/MediaWaitingIncrustationHandler";
 import PopupHandler from "./PopupHandler/PopupHandler";
-import MediaDeletingHandler from "./PopupHandler/MediaDeletingHandler/MediaDeletingHandler";
 import AnimateTool from "./AnimationTool/AnimateTool";
+import MediathequeActionButtonHandler from "./MediathequeActionButtonHandler/MediathequeActionButtonHandler";
+import MediaReplacementPopupHandler from "./PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler";
 
 class ToolBox
 {
@@ -36,8 +37,9 @@ class ToolBox
             new PaginatorHandler(),
             new FilterMediasTool(),
             new PopupHandler(),
-            new MediaDeletingHandler(),
+            new MediathequeActionButtonHandler(),
             new AnimateTool(),
+            new MediaReplacementPopupHandler(),
         ];
     }
 

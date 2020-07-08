@@ -55,6 +55,12 @@ class Customer
      */
     private $contact;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FfmpegTasks", mappedBy="customer", orphanRemoval=true)
+     * @ORM\JoinColumn(name="upload_tasks")
+     */
+    private $uploadTasks;
+
 
     public function __construct()
     {
@@ -277,5 +283,35 @@ class Customer
         return $this;
     }
 
+    /**
+     * @return Collection|FfmpegTasks[]
+     */
+    public function getUploadTasks(): Collection
+    {
+        return $this->uploadTasks;
+    }
+
+    public function addUploadTask(FfmpegTasks $uploadTask): self
+    {
+        if (!$this->uploadTasks->contains($uploadTask)) {
+            $this->uploadTasks[] = $uploadTask;
+            $uploadTask->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUploadTask(FfmpegTasks $uploadTask): self
+    {
+        if ($this->uploadTasks->contains($uploadTask)) {
+            $this->uploadTasks->removeElement($uploadTask);
+            // set the owning side to null (unless already changed)
+            if ($uploadTask->getCustomer() === $this) {
+                $uploadTask->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

@@ -59,7 +59,7 @@
                                 </td>
                                 <td class="media_miniature_col">
                                     <div class="media_miniature_container container">
-                                        {% if media.media_type is same as('image') %}
+                                        {% if media.file_type is same as('image') %}
 
                                             <img class="media_miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
                                                  alt="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png">
@@ -77,7 +77,7 @@
                                     <div class="media_characteristics_container container">
                                         <span>{{ media.width }}*{{ media.height }}px</span> <br>
                                         <span>{{ media.extension }}</span> <br>
-                                        {% if media.media_type is same as('image') %}
+                                        {% if media.file_type is same as('image') %}
                                             <span>72dpi</span>
                                         {% else %}
                                             <span>{{ media.videoCodec }}</span>

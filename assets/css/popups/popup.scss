@@ -1,4 +1,5 @@
 .popup_container{
+    font-family: "Barlow", serif;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -79,13 +80,10 @@
     &.is_open {
       opacity: 1;
       pointer-events: auto;
-
       .popup{
-
         //transform: translate(0px, -100px);
         //transition: all 0.9s cubic-bezier(0.59, -0.17, 0.3, 1.67);
         position: relative;
-        padding: 30px;
         width: 100%;
         height: 100%;
         top: 2%;
@@ -113,6 +111,21 @@
 
             }
 
+          }
+          /* Barre de recherche */
+          .search_element_container{
+            .filter_with_search{
+              background: #FFFFFF 0% 0% no-repeat padding-box;
+              border: 0.05rem solid #C0CCD1;
+              border-radius: 0.6rem;
+              font: 1.5rem Barlow;
+              padding: 0.5rem 1rem;
+              margin-right: 0.5rem;
+            }
+            i{
+              font-size: 2rem;
+              color: #C0CCD1;
+            }
           }
 
         }
@@ -155,3 +168,6 @@
 @import "popup_association/popup_association";
 @import "popup_association/product_association/popup_product_association";
 @import "popup_association/tag_association/popup_tag_association";
+@import "popup_media_remplacement/remplacement_basic/popup_media_remplacement_basic";
+//@import "popup_media_expanded_miniature/popup_media_expanded_miniature";
+@import "popup_upload/popup_upload";

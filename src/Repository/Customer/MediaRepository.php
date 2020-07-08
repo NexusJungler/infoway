@@ -2,9 +2,14 @@
 
 namespace App\Repository\Customer;
 
+use App\Entity\Customer\BroadcastSlot;
+use App\Entity\Customer\Display;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\ProgrammingMould;
+use App\Entity\Customer\ScreenPlaylist;
+use App\Entity\Customer\ScreenPlaylistEntry;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Repository\Admin\AllergenRepository;
@@ -36,7 +41,6 @@ class MediaRepository extends ServiceEntityRepository
 
     use MainRepository;
 
-
     private Serializer $serializer;
 
     private MediasHandler $mediasHandler;
@@ -64,7 +68,6 @@ class MediaRepository extends ServiceEntityRepository
     }
 
     /**
-
      * Return all tags which is associated with edia and media products
      * @param Media $media
      * @return Tag[]
@@ -117,12 +120,12 @@ class MediaRepository extends ServiceEntityRepository
 
             if($media instanceof Image)
             {
-                $media->media_type = 'image';
+                $media->file_type = 'image';
             }
 
             else
             {
-                $media->media_type = 'video';
+                $media->file_type = 'video';
             }
 
         }
@@ -181,7 +184,6 @@ class MediaRepository extends ServiceEntityRepository
                 // sert pour choisir le nombre de media à afficher sur la page
                 for($i = 5; $i <= $medias->count()+5; $i+=5)
                 {
-
                     $orderedMedias['mediatheque_medias_number'][] = $i;
                 }
 
@@ -191,7 +193,6 @@ class MediaRepository extends ServiceEntityRepository
 
                 foreach ($medias as $index => $media)
                 {
-
 
                     $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
                                                           $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
@@ -203,7 +204,7 @@ class MediaRepository extends ServiceEntityRepository
 
                     $orderedMedias['medias'][$index] = [
                         'media' => null,
-                        'media_type' => ($media instanceof Image) ? 'image': 'video',
+                        'file_type' => ($media instanceof Image) ? 'image': 'video',
                         'media_products' => [],
                         'media_tags' => [],
                         'media_criterions' => [],
@@ -282,13 +283,79 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
-
     public function getMediaInfosForEdit(int $mediaId)
     {
         // surcharger le retour de la fonction ?
         return $this->getMediaInfos($mediaId);
 
     }
+
+    /**
+     * @param array $exceptions
+     * @return Media[]
+     */
+    public function getAllMediasExcept(array $exceptions)
+    {
+
+        $medias = [];
+
+        foreach ($this->findAll() as $media)
+        {
+            if( !in_array($media, $exceptions) )
+            {
+                $customerName = $this->getEntityManager()->getConnection()->getDatabase();
+                $media->media_low_miniature_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                                $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                                . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+
+                $media->file_type = ($media instanceof Image) ? 'image': 'video';
+                $medias[] = $media;
+            }
+        }
+
+        return $medias;
+    }
+
+
+    public function getMediaProgrammingMouldList(Media $media)
+    {
+
+        return $this->_em->createQueryBuilder()->select("prog_moulds")
+                                               ->distinct()
+                                               ->from(ProgrammingMould::class, "prog_moulds")
+                                               ->innerJoin(Display::class, 'display', 'WITH', 'prog_moulds.id = display.id')
+                                               ->innerJoin(BroadcastSlot::class, 'broadcastSlot', 'WITH', 'broadcastSlot.display = display.id')
+                                               ->innerJoin(ScreenPlaylist::class, 'screenPlaylist', 'WITH', 'screenPlaylist.id = broadcastSlot.id')
+                                               ->innerJoin(ScreenPlaylistEntry::class, 'screenPlaylistEntry', 'WITH', 'screenPlaylistEntry.playlist = screenPlaylist.id')
+                                               ->innerJoin(Media::class, 'media', 'WITH', 'media = :media')
+                                               ->setParameter('media', $media)
+                                               ->getQuery()
+                                               ->getResult();
+
+    }
+
+
+    public function replaceAllMediaOccurrences(Media $mediaToReplace, Media $substitute, bool $deleteMediaToReplace = false)
+    {
+
+        $sql = "UPDATE media_product SET media_product.media_id = :substituteId WHERE media_product.media_id = :mediaToReplaceId;
+                UPDATE media_tag SET media_tag.media_id = :substituteId WHERE media_tag.media_id = :mediaToReplaceId;
+                UPDATE media_incruste SET media_incruste.media_id = :substituteId WHERE media_incruste.media_id = :mediaToReplaceId;
+                UPDATE screen_playlist_entries SET screen_playlist_entries.media_id = :substituteId WHERE screen_playlist_entries.media_id = :mediaToReplaceId;
+                UPDATE media SET media.is_archived = true WHERE media.id = :mediaToReplaceId
+                ";
+
+        if($deleteMediaToReplace)
+            $sql .= "DELETE FROM media WHERE media.id = :oldMedia";
+
+        return $this->_em->getConnection()->prepare($sql)
+                         ->execute([
+                                       'substituteId' => $substitute->getId(),
+                                       'mediaToReplaceId' => $mediaToReplace->getId()
+                                   ]);
+
+    }
+
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
         $column = 'PRO_'.$columnPrice.'_jour';
@@ -299,10 +366,20 @@ class MediaRepository extends ServiceEntityRepository
   )";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($id_pro, $grprix_data_id));
-        $row = $query->fetch(\PDO::FETCH_NUM);
+        $row = $query->fetch(PDO::FETCH_NUM);
         $result = $row[0];
         return $result;
     }
+
+    public function getAllDisplayableMediasTypes(){
+
+        $sql = "SELECT `media_type` FROM `media` WHERE `diffusable` GROUP BY `media_type`";
+        $query = $this->getEntityManager()->getConnection()->prepare( $sql ) ;
+        $query->execute( );
+        return array_values($query->fetchAll(PDO::FETCH_COLUMN ));
+
+    }
+
     public function selectAllImagesAndVideosFromMedia()
     {
         try
@@ -343,7 +420,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
             ";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($id_pro, $grprix_data_id));
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
     public function getPriceCategory($cat_id) {
@@ -355,7 +432,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($cat_id));
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
         //d($result);
         return $result;
     }
@@ -369,7 +446,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($cat_nom));
-        $result = $query->fetch(\PDO::FETCH_NUM);
+        $result = $query->fetch(PDO::FETCH_NUM);
         return $result;
     }
     public function getGroupePrixID() {
@@ -380,7 +457,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 	            ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
-        $result = $query->fetch(\PDO::FETCH_NUM);
+        $result = $query->fetch(PDO::FETCH_NUM);
         return $result[0];
     }
     public function getGroupePrix() {
@@ -390,7 +467,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 	            ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
-        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
     public function getGroupePrixValeur($critere,$prod_id,$dateID,$grprix_id) {
@@ -411,7 +488,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 	            ";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($prod_id,$grprix_id,$dateID));
-        $result = $query->fetch(\PDO::FETCH_NUM);
+        $result = $query->fetch(PDO::FETCH_NUM);
 //        dump($result);
 //        d($result);
         return $result;
@@ -427,7 +504,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 	           ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($prodName,$catID));
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 //    public function insert($media)
@@ -564,7 +641,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         return $result;
     }
     public function findProducts($categorie)
@@ -576,7 +653,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($categorie));
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         return $result;
     }
     public function ProductGetName($id)
@@ -588,7 +665,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($id));
-        $result = $query->fetchAll(\PDO::FETCH_COLUMN);
+        $result = $query->fetchAll(PDO::FETCH_COLUMN);
         return $result[0];
     }
     public function CategorieGetName($id)
@@ -600,7 +677,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($id));
-        $result = $query->fetchAll(\PDO::FETCH_COLUMN);
+        $result = $query->fetchAll(PDO::FETCH_COLUMN);
         return $result[0];
     }
     public function ProductGetValidInfo($id)
@@ -612,7 +689,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($id));
-        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result[0];
     }
     public function getLastId()
@@ -627,7 +704,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
-        $result = $query->fetchAll(\PDO::FETCH_COLUMN);
+        $result = $query->fetchAll(PDO::FETCH_COLUMN);
         return $result;
     }
     public function updateHigh($mediaId)
@@ -648,7 +725,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($resto));
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         return $result;
     }
     public function getCategorie($product)
@@ -661,7 +738,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($product));
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         return $result[0];
     }
     public function getInfoProduct($product)
@@ -674,7 +751,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($product));
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         return $result[0];
     }
     public function getPricesold($resto, $product) {
@@ -686,7 +763,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($resto, $product));
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         return $result;
     }
     public function getPrices($resto, $product) {
@@ -700,7 +777,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($resto, $product, $date_actuelle));
-        $result = $query->fetchAll(\PDO::FETCH_NUM);
+        $result = $query->fetchAll(PDO::FETCH_NUM);
         if( $result[0][3] == 1 ){ //gestion groupe test sur PRI_national
             $result=array();
             $sql_groupe = '
@@ -725,7 +802,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 					';
                 $query = $this->_em->getConnection()->prepare($sql_gr_prix);
                 $query->execute(array('groupe_prix' =>$groupe_prix, 'productId' => $product, 'date_actuelle' => $date_actuelle));
-                $resultsql = $query->fetchAll(\PDO::FETCH_NUM);
+                $resultsql = $query->fetchAll(PDO::FETCH_NUM);
                 $result[] = (array(0=>$type, 1=>$resultsql[0][0], 2=>$resultsql[0][1], 3=>1));
                 $indice++;
             }
@@ -761,7 +838,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array($media));
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
     public function getFileName($id)
@@ -788,7 +865,6 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $final = $this->getFileName($exp[0]);
         return $final;
     }
-
     public function eraseMedia($id, $type) {
         $sql = '
                     DELETE FROM media
@@ -817,7 +893,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute();
-        $result = $query->fetchAll(\PDO::FETCH_COLUMN);
+        $result = $query->fetchAll(PDO::FETCH_COLUMN);
         sort($result, SORT_NUMERIC);
         return $result;
     }
@@ -829,7 +905,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(['md' => $media]);
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
         $ratio = $result['height'] / $result['width'];
         if ($ratio < 1) {
             $orientation = 'horizontal';
@@ -855,13 +931,12 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $result = $query->execute(array('id' => $id));
         // dump($result);
     }
-
     public function getProgByPlaylist($playlist) {
         $sql = "SELECT * FROM programmation INNER JOIN main_schedule ON main_schedule.id = programmation.schedule WHERE playlist = :playlist";
         $sql = "SELECT * FROM programmation INNER JOIN main_schedule ON main_schedule.id = programmation.schedule WHERE playlist = :playlist";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(['playlist' => $playlist]);
-        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         $today = new DateTime();
         foreach($result as $i => $prog) {
             $date_prog_end = new dateTime($prog['date_end']);
@@ -882,7 +957,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $query = $this->_em->getConnection()->prepare($sql);
         $query->bindParam(1, $media);
         $query->execute();
-        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
     public function is_programmed($media) {
@@ -901,7 +976,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(['media' => $media]);
-        $boucles = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $boucles = $query->fetchAll(PDO::FETCH_ASSOC);
         foreach($boucles as $boucle) {
             $tmp = [];
             $tmp["name"] = $boucle["name"];
@@ -966,7 +1041,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         $sql = "SELECT `extension` FROM `image` WHERE `media` = :media";
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(array('media' => $mediaId));
-        $testImage = $query->fetch(\PDO::FETCH_COLUMN);
+        $testImage = $query->fetch(PDO::FETCH_COLUMN);
         if( !$testImage){
             $type = 'video';
         }
@@ -985,7 +1060,7 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
                 ';
         $query = $this->_em->getConnection()->prepare($sql);
         $query->execute(['prd' => $product]);
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -1016,9 +1091,10 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
         foreach ($media->getTags()->getValues() as $tag)
         {
-            if(!in_array($tag, $infos['media_tags']))
-                $infos['media_tags'][] = $tag;
+            if(!in_array($tag->getName(), $infos['media_tags']))
+                $infos['media_tags'][] = $tag->getName();
         }
+
         foreach ($media->getProducts()->getValues() as $product)
         {
 
@@ -1039,8 +1115,8 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
 
             foreach ($product->getTags()->getValues() as $tag)
             {
-                if(!in_array($tag, $infos['media_tags']))
-                    $infos['media_tags'][] = $tag;
+                if(!in_array($tag->getName(), $infos['media_tags']))
+                    $infos['media_tags'][] = $tag->getName();
             }
 
             foreach ($product->getAllergens()->getValues() as $allergen)

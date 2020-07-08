@@ -1,6 +1,6 @@
-import Tool from "../Tool";
+import SubTool from "../../../SubTool";
 
-class ArchivedMediasHandlerTool extends Tool
+class BasicRemplacementHandler extends SubTool
 {
 
     constructor()
@@ -21,4 +21,4 @@ class ArchivedMediasHandlerTool extends Tool
 
 }
 
-export default ArchivedMediasHandlerTool;
+export default BasicRemplacementHandler;

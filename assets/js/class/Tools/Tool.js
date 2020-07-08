@@ -7,6 +7,7 @@ class Tool {
         this.__name = null;
         this.__isActived = false;
         this.__toolBox = null;
+        this.__subTools = [];
     }
 
     getName()
@@ -61,6 +62,16 @@ class Tool {
         }
 
         return urlParameter;
+    }
+
+    showLoadingPopup()
+    {
+        $('.popup_loading_container').addClass('is_open');
+    }
+
+    hideLoadingPopup()
+    {
+        $('.popup_loading_container').removeClass('is_open');
     }
 
     enable()

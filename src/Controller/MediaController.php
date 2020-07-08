@@ -8,6 +8,7 @@ use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Criterion;
+use App\Entity\Customer\Image;
 use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
@@ -46,7 +47,6 @@ class MediaController extends AbstractController
     private SessionManager $sessionManager;
 
     private ParameterBagInterface $parameterBag;
-
 
     private MediasHandler $mediasHandler;
 
@@ -93,7 +93,6 @@ class MediaController extends AbstractController
         $categories = $categoryRepo->findAll();
         $tags = $tagRepo->findAll();
         $criterions = $criterionRepo->findAll();
-
         $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
         $productsTags = $productRepo->findProductsAssociatedDatas('tags');
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
@@ -113,6 +112,7 @@ class MediaController extends AbstractController
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
         $mediaList = new MediasList();
+/*        $mediaList->addMedia( $mediaRepo->find(47) ) ;*/
 
         $uploadMediaForm = $this->createForm(MediasListType::class, $mediaList, [
             'attr' => [
@@ -172,16 +172,24 @@ class MediaController extends AbstractController
         $productsCriterions = $productRepo->findProductsAssociatedDatas('criterions');
         $productsTags = $productRepo->findProductsAssociatedDatas('tags');
 
-        $mediaInfos = $mediaRepo->getMediaInfosForEdit($id);
-
         $media = $mediaRepo->find($id);
         if(!$media)
             throw new Exception(sprintf("No media can be found with this id : '%s'", $id));
+
+        $mediaInfos = $mediaRepo->getMediaInfosForEdit($id);
+
+        $medias = $mediaRepo->getAllMediasExcept([$media]);
 
         $form = $this->createForm(EditMediaType::class, $media, [
             'tagRepo' => $tagRepo,
             'mediaRepo' => $mediaRepo,
         ]);
+
+        $currentCustomerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+
+        $miniature_medium_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
+                                              (($media instanceof Image) ? 'images': 'videos') . "/medium/". $media->getId() . "." .
+                                              ( ($media instanceof Image) ? 'png' : 'mp4' ));
 
         $form->handleRequest($request);
 
@@ -191,8 +199,6 @@ class MediaController extends AbstractController
             dd($media);
 
         }
-
-        $media->media_type = ($media instanceof Video) ? 'video': 'image';
 
         $popupsFiltersContent = $this->getPopupFiltersContent();
 
@@ -209,8 +215,6 @@ class MediaController extends AbstractController
         else
             $characteristics['dpi'] = '72 dpi';
 
-        $media->characteristics = $characteristics;
-
         return $this->render("media/edit_media.html.twig", [
             'products' => $popupsFiltersContent['products'],
             'tags' =>$popupsFiltersContent['tags'],
@@ -221,7 +225,8 @@ class MediaController extends AbstractController
             'mediaInfos' =>$mediaInfos,
             'form' => $form->createView(),
             'media' => $media,
-            'media_type' => ($media instanceof Video) ? 'video': 'image',
+            'medias' => $medias,
+            'file_type' => ($media instanceof Video) ? 'video': 'image',
             'media_characteristics' => $characteristics,
             'media_incrustations' => $mediaInfos['media_incrustations'],
             'media_criterions' => $mediaInfos['media_criterions'],
@@ -229,6 +234,7 @@ class MediaController extends AbstractController
             'media_allergens' => $mediaInfos['media_allergens'],
             'action' => 'edit',
             'sousTitle' => 'Modifier',
+            'miniature_medium_exist' => $miniature_medium_exist,
         ]);
 
     }
@@ -266,7 +272,6 @@ class MediaController extends AbstractController
         $splash = explode('/', $mimeType);
         $real_file_extension = $splash[1];
         $fileType = strstr($mimeType, '/', true);
-
 
         $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
@@ -340,18 +345,21 @@ class MediaController extends AbstractController
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
-
             $dpi = $this->mediasHandler->getImageDpi($miniaturePath);
 
             //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
 
+
             $response = [
                 'id' => $media->getId(),
+                'fileName' => $name,
+                'fileNameWithoutExtension' => $media->getName(),
                 'extension' => $media->getExtension(),
                 'height' => $media->getHeight(),
                 'width' => $media->getWidth(),
                 'dpi' => $dpi,
-                'type' => 'image',
+                'miniatureExist' => file_exists($miniaturePath),
+                'fileType' => 'image',
                 'customer' => $customerName,
                 //'highestFormat' => $highestFormat,
             ];
@@ -376,6 +384,7 @@ class MediaController extends AbstractController
                   ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
+                  ->setOrientation(" ") // le serializer oblige à avoir une valeur
                   ->setType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
@@ -395,7 +404,6 @@ class MediaController extends AbstractController
                 'isArchived' => false,
             ];
 
-
             list($width, $height, $codec) = $this->mediasHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
@@ -413,7 +421,7 @@ class MediaController extends AbstractController
                 'codec' => $codec ?? null,
                 'type' => 'video',
                 'customer' => $customerName,
-                'mimeType' => $mimeType,
+                'mimeType' => 'video/mp4',
                 //'highestFormat' => $highestFormat,
             ];
 
@@ -447,21 +455,21 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . "." . $media->getExtension();
-            $mimeType = finfo_file($finfo, $path);
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . ".mp4";
 
             $response = [
                 'status' => 'Finished',
                 'id' => $media->getId(),
+                'miniatureExist' => file_exists($path),
                 'extension' => $media->getExtension(),
                 'fileName' => $task->getFilename(),
+                'fileNameWithoutExtension' => $media->getName(),
                 'height' => $media->getHeight(),
                 'width' => $media->getWidth(),
                 'codec' => $media->getVideoCodec(),
-                'type' => 'video',
+                'fileType' => 'video',
                 'customer' => $customerName,
-                'mimeType' => $mimeType,
+                'mimeType' => 'video/mp4',
                 'name' => $media->getName()
             ];
 
@@ -490,13 +498,14 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-
         //dd($id);
         $media = $mediaRepository->find($id);
 
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
+        dd("ok");
+        
         /*
         // delete source
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
@@ -577,7 +586,6 @@ class MediaController extends AbstractController
     public function retrieveMediaInfosForPopup(Request $request)
     {
 
-
         $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) )
                                          ->getRepository(Media::class);
 
@@ -611,6 +619,94 @@ class MediaController extends AbstractController
 
         else
             throw new Exception(sprintf("Unrecognized 'data' parameter value ! Expected 'products' or 'tags', but '%s' given ", $data));
+
+    }
+
+
+    /**
+     * @Route(path="get/media/{id}/programming/infos", name="media::getProgrammingInfos", methods={"POST"})
+     */
+    public function getProgrammingInfos(Request $request, int $id)
+    {
+
+        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $mediaRepo = $manager->getRepository(Media::class);
+        $media = $mediaRepo->find($id);
+        if(!$media)
+            throw new Exception(sprintf("No media found with id : '%s'", $id));
+
+        $customerName = strtolower($this->sessionManager->get('current_customer')->getName());
+
+        $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                    $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                    . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+
+        $mediaProgrammingMouldList = $this->serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
+
+        return new JsonResponse([
+            'mediaMiniatureExist' => $mediaMiniatureExist,
+            'customer' => $customerName,
+            'mediaProgrammingMouldList' => $mediaProgrammingMouldList
+        ]);
+
+    }
+
+    /**
+     * @Route(path="/replace/media/in/{location}", name="media::replaceMedia", methods={"POST", "GET"}, requirements={"location": "mediatheque|programmation"})
+     */
+    public function replaceMedia(Request $request, string $location)
+    {
+
+        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $mediaRepo = $manager->getRepository(Media::class);
+
+        $mediaToReplace = $mediaRepo->find($request->request->get('remplacementDatas')['mediaToReplaceId']);
+        $mediaSubstitute = $mediaRepo->find($request->request->get('remplacementDatas')['substituteId']);
+
+        if(!$mediaToReplace || !$mediaSubstitute)
+            throw new Exception(sprintf("No media found with '%s' id !",
+                                        (!$mediaToReplace) ? $request->request->get('remplacementDatas')['mediaToReplaceId'] :
+                                            $request->request->get('remplacementDatas')['substituteId']));
+
+        $fileType = $request->request->get('remplacementDatas')['fileType'];
+
+        $currentCustomerName = strtolower($this->sessionManager->get('current_customer')->getNAme());
+
+        $remplacementDates = [
+            'start' => $request->request->get('remplacementDatas')['remplacementDate']['start'],
+            'end' => $request->request->get('remplacementDatas')['remplacementDate']['end'],
+        ];
+
+        $now = new DateTime('now');
+        $mediaReplaceStartDate = new DateTime($remplacementDates['start']);
+
+        dump($mediaReplaceStartDate === $now || $now > $mediaReplaceStartDate);
+
+        if( $now >= $mediaReplaceStartDate )
+        {
+
+            $mediaRepo->replaceAllMediaOccurrences($mediaToReplace, $mediaSubstitute);
+
+            /*$qualities = ['low', 'medium', 'high', 'HD'];;
+
+            foreach ($qualities as $quality)
+            {
+
+                $source = $this->parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
+                . $fileType . "/" . $quality . "/" . $mediaToReplace->getId() . "." . ( ($fileType === 'image') ? 'png': 'mp4' );
+
+                if(file_exists($source))
+                    unset($source);
+
+            }*/
+
+        }
+
+        // @TODO: else remplacement à date (utiliser entité Date
+
+        $manager->flush();
+
+        dd($request->request);
 
     }
 
@@ -701,7 +797,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        dd($request->request, $customer);
+        //dd($request->request, $customer);
 
         $error = [  ];
 
@@ -752,22 +848,24 @@ class MediaController extends AbstractController
                 $root = $this->getParameter('project_dir') . '/../node_file_system/';
                 $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
 
-                // check date (@see: https://www.php.net/manual/en/function.checkdate.php)
-                // if date is not return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
-                if(!checkdate($mediaInfos['diffusionStart']['month'] ,$mediaInfos['diffusionStart']['day'] ,$mediaInfos['diffusionStart']['year']))
+                // check if date is valid and exist in gregorian calendar (@see: https://www.php.net/manual/en/function.checkdate.php)
+                // if date is not valid return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                // parameter order : ( int $month , int $day , int $year )
+                // form data order : year-month-day
+                if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
                 {
                     $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
                     break;
                 }
 
-                if(!checkdate($mediaInfos['diffusionEnd']['month'] ,$mediaInfos['diffusionEnd']['day'] ,$mediaInfos['diffusionEnd']['year']))
+                if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
                 {
                     $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
                     break;
                 }
 
-                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
-                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
+                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart'] );
+                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd'] );
 
                 if($diffusionEndDate < $diffusionStartDate)
                 {
@@ -778,7 +876,7 @@ class MediaController extends AbstractController
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
 
                 $media->setName( $mediaInfos['name'] )
-                      ->setContainIncruste( $mediaInfos['containIncruste'] )
+                      ->setContainIncruste( $mediaInfos['containIncrustations'] )
                       ->setDiffusionStart($diffusionStartDate)
                       ->setDiffusionEnd($diffusionEndDate);
 
@@ -934,7 +1032,6 @@ class MediaController extends AbstractController
 
     }
 
-
     private function updateMediathequeMediasNumber($number)
     {
 
@@ -971,5 +1068,6 @@ class MediaController extends AbstractController
         ];
 
     }
+
 
 }
