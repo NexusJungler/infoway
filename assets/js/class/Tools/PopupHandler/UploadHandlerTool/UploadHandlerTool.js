@@ -298,12 +298,12 @@ class UploadHandlerTool extends SubTool
         this.showStep(1);
     }
 
-    onClickOnModalCloseButtonsCloseModal(active)
+    onClickOnCloseButtonCloseUploadPopup(active)
     {
 
         if(active)
         {
-            $('.close_modal_button').on("click.onClickOnModalCloseButtonsCloseModal",e => {
+            this.__$location.find('.close_modal_button').on("click.onClickOnCloseButtonCloseUploadPopup",e => {
 
                 return this.closeModal();
 
@@ -335,7 +335,7 @@ class UploadHandlerTool extends SubTool
         }
         else
         {
-            $('.close_modal_button').off("click.onClickOnModalCloseButtonsCloseModal");
+            this.__$location.find('.close_modal_button').off("click.onClickOnCloseButtonCloseUploadPopup");
         }
 
         return this;
@@ -1173,7 +1173,7 @@ class UploadHandlerTool extends SubTool
                 <td>
                     <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.fileType === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
                 </td>
-                <td> <span class="error hidden"></span> <br> <input type="hidden" name="medias_list[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> <input type="hidden" name="medias_list[medias][${mediaInfos.index}][extension]" value="${ mediaInfos.extension }"> <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
+                <td> <span class="error hidden"></span> <br> <input type="hidden" name="medias_list[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> <input type="hidden" name="medias_list[medias][${mediaInfos.index}][extension]" value="${ mediaInfos.extension }"> <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
                 <td> 
                     <div class="diff_start_container">
                         <span class="error hidden"></span> <br> 
@@ -1191,13 +1191,13 @@ class UploadHandlerTool extends SubTool
                 
                 </td>
                 <td class="tags_affectation_container"> 
-                    <button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">TAGS</button>
+                    <button type="button" class="btn tag_association_btn association_btn">Associer tags</button>
                     <div class="associated_tags_container">
                         ${ this.buildAssociationInputsHtml('tags', mediaInfos.index) }
                     </div> 
                 </td>
                 <td class="products_affectation_container"> 
-                    <button type="button" class="associate-product association-btn" data-media="${mediaInfos.name}">Associer</button>
+                    <button type="button" class="btn product_association_btn association_btn">Associer produits</button>
                     <div class="associated_products_container">
                         ${ this.buildAssociationInputsHtml('products', mediaInfos.index) }
                     </div> 
@@ -1218,7 +1218,7 @@ class UploadHandlerTool extends SubTool
             if(item.type === associationItem)
             {
 
-                inputs += `<input type="radio" id="medias_list_medias_${ index }_${ item.type }_${ counter }" name=medias_list[medias][${index}][${ item.type }][]" value="${item.id}"> 
+                inputs += `<input type="checkbox" id="medias_list_medias_${ index }_${ item.type }_${ counter }" name=medias_list[medias][${index}][${ item.type }][]" value="${item.id}"> 
                            <label for="medias_list_medias_${ index }_${ item.type }_${ counter }">${ item.name }</label>`;
                 counter++;
 
@@ -1857,7 +1857,7 @@ class UploadHandlerTool extends SubTool
     {
         super.enable();
         /*this.onClickOnUploadButtonShowModal(true)
-            .onClickOnModalCloseButtonsCloseModal(true)
+            .onClickOnCloseButtonCloseUploadPopup(true)
             .onDragNDropFileAddFileList(true)
             .onFileSelectAddFileInList(true)
             .onClickOnStartUploadButtonStartUpload(true)
@@ -1874,7 +1874,7 @@ class UploadHandlerTool extends SubTool
             .onClickOnMiniatureExpandedPopupCloseBtn(true)*/
 
         this.onClickOnUploadButtonShowModal(true)
-            .onClickOnModalCloseButtonsCloseModal(true)
+            .onClickOnCloseButtonCloseUploadPopup(true)
             .onClickOnCustomFileButtonActiveDefaultFileInput(true)
             .handleFileDragNDrop(true)
             .onFileDropAddFileInUploadList(true)
@@ -1891,7 +1891,7 @@ class UploadHandlerTool extends SubTool
         super.disable();
         // call function with 'false' for remove events (if event was applied on DOM element by function)
         /*this.onClickOnUploadButtonShowModal(false)
-            .onClickOnModalCloseButtonsCloseModal(false)
+            .onClickOnCloseButtonCloseUploadPopup(false)
             .onDragNDropFileAddFileList(false)
             .onFileSelectAddFileInList(false)
             .onClickOnStartUploadButtonStartUpload(false)
@@ -1908,7 +1908,7 @@ class UploadHandlerTool extends SubTool
             .onClickOnMiniatureExpandedPopupCloseBtn(false)*/
 
         this.onClickOnUploadButtonShowModal(false)
-            .onClickOnModalCloseButtonsCloseModal(false)
+            .onClickOnCloseButtonCloseUploadPopup(false)
             .onClickOnCustomFileButtonActiveDefaultFileInput(false)
             .handleFileDragNDrop(false)
             .onFileDropAddFileInUploadList(false)

@@ -797,7 +797,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        //dd($request->request, $customer);
+        dd($request->request, $customer);
 
         $error = [  ];
 
