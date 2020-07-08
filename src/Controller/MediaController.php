@@ -797,7 +797,7 @@ class MediaController extends AbstractController
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
 
-        dd($request->request, $customer);
+        //dd($request->request, $customer);
 
         $error = [  ];
 
@@ -848,22 +848,24 @@ class MediaController extends AbstractController
                 $root = $this->getParameter('project_dir') . '/../node_file_system/';
                 $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
 
-                // check date (@see: https://www.php.net/manual/en/function.checkdate.php)
-                // if date is not return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
-                if(!checkdate($mediaInfos['diffusionStart']['month'] ,$mediaInfos['diffusionStart']['day'] ,$mediaInfos['diffusionStart']['year']))
+                // check if date is valid and exist in gregorian calendar (@see: https://www.php.net/manual/en/function.checkdate.php)
+                // if date is not valid return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                // parameter order : ( int $month , int $day , int $year )
+                // form data order : year-month-day
+                if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
                 {
                     $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
                     break;
                 }
 
-                if(!checkdate($mediaInfos['diffusionEnd']['month'] ,$mediaInfos['diffusionEnd']['day'] ,$mediaInfos['diffusionEnd']['year']))
+                if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
                 {
                     $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
                     break;
                 }
 
-                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart']['year'] . '-' . $mediaInfos['diffusionStart']['month'] . '-' . $mediaInfos['diffusionStart']['day'] );
-                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd']['year'] . '-' . $mediaInfos['diffusionEnd']['month'] . '-' . $mediaInfos['diffusionEnd']['day'] );
+                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart'] );
+                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd'] );
 
                 if($diffusionEndDate < $diffusionStartDate)
                 {
@@ -874,7 +876,7 @@ class MediaController extends AbstractController
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
 
                 $media->setName( $mediaInfos['name'] )
-                      ->setContainIncruste( $mediaInfos['containIncruste'] )
+                      ->setContainIncruste( $mediaInfos['containIncrustations'] )
                       ->setDiffusionStart($diffusionStartDate)
                       ->setDiffusionEnd($diffusionEndDate);
 

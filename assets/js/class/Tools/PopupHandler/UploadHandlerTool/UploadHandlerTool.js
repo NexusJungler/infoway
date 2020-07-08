@@ -81,6 +81,28 @@ class UploadHandlerTool extends SubTool
         this.__uploadAuthorized = false;
         this.__$mediasCollection = $('.medias_collection');
 
+        this.__availableAssociationItems = [];
+
+        this.getAllAvailableAssociationItems();
+    }
+
+    getAllAvailableAssociationItems()
+    {
+
+        $('.popup_associate_product .products_choice_list tr').each( (index,tr) => {
+
+            this.__availableAssociationItems.push( { id: $(tr).data('product_id'), name: $(tr).find('.product_name').text(), type: 'products' } );
+
+        } );
+
+        $('.popup_associate_tag .tags_list tr').each( (index,tr) => {
+
+            this.__availableAssociationItems.push( { id: $(tr).data('tag_id'), name: $(tr).find('.tag_name').text(), type: 'tags' } );
+
+        } );
+
+        return this;
+
     }
 
     fileMimeTypeIsAccepted(mime_type)
@@ -507,7 +529,7 @@ class UploadHandlerTool extends SubTool
 
     }
 
-    onClickOnUploadCancelButton(active)
+    /*onClickOnUploadCancelButton(active)
     {
         if(active)
         {
@@ -661,12 +683,77 @@ class UploadHandlerTool extends SubTool
             // And store it, the length cannot be used if deleting widgets is allowed
             list.data('widget-counter', counter);
         }
-    }
+    }*/
 
     showStep(stepNumber)
     {
-        this.__$location.find('.step').hide();
-        this.__$location.find(`.step_${ stepNumber }`).show();
+
+        if(this.__$location.find(`.step_${ stepNumber }`).length > 0)
+        {
+
+            let html = "";
+
+            if(stepNumber === 1)
+            {
+
+                this.__$location.find('.upload_step_title').text("Préparation de l'upload");
+
+                html = `<div class="actions_buttons_container">
+                        <button class="btn close_modal_button cancel" type="button">Annuler</button>
+                    </div>
+
+                    <div class="actions_buttons_container">
+                        <button class="btn start_upload_btn" type="button" ${ (this.__$fileToUploadList.find('tr').length === 0) ? 'disabled' : '' }><i class="fas fa-arrow-right"></i> Démarrer l'upload</button>
+                    </div>`;
+
+            }
+            else if(stepNumber === 2)
+            {
+
+                this.__$location.find('.upload_step_title').text("Médias à caractériser");
+
+                html = `<div class="actions_buttons_container">
+                        <button class="btn close_modal_button cancel" type="button">Annuler</button>
+                    </div>
+                    
+                    <div class="actions_buttons_container">
+                        <button class="btn show_prev_step" type="button"><i class="fas fa-arrow-left"></i>Précedent</button>
+                    </div>
+
+                    <div class="actions_buttons_container">
+                        <button class="btn save_edits_button" type="button">Enregistrer</button>
+                    </div>`;
+
+            }
+            else
+            {
+
+                this.__$location.find('.upload_step_title').text("Médias prêts");
+
+                html = `<div class="actions_buttons_container">
+                        <button class="btn show_prev_step" type="button"><i class="fas fa-arrow-left"></i>Précedent</button>
+                    </div>
+                    
+                    <div class="actions_buttons_container">
+                        <button class="btn" type="button"><i class="fas fa-arrow-left"></i>Remplacer un média</button>
+                    </div>
+                    
+                    <div class="actions_buttons_container">
+                        <button class="btn" type="button"><i class="far fa-calendar"></i>Programmer</button>
+                    </div>
+
+                    <div class="actions_buttons_container">
+                        <button class="btn" type="button" disabled><i class="icon icon-picto-mediathque"></i>Médiathèque</button>
+                    </div>`;
+
+            }
+
+            this.__$location.find('.step.current_step').removeClass('current_step');
+
+            this.__$location.find('.popup_footer').html(html);
+            this.__$location.find(`.step_${ stepNumber }`).addClass('current_step');
+
+        }
 
         return this;
     }
@@ -760,9 +847,7 @@ class UploadHandlerTool extends SubTool
 
         if (active)
         {
-            this.__$location.find('.start_upload_btn').on("click.onClickOnStartUploadButton", e => {
-
-                console.log(this.__uploadAuthorized); //debugger
+            this.__$location.on("click.onClickOnStartUploadButton", '.start_upload_btn', e => {
 
                 if(this.__uploadAuthorized)
                 {
@@ -773,9 +858,7 @@ class UploadHandlerTool extends SubTool
 
                     let uploadFinished = 0;
 
-                    this.__$fileToUploadList.empty();
-
-                    this.__$location.find('.upload_step_title').text("Médias à caractériser");
+                    //this.__$fileToUploadList.empty();
 
                     //console.log(this.__filesToUpload.length); debugger
                     // for each file in upload list
@@ -850,8 +933,6 @@ class UploadHandlerTool extends SubTool
                                         miniatureExist: response.miniatureExist,
                                         //highestFormat: response.highestFormat,
                                     };
-
-                                    this.__filesToUpload.splice(index , 1);
 
                                     uploadStateIndicator.html("Téléchargement terminé !");
 
@@ -949,7 +1030,7 @@ class UploadHandlerTool extends SubTool
                                 $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
 
                                 //$(".modal-upload-download .show_media_edit_container").fadeOut();
-                                this.__filesToUpload.splice(index , 1);
+
                                 //$(`.modal-upload-download #upload_${fileToUpload.index} progress`).css({ 'color': 'red' });
 
                                 $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
@@ -998,6 +1079,9 @@ class UploadHandlerTool extends SubTool
 
                                 }
 
+                            },
+                            complete: () => {
+                                this.__filesToUpload.splice(index , 1);
                             }
                         });
 
@@ -1009,7 +1093,7 @@ class UploadHandlerTool extends SubTool
         }
         else
         {
-            this.__$location.find('.start_upload_btn').off("click.onClickOnStartUploadButton");
+            this.__$location.off("click.onClickOnStartUploadButton", '.start_upload_btn');
         }
 
         return this;
@@ -1050,24 +1134,24 @@ class UploadHandlerTool extends SubTool
 
     }
 
-    showElementGraphicInfos(elementGraphicInfos)
+    showElementGraphicInfos(elementGraphicInfos, preview)
     {
 
         return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> </td>
                      <td>
-                        <progress class="progress_bar" id="progress_${ index }" max="100" value="100"></progress>
+                        <progress class="progress_bar" id="progress_${ elementGraphicInfos.index }" max="100" value="100"></progress>
                         <i class="fas fa-check" aria-hidden="true"></i>
                      </td>
                      <td> 
-                        ${ elementGraphicInfos.preview } 
+                        ${ preview } 
                         <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="95" aria-hidden="true"></i>
                      </td>
                      <td> 
-                        <input type="text" name="medias_list[medias][${index}][name]" class="form_input fileName" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
+                        <input type="hidden" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }"> <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input fileName" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
                      </td>`;
 
     }
-
+    
     showMediaInfos(mediaInfos, preview)
     {
 
@@ -1087,9 +1171,9 @@ class UploadHandlerTool extends SubTool
                     <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="95" aria-hidden="true"></i>
                 </td>
                 <td>
-                    <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.type === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
+                    <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.fileType === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
                 </td>
-                <td> <span class="error hidden"></span> <br> <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
+                <td> <span class="error hidden"></span> <br> <input type="hidden" name="medias_list[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> <input type="hidden" name="medias_list[medias][${mediaInfos.index}][extension]" value="${ mediaInfos.extension }"> <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input fileName" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
                 <td> 
                     <div class="diff_start_container">
                         <span class="error hidden"></span> <br> 
@@ -1106,12 +1190,44 @@ class UploadHandlerTool extends SubTool
                 <td class="associated_criterions_container">
                 
                 </td>
-                <td class="tags_affectation_container"> <button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">TAGS</button><div class="associated-tags-container"></div> </td>
-                <td class="products_affectation_container"> <button type="button" class="associate-product association-btn" data-media="${mediaInfos.name}">Associer</button><div class="associated-products-container"></div> </td>
+                <td class="tags_affectation_container"> 
+                    <button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">TAGS</button>
+                    <div class="associated_tags_container">
+                        ${ this.buildAssociationInputsHtml('tags', mediaInfos.index) }
+                    </div> 
+                </td>
+                <td class="products_affectation_container"> 
+                    <button type="button" class="associate-product association-btn" data-media="${mediaInfos.name}">Associer</button>
+                    <div class="associated_products_container">
+                        ${ this.buildAssociationInputsHtml('products', mediaInfos.index) }
+                    </div> 
+                </td>
                 <td> 
                     <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="1">Oui</label> 
-                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input choice_media_contain_incruste" checked value="0">Non</label>
+                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input choice_media_contain_incruste" value="0" checked>Non</label>
                 </td>`;
+    }
+
+    buildAssociationInputsHtml(associationItem, index)
+    {
+        let inputs = '';
+        let counter = 0;
+
+        this.__availableAssociationItems.forEach( (item) => {
+
+            if(item.type === associationItem)
+            {
+
+                inputs += `<input type="radio" id="medias_list_medias_${ index }_${ item.type }_${ counter }" name=medias_list[medias][${index}][${ item.type }][]" value="${item.id}"> 
+                           <label for="medias_list_medias_${ index }_${ item.type }_${ counter }">${ item.name }</label>`;
+                counter++;
+
+            }
+
+        } );
+
+        return inputs;
+
     }
 
     showMediaInfoForEdit(mediaInfos)
@@ -1119,7 +1235,7 @@ class UploadHandlerTool extends SubTool
 
         //console.log(mediaInfos); debugger
 
-        const index = mediaInfos.index;
+        const index = this.__$fileToCharacterisationList.children('tr').length;
 
         this.__mediaInfos.push(mediaInfos);
 
@@ -1147,10 +1263,10 @@ class UploadHandlerTool extends SubTool
 
 
 
-        let html = `<tr data-index="${ index }" id="upload_${ index }" class="unregistered">`;
+        let html = `<tr data-index="${ mediaInfos.index }" id="upload_${ mediaInfos.index }" class="unregistered">`;
 
         if( this.__uploadMediaType === 'element_graphic' )
-            html += this.showElementGraphicInfos({ fileName: mediaInfos.fileName, preview: preview, fileNameWithoutExtension: mediaInfos.fileNameWithoutExtension });
+            html += this.showElementGraphicInfos(mediaInfos, preview);
 
         else
             html += this.showMediaInfos(mediaInfos, preview);
@@ -1161,7 +1277,7 @@ class UploadHandlerTool extends SubTool
 
     }
 
-    rebuildYearFieldContent(index, dateData)
+    /*rebuildYearFieldContent(index, dateData)
     {
 
         let now = new Date();
@@ -1181,12 +1297,125 @@ class UploadHandlerTool extends SubTool
         }
 
         return options;
+    }*/
+
+    onClickOnSaveButton(active)
+    {
+        if(active)
+        {
+            this.__$location.find('.popup_footer').on('click.onClickOnSaveButton', '.save_edits_button', e => {
+
+                this.__$location.find('#medias_list_form').submit();
+
+            })
+        }
+        else
+        {
+            this.__$location.find('.popup_footer').off('click.onClickOnSaveButton', '.save_edits_button');
+        }
+
+        return this;
     }
 
     onMediaInfoEditingFormSubmit(active)
     {
         if(active)
         {
+
+            this.__$location.find('#medias_list_form').on('submit.', e => {
+
+                e.preventDefault();
+
+                let formData = new FormData( $(e.currentTarget)[0] );
+                console.log(formData); debugger
+
+                super.showLoadingPopup();
+
+                $.ajax({
+                   url: `/mediatheque/${this.__uploadMediaType}`,
+                   type: 'POST',
+                   data: formData,
+                   processData: false,
+                   contentType: false,
+                   success: (response) => {
+
+                       this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
+
+                       //@TODO: insert media card in mediatheque after saving
+
+                   },
+                   error: (response) => {
+                       let error = response;
+                       console.log(response);
+                       console.log(error);
+                       console.log(error.subject); debugger
+                       let subject = error.subject;
+
+                       // on supprime la class 'unregistered' sur les elements enregistrés jusqu'à l'erreur
+                       for (let i = 0; i < subject; i++)
+                       {
+                           $(`.media_list tbody tr[data-index='${ i }']`).removeClass('unregistered');
+                       }
+
+
+                       switch (error.text)
+                       {
+
+                           case "515 Duplicate File":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
+                               break;
+
+                           case "516 Invalid Filename":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
+                               break;
+
+                           case "517 Empty Filename":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
+                               break;
+
+                           case "518 Too short Filename":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
+                               break;
+
+                           case "519 Invalid diffusion date":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_date );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusionDates`).addClass('invalid');
+                               break;
+
+                           case "519.1 Invalid diffusion start date":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_start_date );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusionDates.start`).addClass('invalid');
+                               break;
+
+                           case "519.2 Invalid diffusion end date":
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).removeClass( 'hidden' );
+                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusionDates.end`).addClass('invalid');
+                               break;
+
+                           default:
+                               console.error(error.text); //debugger
+
+                       }
+                   },
+                    complete: () => {
+                        super.hideLoadingPopup();
+                    },
+
+                });
+
+            })
+
 
         }
         else
@@ -1197,7 +1426,28 @@ class UploadHandlerTool extends SubTool
         return this;
     }
 
-    checkMediaNameValidity(mediaName)
+    onClickOnPreviousButton(active)
+    {
+        if(active)
+        {
+            this.__$location.find('.popup_footer').on('click.onClickOnPreviousButton', '.show_prev_step', e => {
+
+                const currentStep = parseInt($('.step.current_step').data('step'), 10);
+
+                if( !isNaN(currentStep) && currentStep > 1)
+                    this.showStep( currentStep -1 )
+
+            })
+        }
+        else
+        {
+            this.__$location.find('.step').off('click.onClickOnPreviousButton', '.show_prev_step');
+        }
+
+        return this;
+    }
+
+    /*checkMediaNameValidity(mediaName)
     {
         const input = $('<input>', {
             type: 'text',
@@ -1220,7 +1470,7 @@ class UploadHandlerTool extends SubTool
             this.__dataCheckingErrors += this.__errors.empty_error + '<br>';
         }
 
-        if( input.val().match(/(\w)*\.(\w)*/) && input.attr('type') === "text" )
+        if( input.val().match(/(\w)*\.(\w)*!/) && input.attr('type') === "text" )
         {
             inputIsValid = false;
             this.__dataCheckingErrors += this.__errors.invalid_error + '<br>';
@@ -1504,7 +1754,7 @@ class UploadHandlerTool extends SubTool
         {
             this.__$location.on("click.onClickOnExpandMiniatureButton", ".expand-miniature", e => {
 
-                /*const mediaId = $(e.currentTarget).data('media_id');
+                /!*const mediaId = $(e.currentTarget).data('media_id');
                 const index = this.__mediaInfos.findIndex( mediaInfo => mediaInfo.id === mediaId );
 
                 if(index !== -1)
@@ -1513,7 +1763,7 @@ class UploadHandlerTool extends SubTool
                     $('.expand-miniature-container .modal-body').html(`<img src="/miniatures/${mediaInfo.customer}/images/medium/${mediaId}.png" alt="/miniatures/${mediaInfo.customer}/image/medium/${mediaId}.png">`);
                     this.__$location.css({ 'z-index': '0' });
                     $('.expand-miniature-container').fadeIn();
-                }*/
+                }*!/
 
             })
         }
@@ -1531,9 +1781,9 @@ class UploadHandlerTool extends SubTool
         {
             $('.popup_media_expanded_miniature .close_modal_button').on('click.onClickOnMiniatureExpandedPopupCloseBtn', e => {
 
-                /*this.__$location.css({ 'z-index': '' });
+                /!*this.__$location.css({ 'z-index': '' });
                 $('.expand-miniature-container').fadeOut();
-                $('.expand-miniature-container .modal-body').empty();*/
+                $('.expand-miniature-container .modal-body').empty();*!/
 
             })
         }
@@ -1601,7 +1851,7 @@ class UploadHandlerTool extends SubTool
         }
 
         return this;
-    }
+    }*/
 
     enable()
     {
@@ -1631,6 +1881,8 @@ class UploadHandlerTool extends SubTool
             .onClickOnRemoveFileButtonRemoveFileFromUploadList(true)
             .onClickOnStartUploadButton(true)
             .onMediaInfoEditingFormSubmit(true)
+            .onClickOnSaveButton(true)
+            .onClickOnPreviousButton(true)
         ;
     }
 
@@ -1663,6 +1915,8 @@ class UploadHandlerTool extends SubTool
             .onClickOnRemoveFileButtonRemoveFileFromUploadList(false)
             .onClickOnStartUploadButton(false)
             .onMediaInfoEditingFormSubmit(false)
+            .onClickOnSaveButton(false)
+            .onClickOnPreviousButton(false)
         ;
     }
 

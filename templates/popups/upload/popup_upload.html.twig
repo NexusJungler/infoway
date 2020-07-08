@@ -33,7 +33,7 @@
 
         <div class="popup_body">
 
-            <div class="popup_body_child container step step_1">
+            <div class="popup_body_child container step step_1 current_step" data-step="1">
 
                 <div class="container_header">
 
@@ -78,47 +78,50 @@
 
             </div>
 
-            <div class="popup_body_child container step step_2" style="display: none">
+            <div class="popup_body_child container step step_2" data-step="2">
 
-                <table>
-                    <thead>
-                        <tr>
-                            {% if media_displayed is defined and media_displayed is same as('medias') %}
-                                <th>Fichier</th>
-                                <th>Téléchargement</th>
-                                <th>Médias</th>
-                                <th>Caractéristiques</th>
-                                <th>Nom</th>
-                                <th>Date de diffusion</th>
-                                <th>Critères</th>
-                                <th>Associer Tags</th>
-                                <th>Associer Produits</th>
-                                <th>Incrustations</th>
-                            {% else %}
-                                <th>Fichier</th>
-                                <th>Téléchargement</th>
-                                <th>Médias</th>
-                                <th>Nom</th>
-                            {% endif %}
-                        </tr>
-                    </thead>
+                <form id="medias_list_form" name="medias_list">
 
-                    {#{{ form_start(uploadMediaForm) }}
-                    <tbody class="file_to_characterisation_list medias_collection">
-                    {{ form_row(uploadMediaForm) }}
-                    </tbody>
-                    {{ form_end(uploadMediaForm) }}#}
-                    <form id="medias_list_form" name="medias_list">
+                    <table>
+                        <thead>
+                            <tr>
+                                {% if media_displayed is defined and media_displayed is same as('medias') %}
+                                    <th>Fichier</th>
+                                    <th>Téléchargement</th>
+                                    <th>Médias</th>
+                                    <th>Caractéristiques</th>
+                                    <th>Nom</th>
+                                    <th>Date de diffusion</th>
+                                    <th>Critères</th>
+                                    <th>Associer Tags</th>
+                                    <th>Associer Produits</th>
+                                    <th>Incrustations</th>
+                                {% else %}
+                                    <th>Fichier</th>
+                                    <th>Téléchargement</th>
+                                    <th>Médias</th>
+                                    <th>Nom</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+
+                        {#{{ form_start(uploadMediaForm) }}
                         <tbody class="file_to_characterisation_list medias_collection">
-
+                        {{ form_row(uploadMediaForm) }}
                         </tbody>
-                    </form>
+                        {{ form_end(uploadMediaForm) }}#}
 
-                </table>
+                            <tbody class="file_to_characterisation_list medias_collection">
+
+                            </tbody>
+
+                    </table>
+
+                </form>
 
             </div>
 
-            <div class="popup_body_child container step step_3" style="display: none">
+            <div class="popup_body_child container step step_3" data-step="3">
 
                 <table>
                     <thead>

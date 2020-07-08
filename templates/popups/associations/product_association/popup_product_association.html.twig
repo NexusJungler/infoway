@@ -99,7 +99,7 @@
                                 {% for product in products %}
                                     <tr data-product_id="{{ product.id }}" data-tags="{{ productsTags[product.id]['ids'] | join(', ') }}" data-categories="{{ product.category.id }}" data-criterions="{{ productsCriterions[product.id]['ids'] | join(', ') }}">
                                         <td><input type="checkbox" class="choice_product" data-product_name="{{ product.name }}"></td>
-                                        <td class="product_name"><span>{{ product.name }}</span></td>
+                                        <td><span class="product_name">{{ product.name }}</span></td>
                                         <td><span>{{ product.description }}</span></td>
                                         <td class="criterions_col">
                                             {% if product.criterions | length < 1 %}

@@ -67,6 +67,15 @@
           display: flex;
           flex-direction: column;
 
+          &.step{
+            display: none;
+
+            &.current_step{
+              display: block;
+            }
+
+          }
+
           &.step_1{
 
             .container_header{
@@ -218,8 +227,12 @@
 
               tbody.file_to_characterisation_list{
 
-                input[type=checkbox]{
-                  display: none;
+                .products_affectation_container, .tags_affectation_container{
+
+                  input[type=radio], label{
+                    display: none;
+                  }
+
                 }
 
               }

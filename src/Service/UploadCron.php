@@ -693,6 +693,8 @@ class UploadCron
                     $output['low'][1] = 90;
                 }
 
+                $this->mediaOrientation = 'Horizontal';
+
                 break;
 
             case 9 / 16:   // Plein Ecran Vertical
@@ -714,6 +716,8 @@ class UploadCron
                     $output['low'][0] = 90;
                     $output['low'][1] = 160;
                 }
+
+                $this->mediaOrientation = 'Vertical';
 
                 break;
 
@@ -737,6 +741,8 @@ class UploadCron
                     $output['low'][1] = 80;
                 }
 
+                $this->mediaOrientation = 'Horizontal';
+
                 break;
 
             case 8 / 9:  // Demi Ecran Vertical
@@ -758,6 +764,8 @@ class UploadCron
                     $output['low'][0] = 80;
                     $output['low'][1] = 90;
                 }
+
+                $this->mediaOrientation = 'Vertical';
 
                 break;
 

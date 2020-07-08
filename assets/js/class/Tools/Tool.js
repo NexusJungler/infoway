@@ -64,6 +64,16 @@ class Tool {
         return urlParameter;
     }
 
+    showLoadingPopup()
+    {
+        $('.popup_loading_container').addClass('is_open');
+    }
+
+    hideLoadingPopup()
+    {
+        $('.popup_loading_container').removeClass('is_open');
+    }
+
     enable()
     {
         // console.log(`'${this.__name}' is enabled !`);
