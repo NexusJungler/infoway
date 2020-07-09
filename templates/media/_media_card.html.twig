@@ -71,8 +71,8 @@
                         <div class="media_container_arrows show_expanded_miniature">
                             <i class="fas fa-expand-arrows-alt"></i>
                         </div>
-                        <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
-                             alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
+                        <img class="media_miniature miniature_image" src="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ ( media.mediaType is same as('diff') ? 'images/low/' : '/piece/' ) ~ media.id ~ ".png" }}"
+                             alt="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ ( media.mediaType is same as('diff') ? '/images/low/' : '/piece/' ) ~ media.id ~ ".png" }}">
                     </div>
 
 
@@ -83,10 +83,9 @@
                             <i class="fas fa-expand-arrows-alt"></i>
                         </div>
                         <video class="media_miniature miniature_video">
-                            <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
+                            <source src="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ ( media.mediaType is same as('diff') ? '/videos/low/' : '/piece/' ) ~ media.id ~ ".png" }}" type="{{ media.mimeType }}">
                         </video>
                     </div>
-
 
                 {% endif %}
 

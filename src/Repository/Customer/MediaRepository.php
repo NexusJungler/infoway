@@ -182,11 +182,11 @@ class MediaRepository extends ServiceEntityRepository
                 break;
 
             case "synchros":
-                die("Implemente video synchro recuperation logic");
+                die("Need implementation for video synchro recuperation");
                 break;
 
             case "thematics":
-                die("Implemente video thematic recuperation logic");
+                die("Need implementation for video thematic recuperation");
                 break;
 
             case "elgp":
@@ -195,7 +195,7 @@ class MediaRepository extends ServiceEntityRepository
                         LEFT JOIN " . Image::class . " i WITH m.id = i.id
                         LEFT JOIN " . Video::class . " v WITH m.id = v.id
                         
-                        WHERE m.mediaType = 'elgp' AND ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
+                        WHERE m.mediaType = 'elmt' AND ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
                         OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
                         
                         ORDER BY m.createdAt DESC";
@@ -223,17 +223,27 @@ class MediaRepository extends ServiceEntityRepository
         foreach ($medias as $index => $media)
         {
 
+            if($media->getMediaType() === 'diff')
+                $miniatureFolder = ( ($media instanceof Image) ? 'images': 'videos');
+
+            elseif($media->getMediaType() === 'elmt')
+                $miniatureFolder = "piece";
+
+            else
+                dd(sprintf("Need implementation for found '%s' miniature folder", $media->getMediaType()));
+
             $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                  $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                  $customerName. "/" . $miniatureFolder . "/" . $media->getId() . "."
                                                   . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
             $mediaMiniatureMediumExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                     $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/medium/" . $media->getId() . "."
+                                                     $customerName. "/"  . $miniatureFolder . "/" . $media->getId() . "."
                                                      . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
             $orderedMedias['medias'][$index] = [
                 'media' => null,
                 'file_type' => ($media instanceof Image) ? 'image': 'video',
+                'media_type' => $media->getMediaType(),
                 'media_products' => [],
                 'media_tags' => [],
                 'media_criterions' => [],
