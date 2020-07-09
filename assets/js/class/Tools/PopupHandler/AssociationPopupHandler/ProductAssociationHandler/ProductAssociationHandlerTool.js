@@ -23,10 +23,10 @@ class ProductAssociationHandlerTool extends SubTool
 
     addItemInAssociatedList(item)
     {
-        console.log(this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`)); debugger
+
         if(this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).length > 0)
         {
-            console.log(78); debugger
+
             this.__$productsList.find(`tr[data-product_id='${ item.productId }'] .choice_product`).prop('checked', true);
 
             this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).removeClass('dissociated').removeClass('new_association');
@@ -36,7 +36,7 @@ class ProductAssociationHandlerTool extends SubTool
 
         else if( this.__$associatedList.find(`tr[data-product_id="${ item.productId }"]`).length === 0 )
         {
-            console.log(79); debugger
+
             let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMediaName );
 
             if(registeredMediaInfosIndex !== -1)
@@ -95,57 +95,80 @@ class ProductAssociationHandlerTool extends SubTool
         //$(`.edit_media_info .associated_products_container span[data-product='${ item.productId }']`).remove();
     }
 
-    updateMediaAssociatedProducts(mediaAssociationInfos = [])
+    updateMediaAssociatedProducts(productsToAssociations = [])
     {
 
-        if( this.__currentMediaId !== null )
+        if( this.__currentMediaId !== null && !this.__isUpload )
         {
 
             let mediaId = this.__currentMediaId.replace('media_', '');
 
-            $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
+            super.showLoadingPopup();
 
             $.ajax({
                 url: `/update/media/${mediaId}/associated/products`,
                 type: "POST",
-                data: {productsToAssociation: mediaAssociationInfos},
+                data: {productsToAssociation: productsToAssociations},
                 success: (response) => {
 
                     //console.log(response); debugger
 
-                    $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
-
-                    this.__parent.getMediasContainer().find(`.card#${this.__currentMediaId}`).attr('data-products', mediaAssociationInfos.join(', '));
-
-                    this.updateAssociatedListItemState();
+                    this.__parent.getMediasContainer().find(`.card#${this.__currentMediaId}`).attr('data-products', productsToAssociations.join(', '));
 
                 },
                 error: (response, status, error) => {
-
-                    $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
 
                     alert("Erreur interne durant l'enregistrements !");
 
                     console.error(response); debugger
 
                 },
+                complete: () => {
+                    super.hideLoadingPopup();
+                }
             });
 
         }
         else
         {
 
-            mediaAssociationInfos.map( (productId) => {
+            if( this.__isUpload )
+            {
 
-                $(`.media_products_list tr[data-product_id='${productId}'] .product_checkbox`).attr('checked', true);
-                $(`.media_products_list tr[data-product_id='${productId}']`).removeClass('hidden');
+                // reset all associated products
+                const uploadId = $(`.popup_upload .media_name[value="${ this.__currentMediaName }"]`).parents('tr').attr('id');
+                $(`.popup_upload #${ uploadId }`).find(`.associated_products_container input[type='checkbox']`).prop('checked', false);
+                $(`.popup_upload #${ uploadId }`).find(`.associated_products_container label`).hide();
+                $(`.popup_upload #${ uploadId } .associated_criterions_container`).empty();
 
-                /*if( $(`.media_products_list tr[data-product_id='${productId}']`).length === 0 )
-                    $(`<tr data-product_id="${productId}"><td>${ this.__$productsList.find(`tr[data-product_id='${productId}'] td.product_name`).text() }</td></tr>`).appendTo( $('.media_products_list') );*/
+                productsToAssociations.forEach( (productId) => {
+                    const checkBox = $(`.popup_upload #${ uploadId }`).find(`.associated_products_container input[type='checkbox'][value='${ productId }']`);
+                    checkBox.prop('checked', true);
+                    $(`.popup_upload #${ uploadId }`).find(`.associated_products_container label[for='${ checkBox.attr('id') }']`).show();
 
-            } );
+                    this.onProductAssociationCloneProductCriterionsInUploadPopup(productId, uploadId);
+
+                } )
+
+            }
+            else
+            {
+
+                productsToAssociations.map( (productId) => {
+
+                    $(`.media_products_list tr[data-product_id='${productId}'] .product_checkbox`).attr('checked', true);
+                    $(`.media_products_list tr[data-product_id='${productId}']`).removeClass('hidden');
+
+                    /*if( $(`.media_products_list tr[data-product_id='${productId}']`).length === 0 )
+                        $(`<tr data-product_id="${productId}"><td>${ this.__$productsList.find(`tr[data-product_id='${productId}'] td.product_name`).text() }</td></tr>`).appendTo( $('.media_products_list') );*/
+
+                } );
+
+            }
 
         }
+
+        this.updateAssociatedListItemState();
 
     }
 
@@ -302,6 +325,7 @@ class ProductAssociationHandlerTool extends SubTool
                 {
                     this.__isUpload = true;
                     this.__currentMediaName = $(e.currentTarget).parents('tr').find('.media_name').val();
+                    this.__currentMediaId = $(e.currentTarget).parents('tr').find('.media_id').val();
 
                     //const checkBox = $(`.popup_upload .media_name[value="${ this.__currentMediaName }"]`).parents('tr').find(`.associated_tags_container input[type='checkbox'][value='${ tag_id }']`)
                     //                         const id = checkBox.attr('id');
@@ -455,8 +479,6 @@ class ProductAssociationHandlerTool extends SubTool
                 const mediaAssociatedProducts = $.map( this.__$productsList.find('.choice_product:checked'), (element) =>  $(element).parents('tr').data('product_id'));
 
                 this.updateMediaAssociatedProducts(mediaAssociatedProducts);
-
-                this.updateAssociatedListItemState();
 
                 this.__$location.find('.validate_association_btn').attr('disabled', true);
 
@@ -644,6 +666,14 @@ class ProductAssociationHandlerTool extends SubTool
         {
             this.__$location.off('change.onCategorySelectionAddFilterOnProductList', '.product_category_choice');
         }
+
+        return this;
+    }
+
+    onProductAssociationCloneProductCriterionsInUploadPopup(productId, uploadId)
+    {
+        if( this.__$productsList.find(`tr[data-product_id='${ productId }'] .criterions_col span`).length > 0 )
+            $(`.popup_upload #${ uploadId } .associated_criterions_container`).append( this.__$productsList.find(`tr[data-product_id='${ productId }'] .criterions_col`).clone(true) );
 
         return this;
     }

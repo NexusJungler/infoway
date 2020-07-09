@@ -796,7 +796,6 @@ class MediaController extends AbstractController
         $customer = $customerRepository->find( $this->sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
-
         dd($request->request, $customer);
 
         $error = [  ];
