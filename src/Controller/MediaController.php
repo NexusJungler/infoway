@@ -129,9 +129,8 @@ class MediaController extends AbstractController
         }*/
 
         if($request->isMethod('POST'))
-        {
             return $this->saveMediaCharacteristic($request);
-        }
+
 
 
         return $this->render("media/media-image.html.twig", [
@@ -252,16 +251,12 @@ class MediaController extends AbstractController
     public function uploadMedia(Request $request, CustomerRepository $customerRepository): Response
     {
 
-        if($request->request->get('media_type') === "video_synchro")
-            $type = "synchro";
+        $type = $request->request->get('media_type');
 
-        elseif($request->request->get('media_type') === "video_thematic")
-            $type = "thematics";
+        $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync', 'element_graphic' => 'elmt'];
 
-        else
-            $type = "medias";
-
-        $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync'];
+        if(!array_key_exists($type, $options))
+            throw new Exception(sprintf("Array key not found ! '%s' is given (Allow : %s)", $type, implode(', ', array_keys($options))));
 
         $mediaType = $options[$type];
 
@@ -278,19 +273,19 @@ class MediaController extends AbstractController
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         if($this->mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
-            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '514 Corrupt File' ]);
 
         elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
-            return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '512 Bad Extension' ]);
 
         elseif($mediaRepository->findOneByName( pathinfo($file['name'])['filename'] ) )
-            return new Response("515 Duplicate File", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '515 Duplicate File' ]);
 
         elseif(preg_match("/(\w)*\.(\w)*/", pathinfo($file['name'])['filename'] ))
-            return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '516 Invalid Filename' ]);
 
         elseif($file['name'] === "" or $file['name'] === null)
-            return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '517 Empty Filename' ]);
 
         /*else if(strlen(pathinfo($file['name'])['filename']) < 5)
             return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);*/
@@ -300,9 +295,9 @@ class MediaController extends AbstractController
 
         move_uploaded_file($file['tmp_name'], $path);
 
-        copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
+        copy($path, $root . $customerName . '/' . $mediaType . '/' . $file['name']);
 
-        // if is image, insert immediately
+        // if is image, insert in db
         if($splash[0] === 'image')
         {
 
@@ -328,7 +323,7 @@ class MediaController extends AbstractController
                 $errors = implode(' ; ', $cron->getErrors());
 
                 if($errors === "bad ratio")
-                    return new Response("521 Bad ratio", Response::HTTP_INTERNAL_SERVER_ERROR);
+                    return new JsonResponse([ 'error' => '521 Bad ratio' ]);
 
                 else
                     throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
@@ -340,7 +335,11 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No media found with name : '%s'", $name));
 
-            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/images/low/" . $media->getId() . ".png";
+            if($mediaType === 'elmt')
+                $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/piece/" . $media->getId() . ".png";
+
+            else
+                $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/images/low/" . $media->getId() . ".png";
 
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
@@ -360,6 +359,7 @@ class MediaController extends AbstractController
                 'dpi' => $dpi,
                 'miniatureExist' => file_exists($miniaturePath),
                 'fileType' => 'image',
+                'mediaType' => $mediaType,
                 'customer' => $customerName,
                 //'highestFormat' => $highestFormat,
             ];
@@ -384,7 +384,7 @@ class MediaController extends AbstractController
                   ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
-                  ->setOrientation(" ") // le serializer oblige à avoir une valeur
+                  //->setOrientation(" ") // le serializer oblige à avoir une valeur
                   ->setType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
@@ -483,7 +483,7 @@ class MediaController extends AbstractController
         else
             $response = ['status' => 'Running'];
 
-        return new JsonResponse($response , (array_key_exists('error', $response)) ? Response::HTTP_INTERNAL_SERVER_ERROR : Response::HTTP_OK);
+        return new JsonResponse($response);
 
     }
 
@@ -504,7 +504,7 @@ class MediaController extends AbstractController
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
-        dd("ok");
+        //dd("ok");
         
         /*
         // delete source
@@ -520,6 +520,8 @@ class MediaController extends AbstractController
 
         $sizes = ['low', 'medium', 'high', 'HD'];
         foreach ($sizes as $size) {
+
+            if( $media->getMediaType() === 'diff' )
             $path = $this->getParameter('project_dir') .'/../main/data_' . $managerName . '/PLAYER INFOWAY WEB/medias/' . $mediaType . '/' .$size .'/' . $media->getId() . '.' . $media->getExtension();
 
             if(file_exists($path))
@@ -796,7 +798,7 @@ class MediaController extends AbstractController
         $customer = $customerRepository->find( $this->sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
-        dd($request->request, $customer);
+        //dd($request->request, $customer);
 
         $error = [  ];
 
@@ -827,70 +829,47 @@ class MediaController extends AbstractController
             else
             {
 
-                $mediaInfos['mediaType'] = 'video';
-
-                if($request->request->get('media_type') === "video_synchro")
-                    $type = "synchro";
-
-                elseif($request->request->get('media_type') === "video_thematic")
-                    $type = "thematics";
-
-                else
-                    $type = "medias";
-
-                $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync'];
-
-                $mediaType = $options[$type];
-
-                $fileName = $mediaInfos['name'] . '.' . $mediaInfos['extension'];
-
-                $root = $this->getParameter('project_dir') . '/../node_file_system/';
-                $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
-
-                // check if date is valid and exist in gregorian calendar (@see: https://www.php.net/manual/en/function.checkdate.php)
-                // if date is not valid return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
-                // parameter order : ( int $month , int $day , int $year )
-                // form data order : year-month-day
-                if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
-                {
-                    $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
-                    break;
-                }
-
-                if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
-                {
-                    $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
-                    break;
-                }
-
-                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart'] );
-                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd'] );
-
-                if($diffusionEndDate < $diffusionStartDate)
-                {
-                    $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
-                    break;
-                }
+                //$mediaInfos['mediaType'] = 'video';
 
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
+                if(!$media)
+                    throw new Exception(sprintf("No media can be found with this id : '%s'", $mediaInfos['id']));
 
-                $media->setName( $mediaInfos['name'] )
-                      ->setContainIncruste( $mediaInfos['containIncrustations'] )
-                      ->setDiffusionStart($diffusionStartDate)
-                      ->setDiffusionEnd($diffusionEndDate);
-
-                // if user change file name
-                // rename uploaded file
-                if($media && $mediaInfos['name'] !== $media->getName() && file_exists($root . $customer->getName() . '/' . $mediaType . '/' . $media->getName() .'.' . $mediaInfos['extension']))
+                if( array_key_exists('diffusionStart', $mediaInfos) AND array_key_exists('diffusionEnd', $mediaInfos) )
                 {
 
-                    rename($root . $customer->getName() . '/' . $mediaType . '/' . $media->getName() .'.' . $mediaInfos['extension'], $path);
+                    // check if date is valid and exist in gregorian calendar (@see: https://www.php.net/manual/en/function.checkdate.php)
+                    // if date is not valid return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                    // parameter order : ( int $month , int $day , int $year )
+                    // form data order : year-month-day
+                    if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
+                    {
+                        $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
+                        break;
+                    }
 
-                    // debug
-                    // comment this at the end
-                    copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
+                    if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
+                    {
+                        $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
+                        break;
+                    }
+
+                    $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart'] );
+                    $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd'] );
+
+                    if($diffusionEndDate < $diffusionStartDate)
+                    {
+                        $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
+                        break;
+                    }
+
+                    $media->setDiffusionStart($diffusionStartDate)
+                          ->setDiffusionEnd($diffusionEndDate)
+                          ->setContainIncruste( $mediaInfos['containIncrustations'] );
 
                 }
+
+                $media->setName( $mediaInfos['name'] );
 
                 if(array_key_exists('tags', $mediaInfos))
                 {
@@ -984,9 +963,7 @@ class MediaController extends AbstractController
         }
 
         elseif($mediasDisplayedType === "element_graphic")
-        {
-            die("TODO: get all element graphic");
-        }
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('elgp', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "incruste")
         {

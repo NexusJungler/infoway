@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="media_type", type="string")
+ * @ORM\DiscriminatorColumn(name="file_type", type="string")
  * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "element_graphic" = "ElementGraphic" })
  * @UniqueEntity(fields={"name"})
  */
@@ -83,9 +83,9 @@ class Media
     private $products;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, name="media_type")
      */
-    private $type;
+    private $mediaType;
 
     /**
      * @ORM\Column(type="string", nullable=false, name="mime_type")
@@ -98,7 +98,7 @@ class Media
     private $isArchived;
 
     /**
-     * @ORM\Column(type="string", nullable=false, name="orientation")
+     * @ORM\Column(type="string", nullable=true, name="orientation")
      */
     private $orientation;
 
@@ -292,14 +292,14 @@ class Media
         return $this;
     }
 
-    public function getType(): ?string
+    public function getMediaType(): ?string
     {
-        return $this->type;
+        return $this->mediaType;
     }
 
-    public function setType(string $type): self
+    public function setMediaType(string $mediaType): self
     {
-        $this->type = $type;
+        $this->mediaType = $mediaType;
 
         return $this;
     }

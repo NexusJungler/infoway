@@ -79,7 +79,7 @@ class UploadCron
         $this->mediaProducts = $taskInfo['mediaProducts'] ?? [];
         $this->mediaTags = $taskInfo['mediaTags'] ?? [];
         $this->mediaContainIncruste = $taskInfo['mediaContainIncruste'] ?? false;
-        $this->mediaOrientation = null;
+        $this->mediaOrientation = "";
 
         $this->fileDiffusionStart = new DateTime();
 
@@ -96,7 +96,7 @@ class UploadCron
         $this->repository = $this->entityManager->getRepository(Media::class)->setEntityManager($this->entityManager);
         //$this->repository->setBase($this->getCustomerBase($this->customer));
 
-        $options = ['diff' => 'medias', 'them' => 'thematics', 'sync' => 'synchros'];
+        $options = ['diff' => 'medias', 'them' => 'thematics', 'sync' => 'synchros', 'elmt' => 'elmt'];
         $authorized_files = ['mp4', 'x-matroska', 'avi', 'x-quicktime', 'quicktime', 'bmp', 'png', 'jpg', 'jpeg'];
         $type_dir = $options[$this->mediatype];
 
@@ -138,9 +138,8 @@ class UploadCron
             } else {
 
                 if(!$this->process($path))
-                {
                     $this->errors[] = 'bad ratio';
-                }
+
             }
         } else {
             $this->errors[] = 'file not found!';
@@ -918,7 +917,7 @@ class UploadCron
 
                         //$newMedia->setType($this->mediatype);
                         $newVideo->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
-                            ->setType($this->mediatype)
+                            ->setMediaType($this->mediatype)
                             ->setCreatedAt(new DateTime())
                             ->setDiffusionStart($this->fileDiffusionStart)
                             ->setDiffusionEnd($this->fileDiffusionEnd)
@@ -1010,7 +1009,7 @@ class UploadCron
                 list($width, $height) = getimagesize($src);
                 $ratio = $this->EstablishFormat($width, $height);
                 $newImg->setName($this->filename)
-                       ->setType($this->mediatype)
+                       ->setMediaType($this->mediatype)
                        ->setRatio($ratio)
                        ->setContainIncruste($this->mediaContainIncruste)
                        ->setExtension($this->extension)
