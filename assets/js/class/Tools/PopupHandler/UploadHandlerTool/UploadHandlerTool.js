@@ -1134,6 +1134,18 @@ class UploadHandlerTool extends SubTool
 
         this.__$fileToCharacterisationList.find(`#upload_${mediaInfos.index}`).replaceWith( $(html) );
 
+        this.addNewMediaCardInMediatheque(mediaInfos);
+
+    }
+
+    addNewMediaCardInMediatheque(mediaInfos)
+    {
+
+    }
+
+    updateMediaCard(mediaInfos)
+    {
+
     }
 
     onClickOnSaveButton(active)
@@ -1178,7 +1190,9 @@ class UploadHandlerTool extends SubTool
 
                        this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
 
-                       //@TODO: insert media card in mediatheque after saving
+                       this.addNewMediaCardInMediatheque(response);
+
+                       this.__filesToUpload = [];
 
                    },
                    error: (response) => {
@@ -1247,7 +1261,6 @@ class UploadHandlerTool extends SubTool
                    },
                     complete: () => {
                         super.hideLoadingPopup();
-                        this.__filesToUpload = [];
                     },
 
                 });
