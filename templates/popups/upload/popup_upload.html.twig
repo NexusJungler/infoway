@@ -8,7 +8,10 @@
 
             <div class="popup_header_child">
                 <div class="item icon-container">
-                    <i class="icon icon-picto-mediathque"></i>
+                    <svg id="icone_upload" data-name="icone upload" xmlns="http://www.w3.org/2000/svg" width="31.548" height="31.548" viewBox="0 0 31.548 31.548">
+                        <path id="ic_move_to_inbox_24px" d="M31.043,3H6.488a3.475,3.475,0,0,0-3.47,3.505L3,31.043a3.489,3.489,0,0,0,3.488,3.505H31.043a3.516,3.516,0,0,0,3.505-3.505V6.505A3.516,3.516,0,0,0,31.043,3Zm0,21.032H24.032a5.258,5.258,0,1,1-10.516,0H6.488V6.505H31.043Zm-5.258-8.763H22.279V10.011H15.269v5.258H11.763l7.011,7.011Z" transform="translate(-3 -3)" fill="#fff"/>
+                    </svg>
+
                 </div>
 
                 <div class="item title_container">
@@ -38,8 +41,13 @@
                 <div class="container_header">
 
                     <div class="container_header_body_child drag_n_drop_container">
-                        <span>Déposer votre ou vos fichiers ici</span>
-                        <img src="{{ asset('/build/images/download_icon.png') }}" alt="download icon">
+                        <span class="drop-title" >Déposer votre ou vos fichiers ici</span>
+                        {#<img src="{{ asset('/build/images/download.svg') }}" alt="download icon">#}
+                        {#<i class="fas fa-download"></i>#}
+                        <svg id="icone_upload" data-name="icone upload" xmlns="http://www.w3.org/2000/svg" width="8rem" height="8rem" viewBox="0 0 31.548 31.548">
+                            <path id="ic_move_to_inbox_24px" d="M31.043,3H6.488a3.475,3.475,0,0,0-3.47,3.505L3,31.043a3.489,3.489,0,0,0,3.488,3.505H31.043a3.516,3.516,0,0,0,3.505-3.505V6.505A3.516,3.516,0,0,0,31.043,3Zm0,21.032H24.032a5.258,5.258,0,1,1-10.516,0H6.488V6.505H31.043Zm-5.258-8.763H22.279V10.011H15.269v5.258H11.763l7.011,7.011Z" transform="translate(-3 -3)" fill="#7FA0AC"/>
+                        </svg>
+
                     </div>
 
                     <div class="container_header_body_child file_selection_button_container">
@@ -48,7 +56,7 @@
                         </div>
 
                         <div class="custom_upload_input_container">
-                            <button type="button" class="btn custom_upload_input">Sélectionner vos fichiers</button>
+                            <button type="button" class="btn custom_upload_input"><i class="far fa-folder"></i> Sélectionner vos fichiers</button>
                         </div>
 
                     </div>
@@ -61,7 +69,7 @@
 
                         <thead>
                             <tr>
-                                <th>Liste de médias déposés</th>
+                                <th>Liste de médias déposés : </th>
                                 <th class="pre_upload_error"></th>
                                 <th>Fichier accepté</th>
                                 <th></th>
@@ -147,11 +155,11 @@
         <div class="popup_footer">
 
             <div class="actions_buttons_container">
-                <button class="btn close_modal_button cancel" type="button">Annuler</button>
+                <button class="btn close_modal_button_container cancel " type="button">Annuler</button>
             </div>
 
             <div class="actions_buttons_container">
-                <button class="btn start_upload_btn" type="button" disabled><i class="fas fa-arrow-right"></i> Démarrer l'upload</button>
+                <button class="btn start_upload_btn" type="button" disabled><i class="fas fa-long-arrow-alt-right"></i> Démarrer l'Upload</button>
             </div>
 
         </div>

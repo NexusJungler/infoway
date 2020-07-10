@@ -1161,14 +1161,23 @@ class UploadHandlerTool extends SubTool
         let day = (now.getDate() < 10 ) ? '0' + now.getDate() : now.getDate();
         let year = now.getFullYear();
 
-        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ mediaInfos.fileName }</p> </td>
+        return `<td> 
+                    <div class="upload_title_container">
+                        <i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> 
+                        <p> ${ mediaInfos.fileName } <abbr title="${ mediaInfos.fileName }">...</abbr></p> 
+                    </div>
+                </td>
                 <td>
                     <progress class="progress_bar" id="progress_${ mediaInfos.index }" max="100" value="100"></progress>
                     <i class="fas fa-check" aria-hidden="true"></i>
                 </td>
                 <td> 
-                    ${ preview } 
-                    <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="95" aria-hidden="true"></i>
+                <div class="content_visual"> 
+                        ${ preview } 
+                        <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="95" aria-hidden="true"></i>
+                </div>
+                   
+                    
                 </td>
                 <td>
                     <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.fileType === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
@@ -1191,20 +1200,33 @@ class UploadHandlerTool extends SubTool
                 
                 </td>
                 <td class="tags_affectation_container"> 
-                    <button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">TAGS</button>
+                    <button type="button" class="associate-tag association-btn" data-media="${mediaInfos.name}">
+                        <span class="mini-cercle"><i class="fas fa-plus" aria-hidden="true"></i></span>TAGS
+                    </button>
                     <div class="associated_tags_container">
                         ${ this.buildAssociationInputsHtml('tags', mediaInfos.index) }
                     </div> 
                 </td>
                 <td class="products_affectation_container"> 
-                    <button type="button" class="associate-product association-btn" data-media="${mediaInfos.name}">Associer</button>
+                    <button type="button" class="btn associate-product association-btn" data-media="${mediaInfos.name}">Associer</button>
                     <div class="associated_products_container">
                         ${ this.buildAssociationInputsHtml('products', mediaInfos.index) }
                     </div> 
                 </td>
                 <td> 
-                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="1">Oui</label> 
-                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input choice_media_contain_incruste" value="0" checked>Non</label>
+                
+                 <div class="submit-rating" id="d">
+                        <input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste medias_list " id="medias_list[medias][${mediaInfos.index}][containIncrustations]oui" value="1">
+                        <input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input choice_media_contain_incruste " id="medias_list[medias][${mediaInfos.index}][containIncrustations]non" value="0" checked>
+                        
+                          <label for="medias_list[medias][${mediaInfos.index}][containIncrustations]non" class="rating-label rating-label-non"><span class="non">Non</span><span class="oui"></span></label>
+
+                         <div class="smile-rating-toggle"></div>
+                         <div class="toggle-rating-pill"></div>
+                         <label for="medias_list[medias][${mediaInfos.index}][containIncrustations]oui" class="rating-label rating-label-oui">Oui</label>
+
+                         
+                    </div>
                 </td>`;
     }
 

@@ -63,8 +63,7 @@
     padding: 5px;
     margin: 3% auto 0% auto;
     height: 100%;
-    max-height: 100rem;
-    max-height: 100rem;
+    max-height: 124rem;
     overflow: auto;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     .card_video{
@@ -597,4 +596,5 @@
 
 .media-show_container{
     margin-top: 4rem;
+    margin-bottom: 4rem;
 }
