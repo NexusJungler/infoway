@@ -45,8 +45,8 @@
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
                                         <option value="">Sélectionner l'enseigne</option>
-                                        {% for name in app.session.get('customerNames') %}
-                                            <option value="{{name}}" {% if (app.session.get('current_customer') is not null ) and (name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{name}}</option>
+                                        {% for customer in app.session.get('customers') %}
+                                            <option value="{{customer.id}}" {% if (app.session.get('current_customer') is not null ) and (customer.name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{ customer.name }}</option>
                                         {% endfor %}
                                     </select>
                                     <p class="number__enseigne"><span >25</span> enseignes</p>

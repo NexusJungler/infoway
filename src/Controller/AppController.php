@@ -42,9 +42,14 @@ class AppController extends AbstractController
             'clock_format' => 24
         ];
 
-        ($sessionManager->get('customerNames') === null) ?
-            $sessionManager->set('customerNames', $customerRepository->findAllNames()) :
-            $sessionManager->replace('customerNames', $customerRepository->findAllNames());
+        $customers = $customerRepository->findAll();
+
+        ($sessionManager->get('customers') === null) ?
+            $sessionManager->set('customers', $customers) :
+            $sessionManager->replace('customers', $customers);
+
+        // par default, on selectionne la première enseigne de la liste
+        $sessionManager->set('current_customer', $customers[0]);
 
         //dump($location);
 
