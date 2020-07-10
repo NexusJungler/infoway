@@ -294,8 +294,8 @@ class MediaController extends AbstractController
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
 
         move_uploaded_file($file['tmp_name'], $path);
-
-        copy($path, $root . $customerName . '/' . $mediaType . '/' . $file['name']);
+/*dd($root . $customerName . '/' . $mediaType . '/' . $file['name'], $path);*/
+        copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
 
         // if is image, insert in db
         if($splash[0] === 'image')
@@ -903,7 +903,10 @@ class MediaController extends AbstractController
 
         }
 
-        return new JsonResponse( ($error === []) ? '200 OK' : $error , ($error === []) ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
+        if($error === [])
+            return new Response('200 OK');
+
+        return new JsonResponse( $error , Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function getMediaHigestFormat(int $id, string $mediaType)

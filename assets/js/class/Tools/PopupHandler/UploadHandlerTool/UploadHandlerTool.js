@@ -995,7 +995,9 @@ class UploadHandlerTool extends SubTool
                      </td>
                      <td> 
                         <input type="hidden" class="media_id" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }">
-                        <input type="hidden" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }"> <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input fileName" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
+                        <input type="hidden" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }"> 
+                        <span class="error hidden"></span>
+                        <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input file_name" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
                  </td>`;
 
     }
@@ -1021,8 +1023,11 @@ class UploadHandlerTool extends SubTool
                 <td>
                     <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.fileType === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
                 </td>
-                <td> <span class="error hidden"></span> <br> <input type="hidden" class="media_id" name="medias_list[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
-                <td> 
+                <td class="media_name_container"> 
+                    <input type="hidden" class="media_id" name="medias_list[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> 
+                    <span class="error hidden"></span> <br>
+                    <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
+                <td class="media_diff_date_container"> 
                     <div class="diff_start_container">
                         <span class="error hidden"></span> <br> 
                         <label for="media_${mediaInfos.index}_diff_start">Du</label>
@@ -1083,7 +1088,7 @@ class UploadHandlerTool extends SubTool
 
         mediaInfos.index = index;
 
-        console.table(mediaInfos); debugger
+        console.table(mediaInfos); //debugger
 
         //const index = this.__$fileToCharacterisationList.children('tr').length;
 
@@ -1166,6 +1171,71 @@ class UploadHandlerTool extends SubTool
         return this;
     }
 
+    mediaInfosEditFormIsValid(form)
+    {
+        let isValid = true;
+
+        form.find('.form_input').each( (index, input) => {
+
+            const inputFirstParent = $(input).parent();
+            const inputParent = $(input).parents('tr');
+
+            if( $(input).val() === '' )
+            {
+                isValid = false;
+                $(input).addClass('invalid');
+                inputFirstParent.find('span.error').text( this.__errors.empty_error ).removeClass('hidden');
+            }
+            else if( $(input).hasClass('file_name') && form.find(`input.file_name[value='${ $(input).val() }']`).length > 1 )
+            {
+                isValid = false;
+                form.find(`input.file_name[value='${ $(input).val() }']`).addClass('invalid');
+                form.find(`input.file_name[value='${ $(input).val() }']`).parent().find('span.error').text( this.__errors.duplicate_file ).removeClass('hidden');
+            }
+            else if( $(input).hasClass('diffusion_dates') )
+            {
+
+                const diffStartDateInput = inputParent.find('.diffusion_dates.start');
+                const diffEndDateInput = inputParent.find('.diffusion_dates.end');
+
+                const diffStartDate = new Date( diffStartDateInput.val() );
+                const diffEndDate = new Date( diffEndDateInput.val() );
+
+                if( !(diffStartDate instanceof Date) )
+                {
+                    isValid = false;
+                    diffStartDateInput.addClass('invalid');
+                    diffStartDateInput.parent().find('span.error').text( this.__errors.invalid_diffusion_start_date ).removeClass('hidden');
+                }
+
+                else if( !(diffEndDate instanceof Date) )
+                {
+                    isValid = false;
+                    diffEndDateInput.addClass('invalid');
+                    diffEndDateInput.parent().find('span.error').text( this.__errors.invalid_diffusion_end_date ).removeClass('hidden');
+                }
+
+                else if( diffEndDate < diffStartDate )
+                {
+                    isValid = false;
+                    $(input).addClass('invalid');
+                    inputFirstParent.find('span.error').text( this.__errors.invalid_diffusion_date ).removeClass('hidden');
+                }
+
+            }
+            else
+            {
+                //isValid = true;
+                $(input).removeClass('invalid');
+                inputFirstParent.find('span.error').text('').addClass('hidden');
+            }
+
+        } )
+
+        return isValid;
+
+    }
+
     onMediaInfoEditingFormSubmit(active)
     {
         if(active)
@@ -1176,94 +1246,92 @@ class UploadHandlerTool extends SubTool
                 e.preventDefault();
 
                 let formData = new FormData( $(e.currentTarget)[0] );
-                console.log(formData); debugger
+                //console.log(formData); debugger
 
-                super.showLoadingPopup();
+                if( this.mediaInfosEditFormIsValid( $(e.currentTarget) ) )
+                {
 
-                $.ajax({
-                   url: `/mediatheque/${this.__uploadMediaType}`,
-                   type: 'POST',
-                   data: formData,
-                   processData: false,
-                   contentType: false,
-                   success: (response) => {
+                    super.showLoadingPopup();
 
-                       this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
+                    $.ajax({
+                        url: `/mediatheque/${this.__uploadMediaType}`,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (response) => {
 
-                       this.addNewMediaCardInMediatheque(response);
+                            this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
 
-                       this.__filesToUpload = [];
+                            this.addNewMediaCardInMediatheque(response);
 
-                   },
-                   error: (response) => {
-                       let error = response;
-                       console.log(response);
-                       console.log(error);
-                       console.log(error.subject); debugger
-                       let subject = error.subject;
+                            this.__filesToUpload = [];
 
-                       // on supprime la class 'unregistered' sur les elements enregistrés jusqu'à l'erreur
-                       for (let i = 0; i < subject; i++)
-                       {
-                           $(`.media_list tbody tr[data-index='${ i }']`).removeClass('unregistered');
-                       }
+                        },
+                        error: (response) => {
+                            let error = response.responseJSON;
+                            console.log(response);
+                            console.log(error);
+                            console.log(error.subject); //debugger
+                            let subject = error.subject;
+
+                            // on supprime la class 'unregistered' sur les elements enregistrés jusqu'à l'erreur
+                            for (let i = 0; i < subject; i++)
+                            {
+                                $(`.media_list tbody tr[data-index='${ i }']`).removeClass('unregistered');
+                            }
 
 
-                       switch (error.text)
-                       {
+                            switch (error.text)
+                            {
 
-                           case "515 Duplicate File":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
-                               break;
+                                case "515 Duplicate File":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .form_input.file_name`).addClass('invalid');
+                                    break;
 
-                           case "516 Invalid Filename":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
-                               break;
+                                case "516 Invalid Filename":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.file_name`).addClass('invalid');
+                                    break;
 
-                           case "517 Empty Filename":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
-                               break;
+                                case "517 Empty Filename":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.file_name`).addClass('invalid');
+                                    break;
 
-                           case "518 Too short Filename":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.fileName`).addClass('invalid');
-                               break;
+                                case "518 Too short Filename":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.file_name`).addClass('invalid');
+                                    break;
 
-                           case "519 Invalid diffusion date":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_date );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusionDates`).addClass('invalid');
-                               break;
+                                case "519 Invalid diffusion date":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_date ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates`).addClass('invalid');
+                                    break;
 
-                           case "519.1 Invalid diffusion start date":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_start_date );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusionDates.start`).addClass('invalid');
-                               break;
+                                case "519.1 Invalid diffusion start date":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_start_date ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.start`).addClass('invalid');
+                                    break;
 
-                           case "519.2 Invalid diffusion end date":
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).removeClass( 'hidden' );
-                               this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusionDates.end`).addClass('invalid');
-                               break;
+                                case "519.2 Invalid diffusion end date":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
+                                    break;
 
-                           default:
-                               console.error(error.text); //debugger
+                                default:
+                                    console.error(error); debugger
 
-                       }
-                   },
-                    complete: () => {
-                        super.hideLoadingPopup();
-                    },
+                            }
+                        },
+                        complete: () => {
+                            super.hideLoadingPopup();
+                        },
 
-                });
+                    });
+
+                }
 
             })
 
