@@ -46,6 +46,8 @@ class ProductAssociationHandlerTool extends SubTool
 
                 let newLine = $(`<tr data-product_id="${ item.productId }" data-product_criterions="${ item.productCriterions }"></tr>`);
 
+                console.table(this.__mediasAssociationInfo); debugger
+
                 let mediaProductsIds = this.__mediasAssociationInfo[registeredMediaInfosIndex].products;
 
                 if(!mediaProductsIds.includes(item.productId))
@@ -333,6 +335,10 @@ class ProductAssociationHandlerTool extends SubTool
 
                     const currentMediaInfosLocation = $(`.popup_upload .media_name[value="${ this.__currentMediaName }"]`).parents('tr');
 
+                    console.log(currentMediaInfosLocation)
+
+                    console.log(currentMediaInfosLocation.find(`.associated_products_container input[type='checkbox']:checked`)); debugger
+
                     currentMediaInfosLocation.find(`.associated_products_container input[type='checkbox']:checked`).each( (index, element) => {
 
                         mediaProductsAssociatedIds.push( $(element).val() );
@@ -351,9 +357,15 @@ class ProductAssociationHandlerTool extends SubTool
 
                     } )
 
-                    this.__mediasAssociationInfo.push( { media: this.__currentMediaName, products: mediaProductsAssociatedIds } );
-
                 }
+
+                let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMediaName );
+
+                if(registeredMediaInfosIndex !== -1)
+                    this.__mediasAssociationInfo[registeredMediaInfosIndex].products = mediaProductsAssociatedIds;
+
+                else
+                    this.__mediasAssociationInfo.push( { media: this.__currentMediaName, products: mediaProductsAssociatedIds } );
 
                 this.initializePopupContent(mediaProductsAssociatedIds);
 

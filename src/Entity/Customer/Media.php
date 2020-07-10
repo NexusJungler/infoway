@@ -37,7 +37,7 @@ class Media
     private $size;
 
     /**
-     * @ORM\Column(type="datetime", name="created_at", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="date", name="created_at")
      */
     private $createdAt;
 

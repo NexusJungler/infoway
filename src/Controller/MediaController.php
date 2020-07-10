@@ -187,7 +187,7 @@ class MediaController extends AbstractController
         $currentCustomerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
 
         $miniature_medium_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
-                                              (($media instanceof Image) ? 'images': 'videos') . "/medium/". $media->getId() . "." .
+                                              (($media instanceof Image) ? 'image': 'video') . "/medium/". $media->getId() . "." .
                                               ( ($media instanceof Image) ? 'png' : 'mp4' ));
 
         $form->handleRequest($request);
@@ -339,7 +339,7 @@ class MediaController extends AbstractController
                 $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/piece/" . $media->getId() . ".png";
 
             else
-                $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/images/low/" . $media->getId() . ".png";
+                $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/low/" . $media->getId() . ".png";
 
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
@@ -640,7 +640,7 @@ class MediaController extends AbstractController
         $customerName = strtolower($this->sessionManager->get('current_customer')->getName());
 
         $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                    $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                    $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
                     . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
         $mediaProgrammingMouldList = $this->serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
@@ -795,12 +795,12 @@ class MediaController extends AbstractController
         $ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);
         $customerRepository = $this->getDoctrine()->getManager()->getRepository(Customer::class);
 
-        $customer = $customerRepository->find( $this->sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
+
         $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
         //dd($request->request, $customer);
 
-        $error = [  ];
+        $response = $error = [];
 
         foreach ($request->request->get('medias_list')['medias'] as $index => $mediaInfos)
         {
@@ -887,24 +887,46 @@ class MediaController extends AbstractController
                 if(array_key_exists('products', $mediaInfos))
                 {
                     $media->getProducts()->clear();
+                    $categoriesId = [];
                     foreach ($mediaInfos['products'] as $k => $productId)
                     {
-                        $product = $manager->getRepository(Product::class)->setEntityManager($manager)->find($productId);
+                        $productRepo = $manager->getRepository(Product::class)->setEntityManager($manager);
+                        $product = $productRepo->find($productId);
                         if(!$product)
                             throw new Exception(sprintf("No Product found with id : '%d'", $productId));
 
                         $media->addProduct($product);
+                        if(null !== $product->getCategory())
+                            $categoriesId[] = $product->getCategory()->getId();
+                        $criterionsId = $productRepo->getProductsCriterionsIds($product);
                     }
                 }
 
                 $manager->flush();
 
+                if($error === [])
+                {
+
+                    $response[] = [
+                        'id' => $media->getId(),
+                        'createdAt' => $media->getCreatedAt()->format('Y-m-d'),
+                        'fileType' => ($media instanceof Image) ? 'image' : 'video',
+                        'orientation' => '',
+                        'diffStart' => $media->getDiffusionStart(),
+                        'diffEnd' => $media->getDiffusionEnd(),
+                        'customer' => $this->sessionManager->get('current_customer')->getName(),
+                        'products' => $mediaInfos['products'],
+                        'tags' => $mediaInfos['tags'],
+                        'categories' => $categoriesId ?? [],
+                        'criterions' => $criterionsId ?? [],
+                    ];
+
+                    return new Response('200 OK');
+                }
+
             }
 
         }
-
-        if($error === [])
-            return new Response('200 OK');
 
         return new JsonResponse( $error , Response::HTTP_INTERNAL_SERVER_ERROR);
     }

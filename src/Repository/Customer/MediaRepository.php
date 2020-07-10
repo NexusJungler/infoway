@@ -224,7 +224,7 @@ class MediaRepository extends ServiceEntityRepository
         {
 
             if($media->getMediaType() === 'diff')
-                $miniatureFolder = ( ($media instanceof Image) ? 'images': 'videos');
+                $miniatureFolder = ( ($media instanceof Image) ? 'image': 'video') . '/low';
 
             elseif($media->getMediaType() === 'elmt')
                 $miniatureFolder = "piece";
@@ -325,7 +325,7 @@ class MediaRepository extends ServiceEntityRepository
             {
                 $customerName = $this->getEntityManager()->getConnection()->getDatabase();
                 $media->media_low_miniature_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                                $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                                $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
                                                                 . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                 $media->file_type = ($media instanceof Image) ? 'image': 'video';

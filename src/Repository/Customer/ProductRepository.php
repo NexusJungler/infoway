@@ -116,6 +116,37 @@ class ProductRepository extends ServiceEntityRepository
 
     }
 
+    public function getProductsCriterionsIds($productOrId)
+    {
+
+        $criterionsIds = [];
+
+        if(is_int($productOrId))
+        {
+            $product = $this->find($productOrId);
+            if(!$product)
+                throw new Exception(sprintf("Not product found with '%s' id !", $productOrId));
+
+            foreach ($product->getCriterions()->getValues() as $criterion)
+            {
+                $criterionsIds[] = $criterion->getId();
+            }
+
+
+        }
+        else
+        {
+
+            foreach ($productOrId->getCriterions()->getValues() as $criterion)
+            {
+                $criterionsIds[] = $criterion->getId();
+            }
+
+        }
+
+        return $criterionsIds;
+    }
+
     // Eureka --> Surcharger la Méthode findAll() pour contrôler le lazy load !!
     // /**
     //  * @return product[] Returns an array of product objects

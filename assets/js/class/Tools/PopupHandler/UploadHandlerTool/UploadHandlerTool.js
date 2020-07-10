@@ -605,6 +605,10 @@ class UploadHandlerTool extends SubTool
                                     
                                 </td>
                                 
+                                <td>
+                                    
+                                </td>
+                                
                             </tr>`;
                 }
                 else
@@ -984,21 +988,32 @@ class UploadHandlerTool extends SubTool
     showElementGraphicInfos(elementGraphicInfos, preview)
     {
 
-        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> </td>
-                     <td>
-                        <progress class="progress_bar" id="progress_${ elementGraphicInfos.index }" max="100" value="100"></progress>
-                        <i class="fas fa-check" aria-hidden="true"></i>
-                     </td>
-                     <td> 
-                        ${ preview } 
-                        <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="${ elementGraphicInfos.id }" aria-hidden="true"></i>
-                     </td>
-                     <td> 
-                        <input type="hidden" class="media_id" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }">
-                        <input type="hidden" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }"> 
-                        <span class="error hidden"></span>
-                        <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input file_name" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
-                 </td>`;
+        return `<td> 
+                    <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> 
+                </td>
+                <td>
+                    <progress class="progress_bar" id="progress_${ elementGraphicInfos.index }" max="100" value="100"></progress>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </td>
+                <td> 
+                    ${ preview } 
+                    <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="${ elementGraphicInfos.id }" aria-hidden="true"></i>
+                </td>
+                <td> 
+                    <input type="hidden" class="media_id" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }">
+                    <input type="hidden" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }"> 
+                    <span class="error hidden"></span> <br>
+                    <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
+                 </td>
+                 <td class="associated_criterions_container">
+                
+                </td>
+                <td class="products_affectation_container"> 
+                    <button type="button" class="btn product_association_btn association_btn">Associer produits</button>
+                    <div class="associated_products_container">
+                        ${ this.buildAssociationInputsHtml('products', elementGraphicInfos.index) }
+                    </div> 
+                </td>`;
 
     }
     
@@ -1011,7 +1026,7 @@ class UploadHandlerTool extends SubTool
         let day = (now.getDate() < 10 ) ? '0' + now.getDate() : now.getDate();
         let year = now.getFullYear();
 
-        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ mediaInfos.filename }</p> </td>
+        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ mediaInfos.fileName }</p> </td>
                 <td>
                     <progress class="progress_bar" id="progress_${ mediaInfos.index }" max="100" value="100"></progress>
                     <i class="fas fa-check" aria-hidden="true"></i>
@@ -1108,7 +1123,7 @@ class UploadHandlerTool extends SubTool
             {
                 //mediaInfos.mediaType === 'diff'
                 if( mediaInfos.mediaType === 'diff' )
-                    preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/images/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/low/${mediaInfos.id}.png" />`;
+                    preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/low/${mediaInfos.id}.png" />`;
 
                 else if( mediaInfos.mediaType === 'elmt' )
                     preview = `<img class="preview" style="height: 50px;" src="/miniatures/${mediaInfos.customer}/piece/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/piece/${mediaInfos.id}.png" />`;
@@ -1118,7 +1133,7 @@ class UploadHandlerTool extends SubTool
 
             else
                 preview = `<video class="preview" controls>
-                            <source src="/miniatures/${mediaInfos.customer}/videos/low/${mediaInfos.id}.mp4" type="${mediaInfos.mimeType}">
+                            <source src="/miniatures/${mediaInfos.customer}/video/low/${mediaInfos.id}.mp4" type="${mediaInfos.mimeType}">
                        </video>`;
 
         }
@@ -1145,6 +1160,34 @@ class UploadHandlerTool extends SubTool
 
     addNewMediaCardInMediatheque(mediaInfos)
     {
+
+        console.table( mediaInfos ); debugger
+
+        let card = `<div class="card card_${ mediaInfos.fileType }" id="media_${ mediaInfos.id }" data-created_date="${ mediaInfos.createdAt }" data-file_type="${ mediaInfos.fileType }"
+                    data-orientation="${ mediaInfos.orientation }" data-media_diff_start="${ mediaInfos.diffStart }" data-media_diff_end="${ mediaInfos.diffEnd }" data-customer="${ mediaInfos.customer }"
+                    data-products="${ (mediaInfos.products.length > 0) ? mediaInfos.products.join(', ') : 'none' }" data-categories="${ (mediaInfos.categories.length > 0) ? mediaInfos.categories.join(', ') : 'none' }" 
+                    data-criterions="${ (mediaInfos.criterions.length > 0) ? mediaInfos.criterions.join(', ') : 'none' }" data-tags="${ (mediaInfos.tags.length > 0) ? mediaInfos.tags.join(', ') : 'none' }" >
+
+                        <div class="card_header">
+                        
+                            <div class="select_media_input_container">
+                                <label class="container-input">
+                                    <input type="checkbox" class="select_media_input">
+                                    <span class="container-rdo-tags"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="media_actions_shortcuts_container">
+                            
+                            </div>
+                        
+                        </div>  
+                         
+                        <div class="card_body">
+                        
+                        </div>   
+
+                    </div>`;
 
     }
 
@@ -1186,11 +1229,11 @@ class UploadHandlerTool extends SubTool
                 $(input).addClass('invalid');
                 inputFirstParent.find('span.error').text( this.__errors.empty_error ).removeClass('hidden');
             }
-            else if( $(input).hasClass('file_name') && form.find(`input.file_name[value='${ $(input).val() }']`).length > 1 )
+            else if( $(input).hasClass('media_name') && form.find(`input.media_name[value='${ $(input).val() }']`).length > 1 )
             {
                 isValid = false;
-                form.find(`input.file_name[value='${ $(input).val() }']`).addClass('invalid');
-                form.find(`input.file_name[value='${ $(input).val() }']`).parent().find('span.error').text( this.__errors.duplicate_file ).removeClass('hidden');
+                form.find(`input.media_name[value='${ $(input).val() }']`).addClass('invalid');
+                form.find(`input.media_name[value='${ $(input).val() }']`).parent().find('span.error').text( this.__errors.duplicate_file ).removeClass('hidden');
             }
             else if( $(input).hasClass('diffusion_dates') )
             {
@@ -1287,22 +1330,22 @@ class UploadHandlerTool extends SubTool
 
                                 case "515 Duplicate File":
                                     this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .form_input.file_name`).addClass('invalid');
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .form_input.media_name`).addClass('invalid');
                                     break;
 
                                 case "516 Invalid Filename":
                                     this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.file_name`).addClass('invalid');
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
                                     break;
 
                                 case "517 Empty Filename":
                                     this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.file_name`).addClass('invalid');
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
                                     break;
 
                                 case "518 Too short Filename":
                                     this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.file_name`).addClass('invalid');
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
                                     break;
 
                                 case "519 Invalid diffusion date":

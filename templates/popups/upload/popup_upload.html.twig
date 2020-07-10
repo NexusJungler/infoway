@@ -85,7 +85,7 @@
                     <table>
                         <thead>
                             <tr>
-                                {% if media_displayed is defined and media_displayed is same as('medias') %}
+                                {% if media_displayed is defined and media_displayed is not same as('element_graphic') %}
                                     <th>Fichier</th>
                                     <th>Téléchargement</th>
                                     <th>Médias</th>
@@ -101,6 +101,8 @@
                                     <th>Téléchargement</th>
                                     <th>Médias</th>
                                     <th>Nom</th>
+                                    <th>Critères</th>
+                                    <th>Associer Produits</th>
                                 {% endif %}
                             </tr>
                         </thead>
@@ -126,12 +128,18 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Médias</th>
-                            <th>Nom</th>
-                            <th>Critères</th>
-                            <th>Tags affectés</th>
-                            <th>Produits associés</th>
-                            <th>Prix et Rupture</th>
+                            {% if media_displayed is defined and media_displayed is not same as('element_graphic') %}
+                                <th>Médias</th>
+                                <th>Nom</th>
+                                <th>Critères</th>
+                                <th>Tags affectés</th>
+                                <th>Produits associés</th>
+                                <th>Prix et Rupture</th>
+                            {% else %}
+                                <th>Médias</th>
+                                <th>Nom</th>
+                                <th>Produits associés</th>
+                            {% endif %}
                         </tr>
                     </thead>
 

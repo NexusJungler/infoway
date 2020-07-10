@@ -41,7 +41,7 @@ class MediaInfoSheetHandler extends SubTool
                     let miniature = null;
                     const mediaMediumMiniatureExist = $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist');
 
-                    let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
+                    let path = `/miniatures/${customer}/${ (isImage === true) ? 'image' : 'video'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
 
                     if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
                     {
