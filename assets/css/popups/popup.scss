@@ -159,6 +159,74 @@
 
 }
 
+.submit-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-left: 1rem;
+  width: 17rem;
+  input{
+    display: none;
+  }
+  .rating-label {
+    position: relative;
+    text-align: center;
+    z-index: 3;
+    -webkit-box-flex: 3.34;
+    flex: 3.34;
+    cursor: pointer;
+    transition: 250ms;
+    font: 1.8rem "Barlow" ;
+    color: #4D646D;
+    &.rating-label-non {
+      right: -1.5rem;
+      text-align: left;
+    }
+    &.rating-label-oui {
+      left: -2rem;
+      text-align: right;
+    }
+  }
+}
+
+.toggle-rating-pill {
+  position: relative;
+  height: 2.6rem;
+  width: 5.4rem;
+  background: #899CA4 0% 0% no-repeat padding-box;
+  border-radius: 50rem;
+  transition: all 250ms;
+}
+
+.smile-rating-toggle {
+  position: absolute;
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: white;
+  top: 0.2rem;
+  left: 6rem;
+  border-radius: 50rem;
+  transition: all 250ms;
+  z-index: 4;
+}
+
+.input_non:checked~.rating-label-non {
+  color: #4D646D;
+  font-weight: 700;
+}
+
+.medias_list:checked~.rating-label-oui {
+  color: #4F9BAE;
+  font-weight: 700;
+}
+.medias_list:checked~.smile-rating-toggle {
+  left: 8.8rem;
+}
+.medias_list:checked~.toggle-rating-pill {
+  background: #53B3C7 0% 0% no-repeat padding-box;
+}
+
 
 // import popup children css
 @import "popup_delete_media/popup_delete_media";
