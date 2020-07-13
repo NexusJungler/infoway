@@ -416,8 +416,8 @@
                                                 border-radius: 0.3rem;
                                                 position: relative;
                                                 width: 11rem;
-                                                height: 2rem;
-
+                                                height: 2.5rem;
+                                                padding: 1%;
                                                 &::before {
                                                     content: "\f054";
                                                     font-family: FontAwesome;
@@ -433,7 +433,6 @@
                                                     background-color: #A4B4BB;
                                                     cursor: pointer;
                                                 }
-
                                             }
                                         }
                                     }
@@ -485,39 +484,49 @@
                                 }
                             }
                         }
+                        progress{
+                            display: inline-block;
+                            -moz-box-sizing: border-box;
+                            box-sizing: border-box;
+                            padding: 0.1rem;
+                            background: #333;
+                            background: -webkit-linear-gradient(#2d2d2d,#444);
+                            background:    -moz-linear-gradient(#2d2d2d,#444);
+                            background:      -o-linear-gradient(#2d2d2d,#444);
+                            background:         linear-gradient(#2d2d2d,#444);
+                            border: 0.5rem solid #707070;
+                            border-radius: 1rem;
+                            box-shadow: 0 0.1rem 0 rgba(255,255,255,.2);
+                        }
 
                         progress[value]  {
-                            /* Reset the default appearance */
                             -webkit-appearance: none;
                             -moz-appearance: none;
                             appearance: none;
                             background-color: transparent;
 
-                            /* Get rid of default border in Firefox. */
                             border: none;
                             border-radius: 0.5rem;
                             /* Dimensions */
                             width: 15rem;
-                            height: 1rem;
+                            height: 1.5rem;
 
-                            /* For IE10 */
-                            color: blue;
                         }
                         progress[value]::-webkit-progress-value {
                             background-color: #D5FFA6;
-                            border-radius: 0.5rem;
-                            background-size: 3.5rem 2rem, 100% 100%, 100% 100%;
-                            -webkit-animation: animate-stripes 5s linear infinite;
-                            animation: animate-stripes 5s linear infinite
+                            border-radius: 1rem;
+                            //background-size: 3.5rem 2rem, 100% 100%, 100% 100%;
+                            //-webkit-animation: animate-stripes 5s linear infinite;
+                            //animation: animate-stripes 5s linear infinite
                         }
-
-                        @-webkit-keyframes animate-stripes {
-                            100% { background-position: -10rem 0rem; }
-                        }
-
-                        @keyframes animate-stripes {
-                            100% { background-position: -10rem 0rem; }
-                        }
+                        //
+                        //@-webkit-keyframes animate-stripes {
+                        //    100% { background-position: -10rem 0rem; }
+                        //}
+                        //
+                        //@keyframes animate-stripes {
+                        //    100% { background-position: -10rem 0rem; }
+                        //}
 
                     }
 
