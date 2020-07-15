@@ -374,7 +374,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
             border: 1px solid #C0CCD1;
             display: flex;
             flex-direction: row;
-            width: 35%;
+            width: 30%;
             justify-content: space-around;
             align-items: center;
             height: 7.3rem;
@@ -384,11 +384,58 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                height: 29px;
-                background: #FFFFFF 0% 0% no-repeat padding-box;
-                border: 1px solid #C0CCD1;
-                border-radius: 6px;
+                height: 2.9rem;
+                //background: #FFFFFF 0% 0% no-repeat padding-box;
+                //border: 0.6rem solid #C0CCD1;
+               .display-content-poste{
+                   .drop-btn{
+                       width: 13rem;
+                   }
+                   .display-content-down{
+                       width: 1rem;
+                   }
+               }
             }
+            .filter_by_criterions_container{
+                .drop-btn{
+                    background-color: transparent;
+                    border: 0;
+                }
+                .container-criterion{
+                    padding: 0.2rem 1.2rem;
+                    background: #C1E4EB 0% 0% no-repeat padding-box;
+                    border: 0.1rem solid #4D646D;
+                    border-radius: 0.5rem;
+                }
+
+            }
+
+            .filter_by_tags_container{
+                .display-content-poste{
+                    width: 15rem;
+                    .display-content-down {
+                        padding: 1rem 1rem 1rem 2rem;
+                    }
+                }
+
+                .drop-btn{
+                    background-color: transparent;
+                    border: 0;
+                }
+                .container-tags{
+                    width: 100%;
+                    font: 1.6rem "Barlow";
+                    padding: 0.1rem 1.4rem 0.3rem 1.9rem;
+                }
+                .product-select-col{
+                    .container-tags{
+                        width: 100%;
+                    }
+                }
+            }
+
+
+
             .open_filter_content{
                 .btn{
                     margin-right: 0px;
@@ -423,7 +470,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 }
             }
             .filter_active{
-                width: 50%;
+                width: 58%;
                 display: flex;
                 opacity: 1;
                 overflow: inherit;

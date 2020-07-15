@@ -100,14 +100,14 @@
                                     <div class="display-content-poste">
                                         <button type="button" class="drop-btn "> Catégories  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
                                         <div class="display-content-down filter_by_categories">
-                                            {#{% for categorie in categories %}#}
-                                                {#<div class="product-select-col">#}
-                                                    {#<label class="container-input">{{ categorie.name }}#}
-                                                        {#<input type="checkbox" value="{{ categorie.id }}">#}
-                                                        {#<span class="container-rdo"></span>#}
-                                                    {#</label>#}
-                                                {#</div>#}
-                                            {#{% endfor %}#}
+                                            {% for categorie in categories %}
+                                                <div class="product-select-col">
+                                                    <label class="container-input">{{ categorie.name }}
+                                                        <input type="checkbox" value="{{ categorie.id }}">
+                                                        <span class="container-rdo"></span>
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
 
                                         </div>
                                     </div>
@@ -130,14 +130,14 @@
                                         <div class="display-content-poste">
                                             <button type="button" class="drop-btn drop-width "> Produits  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
                                             <div class="display-content-down filter_by_categories">
-                                                {#{% for product in products %}#}
-                                                    {#<div class="product-select-col">#}
-                                                        {#<label class="container-input">{{ product.name }}#}
-                                                            {#<input type="checkbox" value="{{ product.id }}">#}
-                                                            {#<span class="container-rdo"></span>#}
-                                                        {#</label>#}
-                                                    {#</div>#}
-                                                {#{% endfor %}#}
+                                                {% for product in products %}
+                                                    <div class="product-select-col">
+                                                        <label class="container-input">{{ product.name }}
+                                                            <input type="checkbox" value="{{ product.id }}">
+                                                            <span class="container-rdo"></span>
+                                                        </label>
+                                                    </div>
+                                                {% endfor %}
 
                                             </div>
                                         </div>
@@ -158,34 +158,109 @@
 
                             <div class="filter_by_criterions_container filters_by_associated_data_item">
 
-                                <div class="apply_filter_container">
-                                    <input type="checkbox" class="apply_filter" data-target="criterions">
-                                </div>
+                                {#<div class="apply_filter_container">#}
+                                    {#<label class="container-input">#}
+                                        {#<input type="checkbox" class="apply_filter" data-target="criterions">#}
+                                        {#<span class="container-rdo"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+
+                                {#<select class="filter_by_criterions">#}
+                                    {#<option value="" selected>Critères</option>#}
+                                    {#{% for criterion in criterions %}#}
+                                        {#<option value="{{ criterion.id }}">{{ criterion.name }}</option>#}
+                                    {#{% endfor %}#}
+                                {#</select>#}
 
                                 <div class="filter_select_container">
-                                    <select class="filter_by_criterions">
-                                        <option value="" selected>Critères</option>
-                                        {% for criterion in criterions %}
-                                            <option value="{{ criterion.id }}">{{ criterion.name }}</option>
-                                        {% endfor %}
-                                    </select>
+
+                                    <div class="display-content-columns">
+                                        <div class="display-content-poste apply_filter_container">
+
+                                            <button type="button" class="drop-btn drop-width">
+                                                <label class="container-input">
+                                                    <input type="checkbox" class="apply_filter" data-target="criterions">
+                                                    <span class="container-rdo"></span>
+                                                </label>
+                                                <span class="container-criterion">Criterion</span>
+                                                <div class="drop-btn-icone">
+                                                    <i class="fas fa-angle-down"></i>
+                                                </div>
+                                            </button>
+
+                                            <div class="display-content-down filter_by_criterions">
+                                                {% for criterion in criterions %}
+                                                    <div class="product-select-col">
+                                                        <label class="container-input">
+                                                            <input type="checkbox" value="{{ criterion.id }}">
+                                                            <span class="container-rdo"></span>
+                                                        </label>
+                                                        <span class="container-criterion">{{ criterion.name }}</span>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
 
+
+
                             <div class="filter_by_tags_container filters_by_associated_data_item">
 
-                                <div class="apply_filter_container">
-                                    <input type="checkbox" class="apply_filter" data-target="tags">
-                                </div>
+                                {#<div class="apply_filter_container">#}
+                                    {#<label class="container-input">#}
+                                        {#<input type="checkbox" class="apply_filter" data-target="tags">#}
+                                        {#<span class="container-rdo"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+                                {##}
+                                {#<div class="filter_select_container">#}
+                                    {#<select class="filter_by_tags">#}
+                                        {#<option value="" selected>Tags</option>#}
+                                        {#{% for tag in tags %}#}
+                                            {#<option value="{{ tag.id }}">{{ tag.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    {#</select>#}
+                                {#</div>#}
 
-                                <div class="filter_select_container">
-                                    <select class="filter_by_tags">
-                                        <option value="" selected>Tags</option>
-                                        {% for tag in tags %}
-                                            <option value="{{ tag.id }}">{{ tag.name }}</option>
-                                        {% endfor %}
-                                    </select>
+
+                                <div class="display-content-columns">
+                                    <div class="display-content-poste apply_filter_container">
+
+                                        <button type="button" class="drop-btn drop-width">
+                                            <label class="container-input">
+                                                <input type="checkbox" class="apply_filter" data-target="tags">
+                                                <span class="container-rdo"></span>
+                                            </label>
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: darkgray;"></span>
+                                                <span class="current-tags-name">Tags</span>
+                                            </p>
+                                            <div class="drop-btn-icone">
+                                                <i class="fas fa-angle-down"></i>
+                                            </div>
+                                        </button>
+
+                                        <div class="display-content-down filter_by_criterions">
+                                            {% for tag in tags %}
+                                                <div class="product-select-col">
+                                                    <label class="container-input">
+                                                        <input type="checkbox" value="{{ tag.id }}">
+                                                        <span class="container-rdo"></span>
+                                                    </label>
+                                                    <p class="container-tags">
+                                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                                        <span class="current-tags-name">{{ tag.name }}</span>
+                                                    </p>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
                                 </div>
 
                             </div>

@@ -198,11 +198,11 @@
                                                 <span>Aucun critères</span>
 
                                             {% else %}
-
-                                                {% for criterion in product.criterions %}
-                                                    <span>{{ criterion.name }}</span>
-                                                {% endfor %}
-
+                                                <div class="cirterions_content">
+                                                    {% for criterion in product.criterions %}
+                                                        <span class="bloc-criterion">{{ criterion.name }}</span>
+                                                    {% endfor %}
+                                                </div>
                                             {% endif%}
                                         </td>
                                         <td class="tags_col">

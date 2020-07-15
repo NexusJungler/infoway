@@ -1,4 +1,4 @@
-<section class="popup_container popup_medias_waiting_incrustation_container is_open">
+<section class="popup_container popup_medias_waiting_incrustation_container ">
 
     <article class="popup popup_medias_waiting_incrustes">
 
@@ -115,9 +115,7 @@
                                 <td class="media_associated_tags_col">
                                     <div class="media_tags_container container">
                                         {% if media.tags.values is empty %}
-
                                             <span class="container_child">Aucun tag</span>
-
                                         {% else %}
 
                                             {% for tag in media.tags.values %}
@@ -131,7 +129,7 @@
                                     </div>
                                 </td>
                                 <td class="media_associated_products_col">
-                                    <div class="media_products_container container">
+                                    <div class="media_products_container container scrollbar_popup">
                                         {% if media.products.values is empty %}
 
                                             <span class="container_child">Aucun produit</span>
@@ -139,9 +137,9 @@
                                         {% else %}
 
                                             {% for product in media.products.values %}
-
-                                                <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
-
+                                                <div class=" media_products_cintainer_bloc">
+                                                    <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
+                                                </div>
                                             {% endfor %}
 
                                         {% endif %}
