@@ -45,6 +45,9 @@ Encore
     .addEntry('user_login', './assets/js/user_login.js')
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
+
+    /********* SITE ********/
+    .addEntry('site', './assets/js/site.js')
     
     /********* Settings *********/
     /** Customer **/
@@ -69,8 +72,9 @@ Encore
 
     //media
     .addEntry('mediatheque', './assets/js/mediatheque.js')
-
     .addEntry('edit_media', './assets/js/edit_media.js')
+
+
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

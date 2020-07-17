@@ -3,7 +3,7 @@
 {% block title %} Produits {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
+    {{ parent () }}
     {{ encore_entry_link_tags('show_products') }}
 {% endblock %}
 
@@ -146,10 +146,12 @@
                                 <th><i class="fas fa-pen"></i></th>
 
                                 <th class="format">
-                                    <select id="form">
-                                        <option>Form.</option>
+                                    <select id="form" class="filter">
+                                        <option value="0">Form.</option>
+                                        <option value="X3">X3</option>
+                                        <option value="1">1</option>
                                         {#{% for category in categories %}#}
-                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
+                                        {#<option value="{{ category.name }}">{{ category.name }}</option>#}
                                         {#{% endfor %}#}
                                     </select>
                                 </th>
@@ -168,11 +170,8 @@
                                 <th>Critères</th>
 
                                 <th class="tags">
-                                    <select id="form">
+                                    <select >
                                         <option>tags</option>
-                                        {#{% for category in categories %}#}
-                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
-                                        {#{% endfor %}#}
                                     </select>
                                 </th>
 
@@ -181,12 +180,9 @@
                                 <th class="allergene">
                                     <select id="form">
                                         <option>Allergènes</option>
-                                        {#{% for category in categories %}#}
-                                        {#<option value="{{ category.id }}">{{ category.name }}</option>#}
-                                        {#{% endfor %}#}
                                     </select>
                                 </th>
-                                <th class="debut" >Date de dèbut</thclass>
+                                <th class="debut" >Date de dèbut</th>
                                 <th class="fin" >Date de fin</th>
                                 <th>Visuel</th>
                             </tr>
@@ -200,27 +196,47 @@
                                             <span class="container-rdo-tags"></span>
                                         </label>
                                     </td>
-                                    <td><span class="bloc-icone"><i class="fas fa-spinner"></i></span></td>
-                                    <td class="nom">{{ product.name }}</td>
-                                    <td><i class="fas fa-pen"></i></td>
-                                    <td class="format">{{ product.amount }}</td>
+                                    <td>
+                                            <span class="bloc-icone">
+                                                <i class="fas fa-spinner"></i>
+                                            </span>
+                                    </td>
+                                    <td class="nom" data-name="{{ product.name }}">
+                                        {{ product.name }}
+                                    </td>
+
+                                    <td>
+                                        <i class="fas fa-pen"></i>
+                                    </td>
+
+                                    <td class="format " data-format="{{ product.amount }}" >
+                                        {{ product.amount }}
+                                    </td>
 
                                     {% if(product.category.name is defined)  %}
-                                        <td class="category">{{ product.category.name }}</td>
+                                        <td class="category" >
+                                            {{ product.category.name }}
+                                        </td>
                                     {% else %}
-                                        <td class="category">Orphelin</td>
+                                        <td class="category">
+                                            Orphelin
+                                        </td>
                                     {% endif %}
 
-                                    <td class="description" > <p>{{ product.description }}</p></td>
+                                    <td class="description" >
+                                        <p class="content-desc">{{ product.description }}</p>
+                                    </td>
                                     <td>{{ product.note }}</td>
-                                    <td class="tags" >
+                                    <td class="tags" data-tags=" ">
                                         {% for tag in product.tags %}
                                             <p class="container-tags">
                                                 <span class="mini-cercle" style="background: {{tag.color}};"></span>{{ tag.name }}
                                             </p>
                                         {% endfor %}
                                     </td>
-                                    <td class="type">{{ product.priceType.name }}</td>
+                                    <td class="type" data-pricetype="{{ product.priceType.name }}">
+                                        <span>{{ product.priceType.name }}</span>
+                                    </td>
                                     <td class="allergene">
                                         {% for allergen in product.allergens %}
                                             {# <span>{{ allergen.name }}</span> #}

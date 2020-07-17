@@ -150,7 +150,7 @@ class Table  {
         
         //             } else {
                     
-        //                 if(isSelected) {		
+        //                 if(isSelected) {
         //                     if(x < y) return -1;
         //                     if(x > y) return 1;
         //                     return 0;
@@ -170,21 +170,21 @@ class Table  {
         //     })
         // })
 
-        //   $('th').click(function(){
-
+        //   $('.site-container .filter_city').click(function(){
+        //
         //     var table = $(this).parents('table').eq(0)
         //     var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
         //     this.asc = !this.asc
         //     if (!this.asc){rows = rows.reverse()}
         //     for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-
-        //     if(orderClass == 'desc' || orderClass == '') {
-    	// 		$(this).addClass('asc');
-    	// 		orderClass = 'asc';
-        //     } else {
-        //         $(this).addClass('desc');
-        //         orderClass = 'desc';
-        //     }
+        //     //
+        //     // if(orderClass == 'desc' || orderClass == '') {
+    	// 	// 	$(this).addClass('asc');
+    	// 	// 	orderClass = 'asc';
+        //     // } else {
+        //     //     $(this).addClass('desc');
+        //     //     orderClass = 'desc';
+        //     // }
         // })
         // function comparer(index) {
         //     return function(a, b) {

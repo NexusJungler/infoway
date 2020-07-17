@@ -67,27 +67,31 @@ $border--radius--grey : 0.1rem solid #4D646D;
 .display-dates{
     position: relative;
     display: inline-block;
-    &:hover .display-content-down {
-        display: block;
-        height: 300px;
-        overflow: auto;
-    }
+    //&:hover .display-content-down {
+    //    display: block;
+    //    height: 300px;
+    //    overflow: auto;
+    //}
 }
 
 .drop-btn{
     background-color: #FFFFFF ;
-    padding: 0.2rem 0.9rem;
+    padding: 0.2rem ;
     border: $border--radius--grey;
     border-radius: 0.6rem;
-    font-size: 3.1rem;
+    font-size: 2.1rem;
     max-width: 100%;
     text-align: left;
+    display: flex;
     .drop-btn-icone{
-        position: absolute;
-        right: 0.8rem;
-        top: -0.5rem;
-        color: #899CA4;
-        font-size: 3rem;
+        width: 21px;
+        height: 21px;
+        background: #A4B4BB 0% 0% no-repeat padding-box;
+        border-radius: 3px;
+        color: #E3E3E3;
+        text-align: center;
+
+        font-size: 2rem;
     }
 }
 .display-content-down{
