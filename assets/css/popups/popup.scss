@@ -1,14 +1,14 @@
 .popup_container{
     font-family: "Barlow", serif;
-    position: absolute;
+    position: fixed;
     height: 100%;
-    width: 108.7%;
+    width: 100%;
     background: rgba(0, 0, 0, 0.7);
     align-items: center;
     pointer-events: none;
     opacity: 0;
     top: 0;
-    left: -8.7%;
+    left: 0;
     z-index: 9;
 
   .popup_header{
@@ -94,7 +94,7 @@
         box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
         padding: 0;
         border-radius: 7px 7px 0 0;
-        margin: 0 auto;
+        margin: 10% auto;
 
         .popup_body{
           height: 80%;
