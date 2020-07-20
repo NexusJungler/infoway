@@ -1,5 +1,7 @@
+$border--radius : 0.6rem ;
+$color--dark--grey : #4D646D ;
 
-/******************************************************** TABLE **********************************************************************/
+/****************************************************** TABLE *******************************************************/
 
 .table{
     width: 100%;
@@ -8,7 +10,7 @@
         border-radius: 0.5rem 0 0 0;
         overflow: hidden;
         width: 100%;
-        thead, .tbody tr{
+        thead, tbody tr{
             display: table;
             width: 100%;
             table-layout: fixed;
@@ -17,79 +19,73 @@
         .thead-info,
         .thead-content {
             position: relative;
-            background: #899CA4 0% 0% no-repeat padding-box;
-            border-top: 1px solid #4D646D;
-            border-left: 1px solid #4D646D;
-            width: calc( 100% - 18px );
+            background: #899CA4 0 0 no-repeat padding-box;
+            border-top: 0.1rem solid  $color--dark--grey;
+            border-left: 0.1rem solid  $color--dark--grey;
+            width: calc( 100% - 1.8rem );
             &::after{
                 content: "";
-                background: #899CA4 0% 0% no-repeat padding-box;
+                background: #899CA4 0 0 no-repeat padding-box;
                 height: 100%;
-                width: 18px;
+                width: 1.8rem;
                 position: absolute;
-                right: -18px;
-                top: -1px;
+                right: -1.8rem;
+                top: -0.1rem;
                 border-radius: 0 0.5rem 0 0;
-                border-top: 1px solid #4D646D;
-                border-right: 1px solid #4D646D;
-                border-bottom: 1px solid #4D646D;
+                border-top: 0.1rem solid $color--dark--grey;
+                border-right: 0.1rem solid $color--dark--grey;
+                border-bottom: 0.1rem solid $color--dark--grey;
             }
             th{
-                font: 0.8rem 'Barlow', medium;
+                font: 1.3rem "Barlow";
                 color: #FFFFFF;
                 padding: 0.5rem 1rem;
                 position: relative;
-                width: 273px;
+                width: 10%;
                 &:first-child{
                     width: 15%;
                 }
                 span{
-                    font: 14px 'Barlow';
+                    font: 1.4rem 'Barlow';
                 }
                 input{
-                    margin: 0px;
-                    margin-right: 5px;
+                    margin: 0 0.5rem 0 0 ;
                 }
             }
         }
 
         .tbody-content{
-            
-            border: 1px solid #4D646D;
+            border: 0.1rem solid #4D646D;
             tr:nth-child(2n+2) {
-                background: #ffffff 0% 0% no-repeat padding-box;
+                background: #ffffff 0 0 no-repeat padding-box;
             }
             td {
                 padding: 0.2rem 0.5rem 0.6rem 0.5rem;
-                border-right: 1px solid #AAAAAA;
-                width: 273px;
+                border-right: 0.1rem solid #AAAAAA;
+                width: 20%;
                 &:first-child{
                     width: 15%;
                 }
                 input{
-                    margin: 0;
-                    margin-right: 15px;
+                    margin: 0 1.5rem 0 0;
                 }
             }
-        } 
+        }
     }
 }
-
 
 .table{
     .table-associations{
         width: 100%;
-
         thead, tbody tr{
             display: table;
             width: 100%;
             table-layout: fixed;
             color: #4D646D;
         }
-
         .thead-associations{
             background: #C0CCD1 0% 0% no-repeat padding-box;
-            border: 1px solid #899CA4;
+            border: 0.1rem solid #899CA4;
             position: relative;
             th{
                 font: 0.8rem 'Barlow', medium;
@@ -99,39 +95,39 @@
                     width: 40%;
                     border: 0;
                     text-align: center;
-                    font-size: 23px;
+                    font-size: 2.3rem;
                 }
                 &:nth-child(2){
+                    font: 1.3rem "Barlow";
                     width: 60%;
                     text-align: right;
                 }
             }
         }
 
-        .thead-associations{
-            height: 500px;
-            max-height: 500px;
+        .tbody-associations{
+            height: 50rem;
+            max-height: 50rem;
             overflow: auto;
             display: block;
-            border: 1px solid #899CA4;
-            border-top: 0px;
+            border: 0.1rem solid #899CA4;
+            border-top: 0;
             .content-assigned-image{
-                width: 171px;
-                height: 109px;
-                border: 1px solid #707070;
-                border-radius: 6px;
-                padding: 1px;
+                width: 17.1rem;
+                height: 10.9rem;
+                border: 0.1rem solid #707070;
+                border-radius: 0.6rem;
+                padding: 0.1rem;
                 margin-left: 1rem;
                 .img-product{
                     width: 100%;
                     height: 100%;
                     padding: 0.1rem;
-                    border-radius: 6px;
+                    border-radius: $border--radius;
                 }
             }
-
             tr{
-                font-size: 17px;
+                font-size: 1.7rem;
                 td{
                     padding: 1rem;
                     &:nth-child(1){
@@ -153,36 +149,30 @@
     }
 
     .container-input{
-        font-size: 17px;
+        font-size: 1.7rem;
         color: #4D646D;
         .container-rdo {
             position: absolute;
-            top: -1px;
+            top: -0.1rem;
             left: 93%;
-            height: 23px;
-            width: 23px;
+            height: 2.3rem;
+            width: 2.3rem;
             background: #4D646D;
-            border-radius: 3px;
-            border: 1px solid #4D646D;
+            border-radius: 0.3rem;
+            border: 0.1rem solid #4D646D;
             &:after {
                 content: "x";
                 color: white;
-                font-size: 26px;
+                font-size: 2.6rem;
                 font-weight: 600;
                 position: absolute;
-                top: -14px;
-                left: 4px;
-                width: 19px;
-                height: 19px;
-                border-radius: 3px;
+                top: -1.4rem;
+                left: 0.4rem;
+                width: 1.9rem;
+                height: 1.9rem;
+                border-radius: 0.3rem;
                 background: none;
             }
         }
     }
 }
-
-
-
-
-
-

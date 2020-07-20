@@ -12,7 +12,6 @@ use App\Repository\Customer\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use \Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,16 +46,16 @@ class EditMediaType extends AbstractType
 
                 ])
 
-                ->add('diffusionStart', DateTimeType::class,[
+                ->add('diffusionStart', DateType::class,[
                     'widget' => 'single_text',
-                    'input_format' => 'd-m-Y H:i',
+                    'input_format' => 'd-m-Y',
                     'label' => 'Début',
                     'choice_translation_domain' => true,
                 ])
 
-                ->add('diffusionEnd', DateTimeType::class,[
+                ->add('diffusionEnd', DateType::class,[
                     'widget' => 'single_text',
-                    'input_format' => 'd-m-Y H:i',
+                    'input_format' => 'd-m-Y',
                     'label' => 'Fin',
                     'choice_translation_domain' => true,
                 ])
@@ -64,7 +63,7 @@ class EditMediaType extends AbstractType
                 ->add('tags', EntityType::class, [
                     'class' => Tag::class,
                     'choice_label' =>  'name',
-                    //'choices' => $this->__mediaRepo->getMediaAssociatedTags($options['data']),
+                    'choices' => $this->__mediaRepo->getMediaAssociatedTags($options['data']),
                     'multiple' => true,
                     'expanded' => true,
                     'by_reference' => false

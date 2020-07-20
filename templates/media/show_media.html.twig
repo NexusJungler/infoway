@@ -1,41 +1,34 @@
 {% if app.request.attributes.get('_route') is same as('media::edit') %}
-
     {{ form_start(form) }}
-
 {% endif %}
 
 <div class="col top">
-
     <div class="left_side side">
 
         {% if media is defined %}
-
-        <div class="media_miniature_container media_{{ media.orientation }}" data-customer="{{ app.session.get('current_customer').name| lower }}" data-media_id="{{ media.id }}" data-file_type="{{ file_type }}" data-media_type="{{ media.type }}">
-
+        <div class="media_miniature_container media_{{media.orientation }} " data-media_id="{{ media.id }} " >
         {% else %}
-
-        <div class="media_miniature_container" data-customer="{{ app.session.get('current_customer').name| lower }}">
-
+        <div class="media_miniature_container" >
         {% endif %}
 
-            <div class="media_container_{{ (file_type is defined and file_type is same as('image')) ? 'img' : 'video' }}">
+            <div class="media_container_{{ (media_type is defined and media_type is same as('image')) ? 'img' : 'video' }}">
 
-                {% if miniature_medium_exist is defined and miniature_medium_exist is same as(false) %}
+                {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
 
-                    <img class="media_miniature miniature_{{ file_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                    <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
                 {% else %}
 
-                    {% if file_type is defined and file_type is same as('image') %}
+                    {% if media_type is defined and media_type is same as('image') %}
 
-                        <div class="media_container_arrows">
+                         <div class="media_container_arrows">
                             <i class="fas fa-expand-arrows-alt"></i>
-                        </div>
-                        <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/medium/{{ media.id }}.png"
-                             alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/medium/{{ media.id }}.png">
+                         </div>
 
-                    {% elseif file_type is defined and file_type is same as('video') %}
+                          <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/medium/{{ media.id }}.png"
+                          alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/medium/{{ media.id }}.png">
 
+                    {% elseif media_type is defined and media_type is same as('video') %}
 
                         <div class="media_container_arrows">
                             <i class="fas fa-expand-arrows-alt"></i>
@@ -49,7 +42,6 @@
                 {% endif %}
 
             </div>
-
         </div>
 
     </div>
@@ -64,7 +56,7 @@
                         <i class="far fa-clock"></i>
                     </div>
 
-                    <span class="title">Date de validité</span>
+                    <span class="title title--header">Date de validité</span>
                 </div>
 
             </div>
@@ -76,8 +68,8 @@
                             {{ form_label(form.diffusionStart) }}
                         </div>
 
-                        <div class="input_coontainer">
-                            {{ form_widget(form.diffusionStart, {'attr': {'class': 'media_diff_start'}}) }}
+                        <div class="input_container">
+                            {{ form_widget(form.diffusionStart) }}
                         </div>
                     </div>
 
@@ -86,13 +78,13 @@
                             {{ form_label(form.diffusionEnd) }}
                         </div>
 
-                        <div class="input_coontainer">
-                            {{ form_widget(form.diffusionEnd, {'attr': {'class': 'media_diff_end'}}) }}
+                        <div class="input_container">
+                            {{ form_widget(form.diffusionEnd) }}
                         </div>
                     </div>
                 {% else %}
                     <div class="container_body_child">
-                        <span class="media_diff_start">{{ (media is defined) ? media.diffusionStart | date('d/m/Y H:i') : '' }}</span> au <span class="media_diff_end">{{ (media is defined) ? media.diffusionEnd | date('d/m/Y H:i') : '' }}</span>
+                        <span class="media_diff_start">{{ (media is defined) ? media.diffusionStart | date('d/m/Y') : '' }}</span> au <span class="media_diff_end">{{ (media is defined) ? media.diffusionEnd | date('d/m/Y') : '' }}</span>
                     </div>
                 {% endif %}
             </div>
@@ -107,14 +99,17 @@
                     <div class="icon_container">
                         <i class="fas fa-euro-sign"></i>
                     </div>
-                    <span class="container_header_title">Incrustations</span>
+                    <span class="container_header_title title--header">Incrustations</span>
 
                 </div>
 
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
 
                     <div class="container_header_child btn_container">
-                        <button type="button" class="btn"><i class="fas fa-euro-sign"></i> Incruster PRIX</button>
+                        <button type="button" class="btn">
+                            {#<i class="fas fa-euro-sign"></i> #}
+                            Incruster PRIX
+                           </button>
                     </div>
 
                 {% endif %}
@@ -132,9 +127,7 @@
                             <th>Texte</th>
                         </tr>
                     </thead>
-
                     <tbody class="media_incrustations_list">
-
                         {% if media_incrustations is defined %}
 
                             {% for productName, incrusteTypes in media_incrustations %}
@@ -158,7 +151,6 @@
                             {% endfor %}
 
                         {% endif %}
-
                     </tbody>
                 </table>
 
@@ -172,7 +164,7 @@
 {% if app.request.attributes.get('_route') is same as('media::edit') %}
     <div class="col">
         <div class="media_update_btn_container">
-            <button type="button" class="btn media_replacement_btn">Mettre à jour le média</button>
+            <button type="button" class="btn">Mettre à jour le média</button>
         </div>
     </div>
 {% endif %}
@@ -183,7 +175,7 @@
 
         <div class="container">
             <div class="container_child">
-                <span class="container_child_title">Nom du média :</span>
+                <span class="container_child_title">Nom du produit :</span>
             </div>
             <div class="container_child media_name_container">
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
@@ -206,7 +198,7 @@
         </div>
 
         <div class="container associated_data_container">
-            <div class="container_child">
+            <div class="container_child container_child_bloc">
                 <span class="container_child_criteres"> Critères</span>
             </div>
             <div class="container_child media_criterions_container">
@@ -225,41 +217,38 @@
         </div>
 
         <div class="container associated_data_container">
-            <div class="container_child">
+            <div class="container_child container_child_bloc">
                 <p class="container_child_tags btn_tags tag_association_btn" >
                     <span class="mini-cercle"><i class="fas fa-plus"></i></span>TAGS
                 </p>
             </div>
-            <div class="container_child media_tags_list">
+            <div class="container_child media_tags_container">
 
-                {% if media_tags is defined and app.request.attributes.get('_route') is not same as('media::edit') %}
+                {% if media_tags is defined %}
 
                     {% for tag in media_tags %}
+                        <p class="tag container-tags">
+                            <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                            <span class="current-tags-name">{{ tag.name }}</span>
+                        </p>
 
-                        <div class="tag_container">
-                            <span>{{ tag }}</span>
-                        </div>
-
-                    {% endfor %}
-
-                {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
-
-                    {% for tag in form.tags %}
-
-                        <div class="tag_container {% if tag.vars.data is same as(false) %}hidden{% endif %}" data-tag_id="{{ tag.vars.name }}">
-                            <span class="hidden">{{ form_widget(tag, { 'attr': { 'class': 'tag_checkbox' } }) }}</span>
-                            <span data-tag_id="{{ tag.vars.name }}">{{ form_label(tag) }}</span>
-                        </div>
+                        {#<span>{{ tag }}</span>#}
 
                     {% endfor %}
 
+                {% endif %}
+
+                {% if app.request.attributes.get('_route') is same as('media::edit') %}
+                    <div style="display: none">
+                        {{ form_widget(form.tags) }}
+                    </div>
                 {% endif %}
 
             </div>
         </div>
 
         <div class="container associated_data_container">
-            <div class="container_child">
+            <div class="container_child container_child_bloc">
                 <span class="container_child_allergenes">Allergènes</span>
             </div>
             <div class="container_child media_allergens_container">
@@ -287,12 +276,15 @@
                         <i class="icon fas fa-link"></i>
                     </div>
 
-                    <span class="container_header_title">Produits associés</span>
+                    <span class="container_header_title title--header">Produits associés</span>
                 </div>
 
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
                     <div class="container_header_child btn_container">
-                        <button type="button" class="btn product_association_btn"><i class="fas fa-link"></i> Produits associés</button>
+                        <button type="button" class="btn product_association_btn">
+                            {#<i class="fas fa-link"></i> #}
+                            Produits associés
+                        </button>
                     </div>
                 {% endif %}
 
@@ -316,7 +308,7 @@
 
                         {% for product in form.products %}
 
-                            <tr data-product_id="{{ product.vars.name }}" {% if product.vars.data is same as(false) %} class="hidden" {% endif %}>
+                            <tr data-product_id="{{ product.vars.name }}" class="{{ (product.vars.data is same as(false)) ? 'hidden': '' }}">
                                 <td class="hidden">{{ form_widget(product, { 'attr': { 'class': 'product_checkbox' } }) }}</td>
                                 <td class="product_name">{{ form_label(product) }}</td>
                             </tr>

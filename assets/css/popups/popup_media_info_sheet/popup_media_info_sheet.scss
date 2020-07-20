@@ -1,5 +1,5 @@
 .popup_media_info_sheet_container{
-    height: 1200px;
+
 
     .popup_header{
         height: 5%;
@@ -10,7 +10,7 @@
     &.is_open{
 
         .popup{
-
+            height: 1200px;
             .popup_body{
                 display: flex;
                 flex-direction: column;

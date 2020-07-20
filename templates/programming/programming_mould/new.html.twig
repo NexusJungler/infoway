@@ -2,57 +2,10 @@
 
 {% block title %}New DisplayMould{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('programming_mould') }}
-    {{ encore_entry_link_tags('add_media_window') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('programming_mould') }}
-{% endblock %}
 {% block body %}
-<main class="main main_programming">
-    <div class="main-content">
+    <h1>Create new DisplayMould</h1>
 
-        <section class="jumbotron">
+    {{ include('programming/programming_mould/_form.html.twig') }}
 
-            {% block settingtitle %}
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Programmation', 'showSecondTitles': false } %}
-            {% endblock %}
-            {% block wrapper %}
-                {{ include ('wrapper/wrapper_programming.html.twig' , { 'currentDisplaySpace' : programmingMould.displaySetting.displaySpace , 'allDisplaySpacesName' : allDisplaySpacesName }) }}
-            {% endblock %}
-        </section>
-
-        <section>
-            {% block maincontent %}
-                <section class="wrapper_tabcontent">
-
-                    <article class="tab-content-title">
-                        <button type="button" class="btn btn--bluecanard "><i class="fas fa-plus"></i>Paramètres</button>
-                        <h3 class="title">{{ programmingMould.name | upper }}</h3>
-                    </article>
-
-
-                    <article class="display setting-display ">
-                        <div class="display-content">
-                            <div class="display-btn">
-                                <button type="button" id="button__add_media" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Ajouter un media</a></button>
-                                <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Remplacer un media</button>
-                                <button type="button" class="btn delete-table" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer un media</button>
-                            </div>
-                        </div>
-                    </article>
-                    {{ include('media/form/add_media_form.html.twig') }}
-                    {{ include('programming/programming_mould/_form.html.twig') }}
-
-                    <a href="{{ path('programming_programming_mould_index') }}">back to list</a>
-                </section>
-            {% endblock %}
-        </section>
-    </div>
-</main>
-
+    <a href="{{ path('programming_programming_mould_index') }}">back to list</a>
 {% endblock %}

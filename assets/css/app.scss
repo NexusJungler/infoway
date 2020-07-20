@@ -8,7 +8,7 @@
     box-sizing: border-box
 }
 html {
-    font-size: 16px;
+    font-size: 10px;
 }
 p{
     margin: 0;
@@ -48,6 +48,8 @@ img {
     display: none!important;
 }
 
+$border--radius--white : 0.1rem solid #FFFFFF;
+
 
 /** Function for converting  px to rem **/
 @function rem($size) {
@@ -65,16 +67,20 @@ img {
 /** style table **/
 @import 'general/table';
 
+/** style scrollbar**/
+@import 'general/scrollbar';
+
 
 @import 'custome/dropdown.scss';
 
 @import 'Custome/display_down.scss';
 
-@import 'general/scrollbar';
+
 
 @import 'general/form';
 
 
+@import 'media/edit_media.scss';
 
 /************************* CUSTOM ICON  ***************************/
 @import 'custom_icon.scss';
@@ -100,8 +106,6 @@ img {
 /** PRODUCTS **/
 @import 'products/product_price.scss';
 
-/** SITE **/
-@import 'site.scss';
 
 
 /** MEDIA **/

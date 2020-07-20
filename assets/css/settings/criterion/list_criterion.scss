@@ -1,45 +1,39 @@
-// page gestion des crieters
 
-/** Function for converting  px to rem **/
-@function rem($size) {
-    $remSize: $size / 16px;
-    @return #{$remSize}rem;
-}
 
 .font{
-    font: 16px "Barlow" ;
+    font: 1.6rem "Barlow" ;
     letter-spacing: 0px;
     color: #283338;
 }
 
 .content-criterion_list{
     .row-criterion{
-        margin: 20px auto;
-        width: 1000px;
+        margin: 2rem auto;
+        width: 100rem;
         max-width: 100%;
     }
 }
 
 .content-criterion_header{
-    padding: 7px 10px;
+    padding: 0.7rem 1rem;
     display: flex;
     background: #A4B4BB 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #00000029;
-    border: 1px solid #4D646D;
-    height: 45px;
+    box-shadow: 0 0.3rem 0.6rem #00000029;
+    border: 0.1rem solid #4D646D;
+    height: 4.5rem;
     .container-input{
-        left: -23px;
+        left: -2.3rem;
         position: relative;
         .container-rdo-tags{
-            top: 8px;
+            top: 0.8rem;
         }
     }
     .criterions-list_name{
-        font-size: rem(21px);
-        letter-spacing: 0px;
+        font-size: 2.1rem;
+        letter-spacing: 0;
         color: #FFFFFF;
-        margin-right: 10px;
-        margin-left: 50px;
+        margin-right: 1rem;
+        margin-left: 5rem;
         &::after {
             content: '';
             border-left: 0.15rem solid #FFFFFF;
@@ -49,32 +43,32 @@
         }
     }
     .criterions-list_description{
-        font-size: rem(21px);
+        font-size: 2.1rem;
         letter-spacing: 0px;
         color: #283338;
         position: relative;
-        top: -3px;
+        top: -0.3rem;
     }
 }
 
 
 .content-criterion_multi{
     .info{
-        font: 16px "Barlow" ;
+        font: 1.6rem "Barlow" ;
         letter-spacing: 0px;
         color: #283338;
     }
     .info-multi{
-        max-width: 197px;
+        max-width: 19.7rem;
         width: 100%;
-        height: 29px;
-        padding: 1px 10px;
+        height: 2.9rem;
+        padding: 0.1rem 1rem;
         display: inline-flex;
         background: #FFFFFF 0% 0% no-repeat padding-box;
-        border: 1px solid #C0CCD1;
-        border-radius: 6px;
-        font: 16px "Barlow";
-        letter-spacing: 0px;
+        border: 0.1rem solid #C0CCD1;
+        border-radius: 0.6rem;
+        font: 1.6rem "Barlow";
+        letter-spacing: 0;
     }
 }
 
@@ -83,23 +77,26 @@
         .table-custome{
 
             border-radius: 0;
-            border: 1px solid #899CA4;
+            border: 0.1rem solid #899CA4;
             border-top: 0;
             .thead-info{
                 width: 100%;
                 background: #E3E3E3 0% 0% no-repeat padding-box;
                 border: 0;
-                border-bottom: 1px solid #899CA4;
+                border-bottom: 0.1rem solid #899CA4;
+
                 &::after{
                     display: none;
                 }
                 th{
                     color: #4D646D;
                     &:first-child{
+                        font: 1.4rem "Barlow";
                         text-align: center;
                         width: 28%;
                     }
                     &:last-child{
+                        font: 1.4rem "Barlow";
                         text-align: left;
                         width: 80%;
                     }
@@ -108,9 +105,9 @@
             .tbody-content{
                 background: #F6F6F6 0% 0% no-repeat padding-box;
                 border: 0;
-                margin-bottom:30px;
-                padding: 20px 30px ;
-                height: 250px;
+                margin-bottom: 3rem;
+                padding: 2rem 3rem ;
+                height: 25rem;
                 tr{
                     &:first-child{
                         text-align: right;
@@ -120,30 +117,30 @@
                         background: #F6F6F6 0% 0% no-repeat padding-box;
                     }
                     &:last-child{
-                        margin-bottom: 20px;
+                        margin-bottom: 2rem;
                     }
                     td{
                         border: 0;
-                        padding: 10px 35px 10px 10px;
+                        padding: 1rem 3.5rem 1rem 1rem;
                         .criterion-name{
                             text-align: center;
-                            font: 14px 'Barlow', medium;
+                            font: 1.4rem 'Barlow', medium;
                             background: #EAF1F2 0% 0% no-repeat padding-box;
-                            box-shadow: 2px 2px 2px #00000029;
-                            border-radius: 5px;
-                            border: 1px solid #4D646D;
-                            padding: 2px 5px;
-                            width: 110px;
-                            height: 26px;
-                            margin-left: 80px;
+                            box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
+                            border-radius: 0.5rem;
+                            border: 0.1rem solid #4D646D;
+                            padding: 0.2rem 0.5rem;
+                            width: 11rem;
+                            height: 2.6rem;
+                            margin-left: 8rem;
                         }
                         .criterion-description{
                             width: 100%;
-                            height: 30px;
+                            height: 3rem;
                             background: #FFFFFF 0% 0% no-repeat padding-box;
-                            border: 1px solid #899CA4;
-                            border-radius: 9px;
-                            padding: 1px 15px;
+                            border: 0.1rem solid #899CA4;
+                            border-radius: 0.9rem;
+                            padding: 0.1rem 1.5rem;
                            @extend .font;
                         }
                     }
@@ -151,7 +148,7 @@
 
                 .tr-custome{
                     .container-input{
-                        margin-left: 15px;
+                        margin-left: 1.5rem;
                     }
                     td{
                         &:first-child{

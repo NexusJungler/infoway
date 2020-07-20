@@ -19,11 +19,11 @@
 
     .tab-content-bloc-cm-right{
         .tab-content-poste{
-            width: rem(150px);
+            width: 15rem;
             max-width: 100%;
             height: 15%;
             p{
-                font: rem(14.5px) 'Barlow', italic;
+                font: 14.5rem 'Barlow', italic;
                 color: #899CA4;
                 text-align: center;
             }
@@ -31,7 +31,7 @@
         }
         .tab-content-brand{
             border: 0.06rem solid #899CA4;
-            border-radius: 7px 7px 0px 0px;
+            border-radius: 0.7rem 0.7rem 0 0;
             height: 100%;
             max-height: 85%;
             .bloc-poste-title{
@@ -39,7 +39,7 @@
                 background: #A4B4BB 0% 0% no-repeat padding-box;
                 font: 1rem 'Barlow', medium;
                 color: #FAFAFA;
-                border-radius: 6px 6px 0px 0px;
+                border-radius: 0.6rem 0.6rem 0 0;
             }
         }
         
@@ -49,7 +49,7 @@
         display: block;
         position: relative;
         cursor: pointer;
-        font: 1rem 'Barlow', medium;
+        font: 1rem 'Barlow';
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -81,7 +81,7 @@
             right:  0.3rem;
             width: 0.9rem;
             height: 0.9rem;
-            border: 1px solid #A4B4BB;
+            border: 0.1rem solid #A4B4BB;
             background-color: #FAFAFA;
             &:after {
                 content: "";
@@ -116,13 +116,12 @@
 }
 
 .tab-create .custom-file:after {
-    right: 46px;
+    right: 4.6rem;
 }
 
 .tab-create .tab-content-bloc-cm-right .inputRdo  {
     display: block;
 }
-
 
 
 /* MEDIA QUERY */

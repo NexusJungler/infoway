@@ -1,7 +1,6 @@
 .content-categories{
     .display{
         padding-top: 2rem;
-
     }
 }
 
@@ -54,6 +53,7 @@
             border: 1px solid #4D646D;
             .container-input .container-rdo-tags {
                 left: 15px;
+                top: -1rem;
             }
             tr{
                 background-color: #F1F7F9;
@@ -64,16 +64,17 @@
                 td{
                     text-align: center;
                     padding: 0.6rem 0.5rem 0.6rem 0.5rem;
+                    font:1.6rem "Barlow";
                     &:nth-child(1){
                         width: 5%;
                     }
                     &:nth-child(2){
                         width: 15%;
-                        font-size: 17px;
                         letter-spacing: 0px;
                     }
                     &:nth-child(3){
-                        padding: 0.6rem 1rem 0.6rem 1rem;
+                        //padding: 0.6rem 1rem 0.6rem 1rem;
+                        padding-left: 3rem;
                         text-align: left;
                         p{
                             text-overflow: ellipsis;
@@ -103,6 +104,8 @@
     width: 25%;
     .content-categories-show_header{
         display: flex;
+        font: 3.1rem "Barlow";
+
     }
     .table-custome{
         background-color: white;
@@ -116,6 +119,8 @@
             tr{
                 color: #4D646D;
                 background-color: #D4D7D8;
+                font:1.6rem "Barlow";
+                text-align: center;
                 &:nth-child(even){
                     background-color: #EFF0F1;
                 }

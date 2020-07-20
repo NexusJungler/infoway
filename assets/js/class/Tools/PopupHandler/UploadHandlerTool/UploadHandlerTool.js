@@ -1154,46 +1154,58 @@ class UploadHandlerTool extends SubTool
 
         this.__$fileToCharacterisationList.find(`#upload_${mediaInfos.index}`).replaceWith( $(html) );
 
-        this.addNewMediaCardInMediatheque(mediaInfos);
+        //this.addNewMediaCardInMediatheque(mediaInfos);
 
     }
 
-    addNewMediaCardInMediatheque(mediaInfos)
+    addNewMediaCardInMediatheque(mediaCards)
     {
 
-        console.table( mediaInfos ); debugger
+        mediaCards.map( mediaCard => {
 
-        let card = `<div class="card card_${ mediaInfos.fileType }" id="media_${ mediaInfos.id }" data-created_date="${ mediaInfos.createdAt }" data-file_type="${ mediaInfos.fileType }"
-                    data-orientation="${ mediaInfos.orientation }" data-media_diff_start="${ mediaInfos.diffStart }" data-media_diff_end="${ mediaInfos.diffEnd }" data-customer="${ mediaInfos.customer }"
-                    data-products="${ (mediaInfos.products.length > 0) ? mediaInfos.products.join(', ') : 'none' }" data-categories="${ (mediaInfos.categories.length > 0) ? mediaInfos.categories.join(', ') : 'none' }" 
-                    data-criterions="${ (mediaInfos.criterions.length > 0) ? mediaInfos.criterions.join(', ') : 'none' }" data-tags="${ (mediaInfos.tags.length > 0) ? mediaInfos.tags.join(', ') : 'none' }" >
+            $(mediaCard).appendTo(this.__parent.getMediasContainer());
 
-                        <div class="card_header">
-                        
-                            <div class="select_media_input_container">
-                                <label class="container-input">
-                                    <input type="checkbox" class="select_media_input">
-                                    <span class="container-rdo-tags"></span>
-                                </label>
-                            </div>
-                            
-                            <div class="media_actions_shortcuts_container">
-                            
-                            </div>
-                        
-                        </div>  
-                         
-                        <div class="card_body">
-                        
-                        </div>   
+        } )
 
-                    </div>`;
+
 
     }
 
     updateMediaCard(mediaInfos)
     {
 
+    }
+
+    reformateDate(date, onlyDate = false, dateSeparator = '-', clockSeparator = ':')
+    {
+
+        date = new Date(date);
+        date.setMonth( date.getMonth() +1 );
+
+        const year = date.getFullYear();
+        const month = ( date.getMonth() < 10 ) ? '0' + date.getMonth() : date.getMonth();
+        const day= date.getUTCDate();
+        const hour = (date.getHours() < 10) ? '0' + date.getHours() : date.getHours();
+        const minutes = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes();
+        const second = (date.getSeconds() < 10) ? '0' + date.getSeconds() : date.getSeconds();
+
+        if(!onlyDate)
+        {
+            return year + dateSeparator + month + dateSeparator + day + ' ' + hour + clockSeparator + minutes + clockSeparator + second;
+        }
+        else
+        {
+            return year + dateSeparator + month + dateSeparator + day;
+        }
+
+    }
+
+    getDaysDiffBetweenDates(date1, date2)
+    {
+        date1 = ( date1 instanceof Date) ? date1 : new Date(date1);
+        date2 = ( date2 instanceof Date) ? date2 : new Date(date2);
+        const diffTime = Math.abs(date1 - date2);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
     onClickOnSaveButton(active)
@@ -1303,6 +1315,8 @@ class UploadHandlerTool extends SubTool
                         processData: false,
                         contentType: false,
                         success: (response) => {
+
+                            console.log(response); debugger
 
                             this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
 

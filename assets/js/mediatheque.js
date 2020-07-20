@@ -1,5 +1,5 @@
 require("../css/popups/popup.scss");
-require("../css/media/media_image.scss");
+require("../css/media/show_media.scss");
 
 import ToolBox from "./class/Tools/ToolBox";
 

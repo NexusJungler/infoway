@@ -62,8 +62,7 @@ $(function(){
 
         let list = $('.criterion_list')
 
-        let counter = list.children().length;
-
+        let counter = list.children('.row-criteres').length;
         let newWidget = list.attr('data-prototype');
         newWidget = newWidget.replace(/__name__/g, counter);
         newWidget = "<div>" + newWidget + "<div><button type='button' id='"+ counter +"' class='btn delete-row' >x</button></div></div>"
@@ -72,13 +71,11 @@ $(function(){
         list.data('widget-counter', counter);
 
         let newElem = $(list.attr('data-widget-tags')).html(newWidget);
-
         newElem.appendTo(list);
         $(`#criterions_list_criterions_${counter-1} label[for='criterions_list_criterions_${counter-1}_selected']`).html("Choix n°" + counter );
     })
 
     $("#add_criterion").on("click", function() {
-        console.log("1");
         $(".content-criteres-bloc .criterion_list ").animate({
 
             scrollTop: $('.content-criteres-bloc .criterion_list ').get(0).scrollHeight

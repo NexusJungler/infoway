@@ -1,31 +1,21 @@
-/** Function for converting  px to rem **/
-@function rem($size) {
-    $remSize: $size / 16px;
-    @return #{$remSize}rem;
-}
-
 .add-popup {
     position: absolute;
-    //height: 105%;
-    //width: 109.1%;
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.7);
     align-items: center;
     pointer-events: none;
     opacity: 0;
-    //top: -8.1rem;
-    //left: -10rem;
     top: 0;
     left: 0;
     z-index:10000;
     // transition: all 0.5s cubic-bezier(0.59, -0.17, 0.3, 1.67);
     &.is-open {
-      opacity: 1;
-      pointer-events: auto;
-      .modal {
-        // transform: translate(0px, 0px);
-      }
+        opacity: 1;
+        pointer-events: auto;
+        .modal {
+            // transform: translate(0px, 0px);
+        }
     }
 }
 
@@ -34,37 +24,37 @@
     // transform: translate(0px, -100px);
     // transition: all 0.9s cubic-bezier(0.59, -0.17, 0.3, 1.67);
     position: relative;
-    padding: 30px;
+    padding: 3rem;
     width: 100%;
     height: 100%;
     background-color: #ddd;
     color: #231D23;
     text-align: center;
     overflow: hidden;
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.4);
     .lead {
-      font-size: 24px;
-      margin-top: 10px;
+        font-size: 2.4rem;
+        margin-top: 1rem;
     }
     .tagline {
-      margin-bottom: 40px;
-      color: firebrick;
-      font-size: 18px;
+        margin-bottom: 4rem;
+        color: firebrick;
+        font-size: 1.8rem;
     }
     .close-btn {
         position: absolute;
-        padding: 3px 9px;
-        font-size: 24px;
+        padding: 0.3rem 0.9rem;
+        font-size: 2.4rem;
         text-align: center;
         background: #ccc;
         color: #9c9c9c;
-        top: -1px;
+        top: -0.1rem;
         right: 0;
         cursor: pointer;
         // transition: all 0.3s ease-in-out;
         &:hover {
-            // transform: scale(1.2);
-        }
+             // transform: scale(1.2);
+         }
     }
 }
 
@@ -78,11 +68,10 @@
         left: 0rem;
         height: 100%;
         .modal {
-              margin: 0 auto;
-              margin-top: 10%;
+              margin: 10% auto 0 ;
               position: relative;
-              border: 1px solid #4D646D;
-              padding: 0px;
+              border: 0.1rem solid #4D646D;
+              padding: 0;
               width: 35%;
               height: auto;
               max-height: 40%;
@@ -90,58 +79,58 @@
               color: #231D23;
               text-align: center;
               overflow: hidden;
-              box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
-              border-radius: 10px 10px 0px 0px;
+              box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.4);
+              border-radius: 1rem 1rem 0 0;
         }
         .header-modal{
               background: #4D646D 0% 0% no-repeat padding-box;
               display: grid;
-              padding:14px;
+              padding: 1.4rem;
               color: white;
               text-align: center;
              button{
                   position: absolute;
-                  top: 19px;
-                  right: 12px;
+                  top: 1.9rem;
+                  right: 1.2rem;
                   background-color: white;
                   box-shadow: none;
                   padding: 0;
                   margin: 0;
                   border: 0;
-                  height: 16px;
-                  width: 18px;
+                  height: 1.6rem;
+                  width: 1.8rem;
                   i,svg{
-                      right: 3px;
+                      right: 0.3rem;
                       color: #F57171;
-                      font-size: 22px;
+                      font-size: 2.2rem;
                       position: relative;
-                      top: -3px;
+                      top: -0.3rem;
                   }
             }
         }
         .content-modal{
               background-color: white;
             height: 60%;
-            padding: 20px;
+            padding: 2rem;
             .selected-tags-list{
                 height: auto;
-                max-height: 100px;
+                max-height: 10rem;
                 display: block;
                 overflow: auto;
           }
-      }
-      .footer-modal{
-          background: #E3E3E3 0% 0% no-repeat padding-box;
-          padding: 11px;
-          .delete-tag{
-              margin-right: 20px;
-          }
-          .btn{
-              background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
-              &:hover{
-                  background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
-              }
-          }
-      }
-  }
+        }
+        .footer-modal{
+            background: #E3E3E3 0% 0% no-repeat padding-box;
+            padding: 1.1rem;
+            .delete-tag{
+                margin-right: 2rem;
+            }
+            .btn{
+                background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+                &:hover{
+                    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+                }
+            }
+        }
+    }
 }

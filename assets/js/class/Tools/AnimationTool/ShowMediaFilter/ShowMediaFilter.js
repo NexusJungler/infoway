@@ -9,29 +9,25 @@ class ShowMediaFilter extends SubTool
         super();
         this.__name = this.constructor.name;
         this.__$container = $(".left_filter_container .filters_by_associated_data_container");
+        this.__$openFilter = $(".filters_by_associated_data_container");
+        this.__$openSelect = $(".display-content-poste");
     }
 
-
-    ClickShowFiltrer(active)
-    {
+    ClickShowFiltrer(active) {
 
         if(active)
         {
             this.__$container.find(".btn_show_filter").on("click.ClickShowFiltrer", e => {
 
-
-
-                let width = "30%"
+                let width = "30%";
 
                 if($(e.currentTarget).hasClass("btn_show_filter_open")){
-                    console.log("goo");
                     this.__$container.find('.filter_container').addClass("filter_active");
                     this.__$container.find('.btn').removeClass("btn_show_filter_open");
                     $(e.currentTarget).find('i').removeClass('fa-plus').addClass('fa-minus');
                     width = "70%" ;
 
                 } else {
-                    console.log("goo5544");
                     this.__$container.find('.filter_container').removeClass("filter_active");
                     this.__$container.find('.btn').addClass("btn_show_filter_open");
                     $(e.currentTarget).find('i').removeClass('fa-minus').addClass('fa-plus');
@@ -42,7 +38,7 @@ class ShowMediaFilter extends SubTool
                     width: width
                 }, {
                     queue: false,
-                    duration: 1000
+                    duration: 1500
                 })
 
             })
@@ -52,11 +48,87 @@ class ShowMediaFilter extends SubTool
             this.__$container.find(".btn_show_filter").off("click.ClickShowFiltrer")
         }
 
+        return this;
+    }
+
+    ClickOpenFilterAssocier(active) {
+
+        if(active)
+        {
+            this.__$openFilter.find(".open_filter ").on("click.ClickOpenFilterAssocier", e => {
+
+                let width = "0%";
+
+                if($(e.currentTarget).hasClass("open_filter_show")){
+                    console.log('text');
+                    this.__$openFilter.find('.filter_container_association_open').addClass("filter_active");
+                    this.__$openFilter.find(".open_filter").removeClass("open_filter_show");
+                    $(e.currentTarget).find('i').removeClass('fa-plus').addClass('fa-minus');
+                    this.__$openFilter.find('.filter_container_association_open').css({"display":""})
+                    this.__$openFilter.find('.filter').show();
+                    width = "100%" ;
+
+                } else {
+                    console.log("fini");
+                    this.__$openFilter.find('.filter_container_association_open').removeClass("filter_active");
+                    this.__$openFilter.find(".open_filter").addClass("open_filter_show");
+                    $(e.currentTarget).find('i').removeClass('fa-minus').addClass('fa-plus');
+                    this.__$openFilter.find('.filter').hide();
+                    width = "0%" ;
+                }
 
 
+                $('.filter_container_association_open').animate({
+                    width: width
+                }, {
+                    queue: false,
+                    duration: 1000
+                });
+
+            })
+        }
+        else
+        {
+            this.__$openFilter.find(".open_filter ").off("click.ClickOpenFilterAssocier")
+        }
 
         return this;
     }
+
+    ClickOpenSelect(active) {
+
+        if(active)
+        {
+            this.__$openSelect.on("click.ClickOpenSelect", e => {
+
+                if($(e.currentTarget).hasClass("display-content-down")){
+                    console.log("text");
+                    // this.__$openFilter.find('.filter_container_association_open').addClass("filter_active");
+                    // this.__$openFilter.find(".open_filter").removeClass("open_filter_show");
+                    // $(e.currentTarget).find('i').removeClass('fa-plus').addClass('fa-minus');
+                    // this.__$openFilter.find('.filter_container_association_open').css({"display":""})
+                    // this.__$openFilter.find('.filter').show();
+
+                } else {
+                    // this.__$openFilter.find('.filter_container_association_open').removeClass("filter_active");
+                    // this.__$openFilter.find(".open_filter").addClass("open_filter_show");
+                    // $(e.currentTarget).find('i').removeClass('fa-minus').addClass('fa-plus');
+                    // this.__$openFilter.find('.filter').hide();
+                }
+
+
+            })
+        }
+        else
+        {
+            this.__$openSelect.off("click.ClickOpenSelect")
+        }
+
+        return this;
+    }
+
+
+
 
     ClickOpenMenubord(active){
         if(active){
@@ -79,12 +151,16 @@ class ShowMediaFilter extends SubTool
     {
         super.enable();
         this.ClickShowFiltrer(true)
+        this.ClickOpenFilterAssocier(true)
+        this.ClickOpenSelect(true)
     }
 
     disable()
     {
         super.disable();
         this.ClickShowFiltrer(false)
+        this.ClickOpenFilterAssocier(false)
+        this.ClickOpenSelect(false)
     }
 
 }

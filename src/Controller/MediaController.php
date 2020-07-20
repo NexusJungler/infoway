@@ -789,7 +789,7 @@ class MediaController extends AbstractController
 
     }
 
-    private function saveMediaCharacteristic(Request $request)
+    private function saveMediaCharacteristic(Request &$request)
     {
 
         $ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);
@@ -800,7 +800,7 @@ class MediaController extends AbstractController
 
         //dd($request->request, $customer);
 
-        $response = $error = [];
+        $cards = $error = [];
 
         foreach ($request->request->get('medias_list')['medias'] as $index => $mediaInfos)
         {
@@ -895,6 +895,13 @@ class MediaController extends AbstractController
                         if(!$product)
                             throw new Exception(sprintf("No Product found with id : '%d'", $productId));
 
+                        // lors de l'association d'un produit
+                        // le media recupère les tags du produit
+                        foreach ($product->getTags()->getValues() as $tag)
+                        {
+                            $media->addTag($tag);
+                        }
+
                         $media->addProduct($product);
                         if(null !== $product->getCategory())
                             $categoriesId[] = $product->getCategory()->getId();
@@ -907,25 +914,31 @@ class MediaController extends AbstractController
                 if($error === [])
                 {
 
-                    $response[] = [
+                    $cards[] = $this->buildNewMediaCard($mediaInfos, $media);
+
+                    /*$response[] = [
                         'id' => $media->getId(),
                         'createdAt' => $media->getCreatedAt()->format('Y-m-d'),
                         'fileType' => ($media instanceof Image) ? 'image' : 'video',
-                        'orientation' => '',
+                        'orientation' => $media->getOrientation(),
                         'diffStart' => $media->getDiffusionStart(),
                         'diffEnd' => $media->getDiffusionEnd(),
                         'customer' => $this->sessionManager->get('current_customer')->getName(),
-                        'products' => $mediaInfos['products'],
-                        'tags' => $mediaInfos['tags'],
+                        'products' => $mediaInfos['products'] ?? [],
+                        'tags' => $mediaInfos['tags'] ?? [],
                         'categories' => $categoriesId ?? [],
                         'criterions' => $criterionsId ?? [],
-                    ];
+                    ];*/
 
-                    return new Response('200 OK');
                 }
 
             }
 
+        }
+
+        if($error === [])
+        {
+            return new JsonResponse( $cards );
         }
 
         return new JsonResponse( $error , Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -1070,5 +1083,190 @@ class MediaController extends AbstractController
 
     }
 
+    private function buildNewMediaCard(array &$mediaInfos, Media $media)
+    {
+
+        //$manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
+        //$mediaRepo = $manager->getRepository(Media::class)->setEntityManager($manager);
+
+        $fileType = explode("/", $media->getMimeType())[0];
+        $mediaName = $media->getName();
+        $id = $media->getId();
+        $mediaCreatedAt = $media->getCreatedAt()->format("Y-m-d");
+        $mediaDiffStart = $media->getDiffusionStart()->format("Y-m-d");
+        $mediaDiffEnd = $media->getDiffusionEnd()->format("Y-m-d");
+        $orientation = strtolower( $media->getOrientation() );
+        $mediaMimeType = $media->getMimeType();
+        $width = $media->getWidth();
+        $height = $media->getHeight();
+        $extension = $media->getExtension();
+        $criterionsNames = [];
+        $tagsNamesAndColors = [];
+
+        $customer = strtolower($this->sessionManager->get('current_customer')->getName());
+
+        $base = "/miniatures/" . $customer . "/";
+
+        if($media->getMediaType() === 'diff')
+        {
+            $miniatureLowPath = $base . $fileType . "/low/";
+        }
+        else
+        {
+            $miniatureLowPath = $base . "piece/";
+        }
+
+        $miniatureLowPath .= $id . ( ($fileType === 'image') ? '.png' : '.mp4' );
+        $miniatureMediumPath = str_replace("low","medium", $miniatureLowPath);
+
+        $miniatureLowExist = (file_exists($miniatureLowPath)) ? 'true': 'false';
+        $miniatureMediumExist = (file_exists($miniatureMediumPath)) ? 'true' : 'false';
+
+        $now = new \DateTime();
+
+        if($media->getDiffusionEnd() < new \DateTime()) $dateDiff = intval($media->getDiffusionEnd()->diff($now)->format("-%a"));
+
+        else $dateDiff = intval($media->getDiffusionEnd()->diff($now)->format("%a"));
+
+
+
+        $card =  "<div class='card card_$fileType' id='media_$id'  data-created_date='$mediaCreatedAt' data-file_type='$fileType' data-orientation='$orientation' data-media_diff_start='$mediaDiffStart' data-media_diff_end='$mediaDiffEnd' data-customer='$customer' ";
+
+        if (sizeof($media->getProducts()->getValues()) > 0)
+        {
+            $mediaCategoriesId = array_map(fn($product) => $product->getCategorie()->getId(), $media->getProducts()->getValues());
+            $mediaProductsCriterionsId = array_unique(array_map(fn($criterion) => $criterion->getId(), array_map(fn($product) => $product->getCriterions()->getValues(), $media->getProducts()->getValues())));
+            $criterionsNames[] = array_unique(array_map(fn($criterion) => $criterion->Name(), array_map(fn($product) => $product->getCriterions()->getValues(), $media->getProducts()->getValues())));
+
+            $card .= "data-products='" . implode(", ", $mediaInfos['products']) . "' data-categories='" . implode(", ", $mediaCategoriesId) . "'  data-criterions='" . implode(", ", $mediaProductsCriterionsId) . "'";
+
+            dd($mediaCategoriesId, $mediaProductsCriterionsId);
+        }
+        else
+            $card .= "data-products='none' data-categories='none' data-criterions='none'";
+
+        if (sizeof($media->getTags()->getValues()) > 0)
+        {
+            $card .= "data-tags='" . implode(", ", array_map(fn($tag) => $tag->getId(), $media->getTags()->getValues())) . "'";
+            $tagsNamesAndColors[] = array_unique(array_map(fn($tag) => ['name' => $tag->getName(), 'color' => $tag->getColor()], $media->getTags()->getValues()));
+        }
+        else
+            $card .= "data-tags='none'";
+
+
+        $card .= "<div class='card_header'>
+                    <div class='select_media_input_container'>
+                        <label class='container-input'>
+                            <input type='checkbox' class='select_media_input'>
+                            <span class='container-rdo-tags'></span>
+                        </label>
+                    </div>
+            
+                    <div class='media_actions_shortcuts_container'>";
+
+
+        if($dateDiff <= 14)
+        {
+            $card .= "<div class='shortcut shortcut_diff_date_modification alert_date'>
+                        <i class='far fa-clock'></i>
+                      </div>";
+        }
+        else
+        {
+            $card .= "<div class='shortcut shortcut_diff_date_modification'>
+                        <i class='far fa-clock'></i>
+                      </div>";
+        }
+
+        $card .= "<div class='shortcut'>
+                            <i class='fas fa-euro-sign'></i>
+                        </div>
+            
+                        <div class='shortcut'>
+                            <i class='fas fa-link shortcut_product_association'></i>
+                        </div>
+            
+                        <div class='shortcut'>
+                            <i class='fas fa-spinner'></i>
+                        </div>
+            
+                    </div>
+                </div>";
+
+        $card .= "<div class='card_body'> <div class='media_miniature_container media_$orientation' data-miniature_medium_exist='$miniatureMediumExist' data-size='$width*$height' data-extension='$extension'";
+
+        if($fileType === 'image')
+            $card .= "data-dpi='72' >";
+        else
+            $card .= "data-codec='" . $media->getVideoCodec(). "' >";
+
+        if(!$miniatureLowExist)
+            $card .= "<img class='media_miniature miniature_$fileType' src='/build/images/no-available-image.png' alt='/build/images/no-available-image.png'>";
+        else
+        {
+
+            if($fileType === 'image')
+            {
+                $card .= "<div class='media_container_img'>
+                            <div class='media_container_arrows show_expanded_miniature'>
+                                <i class='fas fa-expand-arrows-alt'></i>
+                            </div>
+                            <img class='media_miniature miniature_image' src='$miniatureLowPath' alt='$miniatureLowPath'>
+                        </div>";
+            }
+            else
+            {
+                $card .= "<div class='media_container_video'>
+                            <div class='media_container_arrows show_expanded_miniature'>
+                                <i class='fas fa-expand-arrows-alt'></i>
+                            </div>
+                            <video class='media_miniature miniature_video'>
+                                <source src='$miniatureLowPath' type='$mediaMimeType'>
+                            </video>
+                        </div>";
+            }
+
+        }
+        
+        $card .= "<div class='media_name_container'>
+                    <span class='media_name'>$mediaName</span>
+                </div>";
+
+        $card .= "<div class='media_associated_items_container'>
+                    <div class='media_criterions_container associated_item'>";
+
+        if(sizeof($criterionsNames) > 0)
+        {
+            foreach ($criterionsNames as $criterionName)
+            {
+                $card .= "<p class='criterion'><span></span>$criterionName</p>";
+            }
+
+            $card .= "</div>";
+        }
+        else
+            $card .= "<p>0 critères </p></div>";
+
+        if(sizeof($tagsNamesAndColors) > 0)
+        {
+            foreach ($tagsNamesAndColors as $tagsNameAndColor)
+            {
+                $name = $tagsNameAndColor['name'];
+                $color = $tagsNameAndColor['color'];
+
+                $card .= "<p class='tag container-tags'>
+                            <span class='mini-cercle' style='background: $color;'></span>
+                            <span class='current-tags-name'>$name</span>
+                          </p>";
+            }
+
+            $card .= "</div></div>";
+        }
+        else
+            $card .= "<p>0 tags </p></div></div>";
+
+        return $card;
+
+    }
 
 }

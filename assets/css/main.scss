@@ -3,8 +3,7 @@
     width: 92%;
     left: 8%;
     position: relative;
-    // z-index: 2;
-    padding-bottom: rem(80px);
+    padding-bottom: 8rem;
     .main-content {
         > section{
             padding-left: 4%;
@@ -27,35 +26,35 @@
         flex-direction: row;
         font: 1.6rem 'Barlow', sans-serif;
         color: #899CA4;
-        margin: 25px 35px;
+        margin: 2.5rem 3.5rem;
         width: 100%;
         .page__title-content,
         .page__title-content-info{
             display: flex;
         }
         .page__title--img {
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 5.5rem;
+            height: 5.5rem;
             border-radius: 50%;
             background-color: #4F9BAE;
             img {
                 text-align: center;
-                width: 35px;
+                width: 3.5rem;
                 /* height: 31px; */
                 max-width: none;
-                margin: 13px 10px;
+                margin: 1.3rem 1.0rem;
             }
         }
         h1 {
-            margin-left: 15px;
-            margin-top: -5px;
+            margin-left: 1.5rem;
+            margin-top: -0.5rem;
             color: #283338;
-            font-size: 3rem;
+            font-size: 5rem;
             font-weight: bold;
             text-transform: uppercase;
         }
         .page__tilte-cercle{
-            top: 5px;
+            top: 1rem;
             position: relative;
             width: 0.75rem;
             height: 0.75rem;
@@ -64,8 +63,8 @@
             margin: 1.2rem 1rem 0 1rem;
         }
         h2{
-            margin-top: 8px;
-            font: 2.1rem 'Barlow';
+            margin-top: 0.8rem;
+            font: 3.1rem 'Barlow';
             font-weight: bold;
             color: #306D7C;
             text-transform: uppercase;
@@ -82,10 +81,10 @@
             padding-bottom: 0.5rem;
             &::before{
                 content: "";
-                width: 17px;
-                height: 17px;
+                width: 1.7rem;
+                height: 1.7rem;
                 background: #C0CCD1 0% 0% no-repeat padding-box;
-                border: 1px solid #4D646D;
+                border: 0.1rem solid #4D646D;
                 margin-right: 0.5rem;
                 border-radius: 10%;
             } 
@@ -107,22 +106,18 @@
             padding: 2%;
             width: 100%;
         }
-        .search_icon {
-            // width: 28px;
-            // height: 30px;
-        }
         button {
             background-color: transparent;
             border: none;
         }
         input {
-            width: 390px;
+            width: 39rem;
             max-width: 100% ;
-            height: 35px;
+            height: 3.5rem;
             background: #FFFFFF;
-            border-radius: 9px;
+            border-radius: 0.9rem;
             padding-left: 5%;
-            font-size: 15px;
+            font-size: 1.5rem;
             border: none;
             font-style: italic;
         }   
@@ -132,7 +127,7 @@
 .main-site{
     .main-content{
         .jumbotron{
-            height: 155px;
+            height: 15.5rem;
         }
     }
 }

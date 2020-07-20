@@ -1,10 +1,6 @@
 @import '../../general/input-rdo';
 
-/** Function for converting  px to rem **/
-@function rem($size) {
-    $remSize: $size / 16px;
-    @return #{$remSize}rem;
-}
+
 
 .main-tags {
     .display {
@@ -18,6 +14,7 @@
             .hide-btn {
                 pointer-events: none;
                 background: #ABBBC0;
+                border: 0.06rem solid white;
             }
         }
     }
@@ -43,10 +40,14 @@
                         text-align: center;
                         left: 25px;
                         width: 27%;
+                        font: 1.3rem "Barlow";
+
                     }
                     &:last-child{
                         text-align: left;
                         width: 80%;
+                        font: 1.3rem "Barlow";
+
                     }
                 }
                 

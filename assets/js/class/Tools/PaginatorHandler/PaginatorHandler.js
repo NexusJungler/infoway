@@ -269,13 +269,13 @@ class PaginatorHandler extends Tool
         {
             if(mediaType === 'image')
             {
-                card += `<img class="media_miniature miniature_image" src="/miniatures/${ customer }/image/low/${ media.id }.png"
-                                        alt="/miniatures/${ customer }/image/low/${ media.id }.png">`
+                card += `<img class="media_miniature miniature_image" src="/miniatures/${ customer }/images/low/${ media.id }.png"
+                                        alt="/miniatures/${ customer }/images/low/${ media.id }.png">`
             }
             else
             {
                 card += `<video class="media_miniature miniature_video">
-                        <source src="/miniatures/${ customer }/video/low/${ media.id }.mp4" type="${ media.mimeType }">
+                        <source src="/miniatures/${ customer }/videos/low/${ media.id }.mp4" type="${ media.mimeType }">
                     </video>`;
             }
         }

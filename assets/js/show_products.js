@@ -174,6 +174,7 @@ $(function() {
 
         let formatFlag = 0;
         let formatValue = $('#form').val();
+        console.log(formatFlag);
 
         $('.content-product-show-table table.table-custome tr').each(function() {
 

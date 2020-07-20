@@ -1,14 +1,12 @@
 .popup_loading_container{
-  height: 300px;
-  width: 500px;
-  left: 30%;
-
   &.is_open{
 
     .popup{
 
+      height: 30%;
+      width: 30%;
       .popup_header{
-        height: 10%;
+        height: 13%;
       }
 
       .popup_body{
@@ -18,11 +16,6 @@
         justify-content: center;
         align-items: center;
         background: #FFF;
-
-        .popup_body_item{
-          height: 100%;
-          width: 50%;
-        }
 
       }
 

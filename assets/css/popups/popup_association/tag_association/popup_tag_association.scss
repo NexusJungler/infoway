@@ -1,67 +1,122 @@
 .popup_associate_tag_container{
-
-  &.is_open{
-
-    .popup{
-      width: 732px;
-      height: 448px;
-
-      .popup_header{
-        height: 10%;
-        border: 1px solid #899CA4;
-        border-radius: 7px 7px 0 0;
-      }
-
-      .popup_body{
-        height: 75%;
-        width: 100%;
-
-        .container{
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          .container_body{
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 3%;
-
-            table{
-              width: 100%;
-
-              tbody{
-                .tag_description_container{
-                  height: 30px;
-                  border: 1px solid #899CA4;
-                  border-radius: 9px;
-                  background: #FFF;
-
-                }
-
-                td{
-                  padding-bottom: 2%;
-                }
-              }
-
+    margin-top: 0;
+    &.is_open{
+        transition: none;
+        .popup {
+            margin-top: 10%;
+            width: 40%;
+            height: 25%;
+            transition: none;
+            .popup_body{
+                height: 75%;
+                width: 100%;
             }
-          }
-
+        }
+        .popup_header{
+            padding:0.5rem;
+            height: 13%;
+            border-radius: 0.7rem 0.7rem 0 0;
+            .popup_header_item{
+                font: 2.5rem "Barlow";
+            }
         }
 
-      }
+        .popup_body{
+            .container{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .container_body{
+                    height: 30rem;
+                    max-height: 26.5rem;
+                    display: block;
+                    overflow: auto;
+                    width: 100%;
+                    padding: 3%;
+                    table{
+                        width: 100%;
+                        thead{
+                            th{
+                                padding: 1.2rem 0;
+                            }
+                        }
+                        tbody{
 
-      .popup_footer{
-        height: 15%;
-        background: #EBEBEB;
-      }
+                            td{
+                                padding: 0.5%;
+                                &:nth-child(1){
+                                    width: 8%;
+                                }
+                                &:nth-child(2){
+                                    width: 20%;
+                                }
+                            }
+                            .container-input .container-rdo-tags {
+                                top: -1.1rem;
+                                left: 3.0rem;
+                            }
+                            .container-tags{
+                                width: 90%;
+                                font: 1.3rem "Barlow" ;
+                            }
+                            .tag_description_container{
+                                height: 3rem;
+                                border: 0.1rem solid #899CA4;
+                                border-radius: 0.9rem;
+                                background: #FFF;
+                                font: 1.6rem "Barlow" ;
+                                text-align: left;
+                                padding: 0.5% 4%;
+                            }
+                        }
+                    }
+                }
+            }
+            .btn-add-container-tag{
+                //padding: 0.1rem 0.5rem;
+                height: 2.7rem;
+                box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
+                border: 1px solid #4D646D;
+                border-radius: 2rem 0.7rem 0.7rem 2rem;
+                margin: 0;
+                display: inline-flex;
+                font: 1.4rem "Barlow";
+                &:hover{
+                    .mini-cercle{
+                        i{
+                            color: #2598AE;
+                        }
+                    }
 
+                }
+                .mini-cercle{
+                    background-color: white;
+                    padding: 0.1rem;
+                    width: 1.2rem;
+                    height: 1.4rem;
+                    border-radius: 50%;
+                    display: flex;
+                    top: 0.2rem;
+                    right: 0.3rem;
+                    position: relative;
+                    margin-right: 0.6rem;
+
+                    i{
+                        font-size: 1.1rem;
+                        margin: 0;
+                        color: #4D646D;
+
+                    }
+                }
+            }
+        }
+        .popup_footer{
+            padding: 1rem;
+            height: 15%;
+            background: #EBEBEB;
+        }
     }
-
-  }
-
 }

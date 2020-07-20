@@ -1,6 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
 
-
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -8,9 +7,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-    .autoProvideVariables({
-        moment: 'moment',
-    })
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
@@ -29,6 +25,7 @@ Encore
         //to: 'images/[path][name]_[hash:8].[ext]',
 
         // only copy files matching this pattern
+
         pattern: /\.(png|jpg|jpeg|gif|svg)$/
     })
 
@@ -48,6 +45,9 @@ Encore
     .addEntry('user_login', './assets/js/user_login.js')
     .addEntry('user_password_forget', './assets/js/user_password_forget.js')
     .addEntry('user_password_reset', './assets/js/user_password_reset.js')
+
+    /********* SITE ********/
+    .addEntry('site', './assets/js/site.js')
     
     /********* Settings *********/
     /** Customer **/
@@ -74,8 +74,8 @@ Encore
     .addEntry('mediatheque', './assets/js/mediatheque.js')
     .addEntry('edit_media', './assets/js/edit_media.js')
 
-    .addEntry('programming_mould', './assets/js/programming/programming_mould.js')
-    .addEntry('add_media_window', './assets/js/medias/add_media_window.js')
+
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
