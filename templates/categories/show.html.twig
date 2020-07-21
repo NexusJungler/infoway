@@ -32,9 +32,9 @@
                             <div class="display-btn">
                                 <p> Catégorie : </p>
                                 <button type="button" class="btn" ><a href="{{ path('category::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
-                                <button type="button" class="btn btn_hidden" ><a id="edit" href="{{ path('category::edit', {'category': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
+                                <button type="button" class="btn" ><a id="edit" href="{{ path('category::edit', {'category': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
                                 {# <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button> #}
-                                <button type="button" class="btn btn_hidden" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                <button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
                             </div>
                         </div>
                     </article>
@@ -121,7 +121,6 @@
     </main>    
     
     {% block javascripts %}
-        {{ parent() }}
        {{ encore_entry_script_tags('show_categories') }}
     {% endblock javascripts %}
 

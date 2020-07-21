@@ -88,10 +88,12 @@ class FilterMediasTool extends ParentTool
 
         else
         {
+            //console.log(this.getFilterIndexByProperty(filter.property)); debugger
 
-            this.__activeFilters.splice(this.getFilterIndexByProperty(filter.property), 1);
-
-            this.__activeFilters.push(filter);
+            // replace registered filter with the new filter
+            this.__activeFilters.splice(this.getFilterIndexByProperty(filter.property), 1, filter);
+            //console.log(this.__activeFilters); debugger
+            //this.__activeFilters.push(filter);
         }
 
     }

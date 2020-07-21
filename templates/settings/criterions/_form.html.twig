@@ -28,7 +28,7 @@
                         <th>Ajouter Produits : <button type="button" class="btn btn-open-popup_product"><i class="fas fa-align-justify"></i>Produits</button></th>
                     </tr>
                 </thead>
-                <tbody class="tbody-associations scrollbar-table">
+                <tbody class="thead-associations scrollbar-table">
                 {#{%  if form.products | length < 1  %}  {{ form_row(form.products) }} {% endif %}#}
                     {% for product in form.products %}
                         {%  set currentProduct =  form.products.vars.choices[product.vars.value].data %}
@@ -66,7 +66,7 @@
                         <th>Ajouter sites : <button type="button" class="btn btn-open-popup_site"><i class="fas fa-align-justify"></i>Sites</button></th>
                     </tr>
                 </thead>
-                <tbody class="tbody-associations scrollbar-table">
+                <tbody class="thead-associations scrollbar-table">
                 {#{%  if form.sites|length < 1  %}  {{ form_row(form.sites) }} {% endif %}#}
                     {% for site in form.sites %}
                         {%  set currentSite =  form.sites.vars.choices[site.vars.value].data %}

@@ -45,8 +45,8 @@
                                 <form class="enseigne">
                                     <select name="enseigne" id="enseigne">
                                         <option value="">Sélectionner l'enseigne</option>
-                                        {% for name in app.session.get('customerNames') %}
-                                            <option value="{{name}}" {% if (app.session.get('current_customer') is not null ) and (name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{name}}</option>
+                                        {% for customer in app.session.get('customers') %}
+                                            <option value="{{customer.id}}" {% if (app.session.get('current_customer') is not null ) and (customer.name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{ customer.name }}</option>
                                         {% endfor %}
                                     </select>
                                     <p class="number__enseigne"><span >25</span> enseignes</p>
@@ -195,12 +195,12 @@
                             <li class="nav-menu-hover">
                                 <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias'}) }}"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-picto-mediathque"></i></a>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias', page: 1}) }}"><span class="nav-mobile-title">Medias</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_synchro', page: 1}) }}"><span class="nav-mobile-title">Vidéos Synchro</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_thematic', page: 1}) }}"><span class="nav-mobile-title">Vidéos Thématique</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'element_graphic', page: 1}) }}"><span class="nav-mobile-title">Éléments graphiques</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'template', page: 1}) }}"><span class="nav-mobile-title">Templates</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'incruste', page: 1}) }}"><span class="nav-mobile-title">Incrustes</span></a></li>
+                                    <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('medias') %} active current {% endif %}" data-tab="picture"> <p class="css-tab__label">Medias</p></li></a>
+                                    <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'synchros', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('synchros') %} active current {% endif %}" data-tab="tab-totem"> <p class="css-tab__label"> Vidéos Synchro </p> </li></a>
+                                    <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'thematics', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('thematics') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Vidéos Thématique </p> </li></a>
+                                    <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'element_graphic', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('element_graphic') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Éléments graphiques </p> </li></a>
+                                    <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'template', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('template') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Templates </p> </li></a>
+                                    <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'incruste', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('incruste') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Incrustations </p> </li></a>
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">

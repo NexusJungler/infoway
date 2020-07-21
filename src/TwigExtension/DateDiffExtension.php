@@ -30,7 +30,6 @@ class DateDiffExtension extends AbstractExtension
         $date = new \DateTime($date);
         $now = new \DateTime();
 
-
         if($date < $now)
             return intval($date->diff($now)->format("-%a"));
 

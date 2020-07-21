@@ -3,394 +3,304 @@
 {% block title %} Médiathèque {% endblock %}
 
 {% block maincontent %}
-    <div id="picture" class="tab-content current media-show">
+    <article id="picture" class="tab-content current media-show">
 
-        <article class="display-btn">
-            <div class="display-btn-content actions_btn_container" >
+        <article class="display">
+            <div class="display-content" >
 
-                <div class="display-btn-content_left display-btn_col left_btns ">
-                    {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
-                        <div class="upload_btn_container container">
-                            <button type="button" class="btn btn-upload add-table"><i class="fas fa-download"></i>UPLOAD</button>
+                <div class="top">
+
+                    <div class="actions_btn_container">
+
+                        <div class="left_btns">
+
+                            {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %}
+                                <div class="upload_btn_container container">
+                                    <button type="button" class="btn btn-upload add-table"><i class="fas fa-download"></i>UPLOAD</button>
+                                </div>
+                            {% endif %}
+
+                            <div class="show_media_waiting_incrustation_container container">
+                                <button type="button" id="show_media_waiting_incrustation" class="btn">
+                                    <i class="fas fa-hourglass-half"></i>
+                                    En attente d'incrustation
+                                </button>
+                                <span class="media_waiting_incrustation_number">{{ mediasWaitingForIncrustation['number'] }}</span>
+                            </div>
+
+                            <div class="show_archived_media_container container">
+                                <button type="button" id="show_archived_media_button" class="btn">
+                                    <i class="fas fa-archive"></i>
+                                    Médias archivés
+                                </button>
+                                <span class="archived_medias_number">{{ archivedMedias['number'] }}</span>
+                            </div>
+
                         </div>
-                    {% endif %}
 
-                    <div class="show_media_waiting_incrustation_container container">
-                        <button type="button" id="show_media_waiting_incrustation" class="btn">
-                            <i class="fas fa-hourglass-half"></i>
-                            En attente d'incrustation
-                        </button>
-                        <span class="media_waiting_incrustation_number">{{ mediasWaitingForIncrustation['number'] }}</span>
+                        <div class="display-btn right_btns">
+
+                            <div class="container">
+                                <p>Medias : </p>
+                            </div>
+
+                            <div class="container">
+                                <button type="button" class="btn modify_media_btn media_action_btn" disabled><i class="fas fa-pen"></i>Modifier</button>
+                            </div>
+
+                            <div class="container">
+                                <button type="button" class="btn duplicate_media_btn media_action_btn" disabled><i class="fas fa-plus"></i>Dupliquer</button>
+                            </div>
+
+                            <div class="container">
+                                <button type="button" class="tags-table tag_association_btn">TAG</button>
+                            </div>
+
+                            <div class="container">
+                                <button type="button" class="btn delete_media_btn media_action_btn" disabled><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+
+                        </div >
+
                     </div>
 
-                    <div class="show_archived_media_container container">
-                        <button type="button" id="show_archived_media_button" class="btn">
-                            <i class="fas fa-archive"></i>
-                            Médias archivés
-                        </button>
-                        <span class="archived_medias_number">{{ archivedMedias['number'] }}</span>
-                    </div>
                 </div>
 
-                <div class="display-btn-content_rignt display-btn_col right_btns">
-                    <div class="container">
-                        <p class="display-content_title" >Medias : </p>
-                    </div>
-                    <div class="container">
-                        <button type="button" class="btn modify_media_btn media_action_btn" disabled><i class="fas fa-pen"></i>Modifier</button>
-                    </div>
-                    <div class="container">
-                        <button type="button" class="btn duplicate_media_btn media_action_btn" disabled><i class="fas fa-plus"></i>Dupliquer</button>
-                    </div>
-                    <div class="container">
-                        <button type="button" class="btn btn-tags tag_association_btn" disabled> TAG </button>
-                    </div>
-                    <div class="container">
-                        <button type="button" class="btn delete_media_btn media_action_btn" disabled><i class="fas fa-trash"></i>Supprimer</button>
-                    </div>
-                </div >
+                <div class="body" >
 
-            </div>
-        </article>
+                    <div class="filters_container">
 
-        <article class="media-show_container ">
-            <div class="filters_container">
+                        <div class="left_filter_container">
 
-                <div class="left_filter_container">
+                            <div class="filter_by_orientation_or_type_container">
 
-                    <div class="filter_by_orientation_or_type_container">
+                                <div class="filter_media_by_orientation show_only_horizontal_media filter">
+                                    <i class="icon-horiz-1"></i>
+                                    <br>
+                                    <span>Horizontal</span>
+                                </div>
 
-                        <div class="filter_media_by_orientation show_only_horizontal_media filter">
-                            <i class="fas fa-mobile"></i>
-                            <br>
-                            <span>Horizontal</span>
-                        </div>
+                                <div class="filter_media_by_orientation show_only_vertical_media filter">
+                                    <i class="icon-horiz-2"></i>
+                                    <br>
+                                    <span>Vertical</span>
+                                </div>
 
-                        <div class="filter_media_by_orientation show_only_vertical_media filter">
-                            <i class="fas fa-mobile"></i>
-                            <br>
-                            <span>Vertical</span>
-                        </div>
+                                <div class="filter_media_by_type show_only_images filter">
+                                    <i class="icon-image"></i>
+                                    <br>
+                                    <span>Images</span>
+                                </div>
 
-                        <div class="filter_media_by_type show_only_images filter">
-                            <i class="far fa-file-image"></i>
-                            <br>
-                            <span>Images</span>
-                        </div>
+                                <div class="filter_media_by_type show_only_videos filter">
+                                    <i class="icon-video"></i>
+                                    <br>
+                                    <span>Videos</span>
+                                </div>
 
-                        <div class="filter_media_by_type show_only_videos filter">
-                            <i class="far fa-file-video"></i>
-                            <br>
-                            <span>Videos</span>
-                        </div>
+                            </div>
 
-                    </div>
+                            <div class="filters_by_associated_data_container">
 
+                                <div class="filter_by_categories_container filters_by_associated_data_item">
 
-                    <div class="filters_by_associated_data_container ">
+                                    <div class="apply_filter_container">
+                                        <input type="checkbox" class="apply_filter" data-target="categories">
+                                    </div>
 
-                        <div class="filter_by_categories_container filters_by_associated_data_item">
-
-                            {#<div class="apply_filter_container">#}
-                            {#<input type="checkbox" class="apply_filter" data-target="categories">#}
-                            {#</div>#}
-
-                            <div class="filter_select_container">
-                                <div class="display-content-columns">
-                                    <div class="display-content-poste">
-                                        <button type="button" class="drop-btn "> Catégories  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                                        <div class="display-content-down filter_by_categories">
+                                    <div class="filter_select_container">
+                                        <select class="filter_by_categories">
+                                            <option value="" selected>Catégories</option>
                                             {% for categorie in categories %}
-                                                <div class="product-select-col">
-                                                    <label class="container-input">{{ categorie.name }}
-                                                        <input type="checkbox" value="{{ categorie.id }}">
-                                                        <span class="container-rdo"></span>
-                                                    </label>
-                                                </div>
+                                                <option value="{{ categorie.id }}">{{ categorie.name }}</option>
                                             {% endfor %}
-
-                                        </div>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
+                                <div class="filter_container ">
+                                    <div class="filter_by_products_container filters_by_associated_data_item">
 
-                        <div class="filter_container ">
+                                        <div class="apply_filter_container">
+                                            <input type="checkbox" class="apply_filter" data-target="products">
+                                        </div>
 
-                            <div class="filter_by_products_container filters_by_associated_data_item">
-
-
-                                {#<div class="apply_filter_container">#}
-                                {#<input type="checkbox" class="apply_filter" data-target="products">#}
-                                {#</div>#}
-
-                                <div class="filter_select_container">
-                                    <div class="display-content-columns">
-                                        <div class="display-content-poste">
-                                            <button type="button" class="drop-btn drop-width "> Produits  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                                            <div class="display-content-down filter_by_categories">
+                                        <div class="filter_select_container">
+                                            <select class="filter_by_products">
+                                                <option value="" selected>Produits</option>
                                                 {% for product in products %}
-                                                    <div class="product-select-col">
-                                                        <label class="container-input">{{ product.name }}
-                                                            <input type="checkbox" value="{{ product.id }}">
-                                                            <span class="container-rdo"></span>
-                                                        </label>
-                                                    </div>
+                                                    <option value="{{ product.id }}">{{ product.name }}</option>
                                                 {% endfor %}
-
-                                            </div>
+                                            </select>
                                         </div>
+
                                     </div>
-                                </div>
 
-                                {#<div class="filter_select_container">#}
+                                    <div class="filter_by_criterions_container filters_by_associated_data_item">
 
-                                {#<select class="filter_by_products">#}
-                                {#<option value="" selected>Produits</option>#}
-                                {#{% for product in products %}#}
-                                {#<option value="{{ product.id }}">{{ product.name }}</option>#}
-                                {#{% endfor %}#}
-                                {#</select>#}
-                                {#</div>#}
+                                        <div class="apply_filter_container">
+                                            <input type="checkbox" class="apply_filter" data-target="criterions">
+                                        </div>
 
-                            </div>
-
-                            <div class="filter_by_criterions_container filters_by_associated_data_item">
-
-                                {#<div class="apply_filter_container">#}
-                                    {#<label class="container-input">#}
-                                        {#<input type="checkbox" class="apply_filter" data-target="criterions">#}
-                                        {#<span class="container-rdo"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-
-                                {#<select class="filter_by_criterions">#}
-                                    {#<option value="" selected>Critères</option>#}
-                                    {#{% for criterion in criterions %}#}
-                                        {#<option value="{{ criterion.id }}">{{ criterion.name }}</option>#}
-                                    {#{% endfor %}#}
-                                {#</select>#}
-
-                                <div class="filter_select_container">
-
-                                    <div class="display-content-columns">
-                                        <div class="display-content-poste apply_filter_container">
-
-                                            <button type="button" class="drop-btn drop-width">
-                                                <label class="container-input">
-                                                    <input type="checkbox" class="apply_filter" data-target="criterions">
-                                                    <span class="container-rdo"></span>
-                                                </label>
-                                                <span class="container-criterion">Criterion</span>
-                                                <div class="drop-btn-icone">
-                                                    <i class="fas fa-angle-down"></i>
-                                                </div>
-                                            </button>
-
-                                            <div class="display-content-down filter_by_criterions">
+                                        <div class="filter_select_container">
+                                            <select class="filter_by_criterions">
+                                                <option value="" selected>Critères</option>
                                                 {% for criterion in criterions %}
-                                                    <div class="product-select-col">
-                                                        <label class="container-input">
-                                                            <input type="checkbox" value="{{ criterion.id }}">
-                                                            <span class="container-rdo"></span>
-                                                        </label>
-                                                        <span class="container-criterion">{{ criterion.name }}</span>
-                                                    </div>
+                                                    <option value="{{ criterion.id }}">{{ criterion.name }}</option>
                                                 {% endfor %}
-                                            </div>
-
+                                            </select>
                                         </div>
+
                                     </div>
 
+                                    <div class="filter_by_tags_container filters_by_associated_data_item">
+
+                                        <div class="apply_filter_container">
+                                            <input type="checkbox" class="apply_filter" data-target="tags">
+                                        </div>
+
+                                        <div class="filter_select_container">
+                                            <select class="filter_by_tags">
+                                                <option value="" selected>Tags</option>
+                                                {% for tag in tags %}
+                                                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="open_filter_content">
+                                    <button class="btn btn_show_filter btn_show_filter_open " type="button"><i class="fas fa-plus"></i></button>
+                                </div>
+
+                                <div class="filter_validation_btn_container">
+                                    <button class="filter_validation_btn btn" type="button"><i class="fas fa-plus"></i>Filtrer</button>
                                 </div>
 
                             </div>
 
+                        </div>
 
 
-                            <div class="filter_by_tags_container filters_by_associated_data_item">
 
-                                {#<div class="apply_filter_container">#}
-                                    {#<label class="container-input">#}
-                                        {#<input type="checkbox" class="apply_filter" data-target="tags">#}
-                                        {#<span class="container-rdo"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-                                {##}
-                                {#<div class="filter_select_container">#}
-                                    {#<select class="filter_by_tags">#}
-                                        {#<option value="" selected>Tags</option>#}
-                                        {#{% for tag in tags %}#}
-                                            {#<option value="{{ tag.id }}">{{ tag.name }}</option>#}
-                                        {#{% endfor %}#}
-                                    {#</select>#}
-                                {#</div>#}
+                        <div class="right_filter_container">
 
+                            <div class="filter_by_created_date_container ">
+                                <div class="select">
+                                    <select name="" id="medias_sortable_by_date">
+                                        <option value="desc" selected>Les plus récents d'abord</option>
+                                        <option value="asc">Les plus anciens d'abord</option>
+                                    </select>
+                                </div>
 
-                                <div class="display-content-columns">
-                                    <div class="display-content-poste apply_filter_container">
+                            </div>
 
-                                        <button type="button" class="drop-btn drop-width">
-                                            <label class="container-input">
-                                                <input type="checkbox" class="apply_filter" data-target="tags">
-                                                <span class="container-rdo"></span>
-                                            </label>
-                                            <p class="container-tags">
-                                                <span class="mini-cercle" style="background: darkgray;"></span>
-                                                <span class="current-tags-name">Tags</span>
-                                            </p>
-                                            <div class="drop-btn-icone">
-                                                <i class="fas fa-angle-down"></i>
-                                            </div>
-                                        </button>
+                            <div class="pagination_container">
 
-                                        <div class="display-content-down filter_by_criterions">
-                                            {% for tag in tags %}
-                                                <div class="product-select-col">
-                                                    <label class="container-input">
-                                                        <input type="checkbox" value="{{ tag.id }}">
-                                                        <span class="container-rdo"></span>
-                                                    </label>
-                                                    <p class="container-tags">
-                                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>
-                                                        <span class="current-tags-name">{{ tag.name }}</span>
-                                                    </p>
-                                                </div>
+                                <div class="displayed_elements_number_selection_container container ">
+                                    <div class="select">
+                                        <select id="displayed_elements_number_selection">
+                                            {% for choice in numberOfMediasAllowedToDisplayed %}
+                                                <option value="{{ choice }}" {% if choice is same as(app.session.get('mediatheque_medias_number')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
                                             {% endfor %}
-                                        </div>
-
+                                        </select>
                                     </div>
                                 </div>
 
-                            </div>
-                        </div>
+                                <div class="pages_container container">
 
+                                    {% if numberOfPages > 1 %}
 
+                                        {% if numberOfPages > 1 %}
 
-                        <div class="open_filter_content">
-                            <button class="btn btn_show_filter btn_show_filter_open " type="button"><i class="fas fa-plus"></i></button>
-                        </div>
+                                            <i class="fas fa-chevron-left page_navigation_arrow prev"></i>
 
-                        <div class="filter_validation_btn_container">
-                            <button class="filter_validation_btn btn" type="button"><i class="fas fa-plus"></i>Filtrer</button>
-                        </div>
+                                            {# nombre de page a afficher avant de cacher et remplacer par des '...' #}
+                                            {% set numberOfPagesToDisplayBeforeHidePages = 4 %}
 
-                    </div>
+                                            {% for i in 1..numberOfPages %}
 
-                </div>
+                                                {% if i < numberOfPagesToDisplayBeforeHidePages or loop.last or i is same as(app.request.get('page')|string_to_int) %}
 
+                                                    <a class="page {% if i is same as(app.request.get('page')|string_to_int) %}current_page{% endif %}" href="{{ path('media::showMediatheque', {'mediasDisplayedType': media_displayed, 'page': i}) }}">{{ i }}</a>
 
+                                                {% elseif i is same as(numberOfPagesToDisplayBeforeHidePages) %}
 
-                <div class="right_filter_container">
+                                                    <a class="page" href="">...</a>
 
-                    <div class="filter_by_created_date_container ">
-                        <div class="select">
-                            <select name="" id="medias_sortable_by_date">
-                                <option value="desc" selected>Les plus récents d'abord</option>
-                                <option value="asc">Les plus anciens d'abord</option>
-                            </select>
-                        </div>
+                                                {% endif %}
 
-                    </div>
+                                                {#{% if not loop.first and not loop.last %}
 
-                    <div class="pagination_container">
+                                                    {% if i < 3 %}
+                                                        <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
 
-                        <div class="displayed_elements_number_selection_container container ">
-                            <div class="select">
-                                <select id="displayed_elements_number_selection">
-                                    {% for choice in numberOfMediasAllowedToDisplayed %}
-                                        <option value="{{ choice }}" {% if choice is same as(app.session.get('mediatheque_medias_number')|string_to_int) %} selected {% endif %}>{{ choice }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
+                                                    {% else %}
 
-                        <div class="pages_container container">
+                                                        <span>...</span>
 
-                            {% if numberOfPages > 1 %}
+                                                    {% endif %}
 
-                                {% if numberOfPages > 1 %}
+                                                {% endif %}#}
 
-                                    <i class="fas fa-chevron-left page_navigation_arrow prev"></i>
+                                            {% endfor %}
 
-                                    {# nombre de page a afficher avant de cacher et remplacer par des '...' #}
-                                    {% set numberOfPagesToDisplayBeforeHidePages = 4 %}
-
-                                    {% for i in 1..numberOfPages %}
-
-                                        {% if i < numberOfPagesToDisplayBeforeHidePages or loop.last or i is same as(app.request.get('page')|string_to_int) %}
-
-                                            <a class="page {% if i is same as(app.request.get('page')|string_to_int) %}current_page{% endif %}" href="{{ path('media::showMediatheque', {'mediasDisplayedType': media_displayed, 'page': i}) }}">{{ i }}</a>
-
-                                        {% elseif i is same as(numberOfPagesToDisplayBeforeHidePages) %}
-
-                                            <a class="page" href="">...</a>
+                                            <i class="fas fa-chevron-right page_navigation_arrow next"></i>
 
                                         {% endif %}
 
-                                        {#{% if not loop.first and not loop.last %}
+                                    {% endif %}
 
-                                            {% if i < 3 %}
-                                                <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
+                                </div>
 
-                                            {% else %}
-
-                                                <span>...</span>
-
-                                            {% endif %}
-
-                                        {% endif %}#}
-
-                                    {% endfor %}
-
-                                    <i class="fas fa-chevron-right page_navigation_arrow next"></i>
-
-                                {% endif %}
-
-                            {% endif %}
+                            </div>
 
                         </div>
 
                     </div>
 
+                    <div class="medias_list_container" data-customer="{{ (app.session.get('current_customer') is not null) ? app.session.get('current_customer').name | lower : '' }}">
+                        {% for mediaInfos in mediasToDisplayed['medias'] %}
+
+                            {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],
+                                'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'],
+                                'file_type': mediaInfos['file_type'], 'miniature_low_exist': mediaInfos['miniature_low_exist'], 'miniature_medium_exist': mediaInfos['miniature_medium_exist'] } %}
+
+                        {% endfor %}
+                    </div>
+
                 </div>
 
             </div>
+        </article >
 
-            <div class="medias_list_container" data-customer="{{ (app.session.get('current_customer') is not null) ? app.session.get('current_customer').name | lower : '' }}">
-                {% for mediaInfos in mediasToDisplayed['medias'] %}
+            {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is same as(true) %}
 
-                    {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],
-                        'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'],
-                        'file_type': mediaInfos['file_type'], 'miniature_low_exist': mediaInfos['miniature_low_exist'], 'miniature_medium_exist': mediaInfos['miniature_medium_exist'] } %}
+                {% include "/popups/upload/popup_upload.html.twig" %}
 
-                {% endfor %}
-            </div>
+            {% endif %}
+
+            {% include "/popups/loading_popup/popup_loading.twig" %}
+
+            {% include "/popups/medias_waiting_for_incrustes/popup_medias_waiting_incrustes.html.twig" %}
+
+            {% include "/popups/associations/product_association/popup_product_association.html.twig" %}
+
+            {% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}
+
+            {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
+
+            {% include "/popups/media_info_sheet/popup_media_info_sheet.twig" %}
+
+            {% include "/popups/deleting_media/popup_delete_media.html.twig" %}
+
+            {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
 
         </article>
 
-        {% if uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is same as(true) %}
 
-            {% include "/popups/upload/popup_upload.html.twig" %}
-
-        {% endif %}
-
-        {% include "/popups/loading_popup/popup_loading.twig" %}
-
-        {% include "/popups/medias_waiting_for_incrustes/popup_medias_waiting_incrustes.html.twig" %}
-
-        {% include "/popups/associations/product_association/popup_product_association.html.twig" %}
-
-        {% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}
-
-        {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
-
-        {% include "/popups/media_info_sheet/popup_media_info_sheet.twig" %}
-
-        {% include "/popups/deleting_media/popup_delete_media.html.twig" %}
-
-        {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
-
-    </div>
 {% endblock %}

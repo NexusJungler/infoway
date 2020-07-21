@@ -5,9 +5,9 @@
         <div class="popup_header">
 
             <div class="left_side popup_header_item">
-                {#<div class="item icon-container">#}
-                    {#<i class="icon icon-picto-mediathque"></i>#}
-                {#</div>#}
+                <div class="item icon-container">
+                    <i class="icon icon-picto-mediathque"></i>
+                </div>
 
                 <div class="item title_container">
                     <p class="title">Médiathèque</p>
@@ -24,9 +24,11 @@
             </div>
 
             <div class="right_side popup_header_item">
+
                 <div class="item close_popup_button_container">
                     <button type="button" class="close_modal_button">X</button>
                 </div>
+
             </div>
 
         </div>
@@ -38,6 +40,7 @@
                 <div class="container_header">
 
                     <div class="side left_side filters_container filter_by_media_category_container">
+
                         <button type="button" class="btn show_only_image">Images</button>
                         <button type="button" class="btn show_only_video">Vidéos</button>
                         <button type="button" class="btn show_only_synchro">Synchros</button>
@@ -46,74 +49,35 @@
                         <button type="button" class="btn show_only_thematic" disabled>Thématiques</button>
                         <button type="button" class="btn show_only_template">Templates</button>
                         <button type="button" class="btn show_only_local_medias">Local</button>
+
                     </div>
 
                     <div class="side right_side filters_container">
 
-                        <div class="filter_container_association">
+                        <select class="filter_by_categories">
+                            <option value="">Tout afficher</option>
+                            {% for categorie in categories %}
+                                <option value="{{ categorie.id }}">{{ categorie.name }}</option>
+                            {% endfor %}
+                        </select>
 
-                            <div class="filter filter_by_criterion display-content-columns">
-                                <div class="display-content-poste">
-                                    <button type="button" class="drop-btn ">
-                                        <label class="container-input">
-                                            <input type="checkbox" value="">
-                                            <span class="container-rdo"></span>
-                                        </label>
-                                        <span class="container-criterion">Criterion</span>
-                                        <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
-                                    </button>
-                                    <div class="display-content-down filter_by_criterions scrollbar">
-                                        {% for criterion in criterions %}
-                                            <div class="product-select-col scrollbar">
-                                                <label class="container-input">
-                                                    <input type="checkbox" value="{{  criterion.id }}">
-                                                    <span class="container-rdo"></span>
-                                                </label>
-                                                <span class="container-criterion">{{ criterion.name }}</span>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
+                        <select class="filter_by_criterions">
+                            <option value="">Tout afficher</option>
+                            {% for criterion in criterions %}
+                                <option value="{{ criterion.id }}">{{ criterion.name }}</option>
+                            {% endfor %}
+                        </select>
 
-                            <div class="filter filter_by_tag display-content-columns">
-                                <div class="display-content-poste">
-                                    <button type="button" class="drop-btn ">
-                                        <label class="container-input">
-                                            <input type="checkbox" value="">
-                                            <span class="container-rdo"></span>
-                                        </label>
-                                        <p class="container-tags">
-                                            <span class="mini-cercle" style="background: darkgray;"></span>
-                                            <span class="current-tags-name">Tags</span>
-                                        </p>
-                                        <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
-                                    </button>
-                                    <div class="display-content-down filter_by_tag scrollbar">
-                                        {% for tag in tags %}
-                                            <div class="product-select-col ">
-                                                <label class="container-input">
-                                                    <input type="checkbox" value="{{  tag.id }}">
-                                                    <span class="container-rdo"></span>
-                                                </label>
-                                                <p class="container-tags">
-                                                    <span class="mini-cercle" style="background: {{tag.color}};"></span>
-                                                    <span class="current-tags-name">{{ tag.name }}</span>
-                                                </p>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
+                        <select class="filter_by_tags">
+                            <option value="">Tout afficher</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.id }}">{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
 
-                        </div>
+                        <button type="button" class="btn filter_validation_btn">Filtrer</button>
 
-                        <button type="button" class="btn filter_validation_btn"><i class="fas fa-bars"> </i>Filtrer</button>
-
-                        <div class="search_element_container filter_with_search_container">
-                            <input type="search" class="filter filter_with_search" name="search[product]" placeholder="Rechercher un élément...">
-                            <i class="fas fa-search"></i>
-                        </div>
+                        <input type="search" class="filter filter_with_search" name="search[product]" placeholder="Rechercher un élément...">
 
                     </div>
 
@@ -124,7 +88,7 @@
                     <div class="side left_side">
 
                         <div>
-                            <p class="title">Média sélectionné :</p>
+                            <p>Média sélectionné :</p>
                         </div>
 
                         <div class="media_miniature_container container">
@@ -168,10 +132,7 @@
                                         <div class="card substitute" data-media_id="{{ media.id }}">
 
                                             <div class="card_header">
-                                                <label class="container-input">
-                                                    <input type="checkbox" class="choice_substitute">
-                                                    <span class="container-rdo"></span>
-                                                </label>
+                                                <input type="checkbox" class="choice_substitute">
                                             </div>
 
                                             <div class="card_body">
@@ -231,11 +192,11 @@
                                 <div class="remplacement_infos_setting_date_container">
 
                                     <label>
-                                        Du <input type="date" class="remplacement_date_choice_input remplacement_date_start">
+                                        Du <input type="datetime-local" class="remplacement_date_choice_input remplacement_date_start">
                                     </label>
 
                                     <label>
-                                        Au <input type="date" class="remplacement_date_choice_input remplacement_date_end">
+                                        Au <input type="datetime-local" class="remplacement_date_choice_input remplacement_date_end">
                                     </label>
 
                                 </div>
@@ -259,7 +220,7 @@
             </div>
 
             <div class="actions_buttons_container">
-                <button class="btn upload_substitute_btn" type="button">upload</button>
+                <button class="btn upload_substitute_btn" type="button">Uplpoader</button>
             </div>
 
             <div class="actions_buttons_container">

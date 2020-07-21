@@ -1,0 +1,25 @@
+<article class="wrapper">
+    <div class="wrapper-content">
+        <div class="nav-prev"><i class="fas fa-arrow-left"></i></div>
+        <ul class="tabs">
+
+            <li class='current'><a href="{{ path('programming_display_space_show' , { 'id' : currentDisplaySpace.id}) }}"><p class="css-tab__label">{{ currentDisplaySpace.name }}</p></a></li>
+            {% for id, displaySpaceName in allDisplaySpacesName  %}
+                {% if id is not same as(currentDisplaySpace.id) %}<li><a href="{{ path('programming_display_space_show' , { 'id' : id}) }}"><p class="css-tab__label">{{ displaySpaceName }}</p></a></li>{% endif %}
+            {% endfor  %}
+            <li><a href="{{ path('programming_display_space_show' , { 'id' : 1}) }}"><p class="css-tab__label">Créer Zone de Diffusion</p></a></li>
+            {#<a href="{{ path('customers_new') }}"><li class="{% if app.request.attributes.get('_route') == 'customers_new' %}  current {% endif %}" data-tab="setting-enseigne" data-tab-text="settings"> <p class="css-tab__label">Enseigne</p></li></a>#}
+            {#<a href="{{ path('users:view') }}"><li class="{% if app.request.attributes.get('_route') == 'users:view' %}  current {% endif %}" data-tab="setting-user" data-tab-text="settings"><p class="css-tab__label">Utilisateurs</p></li></a>#}
+            {#<a href="{{ path('criterions_lists_index') }}">#}
+                {#<li class="{% if app.request.attributes.get('_route') is same as( 'criterions_lists_index' ) or app.request.attributes.get('_route') is same as( 'criterions_lists_new' ) or app.request.attributes.get('_route') is same as( 'criterions_lists_edit') %}  current {% endif %}" data-tab="setting-criteres" data-tab-text="settings">#}
+                    {#<p class="css-tab__label">Critères</p>#}
+                {#</li>#}
+            {#</a>#}
+            {#<a href="{{ path('tags_index') }}">#}
+                {#<li class=" {% if app.request.attributes.get('_route') is same as( 'tags_index' )  or app.request.attributes.get('_route') is same as( 'tags_new') or app.request.attributes.get('_route') is same as( 'tags_edit') %}  current {% endif %}" data-tab="setting-tags" data-tab-text="settings">#}
+                    {#<p class="css-tab__label">TAGS</p>#}
+                {#</li>#}
+            {#</a>#}
+        </ul>
+    </div>
+</article>
