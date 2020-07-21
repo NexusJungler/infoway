@@ -1005,6 +1005,11 @@ class UploadHandlerTool extends SubTool
                     <span class="error hidden"></span> <br>
                     <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
                  </td>
+                 <td>
+                    <select name="" id="">
+                        <option value="">Contexte</option>
+                    </select>
+                </td>
                  <td class="associated_criterions_container">
                 
                 </td>
