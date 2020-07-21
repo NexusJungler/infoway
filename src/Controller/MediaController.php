@@ -384,8 +384,8 @@ class MediaController extends AbstractController
                   ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
-                  //->setOrientation(" ") // le serializer oblige à avoir une valeur
-                  ->setType($mediaType);
+                  ->setOrientation(" ") // le serializer oblige à avoir une valeur
+                  ->setMediaType($mediaType);
 
             $media = json_decode($this->serializer->serialize($media, 'json'), true);
 
@@ -455,7 +455,9 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . ".mp4";
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . '/' . ( ($media->getMediaType() === 'diff') ? 'video/low/' : 'piece/' ) . $media->getId() . ".mp4";
+
+            //dd($path);
 
             $response = [
                 'status' => 'Finished',

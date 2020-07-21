@@ -115,6 +115,8 @@ class UploadHandlerTool extends SubTool
     fileIsAlreadyUploaded(file)
     {
 
+        super.showLoadingPopup();
+
         return new Promise( (resolve, reject) => {
 
             $.ajax({
@@ -124,10 +126,12 @@ class UploadHandlerTool extends SubTool
             })
 
                 .done( (response) => {
+                    super.hideLoadingPopup();
                     resolve(parseInt(response) === 0);
                 } )
 
                 .fail( (errorType, errorStatus, errorThrown) => {
+                    super.hideLoadingPopup();
                     console.error(errorType.responseText); //debugger
                     resolve(true);
                 } );

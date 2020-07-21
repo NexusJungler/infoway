@@ -103,7 +103,7 @@ class Media
     private $orientation;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false, name="contain_incruste")
      */
     private $containIncruste;
 

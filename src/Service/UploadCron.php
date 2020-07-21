@@ -173,7 +173,7 @@ class UploadCron
                     $this->retrieveInfo($media);
 
                     // On remplace le nom original des différentes résolutions créées par l'id du media
-                    $sizes = ['low', 'medium', 'high', 'HD'];
+                    $sizes = ['low', 'medium', 'high', 'HD', 'high/UHD-4k', 'high/UHD-8k', 'HD/UHD-4k', 'HD/UHD-8k', 'HIGH/UHD-4k', 'HIGH/UHD-8k'];
 
                     $mediasHandler = new MediasHandler($this->parameterBag);
 
@@ -304,8 +304,12 @@ class UploadCron
         $output_low = '';
 
         switch ($ratio) {
+
             case 16 / 9:  // Plein Ecran Horizontal
                 if ($width >= 1920 && $height >= 1080) {
+
+
+
                     $max_size = true;   // Il faut réencoder la vidéo en résolution high quoi qu'il arrive
                     $output_high = "1920*1080";
                     if ($width > 1920 && $height > 1080) {
@@ -318,7 +322,7 @@ class UploadCron
                 }
                 $output_low = "160*90";
 
-                $this->mediaOrientation = 'Horizontal';
+                $this->mediaOrientation = 'horizontal';
 
                 break;
 
@@ -336,7 +340,7 @@ class UploadCron
                 }
                 $output_low = "90*160";
 
-                $this->mediaOrientation = 'Vertical';
+                $this->mediaOrientation = 'vertical';
 
                 break;
 
@@ -354,7 +358,7 @@ class UploadCron
                 }
                 $output_low = "90*80";
 
-                $this->mediaOrientation = 'Horizontal';
+                $this->mediaOrientation = 'horizontal';
 
                 break;
 
@@ -372,7 +376,7 @@ class UploadCron
                 }
                 $output_low = "80*90";
 
-                $this->mediaOrientation = 'Vertical';
+                $this->mediaOrientation = 'vertical';
 
                 break;
 
@@ -400,9 +404,19 @@ class UploadCron
         $response = [];
         $error = [];
         if ($max_size) {
+
+            if($width ===  4096 && $height === 2160) // 4k
+                $folder = "high/UHD-4k";
+
+            /*else if($width ===  8192 && $height === 4320) // 8k
+                $folder = "high/UHD-8k";*/
+
+            else
+                $folder = "high";
+
             // -preset medium, -compression_level, -crf 20 = Constante Rate Factor ??
             // -b:v 20M (pour les dias converties en vidéo) -g 2
-            exec('ffmpeg -y -i "' . $video . '" -r 25 -s ' . $output_high . ' -vcodec libx264 -b:v 4M -minrate 4M -maxrate 4M -profile:v high -level:v 4.2 -acodec copy -y "' . $this->destfolder . 'high/' . $this->filename . '.mp4"', $response['high'], $error['high']);
+            exec('ffmpeg -y -i "' . $video . '" -r 25 -s ' . $output_high . ' -vcodec libx264 -b:v 4M -minrate 4M -maxrate 4M -profile:v high -level:v 4.2 -acodec copy -y "' . $this->destfolder . $folder . '/' . $this->filename . '.mp4"', $response['high'], $error['high']);
             if($this->mediatype != 'them') {
                 // Copie du fichier encodé vers l'ancien répertoire correspondant pour les médias diffusables
                 if($this->mediatype != 'sync') {
@@ -478,6 +492,35 @@ class UploadCron
         }
 
         switch ($ratio) {
+
+            /*case 17 / 9:
+                // 8k
+                if( $width >= 8192 && $height >= 4320 ) {
+                    $max_size = true;
+                    $output_high = "8192*4320";
+                    if ($width > 8192 && $height > 4320) {
+                        $HD = true;
+                    }
+
+                }
+
+                // 4k
+                if( $width >= 4096 && $height >= 2160 ) {
+
+                    $max_size = true;
+                    $output_high = "4096*2160";
+                    if ($width > 4096 && $height > 2160) {
+                        $HD = true;
+                    }
+
+                }
+
+                $output_low = "170*90";
+
+                $this->mediaOrientation = 'horizontal';
+
+                break;*/
+
             case 16 / 9:  // Plein Ecran Horizontal
 
                 if($width < 1920 && $height < 1080) {
@@ -614,25 +657,52 @@ class UploadCron
 
 
         if ($max_size) {
+
+            if($height === 2160) // 4k
+            {
+                $highFolder = "high/UHD-4k";
+                $HIGHFolder = "HIGH/UHD-4k";
+                $HDFolder = "HD/UHD-4k";
+            }
+
+            /*else if($height === 4320) // 8k
+            {
+                $highFolder = "high/UHD-8k";
+                $HIGHFolder = "HIGH/UHD-8k";
+                $HDFolder = "HD/UHD-8k";
+            }
+            */
+
+            else
+            {
+                $highFolder = "high";
+                $HIGHFolder = "HIGH";
+                $HDFolder = "HD";
+            }
+
             // -preset medium, -compression_level, -crf 20 = Constante Rate Factor ??
             // -b:v 20M (pour les dias converties en vidéo) -g 2
-            // -g 250 -bf 2 -b_strategy 0 -sc_threshold 0 -keyint_min 25
-            exec('ffmpeg -y -i "' . $video . '" -r 25 -s ' . $output_high . ' -vcodec libx264 -b:v 4M -minrate 4M -maxrate 4M -profile:v high -level:v 4.2 -g 250 -bf 2 -b_strategy 0 -sc_threshold 0 -keyint_min 25 -acodec copy -y "' . $this->destfolder . 'high/' . $this->filename . '.mp4"', $response['high'], $error['high']);
+            exec('ffmpeg -y -i "' . $video . '" -r 25 -s ' . $output_high . ' -vcodec libx264 -b:v 4M -minrate 4M -maxrate 4M -profile:v high -level:v 4.2 -acodec copy -y "' . $this->destfolder . $highFolder . '/' . $this->filename . '.mp4"', $response['high'], $error['high']);
+
             if($this->mediatype != 'them') {
+
+                if(!file_exists($this->destfolder . $highFolder))
+                    mkdir($old_path . $highFolder, 0777, true);
+
+                if(!file_exists($old_path . $HIGHFolder))
+                    mkdir($old_path . $HIGHFolder, 0777, true);
+
+                if(!file_exists($this->destfolder . ( ($this->mediatype != 'them') ? '' : 'video/' ) . $HDFolder))
+                    mkdir($this->destfolder . ( ($this->mediatype != 'them') ? '' : 'video/' ) . $HDFolder, 0777, true);
+
                 // Copie du fichier encodé vers l'ancien répertoire correspondant pour les médias diffusables
                 if($this->mediatype != 'sync') {
-                    copy($this->destfolder . 'high/' . $this->filename . '.mp4', $old_path . 'HIGH/' . $this->filename . '.mp4');
+
+                    copy($this->destfolder . $highFolder . '/' . $this->filename . '.mp4', $old_path . $HIGHFolder . '/' . $this->filename . '.mp4');
                     // file_put_contents(__DIR__ . '/../log/upload.log', 'FTP://La video ' . $this->filename . '.mp4 de format high et se trouvant dans ' . $this->destfolder . 'high/ a ete recopiee dans le repertoire ' . $old_path . ' avec le nom ' . $this->filename . '.mp4' . PHP_EOL, FILE_APPEND);
                 }
                 if($HD) {
-
-                    // if end with video/
-                    if (substr($this->destfolder, -strlen('video/')) === 'video/')
-                        copy($video, $this->destfolder . 'HD/' . $this->filename . '.mp4');
-
-                    else
-                        // Copie (déplacement impossible à ce stade) de la source vers le dossier HD
-                        copy($video, $this->destfolder . 'video/HD/' . $this->filename . '.mp4');
+                    copy($video, $this->destfolder . ( ($this->mediatype != 'them') ? '' : 'video/' ) . $HDFolder . '/' . $this->filename . '.mp4');
                 }
             }
         }
