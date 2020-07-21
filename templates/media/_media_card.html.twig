@@ -1,6 +1,6 @@
-<div class="card card_{{ file_type }}" id="media_{{ media.id }}"  data-created_date="{{ media.createdAt|date('Y-m-d') }}" data-file_type="{{ file_type }}" data-orientation="{{ media.orientation | lower }}"
+<div class="card card_{{ file_type }}" id="media_{{ media.id }}"  data-created_date="{{ media.createdAt|date('Y-m-d G:i:s') }}" data-file_type="{{ file_type }}" data-orientation="{{ media.orientation | lower }}"
 
-     data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}" data-customer="{{ app.session.get('current_customer').name| lower }}"
+     data-media_diff_start="{{ media.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ media.diffusionEnd | date('d/m/Y') }}"
 
         {% if (media_products is not empty) %}
             data-products="{{ media_products|join(', ') }}"
@@ -81,8 +81,8 @@
                             <div class="media_container_arrows show_expanded_miniature">
                                 <i class="fas fa-expand-arrows-alt"></i>
                             </div>
-                            <img class="media_miniature miniature_image" src="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ ( media.mediaType is same as('diff') ? '/image/low/' : '/piece/' ) ~ media.id ~ ".png" }}"
-                                 alt="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ ( media.mediaType is same as('diff') ? '/image/low/' : '/piece/' ) ~ media.id ~ ".png" }}">
+                            <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
+                                 alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/low/{{ mediaInfos['media'].id }}.png">
                         </div>
 
 
@@ -93,7 +93,7 @@
                                 <i class="fas fa-expand-arrows-alt"></i>
                             </div>
                             <video class="media_miniature miniature_video">
-                                <source src="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ ( media.mediaType is same as('diff') ? '/video/low/' : '/piece/' ) ~ media.id ~ ".png" }}" type="{{ media.mimeType }}">
+                                <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ mediaInfos['media'].id }}.mp4" type="{{ media.mimeType }}">
                             </video>
                         </div>
 

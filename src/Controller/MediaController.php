@@ -1190,7 +1190,8 @@ class MediaController extends AbstractController
                             <i class='fas fa-spinner'></i>
                         </div>
             
-                    </div>";
+                    </div>
+                </div>";
 
         $card .= "<div class='card_body'> <div class='media_miniature_container media_$orientation' data-miniature_medium_exist='$miniatureMediumExist' data-size='$width*$height' data-extension='$extension'";
 
