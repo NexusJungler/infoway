@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DisplayMould index{% endblock %}
+
+{% block body %}
+    <h1>DisplayMould index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>ScreensNumber</th>
+                <th>StartAt</th>
+                <th>EndAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for programming_mould in programming_moulds %}
+            <tr>
+                <td>{{ programming_mould.id }}</td>
+                <td>{{ programming_mould.name }}</td>
+                <td>{{ programming_mould.startAt ? programming_mould.startAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ programming_mould.endAt ? programming_mould.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('programming_programming_mould_show', {'id': programming_mould.id}) }}">show</a>
+                    <a href="{{ path('programming_programming_mould_edit', {'id': programming_mould.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('programming_programming_mould_new') }}">Create new</a>
+{% endblock %}

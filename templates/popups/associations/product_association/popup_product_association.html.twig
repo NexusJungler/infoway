@@ -1,0 +1,274 @@
+<section class="popup_container association_popup_container popup_associate_product_container ">
+
+    <article class="popup popup_associate_product association_popup">
+
+        <div class="popup_header">
+
+            <div class="left_side popup_header_item">
+                <div class="item title_container">
+                    <p class="title">Associer des produits au média :</p>
+                </div>
+                <div class="item media_name_container">
+                    <p class="media_name"></p>
+                </div>
+            </div>
+            <div class="right_side popup_header_item">
+                <div class="item close_popup_button_container">
+                    <button type="button" class="close_modal_button">X</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="popup_body">
+
+            <div class="popup_body_item container">
+
+                <div class="container_header">
+
+                    <div class="left_side filters_container filters_by_associated_data_container">
+
+                        <div class="display-content-columns">
+                            <div class="display-content-poste">
+                                <button type="button" class="drop-btn "> Catégories  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                <div class="display-content-down filter_by_categories scrollbar">
+                                    {% for categorie in categories %}
+                                    <div class="product-select-col">
+                                        <label class="container-input">{{ categorie.name }}
+                                            <input type="checkbox" value="{{ categorie.id }}">
+                                            <span class="container-rdo"></span>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {#<div class="filter filter_by_category">#}
+                            {#<select class="filter_by_categories">#}
+                                {#<option value="">Tout afficher</option>#}
+                                {#{% for categorie in categories %}#}
+                                    {#<option value="{{ categorie.id }}">{{ categorie.name }}</option>#}
+                                {#{% endfor %}#}
+                            {#</select>#}
+                        {#</div>#}
+
+
+                        <div class="filter_container_association">
+
+                            <div>
+                                <button type="button" class="open_filter open_filter_show">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+
+                            <div class="filter_container_association_open">
+
+                                <div class="filter filter_by_criterion display-content-columns">
+                                    <div class="display-content-poste">
+                                        <button type="button" class="drop-btn ">
+                                            <label class="container-input">
+                                                <input type="checkbox" value="">
+                                                <span class="container-rdo"></span>
+                                            </label>
+                                            <span class="container-criterion">Criterion</span>
+                                            <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
+                                        </button>
+                                        <div class="display-content-down filter_by_criterions scrollbar">
+                                            {% for criterion in criterions %}
+                                                <div class="product-select-col scrollbar">
+                                                    <label class="container-input">
+                                                        <input type="checkbox" value="{{  criterion.id }}">
+                                                        <span class="container-rdo"></span>
+                                                    </label>
+                                                    <span class="container-criterion">{{ criterion.name }}</span>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {#<div class="filter filter_by_criterion">#}
+                                    {#<select class="filter_by_criterions">#}
+                                        {#<option value="">Tout afficher</option>#}
+                                        {#{% for criterion in criterions %}#}
+                                            {#<option value="{{ criterion.id }}">{{ criterion.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    {#</select>#}
+                                {#</div>#}
+
+                                <div class="filter filter_by_tag display-content-columns">
+                                    <div class="display-content-poste">
+                                        <button type="button" class="drop-btn ">
+                                            <label class="container-input">
+                                                <input type="checkbox" value="">
+                                                <span class="container-rdo"></span>
+                                            </label>
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: darkgray;"></span>
+                                                <span class="current-tags-name">Tags</span>
+                                            </p>
+                                            <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
+                                        </button>
+                                        <div class="display-content-down filter_by_tag scrollbar">
+                                            {% for tag in tags %}
+                                                <div class="product-select-col ">
+                                                    <label class="container-input">
+                                                        <input type="checkbox" value="{{  tag.id }}">
+                                                        <span class="container-rdo"></span>
+                                                    </label>
+                                                    <p class="container-tags">
+                                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                                        <span class="current-tags-name">{{ tag.name }}</span>
+                                                    </p>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {#<div class="filter filter_by_tag">#}
+                                    {#<select class="filter_by_tags">#}
+                                        {#<option value="">Tout afficher</option>#}
+                                        {#{% for tag in tags %}#}
+                                            {#<option value="{{ tag.id }}">{{ tag.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    {#</select>#}
+                                {#</div>#}
+
+                            </div>
+
+                        </div>
+
+                        <div class="filter_validation_btn_container">
+                            <button type="button" class="btn filter_validation_btn">
+                                <i class="fas fa-bars"></i>Filtrer
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="right_side filters_container">
+
+                        <div class="search_element_container filter_with_search_container">
+                            <input type="search" class="filter filter_with_search" name="search[product]" placeholder="Rechercher un élément...">
+                            <i class="fas fa-search"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="container_body">
+
+                    <div class="container_body_item table products_choice_list_container">
+
+                        <table class="table-custome">
+                            <thead class="thead-content">
+                                <tr>
+                                    <th>
+                                        <label class="container-input">
+                                            <input type="checkbox" class="select_all_products">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </th>
+                                    <th>Nom du produit</th>
+                                    <th><p>Description</p></th>
+                                    <th>Critères</th>
+                                    <th>TAGS</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="products_choice_list list tbody-content scrollbar">
+                                {% for product in products %}
+                                    <tr data-product_id="{{ product.id }}" data-tags="{{ productsTags[product.id]['ids'] | join(', ') }}" data-categories="{{ product.category.id }}" data-criterions="{{ productsCriterions[product.id]['ids'] | join(', ') }}">
+                                        <td>
+                                            <label class="container-input">
+                                                <input type="checkbox" class="choice_product" data-product_name="{{ product.name }}">
+                                                <span class="container-rdo-tags"></span>
+                                            </label>
+                                        </td>
+                                        <td class="product_name"><span>{{ product.name }}</span></td>
+                                        <td><span class="product_description">{{ product.description }}</span></td>
+                                        <td class="criterions_col">
+                                            {% if product.criterions | length < 1 %}
+
+                                                <span>Aucun critères</span>
+
+                                            {% else %}
+                                                <div class="cirterions_content">
+                                                    {% for criterion in product.criterions %}
+                                                        <span class="bloc-criterion">{{ criterion.name }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif%}
+                                        </td>
+                                        <td class="tags_col">
+                                            {% if product.tags | length < 1 %}
+
+                                                <span>Aucun tags</span>
+
+                                            {% else %}
+
+                                                {% for tag in product.tags %}
+                                                    <p class="container-tags">
+                                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                                        <span class="current-tags-name">{{ tag.name }}</span>
+                                                    </p>
+                                                {% endfor %}
+
+                                            {% endif%}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="container_body_item chevron_right_container">
+                        <i class="fas fa-caret-right update_media_associated_products_list"></i>
+                    </div>
+
+                    <div class="container_body_item table products_associated_list_container">
+
+                        <table class="table-custome">
+
+                            <thead class="thead-content">
+                                <tr>
+                                    <th>Produits associés</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="products_associated_list tbody-content scrollbar">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="popup_footer popup_item_container">
+
+            <div class="actions_buttons_container">
+                <button class="btn close_modal_button cancel" type="button">Annuler</button>
+            </div>
+
+            <div class="actions_buttons_container">
+                <button class="btn validate_association_btn" type="button" disabled>Valider</button>
+            </div>
+
+        </div>
+
+    </article>
+
+</section>

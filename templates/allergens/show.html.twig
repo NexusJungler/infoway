@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Allergènes {% endblock %}
+
+{# {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('show_factories') }}
+{% endblock %} #}
+
+{% block body %}
+
+    <main class="main main_setting">    
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Paroduits', 'sousTitle': 'Allergènes', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-content current allergenes">
+
+                    <article class="display setting-display ">
+                        <div class="display-content">
+
+                            <div class="display-content-columns">
+                                <div class="display-content-poste">
+                                    <button type="button" class="drop-btn" >
+                                        <label class="mutliselect-chkbox"> Tous
+                                            <input type="checkbox"  checked  >
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                        <div class="drop-btn-icone">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </button>
+                                    <div class="display-content-down">
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox">Nom
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="nom">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="display-btn">
+                                <p> Produits : </p>
+                                {#<button type="button" class="btn" ><a href="{{ path('allergen::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>#}
+                                {#<button type="button" class="btn" ><a id="edit" href="{{ path('allergen::edit', {'allergen': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>#}
+                                {# <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button> #}
+                                {#<button type="button" class="btn" id="delete"><i class="fas fa-trash"></i>Supprimer</button>#}
+                                <button type="button" class="tags-table">TAGS</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class=" content-allergenes-show table">
+
+                        <div id="" class="content-allergenes-show-left " >
+                            <form method="post" action="{{ path('allergens::delete') }}">
+                                <table id="list" class="table-custome" >
+                                    <thead class="thead-info">
+                                        <tr>
+                                            <th>Select.<th>
+                                            <th>Nom du produit</th>
+                                            <th>Description</th>
+                                            <th>Critères</th>
+                                            <th>TAGS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                            <tr>
+                                                <td><input type="checkbox" name=""></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="content-allergenes-show-right">
+                            <form method="post" action="{{ path('allergens::delete') }}">
+                                <table id="list" class="table-custome" >
+                                    <thead class="thead-info">
+                                    <tr>
+                                        <th>Select.<th>
+                                        <th>Allergènes du produit</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                    {% for allergen in allergens %}
+                                        <tr>
+                                            <td><input type="checkbox" name="allergens[{{ allergen.id }}]"></td>
+                                            <td><img src="/pictogram/{{ allergen.pictogram }}" alt="" class="image-td"></td>
+                                            {#<td>{{ allergen.name }}</td>#}
+                                            <td>{{ allergen.description }}</td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                    </article>
+
+               </div>
+            </section>
+
+        </div>
+    </main> 
+
+    
+
+    {% block javascripts %}
+    {{ encore_entry_script_tags('show_products') }}
+    {% endblock javascripts %}
+
+{% endblock %}

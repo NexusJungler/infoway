@@ -1,0 +1,82 @@
+{% extends 'media.html.twig' %}
+
+{% block title "Modification - Média" %}
+
+{% block class "main-edit_media " %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('edit_media') }}
+{% endblock %}
+
+
+{% block maincontent %}
+    <article id="picture" class="tab-content current media-show">
+
+        <div id="tab-products" class="tab-content current content-product">
+            <article class="tab-content-title">
+                <h3 class="title">Modifier Média</h3>
+                <p class="media_name">{{ media.name }}</p>
+            </article>
+
+            <article class="display setting-display ">
+                <div class="display-content">
+
+                    <div class="display-btn">
+                        <p>Mèdias : </p>
+                        <button type="button" class="btn duplicate_media_btn media_action_btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
+                        <button type="button" class="btn btn-tags  media_action_btn tag_association_btn">TAG</button>
+                        <button type="button" class="btn popup_comfirmation_delete delete_media_btn media_action_btn" ><i class="fas fa-trash"></i>Supprimer</button>
+
+                    </div>
+
+                </div>
+            </article>
+        </div>
+
+        {#<div class="tab_content_body_top">#}
+            {#<div class="tab_content_body_top_item container tab_content_body_title_container">#}
+                {#<p class="tab_content_body_title"></p>#}
+            {#</div>#}
+            {#<div class="tab_content_body_top_item container actions_buttons_container">#}
+                {#<div class="container">#}
+                    {#<p>Medias : </p>#}
+                {#</div>#}
+                {#<div class="container">#}
+                    {#<button type="button" class="btn " disabled><i class="fas fa-plus"></i>Dupliquer</button>#}
+                {#</div>#}
+                {#<div class="container">#}
+                    {#<button type="button" class="btn tags-table">TAG</button>#}
+                {#</div>#}
+                {#<div class="container">#}
+                    {#<button type="button" class="btn "><i class="fas fa-trash"></i>Supprimer</button>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+
+
+        <div class="tab_content_body">
+            {% include "/media/show_media.html.twig" %}
+        </div>
+
+    </article>
+
+    {% include "/popups/loading_popup/popup_loading.twig" %}
+
+    {% include "/popups/associations/product_association/popup_product_association.html.twig" %}
+
+    {% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}
+
+    {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
+
+    {% include "/popups/deleting_media/popup_delete_media.html.twig" %}
+
+    {% include "/popups/media_remplacement_popup/remplacement_basic/popup_media_remplacement_basic.html.twig" %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('edit_media') }}
+{% endblock %}

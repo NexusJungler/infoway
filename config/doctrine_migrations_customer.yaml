@@ -1,0 +1,7 @@
+#doctrine_migrations:
+#    dir_name: '%kernel.project_dir%/src/Migrations/Customer'
+#    namespace: DoctrineMigrations
+
+migrations_directory: "./src/Migrations/Customer"
+migrations_namespace: DoctrineMigrations
+table_name: migration_versions

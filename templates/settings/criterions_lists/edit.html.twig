@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CriterionList{% endblock %}
+
+{% block body %}
+    <main class="main main_criterion">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critéres', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+
+            </section>
+
+            {% block maincontent %}
+                <section class="wrapper_tabcontent">
+
+                    <div id="setting-criteres" class="tab-content current create-criteres modifie-critere ">
+
+                        <article class="tab-content-title">
+                            <h3 class="title">Gestion des Critéres</h3>
+                            <p>SUPER WILD COFFEE</p>
+                        </article>
+
+                        {# <article class="display criterion-display ">
+                            <div class="display-content">
+                                <div class="display-btn">
+                                    <a href="{{ path('criterions_lists_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                                    <button type="button" class="btn duplicate-criterion"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn modified-criterion"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn delete-criterion" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+                            </div>
+                        </article> #}
+
+                        {{ include('settings/criterions_lists/_form.html.twig', {'button_label': 'Update'}) }}
+
+                        <a href="{{ path('criterions_lists_index') }}">back to list</a>
+
+                        {{ include('settings/criterions_lists/_delete_form.html.twig') }}
+                    </div>
+
+                <section>
+            {% endblock %}
+
+        </div>
+    </main>
+{% endblock %}
+

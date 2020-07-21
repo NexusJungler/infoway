@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main main_produits">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'categories', 'sousTitle': 'créer', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {# {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %} #}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-products" class="tab-create tab-create-product current produits-create">
+
+                    <article id="" class="">
+                        <div class="">
+                            {{ form_start(form) }}
+                                {{ form_row(form.name) }}
+                                {{ form_row(form.description) }}
+                                {{ form_row(form.pictogram) }}
+
+                                {% if expected_change is defined %}
+                                    <input type="hidden" name="expected_date" value="2020-05-10">
+                                {% endif %}
+                            {{ form_end(form) }}
+                        </div>
+                    </article>
+
+                </div>
+            </section>    
+
+        </div>
+    </main>  
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('edit_product') }}
+    {% endblock javascripts %}
+    
+{% endblock %}

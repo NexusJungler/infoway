@@ -1,0 +1,124 @@
+.customer{
+    .content-create-customer{
+        margin-top: 4rem;
+    }
+    .content-form-customer{
+        width: 74rem;
+        max-width: 100%;
+        height: 18.5rem;
+        border: 0.1rem solid #899CA4;
+        padding: 1.5rem;
+        display: flex;
+        .content-left{
+            width: 70%;
+            .row{
+                display: flex;
+                label{
+                    width: 30%;
+                    font: 1.6rem 'Barlow', lighter;
+                    color: #4D646D;
+                }
+            }
+            .row-inputfile{
+                margin-top: 5rem;
+                .inputfile {
+                    width: 0.01rem;
+                    height: 0.01rem;
+                    opacity: 0;
+                    overflow: hidden;
+                    position: absolute;
+                    z-index: -1;
+                    & + label {
+                        font: 1.6rem "Barlow";
+                        width: 17.5rem;
+                        max-width: 100%;
+                        height: 3.1rem;
+                        padding: 0.4rem 1rem 0px;
+                        color: white;
+                        background: #899CA4 0% 0% no-repeat padding-box;
+                        display: inline-block;
+                        border: 0.1rem solid #4D646D;
+                        border-radius: 0.6rem;
+                        // cursor: pointer; 
+                    }
+                }
+                .inputfile:focus + label,
+                .inputfile + label:hover {
+                    background-color: #4D646D;
+                }
+                i{
+                    margin-right: 1rem;
+                }
+            }
+        }
+
+        .content-right{
+            width: 30%;
+            .content-image{
+                border: 0.1rem solid #C0CCD1;
+                border-radius: 0.9rem;
+                padding: 0.5rem;
+                height: 11rem;
+                width: 11rem;
+                img{
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .content-contact{
+        margin-top: 4rem;
+        .title{
+            font: 2.8rem "Barlow";
+            color: #899CA4;
+        }
+    }
+
+    .content-form-contact{
+        width: 74rem;
+        max-width: 100%;
+        border: 0.1rem solid #899CA4;
+        margin-top: 2rem;
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+        .row{
+            display: flex;
+            .row-col{
+                width: 50%;
+                display: flex;
+                label{
+                    width: 49%;
+                }
+                &:nth-child(2){
+                    margin-left: 4rem;
+                    label{
+                        width: 20%;
+                    }
+                }
+            }
+        }
+        .col-input-group{
+            margin-bottom: 1.5rem;
+            display: flex;
+            width: 95%;
+            label{
+                width: 15%;
+                display: inline-block;
+                color: #4D646D;
+                font: 1.6rem 'Barlow', lighter;
+            }
+            .input-custome{
+                width: 100%;
+               max-width: 85%;
+            }
+        }
+    }
+
+    .content-contact-btn{
+        margin-top: 2.0rem;
+        width: 74rem;
+        max-width: 100%;
+        text-align: center;
+
+    }
+}

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer TAGS{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('tags') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main-tags">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'TAGS', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+
+            </section>
+
+            {% block maincontent %}
+                <section class="wrapper_tabcontent">
+                    <div id="setting-tags" class="tab-content current create-tags">
+
+                        <article class="tab-content-title">
+                            <h3 class="title">Créer TAGS</h3>
+                        </article>
+
+                        <div class="content-tags">
+                            {{ include('settings/tags/_form.html.twig') }}
+                        </div>
+
+                        {# <a href="{{ path('tags_index') }}">back to list</a> #}
+                        
+                    </div>   
+                <section> 
+            {% endblock %}
+                
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('tags') }}
+{% endblock javascripts %} 

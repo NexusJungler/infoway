@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mediatheque') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main  {% block class%} main-media {% endblock %} " {% if media_displayed is defined and uploadIsAuthorizedOnPage is defined and uploadIsAuthorizedOnPage is not same as(false) %} data-media_displayed="{{ media_displayed }}" {% endif %}>
+        <div class="main-content">
+
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Médiathèque', 'sousTitle': (sousTitle is defined) ? sousTitle : '' } %}
+            </section>
+
+            <section class="wrapper">
+                <article class="wrapper-content">
+                    <ul class="tabs">
+                        <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias', page: 1}) }}">
+                            <li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('medias') %} active current {% endif %}" data-tab="picture">
+                                <p class="css-tab__label">Medias</p>
+                            </li>
+                        </a>
+                        <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_synchro', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('video_synchro') %} active current {% endif %}" data-tab="tab-totem"> <p class="css-tab__label"> Vidéos Synchro </p> </li></a>
+                        <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_thematic', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('video_thematic') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Vidéos Thématique </p> </li></a>
+                        <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'element_graphic', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('element_graphic') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Éléments graphiques </p> </li></a>
+                        <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'template', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('template') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Templates </p> </li></a>
+                        <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'incruste', page: 1}) }}"><li class="tablinks {% if app.request.attributes.get('_route') is same as('media::showMediatheque') and app.request.attributes.get('_route_params')['mediasDisplayedType'] is same as('incruste') %} active current {% endif %}" data-tab="tab-price"> <p class="css-tab__label"> Incrustations </p> </li></a>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="wrapper_tabcontent">
+                {% block  maincontent %}
+
+                {% endblock %}
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mediatheque') }}
+{% endblock javascripts %}

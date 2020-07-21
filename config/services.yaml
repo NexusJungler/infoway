@@ -1,0 +1,141 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    project_dir: '%kernel.project_dir%'
+    logs_dir: '%kernel.logs_dir%'
+    config_dir: '%kernel.project_dir%/config'
+    doctrine_file_path: '%kernel.project_dir%/config/packages/doctrine.yaml'
+    env_file_path: '%kernel.project_dir%/.env'
+    logoDirectory: '%kernel.project_dir%/public/logo/'
+    pictoDirectory: '%kernel.project_dir%/public/pictogram/'
+    uploadDirectory: '%kernel.project_dir%/public/upload/'
+    logo_dir: '%kernel.project_dir%/public/logo'
+    upload_dir: '%kernel.project_dir%/public/upload'
+    sys_path:
+        #datas: "D:/main"
+        datas: "%kernel.project_dir%/../main"
+
+    authorizedExtensions:
+        - jpg
+        - jpeg
+        - png
+        - bmp
+        - gif
+        - svg
+        - mp4
+        - avi
+        - 3gp
+        - mp3
+        - ppt
+        - pptx
+        - pdf
+        - doc
+        - docx
+    passwordResetTokenTimer: 1 # 1h
+    mailer_user: noreply@infoway.fr
+    mailer_password: Annesivy1974
+    container.dumper.inline_factories: true
+
+services:
+    # default configuration for services in *this* file
+
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $logoDir : '%logoDirectory%'
+            $project_dir : '%project_dir%'
+
+
+    session.flash_bag:
+        class: Symfony\Component\HttpFoundation\Session\Flash\AutoExpireFlashBag
+
+    App\Serializer\Normalizer\IgnoreNotAllowedNulledAttributeNormalizer:
+        tags: [serializer.normalizer]
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Repository/Customer/CustomerRepository.php}'
+
+    App\Repository\Customer\CustomerRepository:
+
+        autowire: true
+        arguments:
+            $entityClass: null
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\EventListener\CustomerListener:
+        tags:
+            -
+                name: doctrine.orm.entity_listener
+                event: postLoad
+                entity: App\Entity\Admin\Customer
+#                # entity_manager attribute is optional
+#                entity_manager: custom
+                # method attribute is optional
+                method: initializeSites
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\EventListener\UserListener:
+        arguments:
+            $doctrine: ['@doctrine']
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Admin\User
+                #                # entity_manager attribute is optional
+                #                entity_manager: custom
+                # method attribute is optional
+              method: initializeSites
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\EventListener\ProductListener:
+
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Customer\Product
+              entity_manager: kfc
+              method: initializeAllergens
+
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\EventListener\Customer\SiteListener:
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Customer\Site
+              entity_manager: kfc
+                #                # entity_manager attribute is optional
+
+                # method attribute is optional
+              method: initializeUsers
+
+
+    App\EventListener\Customer\ProductListener:
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: postLoad
+              entity: App\Entity\Customer\Product
+              entity_manager: kfc
+                #                # entity_manager attribute is optional
+
+                # method attribute is optional
+              method: initializeAllergens          
+
+    Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'

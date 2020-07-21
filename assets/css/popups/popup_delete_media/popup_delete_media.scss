@@ -1,0 +1,39 @@
+.popup_delete_medias_container{
+    &.is_open{
+        .popup{
+            margin: 0 auto;
+            height: 400px;
+            width: 35%;
+
+            .popup_header{
+                height: 12%;
+                border: 1px solid #899CA4;
+                border-radius: 7px 7px 0 0;
+
+                .popup_header_item{
+                    &:first-child{
+                        width: 80%;
+                    }
+                }
+            }
+
+            .popup_body{
+                height: 75%;
+                font: 1.5rem Barlow;
+                .popup_body_item{
+                    padding: 2%;
+                }
+            }
+
+            .popup_footer{
+                height: 13%;
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                .actions_buttons_container{
+                    &:not(:last-child){
+                        margin-right: 2%;
+                    }
+                }
+            }
+        }
+    }
+}

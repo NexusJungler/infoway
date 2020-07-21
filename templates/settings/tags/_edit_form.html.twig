@@ -1,0 +1,204 @@
+{{ form_start(form) }}
+    <div class="row ">
+        <div class="content-tags row" >
+            <div class="content-color">
+                <img src="{{ asset('/build/images/color_picker.png') }}" alt="color_picker">
+                {{ form_widget(form.color, {'attr': {'class': 'tags-color tags-color-edit'} }) }}
+            </div>
+            <div class="show-color">
+                <span class="input-color-edit"></span>
+                {{ form_widget(form.name, {'attr': {'class': 'tags-input'} }) }}
+            </div>
+            <div class="content-desc">
+                {{ form_widget(form.description, {'attr': {'class': 'tags-desc'} }) }}
+            </div> 
+        </div>
+    </div>
+
+
+    <section class="bloc table">
+
+        <article class="bloc-produits ">
+            <div class='title'>
+                <h3>Affecté aux <span class="title-bold">produits</span> :</h3>
+            </div>
+            <table class="table-produits table-custome">
+                <thead class="table-info thead-info">
+                    <tr>
+                        <th>Produits</th>
+                        <th>Ajouter Produits : <button type="button" class="btn btn-produits"><i class="fas fa-align-justify"></i>Produits</button></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-content scrollbar-table">
+                    {% for product in form.products %}
+
+                        {%  set currentProduct = product.vars.data  %}
+                        <tr class="tag__products__product{% if currentProduct not in tag.products %} hidden{% endif %}">
+                            <td class="">
+                                <img src="{{ asset('/build/images/no-available-image.png') }}" alt="no-available-image">
+                            </td>
+                            <td>
+                                <label class="container-input">
+                                    {{ form_widget(product, {'attr': {'class': ''} }) }}
+                                    {{  form_label(product) }}
+                                    <span class="container-rdo"></span>
+                                </label>
+                                {# {{ form_row(product, {'attr': {'class': ''} }) }} #}
+                            </td>
+                        </tr>            
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+
+        <article class="bloc-media">
+            <div class='title'>
+                <h3>Affecté aux <span class="title-bold">médias</span> :</h3>
+            </div>
+            <table class="table-media table-custome">
+                <thead class="table-info thead-info">
+                    <tr>
+                        <th>Médias</th>
+                        <th>Ajouter médias : <button type="button" class="btn"> <i class="fas fa-folder-plus"></i>Médiathèque</button></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-content scrollbar-table" >
+                    {# {% for site in form.sites %} #}
+                        {# <tr>
+                            <td class="">
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>             #}
+                    {# {% endfor %} #}
+                </tbody>
+            </table>
+        </article>
+
+        <div class="bloc-site " >
+            <div class='title'>
+                <h3>Affecté aux <span class="title-bold">sites</span>: </h3>
+            </div>
+            <table class="table-site-custome table-custome">
+                <thead class="table-info thead-info">
+                    <tr>
+                        <th>Site</th>
+                        <th>Ajouter sites : <button type="button" class="btn btn-site"><i class="fas fa-align-justify"></i>Sites</button></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-content affected-site-container scrollbar-table">
+                    {% for site in form.sites %}
+                        {%  set currentSite = site.vars.data  %}
+                        <tr class="tag__sites__site{% if currentSite not in tag.sites %} hidden{% endif %}">
+                            <td >
+                            <label class="container-input">
+                                    {{ form_widget(site, {'attr': {'class': 'tag_sites_' ~ site.vars.value} }) }}
+                                    {{  form_label(site) }}
+                                    <span class="container-rdo"></span>
+                                </label>
+                            </td>
+                        </tr>            
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+
+    <div class="btn-tag-enregistrer">
+        <a href="{{ path('tags_index') }}" class="btn btn-back-tags">Annuler</a> 
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+
+{{ form_end(form) }}
+
+
+<article class="add-popup add-popup-site ">
+
+    <div class="modal">
+
+        <div class="header-modal">
+            <p class="upload-title">Affecter :</p>
+            <button type="button" class="btn btn-popupclose2 ">X</button>
+        </div>
+
+        <div class="popup-site table" >
+            {{ form_start( addSiteForm ) }}
+            <table class="table-site-custome table-custome">
+                <thead class="table-info thead-info">
+                    <tr>
+                        <th>Site</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-content affected-site-container-popup scrollbar-table">
+                    {% for site in addSiteForm.sites %}
+                        {%  set currentSite =  site.vars.data %}
+                        {# <tr class="popup__add-site__site{% if currentSite in tag.sites %} hidden{% endif %}"> #}
+                        <tr class="popup__add-site__site">
+                            <td class="">
+                                {{ form_row(site, {'attr': {
+                                    'checked' : currentSite in tag.sites ,
+                                    'class' : 'tag_sites_' ~ site.vars.value
+                                } }) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {{ form_end( addSiteForm ) }}
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-add-site">Affecter au site</button>
+        </div>
+
+    </div>
+
+</article>
+
+
+<article class="add-popup add-popup-produits">
+
+    <div class="modal">
+
+        <div class="header-modal">
+            <p class="upload-title">Affecter :</p>
+            <button type="button" class="btn btn-popupclose2 ">X</button>
+        </div>
+
+        <div class="popup-site table" >
+            {{ form_start( addProductForm ) }}
+            <table class="table-site-custome table-custome">
+                <thead class="table-info thead-info">
+                    <tr>
+                        <th>Produits</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody tbody-content scrollbar-table">
+                    {% for product in addProductForm.products %}
+                        {%  set currentProduct =  product.vars.data %}
+                        <tr class="popup__add-product__products{% if currentProduct in tag.products %} hidden{% endif %}">
+                        {# <tr class="popup__add-product__products"> #}
+                            <td class="">
+                                {{ form_row(product, {'attr': {
+                                    'checked' : currentProduct in tag.Products ,
+                                    'id' : 'add_product_products_tr' ~ product.vars.value
+                                } }) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {{ form_end( addProductForm ) }}
+        </div>
+
+        <div>
+            <button type="button" class="btn ">Affecter au produit</button>
+        </div>
+
+    </div>
+
+</article>

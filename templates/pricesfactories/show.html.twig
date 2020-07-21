@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Produits {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('show_factories') }}
+{% endblock %}
+
+
+{% block body %}
+    <main class="main main_produits">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'PRODUITS/PRIX', 'sousTitle': '', 'showSecondTitles': false } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <article id="tab-products" class="tab-content current group-price-content">
+
+                    <article class="display product-display ">
+
+                        <div class="display-content">
+
+                            <article class="display-content-columns">
+
+                                <div class="display-content-poste">
+                                    <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                    <div class="display-content-down">
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Tags optionnels
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Type de prix
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Prix Compagnie MEDIUM
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                        <div class="product-select-col">
+                                            <label class="mutliselect-chkbox"> Prix Compagnie PREMIUM
+                                                <input type="checkbox"  checked name="satut"  data-satuts="status" value="">
+                                                <span class="mutliselect-check"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </article>
+
+                            <article id="crud" class="display-btn">
+                                <a class="btn" href="{{ path('app:date') }}" role="button">modification a date</a>
+
+                                <p>Groupe : </p>
+                                <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Type de prix</a>
+                                <a class="btn" href="{{ path('pricesfactory::create') }}" role="button"><i class="fas fa-plus"></i>Ajouter</a>
+                                {# <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button> #}
+                                <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                                <button type="button" class="btn modified-table" id="edit"><i class="far fa-edit"></i>Modifier</button>
+                                <button type="button" class="btn delete-table" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                            </article>
+
+                        </div>
+
+                    </article >
+
+                    {# <button id="add_date">Gestion des dates</button> #}
+
+                    <article id="" class="">
+                        <div class="table table-gp-prix">
+                            <div class="table-gp-prix-left">
+                                <div class="btn-download-model">
+                                    <a href="http://www.alsacreations.com/css/img/picto-quiz.png" download="Pacman_Kiwi" class="btn-medele">Trame modèle vierge</a>
+                                    <a href="http://www.alsacreations.com/css/img/picto-quiz.png" download="Pacman_Kiwi" class="btn-medele">Exporter produits</a>
+                                </div>
+                                <form method="post" action="{{ path('pricesfactories::delete') }}">
+                                    <table id="list" class="table-custome">
+                                        <thead class="thead-info">
+                                            <tr>
+                                                <th>Sélect.</th>
+                                                <th>Groupe de prix</th>
+                                                <th>Devise</th>
+                                                <th>Télécharger Prix</th>
+                                                <th>Voir Sites</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody tbody-content">
+                                        {% for factory in factories %}
+
+                                            <tr class="{{factory.id}}">
+                                                <td>
+                                                <label class="container-input">
+                                                    <input type="checkbox" name="factories[{{ factory.id }}]" class="factory">
+                                                    <span class="container-rdo"></span>
+                                                </label>
+                                                <td>{{ factory.name }}</td>
+                                                <td>EURO</td>
+                                                <td><i class="fa fa-download" aria-hidden="true"></i></td>
+                                                <td class="site">
+                                                    <button type="bitton" class="btn"><i class="fas fa-arrow-right"></i></button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+
+                            <div class="table-gp-prix-right">
+                                <div class="title">
+                                    <p>Sites | <span>Prix libres</span></p>
+                                </div>
+                                <form method="post" action="">
+                                    <table id="list" class="table-custome">
+                                        <thead class="thead-info">
+                                            <tr>
+                                                <th>nom des sites</th>
+                                                <th>Ville</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody tbody-content">
+                                                <tr>
+                                                    <td class="site">
+                                                        <p>
+                                                            <span>Test</span>
+                                                            {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
+                                                        </p>
+                                                    </td>
+                                                    <td>Dumbea</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td class="site">
+                                                        <p>
+                                                            <span>Test</span>
+                                                            {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
+                                                        </p>
+                                                    </td>
+                                                    <td>Dumbea</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td class="site">
+                                                        <p>
+                                                            <span>Test</span>
+                                                            {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
+                                                        </p>
+                                                    </td>
+                                                    <td>Dumbea</td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        
+                        <button id="display_prices" class="btn"><p class='btn-text-show'>Afficher les prix </p></button>
+
+                        <section id="display_prices">
+                            <form method="post" action="{{ path('pricesfactories::saveprices') }}">
+                                <table></table>
+                                <button id="prices_validate">Valider les modifications</button>
+                            </form>
+                        </section>
+
+                    </article>
+
+                </article>
+            </section>
+
+        </div>    
+    <main>
+    
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('show_factories') }}
+    {% endblock javascripts %}
+
+{% endblock %}

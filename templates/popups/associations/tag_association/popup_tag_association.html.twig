@@ -1,0 +1,98 @@
+<section class="popup_container association_popup_container popup_associate_tag_container is_open">
+
+    <article class="popup popup_associate_tag association_popup">
+
+        <div class="popup_header">
+
+            <div class="left_side popup_header_item">
+                {#<div class="item icon-container">#}
+                    {#<i class="fas fa-link icon"></i>#}
+                {#</div>#}
+
+                <div class="item title_container">
+                    <p class="title">TAGS à affecter à :</p>
+                </div>
+
+                <div class="item media_name_container">
+                    <p class="media_name"></p>
+                </div>
+
+            </div>
+
+            <div class="right_side popup_header_item">
+
+                <div class="item close_popup_button_container">
+                    <button type="button" class="close_modal_button">X</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="popup_body">
+
+            <div class="popup_body_item container">
+
+                <div class="container_body scrollbar-table">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <button class="btn btn-add-container-tag">
+                                        <span class="mini-cercle"><i class="fas fa-plus" aria-hidden="true"></i></span> Créer TAG
+                                    </button>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody class="tag_list">
+                            {% for tag in tags %}
+                                <tr data-tag_id="{{ tag.id }}">
+                                    <td>
+                                        <label class="container-input">
+                                            <input type="checkbox" class="choice_tag">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <p class="container-tags">
+                                            <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                            <span class="current-tags-name">{{ tag.name }}</span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="tag_description_container">
+                                            {{ tag.description }}
+                                        </p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="popup_footer popup_item_container">
+
+            <div class="actions_buttons_container">
+                <button class="btn close_modal_button cancel" type="button">Annuler</button>
+            </div>
+
+            <div class="actions_buttons_container">
+                <button class="btn validate_association_btn" type="button" disabled>Affecter au média </button>
+            </div>
+
+        </div>
+
+    </article>
+
+</section>

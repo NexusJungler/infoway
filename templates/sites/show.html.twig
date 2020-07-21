@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Site{% endblock %}
+
+{% block body %}
+    <h1>Site</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ site.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ site.name }}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{ site.adress }}</td>
+            </tr>
+            <tr>
+                <th>PostalCode</th>
+                <td>{{ site.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ site.city }}</td>
+            </tr>
+            <tr>
+                <th>PhoneNumber</th>
+                <td>{{ site.phoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>Observations</th>
+                <td>{{ site.observations }}</td>
+            </tr>
+            <tr>
+                <th>CountryId</th>
+                <td>{{ site.countryId }}</td>
+            </tr>
+            <tr>
+                <th>TimezoneId</th>
+                <td>{{ site.timezoneId }}</td>
+            </tr>
+            <tr>
+                <th>CustomerId</th>
+                <td>{{ site.customerId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sites_index') }}">back to list</a>
+
+    <a href="{{ path('sites_edit', {'id': site.id}) }}">edit</a>
+
+    {{ include('sites/_delete_form.html.twig') }}
+{% endblock %}

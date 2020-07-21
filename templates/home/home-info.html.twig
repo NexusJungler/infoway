@@ -1,0 +1,26 @@
+<article class="jumbotrom-wrapper">
+
+    <div class="page__title">
+        <div class="page__title-content">
+            <div class="page__title--img">
+                <img src="{{ '/build/images/home_blanc.png' }}" alt="home">
+            </div>
+            <h1> {{ pageTitle }} </h1>
+        </div>
+
+        <div class="page__title-content-info">
+            {% if sousTitle is defined and sousTitle is not empty %}
+                <span class="page__tilte-cercle"></span>
+                <h2 id="settings" class="tab-content current">{{ sousTitle }}</h2>
+            {% endif %}
+        </div>
+        
+    </div>
+
+    <div class="search__form">
+        <form action="" method="get">
+            <input type="text" name="query" placeholder="Rechercher un élément...">
+            <button><img src="{{ asset('/build/images/search_icon.png') }}" class="search_icon" alt="search icon"></button>
+        </form>
+    </div>
+</article>

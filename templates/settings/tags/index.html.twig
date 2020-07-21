@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Tags{% endblock %}
+
+{% block stylesheets %}
+    {{ parent()}}
+    {{ encore_entry_link_tags('tags') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main-tags">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Tags', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            {% block maincontent %}
+                <section class="wrapper_tabcontent wrapper-tags">
+                    <div id="setting-tags" class="tab-content current tags">
+
+                        <article class="tab-content-title">
+                            <h3 class="title">Gestion des TAGS</h3>
+                            {# <p>SUPER WILD COFFEE</p> #}
+                        </article>
+
+                        {{ form_start( tagsActionForm)  }}
+                            <article class="display setting-display ">
+                                <div class="display-content">
+                                    <div class="display-btn">
+                                        <a href="{{ path('tags_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer TAG</a>
+                                        <button type="button" class="btn duplicate-tag"><i class="fas fa-plus"></i>Dupliquer</button>
+                                        <button type="button" class="btn modified-tag" ><i class="fas fa-edit"></i>Mofifier</button>
+                                        <button class="btn delete-tag-popup"><i class="fas fa-plus"></i>Supprimer</button>
+                                    </div>
+                                </div>
+                            </article>
+
+                        <article class="content-tags table">
+                            <table class="table-custome">
+                                <thead class="table-info thead-info">
+                                    <tr>
+                                        <th>Critères</th>
+                                        <th>Description du critère</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody tbody-content scrollbar-table">
+                                    {% for tag in tagsActionForm.tags  %}
+                                        {% set currentTag = tag.vars.data  %}
+                                        <tr class="tags-poster" id="col-tag{{loop.index}}">
+                                            <td>
+                                                <label class="container-input">
+                                                    {{ form_widget(tag, {'attr': {'class': 'chkbox-tag'}} ) }}
+                                                    <span class="container-rdo-tags"></span>
+                                                </label>
+                                                <p class="container-tags">
+                                                    <span class="mini-cercle" style="background: {{currentTag.color}};"></span>
+                                                    <span class="current-tags-name">{{ currentTag.name }}</span>
+                                                    {# <button type="button" id="delete-tag{{loop.index}}" class="btn-delete-tag">x</button> #}
+                                                </p>
+                                            </td>
+                                            <td class="container-tags-desc"><p class="cercle-desc">{{ currentTag.description }}<p></td>
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </article>
+
+
+                        <article class="add-popup popup-confirmation add-popup-delete ">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">Configuration de la suppression</p>
+                                    <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                                    <div class="selected-tags-list" >
+                                    </div>
+                                </div>
+                                <div class="footer-modal">
+                                    {{ form_widget(tagsActionForm.delete, {
+                                        'label': 'OUI',
+                                        'attr':{'class': 'btn delete-tag' }
+                                    }) }}
+                                    <button type="button" class="btn btn-popupclose">NON</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="add-popup popup-confirmation add-popup-edit">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">modification</p>
+                                    <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>voulez vous modifier ?</p>
+                                    <div class="selected-tags-list" >
+                                    </div>
+                                </div>
+                                <div class="footer-modal">
+                                    {{ form_widget(tagsActionForm.edit, {
+                                        'label': 'OUI',
+                                        'attr':{'class': 'btn' }
+                                    }) }}
+                                    <button type="button" class="btn btn-popupclose">NON</button>  
+                                </div>
+                            </div>
+                        </article>
+
+                        {{ form_end( tagsActionForm ) }}
+                    </div>
+                </section>
+            {% endblock %}
+
+            
+                
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('tags') }}
+{% endblock javascripts %} 

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Critéres{% endblock %}
+
+{% block body %}
+<main class="main main_setting">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critères', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section>
+
+                {% block maincontent %}
+                    <section class="wrapper_tabcontent">
+                        <div id="setting-criteres" class="tab-content current create-criteres">
+
+                            <article class="tab-content-criteres-form">
+                                <div class="tab-content-title">
+                                    <h3 class="title">Créer liste de Critéres</h3>
+                                </div>
+                                
+                                {{ include('criterion_list/_form.html.twig') }}
+
+                                <a href="{{ path('criterions_lists_index') }}">back to list</a>
+                            </article>
+                              
+                        <div>
+                    <section>
+                {% endblock %}
+                
+            </section>
+
+        </div>
+    </main>
+{% endblock %}

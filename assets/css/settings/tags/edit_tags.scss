@@ -1,0 +1,382 @@
+.border-input{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 0.1rem solid #C0CCD1;
+    border-radius: 0.9rem;
+    height: 3rem;
+}
+
+.edit-tags{
+    .btn{
+        padding: 0.06rem 0.7rem 0.2rem;
+        i{
+            margin-right: 0.6rem;
+        }
+    }
+}
+
+.edit-tags{
+    .content-tags{
+        display: flex;
+        margin-top: 3rem;
+        background: #B1C1C8 0% 0% no-repeat padding-box;
+        border: 1px solid #707070;
+        height: 10rem;
+        padding: 3.3rem 4.5rem;
+        width: 100%;
+        .content-color{
+            width: 6%;
+            position: relative;
+            img{
+                position: relative;
+                z-index: 1;
+                display: none;
+            }
+        }
+        .show-color{
+            width: 17%;
+            position: relative;
+            .input-color-edit {
+                top: 0.7rem;
+                left: 0.7rem;
+                position: absolute;
+                height: 1.6rem;
+                width: 1.6rem;
+                border-radius: 50%;
+                background-color: black;
+            }
+        }
+        .content-desc{
+            width: 75%;
+        }
+        .tags-color{
+            position: relative;
+            top:0.3rem;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+        .tags-input{
+            @extend .border-input;
+            width: 80%;
+            max-width: 100%;
+            padding: 0.6rem 1rem;
+            font:  1.6rem 'Barlow';
+            padding-left: 2.8rem;
+        }
+        .tags-desc{
+            @extend .border-input;
+            width: 100rem;
+            max-width: 100%;
+            padding: 0.2rem 1rem;
+            font:  1.6rem 'Barlow' ;
+            position: relative;
+        }
+    }
+}
+
+.edit-tags{
+    .bloc{
+        display: flex;
+        margin-top: 3rem;
+        .title{
+            font:  2.5rem "Barlow";
+            color: #4D646D;
+            margin-bottom: 1.5rem;
+            .title-bold{
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+        .bloc-produits{
+            margin-right: 3rem;
+            height: 55rem;
+            
+            .table-produits{
+                width: 100% ;
+                max-width: 54.5rem;
+                .thead-info{
+                    th{
+                        font:  1.6rem 'Barlow';
+
+                        &:nth-child(1){
+                            text-align: left;
+                            width: 40%;
+                            border: 0;
+                        }
+                        &:nth-child(2){
+                            width: 60%;
+                            text-align: right; 
+                        }
+                    }
+                }
+                .tbody{
+                    height: 50rem;
+                    max-height: 50rem;
+                    display: block;
+                    overflow: auto;
+                    tr{
+                        td{
+                            border: 0;
+                            &:nth-child(1){
+                                width: 40%;
+                                img{
+                                    width: 17.1rem;
+                                    height: 10.9rem;
+                                    border: 0.1rem solid #707070;
+                                    border-radius: 0.6rem;
+                                }
+                            }
+                            &:nth-child(2){
+                                width: 60%;
+                                position: relative;
+                                vertical-align: middle;
+                                input{
+                                    position: absolute;
+                                    right: 1rem;
+                                }
+                            } 
+                        }
+                    }
+                }
+            }
+            .container-input .container-rdo {
+                position: absolute;
+                top: -0.1rem;
+                left: 83%;
+                height: 2.3rem;
+                width: 2.3rem;
+                background: #4D646D;
+                border-radius: 0.3rem;
+                border: 0.1rem solid #4D646D;
+                &:after {
+                    content: "x";
+                    color: white;
+                    font-size: 2.6rem;
+                    font-weight: 600;
+                    position: absolute;
+                    top: -1.4rem;
+                    left: 0.4rem;
+                    width: 1.9rem;
+                    height: 1.9rem;
+                    border-radius: 0.3rem;
+                    background: none;
+                }
+            }
+        }
+
+        .bloc-media{
+            margin-right: 3rem;
+            .table-media{
+                width: 100%;
+                max-width: 54.5rem;
+                .thead-info{
+                    th{
+                        font:  1.6rem 'Barlow';
+                        &:nth-child(1){
+                            width: 40%;
+                            border: 0;
+                            text-align: left;
+                        }
+                        &:nth-child(2){
+                            width: 60%;
+                            text-align: right;
+                        }
+                    }
+                }
+                .tbody{
+                    height: 50rem;
+                    max-height: 50rem;
+                    display: block;
+                    overflow: auto;
+                    overflow: auto;
+                }
+            }
+        }
+
+        .bloc-site{
+            .table-site-custome{
+                width: 100%;
+                max-width: 39rem;
+                .thead-info{
+                    th{
+                        font:  1.6rem 'Barlow';
+
+                        &:nth-child(1){
+                            width: 40%;
+                            border: 0;
+                            text-align: left;
+                            padding-left: 2rem;
+                        }
+                        &:nth-child(2){
+                            width: 60%;
+                            text-align: right;
+                        }
+                    }
+                }
+                .tbody{
+                    height: 50rem;
+                    max-height: 50rem;
+                    display: block;
+                    overflow: auto;
+                    tr{
+                        td{
+                            padding: 1rem 1.5rem;
+                            width: 100%;
+                            position: relative;
+                            border: 0;
+                            input{
+                                position: absolute;
+                                right: 1.0rem;
+                            }
+                        }
+                    }
+                }
+            }
+            .container-input .container-rdo {
+                top: 0.3rem;
+                background: #4D646D;
+            }
+        }
+
+        .table{
+            .thead-info{
+                border: 0.1rem solid #899CA4;
+                background: #C0CCD1 0% 0% no-repeat padding-box;
+                width: 100%;
+                border-radius: 0;
+                &::after{
+                    display: none;
+                }
+                th{
+
+                    padding: 1.5rem 0px;
+                    display: inline-block;
+                }
+            }
+            .tbody{
+                border: 0.1rem solid #899CA4;
+                border-top: 0;
+                height: 35rem;
+                max-height: 35rem;
+                display: block;
+                overflow: auto;
+                tr{
+                    &:nth-child(even){
+                        background: #FFFFFF 0% 0% no-repeat padding-box;
+                        border: 0;
+                    }
+                    td{
+                        border: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.edit-tags{
+    .btn-tag-enregistrer{
+        margin-top: 2rem;
+        text-align: center;
+        .btn-back-tags{
+            margin-right: 30rem;
+        }
+    }
+}
+
+.edit-tags{
+
+    .add-popup{
+        background: transparent;
+        width: 100%;
+        top: -8rem;
+        .modal {
+            margin: 0 auto;
+            margin-top: 25%;
+            position: relative;
+            border: 0.1rem solid #4D646D;
+            padding: 0;
+            width: 25%;
+            height: 53%;
+            background-color: #ddd;
+            color: #231D23;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.4);
+        }
+        .header-modal{
+            background: #4D646D 0% 0% no-repeat padding-box;
+            display: flex;
+            padding:0.8rem;
+            color: white;
+            .btn{
+                margin-top: -0.3rem;
+                position: absolute;
+                background: #FF4040;
+                right: 0.3rem;
+            }
+        }
+        .btn{
+            margin-top: 1rem;
+        }
+    }
+
+    .popup-site{
+        display: inline-flex;
+        padding: 2rem;
+    }
+
+    .table-site-custome{
+        .tbody{
+            height: 24rem;
+            max-height: 24rem;
+            display: block;
+            tr{
+                height: 11%;
+                td{
+                    font:  1.6rem 'Barlow';
+
+                    div{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    input {
+                        margin-top: 8px;
+                        margin-right: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.edit-tags {
+    .container-input .container-rdo {
+        position: absolute;
+        top: -1px;
+        left: 83%;
+        height: 2.3rem;
+        width: 2.3rem;
+        background: #4D646D;
+        border-radius: 0.3rem;
+        border: 0.1rem solid #4D646D;
+        font-family : "Barlow" ;
+    }
+    .container-input .container-rdo:after {
+        content: "x";
+        color: white;
+        font-size: 2.6rem;
+        font-weight: 600;
+        position: absolute;
+        display: none;
+        top: -1.4rem;
+        left: 0.4rem;
+        width: 1.9rem;
+        height: 1.9rem;
+        border-radius: 0.3rem;
+        background: none;
+    }
+}
+
+

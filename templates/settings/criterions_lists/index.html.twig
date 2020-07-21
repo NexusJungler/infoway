@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Gestion des Critéres {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('criterion') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main_criterion">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critères', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            {% block maincontent %}
+                <section class="wrapper_tabcontent">
+                    <div id="setting-criteres" class="tab-content current tab-content-criteres content-criterion">
+
+                        <article class="tab-content-title">
+                            <h3 class="title">Gestion des Critéres</h3>
+                            <p>SUPER WILD COFFEE</p>
+                        </article>
+
+
+                        <article class="display setting-display ">
+                            <div class="display-content">
+                                <div class="display-btn">
+                                    <a href="{{ path('criterions_lists_new') }}"  class="btn" ><i class="fas fa-plus"></i>Créer Critère</a>
+                                    <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn btn-popup-edit-criterion"><i class="far fa-edit"></i>Modifier</button>
+                                    <button type="button" class="btn btn-popup-delete-criterion" data-tablelistdelete="site"><i class="fas fa-trash"></i>Supprimer</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="content-criterion_list">
+                            <ul>
+                                {%  for criterions_list in criterions_lists  %}
+                                    <li class="row-criterion">
+                                        {{ include('settings/criterions_lists/_criterions_list.html.twig') }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        <article>
+
+                        <article class="add-popup popup-confirmation add-popup-delete ">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">Configuration de la suppression</p>
+                                    <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                                    <div class="selected-tags-list" >
+                                    </div>
+                                </div>
+                                <div class="footer-modal">
+
+                                    <button type="button" class="btn btn-popupclose">NON</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="add-popup popup-confirmation add-popup-edit">
+                            <div class="modal">
+                                <div class="header-modal">
+                                    <p class="upload-title">modification</p>
+                                    <button type="button" class="btn-popupclose"><i class="fas fa-window-close"></i></button>
+                                </div>
+                                <div class="content-modal" >
+                                    <p>voulez vous modifier ?</p>
+                                    <div class="selected-tags-list" >
+                                    </div>
+                                </div>
+                                <div class="footer-modal">
+                                    <button type="button" class="btn modified-criterion">OUI</button>
+                                    <button type="button" class="btn btn-popupclose">NON</button>
+                                </div>
+                            </div>
+                        </article>
+
+                    <div>
+                <section>
+            {% endblock %}
+                
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}  
+    {{ encore_entry_script_tags('criterion') }}
+{% endblock javascripts %}
+

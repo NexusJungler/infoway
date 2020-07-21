@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main main-info">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Info' } %}
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <article class="display site-display ">
+                    <div class="display-content">
+                        <div class="display-content-columns">
+                            <div class="display-content-poste">
+                                <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                <div class="display-content-down">
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox" > Société / Marque
+                                            <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Societe" value="" >
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox"> Groupe de prix
+                                            <input type="checkbox"  checked name="satut"  data-tableDeleteCol="Groupe" value="">
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox"> Critéré sélectif obligatoire</span>
+                                            <input type="checkbox"  name="satut"  data-tableDeleteCol="selectif" value="">
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="mutliselect-chkbox"> Critérés
+                                            <input type="checkbox"  checked name="satut"  data-tableDeleteCol="critere" value="">
+                                            <span class="mutliselect-check"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="display-btn">
+                            <p>Prodits : </p>
+                            <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button>
+                            <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
+                            <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
+                            <button type="button" class="btn delete-table"><i class="fas fa-trash"></i>Supprimer</button>
+                            <button type="button" class="tags-table">TAG</button>
+                        </div>
+                    </div>
+                </article > 
+
+                <article id="table">
+                    <table class="table-custome">
+                        <thead  class="table-info">
+                            <tr>
+                                <th>Site SWC</th>
+                                <th class="header__item Societe">
+                                    <a id="f-name" class="filter" href="#">
+                                        Société / Marque
+                                    </a>
+                                </th>
+                                <th>
+                                    Groupe de prix
+                                </th>
+                                <th id="f-tags">
+                                    Critéré sélectif obligatoire<span> (l'un ou l'autre)</span>
+                                </th>
+                                <th>
+                                    Critérés
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td ><input type="checkbox" name="select">Q040</td>
+                                <td class="Societe">Quick cie </td>
+                                <td>MEDIUM</td>
+                                <td>NAT</td>
+                                <td>Ptit Dej Gouter Anniv</td>                  
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select">Q041</td>
+                                <td class="Societe">Jack Russell</td>
+                                <td >PREMIUM</td>
+                                <td class="selectif">HALAL</td>
+                                <td>Ptit Dej Gouter</td>     
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="select">Q042</td>
+                                <td class="Societe">Quick cie </td>
+                                <td>MEDIUM</td>
+                                <td>NAT</td>
+                                <td>Ptit Dej Anniv</td>  
+                            </tr>
+                        </tbody>
+                        
+                    </table>    
+                </article>  
+
+            </section>
+        </div>
+    </main>
+    
+{% endblock %}

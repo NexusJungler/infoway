@@ -1,0 +1,7 @@
+#doctrine_migrations:
+#    dir_name: '%kernel.project_dir%/src/Migrations/Default'
+#    namespace: DoctrineMigrations
+
+migrations_directory: "./src/Migrations/Default"
+migrations_namespace: DoctrineMigrations
+table_name: migration_versions

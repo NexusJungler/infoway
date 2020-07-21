@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Catégories {% endblock %}
+
+ {% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('show_categories') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main main_setting">    
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Paroduits', 'sousTitle': 'catégories', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_produits.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            <section class="wrapper_tabcontent">
+                <div id="tab-categories" class="tab-content current content-categories">
+
+                    <article class="display setting-display ">
+
+                        <div class="display-content">
+                            <div class="display-btn">
+                                <p> Catégorie : </p>
+                                <button type="button" class="btn" ><a href="{{ path('category::create') }}"><i class="fas fa-plus"></i>Ajouter</a></button>
+                                <button type="button" class="btn btn_hidden" ><a id="edit" href="{{ path('category::edit', {'category': 1}) }}"><i class="far fa-edit"></i> Modifier</a></button>
+                                {# <button type="button" class="btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button> #}
+                                <button type="button" class="btn btn_hidden" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="checkbox_verification"  class="content-categories-show table">
+
+                        <div class="content-categories-show-left table-categories">
+                            <div class="content-categories-show_header">
+                                <button type="button" class="btn_file color_gray"><i class="fas fa-file-export"></i>Exporter produits</button>
+                            </div>
+                            <form method="post" action="{{ path('categories::delete') }}">
+                                <table id="list" class="table-custome">
+                                    <thead class="thead-info thead-content">
+                                        <tr>
+                                            <th>Sélect.</th>
+                                            <th>Catégorie</th>
+                                            <th>Mention</th>
+                                            <th>Tèlécharger liste</th>
+                                            <th>Images</th>
+                                            <th>Voir produits</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        {% for category in categories %}
+                                            <tr>
+                                            {# {{dump(category.logo)}} #}
+                                                <td>
+                                                    <label class="container-input">
+                                                        <input type="checkbox" name="categories[{{ category.id }}]">
+                                                        <span class="container-rdo-tags"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{{ category.name }}</td>
+                                                <td><p>{{ category.note }}</p></td>
+                                                <td><a href="/ExcelFile.xlsx" download > <i class="fas fa-download"></i></a></td>
+
+                                                <td><i class="fas fa-eye"></i></td>
+                                                {#<td><img src="images/{{ category.logo }}" class="image-td"></td>#}
+                                                <td><button type="button" class="btn"><i class="fas fa-align-justify"></i><i class="fas fa-arrow-right"></i></button></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+                
+                        </div>
+                        <div class="content-categories-show-right">
+
+                            <div class="content-categories-show_header">
+                                <h2>Produits</h2>
+                                <span>Finger food</span>
+                            </div>
+
+                            <div >
+                                <table class="table-custome">
+                                    <thead class="thead-info thead-content">
+                                        <tr>
+                                            <th>Nom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody tbody-content scrollbar-table">
+                                        <tr>
+                                            <td>Cheesy Trio</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cheesy Trio</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cheesy Trio</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+        </div>
+    </main>    
+    
+    {% block javascripts %}
+        {{ parent() }}
+       {{ encore_entry_script_tags('show_categories') }}
+    {% endblock javascripts %}
+
+{% endblock %}

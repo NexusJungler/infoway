@@ -1,0 +1,178 @@
+$border--radius : 0.6rem ;
+$color--dark--grey : #4D646D ;
+
+/****************************************************** TABLE *******************************************************/
+
+.table{
+    width: 100%;
+    .table-custome{
+        border-collapse: collapse;
+        border-radius: 0.5rem 0 0 0;
+        overflow: hidden;
+        width: 100%;
+        thead, tbody tr{
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .thead-info,
+        .thead-content {
+            position: relative;
+            background: #899CA4 0 0 no-repeat padding-box;
+            border-top: 0.1rem solid  $color--dark--grey;
+            border-left: 0.1rem solid  $color--dark--grey;
+            width: calc( 100% - 1.8rem );
+            &::after{
+                content: "";
+                background: #899CA4 0 0 no-repeat padding-box;
+                height: 100%;
+                width: 1.8rem;
+                position: absolute;
+                right: -1.8rem;
+                top: -0.1rem;
+                border-radius: 0 0.5rem 0 0;
+                border-top: 0.1rem solid $color--dark--grey;
+                border-right: 0.1rem solid $color--dark--grey;
+                border-bottom: 0.1rem solid $color--dark--grey;
+            }
+            th{
+                font: 1.3rem "Barlow";
+                color: #FFFFFF;
+                padding: 0.5rem 1rem;
+                position: relative;
+                width: 10%;
+                &:first-child{
+                    width: 15%;
+                }
+                span{
+                    font: 1.4rem 'Barlow';
+                }
+                input{
+                    margin: 0 0.5rem 0 0 ;
+                }
+            }
+        }
+
+        .tbody-content{
+            border: 0.1rem solid #4D646D;
+            tr:nth-child(2n+2) {
+                background: #ffffff 0 0 no-repeat padding-box;
+            }
+            td {
+                padding: 0.2rem 0.5rem 0.6rem 0.5rem;
+                border-right: 0.1rem solid #AAAAAA;
+                width: 20%;
+                &:first-child{
+                    width: 15%;
+                }
+                input{
+                    margin: 0 1.5rem 0 0;
+                }
+            }
+        }
+    }
+}
+
+.table{
+    .table-associations{
+        width: 100%;
+        thead, tbody tr{
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            color: #4D646D;
+        }
+        .thead-associations{
+            background: #C0CCD1 0% 0% no-repeat padding-box;
+            border: 0.1rem solid #899CA4;
+            position: relative;
+            th{
+                font: 0.8rem 'Barlow', medium;
+                padding: 1rem 1rem;
+                position: relative;
+                &:nth-child(1){
+                    width: 40%;
+                    border: 0;
+                    text-align: center;
+                    font-size: 2.3rem;
+                }
+                &:nth-child(2){
+                    font: 1.3rem "Barlow";
+                    width: 60%;
+                    text-align: right;
+                }
+            }
+        }
+
+        .tbody-associations{
+            height: 50rem;
+            max-height: 50rem;
+            overflow: auto;
+            display: block;
+            border: 0.1rem solid #899CA4;
+            border-top: 0;
+            .content-assigned-image{
+                width: 17.1rem;
+                height: 10.9rem;
+                border: 0.1rem solid #707070;
+                border-radius: 0.6rem;
+                padding: 0.1rem;
+                margin-left: 1rem;
+                .img-product{
+                    width: 100%;
+                    height: 100%;
+                    padding: 0.1rem;
+                    border-radius: $border--radius;
+                }
+            }
+            tr{
+                font-size: 1.7rem;
+                td{
+                    padding: 1rem;
+                    &:nth-child(1){
+                        width: 40%;
+                    }
+                    &:nth-child(2){
+                        position: relative;
+                        vertical-align: middle;
+                    }
+                }
+                .td-custome_padding{
+                    padding: 0.9rem 3.5rem 0.9rem 3.5rem;
+                }
+                &:nth-child(even){
+                    background: #FFF 0% 0% no-repeat padding-box;
+                }
+            }
+        }
+    }
+
+    .container-input{
+        font-size: 1.7rem;
+        color: #4D646D;
+        .container-rdo {
+            position: absolute;
+            top: -0.1rem;
+            left: 93%;
+            height: 2.3rem;
+            width: 2.3rem;
+            background: #4D646D;
+            border-radius: 0.3rem;
+            border: 0.1rem solid #4D646D;
+            &:after {
+                content: "x";
+                color: white;
+                font-size: 2.6rem;
+                font-weight: 600;
+                position: absolute;
+                top: -1.4rem;
+                left: 0.4rem;
+                width: 1.9rem;
+                height: 1.9rem;
+                border-radius: 0.3rem;
+                background: none;
+            }
+        }
+    }
+}

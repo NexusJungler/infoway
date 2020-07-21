@@ -1,0 +1,26 @@
+.popup_loading_container{
+  &.is_open{
+
+    .popup{
+
+      height: 30%;
+      width: 30%;
+      .popup_header{
+        height: 13%;
+      }
+
+      .popup_body{
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+
+      }
+
+    }
+
+  }
+
+}

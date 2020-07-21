@@ -1,0 +1,289 @@
+@import '../../general/input-rdo';
+
+
+
+.main-tags {
+    .display {
+        padding-top: 20px;
+
+        &::after {
+            left: 0;
+        }
+
+        .display-btn {
+            .hide-btn {
+                pointer-events: none;
+                background: #ABBBC0;
+                border: 0.06rem solid white;
+            }
+        }
+    }
+}
+
+
+.main-tags{
+    // Tableau TagsList
+    .content-tags{
+        .table-custome{
+            border-radius: 0;
+            border: 1px solid #899CA4;
+            .thead-info{
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                border: 0px;
+                width: 100%;
+                &::after{
+                    display: none;
+                }
+                th{
+                    color: #4D646D;
+                    &:first-child{
+                        text-align: center;
+                        left: 25px;
+                        width: 27%;
+                        font: 1.3rem "Barlow";
+
+                    }
+                    &:last-child{
+                        text-align: left;
+                        width: 80%;
+                        font: 1.3rem "Barlow";
+
+                    }
+                }
+                
+            }
+            .tbody-content{
+                background: #EBEBEB 0% 0% no-repeat padding-box;
+                padding: 20px 60px 20px 20px;
+                height: 350px;
+                max-height: 350px;
+                display: block;
+                overflow: auto;
+                border: 0;
+                tr{
+                    margin: 5px 0;
+                    background: #EBEBEB 0% 0% no-repeat padding-box;
+                    height: 15%;
+                    td{
+                        border: 0;
+                        padding: 0;
+                        text-align: center;
+                        background: #EBEBEB 0% 0% no-repeat padding-box;
+                        &:first-child{
+                            width: 11%;
+                        }
+                        &:nth-child(2){
+                           text-align: left; 
+                        }
+                        .cercle-desc{
+                            height: 30px;
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 1px solid #899CA4;
+                            border-radius: 9px;
+                            padding: 3px 5px 0 10px;
+                            width: 100%;
+                            max-width: 100%;
+                            font:16px "Barlow";
+                            color: #283338;
+                        }
+                        input{
+                            margin-left: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    // Style Tags
+
+    .tags{
+        // padding-left: 35px;
+        .content-tags{
+            margin-top: 110px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1000px;
+            max-width: 100%;
+            height: 460px;
+            .tags-poster{
+                padding: 20px 10px 30px;
+                text-align: center;
+                height: 100%;
+                .container-input{
+                    .container-rdo-tags {
+                        position: absolute;
+                        top: 5px;
+                        left: 25px;
+                        height: 16px;
+                        width: 16px;
+                        background-color: white;
+                        border-radius: 3px;
+                        border: 1px solid #4D646D;
+                    }
+                }
+                .container-tags{
+                    position: relative;
+                    //display: block;
+                    height: 25px;
+                    padding: 3px 14px 3px 19px;
+                    background: #F6F6F6 0% 0% no-repeat padding-box;
+                    border: 1px solid #4D646D;
+                    border-radius: 1.375rem rem(11px)  rem(11px)  1.375rem ;
+                    font: 14px 'Barlow';
+                    text-align: center;
+                    color: #283338;;
+                    width: 50%;
+                    justify-content: center;
+                    display: inline-block;
+                    .mini-cercle{
+                        position: absolute;
+                        left: 4px;
+                        top: 3px;
+                        width: 17px;
+                        height: 17px;
+                        background: #e8e4e4 0% 0% no-repeat padding-box;
+                        border: 1px solid #707070;
+                        border-radius: 50%;
+                        margin-right: 0.6rem;
+                    }
+                    .btn-delete-tag{
+                        position: absolute;
+                        top: 0px;
+                        right: 0;
+                        border: 0;
+                        background-color: transparent;
+                        font-size: 17px;
+                    }
+                }
+
+                .btn-delete-tag{
+                    position: absolute;
+                    top: 4px;
+                    right: 88px;
+                    background-color: transparent;
+                    border: 0;
+                    font-size: 16px;
+                }
+                
+            }
+        }
+    }
+}
+
+.main-tags{
+    .tags{
+        .add-popup{
+            background: transparent;
+            width: 100%;
+            
+            .modal {
+                margin: 0 auto;
+                margin-top: 10%;
+                position: relative;
+                border: 1px solid #4D646D;
+                padding: 0px;
+                width: 35%;
+                height: auto;
+                max-height: 40%;
+                background-color: #ddd;
+                color: #231D23;
+                text-align: center;
+                overflow: hidden;
+                box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+                border-radius: 10px 10px 0px 0px;
+            }
+            .header-modal{
+                background: #4D646D 0% 0% no-repeat padding-box;
+                display: grid;
+                padding:14px;
+                color: white;
+                text-align: center;
+                button{
+                    position: absolute;
+                    top: 19px;
+                    right: 12px;
+                    background-color: white;
+                    box-shadow: none;
+                    padding: 0;
+                    margin: 0;
+                    border: 0;
+                    height: 16px;
+                    width: 18px;
+                    i{
+                        right: 3px;
+                        color: #F57171;
+                        font-size: 22px;
+                        position: relative;
+                        top: -3px;
+                    }
+                }
+            }
+            .content-modal{
+                background-color: white;
+                height: 60%;
+                padding: 20px;
+                .selected-tags-list{
+                    height: auto;
+                    max-height: 100px;
+                    display: block;
+                    overflow: auto;
+                }
+            }
+            .footer-modal{
+                background: #E3E3E3 0% 0% no-repeat padding-box;
+                padding: 11px;
+                .delete-tag{
+                    margin-right: 20px;
+                }
+                .btn{
+                    background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+                    &:hover{
+                        background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+                    }
+                }
+            }
+        }
+    }   
+    
+}
+
+
+/* MEDIA QUERY */
+
+/* Tablette */
+
+@media (max-width: 1024px)  {
+    .main-tags .content-tags .table-custome .tbody-content tr td:first-child {
+        width: 14%;
+    }
+}
+
+@media (max-width: 768px)  {
+    .main-tags{
+        .content-tags {
+            .table-custome{
+                .thead-info{
+                    th{
+                        &:nth-child(1){
+                            left: 20px;
+                            width: 40%;
+                        }
+                    }
+                }
+                .tbody-content {
+                    tr{
+                        td{
+                            &:nth-child(1){
+                                width: 30%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

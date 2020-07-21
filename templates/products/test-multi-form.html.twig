@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="debug">
+        <div class="form">
+            {{ form_start(forms.product) }}
+            {{ form_row(forms.product.category) }}
+            {{ form_row(forms.product.priceType) }}
+            {{ form_row(forms.product.name) }}
+            {{ form_row(forms.product.amount) }}
+            {{ form_row(forms.product.description) }}
+            {{ form_row(forms.product.note) }}
+            {{ form_row(forms.product.start) }}
+            {{ form_row(forms.product.end) }}
+
+            {#
+            <div class="ManyToMany">
+                {{ form_row(forms.product.criterions) }}
+            </div>
+            #}
+
+            <div >
+                {{ form_row(forms.product.tags) }}
+            </div>
+
+            <div >
+                {{ form_row(forms.product.allergens) }}
+                {#
+                <div>
+                    <label class="label-custome" for="allergens">Allergenes</label>
+                    <select id="allergens" name="allergens[]" multiple="multiple">
+                        {% for allergen in allergens %}
+                            {% set selected = '' %}
+                            {% if allergen in product_allergens %}
+                                {% set selected = 'selected' %}
+                            {% endif %}
+                            <option value="{{ allergen.id }}" {{ selected }}>{{ allergen.name }}</option>
+                        {% endfor %}
+                    </select>+
+                </div>
+                #}
+            </div>
+
+
+            {{ form_row(forms.product.logo) }}
+            {{ form_end(forms.product) }}
+        </div>
+
+        {#
+        <div id="medias_association_with_context">
+            <div id="upload_ajax">
+                <input type="file" name="new_graph">
+            </div>
+            <ul id="available_graphics">
+                {% for graphic in graphics %}
+                    <li data-id="{{ graphic.id }}"><img src="/datas/medias/piece/{{ graphic.id }}.png" alt="{{ graphic.name }}"></li>
+                {% endfor %}
+            </ul>
+            <ul id="linked_graphics">
+                {% for graphic in linked_graphics %}
+                    <li data-id="{{ graphic.id }}">
+                        <img src="/datas/medias/piece/{{ graphic.id }}.png" alt="{{ graphic.name }}">
+                        <select>
+                            {% for context in contexts %}
+                                <option value="{{ context.id }}" {{ selected }}>{{ context.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        #}
+
+        {#
+        <div id="checkout_system_mapping">
+            {{ form_start(forms.checkout) }}
+            {{ form_end(forms.checkout) }}
+        </div>
+        #}
+
+    </div>
+
+    <div class="form">
+        <div id="factories_prices">
+            {{ form_start(forms.prices) }}
+
+            {% for price in forms.prices.prices %}
+                {% set factory = factories[loop.index-1] %}
+                <h1>Groupe Prix {{ factory.name }}</h1>
+                {{ form_row(price) }}
+            {% endfor %}
+
+            {{ form_end(forms.prices) }}
+        </div>
+    </div>
+
+    <div class="form">
+        <div id="checkout_mapping">
+            {{ form_start(forms.checkout) }}
+
+            {% for mapping in forms.checkout.mappings %}
+                {% set system = systems[loop.index-1] %}
+                <h1>Système de caisse {{ system.name }}</h1>
+                {{ form_row(mapping) }}
+            {% endfor %}
+            {{ form_end(forms.checkout) }}
+        </div>
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+        <script>
+            $('.ManyToMany select').select2();
+        </script>
+        {{ encore_entry_script_tags('edit_product') }}
+    {% endblock javascripts %}
+{% endblock %}

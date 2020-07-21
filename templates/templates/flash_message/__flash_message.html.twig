@@ -1,0 +1,9 @@
+{% for message in app.session.flashbag.get('message') %}
+
+    {% if message is not empty %}
+        <div>
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+
+{% endfor %}

@@ -1,0 +1,39 @@
+<div class="table">
+
+    <div class="content-criterion_header">
+        <label class="container-input">
+            <input type="checkbox" id="{{criterions_list.id}}" class="" />
+            <span class="container-rdo-tags"></span>
+        </label>
+        <p class="criterions-list_name">{{ criterions_list.name }}</p>
+        <p class="criterions-list_description">{{ criterions_list.description }}</p>
+    </div>
+
+    <table class="table-custome">
+        <thead class="thead-info">
+            <tr>
+                <th><h3>Critère</h3></th>
+                <th><p>Description du critère</p></th>
+            </tr>
+        </thead>
+        <tbody class="tbody tbody-content scrollbar-table">
+            <tr class="content-criterion_multi">
+                <td><p class="info">Pour les sites affectation à choix : <span class="info-multi">{{criterions_list.multiple ? 'Multiple' : 'Unique'  }}</span></p></td>
+            </tr>
+            {% for criterion in criterions_list.criterions %}
+                <tr class='tr-custome criterion-poster'>
+                    <td>
+                        <label class="container-input">
+                            <input type="checkbox" class="chkbox-critere" id="{{criterion.id}}" data-criterion="{{criterion.id}}"  >
+                            <span class="container-rdo-tags"></span>
+                        </label>
+                        <p class="criterion-name">{{ criterion.name }}</p>
+                    </td>
+                    <td><p class="criterion-description">{{ criterion.description }}</p></td>
+                    {# <td><a href="{{ path('criterions_lists_edit', {'id': criterions_list.id}) }}">edit</a></td> #}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>

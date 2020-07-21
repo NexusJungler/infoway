@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Critéres{% endblock %}
+
+{% block body %}
+    <main class="main main_setting">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Critéres', 'showSecondTitles': true } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+                
+            </section>
+
+            {% block maincontent %}
+                <section class="wrapper_tabcontent">
+
+                    <div id="setting-criteres" class="tab-content current create-criteres">
+                    
+                        <div class="tab-content-title">
+                            <h3 class="title">Modifier Critéres</h3>
+                        </div>
+                        
+                        {{ include('criterion_list/_form.html.twig', {'button_label': 'Update'}) }}
+
+                        <a href="{{ path('criterions_lists_index') }}" class="btn">back to list</a>
+
+                        {{ include('criterion_list/_delete_form.html.twig') }}
+                    </div>
+                    
+                <section>
+            {% endblock %}
+                
+        </div>
+    </main>
+{% endblock %}
