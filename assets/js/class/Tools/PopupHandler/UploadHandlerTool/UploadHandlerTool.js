@@ -239,7 +239,7 @@ class UploadHandlerTool extends SubTool
 
             if(fileIsAccepted)
             {
-                this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, file: item} );
+                this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, file: item, mediaId: null, intervalId: null} );
                 console.log("new element added in upload list")
                 console.table(this.__filesToUpload); //debugger
             }
@@ -317,7 +317,21 @@ class UploadHandlerTool extends SubTool
                     // if user choice "yes"
                     if(confirm("Certains de vos téléchargement ne sont pas terminés ! En fermant cet fênetre, vos devrez recommencer les téléchargement en cours. Etes-vous sûr de vouloir continuer ?"))
                     {
+
                         // @TODO: abort download or send ajax to server for delete media which is not finish
+
+                        super.showLoadingPopup();
+
+                        this.__filesToUpload.map( (fileToUpload) => {
+
+                            clearInterval(fileToUpload.intervalId);
+
+                            if(!this.notifyServerToDeleteMedia(fileToUpload.mediaId))
+                                alert(`Erreur lors de l'annulation du telechargement en position ${ fileToUpload.index }`);
+
+                        } );
+
+                        super.hideLoadingPopup();
 
                         this.closeModal();
                     }
@@ -344,6 +358,33 @@ class UploadHandlerTool extends SubTool
         }
 
         return this;
+    }
+
+    notifyServerToDeleteMedia(mediaId)
+    {
+
+        return new Promise( (resolve, reject) => {
+
+            $.ajax({
+                url: `/remove/media/${mediaId}`,
+                type: "POST",
+                data: {},
+                success: (response) => {
+
+                    console.log(response); //debugger
+                    resolve(true);
+
+                },
+                error: (response, status, error) => {
+
+                    console.log(response); //debugger
+                    reject(false);
+
+                }
+            })
+
+        } );
+
     }
 
     handleFileDragNDrop(active)
@@ -799,21 +840,13 @@ class UploadHandlerTool extends SubTool
 
                                             uploadStateIndicator.html("Encodage en cours ...");
 
-                                            // check status every 10sec
-                                            /*let videoEncodingResult = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
-                                            while (videoEncodingResult.status !== 'Finished')
-                                            {
-                                                // wait 10s before checking again
-                                                //this.sleep(10000);
-
-
-                                            }*/
-
                                             let videoEncodingResult = {};
 
                                             let intervalId = setInterval( async() => {
 
-                                                videoEncodingResult = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
+                                                this.__filesToUpload[index].intervalId = intervalId;
+
+                                                videoEncodingResult = await this.checkVideoEncodingStatus(response.id);
                                                 if( videoEncodingResult.status === 'Finished' )
                                                 {
                                                     clearInterval(intervalId);
@@ -1217,24 +1250,6 @@ class UploadHandlerTool extends SubTool
         return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
-    onClickOnSaveButton(active)
-    {
-        if(active)
-        {
-            this.__$location.find('.popup_footer').on('click.onClickOnSaveButton', '.save_edits_button', e => {
-
-                this.__$location.find('#medias_list_form').submit();
-
-            })
-        }
-        else
-        {
-            this.__$location.find('.popup_footer').off('click.onClickOnSaveButton', '.save_edits_button');
-        }
-
-        return this;
-    }
-
     mediaInfosEditFormIsValid(form)
     {
         let isValid = true;
@@ -1298,6 +1313,24 @@ class UploadHandlerTool extends SubTool
 
         return isValid;
 
+    }
+
+    onClickOnSaveButton(active)
+    {
+        if(active)
+        {
+            this.__$location.find('.popup_footer').on('click.onClickOnSaveButton', '.save_edits_button', e => {
+
+                this.__$location.find('#medias_list_form').submit();
+
+            })
+        }
+        else
+        {
+            this.__$location.find('.popup_footer').off('click.onClickOnSaveButton', '.save_edits_button');
+        }
+
+        return this;
     }
 
     onMediaInfoEditingFormSubmit(active)
@@ -1427,6 +1460,26 @@ class UploadHandlerTool extends SubTool
         else
         {
             this.__$location.find('.step').off('click.onClickOnPreviousButton', '.show_prev_step');
+        }
+
+        return this;
+    }
+
+    onClickOnAnMediaUploadCancelButton(active)
+    {
+        if(active)
+        {
+
+            this.__$location.on('click.', '.cancel-upload', e => {
+
+                clearInterval(this.__filesToUpload[ $(e.currentTarget).data('index') ].intervalId);
+
+            })
+
+        }
+        else
+        {
+
         }
 
         return this;

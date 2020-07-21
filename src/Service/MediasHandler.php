@@ -166,8 +166,9 @@ class MediasHandler
         if($fileType === 'video')
         {
 
+            // if something is in error.log that file is considered as corrupt by ffmpeg
             if(filesize( $this->parameterBag->get('project_dir') . "/public/error.log" ) !== 0)
-                $output = true;
+                $output = 1;
 
             else
                 $output = $cmdResultStatus;

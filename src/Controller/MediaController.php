@@ -490,19 +490,19 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/remove/media/{id}", name="media::removeMedia", methods={"POST"},
+     * @Route(path="/remove/media/{id}", name="media::removeMedia", methods={"POST", "GET"},
      * requirements={"id": "\d+"})
      */
     public function removeMedia(Request $request, int $id)
     {
 
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $customerName = $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         //dd($id);
-        $media = $mediaRepository->find($id);
 
+        $media = $mediaRepository->find($id);
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
@@ -514,17 +514,50 @@ class MediaController extends AbstractController
         $path = $root . $managerName . '/' . $media->getType() . '/' . $media->getName() . '.' . $media->getExtension();
         unlink($path);*/
 
-        if($media instanceof Video)
-            $mediaType = 'video';
+        $fileType = explode("/", $media->getMimeType())[0];
+
+        $sizes = ['low', 'medium', 'high', 'HD', 'high/UHD-4k', 'high/UHD-8k', 'HD/UHD-4k', 'HD/UHD-8k', 'HIGH/UHD-4k', 'HIGH/UHD-8k'];
+
+        if($media->getMediaType() === 'elgp')
+        {
+            $path = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/piece/' . $media->getId() . '.' . ( ($fileType === 'image') ? '.png' : '.mp4' );
+            if(file_exists($path))
+                unlink($path);
+        }
+
+        else if( $media->getMediaType() === 'diff' )
+        {
+
+            foreach ($sizes as $size) {
+
+                // medias; VIDÉOS; VIDÉOS HORIZONTALES; VIDÉOS VERTICALES; IMAGES/PRODUITS FIXES/PLEIN ECRAN/
+
+                if( $media->getMediaType() === 'diff' )
+                    $path = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $fileType . '/' .$size .'/' . $media->getId() . '.' . ( ($fileType === 'image') ? '.png' : '.mp4' );
+
+                if(file_exists($path))
+                    unlink($path);
+            }
+
+        }
 
         else
-            $mediaType = 'image';
+        {
 
-        $sizes = ['low', 'medium', 'high', 'HD'];
+        }
+
         foreach ($sizes as $size) {
 
+            // medias; VIDÉOS; VIDÉOS HORIZONTALES; VIDÉOS VERTICALES; IMAGES/PRODUITS FIXES/PLEIN ECRAN/
+
             if( $media->getMediaType() === 'diff' )
-            $path = $this->getParameter('project_dir') .'/../main/data_' . $managerName . '/PLAYER INFOWAY WEB/medias/' . $mediaType . '/' .$size .'/' . $media->getId() . '.' . $media->getExtension();
+                $path = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $fileType . '/' .$size .'/' . $media->getId() . '.' . ( ($fileType === 'image') ? '.png' : '.mp4' );
+
+            else
+            {
+                // dossier 'AUTRES' pour 5asec,toujours utile ??
+                $path = "";
+            }
 
             if(file_exists($path))
                 unlink($path);
