@@ -246,7 +246,8 @@ class FfmpegSchedule
                 } else {
                     $this->updateTask($task, 'started');
                     $taskInfo = [
-                        'fileName' => $task->getFilename(),
+                        //'fileName' => $task->getFilename(),
+                        'fileName' => $taskMediaInfo['name'],
                         'customerName' => $customer_name,
                         'mediaType' => $task->getMediatype(),
                         'uploadDate' => $taskMediaInfo['createdAt'],
@@ -255,8 +256,11 @@ class FfmpegSchedule
                         'mediaTags' => $taskMediaInfo['tags'],
                         'mimeType' => $taskMediaInfo['mimeType'],
                     ];
-                    $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
-                    $errors = $encoding->getErrors();
+                    //$encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
+                    $encoding = new MediaEncodeManager($this->managerRegistry, $this->parameterBag);
+                    $encoding->encodeMedia($taskInfo);
+
+                    $errors = $encoding->getEncodeErrors();
                     $error_string = implode(' || ', $errors);
                     if($error_string != '') {
                         $this->pushError($task, $error_string);

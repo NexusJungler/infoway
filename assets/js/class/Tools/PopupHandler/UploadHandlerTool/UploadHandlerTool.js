@@ -23,7 +23,7 @@ class UploadHandlerTool extends SubTool
             medias: [
                 'image/jpg', 'image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/x-windows-bmp', 'image/pjpeg', 'image/svg+xml',
                 '.jpg', '.jpeg', '.png', '.bmp', '.gif', '.svg', 'video/*', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime',
-                '.mp4', '.avi', '.3gp'
+                '.mp4', '.avi', '.3gp', '.mov', '.qt'
             ],
 
             /*element_graphic: [
