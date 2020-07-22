@@ -9,6 +9,7 @@ class PaginatorHandler extends Tool
         this.__name = this.constructor.name;
         this.__$location = $('.pagination_container');
         this.pageNavigationIsActive = true;
+
     }
 
     reloadMediatheque(page = 1)
@@ -429,7 +430,11 @@ class PaginatorHandler extends Tool
 
                 const mediasCards = $(".medias_list_container .card");
 
-                mediasCards.sort( this.sortByDate('created_date', $(e.currentTarget).val()) );
+                if( $(e.currentTarget).val() === 'asc' || $(e.currentTarget).val() === 'desc' )
+                    mediasCards.sort( this.sortByDate('created_date', $(e.currentTarget).val()) );
+
+                else if( $(e.currentTarget).val() === 'alpha_num_asc' || $(e.currentTarget).val() === 'alpha_num_desc' )
+                    mediasCards.sort( this.sortByAlphaNum($(e.currentTarget).val()) );
 
                 $(".medias_list_container").html(mediasCards)
 
@@ -460,6 +465,32 @@ class PaginatorHandler extends Tool
                 (order === 'desc') ? (comparison * -1) : comparison
             );
         };
+    }
+
+    sortByAlphaNum(order = 'alpha_num_asc')
+    {
+        return function a(a, b) {
+            var AInt = parseInt($(a).find('.media_name').text(), 10);
+            var BInt = parseInt($(b).find('.media_name').text(), 10);
+
+            if(isNaN(AInt) && isNaN(BInt)){
+                var aA = $(a).find('.media_name').text().replace(/[^a-zA-Z]/g, "");
+                var bA = $(b).find('.media_name').text().replace(/[^a-zA-Z]/g, "");
+                if(aA === bA) {
+                    var aN = parseInt($(a).find('.media_name').text().replace(/[^0-9]/g, ""), 10);
+                    var bN = parseInt($(b).find('.media_name').text().replace(/[^0-9]/g, ""), 10);
+                    return aN === bN ? 0 : aN > bN ? 1 : -1;
+                } else {
+                    return (order === 'alpha_num_asc') ? (aA > bA ? 1 : -1) : (aA < bA ? -1 : 1);
+                }
+            }else if(isNaN(AInt)){//A is not an Int
+                return (order === 'alpha_num_asc') ? 1 : -1;//to make alphanumeric sort first return -1 here
+            }else if(isNaN(BInt)){//B is not an Int
+                return (order === 'alpha_num_asc') ? -1 : 1;//to make alphanumeric sort first return 1 here
+            }else{
+                return (order === 'alpha_num_asc') ? (AInt > BInt ? 1 : -1) : (AInt < BInt ? -1 : 1);
+            }
+        }
     }
 
     enable()
