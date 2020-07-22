@@ -5,9 +5,9 @@
         <div class="popup_header">
 
             <div class="left_side popup_header_item">
-                <div class="item icon-container">
-                    <i class="fas fa-link icon"></i>
-                </div>
+                {#<div class="item icon-container">#}
+                    {#<i class="fas fa-link icon"></i>#}
+                {#</div>#}
 
                 <div class="item title_container">
                     <p class="title">TAGS à affecter à :</p>
@@ -33,25 +33,41 @@
 
             <div class="popup_body_item container">
 
-                <div class="container_body">
+                <div class="container_body scrollbar-table">
 
                     <table>
                         <thead>
                             <tr>
                                 <th></th>
-                                <th><button class="btn">Créer TAG</button></th>
+                                <th>
+                                    <button class="btn btn-add-container-tag">
+                                        <span class="mini-cercle"><i class="fas fa-plus" aria-hidden="true"></i></span> Créer TAG
+                                    </button>
+                                </th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody class="tags_list">
+
+
+                        <tbody class="tag_list">
                             {% for tag in tags %}
                                 <tr data-tag_id="{{ tag.id }}">
-                                    <td><input type="checkbox" class="choice_tag"></td>
-                                    <td><span class="tag_name">{{ tag.name }}</span></td>
                                     <td>
-                                        <div class="tag_description_container">
+                                        <label class="container-input">
+                                            <input type="checkbox" class="choice_tag">
+                                            <span class="container-rdo-tags"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <p class="container-tags">
+                                            <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                            <span class="current-tags-name">{{ tag.name }}</span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="tag_description_container">
                                             {{ tag.description }}
-                                        </div>
+                                        </p>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -72,7 +88,7 @@
             </div>
 
             <div class="actions_buttons_container">
-                <button class="btn validate_association_btn" type="button" disabled>Affecter</button>
+                <button class="btn validate_association_btn" type="button" disabled>Affecter au média </button>
             </div>
 
         </div>

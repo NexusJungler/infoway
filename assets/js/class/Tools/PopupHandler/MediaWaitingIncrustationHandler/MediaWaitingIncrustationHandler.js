@@ -9,8 +9,8 @@ class MediaWaitingIncrustationHandler extends SubTool
         super();
         this.__name = this.constructor.name;
         this.__$container = $('.popup_medias_waiting_incrustation_container');
-        this.__$location = $('.popup_medias_waiting_incrustes');
-        this.__$mediasList = $('.archived_medias_list');
+        this.__$location = $('.popup_medias_waiting_incrustation');
+        this.__$mediasList = $('.medias_waiting_incrustation_list');
     }
 
     onClickOnWaitingListButtonOpenModal(active)

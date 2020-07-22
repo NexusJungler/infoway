@@ -136,15 +136,7 @@ class MediaRepository extends ServiceEntityRepository
         foreach ($medias as $media)
         {
 
-            if($media instanceof Image)
-            {
-                $media->file_type = 'image';
-            }
-
-            else
-            {
-                $media->file_type = 'video';
-            }
+            $media->file_type = explode("/", $media->getMimeType())[0];
 
         }
 
@@ -162,6 +154,13 @@ class MediaRepository extends ServiceEntityRepository
     {
 
         $medias = $this->findBy(['isArchived' => true]);
+
+        foreach ($medias as $media)
+        {
+
+            $media->file_type = explode("/", $media->getMimeType())[0];
+
+        }
 
         return [
             'number' => sizeof($medias),

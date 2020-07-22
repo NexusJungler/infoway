@@ -1,15 +1,15 @@
 .popup_upload_container{
     font-family: "Barlow" ;
-    position: fixed;
+    position: absolute;
     height: 100%;
-    width: 100%;
+    width: 108.7%;
     background: rgba(0, 0, 0, 0.7);
     align-items: center;
     pointer-events: none;
     opacity: 0;
     top: 0;
     left: 0;
-    z-index: 90;
+    z-index: 9;
     &.is_open{
         .popup{
             width: 183rem;

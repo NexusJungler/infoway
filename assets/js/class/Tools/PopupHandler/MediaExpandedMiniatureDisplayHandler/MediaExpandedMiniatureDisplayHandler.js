@@ -27,12 +27,12 @@ class MediaExpandedMiniatureDisplayHandler extends SubTool
         {
 
             if(this.__currentMediaInfos.fileType === 'image')
-                miniature = `<img class="media_expanded_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/image/medium/${ this.__currentMediaInfos.id }.png"
-                             alt="/miniatures/${ this.__currentMediaInfos.customer }/image/medium/${ this.__currentMediaInfos.id }.png" />`;
+                miniature = `<img class="media_expanded_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/images/medium/${ this.__currentMediaInfos.id }.png"
+                             alt="/miniatures/${ this.__currentMediaInfos.customer }/images/medium/${ this.__currentMediaInfos.id }.png" />`;
 
             else
                 miniature = `<video class="media_expanded_miniature miniature_video" controls>
-                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/video/medium/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
+                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/videos/medium/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
                              </video>`;
 
         }

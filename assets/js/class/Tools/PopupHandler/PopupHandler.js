@@ -6,8 +6,8 @@ import MediaDeletingButtonHandler from "../MediathequeActionButtonHandler/MediaD
 import AssociationPopupHandler from "./AssociationPopupHandler/AssociationPopupHandler";
 import ParentTool from "../ParentTool";
 import MediaReplacementPopupHandler from "./MediaReplacementPopupHandler/MediaReplacementPopupHandler";
-import MediaExpandedMiniatureDisplayHandler
-    from "./MediaExpandedMiniatureDisplayHandler/MediaExpandedMiniatureDisplayHandler";
+import MediaExpandedMiniatureDisplayHandler from "./MediaExpandedMiniatureDisplayHandler/MediaExpandedMiniatureDisplayHandler";
+import ArchivedMediasHandlerTool from "./ArchivedMediasHandler/ArchivedMediasHandlerTool";
 
 class PopupHandler extends ParentTool
 {
@@ -23,6 +23,7 @@ class PopupHandler extends ParentTool
             //new MediaReplacementPopupHandler(),
             new AssociationPopupHandler(),
             new MediaExpandedMiniatureDisplayHandler(),
+            new ArchivedMediasHandlerTool()
         ];
     }
 

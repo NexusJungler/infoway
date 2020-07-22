@@ -16,9 +16,7 @@ class FilterMediasByTypeSubTool extends SubTool
         {
             $(".filter.filter_media_by_type").on("click.onClickOnMediaFilterByTypeIcon", e => {
 
-                let filter = { 'property': 'data-file_type', 'value': ($(e.currentTarget).hasClass("show_only_images")) ? 'image' : 'video' };
-                /*console.table(filter);
-                console.log(this.__parent.findFilterByProperty(filter.property)); debugger*/
+                let filter = { 'property': 'data-media_type', 'value': ($(e.currentTarget).hasClass("show_only_images")) ? 'image' : 'video' };
                 if(this.__parent.findFilterByProperty(filter.property))
                     this.__parent.replaceAnRegisteredFilter(filter);
 
@@ -26,8 +24,6 @@ class FilterMediasByTypeSubTool extends SubTool
                     this.__parent.registerNewFilter(filter);
 
                 let filters = this.__parent.getActivedFilters();
-
-                //console.table(filters); debugger
 
                 this.__parent.getMediasContainer().find(`.card`).addClass("hidden");
 
@@ -39,12 +35,13 @@ class FilterMediasByTypeSubTool extends SubTool
 
                     filters = this.__parent.getActivedFilters();
 
-                    //debugger
+                    this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
+
                 }
                 else
                 {
 
-                    //this.__parent.registerFiltersInParent({property: 'data-file_type', value: ($(e.currentTarget).hasClass("show_only_images")) ? 'image' : 'video'});
+                    this.__parent.registerFiltersInParent({property: 'data-media_type', value: ($(e.currentTarget).hasClass("show_only_images")) ? 'image' : 'video'});
 
                     $(".filter.filter_media_by_type.active").removeClass("active");
 
@@ -52,9 +49,9 @@ class FilterMediasByTypeSubTool extends SubTool
 
                     //console.log(filters); debugger
 
-                }
+                    this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
 
-                this.__parent.getMediasContainer().find(`.card${filters}`).removeClass("hidden");
+                }
 
             })
         }

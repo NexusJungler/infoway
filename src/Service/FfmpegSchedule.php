@@ -256,11 +256,12 @@ class FfmpegSchedule
                         'mediaTags' => $taskMediaInfo['tags'],
                         'mimeType' => $taskMediaInfo['mimeType'],
                     ];
-                    //$encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
-                    $encoding = new MediaEncodeManager($this->managerRegistry, $this->parameterBag);
+                    $encoding = new UploadCron($taskInfo, $this->managerRegistry, $this->parameterBag);
+                    /*$encoding = new MediaEncodeManager($this->managerRegistry, $this->parameterBag);
                     $encoding->encodeMedia($taskInfo);
 
-                    $errors = $encoding->getEncodeErrors();
+                    $errors = $encoding->getEncodeErrors();*/
+                    $errors = $encoding->getErrors();
                     $error_string = implode(' || ', $errors);
                     if($error_string != '') {
                         $this->pushError($task, $error_string);

@@ -290,7 +290,7 @@ class MediaController extends AbstractController
         /*else if(strlen(pathinfo($file['name'])['filename']) < 5)
             return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);*/
 
-        $root = $this->getParameter('project_dir') . '/../upload/source/' . $customerName . '/' . $splash[0] . '/' . $mediaType;
+        /*$root = $this->getParameter('project_dir') . '/../upload/source/' . $customerName . '/' . $splash[0] . '/' . $mediaType;
 
         if(!file_exists($root))
             mkdir($root,0777, true);
@@ -299,7 +299,14 @@ class MediaController extends AbstractController
 
         move_uploaded_file($file['tmp_name'], $path);
 /*dd($root . $customerName . '/' . $mediaType . '/' . $file['name'], $path);*/
-       // copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
+       // copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);*/
+
+        $root = $this->getParameter('project_dir') . '/../node_file_system/';
+        $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
+
+        move_uploaded_file($file['tmp_name'], $path);
+        /*dd($root . $customerName . '/' . $mediaType . '/' . $file['name'], $path);*/
+        copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
 
         // if is image, insert in db
         if($splash[0] === 'image')

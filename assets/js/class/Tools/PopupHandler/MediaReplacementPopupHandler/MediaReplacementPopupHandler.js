@@ -52,12 +52,12 @@ class MediaReplacementPopupHandler extends SubTool
             {
 
                 if(this.__currentMediaInfos.type === 'image')
-                    miniature = `<img class="media_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/image/low/${ this.__replacementInfos.mediaId }.png"
-                             alt="/miniatures/${ this.__currentMediaInfos.customer }/image/low/${ this.__replacementInfos.mediaId }.png" />`;
+                    miniature = `<img class="media_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/images/low/${ this.__replacementInfos.mediaId }.png"
+                             alt="/miniatures/${ this.__currentMediaInfos.customer }/images/low/${ this.__replacementInfos.mediaId }.png" />`;
 
                 else
                     miniature = `<video class="media_miniature miniature_video" controls>
-                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/video/low/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
+                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/videos/low/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
                              </video>`;
 
             }
@@ -149,7 +149,7 @@ class MediaReplacementPopupHandler extends SubTool
                     id: this.__replacementInfos.mediaToReplaceId,
                     name: mediaNameText,
                     customer: $('.media_miniature').parents('.media_miniature_container').data('customer'),
-                    type: ($('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image') ? 'image' : 'video',
+                    type: ($('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image') ? 'images' : 'videos',
                     extension: ( $('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image' ) ? 'png' : 'mp4',
                 };
 

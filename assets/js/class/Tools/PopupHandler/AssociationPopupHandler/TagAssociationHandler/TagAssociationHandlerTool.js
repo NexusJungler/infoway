@@ -46,15 +46,9 @@ class TagAssociationHandlerTool extends SubTool
         if(active)
         {
 
-            $(document).on('click.onClickOnTagAssociationButtonShowModal', '.tag_association_btn', e => {
+            $('.tag_association_btn').on("click.onClickOnTagAssociationButtonShowModal", e => {
 
-                if( $('.popup_upload_container.is_open').length > 0 ) // association is used after upload
-                {
-                    this.__isUpload = true;
-                    this.__currentMediaName = $(e.currentTarget).parents('tr').find('.media_name').val();
-                }
-                //else if( $('.media_products_list').length > 0 )
-                else
+                if( $('.media_products_list').length > 0 )
                 {
 
                     this.__currentMediaName = $('.tab_content_body_title_container .media_name').text();
@@ -70,8 +64,30 @@ class TagAssociationHandlerTool extends SubTool
                     this.__mediasAssociationInfo.push( { media: this.__currentMediaName, tags: mediaTagsAssociatedIds } );
 
                 }
+                else if( $('.popup_upload_container.is_open').length > 0 ) // association is used after upload
+                {
+                    this.__currentMediaName = $('.media_name_container .media_name').val();
+                }
 
                 this.initializePopupContent();
+
+                /*$('.add-popup').css({ 'z-index': '0' });
+                this.__currentMedia = $(e.currentTarget).data('media');
+                this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
+
+                // check if media is already associated with tag (in this case, update popup)
+                let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
+                if(registeredMediaInfosIndex !== -1)
+                {
+                    this.__mediasAssociationInfo[ registeredMediaInfosIndex ].tags.forEach( (id, index) => {
+
+                        this.__$tagsList.find(`tr[data-tag_id='${ id }'] .choice_tag`).prop('checked', true);
+
+                    } )
+                }
+
+                this.__$location.find('.modal-title-container .media_name').text( this.__currentMedia );
+                this.__$location.fadeIn();*/
 
             })
 
@@ -122,10 +138,10 @@ class TagAssociationHandlerTool extends SubTool
                 const tag_id = $( $(e.currentTarget) ).parents('tr').data('tag_id');
                 const index = this.__mediasAssociationInfo.findIndex( mediaAssociationInfo => mediaAssociationInfo.media === this.__currentMediaName );
 
-                if( index !== -1 )
+                if(index !== -1)
                 {
 
-                    /*if($(e.currentTarget).is(':checked') && $('.media_tags_list').find(`div[data-tag_id='${ tag_id }'] .tag_checkbox:checked`).length === 0)
+                    if($(e.currentTarget).is(':checked') && $('.media_tags_list').find(`div[data-tag_id='${ tag_id }'] .tag_checkbox:checked`).length === 0)
                     {
                         $( $(e.currentTarget) ).parents('tr').addClass('new_association');
                     }
@@ -136,11 +152,11 @@ class TagAssociationHandlerTool extends SubTool
                     else
                     {
                         $( $(e.currentTarget) ).parents('tr').removeClass('new_association dissociated');
-                    }*/
+                    }
+
+                    this.handleMediaInfosModification();
 
                 }
-
-                this.handleMediaInfosModification();
 
             })
         }
@@ -156,7 +172,8 @@ class TagAssociationHandlerTool extends SubTool
     handleMediaInfosModification()
     {
 
-        this.__$location.find('.validate_association_btn').attr('disabled', ( this.__$tagsList.find('.choice_tag:checked').length === 0  ) );
+        this.__$location.find('.validate_association_btn').attr('disabled', ( (this.__$tagsList.find('tr.dissociated').length === 0)
+            && (this.__$tagsList.find('tr.new_association').length === 0)  ) );
 
     }
 
@@ -174,18 +191,9 @@ class TagAssociationHandlerTool extends SubTool
                     const tag_id = $(element).parents('tr').data('tag_id');
 
                     // association is used after upload
-                    if( this.__isUpload )
+                    if( $('.popup_upload_container.is_open').length > 0 )
                     {
-
-                        const checkBox = $(`.popup_upload .media_name[value="${ this.__currentMediaName }"]`).parents('tr').find(`.associated_tags_container input[type='checkbox'][value='${ tag_id }']`)
-                        const id = checkBox.attr('id');
-                        checkBox.prop('checked', $(element).is(':checked'));
-
-                        if($(element).is(':checked'))
-                            $(`.popup_upload .media_name[value="${ this.__currentMediaName }"]`).parents('tr').find(`label[for='${ id }']`).show();
-
-                        else
-                            $(`.popup_upload .media_name[value="${ this.__currentMediaName }"]`).parents('tr').find(`label[for='${ id }']`).hide();
+                        debugger;
                     }
                     else
                     {

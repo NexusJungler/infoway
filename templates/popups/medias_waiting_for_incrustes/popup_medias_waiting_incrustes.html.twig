@@ -1,6 +1,6 @@
-<section class="popup_container popup_medias_waiting_incrustation_container">
+<section class="popup_container popup_medias_waiting_incrustation_container ">
 
-    <article class="popup popup_medias_waiting_incrustes">
+    <article class="popup popup_medias_waiting_incrustation">
 
         <div class="popup_header">
 
@@ -31,11 +31,11 @@
 
         <div class="popup_body">
 
-            <div class="archived_medias_list_container table popup_body_item">
+            <div class="medias_waiting_incrustation_list_container table popup_body_item">
 
                 <table class="table-custome">
 
-                    <thead class="thead-info">
+                    <thead class="thead-content">
                         <tr>
                             <th></th>
                             <th>Médias</th>
@@ -44,17 +44,21 @@
                             <th>Critères affectés</th>
                             <th>TAGS affectés</th>
                             <th>Produits associés</th>
+                            <th>Prix & Rupture</th>
                         </tr>
                     </thead>
 
-                    <tbody class="archived_medias_list tbody tbody-content scrollbar-table">
+                    <tbody class="medias_waiting_incrustation_list tbody-content scrollbar">
 
                         {% for media in mediasWaitingForIncrustation['medias'] %}
 
                             <tr>
                                 <td class="select_media_col">
                                     <div class="media_selection_container container">
-                                        <input type="checkbox" class="select_media container_child" data-media="{{ media.id }}">
+                                        <label class="container-input">
+                                            <input type="checkbox" class="select_media container_child" data-media="{{ media.id }}">
+                                            <span class="container-input-rdo"></span>
+                                        </label>
                                     </div>
                                 </td>
                                 <td class="media_miniature_col">
@@ -63,13 +67,13 @@
 
                                             <img class="media_miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png"
                                                  alt="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/low/{{ media.id }}.png">
-
+                                            <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
                                         {% else %}
 
                                             <video class="media-miniature container_child" controls>
                                                 <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
                                             </video>
-
+                                            <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
                                         {% endif %}
                                     </div>
                                 </td>
@@ -111,20 +115,21 @@
                                 <td class="media_associated_tags_col">
                                     <div class="media_tags_container container">
                                         {% if media.tags.values is empty %}
-
                                             <span class="container_child">Aucun tag</span>
-
                                         {% else %}
 
                                             {% for tag in media.tags.values %}
-                                                <span class="container_child">{{ tag.name }}</span>
+                                                <p class="container-tags">
+                                                    <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                                    <span class="current-tags-name container_child">{{tag.name }}</span>
+                                                </p>
                                             {% endfor %}
 
                                         {% endif %}
                                     </div>
                                 </td>
                                 <td class="media_associated_products_col">
-                                    <div class="media_products_container container">
+                                    <div class="media_products_container container scrollbar_popup">
                                         {% if media.products.values is empty %}
 
                                             <span class="container_child">Aucun produit</span>
@@ -132,13 +137,26 @@
                                         {% else %}
 
                                             {% for product in media.products.values %}
-
-                                                <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
-
+                                                <div class=" media_products_cintainer_bloc">
+                                                    <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
+                                                </div>
                                             {% endfor %}
 
                                         {% endif %}
                                     </div>
+                                </td>
+                                <td class="media_associated_rupture_col">
+                                    <button type="button" class="btn">Incruster PRIX</button>
+                                    <div class="submit-rating">
+                                        <input type="radio" name="{{ media.name }}" class="form_input media_contain_incruste medias_list " id="{{ media.name }}oui" value="1">
+                                        <input type="radio" name="{{ media.name }}" class="form_input input_non choice_media_contain_incruste " id="{{ media.name }}non" value="0" checked>
+
+                                        <label for="{{ media.name }}non" class="rating-label rating-label-non">Non</label>
+                                        <div class="smile-rating-toggle"></div>
+                                        <div class="toggle-rating-pill"></div>
+                                        <label for="{{ media.name }}oui" class="rating-label rating-label-oui">Oui</label>
+                                    </div>
+
                                 </td>
                             </tr>
 
@@ -159,7 +177,7 @@
             </div>
 
             <div class="actions_buttons_container">
-                <button type="button" class="btn redirect_to_module_incruste_button disabled">Incruster PRIX</button>
+                <button type="button" class="btn redirect_to_module_incruste_button disabled">Coller à partir de</button>
             </div>
 
         </div>
