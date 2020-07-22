@@ -53,6 +53,7 @@ security:
         - { path: ^/reset/password/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/cancel/password/reset/request/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        #- { path: infoway::mediaEncodage, roles: [IS_AUTHENTICATED_FULLY, ROLE_INFOWAY] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

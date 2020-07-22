@@ -67,6 +67,24 @@ class MediaRepository extends ServiceEntityRepository
         $this->parameterBag = $parameterBag;
     }
 
+
+    /**
+     * Return all medias which is still used in app (not archived and where diffusionEnd is not past)
+     *
+     * @return Media[]
+     */
+    public function getAllMediasStillUsedInApp()
+    {
+
+        return $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                                      ->where("m.isArchived = false AND m.diffusionEnd > CURRENT_DATE()")
+                                      ->orderBy("m.id", "ASC")
+                                      ->getQuery()
+                                      ->getResult();
+
+    }
+
+
     /**
      * Return all tags which is associated with edia and media products
      * @param Media $media

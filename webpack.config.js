@@ -74,7 +74,7 @@ Encore
     .addEntry('mediatheque', './assets/js/mediatheque.js')
     .addEntry('edit_media', './assets/js/edit_media.js')
 
-
+    .addEntry('interface_infoway_media_encodage', './assets/js/infoway/interface_infoway_media_encodage.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

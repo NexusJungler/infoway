@@ -1,0 +1,1 @@
+import '../../css/infoway/media_encodage.scss';
