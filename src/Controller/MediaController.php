@@ -23,6 +23,7 @@ use App\Service\FfmpegSchedule;
 use App\Service\MediasHandler;
 use App\Service\SessionManager;
 use App\Service\UploadCron;
+use App\Service\UploadedImageFormatsCreator;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,13 +43,13 @@ use \Doctrine\Persistence\ObjectManager;
 class MediaController extends AbstractController
 {
 
-    private SerializerInterface $serializer;
+    private SerializerInterface $__serializer;
 
-    private SessionManager $sessionManager;
+    private SessionManager $__sessionManager;
 
-    private ParameterBagInterface $parameterBag;
+    private ParameterBagInterface $__parameterBag;
 
-    private MediasHandler $mediasHandler;
+    private MediasHandler $__mediasHandler;
 
     public function __construct(SessionManager $sessionManager, ParameterBagInterface $parameterBag)
     {
@@ -60,11 +61,11 @@ class MediaController extends AbstractController
         ];
         $encoder =  new JsonEncoder();
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
-        $this->serializer = new Serializer( [ $normalizer, new DateTimeNormalizer() ] , [ $encoder ] );
+        $this->__serializer = new Serializer( [ $normalizer, new DateTimeNormalizer() ] , [ $encoder ] );
 
-        $this->sessionManager = $sessionManager;
-        $this->parameterBag = $parameterBag;
-        $this->mediasHandler = new MediasHandler($this->parameterBag);
+        $this->__sessionManager = $sessionManager;
+        $this->__parameterBag = $parameterBag;
+        $this->__mediasHandler = new MediasHandler($this->__parameterBag);
     }
 
     /**
@@ -79,7 +80,7 @@ class MediaController extends AbstractController
     public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
     {
 
-        $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $managerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $managerName );
 
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
@@ -98,8 +99,8 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
-        if($this->sessionManager->get('mediatheque_medias_number') === null)
-            $this->sessionManager->set('mediatheque_medias_number', 15);
+        if($this->__sessionManager->get('mediatheque_medias_number') === null)
+            $this->__sessionManager->set('mediatheque_medias_number', 15);
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
@@ -159,7 +160,7 @@ class MediaController extends AbstractController
     public function edit(Request $request, int $id)
     {
 
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
 
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
@@ -184,9 +185,9 @@ class MediaController extends AbstractController
             'mediaRepo' => $mediaRepo,
         ]);
 
-        $currentCustomerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $currentCustomerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
 
-        $miniature_medium_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
+        $miniature_medium_exist = file_exists($this->__parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
                                               (($media instanceof Image) ? 'image': 'video') . "/medium/". $media->getId() . "." .
                                               ( ($media instanceof Image) ? 'png' : 'mp4' ));
 
@@ -268,11 +269,11 @@ class MediaController extends AbstractController
         $real_file_extension = $splash[1];
         $fileType = strstr($mimeType, '/', true);
 
-        $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if($this->mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
+        if($this->__mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
             return new JsonResponse([ 'error' => '514 Corrupt File' ]);
 
         elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
@@ -310,12 +311,15 @@ class MediaController extends AbstractController
         if($splash[0] === 'image')
         {
 
+            $explode = explode('.', $file['name']);
+            $name = $explode[0];
+
             $taskInfo = [
-                'fileName' => $file['name'],
+                'fileName' => $name,
                 'customerName' => $customerName,
                 'mediaType' => $mediaType,
                 'uploadDate' => new DateTime(),
-                'extension' => $real_file_extension,
+                'extension' => $explode[1],
                 'mediaProducts' => [],
                 'mediaTags' => [],
                 'mediaContainIncruste' => false,
@@ -323,40 +327,32 @@ class MediaController extends AbstractController
                 'isArchived' => false,
             ];
 
-            // don't duplicate code !!
-            // reuse this class
-            $cron = new UploadCron($taskInfo, $this->getDoctrine(), $this->parameterBag);
-            if( $cron->getErrors() !== [] )
+            $uploadedImageFormatsCreator = new UploadedImageFormatsCreator($this->__parameterBag);
+            $uploadedImageFormatsCreator->createImageFormats($taskInfo);
+
+            if(!empty($uploadedImageFormatsCreator->getErrors()))
             {
 
-                $errors = implode(' ; ', $cron->getErrors());
+                $errors = implode(' ; ', $uploadedImageFormatsCreator->getErrors());
 
                 if($errors === "bad ratio")
                     return new JsonResponse([ 'error' => '521 Bad ratio' ]);
 
                 else
-                    throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
+                    throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", $errors) );
 
             }
-
-            $name = explode('.',$file['name'])[0];
-            $media = $mediaRepository->findOneByName( $name );
-            if(!$media)
-                throw new Exception(sprintf("No media found with name : '%s'", $name));
-
-            if($mediaType === 'elmt')
-                $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/piece/" . $media->getId() . ".png";
-
             else
-                $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/low/" . $media->getId() . ".png";
+                $media = $mediaRepository->insertImage($uploadedImageFormatsCreator->getImageInfos());
+
+            $this->renameMediaWithId($media->getName(), $media->getId(), $uploadedImageFormatsCreator->getFilesToRenameList());
+
+            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/" . $mediaType . '/low/' . $media->getId() . ".png";
 
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
-            $dpi = $this->mediasHandler->getImageDpi($miniaturePath);
-
-            //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
-
+            $dpi = $this->__mediasHandler->getImageDpi($miniaturePath);
 
             $response = [
                 'id' => $media->getId(),
@@ -370,7 +366,6 @@ class MediaController extends AbstractController
                 'fileType' => 'image',
                 'mediaType' => $mediaType,
                 'customer' => $customerName,
-                //'highestFormat' => $highestFormat,
             ];
 
         }
@@ -384,7 +379,7 @@ class MediaController extends AbstractController
             if($fileType === 'video')
                 $media = new Video();
 
-            // need new Entity (e.g : for powerpoint, word, ...)
+            // need new Entity
             else
                 throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
 
@@ -396,7 +391,7 @@ class MediaController extends AbstractController
                   ->setOrientation(" ") // le serializer oblige à avoir une valeur
                   ->setMediaType($mediaType);
 
-            $media = json_decode($this->serializer->serialize($media, 'json'), true);
+            $media = json_decode($this->__serializer->serialize($media, 'json'), true);
 
             $fileInfo = [
                 'fileName' => $fileName,
@@ -413,11 +408,11 @@ class MediaController extends AbstractController
                 'isArchived' => false,
             ];
 
-            list($width, $height, $codec) = $this->mediasHandler->getVideoDimensions($path);
+            list($width, $height, $codec) = $this->__mediasHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
             // a CRON will do task after
-            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->parameterBag);
+            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->__parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
             //$highestFormat = $this->getMediaHigestFormat($id, "video");
@@ -456,7 +451,7 @@ class MediaController extends AbstractController
         if($task->getFinished() !== null AND $task->getErrors() === null)
         {
 
-            $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+            $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
             $manager = $this->getDoctrine()->getManager( $customerName );
             $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -505,7 +500,7 @@ class MediaController extends AbstractController
     public function removeMedia(Request $request, int $id)
     {
 
-        $customerName = $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $customerName = $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -590,7 +585,7 @@ class MediaController extends AbstractController
     {
 
         $fileNameWithExtension = $request->request->get('file');
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -616,7 +611,7 @@ class MediaController extends AbstractController
     public function mediaMiniatureExist(Request $request)
     {
 
-        $path = $this->parameterBag->get('project_dir'). '/public/' . $request->request->get('path');
+        $path = $this->__parameterBag->get('project_dir'). '/public/' . $request->request->get('path');
 
         if( file_exists($path) )
             return new Response( "200 OK" );
@@ -632,7 +627,7 @@ class MediaController extends AbstractController
     public function retrieveMediaInfosForPopup(Request $request)
     {
 
-        $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) )
+        $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) )
                                          ->getRepository(Media::class);
 
         $mediaInfos = $mediaRepo->getMediaInfosForInfoSheetPopup(intval( $request->request->get('mediaId') ));
@@ -650,7 +645,7 @@ class MediaController extends AbstractController
     public function updateMediaAssociatedData(Request $request, int $id, string $data)
     {
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $manager = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
         $media = $mediaRepo->find($id);
 
@@ -675,19 +670,19 @@ class MediaController extends AbstractController
     public function getProgrammingInfos(Request $request, int $id)
     {
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $manager = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
         $media = $mediaRepo->find($id);
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
-        $customerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $customerName = strtolower($this->__sessionManager->get('current_customer')->getName());
 
-        $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+        $mediaMiniatureExist = file_exists($this->__parameterBag->get('project_dir') . "/public/miniatures/" .
                     $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
                     . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
-        $mediaProgrammingMouldList = $this->serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
+        $mediaProgrammingMouldList = $this->__serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
 
         return new JsonResponse([
             'mediaMiniatureExist' => $mediaMiniatureExist,
@@ -703,7 +698,7 @@ class MediaController extends AbstractController
     public function replaceMedia(Request $request, string $location)
     {
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $manager = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
 
         $mediaToReplace = $mediaRepo->find($request->request->get('remplacementDatas')['mediaToReplaceId']);
@@ -716,7 +711,7 @@ class MediaController extends AbstractController
 
         $fileType = $request->request->get('remplacementDatas')['fileType'];
 
-        $currentCustomerName = strtolower($this->sessionManager->get('current_customer')->getNAme());
+        $currentCustomerName = strtolower($this->__sessionManager->get('current_customer')->getNAme());
 
         $remplacementDates = [
             'start' => $request->request->get('remplacementDatas')['remplacementDate']['start'],
@@ -738,7 +733,7 @@ class MediaController extends AbstractController
             foreach ($qualities as $quality)
             {
 
-                $source = $this->parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
+                $source = $this->__parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
                 . $fileType . "/" . $quality . "/" . $mediaToReplace->getId() . "." . ( ($fileType === 'image') ? 'png': 'mp4' );
 
                 if(file_exists($source))
@@ -840,7 +835,7 @@ class MediaController extends AbstractController
         $customerRepository = $this->getDoctrine()->getManager()->getRepository(Customer::class);
 
 
-        $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
+        $manager = $this->getDoctrine()->getManager( strtolower( $this->__sessionManager->get('current_customer')->getName() ) );
 
         //dd($request->request, $customer);
 
@@ -967,7 +962,7 @@ class MediaController extends AbstractController
                         'orientation' => $media->getOrientation(),
                         'diffStart' => $media->getDiffusionStart(),
                         'diffEnd' => $media->getDiffusionEnd(),
-                        'customer' => $this->sessionManager->get('current_customer')->getName(),
+                        'customer' => $this->__sessionManager->get('current_customer')->getName(),
                         'products' => $mediaInfos['products'] ?? [],
                         'tags' => $mediaInfos['tags'] ?? [],
                         'categories' => $categoriesId ?? [],
@@ -995,7 +990,7 @@ class MediaController extends AbstractController
             'HD', 'high', 'medium', 'low'
         ];
 
-        $customerName = $this->sessionManager->get('current_customer')->getName();
+        $customerName = $this->__sessionManager->get('current_customer')->getName();
 
         $root = $path = $this->getParameter('project_dir') . "/../main/data_" . $customerName . "/PLAYER INFOWAY WEB/medias";
 
@@ -1020,7 +1015,7 @@ class MediaController extends AbstractController
 
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('mediatheque_medias_number');
+        $numberOfMediasDisplayedInMediatheque = $this->__sessionManager->get('mediatheque_medias_number');
 
         $mediasDisplayedType = $request->get('mediasDisplayedType');
 
@@ -1062,7 +1057,7 @@ class MediaController extends AbstractController
 
         if($serializeResults)
         {
-            $mediasToDisplayed = json_decode( $this->serializer->serialize($mediasToDisplayed, 'json'), true);
+            $mediasToDisplayed = json_decode( $this->__serializer->serialize($mediasToDisplayed, 'json'), true);
 
             foreach ($mediasToDisplayed['medias'] as &$mediaInfos)
             {
@@ -1098,9 +1093,9 @@ class MediaController extends AbstractController
         if(!is_int($number))
             throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
 
-        ( $this->sessionManager->get('mediatheque_medias_number') !== null ) ?
-            $this->sessionManager->replace('mediatheque_medias_number', $number) :
-            $this->sessionManager->set('mediatheque_medias_number', $number);
+        ( $this->__sessionManager->get('mediatheque_medias_number') !== null ) ?
+            $this->__sessionManager->replace('mediatheque_medias_number', $number) :
+            $this->__sessionManager->set('mediatheque_medias_number', $number);
 
     }
 
@@ -1111,7 +1106,7 @@ class MediaController extends AbstractController
     private function getPopupFiltersContent()
     {
 
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
         $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
@@ -1130,7 +1125,7 @@ class MediaController extends AbstractController
     private function buildNewMediaCard(array &$mediaInfos, Media $media)
     {
 
-        //$manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
+        //$manager = $this->getDoctrine()->getManager( strtolower( $this->__sessionManager->get('current_customer')->getName() ) );
         //$mediaRepo = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         $fileType = explode("/", $media->getMimeType())[0];
@@ -1147,7 +1142,7 @@ class MediaController extends AbstractController
         $criterionsNames = [];
         $tagsNamesAndColors = [];
 
-        $customer = strtolower($this->sessionManager->get('current_customer')->getName());
+        $customer = strtolower($this->__sessionManager->get('current_customer')->getName());
 
         $base = "/miniatures/" . $customer . "/";
 
@@ -1309,6 +1304,23 @@ class MediaController extends AbstractController
             $card .= "<p>0 tags </p></div></div>";
 
         return $card;
+
+    }
+
+    private function renameMediaWithId(string $mediaName, int $mediaId, array $filesToRenameWithId)
+    {
+
+        foreach ($filesToRenameWithId as $fileToRenameWithIdPath)
+        {
+
+            $path = str_replace($mediaName, $mediaId, $fileToRenameWithIdPath);
+
+            if(!file_exists($fileToRenameWithIdPath))
+                throw new Exception(sprintf("File not found : %s", $fileToRenameWithIdPath));
+
+            rename($fileToRenameWithIdPath, $path);
+
+        }
 
     }
 

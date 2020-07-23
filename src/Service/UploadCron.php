@@ -1002,7 +1002,7 @@ class UploadCron
                             ->setFormat($data['major_brand'])
                             ->setRatio($ratio)
                             ->setSampleSize($data['bits_per_raw_sample'] . ' bits')
-                            ->setEncoder($data['encoder'])
+                            ->setEncoder($data['bits_per_raw_sample'] . ' bits')
                             ->setVideoCodec($data['codec_long_name'])
                             ->setVideoCodecLevel($level)
                             ->setVideoFrequence(substr($data['avg_frame_rate'], 0, -2) . ' img/s')

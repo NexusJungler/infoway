@@ -104,7 +104,7 @@ class MediasHandler
      * @param string $originalFileName
      * @param string $outputFileName
      * @param int $dpi
-     * @return bool
+     * @return self
      * @throws Exception
      */
     public function changeImageDpi(string $originalFileName, string $outputFileName, int $dpi)
@@ -120,7 +120,7 @@ class MediasHandler
 
         }
 
-        return true;
+        return $this;
     }
 
 
@@ -129,7 +129,7 @@ class MediasHandler
      *
      * @param string $originalFileName
      * @param string $outputFileName
-     * @return bool
+     * @return self
      * @throws Exception
      */
     public function convertImageCMYKToRGB(string $originalFileName, string $outputFileName)
@@ -141,7 +141,7 @@ class MediasHandler
         if($cmdResultStatus === 1)
             throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
 
-        return true;
+        return $this;
 
     }
 

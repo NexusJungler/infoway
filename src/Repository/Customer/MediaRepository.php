@@ -5,6 +5,8 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\BroadcastSlot;
 use App\Entity\Customer\Display;
 use App\Entity\Customer\Image;
+use App\Entity\Customer\ImageElementGraphic;
+use App\Entity\Customer\ImageThematic;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\ProgrammingMould;
@@ -12,6 +14,9 @@ use App\Entity\Customer\ScreenPlaylist;
 use App\Entity\Customer\ScreenPlaylistEntry;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
+use App\Entity\Customer\VideoElementGraphic;
+use App\Entity\Customer\VideoSynchro;
+use App\Entity\Customer\VideoThematic;
 use App\Repository\Admin\AllergenRepository;
 use App\Repository\MainRepository;
 use App\Service\MediasHandler;
@@ -240,26 +245,19 @@ class MediaRepository extends ServiceEntityRepository
         foreach ($medias as $index => $media)
         {
 
-            if($media->getMediaType() === 'diff')
-                $miniatureFolder = ( ($media instanceof Image) ? 'image': 'video') . '/low';
-
-            elseif($media->getMediaType() === 'elmt')
-                $miniatureFolder = "piece";
-
-            else
-                dd(sprintf("Need implementation for found '%s' miniature folder", $media->getMediaType()));
+            $fileType = explode("/", $media->getMimeType())[0];
 
             $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                  $customerName. "/" . $miniatureFolder . "/" . $media->getId() . "."
-                                                  . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+                                                  $customerName. "/" . $fileType . "/" . $media->getMediaType() . '/low/' . $media->getId() . "."
+                                                  . ( ($fileType === 'image') ? 'png': 'mp4' ) );
 
             $mediaMiniatureMediumExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                     $customerName. "/"  . $miniatureFolder . "/" . $media->getId() . "."
-                                                     . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+                                                     $customerName. "/" . $fileType . "/" . $media->getMediaType() . '/medium/' . $media->getId() . "."
+                                                     . ( ($fileType === 'image') ? 'png': 'mp4' ) );
 
             $orderedMedias['medias'][$index] = [
                 'media' => null,
-                'file_type' => ($media instanceof Image) ? 'image': 'video',
+                'file_type' => $fileType,
                 'media_type' => $media->getMediaType(),
                 'media_products' => [],
                 'media_tags' => [],
@@ -391,6 +389,127 @@ class MediaRepository extends ServiceEntityRepository
                                        'mediaToReplaceId' => $mediaToReplace->getId()
                                    ]);
 
+    }
+
+
+    public function insertVideo(array $videoInfos)
+    {
+
+        switch ($videoInfos['mediaType'])
+        {
+
+            case "diff":
+                $media = new Video();
+                break;
+
+            case "them":
+                $media = new VideoThematic();
+                $media->setDate(new DateTime());
+                break;
+
+            case "elmt":
+                $media = new VideoElementGraphic();
+                $media->setContexte(null);
+                break;
+
+            case "sync":
+                $media = new VideoSynchro();
+                break;
+
+            default:
+                throw new Exception( sprintf("Unrecognized mediaType : '%s'", $videoInfos['mediaType']) );
+
+        }
+
+        if(array_key_exists('audioCodec', $videoInfos) and array_key_exists('audioDebit', $videoInfos)
+            and array_key_exists('audioFrequence', $videoInfos) and array_key_exists('audioChannel', $videoInfos)
+            and array_key_exists('audioFrame', $videoInfos))
+        {
+            $media->setAudioCodec($videoInfos['audioCodec'])
+                  ->setAudioDebit($videoInfos['audioDebit'])
+                  ->setAudioFrequence($videoInfos['audioFrequence'])
+                  ->setAudioChannel($videoInfos['audioChannel'])
+                  ->setAudioFrame($videoInfos['audioFrame']);
+        }
+
+        $media->setSize($videoInfos['size'])
+              ->setFormat($videoInfos['format'])
+              ->setSampleSize($videoInfos['sampleSize'])
+              ->setEncoder($videoInfos['encoder'])
+              ->setVideoCodec($videoInfos['videoCodec'])
+              ->setVideoCodecLevel($videoInfos['videoCodecLevel'])
+              ->setVideoFrequence($videoInfos['videoFrequence'])
+              ->setVideoFrame($videoInfos['videoFrame'])
+              ->setVideoDebit($videoInfos['videoDebit'])
+              ->setDuration($videoInfos['duration'])
+              ->setMediaType($videoInfos['mediaType'])
+              ->setWidth($videoInfos['width'])
+              ->setHeight($videoInfos['height'])
+              ->setIsArchived(false)
+              ->setContainIncruste(false)
+              ->setName($videoInfos['fileName'])
+              ->setOrientation($videoInfos['orientation'])
+              ->setMimeType($videoInfos['mimeType'])
+              ->setRatio($videoInfos['ratio'])
+              ->setExtension($videoInfos['extension'])
+              ->setCreatedAt(new DateTime())
+              ->setDiffusionStart( new DateTime() )
+              ->setDiffusionEnd( (new DateTime())->modify('+10 year') );
+
+        /*array_map( fn($product) => $media->addProduct($product), $videoInfos['mediaProducts']);
+        array_map( fn($tag) => $media->addTag($tag), $videoInfos['mediaTags']);*/
+
+        $this->_em->persist($media);
+        $this->_em->flush();
+
+        return $media;
+
+    }
+
+    public function insertImage(array $imageInfos)
+    {
+
+        switch ($imageInfos['mediaType'])
+        {
+
+            case "diff":
+                $media = new Image();
+                break;
+
+            case "them":
+                $media = new ImageThematic();
+                $media->setDate(new DateTime());
+                break;
+
+            case "elmt":
+                $media = new ImageElementGraphic();
+                $media->setContexte(null);
+                break;
+
+            default:
+                throw new Exception( sprintf("Unrecognized mediaType : '%s'", $imageInfos['mediaType']) );
+
+        }
+
+        $media->setName($imageInfos['filename'])
+               ->setMediaType($imageInfos['mediaType'])
+               ->setRatio($imageInfos['ratio'])
+               ->setContainIncruste(false)
+               ->setExtension($imageInfos['extension'])
+               ->setOrientation($imageInfos['orientation'])
+               ->setMimeType($imageInfos['mimeType'])
+               ->setIsArchived(false)
+               ->setWidth($imageInfos['width'])
+               ->setHeight($imageInfos['height'])
+               ->setSize($imageInfos['size'])
+               ->setCreatedAt(new DateTime())
+               ->setDiffusionStart( new DateTime() )
+               ->setDiffusionEnd( (new DateTime())->modify('+10 year') );
+
+        $this->_em->persist($media);
+        $this->_em->flush();
+
+        return $media;
     }
 
 

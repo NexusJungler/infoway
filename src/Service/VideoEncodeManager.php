@@ -16,10 +16,8 @@ use DateTime;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class MediaEncodeManager
+class VideoEncodeManager
 {
-
-    private ManagerRegistry $__managerRegistry;
 
     private ParameterBagInterface $__parameterBag;
 
@@ -27,7 +25,7 @@ class MediaEncodeManager
 
     private string $__mediasEncodeOutputFolder;
     
-    private string $__mediaOrientation = "";
+    private string $__orientation = "";
 
     private array $__errors = [];
 
@@ -37,12 +35,13 @@ class MediaEncodeManager
 
     private array $__encodeOutputSizesFolders = [ 'low' => 'low', 'medium' => 'medium', 'high' => 'high', 'HD' => 'HD', '4k' => 'UHD-4k', '8k' => 'UHD-8k' ];
 
+    private array $__videoInfos = [];
+
     private array $__filesToRenameWithId = [];
 
-    public function __construct(ManagerRegistry $managerRegistry, ParameterBagInterface $parameterBag)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
 
-        $this->__managerRegistry = $managerRegistry;
         $this->__parameterBag = $parameterBag;
         $this->__mediasSourceFolder = $parameterBag->get('project_dir') . '/../upload/source';
         $this->__mediasEncodeOutputFolder = $parameterBag->get('project_dir') . '/../upload/medias_encode';
@@ -55,11 +54,21 @@ class MediaEncodeManager
         return $this->__errors;
     }
 
-    public function encodeMedia(array $mediaInfos)
+    public function getFilesToRenameList()
+    {
+        return $this->__filesToRenameWithId;
+    }
+
+    public function getEncodedVideoInfos()
+    {
+        return $this->__videoInfos;
+    }
+
+    public function encodeMedia(array $videoInfos)
     {
 
-        $this->__mediasSourceFolder .= '/' . $mediaInfos['customerName'] . '/video/' . $mediaInfos['mediaType'];
-        $this->__mediasEncodeOutputFolder .= '/' . $mediaInfos['customerName'] . '/video';
+        $this->__mediasSourceFolder .= '/' . $videoInfos['customerName'] . '/video/' . $videoInfos['mediaType'];
+        $this->__mediasEncodeOutputFolder .= '/' . $videoInfos['customerName'] . '/video/' . $videoInfos['mediaType'];
 
         if(!file_exists($this->__mediasSourceFolder))
             mkdir($this->__mediasSourceFolder, 0777, true);
@@ -67,7 +76,7 @@ class MediaEncodeManager
         if(!file_exists($this->__mediasEncodeOutputFolder))
             mkdir($this->__mediasEncodeOutputFolder, 0777, true);
 
-        $mediaSource = $this->__mediasSourceFolder . '/' . $mediaInfos['fileName'] . '.' . $mediaInfos['extension'];
+        $mediaSource = $this->__mediasSourceFolder . '/' . $videoInfos['fileName'] . '.' . $videoInfos['extension'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $mediaSource);
@@ -102,82 +111,45 @@ class MediaEncodeManager
             else
             {
 
-                if($this->encodeVideo($mediaSource, ['fileName' => $mediaInfos['fileName'], 'ratio'=> $ratio, 'width' => $width, 'height' => $height, 'mediaType' => $mediaInfos['mediaType']]))
+                if($this->encodeVideo($mediaSource, ['fileName' => $videoInfos['fileName'], 'ratio'=> $ratio, 'width' => $width, 'height' => $height, 'mediaType' => $videoInfos['mediaType']]))
                 {
 
-                    $entityManager = $this->__managerRegistry->getManager(strtolower($mediaInfos['customerName']));
+                    $data = $this->getVideoFileCharacteristics($mediaSource);
+                    $audioCharacteristics = null;
 
-                    $data = $this->getVideoInfos($mediaSource);
-                    $level_array = str_split($data['level']);
+                    $videoCharacteristics = $data['video'];
+
+                    if(array_key_exists('audio',$data))
+                        $audioCharacteristics = $data['audio'];
+
+                    $level_array = str_split($videoCharacteristics['level']);
                     $level = implode('.', $level_array);
 
-                    switch ($mediaInfos['mediaType']) {
-
-                        case "diff":
-                            $media = new Video();
-                            break;
-
-                        case "them":
-                            $media = new VideoThematic();
-                            $media->setDate(new DateTime());
-                            break;
-
-                        case "elmt":
-                            $media = new VideoElementGraphic();
-                            $media->setContexte(null);
-                            break;
-
-                        case "sync":
-                            $media = new VideoSynchro();
-                            break;
-
-                        default:
-                            throw new Exception( sprintf("Unrecognized mediaType : '%s'", $mediaInfos['mediaType']) );
-
-                    }
-
-                    if(array_key_exists('codec_long_name', $data) and array_key_exists('bit_rate', $data)
-                        and array_key_exists('sample_rate', $data) and array_key_exists('channels', $data)
-                        and array_key_exists('nb_frames', $data))
-                    {
-                        $media->setAudioCodec($data['codec_long_name'])
-                              ->setAudioDebit((int)($data['bit_rate'] / 1000) . ' kbit/s')
-                              ->setAudioFrequence($data['sample_rate'] . ' Hz')
-                              ->setAudioChannel($data['channels'])
-                              ->setAudioFrame($data['nb_frames']);
-                    }
-
-                    $media->setSize(round($data['size'] / (1024 * 1024), 2) . ' Mo')
-                          ->setFormat($data['major_brand'])
-                          ->setSampleSize($data['bits_per_raw_sample'] . ' bits')
-                          ->setEncoder($data['encoder'])
-                          ->setVideoCodec($data['codec_long_name'])
-                          ->setVideoCodecLevel($level)
-                          ->setVideoFrequence(substr($data['avg_frame_rate'], 0, -2) . ' img/s')
-                          ->setVideoFrame($data['nb_frames'])
-                          ->setVideoDebit((int)($data['bit_rate'] / 1000) . ' kbit/s')
-                          ->setDuration(round($data['duration'], 2) . ' secondes')
-                          ->setMediaType('diff')
-                          ->setWidth($width)
-                          ->setHeight($height)
-                          ->setIsArchived(false)
-                          ->setContainIncruste(false)
-                          ->setName($mediaInfos['fileName'])
-                          ->setOrientation($this->__mediaOrientation)
-                          ->setMimeType($mediaInfos['mimeType'])
-                          ->setRatio("$width/$height")
-                          ->setExtension($mediaInfos['extension'])
-                          ->setCreatedAt(new DateTime())
-                          ->setDiffusionStart( new DateTime() )
-                          ->setDiffusionEnd( (new DateTime())->modify('+10 year') );
-
-                    array_map( fn($product) => $media->addProduct($product), $mediaInfos['mediaProducts']);
-                    array_map( fn($tag) => $media->addTag($tag), $mediaInfos['mediaTags']);
-
-                    $entityManager->persist($media);
-                    $entityManager->flush();
-
-                    $this->renameMediaWithId($media->getName(), $media->getId());
+                    $this->__videoInfos = [
+                        'size' => round($videoCharacteristics['size'] / (1024 * 1024), 2) . ' Mo',
+                        'format' => $videoCharacteristics['major_brand'],
+                        'sampleSize' => $videoCharacteristics['bits_per_raw_sample'] . ' bits',
+                        'encoder' => $videoCharacteristics['encoder'],
+                        'videoCodec' => $videoCharacteristics['codec_long_name'],
+                        'videoCodecLevel' => $level,
+                        'videoFrequence' => substr($videoCharacteristics['avg_frame_rate'], 0, -2) . ' img/s',
+                        'videoFrame' => $videoCharacteristics['nb_frames'],
+                        'videoDebit' => (int)($videoCharacteristics['bit_rate'] / 1000) . ' kbit/s',
+                        'duration' => round($videoCharacteristics['duration'], 2) . ' secondes',
+                        'mediaType' => $videoInfos['mediaType'],
+                        'width' => $width,
+                        'height' => $height,
+                        'fileName' => $videoInfos['fileName'],
+                        'orientation' => $this->__orientation,
+                        'mimeType' => $videoInfos['mimeType'],
+                        'ratio' => "$width/$height",
+                        'extension' => $videoInfos['extension'],
+                        'audioCodec' => ($audioCharacteristics !== null) ? $audioCharacteristics['codec_long_name'] : null,
+                        'audioDebit' => ($audioCharacteristics !== null) ? (int)($audioCharacteristics['bit_rate'] / 1000) . ' kbit/s' : null,
+                        'audioFrequence' => ($audioCharacteristics !== null) ? $audioCharacteristics['sample_rate'] . ' Hz' : null,
+                        'audioChannel' => ($audioCharacteristics !== null) ? $audioCharacteristics['channels'] : null,
+                        'audioFrame' => ($audioCharacteristics !== null) ? $audioCharacteristics['nb_frames'] : null,
+                    ];
 
                     return true;
                 }
@@ -226,7 +198,7 @@ class MediaEncodeManager
                 }
                 $output_low = "160*90";
 
-                $this->__mediaOrientation = 'Horizontal';
+                $this->__orientation = 'Horizontal';
 
                 break;
 
@@ -257,7 +229,7 @@ class MediaEncodeManager
                 }
                 $output_low = "90*160";
 
-                $this->__mediaOrientation = 'Vertical';
+                $this->__orientation = 'Vertical';
 
                 break;
 
@@ -288,7 +260,7 @@ class MediaEncodeManager
                 }
                 $output_low = "90*80";
 
-                $this->__mediaOrientation = 'Horizontal';
+                $this->__orientation = 'Horizontal';
 
                 break;
 
@@ -319,7 +291,7 @@ class MediaEncodeManager
                 }
                 $output_low = "80*90";
 
-                $this->__mediaOrientation = 'Vertical';
+                $this->__orientation = 'Vertical';
 
                 break;
 
@@ -400,12 +372,12 @@ class MediaEncodeManager
             $this->__filesToRenameWithId[] = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['fileName'] . '.mp4';
 
         }
-        
+
         return true;
 
     }
 
-    private function renameMediaWithId(string $mediaName, int $mediaId)
+    public function renameMediaWithId(string $mediaName, int $mediaId)
     {
 
         foreach ($this->__filesToRenameWithId as $filesToRenameWithIdPath)
@@ -422,10 +394,10 @@ class MediaEncodeManager
 
     }
 
-    private function getVideoInfos(string $pathToVideo)
+    private function getVideoFileCharacteristics(string $pathToVideo)
     {
 
-        $data = $infofile = $video = $audio = $format = [];
+        $infofile = $video = $audio = $format = [];
 
         $path_to_json = $this->__parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
         exec('ffprobe -v quiet -print_format json -show_format -show_streams "' . $pathToVideo . '" > "' . $path_to_json . '"', $output, $error);
@@ -478,15 +450,10 @@ class MediaEncodeManager
                 $infofile['audio'][$key] = $value;
             }
         }
+
         unset($infofile['audio']['avg_frame_rate'], $infofile['audio']['duration']);
 
-        if(null !== $video)
-            $data = $infofile['video'];
-
-        elseif (null !== $audio)
-            $data = $infofile['audio'];
-
-        return $data;
+        return $infofile;
 
     }
 

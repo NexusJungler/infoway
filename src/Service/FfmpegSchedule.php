@@ -143,6 +143,8 @@ class FfmpegSchedule
 
                 $customerManager = $this->__managerRegistry->getManager(strtolower( $task->getCustomer()->getName() ));
 
+                $mediaRep = $customerManager->getRepository(Media::class)->setEntityManager($customerManager);
+
                 $taskMediaInfo = $task->getMedia();
                 foreach ($taskMediaInfo['products'] as $k => $v) {
 
@@ -212,19 +214,27 @@ class FfmpegSchedule
                         //$encoding = new UploadCron($taskInfo, $this->__managerRegistry, $this->__parameterBag);
                         //$errors = $encoding->getErrors();
 
-                        $encoding = new MediaEncodeManager($this->__managerRegistry, $this->__parameterBag);
-                        $encoding->encodeMedia($taskInfo);
-                        $errors = $encoding->getEncodeErrors();
+                        $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
+                        $videoEncodeManager->encodeMedia($taskInfo);
+                        $errors = $videoEncodeManager->getEncodeErrors();
+
+                        if(empty($videoEncodeManager->getEncodeErrors()))
+                        {
+                            $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
+                            $videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
+                        }
 
                         foreach($errors as $error) {
                             $all_sync_errors[] = $error;
                         }
+
                         $sorted_medias[] = $encoding->fileID;
                     }
                     $error_string = implode(' || ', $all_sync_errors);
                     if($error_string != '') {
                         $this->pushError($task, $error_string);
                     }
+
                     // Add new entity synchro & Erase uploaded zip file
                     $new_sync = $rep_sync->insertSynchro(substr($task->getFilename(), 0, -4), count($list), $encoding->getSyncOrientation(), 'plein-écran');
                     $rep_sync->saveSyncMedias($new_sync, $sorted_medias);
@@ -247,14 +257,20 @@ class FfmpegSchedule
                     //$encoding = new UploadCron($taskInfo, $this->__managerRegistry, $this->__parameterBag);
                     //$errors = $encoding->getErrors();
 
-                    $encoding = new MediaEncodeManager($this->__managerRegistry, $this->__parameterBag);
-                    $encoding->encodeMedia($taskInfo);
-                    $errors = $encoding->getEncodeErrors();
+                    $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
+                    $videoEncodeManager->encodeMedia($taskInfo);
+                    $errors = $videoEncodeManager->getEncodeErrors();
 
                     $error_string = implode(' || ', $errors);
                     if($error_string != '') {
                         $this->pushError($task, $error_string);
                     }
+                    else
+                    {
+                        $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
+                        $videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
+                    }
+
                     $this->updateTask($task, 'finished');
                     // $this->killTask($task['id']);
                 }
