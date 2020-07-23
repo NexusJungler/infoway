@@ -96,9 +96,6 @@ class Product
      */
     private $medias;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="ElementGraphic", inversedBy="products", cascade={"persist"})
-     */
     private $elements;
 
 
@@ -408,14 +405,14 @@ class Product
     }
 
     /**
-     * @return Collection|ElementGraphic[]
+     * @return Collection|ImageElementGraphic[]|VideoElementGraphic[]
      */
-    public function getElements(): Collection
+    public function getElementGraphics(): Collection
     {
         return $this->elements;
     }
 
-    public function addElement(ElementGraphic $element): self
+    public function addElementGraphic($element): self
     {
         if (!$this->elements->contains($element)) {
             $this->elements[] = $element;
@@ -424,7 +421,7 @@ class Product
         return $this;
     }
 
-    public function removeElement(ElementGraphic $element): self
+    public function removeElementGraphic($element): self
     {
         if ($this->elements->contains($element)) {
             $this->elements->removeElement($element);

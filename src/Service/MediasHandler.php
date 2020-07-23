@@ -163,6 +163,9 @@ class MediasHandler
 
         exec($cmd, $data, $cmdResultStatus);
 
+        if($cmdResultStatus === 1)
+            throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
+
         if($fileType === 'video')
         {
 

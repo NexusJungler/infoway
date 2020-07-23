@@ -5,6 +5,7 @@ namespace App\Repository\Admin;
 use App\Entity\Admin\FfmpegTasks;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * @method FfmpegTasks|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,22 @@ class FfmpegTasksRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FfmpegTasks::class);
+    }
+
+    /**
+     * Remove last week tasks
+     */
+    public function removeAllFinishedTaks()
+    {
+
+        $lastWeek = ( new \DateTime() )->modify("-1 week");
+
+        $this->_em->createQueryBuilder()->delete($this->getClassName(), 'f')
+                                        ->where('f.registered <= :date')
+                                        ->setParameter('date', $lastWeek)
+                                        ->getQuery()
+                                        ->getResult();
+
     }
 
     // /**
