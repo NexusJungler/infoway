@@ -57,13 +57,26 @@ class UploadedImageFormatsCreator
         $this->__mediasSourceFolder .= '/' . $mediaInfos['customerName'] . '/image/' . $mediaInfos['mediaType'];
         $this->__mediaFormatsOutputFolder .= '/' . $mediaInfos['customerName'] . '/image/' . $mediaInfos['mediaType'];
 
+        $width = $mediaInfos['width'];
+        $height = $mediaInfos['height'];
+
+        if($height === 2160) // 4k
+            $this->__mediasSourceFolder .= '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $this->__encodeOutputSizesFolders['4k'];
+
+        /*else if($height === 4320) // 8k
+            $this->__mediasSourceFolder .= '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $this->__encodeOutputSizesFolders['8k'];
+        */
+
         $pathToImg = $this->__mediasSourceFolder . '/' . $mediaInfos['fileName'] . '.' . $mediaInfos['extension'];
 
         if(!file_exists($pathToImg))
             throw new Exception(sprintf("File not found : %s", $pathToImg));
 
-        list($width, $height) = getimagesize($pathToImg);
+        $this->__filesToRenameWithId[] = $pathToImg;
+
+        //list($width, $height) = getimagesize($pathToImg);
         $output = [];
+
         $ratio = $width / $height;
 
         if($mediaInfos['extension'] == 'png')
@@ -85,7 +98,7 @@ class UploadedImageFormatsCreator
                     $output['high'][0] = 1920;
                     $output['high'][1] = 1080;
 
-                    $folder = $this->__mediasSourceFolder . '/' . $this->__encodeOutputSizesFolders['HD'];
+                    $folder = $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'];
 
                     if($height === 2160) // 4k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['4k'];
@@ -93,6 +106,9 @@ class UploadedImageFormatsCreator
                     /*else if($height === 4320) // 8k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['8k'];
                     */
+
+                    if(!file_exists($folder))
+                        mkdir($folder, 0777, true);
 
                     if($width > 1920 && $height >1080)
                         imagepng($source, $folder . '/' . $mediaInfos['fileName'] . '.png');
@@ -119,7 +135,7 @@ class UploadedImageFormatsCreator
                     $output['high'][0] = 1080;
                     $output['high'][1] = 1920;
 
-                    $folder = $this->__mediasSourceFolder . '/' . $this->__encodeOutputSizesFolders['HD'];
+                    $folder = $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'];
 
                     if($height === 2160) // 4k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['4k'];
@@ -127,6 +143,9 @@ class UploadedImageFormatsCreator
                     /*else if($height === 4320) // 8k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['8k'];
                     */
+
+                    if(!file_exists($folder))
+                        mkdir($folder, 0777, true);
 
                     if ($width > 1080 && $height >1920)
                         imagepng($source, $folder . '/' . $mediaInfos['fileName'] . '.png');
@@ -152,7 +171,7 @@ class UploadedImageFormatsCreator
                     $output['high'][0] = 1080;
                     $output['high'][1] = 960;
                     if ($width > 1080 && $height > 960) {
-                        imagepng($source, $this->__mediasSourceFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['fileName'] . '.png');
+                        imagepng($source, $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['fileName'] . '.png');
                     }
                 }
 
@@ -176,7 +195,7 @@ class UploadedImageFormatsCreator
                     $output['high'][0] = 960;
                     $output['high'][1] = 1080;
                     if ($width > 960 && $height > 1080) {
-                        imagepng($source, $this->__mediasSourceFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['fileName'] . '.png');
+                        imagepng($source, $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['fileName'] . '.png');
                     }
                 }
 

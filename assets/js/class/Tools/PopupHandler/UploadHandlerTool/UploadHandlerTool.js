@@ -1120,20 +1120,12 @@ class UploadHandlerTool extends SubTool
         {
 
             if(mediaInfos.fileType === 'image')
-            {
-                //mediaInfos.mediaType === 'diff'
-                if( mediaInfos.mediaType === 'diff' )
-                    preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/low/${mediaInfos.id}.png" />`;
-
-                else if( mediaInfos.mediaType === 'elmt' )
-                    preview = `<img class="preview" style="height: 50px;" src="/miniatures/${mediaInfos.customer}/piece/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/piece/${mediaInfos.id}.png" />`;
-
-            }
+                preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.mediaType}/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.mediaType}/low/${mediaInfos.id}.png" />`;
 
 
             else
                 preview = `<video class="preview" controls>
-                            <source src="/miniatures/${mediaInfos.customer}/video/low/${mediaInfos.id}.mp4" type="${mediaInfos.mimeType}">
+                            <source src="/miniatures/${mediaInfos.customer}/video/${mediaInfos.mediaType}/low/${mediaInfos.id}.mp4" type="${mediaInfos.mimeType}">
                        </video>`;
 
         }

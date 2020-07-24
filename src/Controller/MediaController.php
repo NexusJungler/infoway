@@ -291,7 +291,16 @@ class MediaController extends AbstractController
         /*else if(strlen(pathinfo($file['name'])['filename']) < 5)
             return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);*/
 
+        list($width, $height) = getimagesize($file['tmp_name']);
+
         $root = $this->getParameter('project_dir') . '/../upload/source/' . $customerName . '/' . $splash[0] . '/' . $mediaType;
+
+        if($height === 2160) // 4k
+            $root .= '/HD/UHD-4k';
+
+        /*else if($height === 4320) // 8k
+            $root .= '/HD/UHD-8k';
+        */
 
         if(!file_exists($root))
             mkdir($root,0777, true);
@@ -325,6 +334,8 @@ class MediaController extends AbstractController
                 'mediaContainIncruste' => false,
                 'mimeType' => $mimeType,
                 'isArchived' => false,
+                'height' => $height,
+                'width' => $width,
             ];
 
             $uploadedImageFormatsCreator = new UploadedImageFormatsCreator($this->__parameterBag);

@@ -174,7 +174,7 @@ class VideoEncodeManager
                     return false;
                 }
 
-                if ($videoInfos['width'] > 1920 && $videoInfos['width'] > 1080) {
+                if ($videoInfos['width'] > 1920 && $videoInfos['height'] > 1080) {
                     $max_size = true;
                     $output_high = "1920*1080";
                     $HD = true; // On se prépare à copier la source dans 'HD' si la résolution dépasse le format high
@@ -183,7 +183,7 @@ class VideoEncodeManager
                 if ($videoInfos['width'] == 1920 && $videoInfos['height'] == 1080) {
                     $max_size = false;
                     // On copie simplement la vidéo sans la réencoder dans les répertoires Tizen et LFD!
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
 
 
 
@@ -217,7 +217,7 @@ class VideoEncodeManager
 
                 if ($videoInfos['width'] == 1080 && $videoInfos['height'] == 1920) {
                     $max_size = false;
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
                     }*/
@@ -248,7 +248,7 @@ class VideoEncodeManager
 
                 if ($videoInfos['width'] == 1080 && $videoInfos['height'] == 960) {
                     $max_size = false;
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
                     }*/
@@ -279,7 +279,7 @@ class VideoEncodeManager
 
                 if ($videoInfos['width'] == 960 && $videoInfos['height'] == 1080) {
                     $max_size = false;
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
                     }*/
@@ -301,16 +301,12 @@ class VideoEncodeManager
 
             $copyFolder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'];
 
-            if($videoInfos['height'] === 2160) // 4k
+            /*if($videoInfos['height'] === 2160) // 4k
                 $copyFolder .= '/' . $this->__encodeOutputSizesFolders['4k'];
-                //$this->__mediasEncodeOutputFolder .= $this->__encodeOutputSizesFolders['4k'];
 
-            /*else if($videoInfos['height'] === 4320) // 8k
+            else if($videoInfos['height'] === 4320) // 8k
                 $copyFolder .= '/' . $this->__encodeOutputSizesFolders['8k'];
-                //$this->__mediasEncodeOutputFolder .= $this->__encodeOutputSizesFolders['8k'];
             */
-
-            else $copyFolder = $this->__mediasEncodeOutputFolder . $this->__encodeOutputSizesFolders['high'];
 
             if(!file_exists($copyFolder))
                 mkdir($copyFolder, 0777, true);
