@@ -6,7 +6,6 @@ use App\Entity\Customer\BroadcastSlot;
 use App\Entity\Customer\Display;
 use App\Entity\Customer\Image;
 use App\Entity\Customer\ImageElementGraphic;
-use App\Entity\Customer\ImageThematic;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\ProgrammingMould;
@@ -20,6 +19,7 @@ use App\Entity\Customer\VideoThematic;
 use App\Repository\Admin\AllergenRepository;
 use App\Repository\RepositoryTrait;
 use App\Service\MediasHandler;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -177,58 +177,53 @@ class MediaRepository extends ServiceEntityRepository
 
     public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15)
     {
-        //dd($type, $currentPage, $limit);
-        // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
 
+        // recupère les medias qui n'ont pas et qui en contiennent, si ils doivent en contenir (boolean a true)
         switch ($type)
         {
 
-            // recupère les medias qui ont (boolean a true et tableau des incrustes non vide) et qui n'ont pas
-            // d'incruste(boolean a false et tableau des incrustes vide)
             case "medias":
-
-                $dql = "SELECT m FROM " . Media::class. " m 
-                
-                        LEFT JOIN " . Image::class . " i WITH m.id = i.id
-                        LEFT JOIN " . Video::class . " v WITH m.id = v.id
-                        
-                        WHERE m.mediaType = 'diff' AND ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
-                        OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) ) 
-                        
-                        ORDER BY m.createdAt DESC";
-
-                $medias = $this->paginate($dql, $currentPage, $limit);
-
-                //$orderedMedias['medias_products_criterions'] = $this->getEntityManager()->getRepository(Product::class)->findProductsCriterions();
-
+                $dql = $this->createQueryBuilder("m")
+                                ->leftJoin(Image::class, "i", "WITH", "i.id = m.id")
+                                ->leftJoin(Video::class, "v", "WITH", "v.id = m.id");
                 break;
 
-            case "synchros":
-                die("Need implementation for video synchro recuperation");
+            case "sync":
+                $dql = $this->createQueryBuilder("m")
+                            ->leftJoin(VideoSynchro::class, "vs", "WITH", 'vs.id = m.id')
+                            ->leftJoin(Video::class, "v", "WITH", 'v.id = m.id');
                 break;
 
-            case "thematics":
-                die("Need implementation for video thematic recuperation");
+            case "them":
+                $dql = $this->createQueryBuilder("m")
+                            ->leftJoin(VideoThematic::class, "vt", "WITH", 'vt.id = m.id')
+                            ->leftJoin(Video::class, "v", "WITH", 'v.id = m.id');
                 break;
 
-            case "elgp":
-                $dql = "SELECT m FROM " . Media::class. " m 
-                
-                        LEFT JOIN " . Image::class . " i WITH m.id = i.id
-                        LEFT JOIN " . Video::class . " v WITH m.id = v.id
-                        
-                        WHERE m.mediaType = 'elmt' AND ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
-                        OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
-                        
-                        ORDER BY m.createdAt DESC";
-
-                $medias = $this->paginate($dql, $currentPage, $limit);
+            case "elmt":
+                $dql = $this->createQueryBuilder("m")
+                                 ->leftJoin(ImageElementGraphic::class, "i", "WITH", "m.id = i.id")
+                                 ->leftJoin(VideoElementGraphic::class, "v", "WITH", "m.id = v.id");
                 break;
 
             default:
                 throw new Exception(sprintf("Error : Unrecognized media type ! Trying to get medias with '%s' type but this media type is not exist ", $type));
 
         }
+
+        $dql = $dql->where("m.mediaType = :type")
+                   ->andWhere("m.isArchived = false")
+                   ->andWhere("m.containIncruste = false AND m.incrustes IS EMPTY")
+                   ->orWhere("m.containIncruste = true AND m.incrustes IS NOT EMPTY")
+                   ->setParameter("type", $type)
+                   ->orderBy("m.id", "ASC")
+                   ->setFirstResult($limit * ($currentPage - 1))
+                   ->setMaxResults($limit);
+
+        //dd($dql->getQuery()->getResult());
+
+        // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
+        $medias = ( new Paginator($dql, $fetchJoinCollection = true))->setUseOutputWalkers(false);
 
         $orderedMedias['numberOfPages'] = intval( ceil($medias->count() / $limit) );
 
@@ -474,11 +469,6 @@ class MediaRepository extends ServiceEntityRepository
 
             case "diff":
                 $media = new Image();
-                break;
-
-            case "them":
-                $media = new ImageThematic();
-                $media->setDate(new DateTime());
                 break;
 
             case "elmt":
@@ -1293,15 +1283,6 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         return $infos;
 
     }
-    private function paginate(string $query, int $page = 1, int $limit = 15)
-    {
 
-        $query = $this->_em->createQuery($query)
-                           ->setFirstResult($limit * ($page - 1))
-                           ->setMaxResults($limit);
-
-        return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
-
-    }
 
 }

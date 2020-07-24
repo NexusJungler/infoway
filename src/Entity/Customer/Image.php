@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image extends Media
 {
 
-
-
     public function __construct()
     {
         parent::__construct();

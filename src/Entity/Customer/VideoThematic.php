@@ -13,4 +13,9 @@ class VideoThematic extends Video
 
     use Thematic;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
 }

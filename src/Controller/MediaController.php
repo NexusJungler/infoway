@@ -1041,17 +1041,13 @@ class MediaController extends AbstractController
         }
 
         elseif($mediasDisplayedType === "video_synchro")
-        {
-            die("TODO: get all video synchro");
-        }
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('sync', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "video_thematic")
-        {
-            die("TODO: get all video thematic");
-        }
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('them', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "element_graphic")
-            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('elgp', $page, $numberOfMediasDisplayedInMediatheque);
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('elmt', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "incruste")
         {
