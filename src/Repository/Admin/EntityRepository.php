@@ -3,7 +3,7 @@
 namespace App\Repository\Admin;
 
 use App\Entity\Admin\Entity;
-use App\Repository\RepositoryInterface;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;

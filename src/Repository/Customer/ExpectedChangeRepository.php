@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\ExpectedChange;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExpectedChangeRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExpectedChange::class);

@@ -3,12 +3,16 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\CriterionsList;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 
 class CriterionsListRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CriterionsList::class);

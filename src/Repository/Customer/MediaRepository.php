@@ -18,7 +18,7 @@ use App\Entity\Customer\VideoElementGraphic;
 use App\Entity\Customer\VideoSynchro;
 use App\Entity\Customer\VideoThematic;
 use App\Repository\Admin\AllergenRepository;
-use App\Repository\MainRepository;
+use App\Repository\RepositoryTrait;
 use App\Service\MediasHandler;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DateTime;
@@ -44,7 +44,7 @@ use Symfony\Component\Serializer\Serializer;
 class MediaRepository extends ServiceEntityRepository
 {
 
-    use MainRepository;
+    use RepositoryTrait;
 
     private Serializer $serializer;
 

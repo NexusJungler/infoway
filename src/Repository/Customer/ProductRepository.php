@@ -5,8 +5,8 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Site;
-use App\Repository\MainRepository;
-use App\Repository\RepositoryInterface;
+use App\Repository\RepositoryTrait;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -21,7 +21,7 @@ use Exception;
 class ProductRepository extends ServiceEntityRepository
 {
 
-    use MainRepository;
+    use RepositoryTrait;
 
     public function __construct(ManagerRegistry $registry)
     {

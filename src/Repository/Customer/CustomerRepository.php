@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\CriterionsList;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -16,20 +17,16 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CustomerRepository extends ServiceEntityRepository
 {
 
+    use RepositoryTrait;
+
     public function __construct(EntityManagerInterface $doctrine, ManagerRegistry $registry , ?string $entityClass )
     {
-        dd($doctrine);
+        //dd($doctrine);
         parent::__construct($registry, $entityClass);
-        dd($this->_em);
+        //dd($this->_em);
        // $this->_em = $registry->getManager();
 
 
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-        return $this;
     }
 
 

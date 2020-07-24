@@ -3,7 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\date;
-use App\Repository\RepositoryInterface;
+use App\Repository\RepositoryTrait;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -14,18 +15,14 @@ use Doctrine\Persistence\ObjectManager;
  * @method date[]    findAll()
  * @method date[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DateRepository extends ServiceEntityRepository implements RepositoryInterface
+class DateRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, date::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**

@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Devise;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -14,6 +15,9 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class DeviseRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Devise::class);

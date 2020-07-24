@@ -3,7 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\ProductAllergen;
-use App\Repository\RepositoryInterface;
+use App\Repository\RepositoryTrait;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -14,18 +15,14 @@ use Doctrine\Persistence\ObjectManager;
  * @method productAllergen[]    findAll()
  * @method productAllergen[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductAllergenRepository extends ServiceEntityRepository implements RepositoryInterface
+class ProductAllergenRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProductAllergen::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**
