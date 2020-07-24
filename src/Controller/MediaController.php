@@ -346,7 +346,7 @@ class MediaController extends AbstractController
 
                 $errors = implode(' ; ', $uploadedImageFormatsCreator->getErrors());
 
-                if($errors === "bad ratio")
+                if(preg_match("/bad ratio/i", $errors ))
                     return new JsonResponse([ 'error' => '521 Bad ratio' ]);
 
                 else

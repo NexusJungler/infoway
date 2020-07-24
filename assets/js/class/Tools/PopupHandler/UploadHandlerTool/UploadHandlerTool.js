@@ -590,7 +590,7 @@ class UploadHandlerTool extends SubTool
                 {
                     html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered">
                                 <td class="file-name-container uploaded-file-name-col">
-                                    <p><i class="fas fa-trash-alt cancel-upload" style="display: none"></i>${fileToUpload.name}</p>
+                                    <p title="${ fileToUpload.name }"><i class="fas fa-trash-alt cancel-upload" style="display: none"></i>${fileToUpload.name}</p>
                                 </td>
                                 
                                 <td class="file_progress_bar_container">
@@ -616,7 +616,7 @@ class UploadHandlerTool extends SubTool
 
                     html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered">
                                 <td>
-                                    <p>${fileToUpload.name}</p>
+                                    <p title="${ fileToUpload.name }">${fileToUpload.name}</p>
                                 </td>
                                 
                                 <td class="file_progress_bar_container">
@@ -989,7 +989,7 @@ class UploadHandlerTool extends SubTool
     {
 
         return `<td> 
-                    <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> 
+                    <p title="${ elementGraphicInfos.fileName }"><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> 
                 </td>
                 <td>
                     <progress class="progress_bar" id="progress_${ elementGraphicInfos.index }" max="100" value="100"></progress>
@@ -1026,7 +1026,7 @@ class UploadHandlerTool extends SubTool
         let day = (now.getDate() < 10 ) ? '0' + now.getDate() : now.getDate();
         let year = now.getFullYear();
 
-        return `<td> <p><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ mediaInfos.fileName }</p> </td>
+        return `<td> <p title="${ mediaInfos.fileName }"><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ mediaInfos.fileName }</p> </td>
                 <td>
                     <progress class="progress_bar" id="progress_${ mediaInfos.index }" max="100" value="100"></progress>
                     <i class="fas fa-check" aria-hidden="true"></i>
