@@ -1,5 +1,6 @@
 import ToolBox from "./ToolBox";
 import Tool from "./Tool";
+import ParentTool from "./ParentTool";
 
 class SubTool extends Tool
 {
@@ -14,7 +15,7 @@ class SubTool extends Tool
 
     setParent(parent)
     {
-        if( !(parent instanceof Tool) )
+        if( !(parent instanceof ParentTool) )
             throw new Error(`Attempt to set parent to ${this.__name}, but parent must be instance of Tool`);
 
         this.__parent = parent;

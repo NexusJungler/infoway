@@ -1,5 +1,9 @@
 import Tool from "../../Tool"
 import SubTool from "../../SubTool";
+import UploadElementGraphicSubTool from "./UploadElementGraphicSubTool/UploadElementGraphicSubTool";
+import UploadMediaDiffSubTool from "./UploadMediaDiffSubTool/UploadMediaDiffSubTool";
+import UploadVideoSynchroSubTool from "./UploadVideoSynchroSubTool/UploadVideoSynchroSubTool";
+import UploadVideoThematicSubTool from "./UploadVideoThematicSubTool/UploadVideoThematicSubTool";
 
 
 class UploadHandlerTool extends SubTool
@@ -15,6 +19,15 @@ class UploadHandlerTool extends SubTool
         this.__$location = $('.popup_upload');
         this.__$fileToUploadList = $('.file_to_upload_list');
         this.__$fileToCharacterisationList = $('.file_to_characterisation_list');
+
+        this.__subTools = [
+            new UploadElementGraphicSubTool(),
+            new UploadMediaDiffSubTool(),
+            new UploadVideoSynchroSubTool(),
+            new UploadVideoThematicSubTool(),
+        ];
+
+        this.__currentUploadManager = null;
 
         // W3C authors recommend to specify both MIME-types and corresponding extensions in input type file "accept" attribute
         // @see : https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
@@ -84,6 +97,88 @@ class UploadHandlerTool extends SubTool
         this.__availableAssociationItems = [];
 
         this.getAllAvailableAssociationItems();
+
+        this.activeUploadSubTool();
+
+    }
+
+    activeUploadSubTool()
+    {
+
+        switch (this.__uploadMediaType)
+        {
+
+            case "medias":
+                this.activeSubTool("UploadMediaDiffSubTool");
+                break;
+
+            case "video_synchro":
+                this.activeSubTool("UploadVideoSynchroSubTool");
+                break;
+
+            case "video_thematic":
+                this.activeSubTool("UploadVideoThematicSubTool");
+                break;
+
+            case "element_graphic":
+                this.activeSubTool("UploadElementGraphicSubTool");
+                break;
+
+            default:
+                throw new Error(`Error : Unrecognized media type (${ this.__uploadMediaType }) !`);
+        }
+
+        return this;
+    }
+
+    activeSubTool(subToolName, subToolToolsToActive = [])
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        this.__currentUploadManager = this.__subTools[ this.getSubToolIndex(subToolName) ];
+
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
+        this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
+
+        if(subToolToolsToActive.length > 0)
+        {
+
+            subToolToolsToActive.map( (subToolToolToActive) => {
+
+                if(subToolToolToActive === "all")
+                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeAllSubTools();
+
+                else
+                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeSubTool(subToolToolToActive);
+
+            } )
+
+        }
+
+        return this;
+    }
+
+    getSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        return this.__subTools[ this.getSubToolIndex(subToolName) ];
+
+    }
+
+    subToolIsRegistered(subToolName)
+    {
+        return this.getSubToolIndex( subToolName ) !== -1;
+    }
+
+    getSubToolIndex(subToolName)
+    {
+        return this.__subTools.findIndex( subTool =>  subTool.getName() === subToolName );
     }
 
     getAllAvailableAssociationItems()
@@ -753,57 +848,12 @@ class UploadHandlerTool extends SubTool
                                     if(typeof response.error === "undefined")
                                     {
 
-                                        if(response.fileType === 'image')
-                                        {
+                                        this.__currentUploadManager.saveMediaInfos(response);
 
-                                            /*let mediaInfos = {
-                                                id: response.id,
-                                                customer: response.customer,
-                                                index: fileToUpload.index,
-                                                fileType: response.fileType,
-                                                mediaType: response.mediaType,
-                                                fileName: response.fileName,
-                                                fileNameWithoutExtension: response.fileNameWithoutExtension,
-                                                extension: response.extension,
-                                                height: response.height,
-                                                width: response.width,
-                                                dpi: response.dpi,
-                                                miniatureExist: response.miniatureExist,
-                                                //highestFormat: response.highestFormat,
-                                            };*/
-
-                                            uploadStateIndicator.html("Téléchargement terminé !");
-
-                                            $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
-                                            $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
-
-                                            uploadFinished++;
-
-                                            if( $(`#upload_${fileToUpload.index} .file_progress_bar_container i`).length === 0 )
-                                                $('<i>', { class: 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
-
-                                            // new item
-                                            //this.addNewItemInMediaCollection( { id: response.id, fileName: fileName, extension: fileExtension, type: mediaInfos.type } );
-
-                                            this.showMediaInfoForEdit(response ,fileToUpload.index);
-
-                                            $('.edit-btn-container').fadeIn();
-
-                                        }
-                                        else
+                                        if(response.fileType === 'video')
                                         {
 
                                             uploadStateIndicator.html("Encodage en cours ...");
-
-                                            // check status every 10sec
-                                            /*let videoEncodingResult = await this.checkVideoEncodingStatus(response.id, fileToUpload.index);
-                                            while (videoEncodingResult.status !== 'Finished')
-                                            {
-                                                // wait 10s before checking again
-                                                //this.sleep(10000);
-
-
-                                            }*/
 
                                             let videoEncodingResult = {};
 
@@ -829,28 +879,6 @@ class UploadHandlerTool extends SubTool
 
                                                         $(`#upload_${fileToUpload.index}`).removeClass("valid_download");
 
-                                                        //this.addNewItemInMediaCollection( {id: videoEncodingResult.id, fileName: fileName, extension: videoEncodingResult.extension, type: videoEncodingResult.type} );
-
-                                                        /*let videoInfos = {
-                                                            id: videoEncodingResult.id,
-                                                            customer: videoEncodingResult.customer,
-                                                            index: fileToUpload.index,
-                                                            fileType: videoEncodingResult.type,
-                                                            fileName: videoEncodingResult.fileName,
-                                                            fileNameWithoutExtension: videoEncodingResult.fileNameWithoutExtension,
-                                                            miniatureExist: videoEncodingResult.miniatureExist,
-                                                            name: videoEncodingResult.name,
-                                                            extension: videoEncodingResult.extension,
-                                                            height: videoEncodingResult.height,
-                                                            width: videoEncodingResult.width,
-                                                            dpi: videoEncodingResult.dpi,
-                                                            codec: videoEncodingResult.codec,
-                                                            mimeType: videoEncodingResult.mimeType,
-                                                            //highestFormat: videoEncodingResult.highestFormat,
-                                                        };*/
-
-                                                        this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
-
                                                     }
                                                     else
                                                     {
@@ -864,6 +892,52 @@ class UploadHandlerTool extends SubTool
                                             }, 10000 )
 
                                         }
+
+                                        this.__currentUploadManager.showMediaInfoForEdit(response, fileToUpload.index);
+
+                                        /*if(response.fileType === 'image')
+                                        {
+
+                                            /!*let mediaInfos = {
+                                                id: response.id,
+                                                customer: response.customer,
+                                                index: fileToUpload.index,
+                                                fileType: response.fileType,
+                                                mediaType: response.mediaType,
+                                                fileName: response.fileName,
+                                                fileNameWithoutExtension: response.fileNameWithoutExtension,
+                                                extension: response.extension,
+                                                height: response.height,
+                                                width: response.width,
+                                                dpi: response.dpi,
+                                                miniatureExist: response.miniatureExist,
+                                                //highestFormat: response.highestFormat,
+                                            };*!/
+
+                                            uploadStateIndicator.html("Téléchargement terminé !");
+
+                                            $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
+                                            $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
+
+                                            uploadFinished++;
+
+                                            if( $(`#upload_${fileToUpload.index} .file_progress_bar_container i`).length === 0 )
+                                                $('<i>', { class: 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
+
+                                            // new item
+                                            //this.addNewItemInMediaCollection( { id: response.id, fileName: fileName, extension: fileExtension, type: mediaInfos.type } );
+
+                                            this.showMediaInfoForEdit(response ,fileToUpload.index);
+
+                                            $('.edit-btn-container').fadeIn();
+
+                                        }
+                                        else
+                                        {
+
+
+
+                                        }*/
 
                                         if($('.media_list tbody tr.valid-download').length > 0)
                                             $('.edit_media_info .action-btn-container').fadeIn();
@@ -985,6 +1059,28 @@ class UploadHandlerTool extends SubTool
 
     }
 
+    buildAssociationInputsHtml(associationItem, index)
+    {
+        let inputs = '';
+        let counter = 0;
+
+        this.__availableAssociationItems.forEach( (item) => {
+
+            if(item.type === associationItem)
+            {
+
+                inputs += `<input type="checkbox" id="medias_list_medias_${ index }_${ item.type }_${ counter }" name=medias_list[medias][${index}][${ item.type }][]" value="${item.id}"> 
+                           <label for="medias_list_medias_${ index }_${ item.type }_${ counter }">${ item.name }</label>`;
+                counter++;
+
+            }
+
+        } );
+
+        return inputs;
+
+    }
+
     showElementGraphicInfos(elementGraphicInfos, preview)
     {
 
@@ -1076,28 +1172,6 @@ class UploadHandlerTool extends SubTool
                 </td>`;
     }
 
-    buildAssociationInputsHtml(associationItem, index)
-    {
-        let inputs = '';
-        let counter = 0;
-
-        this.__availableAssociationItems.forEach( (item) => {
-
-            if(item.type === associationItem)
-            {
-
-                inputs += `<input type="checkbox" id="medias_list_medias_${ index }_${ item.type }_${ counter }" name=medias_list[medias][${index}][${ item.type }][]" value="${item.id}"> 
-                           <label for="medias_list_medias_${ index }_${ item.type }_${ counter }">${ item.name }</label>`;
-                counter++;
-
-            }
-
-        } );
-
-        return inputs;
-
-    }
-
     showMediaInfoForEdit(mediaInfos, index)
     {
 
@@ -1111,7 +1185,6 @@ class UploadHandlerTool extends SubTool
 
         $(`#upload_${mediaInfos.index} .choice_media`).attr('data-media', mediaInfos.index);
 
-        // show miniatures
         $(`#upload_${mediaInfos.index} .preview_container`).empty();
 
         let preview = '';
@@ -1133,16 +1206,20 @@ class UploadHandlerTool extends SubTool
             preview = `<img class="media_miniature miniature_${ mediaInfos.fileType }" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">`;
 
 
+        let html = '';
 
-        let html = `<tr data-index="${ mediaInfos.index }" id="upload_${ mediaInfos.index }" class="unregistered">`;
-
-        if( this.__uploadMediaType === 'element_graphic' )
-            html += this.showElementGraphicInfos(mediaInfos, preview);
-
+        if(this.__uploadMediaType === 'video_synchro')
+        {
+            html = this.__currentUploadManager.showMediaInfoForEdit(mediaInfos, preview);
+        }
         else
-            html += this.showMediaInfos(mediaInfos, preview);
+        {
 
-        html += `</tr>`;
+            html = `<tr data-index="${ mediaInfos.index }" id="upload_${ mediaInfos.index }" class="unregistered">`;
+
+            html += this.__currentUploadManager.showMediaInfoForEdit(mediaInfos, preview) + `</tr>`;
+
+        }
 
         this.__$fileToCharacterisationList.find(`#upload_${mediaInfos.index}`).replaceWith( $(html) );
 

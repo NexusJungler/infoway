@@ -1,0 +1,54 @@
+<div class="popup_body_child container step step_2" data-step="2">
+
+    <form id="medias_list_form" name="medias_list">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Fichier</th>
+                <th>Téléchargement</th>
+                <th>Médias</th>
+                <th>Caractéristiques</th>
+                <th>Nom</th>
+                <th>Date de diffusion</th>
+                <th>Critères</th>
+                <th>Associer Tags</th>
+                <th>Associer Produits</th>
+            </tr>
+            </thead>
+
+            {#{{ form_start(uploadMediaForm) }}
+            <tbody class="file_to_characterisation_list medias_collection">
+            {{ form_row(uploadMediaForm) }}
+            </tbody>
+            {{ form_end(uploadMediaForm) }}#}
+
+            <tbody class="file_to_characterisation_list medias_collection">
+
+            </tbody>
+
+        </table>
+
+    </form>
+
+</div>
+
+<div class="popup_body_child container step step_3" data-step="3">
+
+    <table>
+        <thead>
+        <tr>
+            <th>Médias</th>
+            <th>Nom</th>
+            <th>Critères</th>
+            <th>Tags affectés</th>
+            <th>Produits associés</th>
+        </tr>
+        </thead>
+
+        <tbody class="media_characterisation_resume_list">
+
+        </tbody>
+    </table>
+
+</div>
