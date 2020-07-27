@@ -11,6 +11,7 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\ScreenPlaylist;
 use App\Entity\Customer\ScreenPlaylistEntry;
+use App\Entity\Customer\Synchro;
 use App\Entity\Customer\SynchroElement;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
@@ -409,6 +410,19 @@ class MediaRepository extends ServiceEntityRepository
 
             case "sync":
                 $media = new SynchroElement();
+
+                $synchro = $this->_em->getRepository(Synchro::class)->findOneByName($videoInfos['synchros']['name']);
+
+                if(!$synchro)
+                {
+                    $synchro = new Synchro();
+                    $synchro->setName($videoInfos['synchros']['name']);
+                    $this->_em->persist($synchro);
+                }
+
+                $media->addSynchro($synchro)
+                      ->setPosition($videoInfos['position']);
+
                 break;
 
             default:
@@ -426,6 +440,8 @@ class MediaRepository extends ServiceEntityRepository
                   ->setAudioChannel($videoInfos['audioChannel'])
                   ->setAudioFrame($videoInfos['audioFrame']);
         }
+
+        $date = new DateTime($videoInfos['createdAt']);
 
         $media->setSize($videoInfos['size'])
               ->setFormat($videoInfos['format'])
@@ -447,9 +463,9 @@ class MediaRepository extends ServiceEntityRepository
               ->setMimeType($videoInfos['mimeType'])
               ->setRatio($videoInfos['ratio'])
               ->setExtension($videoInfos['extension'])
-              ->setCreatedAt(new DateTime())
-              ->setDiffusionStart( new DateTime() )
-              ->setDiffusionEnd( (new DateTime())->modify('+10 year') );
+              ->setCreatedAt($date)
+              ->setDiffusionStart( $date )
+              ->setDiffusionEnd( $date->modify('+10 year') );
 
         /*array_map( fn($product) => $media->addProduct($product), $videoInfos['mediaProducts']);
         array_map( fn($tag) => $media->addTag($tag), $videoInfos['mediaTags']);*/

@@ -125,6 +125,7 @@ class Media
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->incrustes = new ArrayCollection();
+        $this->orientation = " ";
     }
 
     public function getId(): ?int

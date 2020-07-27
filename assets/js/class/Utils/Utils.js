@@ -9,11 +9,13 @@ class Utils
                 if (seen.has(value)) {
                     return;
                 }
+
                 seen.add(value);
             }
             return value;
         };
-    };
+
+    }
 
 }
 

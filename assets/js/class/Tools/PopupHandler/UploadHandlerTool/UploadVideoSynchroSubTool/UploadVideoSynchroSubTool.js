@@ -10,18 +10,31 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         super();
         this.__name = this.constructor.name;
-        this.__synchro = new Synchro();
+        this.__synchro = (new Synchro()).setName("Synchro1");
         this.__synchroIsSend = false;
     }
 
-    saveSynchroElement(element = { name: "", position: 0 })
+    saveSynchroElement(element = { name: "" })
     {
 
+        let lastItem = this.__synchro.getSynchroElements()[ this.__synchro.getSynchroElements().length-1 ];
         const synchroElement = new SynchroElement();
-        synchroElement.setName(element.name)
-                      .setPosition(element.position);
+        synchroElement.setName(element.name);
+
+        if( lastItem instanceof SynchroElement)
+        {
+            //console.log(lastItem); debugger
+
+            // par défaut la position est à 0
+            // on incremente la position de l'element si la position est déjà utilisé par le dernier synchroElement dans la liste
+            if(lastItem.getPosition() === synchroElement.getPosition())
+                synchroElement.setPosition( synchroElement.getPosition() +1 );
+
+        }
 
         this.__synchro.addSynchroElement(synchroElement);
+
+        console.log(this.__synchro); //debugger
 
     }
 
@@ -29,23 +42,28 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         this.__synchroIsSend = true;
 
-        //let zonesToExport = Object.values(this.interface.currentTemplate.getZones()).map(zone=>{
-        //             let zoneObject = Object.assign({}, zone);
-        //             let zoneChildrens = Object.values(zone.zoneChildrens).map(children => {
-        //                 console.log(children);
-        //                 children = Object.assign({},children)
-        //                 children.zoneParent = children.zoneParent.id
-        //                 return children
-        //             })
-        //             zoneObject.zoneChildrens = zoneChildrens
-        //             if( typeof zoneObject.parentZone ==='object' && zoneObject.parentZone instanceof Zone )zoneObject.parentZone = zoneObject.parentZone.id
-        //             return zoneObject
-        //         }).filter(zoneToExportWihtoutChild => {
-        //             return zoneToExportWihtoutChild.zoneParent === null
-        //         })
+        let synchroToExport = this.__synchro.formatObjectToExport();
 
+        //console.log(synchroToExport); debugger
 
-        return JSON.stringify( this.__synchro, Utils.getCircularReplacer() );
+        return JSON.stringify( synchroToExport );
+    }
+
+    getSynchroElementByName(name)
+    {
+
+        let element = null;
+
+        this.__synchro.getSynchroElements().forEach( (synchroElement) => {
+
+            if(synchroElement.getName() === name)
+                element =  synchroElement;
+
+        } )
+
+        element.__synchros = this.__synchro.getName();
+
+        return JSON.stringify(element);
     }
 
     synchroIsAlreadySend()

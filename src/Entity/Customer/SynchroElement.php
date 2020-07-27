@@ -11,12 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SynchroElement extends Video
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
 
     /**
      * @ORM\Column(type="integer")
@@ -32,11 +27,7 @@ class SynchroElement extends Video
     {
         parent::__construct();
         $this->synchros = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->position = 0;
     }
 
     public function getPosition(): int
@@ -63,7 +54,7 @@ class SynchroElement extends Video
     {
         if (!$this->synchros->contains($synchro)) {
             $this->synchros[] = $synchro;
-            $synchro->addVideo($this);
+            $synchro->addSynchroElement($this);
         }
 
         return $this;
@@ -73,7 +64,7 @@ class SynchroElement extends Video
     {
         if ($this->synchros->contains($synchro)) {
             $this->synchros->removeElement($synchro);
-            $synchro->removeVideo($this);
+            $synchro->removeSynchroElement($this);
         }
 
         return $this;

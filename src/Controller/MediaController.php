@@ -13,6 +13,8 @@ use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\Synchro;
+use App\Entity\Customer\SynchroElement;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Form\Customer\EditMediaType;
@@ -254,8 +256,6 @@ class MediaController extends AbstractController
 
         $type = $request->request->get('media_type');
 
-        dd(json_decode($request->request->get('synchrosElement')));
-
         $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync', 'element_graphic' => 'elmt'];
 
         if(!array_key_exists($type, $options))
@@ -396,15 +396,31 @@ class MediaController extends AbstractController
             else
                 throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
 
+
+            if($type === 'synchros')
+            {
+
+                $synchroDatas = json_decode($request->request->get('synchro'));
+
+                $synchro = new Synchro();
+                $synchro->setName($synchroDatas->__name);
+
+                $media = new SynchroElement();
+                $media->addSynchro($synchro)
+                      ->setPosition($synchroDatas->__position);
+
+            }
+
             $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
                   ->setExtension($real_file_extension)
                   ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
-                  ->setOrientation(" ") // le serializer oblige à avoir une valeur
                   ->setMediaType($mediaType);
 
             $media = json_decode($this->__serializer->serialize($media, 'json'), true);
+
+            $media['createdAt'] = date('Y-m-d');
 
             $fileInfo = [
                 'fileName' => $fileName,
@@ -428,18 +444,6 @@ class MediaController extends AbstractController
             $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->__parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
-            //$highestFormat = $this->getMediaHigestFormat($id, "video");
-//'id' => $media->getId(),
-//                'fileName' => $name,
-//                'fileNameWithoutExtension' => $media->getName(),
-//                'extension' => $media->getExtension(),
-//                'height' => $media->getHeight(),
-//                'width' => $media->getWidth(),
-//                'dpi' => $dpi,
-//                'miniatureExist' => file_exists($miniaturePath),
-//                'fileType' => 'image',
-//                'mediaType' => $mediaType,
-//                'customer' => $customerName,
             $response = [
                 'id' => $id,
                 'fileName' => $fileName,
@@ -455,8 +459,6 @@ class MediaController extends AbstractController
             ];
 
         }
-
-        // @TODO: if resolution 16/9, add color red on resolution in popup when user click save, confirm(error..., continue ?)
 
         return new JsonResponse($response, Response::HTTP_OK);
 

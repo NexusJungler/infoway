@@ -96,6 +96,24 @@ class Synchro extends Video
         return ``;
     }
 
+    formatObjectToExport()
+    {
+
+        this.__synchroElements = Object.values(this.getSynchroElements()).map(synchroElement => {
+
+            synchroElement.getSynchros().map((synchro, index) => {
+
+                synchroElement.getSynchros()[index] = this.getName();
+
+            })
+
+            return synchroElement;
+
+        });
+
+        return this;
+    }
+
 }
 
 export default Synchro;

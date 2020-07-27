@@ -19,6 +19,11 @@ class Synchro
     private $id;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
+    /**
      * @ORM\ManyToMany(targetEntity="SynchroElement", inversedBy="synchros")
      */
     private $videos;
@@ -33,15 +38,27 @@ class Synchro
         return $this->id;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     /**
      * @return Collection|SynchroElement[]
      */
-    public function getVideos(): Collection
+    public function getSynchroElements(): Collection
     {
         return $this->videos;
     }
 
-    public function addVideo(SynchroElement $video): self
+    public function addSynchroElement(SynchroElement $video): self
     {
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
@@ -50,7 +67,7 @@ class Synchro
         return $this;
     }
 
-    public function removeVideo(SynchroElement $video): self
+    public function removeSynchroElement(SynchroElement $video): self
     {
         if ($this->videos->contains($video)) {
             $this->videos->removeElement($video);

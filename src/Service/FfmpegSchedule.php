@@ -159,121 +159,54 @@ class FfmpegSchedule
 
                 }
 
-                if($task->getMediatype() == 'sync') {
-                    $path = $this->__parameterBag->get('project_dir') . '/../upload/source/' . $customer_name . '/video/' . $taskMediaInfo['mediaType'] . '/' . $task->getFilename();
-                    //$temp_folder = 'D:/inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
-                    $temp_folder = $this->__parameterBag->get('project_dir') . '../inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
+                $this->updateTask($task, 'started');
 
-                    if (file_exists($path)) {
-                        $real_file_extension = $this->getRealFileExtension($path);
-                        if($real_file_extension != 'zip' && $real_file_extension != 'rar') {
-                            $this->updateTask($task, 'started');
-                            $this->pushError($task, 'permission denied - ' .  $real_file_extension . ' forbidden extension');
-                            $this->updateTask($task, 'finished');
-                            continue;
-                        }
-                    } else {
-                        dd($path);
-                        $this->updateTask($task, 'started');
-                        $this->pushError($task, 'file not found!');
-                        $this->updateTask($task, 'finished');
-                        continue;
-                    }
+                $taskInfo = [
+                    'fileName' => $taskMediaInfo['name'],
+                    'customerName' => $customer_name,
+                    'mediaType' => $task->getMediatype(),
+                    'createdAt' => $taskMediaInfo['createdAt'],
+                    'extension' => $taskMediaInfo['extension'],
+                    'mediaProducts' => $taskMediaInfo['products'],
+                    'mediaTags' => $taskMediaInfo['tags'],
+                    'mimeType' => $taskMediaInfo['mimeType'],
+                ];
 
-                    exec('7z e "' . $path . '" -o' . $temp_folder, $output);
-                    exec('rmdir "' . $temp_folder . '/' . substr($task->getFilename(), 0, -4) . '"');
+                if($task->getMediatype() === 'sync')
+                {
 
-                    $this->updateTask($task, 'started');
-                    $list = scandir($temp_folder);
-                    $sorted_medias = [];
-                    unset($list[0], $list[1]);
-                    $all_sync_errors = [];
-                    $encoding = null;
-                    foreach($list as $video) {
-                        if(is_dir($video)) {
-                            $this->deldir($video);
-                            continue;
-                        }
-
-                        // ce fichier c'est pour les videos
-                        // lors de l'enregistrement en base
-
-                        $taskInfo = [
-                            'fileName' => $video,
-                            'customerName' => $customer_name,
-                            'mediaType' => 'sync',
-                            'uploadDate' => $taskMediaInfo['createdAt'],
-                            'extension' => $taskMediaInfo['extension'],
-                            'mediaProducts' => $taskMediaInfo['products'],
-                            'mediaTags' => $taskMediaInfo['tags'],
-                            'mimeType' => $taskMediaInfo['mimeType'],
-                        ];
-
-                        //$encoding = new UploadCron($taskInfo, $this->__managerRegistry, $this->__parameterBag);
-                        //$errors = $encoding->getErrors();
-
-                        $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
-                        $videoEncodeManager->encodeMedia($taskInfo);
-                        $errors = $videoEncodeManager->getEncodeErrors();
-
-                        if(empty($videoEncodeManager->getEncodeErrors()))
-                        {
-                            $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
-                            $videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
-                        }
-
-                        foreach($errors as $error) {
-                            $all_sync_errors[] = $error;
-                        }
-
-                        $sorted_medias[] = $encoding->fileID;
-                    }
-                    $error_string = implode(' || ', $all_sync_errors);
-                    if($error_string != '') {
-                        $this->pushError($task, $error_string);
-                    }
-
-                    $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
-
-                    // Add new entity synchro & Erase uploaded zip file
-                    /*$new_sync = $rep_sync->insertSynchro(substr($task->getFilename(), 0, -4), count($list), $encoding->getSyncOrientation(), 'plein-écran');
-                    $rep_sync->saveSyncMedias($new_sync, $sorted_medias);*/
-                    unlink($path);
-                    $this->updateTask($task, 'finished');
-                } else {
-                    $this->updateTask($task, 'started');
                     $taskInfo = [
-                        //'fileName' => $task->getFilename(),
                         'fileName' => $taskMediaInfo['name'],
                         'customerName' => $customer_name,
                         'mediaType' => $task->getMediatype(),
-                        'uploadDate' => $taskMediaInfo['createdAt'],
+                        'createdAt' => $taskMediaInfo['createdAt'],
                         'extension' => $taskMediaInfo['extension'],
                         'mediaProducts' => $taskMediaInfo['products'],
                         'mediaTags' => $taskMediaInfo['tags'],
                         'mimeType' => $taskMediaInfo['mimeType'],
+                        'synchros' => $taskMediaInfo['synchros'][0],
+                        'position' => $taskMediaInfo['position'],
                     ];
 
-                    //$encoding = new UploadCron($taskInfo, $this->__managerRegistry, $this->__parameterBag);
-                    //$errors = $encoding->getErrors();
-
-                    $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
-                    $videoEncodeManager->encodeMedia($taskInfo);
-                    $errors = $videoEncodeManager->getEncodeErrors();
-
-                    $error_string = implode(' || ', $errors);
-                    if($error_string != '') {
-                        $this->pushError($task, $error_string);
-                    }
-                    else
-                    {
-                        $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
-                        $videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
-                    }
-
-                    $this->updateTask($task, 'finished');
-                    // $this->killTask($task['id']);
                 }
+
+                $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
+                $videoEncodeManager->encodeMedia($taskInfo);
+                $errors = $videoEncodeManager->getEncodeErrors();
+
+                $error_string = implode(' || ', $errors);
+                if($error_string != '') {
+                    $this->pushError($task, $error_string);
+                }
+                else
+                {
+                    $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
+
+                    $videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
+                }
+
+                $this->updateTask($task, 'finished');
+
             }
 
             // A la fin du traitement, mise à jour du fichier de configuration: FFMPEG -> 0

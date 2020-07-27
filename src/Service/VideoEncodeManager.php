@@ -138,6 +138,7 @@ class VideoEncodeManager
                         'mediaType' => $videoInfos['mediaType'],
                         'width' => $width,
                         'height' => $height,
+                        'createdAt' => $videoInfos['createdAt'],
                         'fileName' => $videoInfos['fileName'],
                         'orientation' => $this->__orientation,
                         'mimeType' => $videoInfos['mimeType'],
@@ -149,6 +150,12 @@ class VideoEncodeManager
                         'audioChannel' => ($audioCharacteristics !== null) ? $audioCharacteristics['channels'] : null,
                         'audioFrame' => ($audioCharacteristics !== null) ? $audioCharacteristics['nb_frames'] : null,
                     ];
+
+                    if($videoInfos['mediaType'] === 'sync')
+                    {
+                        $this->__videoInfos['synchros'] = $videoInfos['synchros'];
+                        $this->__videoInfos['position'] = $videoInfos['position'];
+                    }
 
                     return true;
                 }
