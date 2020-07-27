@@ -33,7 +33,7 @@ class ToolBox
     {
         this.__tools = [
             new CustomerCreatorHandler(),
-            new ArchivedMediasHandlerTool(),
+            //new ArchivedMediasHandlerTool(),
             new PaginatorHandler(),
             new FilterMediasTool(),
             new PopupHandler(),
@@ -47,7 +47,7 @@ class ToolBox
     {
 
         if(typeof toolName !== 'string' || typeof toolName === "undefined" || toolName === "" || toolName === null)
-            throw new Error("Invalid 'toolName' form ToolBox::loadTool()");
+            throw new Error(`Parameter of ToolBox.activeTool() must be instance of string, but '${typeof toolName}' given !`);
 
         if(this.toolIsRegistered(toolName))
         {
@@ -82,7 +82,7 @@ class ToolBox
     disableTool(toolName)
     {
         if(typeof toolName !== 'string')
-            throw new Error("Invalid 'toolName' form ToolBox::loadTool()");
+            throw new Error(`Parameter of ToolBox.disableTool() must be instance of string, but '${typeof toolName}' given !`);
 
         if(this.toolIsRegistered(toolName))
             this.__tools[ this.getToolIndex(toolName) ].disable();
@@ -95,7 +95,7 @@ class ToolBox
 
     disableAllTools()
     {
-        this.__tools.map( tool => (tool.toolIsActived()) ? tool.disable() : null );
+        this.__tools.map( tool => (tool.isActive()) ? tool.disable() : null );
         return this;
     }
 

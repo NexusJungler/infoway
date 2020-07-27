@@ -1,4 +1,5 @@
 import Tool from "./Tool";
+import SubTool from "./SubTool";
 
 class ParentTool extends Tool
 {
@@ -7,6 +8,8 @@ class ParentTool extends Tool
     {
         super();
         this.__$mediasContainer = $(".medias_list_container");
+        this.__subTools = [];
+
     }
 
     getAgainMediaListContainer()
@@ -45,7 +48,7 @@ class ParentTool extends Tool
 
         if(!this.subToolIsRegistered(subToolName))
             throw new Error(`'${subToolName}' subTool is not registered !`);
-
+        //console.log(this.__subTools[ this.getSubToolIndex(subToolName) ]); debugger
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
         this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
@@ -64,6 +67,18 @@ class ParentTool extends Tool
             } )
 
         }
+
+        return this;
+    }
+
+    disableSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered as UploadSubTool !`);
+
+        if(this.__subTools[ this.getSubToolIndex(subToolName) ].isActive)
+            this.__subTools[ this.getSubToolIndex(subToolName) ].disable();
 
         return this;
     }

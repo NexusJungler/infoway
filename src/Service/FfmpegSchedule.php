@@ -14,6 +14,7 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\Synchro;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
+use App\Entity\Customer\VideoSynchro;
 use App\Repository\Admin\FfmpegTasksRepository;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -161,7 +162,7 @@ class FfmpegSchedule
 
                 if($task->getMediatype() == 'sync') {
                     //$rep_sync = new synchro_rep($base);
-                    $rep_sync = $this->__entityManager->getRepository(Synchro::class);
+                    //$rep_sync = $this->__entityManager->getRepository(VideoSynchro::class);
                     //$path = 'D:/node_file_system/' . $customer_name . '/synchros/' . $task->getFilename();
                     $path = $this->__parameterBag->get('project_dir') . '/../node_file_system/' . $customer_name . '/synchros/' . $task->getFilename();
                     //$temp_folder = 'D:/inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
@@ -235,9 +236,11 @@ class FfmpegSchedule
                         $this->pushError($task, $error_string);
                     }
 
+                    $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
+
                     // Add new entity synchro & Erase uploaded zip file
-                    $new_sync = $rep_sync->insertSynchro(substr($task->getFilename(), 0, -4), count($list), $encoding->getSyncOrientation(), 'plein-écran');
-                    $rep_sync->saveSyncMedias($new_sync, $sorted_medias);
+                    /*$new_sync = $rep_sync->insertSynchro(substr($task->getFilename(), 0, -4), count($list), $encoding->getSyncOrientation(), 'plein-écran');
+                    $rep_sync->saveSyncMedias($new_sync, $sorted_medias);*/
                     unlink($path);
                     $this->updateTask($task, 'finished');
                 } else {

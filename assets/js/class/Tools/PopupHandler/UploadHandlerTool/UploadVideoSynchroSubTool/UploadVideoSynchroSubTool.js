@@ -16,15 +16,17 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         const synchro = new Synchro();
         synchro.setId(synchroInfos['id'])
-            .setName(synchroInfos['name'])
-            .setPosition(synchroInfos['position'])
-            .setPreview();
+               .setName(synchroInfos['fileNameWithoutExtension'])
+               .setPosition(this.__synchros.length)
+               .setPreview();
 
         if(!this.synchroIsAlreadyRegistered(synchro))
         {
             synchro.addVideo(this);
             this.__synchros.push(synchro);
         }
+
+        console.table(this.__synchros); debugger
 
         return this;
     }
@@ -94,12 +96,12 @@ class UploadVideoSynchroSubTool extends SubTool {
 
     enable()
     {
-
+        super.enable();
     }
 
     disable()
     {
-
+        super.disable();
     }
 
 }

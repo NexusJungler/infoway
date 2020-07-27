@@ -15,8 +15,10 @@ class SubTool extends Tool
 
     setParent(parent)
     {
+        /*console.log(parent)
+        debugger*/
         if( !(parent instanceof ParentTool) )
-            throw new Error(`Attempt to set parent to ${this.__name}, but parent must be instance of Tool`);
+            throw new Error(`Parameter of ${ this.__name }.setParent() must be instance of Tool, but '${typeof parent}' given !`);
 
         this.__parent = parent;
     }

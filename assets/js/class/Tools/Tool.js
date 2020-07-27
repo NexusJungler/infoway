@@ -19,7 +19,7 @@ class Tool {
     {
 
         if(typeof name !== 'string' || typeof name === "undefined" || name === "" || name === null)
-            throw new Error(`Attempt to set name to ${this.__name}, but name must be instance of string`);
+            throw new Error(`${ this.__name }.name must be instance of string, but '${typeof name}' given !`);
 
         this.__name = name;
 
@@ -30,7 +30,7 @@ class Tool {
     {
 
         if( !(toolBox instanceof ToolBox) )
-            throw new Error(`Attempt to set toolbox to ${this.__name}, but toolbox must be instance of ToolBox`);
+            throw new Error(`${ this.__name }.setToolBox must be instance of ToolBox, but '${typeof toolBox}' given !`);
 
         this.__toolBox = toolBox;
         // console.log(`ToolBox is now added in '${this.__name}' !`);
@@ -41,13 +41,6 @@ class Tool {
     getToolBox()
     {
         return this.__toolBox;
-    }
-
-
-
-    toolIsActived()
-    {
-        return this.__isActived;
     }
 
     getUrlParam(parameterName)
@@ -74,16 +67,27 @@ class Tool {
         $('.popup_loading_container').removeClass('is_open');
     }
 
+    isActive()
+    {
+        return this.__isActived;
+    }
+
     enable()
     {
-        // console.log(`'${this.__name}' is enabled !`);
-        this.__isActived = true;
+        if(!this.isActive())
+        {
+            // console.log(`'${this.__name}' is enabled !`);
+            this.__isActived = true;
+        }
     }
 
     disable()
     {
-        // console.log(`'${this.__name}' is disabled !`);
-        this.__isActived = false;
+        if(this.isActive())
+        {
+            // console.log(`'${this.__name}' is disabled !`);
+            this.__isActived = false;
+        }
     }
 
 }

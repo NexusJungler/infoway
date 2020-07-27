@@ -39,6 +39,10 @@ class UploadHandlerTool extends SubTool
                 '.mp4', '.avi', '.3gp'
             ],
 
+            video: [
+                'video/*', 'video/mp4', 'video/avi', 'video/x-matroska', 'video/3gpp', 'video/quicktime', '.mp4', '.avi'
+            ]
+
             /*element_graphic: [
 
             ],*/
@@ -84,7 +88,17 @@ class UploadHandlerTool extends SubTool
         }
 
         let type = this.__uploadMediaType;
-        $(".default_upload_input").attr("accept", this.__authorizedFiles[ 'medias' ]);
+
+        if(this.__uploadMediaType === 'video_synchro' || this.__uploadMediaType === 'video_thematic')
+        {
+
+            this.__uploadMediaType = (this.__uploadMediaType === 'video_synchro') ? 'synchros' : 'thematics';
+
+            $(".default_upload_input").attr("accept", this.__authorizedFiles[ 'video' ]);
+        }
+
+        else
+            $(".default_upload_input").attr("accept", this.__authorizedFiles[ 'medias' ]);
 
         this.__total_files_allowed = 50;
         this.__max_file_size = 524288000;
@@ -98,8 +112,6 @@ class UploadHandlerTool extends SubTool
 
         this.getAllAvailableAssociationItems();
 
-        this.activeUploadSubTool();
-
     }
 
     activeUploadSubTool()
@@ -112,11 +124,11 @@ class UploadHandlerTool extends SubTool
                 this.activeSubTool("UploadMediaDiffSubTool");
                 break;
 
-            case "video_synchro":
+            case "synchros":
                 this.activeSubTool("UploadVideoSynchroSubTool");
                 break;
 
-            case "video_thematic":
+            case "thematics":
                 this.activeSubTool("UploadVideoThematicSubTool");
                 break;
 
@@ -131,6 +143,17 @@ class UploadHandlerTool extends SubTool
         return this;
     }
 
+    disableUploadSubTool()
+    {
+
+        this.__subTools.map( subTool => {
+
+            subTool.disable();
+
+        } )
+
+    }
+
     activeSubTool(subToolName, subToolToolsToActive = [])
     {
 
@@ -138,25 +161,10 @@ class UploadHandlerTool extends SubTool
             throw new Error(`'${subToolName}' subTool is not registered !`);
 
         this.__currentUploadManager = this.__subTools[ this.getSubToolIndex(subToolName) ];
-
+        //console.log(this.__parent); debugger
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
-        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
+        //this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
-
-        if(subToolToolsToActive.length > 0)
-        {
-
-            subToolToolsToActive.map( (subToolToolToActive) => {
-
-                if(subToolToolToActive === "all")
-                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeAllSubTools();
-
-                else
-                    this.__subTools[ this.getSubToolIndex(subToolName) ].activeSubTool(subToolToolToActive);
-
-            } )
-
-        }
 
         return this;
     }
@@ -204,6 +212,10 @@ class UploadHandlerTool extends SubTool
     {
         // search mime_type in authorized extension using upload current tab (image, video, video synchro, ...)
         //return this.__authorizedFiles[this.__uploadMediaType].indexOf(mime_type) !== -1;
+
+        if(this.__uploadMediaType !== 'medias')
+            return this.__authorizedFiles['video'].indexOf(mime_type) !== -1;
+
         return this.__authorizedFiles['medias'].indexOf(mime_type) !== -1;
     }
 
@@ -352,9 +364,20 @@ class UploadHandlerTool extends SubTool
 
             else
             {
-                this.__uploadAuthorized = true;
-                this.__$location.find('.pre_upload_error').empty();
-                this.__$location.find('.start_upload_btn').removeAttr('disabled');
+
+                if(this.__uploadMediaType === 'synchros' && this.__$location.find(`.file_to_upload_list tr.valid_upload_item`).length < 2)
+                {
+                    this.__uploadAuthorized = false;
+                    this.__$location.find('.pre_upload_error').text(`Vous devez uploader au moins 2 videos !`).parent().removeClass('hidden');
+                    this.__$location.find('.start_upload_btn').attr('disabled', true);
+                }
+                else
+                {
+                    this.__uploadAuthorized = true;
+                    this.__$location.find('.pre_upload_error').empty().parent().addClass('hidden');
+                    this.__$location.find('.start_upload_btn').removeAttr('disabled');
+                }
+
             }
 
         }
@@ -848,9 +871,11 @@ class UploadHandlerTool extends SubTool
                                     if(typeof response.error === "undefined")
                                     {
 
-                                        this.__currentUploadManager.saveMediaInfos(response);
+                                        // dans le cas des videos, on attend la fin de l'encodage pour envoyer les infos au subTool
+                                        if(response.type !== 'video')
+                                            this.__currentUploadManager.saveMediaInfos(response);
 
-                                        if(response.fileType === 'video')
+                                        if(response.type === 'video')
                                         {
 
                                             uploadStateIndicator.html("Encodage en cours ...");
@@ -876,9 +901,8 @@ class UploadHandlerTool extends SubTool
 
                                                     if(typeof videoEncodingResult.error === "undefined")
                                                     {
-
+                                                        this.__currentUploadManager.saveMediaInfos(response);
                                                         $(`#upload_${fileToUpload.index}`).removeClass("valid_download");
-
                                                     }
                                                     else
                                                     {
@@ -1208,7 +1232,7 @@ class UploadHandlerTool extends SubTool
 
         let html = '';
 
-        if(this.__uploadMediaType === 'video_synchro')
+        if(this.__uploadMediaType === 'synchros')
         {
             html = this.__currentUploadManager.showMediaInfoForEdit(mediaInfos, preview);
         }
@@ -1497,6 +1521,8 @@ class UploadHandlerTool extends SubTool
     {
         super.enable();
 
+        this.activeUploadSubTool();
+
         this.onClickOnUploadButtonShowModal(true)
             .onClickOnCloseButtonCloseUploadPopup(true)
             .onClickOnCustomFileButtonActiveDefaultFileInput(true)
@@ -1513,6 +1539,8 @@ class UploadHandlerTool extends SubTool
     disable()
     {
         super.disable();
+
+        this.disableUploadSubTool();
 
         this.onClickOnUploadButtonShowModal(false)
             .onClickOnCloseButtonCloseUploadPopup(false)

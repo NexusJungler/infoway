@@ -316,12 +316,12 @@ class MediaController extends AbstractController
         move_uploaded_file($file['tmp_name'], $path);
         copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);*/
 
+        $explode = explode('.', $file['name']);
+        $name = $explode[0];
+
         // if is image, insert in db
         if($splash[0] === 'image')
         {
-
-            $explode = explode('.', $file['name']);
-            $name = $explode[0];
 
             $taskInfo = [
                 'fileName' => $name,
@@ -427,9 +427,21 @@ class MediaController extends AbstractController
             $id = $ffmpegSchedule->pushTask($fileInfo);
 
             //$highestFormat = $this->getMediaHigestFormat($id, "video");
-
+//'id' => $media->getId(),
+//                'fileName' => $name,
+//                'fileNameWithoutExtension' => $media->getName(),
+//                'extension' => $media->getExtension(),
+//                'height' => $media->getHeight(),
+//                'width' => $media->getWidth(),
+//                'dpi' => $dpi,
+//                'miniatureExist' => file_exists($miniaturePath),
+//                'fileType' => 'image',
+//                'mediaType' => $mediaType,
+//                'customer' => $customerName,
             $response = [
                 'id' => $id,
+                'fileName' => $fileName,
+                'fileNameWithoutExtension' => str_replace( '.' . $real_file_extension, null, $fileName),
                 'extension' => $real_file_extension,
                 'height' => $height,
                 'width' => $width,

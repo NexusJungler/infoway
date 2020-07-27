@@ -33,15 +33,9 @@ class AssociationPopupHandler extends SubTool
 
         this.__subTools.map( subTool => {
 
-            if(this.subToolIsRegistered(subTool.getName()))
-            {
-                subTool.setToolBox(this.getToolBox());
-                subTool.setParent(this);
-                subTool.enable();
-            }
-
-            else
-                throw new Error(`'${subTool.getName()}' subTool is not registered !`);
+            subTool.setToolBox(this.getToolBox());
+            subTool.setParent(this.getParent());
+            subTool.enable();
 
         } );
 
@@ -56,8 +50,31 @@ class AssociationPopupHandler extends SubTool
             throw new Error(`'${subToolName}' subTool is not registered !`);
 
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
-        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this.getParent());
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
+
+        return this;
+    }
+
+    disableSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        this.__subTools[ this.getSubToolIndex(subToolName) ].disable();
+
+        return this;
+
+    }
+
+    disableAllSubTool()
+    {
+        this.__subTools.map( subTool => {
+
+            subTool.disable();
+
+        } );
 
         return this;
     }

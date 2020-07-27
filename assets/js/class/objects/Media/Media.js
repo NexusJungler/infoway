@@ -16,7 +16,7 @@ class Media
     setId(id)
     {
 
-        if( !(typeof id !== "number") )
+        if( typeof id !== "number" )
             throw new Error(`${ this.__className }.id must be instance of number, but '${typeof id}' given !`);
 
         this.__id = id;
@@ -30,7 +30,7 @@ class Media
 
     setName(name) {
 
-        if( !(typeof name !== "string") )
+        if(typeof name !== "string")
             throw new Error(`${ this.__className }.name must be instance of string, but '${typeof name}' given !`);
 
         this.__name = name;
