@@ -6,6 +6,7 @@ class Media
         this.__className = this.constructor.name;
         this.__id = null;
         this.__name = null;
+        this.__html = null;
     }
 
     getId()
@@ -36,6 +37,25 @@ class Media
         this.__name = name;
 
         return this;
+    }
+
+    /**
+     * @returns {Media}
+     */
+    buildHtml()
+    {
+
+        this.__html =  ``;
+
+        return this;
+    }
+
+    /**
+     * @returns {string}
+     */
+    getHtml()
+    {
+        return this.__html;
     }
 
 }

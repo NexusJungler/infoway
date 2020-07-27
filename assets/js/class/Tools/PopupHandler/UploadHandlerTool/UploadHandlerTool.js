@@ -343,6 +343,12 @@ class UploadHandlerTool extends SubTool
             if(fileIsAccepted)
             {
                 this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, file: item} );
+
+                if(this.__uploadMediaType === 'synchros')
+                {
+                    this.__currentUploadManager.saveSynchroElement( { name: fileName, position: this.__filesToUpload.length } );
+                }
+
                 console.log("new element added in upload list")
                 console.table(this.__filesToUpload); //debugger
             }
@@ -822,6 +828,9 @@ class UploadHandlerTool extends SubTool
                             let formData = new FormData();
                             formData.append('file', fileToUpload.file);
                             formData.append('media_type', this.__uploadMediaType);
+
+                            if(this.__uploadMediaType === 'synchros' && !this.__currentUploadManager.synchroIsAlreadySend())
+                                formData.append('synchrosElement', this.__currentUploadManager.getSynchros())
 
                             const fileExtension = fileToUpload.file.name.split('.').pop();
                             const fileName = fileToUpload.file.name.replace( '.' + fileExtension , '');

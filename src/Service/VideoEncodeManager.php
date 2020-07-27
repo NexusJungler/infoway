@@ -9,7 +9,6 @@ use App\Entity\Customer\Image;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Video;
 use App\Entity\Customer\VideoElementGraphic;
-use App\Entity\Customer\VideoSynchro;
 use App\Entity\Customer\VideoThematic;
 use Doctrine\Persistence\ManagerRegistry;
 use DateTime;

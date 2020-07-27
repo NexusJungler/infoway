@@ -11,10 +11,10 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\ScreenPlaylist;
 use App\Entity\Customer\ScreenPlaylistEntry;
+use App\Entity\Customer\SynchroElement;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Entity\Customer\VideoElementGraphic;
-use App\Entity\Customer\VideoSynchro;
 use App\Entity\Customer\VideoThematic;
 use App\Repository\Admin\AllergenRepository;
 use App\Repository\RepositoryTrait;
@@ -190,7 +190,7 @@ class MediaRepository extends ServiceEntityRepository
 
             case "sync":
                 $dql = $this->createQueryBuilder("m")
-                            ->leftJoin(VideoSynchro::class, "vs", "WITH", 'vs.id = m.id')
+                            ->leftJoin(SynchroElement::class, "vs", "WITH", 'vs.id = m.id')
                             ->leftJoin(Video::class, "v", "WITH", 'v.id = m.id');
                 break;
 
@@ -408,7 +408,7 @@ class MediaRepository extends ServiceEntityRepository
                 break;
 
             case "sync":
-                $media = new VideoSynchro();
+                $media = new SynchroElement();
                 break;
 
             default:

@@ -1,4 +1,5 @@
 import Video from "../Video";
+import SynchroElement from "./SynchroElement";
 
 
 class Synchro extends Video
@@ -8,12 +9,12 @@ class Synchro extends Video
     {
         super();
         this.__className = this.constructor.name;
-        this.__preview = "";
-        this.__position = 0;
-        this.__videos = [];
+        this.__synchroElements = [];
+        //this.__preview = "";
+
     }
 
-    getPreview()
+    /*getPreview()
     {
         return this.__preview;
     }
@@ -25,107 +26,74 @@ class Synchro extends Video
             preview = this.buildHtml();
         }
 
-        if( !(typeof preview !== "string") )
-            throw new Error(`${ this.__className }.preview must be instance of string, but '${typeof position}' given !`);
+        if(typeof preview !== "string")
+            throw new Error(`${ this.__className }.preview must be instance of string, but '${typeof preview}' given !`);
 
         this.__preview = preview;
 
         return this;
-    }
+    }*/
 
-    getPosition() {
-        return this.__position;
-    }
-
-    setPosition(position) {
-
-        if( !(typeof position !== "number") )
-            throw new Error(`${ this.__className }.position must be instance of number, but '${typeof position}' given !`);
-
-        this.__position = position;
-
-        return this;
-
-    }
-
-    getVideos()
+    getSynchroElements()
     {
-        return this.__videos;
+        return this.__synchroElements;
     }
 
-    addVideo(video)
+    addSynchroElement(synchroElement)
     {
 
-        if( !(video instanceof Video) )
-            throw new Error(`Parameter of ${ this.__className }.addVideo() must be instance of Video, but '${typeof video}' given !`);
+        if( !(synchroElement instanceof SynchroElement) )
+            throw new Error(`Parameter of ${ this.__className }.addVideo() must be instance of SynchroElement, but '${typeof synchroElement}' given !`);
 
-        if(!this.videoIsAlreadyRegistered(video))
+        if(!this.synchroElementIsAlreadyRegistered(synchroElement))
         {
-            video.addSynchro(this);
-            this.__videos.push(video);
+            this.__synchroElements.push(synchroElement);
+            synchroElement.addSynchro(this);
         }
 
         return this;
     }
 
-    removeVideo(video)
+    removeSynchroElement(synchroElement)
     {
 
-        if( !(video instanceof Video) )
-            throw new Error(`Parameter of ${ this.__className }.addVideo() must be instance of Video, but '${typeof video}' given !`);
+        if( !(synchroElement instanceof SynchroElement) )
+            throw new Error(`Parameter of ${ this.__className }.addVideo() must be instance of SynchroElement, but '${typeof synchroElement}' given !`);
 
-        if(this.videoIsAlreadyRegistered(video))
+        if(this.synchroElementIsAlreadyRegistered(synchroElement))
         {
-            this.__videos.splice(this.getRegisteredVideoIndex(video) , 1);
+            this.__synchroElements.splice(this.getRegisteredSynchroElementIndex(synchroElement) , 1);
 
-            video.removeSynchro(this);
+            synchroElement.removeSynchro(this);
         }
 
         return this;
     }
 
-    removeAllVideos()
+    removeAllSynchroElements()
     {
-        this.__videos.map( video => {
-            video.removeSynchro(this);
+        this.__synchroElements.map( synchroElement => {
+            synchroElement.removeSynchro(this);
         } );
 
-        this.__videos = [];
+        this.__synchroElements = [];
 
         return this;
     }
 
-    videoIsAlreadyRegistered(video)
+    synchroElementIsAlreadyRegistered(synchroElement)
     {
-        return this.getRegisteredVideoIndex(video) !== -1;
+        return this.getRegisteredSynchroElementIndex(synchroElement) !== -1;
     }
 
-    getRegisteredVideoIndex(video)
+    getRegisteredSynchroElementIndex(synchroElement)
     {
-        return this.__videos.findIndex( registeredVideo =>  registeredVideo.getName() === video.getName() );
+        return this.__synchroElements.findIndex( registeredSynchroElement =>  registeredSynchroElement.getName() === synchroElement.getName() );
     }
 
     buildHtml()
     {
-        return `
-        
-        <div class="synchro" id="synchro_video_${ this.__id }">
-            
-            <div class="synchro_preview_container">
-                ${ this.__preview }
-            </div>
-            
-            <div class="synchro_video_name_container">
-                <p class="synchro_video_name"> ${ this.__name } </p>
-            </div>
-            
-            <div class="synchro_video_position_container">
-                <p class="synchro_video_position"> ${ this.__position } </p>
-            </div>
-            
-        </div>
-        
-        `;
+        return ``;
     }
 
 }

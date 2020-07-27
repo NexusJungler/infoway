@@ -254,6 +254,8 @@ class MediaController extends AbstractController
 
         $type = $request->request->get('media_type');
 
+        dd(json_decode($request->request->get('synchrosElement')));
+
         $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync', 'element_graphic' => 'elmt'];
 
         if(!array_key_exists($type, $options))

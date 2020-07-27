@@ -1,6 +1,8 @@
 import ParentTool from "../../../ParentTool";
 import SubTool from "../../../SubTool";
 import Synchro from "../../../../objects/Media/Video/Synchro/Synchro";
+import SynchroElement from "../../../../objects/Media/Video/Synchro/SynchroElement";
+import Utils from "../../../../Utils/Utils";
 
 class UploadVideoSynchroSubTool extends SubTool {
 
@@ -8,46 +10,47 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         super();
         this.__name = this.constructor.name;
-        this.__synchros = [];
+        this.__synchro = new Synchro();
+        this.__synchroIsSend = false;
     }
 
-    saveMediaInfos(synchroInfos)
+    saveSynchroElement(element = { name: "", position: 0 })
     {
 
-        const synchro = new Synchro();
-        synchro.setId(synchroInfos['id'])
-               .setName(synchroInfos['fileNameWithoutExtension'])
-               .setPosition(this.__synchros.length)
-               .setPreview();
+        const synchroElement = new SynchroElement();
+        synchroElement.setName(element.name)
+                      .setPosition(element.position);
 
-        if(!this.synchroIsAlreadyRegistered(synchro))
-        {
-            synchro.addVideo(this);
-            this.__synchros.push(synchro);
-        }
+        this.__synchro.addSynchroElement(synchroElement);
 
-        console.table(this.__synchros); debugger
-
-        return this;
     }
 
-    removeSynchro(synchro)
+    getSynchros()
     {
+        this.__synchroIsSend = true;
 
-        if( !(synchro instanceof Synchro) )
-            throw new Error(`Parameter of ${ this.__className }.removeSynchro() must be instance of Synchro, but '${typeof synchro}' given !`);
+        //let zonesToExport = Object.values(this.interface.currentTemplate.getZones()).map(zone=>{
+        //             let zoneObject = Object.assign({}, zone);
+        //             let zoneChildrens = Object.values(zone.zoneChildrens).map(children => {
+        //                 console.log(children);
+        //                 children = Object.assign({},children)
+        //                 children.zoneParent = children.zoneParent.id
+        //                 return children
+        //             })
+        //             zoneObject.zoneChildrens = zoneChildrens
+        //             if( typeof zoneObject.parentZone ==='object' && zoneObject.parentZone instanceof Zone )zoneObject.parentZone = zoneObject.parentZone.id
+        //             return zoneObject
+        //         }).filter(zoneToExportWihtoutChild => {
+        //             return zoneToExportWihtoutChild.zoneParent === null
+        //         })
 
-        if(this.synchroIsAlreadyRegistered(synchro))
-            this.__synchros.splice(this.getRegisteredVideoIndex(synchro) , 1);
 
-        return this;
+        return JSON.stringify( this.__synchro, Utils.getCircularReplacer() );
     }
 
-    removeAllSynchros()
+    synchroIsAlreadySend()
     {
-        this.__synchros = [];
-
-        return this;
+        return this.__synchroIsSend;
     }
 
     synchroIsAlreadyRegistered(synchro)

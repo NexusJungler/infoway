@@ -14,7 +14,6 @@ use App\Entity\Customer\Product;
 use App\Entity\Customer\Synchro;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
-use App\Entity\Customer\VideoSynchro;
 use App\Repository\Admin\FfmpegTasksRepository;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -161,10 +160,7 @@ class FfmpegSchedule
                 }
 
                 if($task->getMediatype() == 'sync') {
-                    //$rep_sync = new synchro_rep($base);
-                    //$rep_sync = $this->__entityManager->getRepository(VideoSynchro::class);
-                    //$path = 'D:/node_file_system/' . $customer_name . '/synchros/' . $task->getFilename();
-                    $path = $this->__parameterBag->get('project_dir') . '/../node_file_system/' . $customer_name . '/synchros/' . $task->getFilename();
+                    $path = $this->__parameterBag->get('project_dir') . '/../upload/source/' . $customer_name . '/video/' . $taskMediaInfo['mediaType'] . '/' . $task->getFilename();
                     //$temp_folder = 'D:/inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
                     $temp_folder = $this->__parameterBag->get('project_dir') . '../inetpub/wwwroot/admin/node_JS/node_ftp_server/temp';
 
@@ -177,6 +173,7 @@ class FfmpegSchedule
                             continue;
                         }
                     } else {
+                        dd($path);
                         $this->updateTask($task, 'started');
                         $this->pushError($task, 'file not found!');
                         $this->updateTask($task, 'finished');

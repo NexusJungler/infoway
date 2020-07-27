@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="instance", type="string")
- * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "image_element_graphic" = "ImageElementGraphic", "video_element_graphic" = "VideoElementGraphic", "video_thematic" = "VideoThematic", "video_synchro" = "VideoSynchro" })
+ * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "image_element_graphic" = "ImageElementGraphic", "video_element_graphic" = "VideoElementGraphic", "video_thematic" = "VideoThematic", "video_synchro" = "SynchroElement" })
  * @UniqueEntity(fields={"name"})
  */
 class Media
