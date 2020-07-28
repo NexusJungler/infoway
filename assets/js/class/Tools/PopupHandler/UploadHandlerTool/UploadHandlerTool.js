@@ -882,9 +882,12 @@ class UploadHandlerTool extends SubTool
 
                                         // dans le cas des videos, on attend la fin de l'encodage pour envoyer les infos au subTool
                                         if(response.type !== 'video')
-                                            this.__currentUploadManager.saveMediaInfos(response);
+                                        {
+                                            //this.__currentUploadManager.saveMediaInfos(response);
+                                            this.showMediaInfoForEdit(response, fileToUpload.index);
+                                        }
 
-                                        if(response.type === 'video')
+                                        else
                                         {
 
                                             uploadStateIndicator.html("Encodage en cours ...");
@@ -926,7 +929,7 @@ class UploadHandlerTool extends SubTool
 
                                         }
 
-                                        this.__currentUploadManager.showMediaInfoForEdit(response, fileToUpload.index);
+
 
                                         /*if(response.fileType === 'image')
                                         {
@@ -1238,21 +1241,15 @@ class UploadHandlerTool extends SubTool
         else
             preview = `<img class="media_miniature miniature_${ mediaInfos.fileType }" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">`;
 
+        let html = `<tr data-index="${ mediaInfos.index }" id="upload_${ mediaInfos.index }" class="unregistered">`;
 
-        let html = '';
+        if( this.__uploadMediaType === 'element_graphic' )
+            html += this.showElementGraphicInfos(mediaInfos, preview);
 
-        if(this.__uploadMediaType === 'synchros')
-        {
-            html = this.__currentUploadManager.showMediaInfoForEdit(mediaInfos, preview);
-        }
         else
-        {
+            html += this.showMediaInfos(mediaInfos, preview);
 
-            html = `<tr data-index="${ mediaInfos.index }" id="upload_${ mediaInfos.index }" class="unregistered">`;
-
-            html += this.__currentUploadManager.showMediaInfoForEdit(mediaInfos, preview) + `</tr>`;
-
-        }
+        html += `</tr>`;
 
         this.__$fileToCharacterisationList.find(`#upload_${mediaInfos.index}`).replaceWith( $(html) );
 
