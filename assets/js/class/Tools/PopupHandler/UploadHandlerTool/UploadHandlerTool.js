@@ -1545,8 +1545,59 @@ class UploadHandlerTool extends SubTool
         {
             this.__currentUploadManager.showSynchros();
         }
+
+        else if(this.__uploadMediaType === 'element_graphic')
+        {
+            this.__currentUploadManager.showSynchros();
+        }
+
         else
         {
+
+            this.__$location.find('.file_to_characterisation_list tr').each( (index, element) => {
+
+
+
+                let html = `
+                
+                    <tr>
+                        
+                        <td> 
+                            <input type="checkbox" class="choice_media"> 
+                            ${ $(element).find('.preview').html() }
+                        </td>
+                        
+                        <td>
+                            <div class="media_name_container"> <p>${ $(element).find('.media_name').text() }</p> </div>
+                        </td>
+                        
+                        <td>
+                            <div> ${ $(element).find('.associated_criterions_container').html() } </div>
+                        </td>
+                        
+                        <td>
+                            <div> ${ $(element).find('.associated_tags_container').html() } </div>
+                        </td>
+                        
+                        <td>
+                            <div> ${ $(element).find('.associated_products_container').html() } </div>
+                        </td>
+                        
+                        <td>
+                            
+                        </td>
+                        
+                    </tr>
+                
+                `;
+
+
+
+                console.log(copy); debugger
+
+                this.__$location.find('.media_characterisation_resume_list').html( html );
+
+            } )
 
         }
 
