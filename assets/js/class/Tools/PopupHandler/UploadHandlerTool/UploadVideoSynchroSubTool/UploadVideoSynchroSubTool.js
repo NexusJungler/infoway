@@ -12,6 +12,9 @@ class UploadVideoSynchroSubTool extends SubTool {
         this.__name = this.constructor.name;
         this.__synchro = (new Synchro()).setName("Synchro1");
         this.__synchroIsSend = false;
+        this.__$container= $('.popup_upload_container');
+        this.__$location = $('.popup_upload');
+        this.__synchroHtml = "";
     }
 
     saveSynchroElement(element = { name: "" })
@@ -36,6 +39,38 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         console.log(this.__synchro); //debugger
 
+    }
+
+    /**
+     * @param {object} synchroElement
+     * @returns {UploadVideoSynchroSubTool}
+     */
+    saveSynchroElement(synchroElement)
+    {
+
+        this.__synchroHtml += `
+        
+        <div class="synchro_element">
+
+            <div class="synchro_element_preview_container">
+                <video>
+                    <source src="/miniatures/${ synchroElement.customer }/video/${ synchroElement.mediaType }/low/${ synchroElement.id }.mp4" type="video/mp4" />
+                </video>
+            </div>
+
+            <div class="synchro_element_name_container">
+                <input type="text" class="synchro_element_name" title="nom du média" value="${ synchroElement.name }">
+            </div>
+
+            <div class="synchro_element_position_container">
+                <input type="text" class="synchro_element_position" title="position" value="${ synchroElement.position }">
+            </div>
+
+        </div>
+        
+        `;
+
+        return this;
     }
 
     getSynchros()
@@ -81,48 +116,100 @@ class UploadVideoSynchroSubTool extends SubTool {
         return this.__synchros.findIndex( registeredSynchro =>  registeredSynchro.getName() === synchro.getName() );
     }
 
-    showMediaInfoForEdit(mediaInfos, index)
+    showSynchros()
     {
 
-        let html = `
-        
-        <div class="synchro_resume_elements_container">
-        
-            <div class="synchro_resume_element top">
-            
-                <div class="synchro_name_container"> 
-                    <span>Nom</span> 
-                    <p title="${ mediaInfos.fileName }">${ mediaInfos.fileName }</p> 
-                    <button type="button" class="play_synchro_button"><i class="fas fa-play"></i></button>
-                </div>
-                
-                <div class="synchro_videos_container">
-                    
-                </div>
-                
-            
-            </div>
-            
-            <div class="synchro_resume_element bottom">
-            
-            </div>
-        
-        </div>
-        
-        `;
+    }
 
-        return html;
+    onClickOnSynchroActionButton(active)
+    {
+
+        if(active)
+        {
+
+            this.__$location.on('click.onClickOnSynchroActionButton', '.synchro_action_button_icon', e => {
+
+                const icon = $(e.currentTarget);
+
+                if(icon.hasClass('fa-play'))
+                {
+                    console.log("play videos"); //debugger
+
+                    this.__$location.find('video').map( (index, video) => {
+
+                        video.play();
+
+                    } )
+
+                    // show pause icon
+                    icon.removeClass('fa-play').addClass('fa-pause');
+
+                    // add backward button (restart videos)
+                    if(this.__$location.find('.restart_video_btn').length === 0)
+                        $('<button type="button" class="synchro_action_button restart_video_btn"><i class="fas fa-step-backward synchro_action_button_icon"></i></button>').appendTo( icon.parents('.synchro_action_button_container') )
+                }
+
+                else if(icon.hasClass('fa-pause'))
+                {
+                    console.log("pause videos"); //debugger
+
+                    this.__$location.find('video').map( (index, video) => {
+
+                        video.pause();
+
+                    } )
+
+                    this.__$location.find('i.fa-pause').removeClass('fa-pause').addClass('fa-play');
+
+                }
+
+                else if(icon.hasClass('fa-step-backward'))
+                {
+                    console.log("restart videos"); //debugger
+
+                    this.__$location.find('video').map( (index, video) => {
+
+                        video.pause();
+                        video.currentTime = 0;
+
+                    } )
+
+                    this.__$location.find('.restart_video_btn').remove();
+
+                    this.__$location.find('i.fa-pause').removeClass('fa-pause').addClass('fa-play');
+
+                }
+
+                else
+                {
+                    console.log(icon); debugger
+                }
+
+            })
+        }
+        else
+        {
+            this.__$location.off('click.onClickOnSynchroActionButton', '.synchro_action_button');
+        }
+
+        return this;
 
     }
+
+
 
     enable()
     {
         super.enable();
+        this.onClickOnSynchroActionButton(true)
+        ;
     }
 
     disable()
     {
         super.disable();
+        this.onClickOnSynchroActionButton(false)
+        ;
     }
 
 }

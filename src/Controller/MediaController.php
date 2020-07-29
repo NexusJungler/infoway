@@ -474,13 +474,13 @@ class MediaController extends AbstractController
         if(!$task)
             throw new Exception(sprintf("No Ffmpeg task found with id : '%d'", $request->request->get('id')));
 
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $customerName );
+        $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
+
         // finish with 0 errors
         if($task->getFinished() !== null AND $task->getErrors() === null)
         {
-
-            $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
-            $manager = $this->getDoctrine()->getManager( $customerName );
-            $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
             $media = $mediaRepository->findOneByName( $task->getMedia()['name'] );
             if(!$media)
@@ -510,7 +510,17 @@ class MediaController extends AbstractController
 
         // finish with 1 or more errors
         elseif($task->getFinished() !== null AND $task->getErrors() !== null)
+        {
+
+            if($task->getMediatype() === 'sync')
+            {
+                $taskMedia = $task->getMedia();
+
+                $mediaRepository->removeUncompleteSynchros( $taskMedia['synchros'] );
+            }
+
             $response = ['status' => 'Finished', 'type' => '520 Encode error', 'error' => $task->getErrors()];
+        }
 
         // not finish
         else

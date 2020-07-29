@@ -112,6 +112,8 @@ class UploadHandlerTool extends SubTool
 
         this.getAllAvailableAssociationItems();
 
+        this.showStep(3)
+
     }
 
     activeUploadSubTool()
@@ -913,13 +915,46 @@ class UploadHandlerTool extends SubTool
 
                                                     if(typeof videoEncodingResult.error === "undefined")
                                                     {
-                                                        this.__currentUploadManager.saveMediaInfos(response);
+
                                                         $(`#upload_${fileToUpload.index}`).removeClass("valid_download");
+
+                                                        if( this.__uploadMediaType === 'synchros' )
+                                                        {
+
+                                                            if( $('.media_list tbody tr.on_upload').length === 0 )
+                                                            {
+                                                                this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
+                                                            }
+                                                            else
+                                                            {
+                                                                this.__currentUploadManager.saveSynchroElement(response);
+                                                                uploadStateIndicator.html("En attente du traitement des autres videos...");
+                                                            }
+
+                                                        }
+                                                        else
+                                                            this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
+
                                                     }
                                                     else
                                                     {
                                                         $(`#upload_${fileToUpload.index}`).addClass('invalid-download');
                                                         uploadStateIndicator.html(`${this.__errors.encode_error} : ${ videoEncodingResult.error }`);
+
+                                                        if(this.__uploadMediaType === "synchros")
+                                                        {
+
+                                                            this.__$fileToCharacterisationList.find(`.upload_state`).each( (index, element) => {
+
+                                                                if( $(element).parents('tr').attr('id') !== `upload_${fileToUpload.index}` )
+                                                                {
+                                                                    $(element).text("Erreur(s) sur 1 ou plusieurs vidéos de la synchros !");
+                                                                }
+
+                                                            } )
+
+                                                        }
+
                                                     }
 
                                                 }
@@ -928,7 +963,6 @@ class UploadHandlerTool extends SubTool
                                             }, 10000 )
 
                                         }
-
 
 
                                         /*if(response.fileType === 'image')
@@ -974,6 +1008,7 @@ class UploadHandlerTool extends SubTool
 
 
                                         }*/
+
 
                                         if($('.media_list tbody tr.valid-download').length > 0)
                                             $('.edit_media_info .action-btn-container').fadeIn();
@@ -1423,6 +1458,8 @@ class UploadHandlerTool extends SubTool
 
                             this.__filesToUpload = [];
 
+                            this.showMediaEditingResume();
+
                         },
                         error: (response) => {
                             let error = response.responseJSON;
@@ -1501,6 +1538,20 @@ class UploadHandlerTool extends SubTool
         return this;
     }
 
+    showMediaEditingResume()
+    {
+
+        if(this.__uploadMediaType === 'synchros')
+        {
+            this.__currentUploadManager.showSynchros();
+        }
+        else
+        {
+
+        }
+
+    }
+
     onClickOnPreviousButton(active)
     {
         if(active)
@@ -1522,6 +1573,24 @@ class UploadHandlerTool extends SubTool
         return this;
     }
 
+    onClickOnNextButtonShowMediasEditingResume(active)
+    {
+
+        if(active)
+        {
+            this.__$location.on('click.onClickOnNextButtonShowMediasEditingResume', '.show_media_editing_resume', e => {
+
+
+
+            })
+        }
+        else
+        {
+            this.__$location.off('click.onClickOnNextButtonShowMediasEditingResume', '.show_media_editing_resume');
+        }
+
+        return this;
+    }
 
     enable()
     {
@@ -1539,6 +1608,7 @@ class UploadHandlerTool extends SubTool
             .onMediaInfoEditingFormSubmit(true)
             .onClickOnSaveButton(true)
             .onClickOnPreviousButton(true)
+            .onClickOnNextButtonShowMediasEditingResume(true)
         ;
     }
 
@@ -1558,6 +1628,7 @@ class UploadHandlerTool extends SubTool
             .onMediaInfoEditingFormSubmit(false)
             .onClickOnSaveButton(false)
             .onClickOnPreviousButton(false)
+            .onClickOnNextButtonShowMediasEditingResume(false)
         ;
     }
 

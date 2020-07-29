@@ -24,7 +24,7 @@ class Synchro
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="SynchroElement", inversedBy="synchros")
+     * @ORM\ManyToMany(targetEntity="SynchroElement", inversedBy="synchros", orphanRemoval=true)
      */
     private $videos;
 

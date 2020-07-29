@@ -29,6 +29,8 @@ class UploadedImageFormatsCreator
 
     private array $__filesToRenameWithId = [];
 
+    private int $__base_height = 6;
+
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->__mediasSourceFolder = $parameterBag->get('project_dir') . '/../upload/source';
@@ -217,10 +219,10 @@ class UploadedImageFormatsCreator
                 // case élément graphique
                 if($mediaInfos['mediaType'] == 'elmt') {
                     // Why encoding more graphic element ??
-                    $low_width = round($width/($height/base_height));
-                    $output_low = $low_width . '*' . base_height;
+                    $low_width = round($width/($height/$this->__base_height));
+                    $output_low = $low_width . '*' . $this->__base_height;
                     $output['low'][0] = $output_low;
-                    $output['low'][1] = base_height;
+                    $output['low'][1] = $this->__base_height;
                 }
                 else
                 {

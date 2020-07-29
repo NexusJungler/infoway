@@ -519,6 +519,24 @@ class MediaRepository extends ServiceEntityRepository
     }
 
 
+    public function removeUncompleteSynchros( array $synchros )
+    {
+
+        foreach ($synchros as $synchroInfos)
+        {
+
+            $synchro = $this->_em->getRepository(Synchro::class)->findOneByName($synchroInfos['name']);
+            if(!$synchro)
+                throw new Exception(sprintf("No Synchro foudn with name : '%s'", $synchroInfos['name']));
+
+            $this->_em->remove($synchro);
+            $this->_em->flush();
+
+        }
+
+    }
+
+
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
         $column = 'PRO_'.$columnPrice.'_jour';
         $sql = "SELECT $column FROM `qui_groupe_prix_valeurs` WHERE id_produit = ? AND id_groupe_prix = ? and date = (
