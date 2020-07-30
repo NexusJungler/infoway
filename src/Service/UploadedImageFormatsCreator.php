@@ -113,7 +113,10 @@ class UploadedImageFormatsCreator
                         mkdir($folder, 0777, true);
 
                     if($width > 1920 && $height >1080)
+                    {
                         imagepng($source, $folder . '/' . $mediaInfos['fileName'] . '.png');
+                        $this->__filesToRenameWithId[] = $folder . '/' . $mediaInfos['fileName'] . '.png';
+                    }
 
                 }
 
@@ -150,7 +153,10 @@ class UploadedImageFormatsCreator
                         mkdir($folder, 0777, true);
 
                     if ($width > 1080 && $height >1920)
+                    {
                         imagepng($source, $folder . '/' . $mediaInfos['fileName'] . '.png');
+                        $this->__filesToRenameWithId[] = $folder . '/' . $mediaInfos['fileName'] . '.png';
+                    }
                 }
 
                 if ($width >= 720 && $height >= 1280) {

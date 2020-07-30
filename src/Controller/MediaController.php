@@ -134,7 +134,7 @@ class MediaController extends AbstractController
         if($request->isMethod('POST'))
             return $this->saveMediaCharacteristic($request);
 
-
+        //dd($mediasToDisplayed);
 
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $mediasDisplayedType, // will be used by js for get authorized extensions for upload
@@ -452,7 +452,7 @@ class MediaController extends AbstractController
                 'height' => $height,
                 'width' => $width,
                 'codec' => $codec ?? null,
-                'type' => 'video',
+                'fileType' => 'video',
                 'customer' => $customerName,
                 'mimeType' => 'video/mp4',
                 //'highestFormat' => $highestFormat,
@@ -1065,6 +1065,9 @@ class MediaController extends AbstractController
         {
             die("TODO: get all templates");
         }
+
+        elseif($mediasDisplayedType === "medias")
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('diff', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "video_synchro")
             $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('sync', $page, $numberOfMediasDisplayedInMediatheque);

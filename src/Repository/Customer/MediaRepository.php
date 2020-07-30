@@ -184,9 +184,14 @@ class MediaRepository extends ServiceEntityRepository
         {
 
             case "medias":
-                $dql = $this->createQueryBuilder("m")
+            case "diff":
+                /*$dql = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
                                 ->leftJoin(Image::class, "i", "WITH", "i.id = m.id")
-                                ->leftJoin(Video::class, "v", "WITH", "v.id = m.id");
+                                ->leftJoin(Video::class, "v", "WITH", "v.id = m.id");*/
+                $dql = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                                 ->leftJoin(Image::class, "i", "WITH", "i.id = m.id")
+                                 ->leftJoin(Video::class, "v", "WITH", "v.id = m.id");
+
                 break;
 
             case "sync":

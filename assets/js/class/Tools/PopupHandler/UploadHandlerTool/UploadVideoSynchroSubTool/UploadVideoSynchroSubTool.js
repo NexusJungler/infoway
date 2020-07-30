@@ -15,8 +15,13 @@ class UploadVideoSynchroSubTool extends SubTool {
         this.__$container= $('.popup_upload_container');
         this.__$location = $('.popup_upload');
         this.__synchroHtml = "";
+        this.__encodedMediaInfos = [];
     }
 
+    /**
+     * @param {object} element
+     * @returns {UploadVideoSynchroSubTool}
+     */
     saveSynchroElement(element = { name: "" })
     {
 
@@ -39,13 +44,53 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         console.log(this.__synchro); //debugger
 
+        return this;
+    }
+
+    /**
+     * @param {object} encodedMediaInfos
+     * @return {UploadVideoSynchroSubTool}
+     */
+    saveEncodedMediaInfos(encodedMediaInfos)
+    {
+
+        console.table(encodedMediaInfos);
+
+        if(!this.encodedMediaInfosIsAlreadyRegistered(encodedMediaInfos))
+        {
+            this.__encodedMediaInfos.push( encodedMediaInfos );
+        }
+
+        console.table(this.__encodedMediaInfos);
+
+        debugger
+
+        return this;
+    }
+
+    /**
+     * @return {array}
+     */
+    getAllEncodedMediasInfos()
+    {
+        return this.__encodedMediaInfos;
+    }
+
+    encodedMediaInfosIsAlreadyRegistered(encodedMediaInfos)
+    {
+        return this.getEncodedMediaInfosIndex(encodedMediaInfos) !== -1;
+    }
+
+    getEncodedMediaInfosIndex(encodedMediaInfos)
+    {
+        return this.__encodedMediaInfos.findIndex( mediaInfos => mediaInfos.fileName === encodedMediaInfos.fileName );
     }
 
     /**
      * @param {object} synchroElement
      * @returns {UploadVideoSynchroSubTool}
      */
-    saveSynchroElement(synchroElement)
+    abc(synchroElement)
     {
 
         this.__synchroHtml += `

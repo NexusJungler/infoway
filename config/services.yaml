@@ -37,6 +37,7 @@ parameters:
         - mkv
         - mov
         - qt
+        - x-m4v
 
 #    authorizedMimeTypes:
 #        - image/jpg

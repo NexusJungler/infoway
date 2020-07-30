@@ -3,6 +3,8 @@
 button{
     &:disabled{
         cursor: not-allowed;
+        background: #C0CCD1;
+        border: none;
     }
 }
 
