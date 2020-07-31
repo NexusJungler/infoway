@@ -438,7 +438,7 @@ class UploadEncode
 
                 if($height === 2160)
                 {
-                    exec('C:\inetpub\wwwroot\ffmpeg\bin\ffmpeg -y -i "' . $video . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset ultrafast -profile:v high -level 4.2 -r 25 -crf 25 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $tempfolder . 'high/' . $this->filename . '.mp4"', $response['high'], $error['high']);
+                    exec('C:\inetpub\wwwroot\ffmpeg\bin\ffmpeg -y -i "' . $video . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset ultrafast -profile:v high -level 4.2 -r 25 -crf 23 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $tempfolder . 'high/' . $this->filename . '.mp4"', $response['high'], $error['high']);
                 }
                 if($height === 4320)
                 {
