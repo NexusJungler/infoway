@@ -215,7 +215,7 @@ class UploadHandlerTool extends SubTool
         // search mime_type in authorized extension using upload current tab (image, video, video synchro, ...)
         //return this.__authorizedFiles[this.__uploadMediaType].indexOf(mime_type) !== -1;
 
-        if(this.__uploadMediaType !== 'medias')
+        if(this.__uploadMediaType === 'synchros' || this.__uploadMediaType === 'thematics')
             return this.__authorizedFiles['video'].indexOf(mime_type) !== -1;
 
         return this.__authorizedFiles['medias'].indexOf(mime_type) !== -1;
@@ -283,8 +283,8 @@ class UploadHandlerTool extends SubTool
         let fileName = item.name;
         let fileNameWithoutExtension = fileName.replace( '.' + fileName.split('.').pop(), '' )
 
-        console.log(item); //debugger
-        console.log(fileNameWithoutExtension); //debugger
+        //console.log(item); //debugger
+        //console.log(fileNameWithoutExtension); //debugger
 
         // don't duplicate file in upload list
         if(!this.fileIsAlreadyInUploadList(fileName))
@@ -349,15 +349,15 @@ class UploadHandlerTool extends SubTool
 
             if(fileIsAccepted)
             {
-                this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, file: item} );
+                this.__filesToUpload.push( {index: this.__filesToUpload.length, name: fileName, extension: fileExtension, file: item} );
 
                 if(this.__uploadMediaType === 'synchros')
                 {
                     this.__currentUploadManager.saveSynchroElement( { name: fileNameWithoutExtension } );
                 }
 
-                console.log("new element added in upload list")
-                console.table(this.__filesToUpload); //debugger
+                //console.log("new element added in upload list")
+                //console.table(this.__filesToUpload); //debugger
             }
 
             if( this.__$location.find(`.file_to_upload_list tr.valid_upload_item`).length > this.__total_files_allowed)
@@ -526,10 +526,10 @@ class UploadHandlerTool extends SubTool
 
                 e.preventDefault();
                 $(e.currentTarget).removeClass("on_dragenter");
-                console.log(`${e.originalEvent.dataTransfer.files.length} File(s) dropped !`);
+                //console.log(`${e.originalEvent.dataTransfer.files.length} File(s) dropped !`);
                 let droppedFiles = e.originalEvent.dataTransfer.files;
 
-                console.table(droppedFiles); //debugger
+                //console.table(droppedFiles); //debugger
 
                 droppedFiles.forEach( (droppedFile) => {
 
@@ -616,8 +616,8 @@ class UploadHandlerTool extends SubTool
                 if(index !== -1)
                 {
                     this.__filesToUpload.splice( index, 1 );
-                    console.log("upload element removed !");
-                    console.log(this.__filesToUpload.length);
+                    //console.log("upload element removed !");
+                    //console.log(this.__filesToUpload.length);
 
                     if( this.__$fileToUploadList.find('tr').length < 1 )
                         this.__$location.find('.start_upload_btn').attr('disabled', true);
@@ -745,7 +745,7 @@ class UploadHandlerTool extends SubTool
                 else
                 {
 
-                    html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered">
+                    html = `<tr data-index="${ index }" id="upload_${index}" class="unregistered ${ (this.__uploadMediaType === 'synchros') ? 'waiting_encode' : '' }">
                                 <td>
                                     <p title="${ fileToUpload.name }">${fileToUpload.name}</p>
                                 </td>
@@ -832,6 +832,9 @@ class UploadHandlerTool extends SubTool
                             const uploadStateIndicator = this.__$fileToCharacterisationList.find(`#upload_${fileToUpload.index} .upload_state`);
                             uploadStateIndicator.html("Téléchargement en cours ...");
 
+                            const currentUpload = this.__$fileToCharacterisationList.find(`#upload_${fileToUpload.index}`);
+                            const currentUploadProgressBar = this.__$fileToCharacterisationList.find(`#upload_${fileToUpload.index} progress`);
+
                             let formData = new FormData();
                             formData.append('file', fileToUpload.file);
                             formData.append('media_type', this.__uploadMediaType);
@@ -863,7 +866,7 @@ class UploadHandlerTool extends SubTool
                                             }
 
                                             //update progressbar
-                                            this.__$fileToCharacterisationList.find(`#upload_${fileToUpload.index} progress`).addClass("on_upload").attr("value", percent);
+                                            currentUploadProgressBar.addClass("on_upload").attr("value", percent);
 
                                             uploadStateIndicator.html(`Téléchargement en cours ... (${percent}%)`);
                                             //jQuery('#progress' + (index + 1) + ' .progress-bar').css("left", +percent + "%");
@@ -909,32 +912,44 @@ class UploadHandlerTool extends SubTool
                                                 {
                                                     clearInterval(intervalId);
 
-                                                    $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
+                                                    currentUploadProgressBar.removeClass("on_upload");
                                                     uploadFinished++;
 
                                                     //console.log(videoEncodingResult); //debugger
 
-                                                    $(`#upload_${fileToUpload.index} .cancel-upload`).fadeIn();
+                                                    currentUpload.find('.cancel_upload').fadeIn();
 
-                                                    if( $(`#upload_${fileToUpload.index} .file_progress_bar_container i`).length === 0 )
+                                                    if( currentUploadProgressBar.parents('.file_progress_bar_container').find('i').length === 0 )
                                                         $('<i>', { class: (typeof videoEncodingResult.error !== "undefined") ? 'fas fa-times' : 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
 
                                                     if(typeof videoEncodingResult.error === "undefined")
                                                     {
 
-                                                        $(`#upload_${fileToUpload.index}`).removeClass("valid_download");
+                                                        currentUpload.removeClass("valid_download");
 
                                                         if( this.__uploadMediaType === 'synchros' )
                                                         {
 
-                                                            if( this.__$location.find('.file_to_characterisation_list tr.on_upload').length === 0 )
+                                                            console.log("synchros"); //debugger
+
+                                                            currentUpload.removeClass("waiting_encode");
+
+                                                            if( this.__$location.find('.file_to_characterisation_list tr.waiting_encode').length === 0 )
                                                             {
+
+                                                                console.log("0"); debugger
 
                                                                 if(this.__$location.find('.file_to_characterisation_list tr').length === 1)
                                                                     this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
 
                                                                 else
                                                                 {
+
+                                                                    console.log("get all"); //debugger
+
+                                                                    videoEncodingResult.index = fileToUpload.index;
+                                                                    this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
+
                                                                     this.__currentUploadManager.getAllEncodedMediasInfos().forEach( encodedMediaInfos => {
 
                                                                         console.table(encodedMediaInfos); debugger
@@ -947,6 +962,7 @@ class UploadHandlerTool extends SubTool
                                                             }
                                                             else
                                                             {
+                                                                console.log("wait"); debugger
                                                                 videoEncodingResult.index = fileToUpload.index;
                                                                 this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
                                                                 uploadStateIndicator.html("En attente du traitement des autres videos...");
@@ -959,7 +975,7 @@ class UploadHandlerTool extends SubTool
                                                     }
                                                     else
                                                     {
-                                                        $(`#upload_${fileToUpload.index}`).addClass('invalid-download');
+                                                        currentUpload.addClass('invalid-download');
                                                         uploadStateIndicator.html(`${this.__errors.encode_error} : ${ videoEncodingResult.error }`);
 
                                                         if(this.__uploadMediaType === "synchros")
@@ -1001,9 +1017,9 @@ class UploadHandlerTool extends SubTool
 
                                         //$(`.modal-upload-download #upload_${fileToUpload.index} progress`).css({ 'color': 'red' });
 
-                                        $(`#upload_${fileToUpload.index} progress`).removeClass("on_upload");
-                                        $(`#upload_${fileToUpload.index}`).removeClass("unregistered").addClass('invalid_upload');
-                                        $('<i>', { class: 'fas fa-times' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) );
+                                        currentUploadProgressBar.removeClass("on_upload");
+                                        currentUpload.removeClass("unregistered").addClass('invalid_upload');
+                                        $('<i>', { class: 'fas fa-times' }).appendTo( currentUploadProgressBar.parents('.file_progress_bar_container') );
 
                                         switch (response.error)
                                         {
@@ -1042,7 +1058,7 @@ class UploadHandlerTool extends SubTool
                                                 break;
 
                                             default:
-                                                $(`#upload_${fileToUpload.index} .upload_state`).html("Téléchargement annulé suite à une erreur interne !");
+                                                uploadStateIndicator.html("Téléchargement annulé suite à une erreur interne !");
                                                 console.log(response.error); debugger
 
                                         }
@@ -1422,7 +1438,7 @@ class UploadHandlerTool extends SubTool
                         contentType: false,
                         success: (response) => {
 
-                            console.log(response); //debugger
+                            //console.log(response); //debugger
 
                             this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
 
@@ -1435,9 +1451,9 @@ class UploadHandlerTool extends SubTool
                         },
                         error: (response) => {
                             let error = response.responseJSON;
-                            console.log(response);
+                            /*console.log(response);
                             console.log(error);
-                            console.log(error.subject); //debugger
+                            console.log(error.subject); //debugger*/
                             let subject = error.subject;
 
                             // on supprime la class 'unregistered' sur les elements enregistrés jusqu'à l'erreur

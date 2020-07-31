@@ -189,10 +189,8 @@ class VideoEncodeManager
                 if ($videoInfos['width'] == 1920 && $videoInfos['height'] == 1080) {
                     $max_size = true;
                     $output_high = "1920*1080";
-                    $HD = true;
-                    //copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
 
-
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
 
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
@@ -225,8 +223,9 @@ class VideoEncodeManager
                 if ($videoInfos['width'] == 1080 && $videoInfos['height'] == 1920) {
                     $max_size = true;
                     $output_high = "1080*1920";
-                    $HD = true;
-                    //copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
                     }*/
@@ -258,8 +257,9 @@ class VideoEncodeManager
                 if ($videoInfos['width'] == 1080 && $videoInfos['height'] == 960) {
                     $max_size = true;
                     $output_high = "1080*960";
-                    $HD = true;
-                    //copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
                     }*/
@@ -291,8 +291,9 @@ class VideoEncodeManager
                 if ($videoInfos['width'] == 960 && $videoInfos['height'] == 1080) {
                     $max_size = true;
                     $output_high = "960*1080";
-                    $HD = true;
-                    //copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+
                     /*if($videoInfos['mediaType'] != 'sync') {
                         copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
                     }*/
