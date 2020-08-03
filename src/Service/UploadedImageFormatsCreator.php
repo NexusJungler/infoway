@@ -105,9 +105,8 @@ class UploadedImageFormatsCreator
                     if($height === 2160) // 4k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['4k'];
 
-                    /*else if($height === 4320) // 8k
+                    else if($height === 4320) // 8k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['8k'];
-                    */
 
                     if(!file_exists($folder))
                         mkdir($folder, 0777, true);
@@ -145,9 +144,8 @@ class UploadedImageFormatsCreator
                     if($height === 2160) // 4k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['4k'];
 
-                    /*else if($height === 4320) // 8k
+                    else if($height === 4320) // 8k
                         $folder .= '/' . $this->__encodeOutputSizesFolders['8k'];
-                    */
 
                     if(!file_exists($folder))
                         mkdir($folder, 0777, true);
