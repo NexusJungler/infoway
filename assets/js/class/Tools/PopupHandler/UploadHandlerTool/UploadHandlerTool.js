@@ -679,21 +679,37 @@ class UploadHandlerTool extends SubTool
 
                 this.__$location.find('.upload_step_title').text("Médias prêts");
 
-                html = `<div class="actions_buttons_container">
+                html = `
+                    <div class="actions_buttons_container">
                         <button class="btn show_prev_step" type="button"><i class="fas fa-arrow-left"></i>Précedent</button>
-                    </div>
-                    
-                    <div class="actions_buttons_container">
-                        <button class="btn" type="button"><i class="fas fa-arrow-left"></i>Remplacer un média</button>
-                    </div>
-                    
-                    <div class="actions_buttons_container">
-                        <button class="btn" type="button"><i class="far fa-calendar"></i>Programmer</button>
-                    </div>
-
-                    <div class="actions_buttons_container">
-                        <button class="btn" type="button" disabled><i class="icon icon-picto-mediathque"></i>Médiathèque</button>
                     </div>`;
+
+                if(this.__uploadMediaType === 'synchros')
+                {
+                    html += `
+                    
+                        <div class="actions_buttons_container"> 
+                            <button class="btn save_synchro_edits_button" type="button" disabled>Enregistrer</button> 
+                        </div>
+                    
+                    `;
+                }
+
+                html += `
+                
+                <div class="actions_buttons_container">
+                    <button class="btn" type="button"><i class="fas fa-arrow-left"></i>Remplacer un média</button>
+                </div>
+                
+                <div class="actions_buttons_container">
+                    <button class="btn" type="button"><i class="far fa-calendar"></i>Programmer</button>
+                </div>
+
+                <div class="actions_buttons_container">
+                    <button class="btn" type="button" disabled><i class="icon icon-picto-mediathque"></i>Médiathèque</button>
+                </div>
+                
+                `;
 
             }
 
@@ -937,7 +953,7 @@ class UploadHandlerTool extends SubTool
                                                             if( this.__$location.find('.file_to_characterisation_list tr.waiting_encode').length === 0 )
                                                             {
 
-                                                                console.log("0"); debugger
+                                                                console.log("all files was encoded"); //debugger
 
                                                                 if(this.__$location.find('.file_to_characterisation_list tr').length === 1)
                                                                     this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
@@ -962,7 +978,7 @@ class UploadHandlerTool extends SubTool
                                                             }
                                                             else
                                                             {
-                                                                console.log("wait"); debugger
+                                                                console.log("wait"); //debugger
                                                                 videoEncodingResult.index = fileToUpload.index;
                                                                 this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
                                                                 uploadStateIndicator.html("En attente du traitement des autres videos...");
@@ -999,12 +1015,6 @@ class UploadHandlerTool extends SubTool
 
                                             }, 10000 )
 
-                                        }
-
-                                        if(this.__$location.find('.file_to_characterisation_list tr.upload_finished').length > 0)
-                                        {
-                                            this.__$location.find('.save_edits_button').removeAttr('disabled');
-                                            //$('.edit_media_info .action-btn-container').fadeIn();
                                         }
 
                                     }
@@ -1276,6 +1286,12 @@ class UploadHandlerTool extends SubTool
 
         this.__$fileToCharacterisationList.find(`#upload_${mediaInfos.index}`).replaceWith( $(html) );
 
+        if(this.__$location.find('.file_to_characterisation_list tr.upload_finished').length > 0)
+        {
+            this.__$location.find('.save_edits_button').removeAttr('disabled');
+            //$('.edit_media_info .action-btn-container').fadeIn();
+        }
+
         //this.addNewMediaCardInMediatheque(mediaInfos);
 
     }
@@ -1431,7 +1447,8 @@ class UploadHandlerTool extends SubTool
                     super.showLoadingPopup();
 
                     $.ajax({
-                        url: `/mediatheque/${this.__uploadMediaType}`,
+                        //url: `/mediatheque/${this.__uploadMediaType}`,
+                        url: `/save/upload/medias/infos`,
                         type: 'POST',
                         data: formData,
                         processData: false,
@@ -1529,15 +1546,15 @@ class UploadHandlerTool extends SubTool
     showMediaEditingResume()
     {
 
+        let html = "";
+
         if(this.__uploadMediaType === 'synchros')
         {
-            this.__currentUploadManager.showSynchros();
+            html = this.__currentUploadManager.showSynchros();
         }
 
         else
         {
-
-            let html = "";
 
             this.__$location.find('.file_to_characterisation_list tr').each( (index, element) => {
 
@@ -1581,11 +1598,13 @@ class UploadHandlerTool extends SubTool
 
             } )
 
-            this.__$location.find('.media_characterisation_resume_list').html( html );
-
-            this.showStep(3);
-
         }
+
+        //console.log(html);
+
+        this.__$location.find('.media_characterisation_resume_list').html( html );
+
+        this.showStep(3);
 
     }
 
@@ -1617,7 +1636,7 @@ class UploadHandlerTool extends SubTool
         {
             this.__$location.on('click.onClickOnNextButtonShowMediasEditingResume', '.show_media_editing_resume', e => {
 
-
+                this.showMediaEditingResume();
 
             })
         }

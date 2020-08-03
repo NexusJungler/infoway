@@ -24,7 +24,6 @@ use App\Repository\Admin\FfmpegTasksRepository;
 use App\Service\FfmpegSchedule;
 use App\Service\MediasHandler;
 use App\Service\SessionManager;
-use App\Service\UploadCron;
 use App\Service\UploadedImageFormatsCreator;
 use DateTime;
 use Exception;
@@ -114,14 +113,14 @@ class MediaController extends AbstractController
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
-        $mediaList = new MediasList();
-/*        $mediaList->addMedia( $mediaRepo->find(47) ) ;*/
+        /*$mediaList = new MediasList();
+         //$mediaList->addMedia( $mediaRepo->find(47) ) ;
 
         $uploadMediaForm = $this->createForm(MediasListType::class, $mediaList, [
             'attr' => [
                 'id' => 'medias_list_form'
             ]
-        ]);
+        ]);*/
 
         // @TODO: remplacer le formulaire dans la popup d'upload par le form créer par le formbuilder et laisser symfony gérer la validation (assert)
         /*$form->handleRequest($request);
@@ -131,8 +130,8 @@ class MediaController extends AbstractController
 
         }*/
 
-        if($request->isMethod('POST'))
-            return $this->saveMediaCharacteristic($request);
+        /*if($request->isMethod('POST'))
+            return $this->saveMediaCharacteristic($request);*/
 
         //dd($mediasToDisplayed);
 
@@ -145,7 +144,7 @@ class MediaController extends AbstractController
             'criterions' => $criterions,
             'productsCriterions' => $productsCriterions,
             'productsTags' => $productsTags,
-            'uploadMediaForm' => $uploadMediaForm->createView(),
+            //'uploadMediaForm' => $uploadMediaForm->createView(),
             'mediasWaitingForIncrustation' => $mediasWaitingForIncrustation,
             'mediasToDisplayed' => $mediasToDisplayed,
             'numberOfPages' => $numberOfPages,
@@ -464,8 +463,21 @@ class MediaController extends AbstractController
 
     }
 
+
+    /**
+     * @Route(path="/save/synchro/infos", name="media::saveSynchroInfos", methods={"POST"})
+     */
+    public function saveSynchroInfos(Request $request)
+    {
+
+        dd($request->request);
+
+    }
+
+
     /**
      * @Route(path="/get/video/encoding/status", name="media::getMediaEncodingStatus", methods={"POST"})
+     * @throws Exception
      */
     public function getMediaEncodingStatus(Request $request, FfmpegTasksRepository $ffmpegTasksRepository)
     {
@@ -486,7 +498,7 @@ class MediaController extends AbstractController
             if(!$media)
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . '/' . ( ($media->getMediaType() === 'diff') ? 'video/low/' : 'piece/' ) . $media->getId() . ".mp4";
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . '/' . $media->getMediaType() . '/' . $media->getId() . ".mp4";
 
             //dd($path);
 
@@ -512,12 +524,12 @@ class MediaController extends AbstractController
         elseif($task->getFinished() !== null AND $task->getErrors() !== null)
         {
 
-            if($task->getMediatype() === 'sync')
+            /*if($task->getMediatype() === 'sync')
             {
                 $taskMedia = $task->getMedia();
 
                 $mediaRepository->removeUncompleteSynchros( $taskMedia['synchros'] );
-            }
+            }*/
 
             $response = ['status' => 'Finished', 'type' => '520 Encode error', 'error' => $task->getErrors()];
         }
@@ -865,7 +877,14 @@ class MediaController extends AbstractController
 
     }
 
-    private function saveMediaCharacteristic(Request &$request)
+    /**
+     * @Route(path="/save/upload/medias/infos", name="media::saveMediaCharacteristic", methods={"POST"})
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function saveMediaCharacteristic(Request &$request)
     {
 
         $ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);

@@ -24,14 +24,21 @@ class MediasHandler
      * @return array
      */
     public function getVideoDimensions(string $file) {
-        $path_to_json = $this->parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
+        //$path_to_json = $this->parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
+        $path_to_json = $this->parameterBag->get('project_dir') . '/..\upload\infofile.json';
+
+        if(!file_exists($path_to_json))
+            throw new Exception(sprintf("Cannot found this file : '%s'", $path_to_json));
 
         $cmd = 'ffprobe -v quiet -print_format json -show_format -show_streams "'. $file . '" > "' . $path_to_json . '"';
 
-        exec($cmd, $output, $cmdResultStatus);
+        exec($cmd, $cmdOutput, $cmdResultStatus);
 
-        if($cmdResultStatus === 1)
+        if($cmdResultStatus !== 0)
+        {
+            dump($cmdOutput);
             throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
+        }
 
         $data = file_get_contents($path_to_json);
         $json = (array) json_decode($data);
@@ -78,13 +85,16 @@ class MediasHandler
 
         $cmd = "magick identify -quiet -format %x \"".$filename."\"  2>&1";
 
-        exec($cmd, $data, $cmdResultStatus);
+        exec($cmd, $cmdOutput, $cmdResultStatus);
 
-        if($cmdResultStatus === 1)
+        if($cmdResultStatus !== 0)
+        {
+            dump($cmdOutput);
             throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
+        }
 
-        if($data && is_array($data)){
-            $data = explode(' ', $data[0]);
+        if($cmdOutput && is_array($cmdOutput)){
+            $data = explode(' ', $cmdOutput[0]);
 
             if(array_key_exists(1, $data) && $data[1] == 'PixelsPerInch'){
                 return intval($data[0]);
@@ -113,10 +123,13 @@ class MediasHandler
         if($this->getImageDpi($outputFileName) !== 72)
         {
             $cmd = "magick convert \"" . $originalFileName . "\" -density " . $dpi . " \"" . $outputFileName . "\"  2>&1";
-            exec($cmd, $data, $cmdResultStatus);
+            exec($cmd, $cmdOutput, $cmdResultStatus);
 
             if($cmdResultStatus === 1)
+            {
+                dump($cmdOutput);
                 throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
+            }
 
         }
 
@@ -136,10 +149,13 @@ class MediasHandler
     {
 
         $cmd = "magick convert \"" . $originalFileName . "\" -colorspace rgb \"" . $outputFileName . "\"  2>&1";
-        exec($cmd, $data, $cmdResultStatus);
+        exec($cmd, $cmdOutput, $cmdResultStatus);
 
-        if($cmdResultStatus === 1)
+        if($cmdResultStatus !== 0)
+        {
+            dump($cmdOutput);
             throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
+        }
 
         return $this;
 
@@ -151,6 +167,7 @@ class MediasHandler
      *
      * @param string $fileName
      * @return bool true if $cmdResultStatus === 1, else return false
+     * @throws Exception
      */
     public function fileIsCorrupt(string $fileName, string $fileType)
     {
@@ -161,10 +178,13 @@ class MediasHandler
         else
             $cmd = "ffmpeg -v error -i \"" . $fileName . "\" -f null - 2>error.log";
 
-        exec($cmd, $data, $cmdResultStatus);
+        exec($cmd, $cmdOutput, $cmdResultStatus);
 
-        if($cmdResultStatus === 1)
+        if($cmdResultStatus !== 0)
+        {
+            dump($cmdOutput);
             throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
+        }
 
         if($fileType === 'video')
         {

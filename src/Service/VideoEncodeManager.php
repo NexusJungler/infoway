@@ -357,7 +357,7 @@ class VideoEncodeManager
 
             if($videoInfos['mediaType'] != 'them') {
 
-                if($HD) {
+                if(isset($HD) and $HD) {
 
                     $copyFolder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'];
 

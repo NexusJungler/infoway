@@ -86,38 +86,6 @@ class UploadVideoSynchroSubTool extends SubTool {
         return this.__encodedMediaInfos.findIndex( mediaInfos => mediaInfos.fileName === encodedMediaInfos.fileName );
     }
 
-    /**
-     * @param {object} synchroElement
-     * @returns {UploadVideoSynchroSubTool}
-     */
-    abc(synchroElement)
-    {
-
-        this.__synchroHtml += `
-        
-        <div class="synchro_element">
-
-            <div class="synchro_element_preview_container">
-                <video>
-                    <source src="/miniatures/${ synchroElement.customer }/video/${ synchroElement.mediaType }/low/${ synchroElement.id }.mp4" type="video/mp4" />
-                </video>
-            </div>
-
-            <div class="synchro_element_name_container">
-                <input type="text" class="synchro_element_name" title="nom du média" value="${ synchroElement.name }">
-            </div>
-
-            <div class="synchro_element_position_container">
-                <input type="text" class="synchro_element_position" title="position" value="${ synchroElement.position }">
-            </div>
-
-        </div>
-        
-        `;
-
-        return this;
-    }
-
     getSynchros()
     {
         this.__synchroIsSend = true;
@@ -163,6 +131,88 @@ class UploadVideoSynchroSubTool extends SubTool {
 
     showSynchros()
     {
+
+        let html =
+        `    <form name="synchro_edit_form" id="synchro_edit_form" action="/save/synchro/infos" method="post">
+            <div class="top">
+            
+                <div class="synchro_name_container container">
+
+                    <div class="label_container"><label for="synchro_name">Nom</label></div>
+                    <div class="input_container"><input type="text" id="synchro_name" name="synchro_edit_form[synchro_name]" placeholder="Nom de la synchro" class="synchro_name"></div>
+                    <div class="synchro_action_button_container"><button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button></div>
+        
+                </div>
+       
+            <div class="synchro_elements_container container">
+        
+        `;
+
+        this.getAllEncodedMediasInfos().forEach( (mediaInfos, index) => {
+
+            html += `
+            
+                <div class="synchro_element">
+
+                    <div class="synchro_element_preview_container">
+                        <video>
+                            <source src="/miniatures/kfc/video/sync/low/${ mediaInfos.id }.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+    
+                    <div class="synchro_element_name_container">
+                        <span class="error hidden"></span>
+                        <input type="text" class="synchro_element_name" title="nom du média" name="synchro_edit_form[synchros_elements][${index}][name]" value="${ mediaInfos.name }">
+                    </div>
+    
+                    <div class="synchro_element_position_container">
+                        <span class="error hidden"></span>
+                        <input type="text" class="synchro_element_position" title="position" name="synchro_edit_form[synchros_elements][${index}][position]" value="${ index +1 }">
+                    </div>
+    
+                </div>
+            
+            `;
+
+        } );
+
+        html += "</div></div></form>";
+
+        html += `
+        
+            <div class="bottom">
+
+                <div class="synchro_associated_data_container">
+        
+                    <table>
+        
+                        <thead>
+                            <tr>
+                                <th>Critères</th>
+                                <th>Tags</th>
+                                <th>Produits associés</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+        
+                            <tr>
+                                <td class="synchro_criterions_container"></td>
+                                <td class="synchro_tags_container"></td>
+                                <td class="synchro_products_container"></td>
+                            </tr>
+        
+                        </tbody>
+        
+                    </table>
+        
+                </div>
+        
+            </div>
+        
+        `;
+
+        return html;
 
     }
 
@@ -241,7 +291,103 @@ class UploadVideoSynchroSubTool extends SubTool {
 
     }
 
+    synchroEditFormIsValid()
+    {
 
+        let form = $('#synchro_edit_form');
+
+        // @TODO: vérifier validité du formulaire (span.error, ...)
+
+    }
+
+    onClickOnSynchroSaveButton(active)
+    {
+
+        if(active)
+        {
+            this.__$location.on('click.onClickOnSynchroSaveButton', '.save_synchro_edits_button', e => {
+
+                if(this.synchroEditFormIsValid())
+                {
+
+                    let formData = new FormData( $('#synchro_edit_form')[0] );
+
+                    super.showLoadingPopup();
+
+                    $.ajax({
+                        url: `/save/synchro/infos`,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (response) => {
+
+                            //console.log(response); //debugger
+
+                            this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
+
+                        },
+                        error: (response) => {
+
+                            let error = response.responseJSON;
+
+                            let subject = error.subject;
+
+                            switch (error.text)
+                            {
+
+                                case "515 Duplicate File":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .form_input.media_name`).addClass('invalid');
+                                    break;
+
+                                case "516 Invalid Filename":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
+                                    break;
+
+                                case "517 Empty Filename":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
+                                    break;
+
+                                case "518 Too short Filename":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
+                                    break;
+
+                                case "519.2 Invalid diffusion end date":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
+                                    break;
+
+                                case "520 Position already used":
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
+                                    break;
+
+                                default:
+                                    console.error(error); debugger
+
+                            }
+                        },
+                        complete: () => {
+                            super.hideLoadingPopup();
+                        },
+
+                    });
+
+                }
+
+            })
+        }
+        else
+        {
+            this.__$location.off('click.onClickOnSynchroSaveButton', '.save_synchro_edits_button');
+        }
+
+        return this;
+    }
 
     enable()
     {
