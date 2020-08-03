@@ -1,4 +1,5 @@
 
+
 /* == button == */
 button{
     &:disabled{
@@ -90,4 +91,39 @@ button{
 
 .color_gray{
     background: #899CA4 0% 0% no-repeat padding-box;
+}
+
+/* header btn style */
+
+.number__enseigne, .number__enseigne-site, .number__site {
+    position: relative;
+    color: #7BA2B1;
+    top: -0.45rem;
+}
+
+.update__site, .update__all, .btn-back {
+    width: auto;
+    padding: 5px 7px;
+    color: #fff;
+    font-size: 17px;
+    border-radius: 5px;
+    border: none;
+}
+
+.update__all {
+    color: #fff;
+    background-color: #F57171;
+    box-shadow: 3px 3px 3px #00000029;
+}
+
+.btn-back{
+    bottom: 0rem;
+    background-color: transparent;
+    color: #899CA4;
+    border: 0.06rem solid #899CA4;
+    border-radius: 0.3rem;
+}
+
+.contenu_hide{
+    display: none;
 }

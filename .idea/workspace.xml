@@ -2,580 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b237bda7-15f6-4ae8-877d-6e58489f2c4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/header.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.test" beforeDir="false" afterPath="$PROJECT_DIR$/.env.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/infoway-master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/infoway-master.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/new_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/new_app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/header/headerSelect.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SYMFONY_HELP.md" beforeDir="false" afterPath="$PROJECT_DIR$/SYMFONY_HELP.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/allergenes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/allergenes.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/table.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/groupe-prix.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/groupe-prix.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/home_page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/home_page.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/media/show_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/show_media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_product_association/popup_product_association.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/allergene/allergenes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/allergene/allergenes.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/allergens/allergenes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/allergens/allergenes.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/allergens/show_allergens.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/allergens/show_allergens.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/category/show_categories.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/date/date.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/date/date.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/edit_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/edit_product.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/product_price.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/product_price.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/products/show_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/products/show_product.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/settings_user.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/settings_user.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/tags/list_tags.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/user/create_user.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/user/create_user.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Table/tableDelete.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Table/tableDelete.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tags/Tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tags/Tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/ProductAssociationHandler/MediaProductAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/TagAssociationHandler/MediaTagAssociationHandlerTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/show_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/show_products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/site.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/console" beforeDir="false" afterPath="$PROJECT_DIR$/bin/console" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/phpunit" beforeDir="false" afterPath="$PROJECT_DIR$/bin/phpunit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bootstrap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/doctrine_migrations_customer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine_migrations_customer.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/doctrine_migrations_default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine_migrations_default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/assets.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/assets.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/cache.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/cache.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/dev/debug.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/debug.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/dev/easy_log_handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/easy_log_handler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/dev/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/monolog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/dev/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/swiftmailer.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/dev/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/web_profiler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/doctrine_migrations.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine_migrations.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/knp_paginator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/knp_paginator.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/prod/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/prod/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/monolog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/prod/routing.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/routing.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/prod/webpack_encore.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/webpack_encore.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/routing.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/routing.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/swiftmailer.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/framework.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/monolog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/swiftmailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/swiftmailer.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/twig.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/validator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/validator.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/web_profiler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/test/webpack_encore.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/test/webpack_encore.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/translation.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/translation.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/validator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/validator.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/vich_uploader.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/vich_uploader.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes/annotations.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/annotations.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes/dev/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/dev/twig.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes/dev/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/dev/web_profiler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sys_flags.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/sys_flags.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-italic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-italic.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/barlow-v4-latin-regular.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/all.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/brands.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/fontawesome.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/regular.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/solid.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/svg-with-js.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/css/v4-shims.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/all.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/brands.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/conflict-detection.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/fontawesome.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/regular.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/solid.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/js/v4-shims.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_animated.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_animated.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_bordered-pulled.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_bordered-pulled.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_core.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_core.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_fixed-width.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_fixed-width.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_icons.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_icons.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_larger.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_larger.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_list.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_list.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_mixins.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_rotated-flipped.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_rotated-flipped.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_screen-reader.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_screen-reader.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_shims.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_stacked.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_stacked.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_variables.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/_variables.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/brands.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/brands.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/fontawesome.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/fontawesome.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/regular.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/regular.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/solid.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/solid.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/v4-shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/less/v4-shims.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/categories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/icons.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/shims.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/sponsors.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/metadata/sponsors.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_animated.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_animated.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_bordered-pulled.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_bordered-pulled.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_core.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_core.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_fixed-width.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_fixed-width.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_icons.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_larger.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_larger.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_list.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_mixins.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_rotated-flipped.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_rotated-flipped.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_screen-reader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_screen-reader.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_shims.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_stacked.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_stacked.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/brands.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/brands.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/fontawesome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/fontawesome.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/regular.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/regular.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/solid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/solid.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/v4-shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/scss/v4-shims.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/brands.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/brands.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/regular.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/solid.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/sprites/solid.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/svgs/brands/keybase.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/svgs/brands/keybase.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-brands-400.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-regular-400.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-free-5.10.2-web/webfonts/fa-solid-900.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/all.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/brands.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/duotone.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/fontawesome.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/light.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/regular.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/solid.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/svg-with-js.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/css/v4-shims.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/all.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/brands.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/conflict-detection.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/duotone.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/fontawesome.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/light.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/regular.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/solid.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/js/v4-shims.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_animated.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_animated.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_bordered-pulled.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_bordered-pulled.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_core.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_core.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_fixed-width.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_fixed-width.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_icons.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_icons.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_larger.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_larger.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_list.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_list.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_mixins.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_rotated-flipped.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_rotated-flipped.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_screen-reader.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_screen-reader.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_shims.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_stacked.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_stacked.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_variables.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/_variables.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/brands.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/brands.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/duotone.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/duotone.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/fontawesome.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/fontawesome.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/light.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/light.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/regular.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/regular.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/solid.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/solid.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/v4-shims.less" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/less/v4-shims.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/categories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/icons.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/shims.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/sponsors.yml" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/metadata/sponsors.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_animated.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_animated.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_bordered-pulled.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_bordered-pulled.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_core.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_core.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_fixed-width.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_fixed-width.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_icons.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_larger.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_larger.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_list.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_mixins.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_rotated-flipped.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_rotated-flipped.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_screen-reader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_screen-reader.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_shims.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_stacked.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_stacked.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/brands.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/brands.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/duotone.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/duotone.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/fontawesome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/fontawesome.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/light.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/light.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/regular.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/regular.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/solid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/solid.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/v4-shims.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/scss/v4-shims.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/brands.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/brands.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/duotone.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/duotone.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/light.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/light.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/regular.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/solid.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/sprites/solid.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/brands/keybase.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/brands/keybase.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/duotone/spinner-third.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/svgs/duotone/spinner-third.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-brands-400.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-duotone-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-duotone-900.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-light-300.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-light-300.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-regular-400.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/fontawesome-pro-5.10.2-web/webfonts/fa-solid-900.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/jquery3.4.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/lib/jquery3.4.1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/FfmpegLauncher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/FfmpegLauncher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AllergenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AllergenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Back_office/AdminCustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Back_office/AdminCustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Back_office/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Back_office/AdminUserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Customer/CheckoutSystemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Customer/CheckoutSystemController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Customer/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Customer/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CustomerControllerold.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CustomerControllerold.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DateController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ExpectedChangeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ExpectedChangeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Home/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Home/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PriceTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PriceTypeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PricesFactoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PricesFactoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Programming/DisplaySettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Programming/DisplaySettingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Programming/DisplaySpaceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Programming/DisplaySpaceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Programming/ProgrammingMouldController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Programming/ProgrammingMouldController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Settings/CriterionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/CriterionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Settings/CriterionsListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/CriterionsListController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Settings/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Settings/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/SiteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/button.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/header_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header_menu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Settings/TagController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/TagController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Settings/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Settings/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/CustomerFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/CustomerFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Country.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Country.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Devise.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Devise.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Entity.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Entity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Feature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Feature.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Perimeter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Perimeter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Permission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/Screen.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/Screen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/ScreenAction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/ScreenAction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/ScreensList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/ScreensList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/TagsList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/TagsList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/TimeZone.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/TimeZone.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/UserPermission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/UserPermission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/UserRoles.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/UserRoles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Admin/UserSites.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Admin/UserSites.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ActionStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ActionStatus.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/CheckoutProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/CheckoutProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/CheckoutSystem.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/CheckoutSystem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Contexte.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Contexte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Criterion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Criterion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/CriterionsList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/CriterionsList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Devise.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Devise.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Display.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Display.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/DisplaySetting.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/DisplaySetting.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/DisplaySpace.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/DisplaySpace.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ElementGraphic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ElementGraphic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ExpectedChangesList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ExpectedChangesList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Image.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Image.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Incruste.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/LocalProgramming.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/LocalProgramming.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/MainPrice.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/MainPrice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/MediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/MediaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/MediasList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/MediasList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/NightProgramming.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/NightProgramming.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Price.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Price.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/PriceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/PriceType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/PricesFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/PricesFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/PricesGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/PricesGroup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ProductAllergen.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ProductAllergen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ProgrammingMould.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ProgrammingMould.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/RolePermissions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/RolePermissions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ScreenPlaylist.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ScreenPlaylist.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/ScreenPlaylistEntry.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/ScreenPlaylistEntry.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Site.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Site.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/SiteScreen.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/SiteScreen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/TagCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/TagCategory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/TimeSlot.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/TimeSlot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Customer/Video.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Customer/Video.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Search.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Contact/ContactError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Contact/ContactError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Contact/InvalidContactFirstNameError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Contact/InvalidContactFirstNameError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Contact/InvalidContactLastNameError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Contact/InvalidContactLastNameError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Contact/InvalidEmailError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Contact/InvalidEmailError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Contact/InvalidPhoneError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Contact/InvalidPhoneError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Contact/InvalidPositionError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Contact/InvalidPositionError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Criterion/CriterionError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Criterion/CriterionError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Criterion/ExistingCriterionNameError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Criterion/ExistingCriterionNameError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Criterion/NotExistingProductsError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Criterion/NotExistingProductsError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Criterion/NotExistingSitesError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Criterion/NotExistingSitesError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/CriterionsList/CriterionsListError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/CriterionsList/CriterionsListError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/CriterionsList/ExistingCriterionsListNameError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/CriterionsList/ExistingCriterionsListNameError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/CriterionsList/MinimumCriterionsInListNonReachedError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/CriterionsList/MinimumCriterionsInListNonReachedError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/CustomerCreationGeneralError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/CustomerCreationGeneralError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/CustomerDatabaseCreationError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/CustomerDatabaseCreationError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/CustomerError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/CustomerError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/ExistingCustomerError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/ExistingCustomerError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/ExistingDatabaseError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/ExistingDatabaseError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerContact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerContact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerLogo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerLogo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerNameError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerNameError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerSitesError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerSitesError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Customer/InvalidCustomerUsers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Error.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Error.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/Tag/TagError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/Tag/TagError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/TagsList/MinimumSitesNotReached.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/TagsList/MinimumSitesNotReached.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/TagsList/NoTagToInsertError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/TagsList/NoTagToInsertError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/TagsList/NotAllowedSitesError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/TagsList/NotAllowedSitesError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Errors/TagsList/TagsListError.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Errors/TagsList/TagsListError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventListener/Customer/ProductListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/Customer/ProductListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventListener/Customer/SiteListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/Customer/SiteListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventListener/CustomerListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/CustomerListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventListener/ProductListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/ProductListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventListener/UserListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/UserListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Admin/AllergenType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Admin/AllergenType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Admin/ContactType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Admin/ContactType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Admin/CustomerType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Admin/CustomerType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Admin/ScreensListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Admin/ScreensListType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CategoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CategoryType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CreateCompanyPieceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CreateCompanyPieceType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/Action/TagsActionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/Action/TagsActionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/AddProductType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/AddProductType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/AddSiteType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/AddSiteType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/CheckoutProductType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/CheckoutProductType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/CheckoutSystemType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/CheckoutSystemType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/CriterionCategoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/CriterionCategoryType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/CriterionInListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/CriterionInListType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/CriterionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/CriterionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/CriterionsListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/CriterionsListType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/DateType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/DateType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/DisplaySettingType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/DisplaySettingType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/DisplaySpaceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/DisplaySpaceType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/DisplayType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/DisplayType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/EditMediaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ExpectedChangesListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ExpectedChangesListType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/LocalProgrammingType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/LocalProgrammingType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/MainPriceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/MainPriceType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/NightProgrammingType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/NightProgrammingType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ProductEditorType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ProductEditorType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ProductType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ProductType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ProgrammingMouldType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ProgrammingMouldType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistEntryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistEntryType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/ScreenPlaylistType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/SiteScreenType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/SiteScreenType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/TagListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/TagListType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/TagType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/TagType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Customer/TimeSlotType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Customer/TimeSlotType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CustomerCreationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CustomerCreationType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CustomerSearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CustomerSearchType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/DataTransformer/MediaToNumberTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/DataTransformer/MediaToNumberTransformer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/DataTransformer/MouldToLocalProgrammingTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/DataTransformer/MouldToLocalProgrammingTransformer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/DataTransformer/SitesScreenToScreenTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/DataTransformer/SitesScreenToScreenTransformer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Extension/SubmitTypeIconExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Extension/SubmitTypeIconExtension.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MediaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MediaType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MediaUploaderType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MediaUploaderType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MediasListType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MediasListType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PriceTypeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PriceTypeType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PricesFactoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PricesFactoryType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SalarySearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SalarySearchType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SiteCreationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SiteCreationType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SiteSearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SiteSearchType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SiteType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SiteType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Customer/Version20200317134802.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Customer/Version20200317134802.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Customer/Version20200318180519.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Customer/Version20200318180519.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200310143826.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200310143826.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200310144427.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200310144427.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200310162642.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200310162642.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200310175338.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200310175338.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200311153415.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200311153415.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200311153943.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200311153943.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200311185611.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200311185611.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200312104546.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200312104546.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200318180456.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200318180456.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200322142147.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200322142147.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200407174450.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200407174450.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Default/Version20200413155608.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Migrations/Default/Version20200413155608.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Object/Customer/Action/TagsAction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Object/Customer/Action/TagsAction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Object/Customer/ProductEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Object/Customer/ProductEditor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Object/Customer/SitesList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Object/Customer/SitesList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/ActionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/ActionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/AllergenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/AllergenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/ContactRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/ContactRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/CountryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/CountryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/CustomerRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/CustomerRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/DeviseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/DeviseRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/EntityRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/EntityRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/FeatureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/FeatureRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/PerimeterRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/PerimeterRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/PermissionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/PermissionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/RoleRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/ScreenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/ScreenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/SubjectRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/SubjectRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/TimeZoneRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/TimeZoneRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserPermissionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserPermissionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserRolesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserRolesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Admin/UserSitesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Admin/UserSitesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ActionStatusRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ActionStatusRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CategoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CheckoutProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CheckoutProductRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CheckoutSystemRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CheckoutSystemRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ContexteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ContexteRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CriterionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CriterionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CriterionsListRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CriterionsListRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/CustomerRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/CustomerRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DateRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DateRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DeviseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DeviseRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DisplayRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DisplayRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DisplaySettingRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DisplaySettingRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/DisplaySpaceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/DisplaySpaceRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ElementGraphicRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ElementGraphicRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ExpectedChangeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ExpectedChangeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ImageRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ImageRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/IncrusteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/IncrusteRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/LocalProgrammingRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/LocalProgrammingRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MainPriceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MainPriceRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/MediaTypeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/MediaTypeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/NightProgrammingRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/NightProgrammingRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PriceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PriceRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesFactoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesFactoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesGroupRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesGroupRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/PricesTypeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/PricesTypeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductAllergenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductAllergenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProductRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ProgrammingMouldRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ProgrammingMouldRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/RolePermissionsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/RolePermissionsRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/RoleRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ScreenActionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ScreenActionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ScreenPlaylistEntryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ScreenPlaylistEntryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/ScreenPlaylistRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/ScreenPlaylistRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SearchRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SearchRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SiteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SiteRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/SiteScreenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/SiteScreenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/StageRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/StageRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagCategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagCategoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TagsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TagsRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/TimeSlotRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/TimeSlotRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Customer/VideoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Customer/VideoRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/MainRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/MainRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/RepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/RepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SearchRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SearchRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Serializer/Normalizer/IgnoreNotAllowedNulledAttributeNormalizer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Serializer/Normalizer/IgnoreNotAllowedNulledAttributeNormalizer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ArrayHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ArrayHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ArraySearchRecursiveService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ArraySearchRecursiveService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ContactHandlerService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ContactHandlerService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/CriterionsHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CriterionsHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/CriterionsListHandlerService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CriterionsListHandlerService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/CustomerHandlerService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CustomerHandlerService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/DatabaseAccessHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/DatabaseAccessHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/DotEnvParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/DotEnvParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/EmailSenderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EmailSenderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/EmailVerificator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EmailVerificator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ExpectedChangeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ExpectedChangeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/FlashBagHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FlashBagHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/MediaUploaderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MediaUploaderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/MediasHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MediasHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/PaginatorService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PaginatorService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/PermissionsHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PermissionsHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/SessionManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SessionManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/TagsHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TagsHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/TokenGeneratorService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TokenGeneratorService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Twig/InstanceOfExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Twig/InstanceOfExtension.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TwigExtension/DateDiffExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/TwigExtension/DateDiffExtension.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TwigExtension/StringToIntExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/TwigExtension/StringToIntExtension.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/allergens/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/allergens/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/categories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/info.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/info.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/media_info_sheet/popup_media_info_sheet.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/media_info_sheet/popup_media_info_sheet.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/medias_waiting_for_incrustes/popup_medias_waiting_incrustes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/medias_waiting_for_incrustes/popup_medias_waiting_incrustes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_allergens.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/product/popup_product_incrustes_allergens.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/create-date.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/create-date.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pricesfactories/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pricesfactories/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/programming.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/programming.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/_criterions_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/_criterions_list.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/_edit_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/_edit_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/tags/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/tags/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/user/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/user/modify.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/user/modify.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/site.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/bootstrap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/forms.fr.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/forms.fr.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/messages.fr.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/messages.fr.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/header.html.twig" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/public/build/" />
     <ignored path="$PROJECT_DIR$/vendor/behat/transliterator/" />
@@ -722,124 +156,75 @@
     <favorites_list name="infoway" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.9">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Entity/Customer/BroadcastSlot.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1003">
-                  <caret line="61" column="25" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/assets/css/popups/popup.scss">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="544">
-                  <caret line="32" selection-start-line="32" selection-end-line="32" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webpack.config.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-153">
-                  <caret line="30" selection-start-line="30" selection-end-line="30" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/templates/header.html.twig">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="170">
-                  <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-                  <folding>
-                    <element signature="e#349#2212#0#HTML" />
-                    <element signature="e#2218#3463#0#HTML" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/templates/home.html.twig">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/templates/home/home-company.html.twig">
-              <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret selection-end-line="11" selection-end-column="14" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="697">
-                  <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Entity/Customer/Display.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1683">
-                  <caret line="101" column="23" selection-start-line="101" selection-start-column="23" selection-end-line="101" selection-end-column="23" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/templates/site.html.twig">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1156">
-                  <caret line="68" column="2" selection-start-line="68" selection-start-column="2" selection-end-line="68" selection-end-column="2" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/assets/css/Custome/dropdown.scss">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/assets/css/Custome/display_down.scss">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="881">
-                  <caret line="90" column="22" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/js/header/headerSelect.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/images/kfc.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/css/header_menu.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="164" selection-start-line="164" selection-end-line="164" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="76" column="41" selection-start-line="76" selection-start-column="41" selection-end-line="76" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Settings/TagController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="121" column="9" selection-start-line="121" selection-start-column="9" selection-end-line="121" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/header.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="18" selection-start-column="18" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -851,7 +236,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>100</find>
       <find>submit-rating</find>
       <find>4%</find>
       <find>media-sh</find>
@@ -881,6 +265,7 @@
       <find>displays_screen_playlists</find>
       <find>after</find>
       <find>block body</find>
+      <find>hangeFilter</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -903,11 +288,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/popups/deletingMedia/popup_delete_media.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" />
-        <option value="$USER_HOME$/Downloads/infoway-cheickne (1)/infoway-cheickne/templates/media/_media_card.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/mediatheque.js" />
-        <option value="$PROJECT_DIR$/templates/popups/deleting_media/popup_delete_media.html.twig" />
         <option value="$PROJECT_DIR$/assets/js/class/Tools/PaginatorHandler/PaginatorHandler.js" />
         <option value="$PROJECT_DIR$/templates/popups/media_info_sheet/popup_media_info_sheet.twig" />
         <option value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler.js" />
@@ -917,7 +297,6 @@
         <option value="$PROJECT_DIR$/assets/css/media.scss" />
         <option value="$PROJECT_DIR$/templates/media/edit_media.html.twig" />
         <option value="$PROJECT_DIR$/templates/media.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" />
         <option value="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" />
         <option value="$PROJECT_DIR$/assets/css/media/edit_media.scss" />
         <option value="$PROJECT_DIR$/assets/css/Custome/input-rdo.scss" />
@@ -939,7 +318,6 @@
         <option value="$PROJECT_DIR$/assets/js/show_products.js" />
         <option value="$PROJECT_DIR$/assets/css/app.scss" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
-        <option value="$PROJECT_DIR$/assets/css/general/button.scss" />
         <option value="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" />
         <option value="$PROJECT_DIR$/templates/media/media-image.html.twig" />
         <option value="$PROJECT_DIR$/assets/js/class/Table/Table.js" />
@@ -953,7 +331,14 @@
         <option value="$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss" />
         <option value="$PROJECT_DIR$/templates/home.html.twig" />
         <option value="$PROJECT_DIR$/templates/base.html.twig" />
+        <option value="$PROJECT_DIR$/assets/js/header/header.js" />
+        <option value="$PROJECT_DIR$/assets/js/app.js" />
+        <option value="$PROJECT_DIR$/assets/css/general/button.scss" />
+        <option value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" />
+        <option value="$PROJECT_DIR$/src/Controller/Settings/TagController.php" />
+        <option value="$PROJECT_DIR$/assets/js/header/headerSelect.js" />
         <option value="$PROJECT_DIR$/templates/header.html.twig" />
+        <option value="$PROJECT_DIR$/assets/css/header_menu.scss" />
       </list>
     </option>
   </component>
@@ -1079,8 +464,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="168" />
-    <option name="y" value="-16" />
+    <option name="x" value="59" />
+    <option name="y" value="-11" />
     <option name="width" value="1557" />
     <option name="height" value="1037" />
   </component>
@@ -1105,13 +490,37 @@
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
               <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="Settings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="infoway" type="462c0819:PsiDirectoryNode" />
+              <item name="var" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1147,15 +556,15 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2018.3.6\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\infoway\assets\css\fonts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\infoway\assets\images" />
       <recent name="C:\laragon\www\infoway\assets\css\popups" />
       <recent name="C:\laragon\www\infoway\templates\media" />
       <recent name="C:\laragon\www\infoway\assets\css\products\allergene" />
       <recent name="C:\laragon\www\infoway\assets\css\general" />
-      <recent name="C:\laragon\www\infoway\templates\popups\productDulicate" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\infoway\assets\css\fonts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1202,17 +611,42 @@
       <workItem from="1594974205127" duration="19013000" />
       <workItem from="1595262843369" duration="2148000" />
       <workItem from="1596444347723" duration="2059000" />
-      <workItem from="1596447061429" duration="1014000" />
+      <workItem from="1596447061429" duration="21937000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="500207000" />
+    <option name="totallyTimeSpent" value="521130000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49740395" visible="true" weight="0.20309168" />
+      <window_info id="Structure" order="1" sideWeight="0.5005192" side_tool="true" weight="0.1945629" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.5025961" side_tool="true" weight="0.20309168" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32917964" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3290993" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3281412" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32917964" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" order="12" />
+      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.32917964" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" x="0" y="0" width="434" height="896" id="Documentation" order="4" side_tool="true" weight="0.32995737" />
+    </layout>
+    <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49844238" visible="true" weight="0.20309168" />
       <window_info id="Structure" order="1" sideWeight="0.5005192" side_tool="true" weight="0.1945629" />
       <window_info id="npm" order="2" side_tool="true" />
@@ -1236,101 +670,14 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" x="0" y="0" width="434" height="896" id="Documentation" order="4" side_tool="true" weight="0.32995737" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/css/general/table.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="64" column="44" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="90" column="25" selection-start-line="90" selection-start-column="25" selection-end-line="90" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/general/input-rdo.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByOrientationSubTool/FilterMediasByOrientationSubTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="71" lean-forward="true" selection-start-line="19" selection-start-column="71" selection-end-line="19" selection-end-column="71" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/AnimateTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/ParentTool.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1020">
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/Tool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-357" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/mediatheque.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/general/button.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/modal_message.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="813">
-          <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/SubTool.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1434,13 +781,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/FilterMediasTool/FilterMediasByCharacteristicsSubTool/FilterMediasByCharacteristicsSubTool.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1455,24 +795,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/site.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="85" column="51" selection-start-line="85" selection-start-column="51" selection-end-line="85" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/class/Table/Table.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2924">
           <caret line="172" column="13" selection-start-line="172" selection-start-column="13" selection-end-line="194" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/site.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1514,30 +840,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Customer/Display.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1683">
-          <caret line="101" column="23" selection-start-line="101" selection-start-column="23" selection-end-line="101" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/site.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="68" column="2" selection-start-line="68" selection-start-column="2" selection-end-line="68" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/Custome/dropdown.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/css/Custome/display_down.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="881">
+        <state relative-caret-position="1034">
           <caret line="90" column="22" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
         </state>
       </provider>
@@ -1549,21 +854,140 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/site.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/nav_left.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1122" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/custom-style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2550" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Customer/Display.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="881">
+          <caret line="101" column="23" selection-start-line="101" selection-start-column="23" selection-end-line="101" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/Custome/dropdown.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/site.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="881">
+          <caret line="68" column="2" selection-start-line="68" selection-start-column="2" selection-end-line="68" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/header/header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="34" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="e#323#395#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/site.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="76" column="41" selection-start-line="76" selection-start-column="41" selection-end-line="76" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/general/button.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/Logo_AREA_blanc.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Settings/TagController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="121" column="9" selection-start-line="121" selection-start-column="9" selection-end-line="121" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
+        <state relative-caret-position="17">
           <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/kfc.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/header_menu.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/header.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-          <folding>
-            <element signature="e#349#2212#0#HTML" />
-            <element signature="e#2218#3463#0#HTML" />
-          </folding>
+        <state>
+          <caret column="18" selection-start-column="18" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/header/headerSelect.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
         </state>
       </provider>
     </entry>

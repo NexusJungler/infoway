@@ -1,5 +1,9 @@
-/***************************************************** HEADER *****************************************************************/
+select,
+button{
+    outline: none;
+}
 
+/***************************************************** HEADER *****************************************************************/
 .header {
     position: fixed;
     display: flex;
@@ -9,16 +13,18 @@
     background-color: #324147;
     z-index: 10;
 
+
     /** HEADER LOGO **/
-    .logo__infoway {
+    .header_logo{
         width: 8%;
         padding: 2.5em 2em;
         background-color: white;
+    }
+    .logo__infoway {
         // transition: width 0.8s ease-in;
         &.logo__infoway-active{
             width: 12%;
             // transition: width 0.8s ease-in;
-
         }
     }
 
@@ -33,54 +39,22 @@
         /* block left */
         .header__block--left {
             display: flex;
-            width: 85%;
+            width: 50%;
         }
     }
 }
 
 
-/* btn style */
-
-.number__enseigne, .number__enseigne-site, .number__site {
-    position: relative;
-    color: #7BA2B1;
-    top: -0.45rem;
-}
-
-.update__site, .update__all, .btn-back {
-    width: auto;
-    padding: 5px 7px;
-    color: #fff;
-    font-size: 17px;
-    border-radius: 5px;
-    border: none;
-}
-
-.update__all {
-    color: #fff;
-    background-color: #F57171;
-    box-shadow: 3px 3px 3px #00000029;
-}
-
-.btn-back{
-        bottom: 0rem;
-        background-color: transparent;
-        color: #899CA4;
-        border: 0.06rem solid #899CA4;
-        border-radius: 0.3rem;
-}
-
 /***************************************************** gradient left*****************************************************************/
 
 .header__gradient-left{
-    flex: 0 0 33.333%;
-    max-width: 33.33%;
+    flex: 0 0 50%;
+    max-width: 50%;
     background: linear-gradient(-271deg, #324147 1%, #4D646D 17%);
     .logo__enseigne {
         display: flex;
         height: 100%;
         flex-basis: 22%;
-        justify-content: center;
         img {
             max-width: 100%;
             height: auto;
@@ -96,7 +70,7 @@
         margin-top: 1.2rem;
         .enseigne{
             select {
-                font: 1.1rem 'Barlow', sans-serif;
+                font: 1.6rem 'Barlow';
                 color: #FFFFFF;;
                 background-color: transparent!important;
                 border: 0em;
@@ -105,73 +79,28 @@
                     color: #4D646D;
                 }
             }
-        } 
+        }
+
+        .btn_maj{
+            background: #F57171 0% 0% no-repeat padding-box;
+            box-shadow: 0.3rem 0.3rem 0.3rem #00000029;
+
+
+        }
         .btn-back{
             margin-top: rem(3px);
         }
     }
-    
+
 }
 
-/***************************************************** gradient center *****************************************************************/
 
-.header__gradient-center{
-    flex: 0 0 33.333%;
-    max-width: 33.33%;
-    display: flex;
-    align-items: center;
-    height: 130px;
+.number__enseigne, .number__site {
+    font: 1.5rem "Barlow";
+    color: #7BA2B1;
+    margin-left: 1.2rem;
     position: relative;
-    z-index: 500;
-    &::before {
-        content: '';
-        display: block;
-        background: linear-gradient(-271deg, #324147 1%, #4D646D 17%);
-        transform: skewX(-30deg);
-        position: absolute;
-        width: 101%;
-        height: 100%;
-        left: -37px;
-    }
-
-    .btn-back{
-        display:none;
-    }
-
-    .update {
-        display: flex;
-        position: relative;
-    }
-    .all__enseigne-site{
-        position: relative;
-        flex-direction: row;
-        margin-left: 0.5rem;
-        font: 1.2rem 'Barlow', sans-serif;
-        color: #4D646D;
-        .enseigne-site{
-            select {
-                font: 1.1rem 'Barlow', sans-serif;
-                color: #FFFFFF;;
-                background-color: transparent!important;
-                border: 0em;
-                padding: 0.2em 0.2em;
-                option{
-                    color: #4D646D;
-                }
-            }
-        } 
-        .update__enseigne-site {
-            color: #fff;
-            background-color: #4F9BAE;
-            border: 1px solid #899CA4;
-            margin-right: 30px;
-        }
-    }
-    
-    .update .update__all{
-        top: 0.5rem;
-        position: relative;
-    }
+    top: -0.45rem;
 }
 
 
@@ -179,8 +108,8 @@
 
 
 .header__gradient-right {
-    flex: 0 0 33.333%;
-    max-width: 33.33%;
+    flex: 0 0 50%;
+    max-width: 50%;
     align-items: center;
     height: 130px;
     position: relative;
@@ -191,7 +120,7 @@
         background: linear-gradient(-317deg, #324147 3%, #4D646D 16%);
         transform: skewX(-30deg);
         position: absolute;
-        width: 80%;
+        width: 100%;
         height: 100%;
         left: -37px;
     }
@@ -205,7 +134,7 @@
     }
     .site{
         select {
-            font: 1.1rem 'Barlow', sans-serif;
+            font: 1.8rem 'Barlow';
             color: #FFFFFF;;
             background-color: transparent!important;
             border: 0em;
@@ -214,7 +143,8 @@
                 color: #4D646D;
             }
         }
-    } 
+    }
+
     .update__site {
         color: #fff;
         background-color: #4F9BAE;
@@ -225,7 +155,13 @@
     }
 }
 
+.select-pointer_events{
+    pointer-events: none;
+}
 
+#customer_logo{
+    height: 8rem;
+}
 
 /* .btn-back span{
     content: "";

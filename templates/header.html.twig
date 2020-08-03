@@ -8,12 +8,12 @@
             <div class="hamburger"><div></div></div>
         </div>
     </div>
-    
+
     <div id="header__block">
         <div class="header__block--left">
             <div class="header__gradient-left">
                 <div class="logo__enseigne">
-                    {# <img src="{{ asset('/build/images/Logo_AREA_blanc.png') }}" alt="logo quick"> #}
+                     <img id="customer_logo" src="{{ asset('/build/images/'~ app.session.get('current_customer').name~'.png') }}" alt="logo quick" class="img_enseigne contenu_hide">
                     <div class="all__enseigne">
                         <form class="enseigne">
                             <select name="enseigne" id="enseigne">
@@ -22,11 +22,11 @@
                                     <option value="{{name}}" {% if (app.session.get('current_customer') is not null ) and (name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{name}}</option>
                                 {% endfor %}
                             </select>
-                            <p class="number__enseigne"><span >25</span> enseignes</p>
-                            <div>
-                                <button class="btn-back"><span></span>Revenir</button>
+                            <p class="number__enseigne contenu_hide"><span></span> enseignes</p>
+                            <div class="header_btn">
+                                <button class="btn btn_maj contenu_hide" type="button"><span></span>Mettre à jour l'enseigne</button>
+                                <button class="btn-back contenu_hide" type="button" ><span></span>Revenir</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -35,17 +35,22 @@
             <div class="header__gradient-right">
                 <div class="all__site">
                     <form class="site">
-                        <select name="site" id="site">
-                            <option value="">sélectionner site</option>
+                        <select name="site" id="select_site" class="select-pointer_events">
+                            <option value="" class="site_choise">sélectionner site</option>
+                            <option value="Q584">Q584</option>
+                            <option value="Q562">Q584</option>
+                            <option value="Q284">Q584</option>
+                            <option value="Q564">Q584</option>
+                            <option value="Q594">Q584</option>
                             {# {% for customer in customer %}
                                     <option value="{{customer}}">{{customer}}</option>
                                 {% endfor %} #}
                         </select>
-                        <p class="number__site">Lemans</p>
+                        <p class="number__site contenu_hide">Lemans</p>
 
                     </form>
                     <div class="update">
-                        <button class="update__site disabled">Mettre à jour le site</button>
+                        <button class="update__site contenu_hide" type="button">Mettre à jour le site</button>
                     </div>
                 </div>
             </div>
@@ -81,6 +86,9 @@
                     <span class="user__rule">Admin</span>
                 </div>
 
+            </div>
+            <div class="logout">
+                <a href="path=/logout/">logout</a>
             </div>
         </div>
     </div>

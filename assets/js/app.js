@@ -1,15 +1,11 @@
 /** SCSS **/
 import '../css/general/reset.scss';
 import '../css/app.scss';
-// import "@fortawesome/fontawesome-free/css/all.css";
 
 // css
 require('../css/custom-style.css');
 require('../css/class/managers/clockManager.css');
 require('../css/debug.css');
-
-// import JS
-// import '@fortawesome/fontawesome-free/js/all.js';
 
 
 import {ClockManager} from "./class/Managers/ClockManager/ClockManager";
@@ -23,24 +19,24 @@ import {Form} from "./class/Form/Form";
 import ToolBox from "./class/Tools/ToolBox";
 import popupConfirmation from "./popup/popup_confirmation";
 
+let headerselect = new headerSelect();
+
+import headerSelect from "./header/headerSelect";
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
-
 
 //jqueryValidat
 require('../js/jqueryValidate/jquery.validate.js');
 require('../js/tags.js');
 
-
-
 $(function() {
+    headerselect.enable();
 
     let popupconfirmation = new popupConfirmation();
     popupconfirmation.enable();
 
 });
-
 
 
 // Tabs Menu

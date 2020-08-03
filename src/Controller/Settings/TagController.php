@@ -99,7 +99,7 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($form->getData());
+//             dd($form->getData());
             if(
                     ! $tagsHandler->isAllSitesSelectedArePossessedByUser( $tagsList->getSites(), $currentUser, $currentCustomer )
                 ||  ! $tagsHandler->isMinimumSitesSelectionIsReached( $tagsList )
@@ -115,6 +115,7 @@ class TagController extends AbstractController
 
                 $customerManager->persist( $tag );
             }
+
             $customerManager->flush();
 
             return $this->redirectToRoute('tags_index');

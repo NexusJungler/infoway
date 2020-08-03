@@ -67,7 +67,7 @@ class UploadHandlerTool extends SubTool
         this.__uploadMediaType = $('.main-media').data('media_displayed');
         if(this.__uploadMediaType === null || typeof this.__uploadMediaType === 'undefined' || this.__uploadMediaType === 'undefined')
         {
-            console.error("Error : cannot found data-media_displayed on element : .main-media !"); //debugger
+            // console.error("Error : cannot found data-media_displayed on element : .main-media !"); //debugger
         }
 
         let type = this.__uploadMediaType;
