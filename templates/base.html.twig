@@ -26,92 +26,11 @@
             <div style="display: none" id="message" data-message="{{ message }}"></div>
         {% endif %}
 
-        {% block header %}
-            <header class="header">
-                <div class="logo__infoway">
-                    <img src="{{ asset('build/images/infoway.png') }}" alt="logo infoway">
-                </div>
-                <div class="menu-wrap">
-                    <input type="checkbox" class="toggler" />
-                    <div class="hamburger"><div></div></div>
-                </div>
-                <div id="header__block">
+        <header class="header" >
+            {% embed 'header.html.twig' %}
 
-                    <div class="header__block--left">
-                        <div class="header__gradient-left">
-                            <div class="logo__enseigne">
-                                {# <img src="{{ asset('/build/images/Logo_AREA_blanc.png') }}" alt="logo quick"> #}
-                            <div class="all__enseigne">
-                                <form class="enseigne">
-                                    <select name="enseigne" id="enseigne">
-                                        <option value="">Sélectionner l'enseigne</option>
-                                        {% for name in app.session.get('customerNames') %}
-                                            <option value="{{name}}" {% if (app.session.get('current_customer') is not null ) and (name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{name}}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <p class="number__enseigne"><span >25</span> enseignes</p>
-                                    <div>
-                                        <button class="btn-back"><span></span>Revenir</button>   
-                                    </div>
-                                    
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="header__gradient-right">
-                        <div class="all__site">
-                            <form class="site">
-                                <select name="site" id="site">
-                                    <option value="">sélectionner site</option>
-                                    {# {% for customer in customer %}
-                                            <option value="{{customer}}">{{customer}}</option>
-                                        {% endfor %} #}
-                                </select>
-                                <p class="number__site">Lemans</p>
-                                
-                            </form>
-                            <div class="update">
-                                <button class="update__site disabled">Mettre à jour le site</button>
-                            </div>
-                        </div> 
-                    </div>
-
-                </div>
-
-                <div class="header__block--right">
-                    <div class="clock__all">
-                        <div class="clock-container" {% if location is defined %} data-city="{{ location.city }}" data-timezone="{{ location.timezone }}" data-date_format="{{ location.date_format }}" data-clock_format="{{ location.clock_format }}" {% endif %}>
-                        </div>
-
-                        <i class="arrow-down" id="showTimeZoneList"></i>
-
-                        <div id="timeZoneList-container" style="display: none">
-                            <ul id="timeZoneList">
-                                <li class="timezone" data-language="jpn" data-timezone="Asia/Tokyo" data-date_format="Y-m-d" data-clock_format="24">Tokyo</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="all__user--account">
-                        <div class="user__logo">
-                            <span class="username__first--letter">N</span>
-                        </div>
-                        <div class="user">
-                            {# <span class="user__name">
-                                {% if user.isLoggedIn %}
-                                    {{ user.name }}!
-                                {% endif %}
-                            </span> #}
-                            <span class="user__name">Nadya</span>
-                            <span class="user__rule">Admin</span>
-                        </div>
-
-                    </div>
-                </div>
-            </header>
-        {% endblock %}
+            {% endembed %}
+        </header>
 
         {% block container %}
             <div id="container" class="menu" >

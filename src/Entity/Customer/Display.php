@@ -19,32 +19,34 @@ class Display
     private $id;
 
     /**
-     * Many User have Many Phonenumbers.
-     * @ORM\ManyToMany(targetEntity="ScreenPlaylist", cascade={"persist"})
-     * @ORM\JoinTable(name="displays_screen_playlists",
-     *      joinColumns={@ORM\JoinColumn(name="display_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="playlist_id", referencedColumnName="id", unique=true)}
-     *      )
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="BroadcastSlot", mappedBy="display")
      */
-    private $playlists;
+    private $broadcastSlots;
 
     /**
-     * One Product has One Shipment.
-     * @ORM\OneToOne(targetEntity="TimeSlot", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="timslot_id", referencedColumnName="id")
+     * @ORM\Column(type="date")
      */
-    private $timeSlot;
+    private $startAt;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $endAt;
+
 
     public function __construct()
     {
         $this->playlists = new ArrayCollection();
+        $this->broadcastSlots = new ArrayCollection();
+        $this->startAt = new \DateTime('NOW');
+        $this->endAt = new \DateTime('NOW');
     }
 
     public function __clone()
     {
-       $this->id = null ;
-       $this->timeSlot = clone $this->timeSlot ;
-       $this->playlists = $this->playlists->map( fn( ScreenPlaylist $screenPlaylist ) => clone $screenPlaylist ) ;
+        $this->id = null ;
+        $this->broadcastSlots = $this->broadcastSlots->map( fn( BroadcastSlot $broadcastSlot ) => clone $broadcastSlot ) ;
     }
 
     public function getId(): ?int
@@ -53,41 +55,60 @@ class Display
     }
 
     /**
-     * @return Collection|ScreenPlaylist[]
+     * @return Collection|BroadcastSlot[]
      */
-    public function getPlaylists(): Collection
+    public function getBroadcastSlots(): Collection
     {
-        return $this->playlists;
+        return $this->broadcastSlots;
     }
 
-    public function addPlaylist(ScreenPlaylist $playlist): self
+    public function addBroadcastSlot(BroadcastSlot $broadcastSlot): self
     {
-        if (!$this->playlists->contains($playlist)) {
-            $this->playlists[] = $playlist;
+        if (!$this->broadcastSlots->contains($broadcastSlot)) {
+            $this->broadcastSlots[] = $broadcastSlot;
+            $broadcastSlot->setDisplay($this);
         }
 
         return $this;
     }
 
-    public function removePlaylist(ScreenPlaylist $playlist): self
+    public function removeBroadcastSlot(BroadcastSlot $broadcastSlot): self
     {
-        if ($this->playlists->contains($playlist)) {
-            $this->playlists->removeElement($playlist);
+        if ($this->broadcastSlots->contains($broadcastSlot)) {
+            $this->broadcastSlots->removeElement($broadcastSlot);
+            // set the owning side to null (unless already changed)
+            if ($broadcastSlot->getDisplay() === $this) {
+                $broadcastSlot->setDisplay(null);
+            }
         }
 
         return $this;
     }
 
-    public function getTimeSlot(): ?TimeSlot
+    public function getStartAt(): ?\DateTimeInterface
     {
-        return $this->timeSlot;
+        return $this->startAt;
     }
 
-    public function setTimeSlot(?TimeSlot $timeSlot): self
+    public function setStartAt(\DateTimeInterface $startAt): self
     {
-        $this->timeSlot = $timeSlot;
+        $this->startAt = $startAt;
 
         return $this;
     }
+
+    public function getEndAt(): ?\DateTimeInterface
+    {
+        return $this->endAt;
+    }
+
+    public function setEndAt(\DateTimeInterface $endAt): self
+    {
+        $this->endAt = $endAt;
+
+        return $this;
+    }
+
+
 
 }
