@@ -16,6 +16,12 @@ class UploadVideoSynchroSubTool extends SubTool {
         this.__$location = $('.popup_upload');
         this.__synchroHtml = "";
         this.__encodedMediaInfos = [];
+        this.__$synchroContainer = $('.synchro_container');
+        this.__errors = {
+            empty_field: "Ce champ est obligatoire",
+            duplicate_name: "Ce nom est déjà utilisé",
+            duplicate_position : "Cette position est déjà utilisée"
+        }
     }
 
     /**
@@ -139,7 +145,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                 <div class="synchro_name_container container">
 
                     <div class="label_container"><label for="synchro_name">Nom</label></div>
-                    <div class="input_container"><input type="text" id="synchro_name" name="synchro_edit_form[synchro_name]" placeholder="Nom de la synchro" class="synchro_name"></div>
+                    <div class="input_container"><input type="text" id="synchro_name" name="synchro_edit_form[synchro_name]" placeholder="Nom de la synchro" class="synchro_name form_input"></div>
                     <div class="synchro_action_button_container"><button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button></div>
         
                 </div>
@@ -152,7 +158,7 @@ class UploadVideoSynchroSubTool extends SubTool {
 
             html += `
             
-                <div class="synchro_element">
+                <div class="synchro_element" id="synchro_element_${ index }">
 
                     <div class="synchro_element_preview_container">
                         <video>
@@ -162,12 +168,12 @@ class UploadVideoSynchroSubTool extends SubTool {
     
                     <div class="synchro_element_name_container">
                         <span class="error hidden"></span>
-                        <input type="text" class="synchro_element_name" title="nom du média" name="synchro_edit_form[synchros_elements][${index}][name]" value="${ mediaInfos.name }">
+                        <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchros_elements][${index}][name]" value="${ mediaInfos.name }">
                     </div>
     
                     <div class="synchro_element_position_container">
                         <span class="error hidden"></span>
-                        <input type="text" class="synchro_element_position" title="position" name="synchro_edit_form[synchros_elements][${index}][position]" value="${ index +1 }">
+                        <input type="text" class="synchro_element_position form_input" title="position" name="synchro_edit_form[synchros_elements][${index}][position]" value="${ index +1 }">
                     </div>
     
                 </div>
@@ -294,10 +300,72 @@ class UploadVideoSynchroSubTool extends SubTool {
     synchroEditFormIsValid()
     {
 
-        let form = $('#synchro_edit_form');
+        let form = this.__$location.find('#synchro_edit_form');
 
-        // @TODO: vérifier validité du formulaire (span.error, ...)
+        form.find(`.error`).text('').addClass('hidden');
+        form.find(`.form_input`).removeClass('invalid');
 
+        if(form.find('.form_input:empty').length > 0)
+        {
+            form.find('.form_input:empty').each( (index, element) => {
+
+                $(element).parent().find('.error').text(this.__errors.empty_field).removeClass( 'hidden' );
+                $(element).addClass('invalid');
+
+            } )
+
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+    onTypingInInputCheckDuplicateValue(active)
+    {
+        if(active)
+        {
+            this.__$synchroContainer.on('input.onTypingInInputCheckDuplicateValue', '.form_input', e => {
+
+                this.__$synchroContainer.find(`.error`).text('').addClass('hidden');
+                this.__$synchroContainer.find(`.form_input`).removeClass('invalid');
+
+                let input = $(e.currentTarget);
+                let inputValue = input.val();
+                input.attr('value', inputValue);
+
+                let duplicateFields = this.__$synchroContainer.find(`.form_input[value='${ inputValue }']`);
+
+                if(duplicateFields.length > 1)
+                {
+                    duplicateFields.each( (index, element) => {
+
+                        if($(element).hasClass('synchro_element_position'))
+                            $(element).parent().find('.error').text(this.__errors.duplicate_position).removeClass( 'hidden' );
+
+                        else
+                            $(element).parent().find('.error').text(this.__errors.duplicate_name).removeClass( 'hidden' );
+
+                        $(element).addClass('invalid');
+
+                    } )
+                }
+
+                if(this.__$synchroContainer.find(`.form_input.invalid`).length === 0)
+                    this.__$location.find('.save_synchro_edits_button').removeAttr('disabled');
+
+                else
+                    this.__$location.find('.save_synchro_edits_button').attr('disabled', true);
+
+            })
+        }
+        else
+        {
+            this.__$synchroContainer.off('input.onTypingInInputCheckDuplicateValue', '.form_input');
+        }
+
+        return this;
     }
 
     onClickOnSynchroSaveButton(active)
@@ -329,6 +397,8 @@ class UploadVideoSynchroSubTool extends SubTool {
                         },
                         error: (response) => {
 
+                            console.log(response); debugger
+
                             let error = response.responseJSON;
 
                             let subject = error.subject;
@@ -336,34 +406,19 @@ class UploadVideoSynchroSubTool extends SubTool {
                             switch (error.text)
                             {
 
-                                case "515 Duplicate File":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "516 Invalid Filename":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "517 Empty Filename":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "518 Too short Filename":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "519.2 Invalid diffusion end date":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
-                                    break;
-
                                 case "520 Position already used":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
+                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_position_container .error`).text(this.__errors.duplicate_position).removeClass( 'hidden' );
+                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_position`).addClass('invalid');
+                                    break;
+
+                                case "521 Duplicate Synchro Name":
+                                    this.__$synchroContainer.find(`.synchro_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
+                                    this.__$synchroContainer.find(`.synchro_name`).addClass('invalid');
+                                    break;
+
+                                case "522 Duplicate Synchro Element Name":
+                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
+                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_name`).addClass('invalid');
                                     break;
 
                                 default:
@@ -393,6 +448,7 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         super.enable();
         this.onClickOnSynchroActionButton(true)
+            .onTypingInInputCheckDuplicateValue(true)
         ;
     }
 
@@ -400,6 +456,7 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         super.disable();
         this.onClickOnSynchroActionButton(false)
+            .onTypingInInputCheckDuplicateValue(false)
         ;
     }
 

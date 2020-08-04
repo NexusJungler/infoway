@@ -11,6 +11,7 @@ import PopupHandler from "./PopupHandler/PopupHandler";
 import AnimateTool from "./AnimationTool/AnimateTool";
 import MediathequeActionButtonHandler from "./MediathequeActionButtonHandler/MediathequeActionButtonHandler";
 import MediaReplacementPopupHandler from "./PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler";
+import DraggableTool from "./DraggableTool/DraggableTool";
 
 class ToolBox
 {
@@ -40,6 +41,7 @@ class ToolBox
             new MediathequeActionButtonHandler(),
             new AnimateTool(),
             new MediaReplacementPopupHandler(),
+            new DraggableTool(),
         ];
     }
 

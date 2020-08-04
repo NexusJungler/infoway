@@ -698,7 +698,7 @@ class UploadHandlerTool extends SubTool
                 html += `
                 
                 <div class="actions_buttons_container">
-                    <button class="btn" type="button"><i class="fas fa-arrow-left"></i>Remplacer un média</button>
+                    <button class="btn" type="button">Remplacer un média</button>
                 </div>
                 
                 <div class="actions_buttons_container">

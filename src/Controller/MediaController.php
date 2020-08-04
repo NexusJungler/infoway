@@ -472,6 +472,12 @@ class MediaController extends AbstractController
 
         dd($request->request);
 
+        // 520 Position already used
+        //
+        // 521 Duplicate Synchro Name
+        //
+        // 522 Duplicate Synchro Element Name
+
     }
 
 
