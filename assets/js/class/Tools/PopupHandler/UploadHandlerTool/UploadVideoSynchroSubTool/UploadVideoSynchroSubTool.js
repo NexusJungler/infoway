@@ -67,9 +67,9 @@ class UploadVideoSynchroSubTool extends SubTool {
             this.__encodedMediaInfos.push( encodedMediaInfos );
         }
 
-        console.table(this.__encodedMediaInfos);
+        //console.table(this.__encodedMediaInfos);
 
-        debugger
+        //debugger
 
         return this;
     }
@@ -218,7 +218,9 @@ class UploadVideoSynchroSubTool extends SubTool {
         
         `;
 
-        return html;
+        this.__$synchroContainer.html(html);
+
+        return this;
 
     }
 
@@ -242,12 +244,6 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                     } )
 
-                    // show pause icon
-                    icon.removeClass('fa-play').addClass('fa-pause');
-
-                    // add backward button (restart videos)
-                    if(this.__$location.find('.restart_video_btn').length === 0)
-                        $('<button type="button" class="synchro_action_button restart_video_btn"><i class="fas fa-step-backward synchro_action_button_icon"></i></button>').appendTo( icon.parents('.synchro_action_button_container') )
                 }
 
                 else if(icon.hasClass('fa-pause'))
@@ -259,8 +255,6 @@ class UploadVideoSynchroSubTool extends SubTool {
                         video.pause();
 
                     } )
-
-                    this.__$location.find('i.fa-pause').removeClass('fa-pause').addClass('fa-play');
 
                 }
 
@@ -274,10 +268,6 @@ class UploadVideoSynchroSubTool extends SubTool {
                         video.currentTime = 0;
 
                     } )
-
-                    this.__$location.find('.restart_video_btn').remove();
-
-                    this.__$location.find('i.fa-pause').removeClass('fa-pause').addClass('fa-play');
 
                 }
 
@@ -294,6 +284,57 @@ class UploadVideoSynchroSubTool extends SubTool {
         }
 
         return this;
+
+    }
+
+    onClickOnDraggableButton(active)
+    {
+        if(active)
+        {
+            this.__$synchroContainer.on('click.onClickOnDraggableButton', '.drag_video_btn', e => {
+
+                if($(e.currentTarget).hasClass('active'))
+                {
+                    this.__$synchroContainer.find('.synchro_element').removeClass('draggable');
+                    $(e.currentTarget).removeClass('active');
+                    this.__$synchroContainer.find('.form_input').removeAttr('readonly');
+                    this.activeDraggeableTool(false);
+                }
+                else
+                {
+                    this.__$synchroContainer.find('.synchro_element').addClass('draggable');
+                    $(e.currentTarget).addClass('active');
+                    this.__$synchroContainer.find('.form_input').attr('readonly', true);
+                    this.activeDraggeableTool(true);
+                }
+
+            })
+        }
+        else
+        {
+            this.__$synchroContainer.off('click.onClickOnDraggableButton', '.drag_video_btn');
+        }
+
+        return this;
+    }
+
+    activeDraggeableTool(active)
+    {
+
+        let draggableTool =  this.getToolBox().getTool('DraggableTool');
+
+        if(!active)
+        {
+            draggableTool.disable();
+        }
+        else
+        {
+            draggableTool.setDraggableElement( this.__$location.find('.media_characterisation_resume_list .synchro_element') )
+                         .enable()
+                         .handleDraggableEvent();
+
+
+        }
 
     }
 
@@ -447,8 +488,10 @@ class UploadVideoSynchroSubTool extends SubTool {
     enable()
     {
         super.enable();
+
         this.onClickOnSynchroActionButton(true)
             .onTypingInInputCheckDuplicateValue(true)
+            .onClickOnDraggableButton(true)
         ;
     }
 
@@ -457,6 +500,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         super.disable();
         this.onClickOnSynchroActionButton(false)
             .onTypingInInputCheckDuplicateValue(false)
+            .onClickOnDraggableButton(false)
         ;
     }
 

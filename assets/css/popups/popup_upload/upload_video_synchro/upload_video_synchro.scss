@@ -74,6 +74,10 @@
             i{
               color: #FFF;
             }
+            
+            &:disabled{
+              cursor: not-allowed;
+            }
 
           }
 
@@ -89,7 +93,7 @@
       padding: 2% 5% 0 5%;
 
       &.synchro_elements_container{
-
+        position: relative;
         display: grid;
         overflow-x: auto;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -100,6 +104,10 @@
           display: flex;
           flex-direction: column;
           align-items: center;
+
+          &.draggable{
+            cursor: move;
+          }
 
           div{
             margin-bottom: 2%;

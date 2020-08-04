@@ -112,7 +112,7 @@ class UploadHandlerTool extends SubTool
 
         this.getAllAvailableAssociationItems();
 
-        //this.showStep(3)
+        this.showStep(3)
 
     }
 
@@ -968,7 +968,7 @@ class UploadHandlerTool extends SubTool
 
                                                                     this.__currentUploadManager.getAllEncodedMediasInfos().forEach( encodedMediaInfos => {
 
-                                                                        console.table(encodedMediaInfos); debugger
+                                                                        //console.table(encodedMediaInfos); //debugger
 
                                                                         this.showMediaInfoForEdit(encodedMediaInfos, encodedMediaInfos.index);
 
@@ -1546,8 +1546,6 @@ class UploadHandlerTool extends SubTool
     showMediaEditingResume()
     {
 
-        let html = "";
-
         if(this.__uploadMediaType === 'synchros')
         {
             html = this.__currentUploadManager.showSynchros();
@@ -1555,6 +1553,8 @@ class UploadHandlerTool extends SubTool
 
         else
         {
+
+            let html = "";
 
             this.__$location.find('.file_to_characterisation_list tr').each( (index, element) => {
 
@@ -1598,11 +1598,9 @@ class UploadHandlerTool extends SubTool
 
             } )
 
+            this.__$location.find('.media_characterisation_resume_list').html( html );
+
         }
-
-        //console.log(html);
-
-        this.__$location.find('.media_characterisation_resume_list').html( html );
 
         this.showStep(3);
 
