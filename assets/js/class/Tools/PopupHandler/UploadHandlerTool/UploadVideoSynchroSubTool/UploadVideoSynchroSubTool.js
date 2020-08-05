@@ -53,6 +53,29 @@ class UploadVideoSynchroSubTool extends SubTool {
         return this;
     }
 
+    updateSynchroElements(elements)
+    {
+
+        elements.forEach( (element, index) => {
+
+            this.__synchro.getSynchroElements().forEach( (synchroElement, index) => {
+
+                if(synchroElement.getName() === element.name)
+                {
+                    synchroElement.setId( element.id )
+                                  .setWidth(element.width)
+                                  .setHeight(element.height)
+                                  .setExtension(element.extension)
+                                  .setCodec( element.codec );
+                }
+
+            } )
+
+
+        } )
+
+    }
+
     /**
      * @param {object} encodedMediaInfos
      * @return {UploadVideoSynchroSubTool}
@@ -295,17 +318,19 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                 if($(e.currentTarget).hasClass('active'))
                 {
-                    this.__$synchroContainer.find('.synchro_element').removeClass('draggable');
+                    //this.__$synchroContainer.find('.synchro_element').removeClass('draggable');
                     $(e.currentTarget).removeClass('active');
                     this.__$synchroContainer.find('.form_input').removeAttr('readonly');
-                    this.activeDraggeableTool(false);
+                    this.__$synchroContainer.find('.synchro_element').removeClass('draggable');
+                    this.onMouseDownOnSynchroElement(false);
                 }
                 else
                 {
-                    this.__$synchroContainer.find('.synchro_element').addClass('draggable');
+                    //this.__$synchroContainer.find('.synchro_element').addClass('draggable');
                     $(e.currentTarget).addClass('active');
+                    this.__$synchroContainer.find('.synchro_element').addClass('draggable');
                     this.__$synchroContainer.find('.form_input').attr('readonly', true);
-                    this.activeDraggeableTool(true);
+                    this.onMouseDownOnSynchroElement(true);
                 }
 
             })
@@ -318,24 +343,75 @@ class UploadVideoSynchroSubTool extends SubTool {
         return this;
     }
 
-    activeDraggeableTool(active)
+    onMouseDownOnSynchroElement(active)
     {
 
-        let draggableTool =  this.getToolBox().getTool('DraggableTool');
-
-        if(!active)
+        if(active)
         {
-            draggableTool.disable();
+
+            this.__$synchroContainer.on('mousedown.onMouseDownOnSynchroElement', '.synchro_element', e => {
+
+                // @see: https://stackoverflow.com/questions/4658300/jquery-sortable-without-jquery-ui
+                // @see: https://jsfiddle.net/606bs750/16/
+
+                if (e.which === 1)
+                {
+
+                    let currentElementOnDrag = $(e.currentTarget);
+                    let parentHeight = currentElementOnDrag.parent().innerHeight();
+                    let left = (isNaN(parseInt(currentElementOnDrag.css('left')))) ? 0 : parseInt(currentElementOnDrag.css('left'));
+                    let originalXPos = currentElementOnDrag.position().left;
+                    let dragMinXPos = 0 - originalXPos;
+                    let dragMaxXPos = parentHeight - originalXPos - currentElementOnDrag.outerHeight();
+                    let dragStartXPos = e.clientX;
+                    let myXPos = originalXPos;
+
+                    $('.synchro_container .synchro_element').each( (index, element) => {
+                        $(element).attr('data-order', (index + 1));
+                    });
+
+                    let prevSynchroElement = currentElementOnDrag.prev('.synchro_element');
+                    let nextSynchroElement = currentElementOnDrag.next('.synchro_element');
+                    let prevSynchroElementXPos = prevSynchroElement.length > 0 ? prevSynchroElement.position().left : '';
+                    let nextSynchroElementXPos = nextSynchroElement.length > 0 ? nextSynchroElement.position().left : '';
+
+                    $(window).on('mousemove', e => {
+
+                        currentElementOnDrag.addClass('ondrag');
+                        let direction = myXPos > currentElementOnDrag.position().left ? 'left' : 'right';
+                        let newLeft = left + (e.clientX - dragStartXPos);
+                        myXPos = currentElementOnDrag.position().left;
+                        currentElementOnDrag.css({
+                            left: left + 'px'
+                        });
+
+                        if (newLeft < dragMinXPos) {
+                            currentElementOnDrag.css({
+                                left: dragMinXPos + 'px'
+                            });
+                        }
+
+                        if (newLeft > dragMaxXPos) {
+                            currentElementOnDrag.css({
+                                left: dragMaxXPos + 'px'
+                            });
+                        }
+
+                    })
+
+                }
+
+            })
+            
         }
         else
         {
-            draggableTool.setDraggableElement( this.__$location.find('.media_characterisation_resume_list .synchro_element') )
-                         .enable()
-                         .handleDraggableEvent();
 
+            this.__$synchroContainer.off('mousedown.onMouseDownOnSynchroElement', '.synchro_element')
 
         }
 
+        return this;
     }
 
     synchroEditFormIsValid()

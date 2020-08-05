@@ -6,6 +6,9 @@ class Media
         this.__className = this.constructor.name;
         this.__id = null;
         this.__name = null;
+        this.__extension = null;
+        this.__height = null;
+        this.__width = null;
         this.__html = null;
     }
 
@@ -35,6 +38,51 @@ class Media
             throw new Error(`${ this.__className }.name must be instance of string, but '${typeof name}' given !`);
 
         this.__name = name;
+
+        return this;
+    }
+
+    getExtension()
+    {
+        return this.__extension;
+    }
+
+    setExtension(extension)
+    {
+        if(typeof extension !== "string")
+            throw new Error(`${ this.__className }.extension must be instance of string, but '${typeof extension}' given !`);
+
+        this.__extension = extension;
+
+        return this;
+    }
+
+    getHeight()
+    {
+        return this.__height;
+    }
+
+    setHeight(height)
+    {
+        if(typeof height !== "number")
+            throw new Error(`${ this.__className }.height must be instance of number, but '${typeof height}' given !`);
+
+        this.__height = height;
+
+        return this;
+    }
+
+    getWidth()
+    {
+        return this.__width;
+    }
+
+    setWidth(width)
+    {
+        if(typeof width !== "number")
+            throw new Error(`${ this.__className }.width must be instance of number, but '${typeof width}' given !`);
+
+        this.__width = width;
 
         return this;
     }

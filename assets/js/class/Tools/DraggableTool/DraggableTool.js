@@ -8,8 +8,7 @@ class DraggableTool extends Tool
         super();
         this.__name = this.constructor.name;
         this.__draggableElement = null;
-
-        this.__pos1 = this.__pos2 = this.__pos3 = this.__pos4 = 0;
+        this.__currentDraggableElement = null;
     }
 
     setDraggableElement(draggableElement)
@@ -18,6 +17,20 @@ class DraggableTool extends Tool
         //console.log(draggableElement); debugger
 
         this.__draggableElement = draggableElement;
+
+        if( (typeof this.__draggableElement.length !== 'undefined') && (this.__draggableElement.length > 1) )
+        {
+            this.__draggableElement.each( (index, element) => {
+
+                $(element).addClass('draggable');
+
+
+            } )
+        }
+        else
+        {
+            this.__draggableElement.addClass('draggable');
+        }
 
         return this;
     }
@@ -33,34 +46,71 @@ class DraggableTool extends Tool
         if(this.isActive())
         {
 
-            this.__draggableElement.each( (index, element) => {
+            if((typeof this.__draggableElement.length !== 'undefined') && (this.__draggableElement.length > 1))
+            {
 
-                $(element).on('mousedown', e => {
+                this.__draggableElement.each( (index, element) => {
 
-                    e.preventDefault();
+                    $(element).on('mousedown.onMouseDownOnDraggableElement', e => {
 
-                    this.__currentDraggableElement = $(element);
+                        e.preventDefault();
 
-                    this.__currentDraggableElement.parent().find('.ondrag').removeClass('ondrag');
+                        this.__currentDraggableElement = $(element);
 
-                    this.__currentDraggableElement.addClass('ondrag');
+                        let parentHeight = this.__currentDraggableElement.parent().innerHeight;
+                        let top = parseInt(this.__currentDraggableElement.css('top'));
+                        let original_ypos = this.__currentDraggableElement.position().top; //original ypos
+                        let drag_min_ypos = 0 - original_ypos;
+                        let drag_max_ypos = parentHeight - original_ypos - this.__currentDraggableElement.outerHeight();
+                        let drag_start_ypos = e.clientY;
+                        let my_ypos = original_ypos;
 
-                    $(element).on('mousemove', this.onDraggableElementMove.bind(this));
-                    $(element).on('mouseup', this.onDraggableElementMoveStop.bind(this));
+                        this.__draggableElement.each( (index, element) => {
+                            $(element).attr('data-order', (index + 1));
+                        });
 
-                });
+                        var prev_button = this.__currentDraggableElement.prev('.button');
+                        var next_button = this.__currentDraggableElement.next('.button');
+                        var prev_button_ypos = prev_button.length > 0 ? prev_button.position().top : '';
+                        var next_button_ypos = next_button.length > 0 ? next_button.position().top : '';
 
-                $(element).parent().on('click.', e => {
+                        /*this.__currentDraggableElement.parent().find('.ondrag').removeClass('ondrag');
 
-                    $(e.currentTarget).find('.ondrag').removeClass('ondrag');
+                        this.__currentDraggableElement.addClass('ondrag');
 
-                })
+                        $(element).on('mousemove.onDraggableElementMove', this.onDraggableElementMove.bind(this));
+                        $(element).on('mouseup.onDraggableElementMoveStop', this.onDraggableElementMoveStop.bind(this));*/
 
-            } )
+                    });
+
+                    $(element).parent().on('click.onClickOnParentDisableDraggableElement', e => {
+
+                        $(e.currentTarget).find('.ondrag').removeClass('ondrag');
+
+                    })
+
+                } )
+
+            }
+            else
+            {
+
+            }
+
         }
         else
         {
-            this.__draggableElement.off('mousedown.onMouseDownOnDraggableElement');
+            if(Array.isArray(this.__draggableElement))
+            {
+                this.__draggableElement.each( (index, element) => {
+
+                    $(element).off('mousedown.onMouseDownOnDraggableElement');
+
+                } )
+            }
+
+            else
+                this.__draggableElement.off('mousedown.onMouseDownOnDraggableElement');
         }
 
         return this;
@@ -80,8 +130,8 @@ class DraggableTool extends Tool
 
     onDraggableElementMoveStop(e)
     {
-        this.__currentDraggableElement.off('mousemove');
-        this.__currentDraggableElement.off('mouseup');
+        this.__currentDraggableElement.off('mousemove.onDraggableElementMove');
+        this.__currentDraggableElement.off('mouseup.onDraggableElementMoveStop');
     }
 
     removeEventListener()
@@ -90,9 +140,13 @@ class DraggableTool extends Tool
         this.__draggableElement.each( (index, draggableElement) => {
 
             //console.log(draggableElement); debugger
-            $(draggableElement).off('mousedown');
-            $(draggableElement).off('mousemove');
-            $(draggableElement).off('mouseup');
+            $(draggableElement).removeClass('draggable');
+
+            $(draggableElement).parent().off('click.onClickOnParentDisableDraggableElement');
+
+            $(draggableElement).off('mousedown.onMouseDownOnDraggableElement');
+            $(draggableElement).off('mousemove.onDraggableElementMove');
+            $(draggableElement).off('mouseup.onDraggableElementMoveStop');
 
         } )
 

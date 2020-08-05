@@ -110,6 +110,8 @@ class UploadHandlerTool extends SubTool
 
         this.__availableAssociationItems = [];
 
+        this.__encodedMediaInfos = [];
+
         this.getAllAvailableAssociationItems();
 
         this.showStep(3)
@@ -950,6 +952,10 @@ class UploadHandlerTool extends SubTool
 
                                                             currentUpload.removeClass("waiting_encode");
 
+                                                            videoEncodingResult.index = fileToUpload.index;
+
+                                                            this.__encodedMediaInfos.push( videoEncodingResult );
+
                                                             if( this.__$location.find('.file_to_characterisation_list tr.waiting_encode').length === 0 )
                                                             {
 
@@ -963,10 +969,11 @@ class UploadHandlerTool extends SubTool
 
                                                                     console.log("get all"); //debugger
 
-                                                                    videoEncodingResult.index = fileToUpload.index;
-                                                                    this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
+                                                                    //this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
 
-                                                                    this.__currentUploadManager.getAllEncodedMediasInfos().forEach( encodedMediaInfos => {
+                                                                    this.__currentUploadManager.updateSynchroElements( this.__encodedMediaInfos );
+
+                                                                    this.__encodedMediaInfos.forEach( encodedMediaInfos => {
 
                                                                         //console.table(encodedMediaInfos); //debugger
 
@@ -979,8 +986,11 @@ class UploadHandlerTool extends SubTool
                                                             else
                                                             {
                                                                 console.log("wait"); //debugger
-                                                                videoEncodingResult.index = fileToUpload.index;
-                                                                this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
+
+                                                                this.__encodedMediaInfos.push( videoEncodingResult );
+
+                                                                //this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
+
                                                                 uploadStateIndicator.html("En attente du traitement des autres videos...");
                                                             }
 
