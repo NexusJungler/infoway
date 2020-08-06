@@ -114,8 +114,13 @@ class UploadHandlerTool extends SubTool
 
         this.getAllAvailableAssociationItems();
 
-        this.showStep(3)
+        //this.showStep(3)
 
+    }
+
+    getLocation()
+    {
+        return this.__$location;
     }
 
     activeUploadSubTool()
@@ -1558,7 +1563,7 @@ class UploadHandlerTool extends SubTool
 
         if(this.__uploadMediaType === 'synchros')
         {
-            html = this.__currentUploadManager.showSynchros();
+            this.__currentUploadManager.showSynchros();
         }
 
         else
