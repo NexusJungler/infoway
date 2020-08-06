@@ -4,7 +4,7 @@
   max-height: 100%;
 
   .form_input[value=''], .form_input.invalid{
-    border: 1px solid red;
+    border: 1px solid red !important;
   }
 
   .top{
@@ -79,6 +79,10 @@
               cursor: not-allowed;
             }
 
+            &.active{
+              border: 3px solid #00B8F5;
+            }
+
           }
 
         }
@@ -145,12 +149,15 @@
             }
 
             &.synchro_element_position_container{
-              width: 39px;
-              height: 24px;
+              width: inherit;
+              height: 40px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
 
               .synchro_element_position{
-                width: inherit;
-                height: inherit;
+                width: 39px;
+                height: 24px;
                 color: #000;
                 font-size: 14px;
                 background: #FFFFFF 0% 0% no-repeat padding-box;
