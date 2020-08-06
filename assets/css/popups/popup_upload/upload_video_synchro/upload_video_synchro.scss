@@ -109,6 +109,7 @@
 
           &.draggable{
             cursor: move;
+            z-index: 99;
           }
 
           div{

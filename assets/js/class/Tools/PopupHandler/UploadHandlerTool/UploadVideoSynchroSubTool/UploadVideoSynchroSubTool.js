@@ -357,12 +357,14 @@ class UploadVideoSynchroSubTool extends SubTool {
                 if (e.which === 1)
                 {
 
+                    e.preventDefault();
+
                     let currentElementOnDrag = $(e.currentTarget);
-                    let parentHeight = currentElementOnDrag.parent().innerHeight();
+                    let parentWidth = currentElementOnDrag.parent().innerWidth();
                     let left = (isNaN(parseInt(currentElementOnDrag.css('left')))) ? 0 : parseInt(currentElementOnDrag.css('left'));
                     let originalXPos = currentElementOnDrag.position().left;
                     let dragMinXPos = 0 - originalXPos;
-                    let dragMaxXPos = parentHeight - originalXPos - currentElementOnDrag.outerHeight();
+                    let dragMaxXPos = parentWidth - originalXPos - currentElementOnDrag.outerWidth();
                     let dragStartXPos = e.clientX;
                     let myXPos = originalXPos;
 
@@ -379,13 +381,13 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                         currentElementOnDrag.addClass('ondrag');
                         let direction = myXPos > currentElementOnDrag.position().left ? 'left' : 'right';
-                        let newLeft = left + (e.clientX - dragStartXPos);
+                        let newLeft = 0 + (e.clientX - dragStartXPos);
                         myXPos = currentElementOnDrag.position().left;
                         currentElementOnDrag.css({
-                            left: left + 'px'
+                            left: newLeft + 'px'
                         });
 
-                        if (newLeft < dragMinXPos) {
+                        /*if (newLeft < dragMinXPos) {
                             currentElementOnDrag.css({
                                 left: dragMinXPos + 'px'
                             });
@@ -395,14 +397,83 @@ class UploadVideoSynchroSubTool extends SubTool {
                             currentElementOnDrag.css({
                                 left: dragMaxXPos + 'px'
                             });
+                        }*/
+
+                        console.log("my : " + myXPos);
+                        console.log("next : " + nextSynchroElementXPos);
+
+                        let tempOrder = (direction === 'right') ? nextSynchroElement.data('order') : prevSynchroElement.data('order');
+                        let tempPosition = (direction === 'right') ? nextSynchroElement.find('.synchro_element_position_container .synchro_element_position').val() : prevSynchroElement.find('.synchro_element_position_container .synchro_element_position').val();
+
+                        if(direction === 'right' && nextSynchroElementXPos !== '')
+                        {
+                            if(myXPos >= nextSynchroElementXPos)
+                            {
+                                nextSynchroElement.css({ left: parseInt(nextSynchroElement.css('left') - nextSynchroElement.outerWidth() + 'px') });
+
+                                nextSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'))
+                                                  .find('.synchro_element_position_container .synchro_element_position').attr('value', currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
+
+
+
+                                currentElementOnDrag.attr('data-order', tempOrder)
+                                                    .find('.synchro_element_position_container .synchro_element_position').attr('value', tempPosition);
+
+
+                                prevSynchroElement = nextSynchroElement;
+                                nextSynchroElement = nextSynchroElement.nextAll('.synchor_element:not(.ondrag)');
+                            }
+                        }
+                        else if(direction === 'left' && prevSynchroElementXPos !== '')
+                        {
+                            if(myXPos <= prevSynchroElementXPos)
+                            {
+                                prevSynchroElement.css({ left: parseInt(prevSynchroElement.css('left') - prevSynchroElement.outerWidth() + 'px') });
+                                prevSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'));
+
+                                prevSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'))
+                                    .find('.synchro_element_position_container .synchro_element_position').attr('value', currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
+
+                                currentElementOnDrag.attr('data-order', tempOrder)
+                                    .find('.synchro_element_position_container .synchro_element_position').attr('value', tempPosition);
+
+                                nextSynchroElement = prevSynchroElement;
+                                prevSynchroElement = prevSynchroElement.nextAll('.synchor_element:not(.ondrag)');
+                            }
                         }
 
+                        //debugger
+
+                        prevSynchroElementXPos = prevSynchroElement.length > 0 ? prevSynchroElement.position().left : '';
+                        nextSynchroElementXPos = nextSynchroElement.length > 0 ? nextSynchroElement.position().left : '';
+
+                    })
+
+                    $(window).on('mouseup', e => {
+                        if(e.which===1) {
+                            $('.synchro_container .synchro_element').removeClass('ondrag');
+                            $(window).off('mouseup mousemove');
+                            //Reorder and reposition all
+
+                            let sorted = $('.synchro_container .synchro_element').sort( (a, b) => {
+
+                                let prevOrder = parseInt( $(a).attr('data-order'));
+                                let nextOrder = parseInt( $(b).attr('data-order'));
+                                return (prevOrder < nextOrder) ? -1 : (prevOrder > nextOrder) ? 1 : 0;
+
+                            })
+
+                            this.__$synchroContainer.find('.synchro_elements_container ').html(sorted);
+
+                            $('.synchro_container .synchro_element').css('left','0')
+                                                                    .removeAttr('data-order'); //reset
+                        }
                     })
 
                 }
 
             })
-            
+
         }
         else
         {
