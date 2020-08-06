@@ -20,7 +20,8 @@ class UploadVideoSynchroSubTool extends SubTool {
         this.__errors = {
             empty_field: "Ce champ est obligatoire",
             duplicate_name: "Ce nom est déjà utilisé",
-            duplicate_position : "Cette position est déjà utilisée"
+            duplicate_position : "Cette position est déjà utilisée",
+            exced_position: "Cette position dépasse le nombre d'écran disponible"
         }
     }
 
@@ -407,13 +408,14 @@ class UploadVideoSynchroSubTool extends SubTool {
                         {
                             if(myXPos >= nextSynchroElementXPos)
                             {
-                                nextSynchroElement.css({ left: parseInt(nextSynchroElement.css('left') - nextSynchroElement.outerWidth() + 'px') });
+
+                                nextSynchroElement.css({ left: ( parseInt(nextSynchroElement.css('left')) - nextSynchroElement.outerWidth(true) ) + 'px' });
 
                                 nextSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'))
-                                                  .find('.synchro_element_position_container .synchro_element_position').attr('value', currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
+                                                  .find('.synchro_element_position_container .synchro_element_position').val(currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
 
                                 currentElementOnDrag.attr('data-order', tempOrder)
-                                                    .find('.synchro_element_position_container .synchro_element_position').attr('value', tempPosition);
+                                                    .find('.synchro_element_position_container .synchro_element_position').val(tempPosition);
 
 
                                 prevSynchroElement = nextSynchroElement;
@@ -425,14 +427,16 @@ class UploadVideoSynchroSubTool extends SubTool {
                         {
                             if(myXPos <= prevSynchroElementXPos)
                             {
-                                prevSynchroElement.css({ left: parseInt(prevSynchroElement.css('left') - prevSynchroElement.outerWidth() + 'px') });
+
+                                prevSynchroElement.css({ left:  ( parseInt(prevSynchroElement.css('left')) + prevSynchroElement.outerWidth(true) ) + 'px' });
+
                                 prevSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'));
 
                                 prevSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'))
-                                    .find('.synchro_element_position_container .synchro_element_position').attr('value', currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
+                                    .find('.synchro_element_position_container .synchro_element_position').val(currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
 
                                 currentElementOnDrag.attr('data-order', tempOrder)
-                                    .find('.synchro_element_position_container .synchro_element_position').attr('value', tempPosition);
+                                    .find('.synchro_element_position_container .synchro_element_position').val(tempPosition);
 
                                 nextSynchroElement = prevSynchroElement;
                                 prevSynchroElement = prevSynchroElement.prevAll('.synchro_element:not(.ondrag)').first();
@@ -449,15 +453,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                             $('.synchro_container .synchro_element').removeClass('ondrag');
                             $(window).off('mouseup mousemove');
 
-                            let sorted = $('.synchro_container .synchro_element').sort( (a, b) => {
-
-                                let prevOrder = parseInt( $(a).attr('data-order'));
-                                let nextOrder = parseInt( $(b).attr('data-order'));
-                                return (prevOrder < nextOrder) ? -1 : (prevOrder > nextOrder) ? 1 : 0;
-
-                            })
-
-                            this.__$synchroContainer.find('.synchro_elements_container ').html(sorted);
+                            this.sortSynchroElementsByAttribute('data-order');
 
                             $('.synchro_container .synchro_element').removeAttr('style')
                                                                     .removeAttr('data-order');
@@ -472,8 +468,71 @@ class UploadVideoSynchroSubTool extends SubTool {
         else
         {
 
-            this.__$synchroContainer.off('mousedown.onMouseDownOnSynchroElement', '.synchro_element')
+            this.__$synchroContainer.off('mousedown.onMouseDownOnSynchroElement', '.synchro_element');
 
+        }
+
+        return this;
+    }
+
+    sortSynchroElementsByAttribute(attribute, fieldSelector)
+    {
+
+        let sorted = $('.synchro_container .synchro_element').sort( (a, b) => {
+
+            let prevOrder, nextOrder = null;
+
+            if(attribute.indexOf('data-') >= 0)
+            {
+
+                if(!(a.hasAttribute(attribute)) || !(b.hasAttribute(attribute)))
+                    throw new Error(`all elements to sort don't have '${ attribute }' attribute !`);
+
+                prevOrder = parseInt( $(a).attr(`${attribute}`));
+                nextOrder = parseInt( $(b).attr(`${attribute}`));
+
+
+            }
+            else
+            {
+                prevOrder = parseInt( $(a).find(fieldSelector).attr(`${attribute}`));
+                nextOrder = parseInt( $(b).find(fieldSelector).attr(`${attribute}`));
+            }
+
+            return (prevOrder < nextOrder) ? -1 : (prevOrder > nextOrder) ? 1 : 0;
+
+        })
+
+        this.__$synchroContainer.find('.synchro_elements_container ').html(sorted);
+
+        return this;
+    }
+
+    onSynchroElementPositionChangeUpdateAllElementsPosition(active)
+    {
+        if(active)
+        {
+            this.__$synchroContainer.on('blur.onSynchroElementPositionChangeUpdateAllElementsPosition', '.synchro_element .synchro_element_position', e => {
+
+                let input = $(e.currentTarget);
+                let inputValue = input.val();
+                input.parent('.synchro_element').attr('data-order', inputValue);
+
+                if(inputValue > this.__$synchroContainer.find('.synchro_element').length)
+                {
+                    input.parent().find('.error').text(this.__errors.exced_position).removeClass( 'hidden' );
+                    input.addClass('invalid');
+                }
+
+                if(!input.hasClass('invalid'))
+                    this.sortSynchroElementsByAttribute('data-order');
+
+            })
+        }
+        else
+        {
+            this.__$synchroContainer.off('blur.onSynchroElementPositionChangeUpdateAllElementsPosition', '.synchro_element .synchro_element_position');
+            //this.__$synchroContainer.off('click', '.synchro_elements_container');
         }
 
         return this;
@@ -496,6 +555,7 @@ class UploadVideoSynchroSubTool extends SubTool {
 
             } )
 
+            this.__$location.find('.save_synchro_edits_button').attr('disabled', true);
 
             return false;
         }
@@ -531,7 +591,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                     {
                         duplicateFields.each( (index, element) => {
 
-                            if($(element).hasClass('synchro_element_position'))
+                            if(input.hasClass('synchro_element_position'))
                                 $(element).parent().find('.error').text(this.__errors.duplicate_position).removeClass( 'hidden' );
 
                             else
@@ -642,6 +702,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         this.onClickOnSynchroActionButton(true)
             .onTypingInInputCheckDuplicateValue(true)
             .onClickOnDraggableButton(true)
+            .onSynchroElementPositionChangeUpdateAllElementsPosition(true)
         ;
     }
 
@@ -651,6 +712,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         this.onClickOnSynchroActionButton(false)
             .onTypingInInputCheckDuplicateValue(false)
             .onClickOnDraggableButton(false)
+            .onSynchroElementPositionChangeUpdateAllElementsPosition(false)
         ;
     }
 

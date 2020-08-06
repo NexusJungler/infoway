@@ -691,7 +691,7 @@ class UploadHandlerTool extends SubTool
                     html += `
                     
                         <div class="actions_buttons_container"> 
-                            <button class="btn save_synchro_edits_button" type="button" disabled>Enregistrer</button> 
+                            <button class="btn save_synchro_edits_button" type="button">Enregistrer</button> 
                         </div>
                     
                     `;
