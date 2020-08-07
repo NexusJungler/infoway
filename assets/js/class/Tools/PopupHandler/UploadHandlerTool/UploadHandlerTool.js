@@ -677,7 +677,7 @@ class UploadHandlerTool extends SubTool
                     </div>
 
                     <div class="actions_buttons_container">
-                        <button class="btn save_edits_button" type="button" disabled>Enregistrer</button>
+                        <button class="btn save_edits_button" type="button" >Enregistrer</button>
                     </div>`;
 
             }
@@ -974,8 +974,6 @@ class UploadHandlerTool extends SubTool
 
                                                                     console.log("get all"); //debugger
 
-                                                                    //this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
-
                                                                     this.__currentUploadManager.updateSynchroElements( this.__encodedMediaInfos );
 
                                                                     this.__encodedMediaInfos.forEach( encodedMediaInfos => {
@@ -993,8 +991,6 @@ class UploadHandlerTool extends SubTool
                                                                 console.log("wait"); //debugger
 
                                                                 this.__encodedMediaInfos.push( videoEncodingResult );
-
-                                                                //this.__currentUploadManager.saveEncodedMediaInfos( videoEncodingResult );
 
                                                                 uploadStateIndicator.html("En attente du traitement des autres videos...");
                                                             }

@@ -9,7 +9,7 @@ class SynchroElement extends Video
         super();
         this.__className = this.constructor.name;
         this.__preview = "";
-        this.__position = 0;
+        this.__position = 1;
         this.__synchros = [];
     }
 
@@ -83,7 +83,7 @@ class SynchroElement extends Video
             this.__synchros.push(synchro);
             synchro.addSynchroElement(this);
         }
-
+        //console.log(this.__synchros); debugger
         return this;
     }
 

@@ -153,7 +153,7 @@ class VideoEncodeManager
 
                     if($videoInfos['mediaType'] === 'sync')
                     {
-                        $this->__videoInfos['synchros'] = $videoInfos['synchros'];
+                        //$this->__videoInfos['synchros'] = $videoInfos['synchros'];
                         $this->__videoInfos['position'] = $videoInfos['position'];
                     }
 

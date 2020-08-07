@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Synchro;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -14,9 +15,24 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class SynchroRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Synchro::class);
+    }
+
+    public function findAllNames()
+    {
+        $names = [];
+
+        foreach ($this->findAll() as $media)
+        {
+            $names[] = $media->getName();
+        }
+
+        return $names;
     }
 
     // /**

@@ -9,7 +9,7 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         super();
         this.__name = this.constructor.name;
-        this.__synchro = (new Synchro()).setName("Synchro1");
+        this.__synchro = new Synchro();
         this.__synchroIsSend = false;
         this.__$location = $('.popup_upload');
         this.__synchroHtml = "";
@@ -19,7 +19,8 @@ class UploadVideoSynchroSubTool extends SubTool {
             empty_field: "Ce champ est obligatoire",
             duplicate_name: "Ce nom est déjà utilisé",
             duplicate_position : "Cette position est déjà utilisée",
-            exced_position: "Cette position dépasse le nombre d'écran disponible"
+            exceed_position: "Cette position dépasse le nombre d'écran disponible",
+            invalid_synchro_element_id: "Une erreur est survenue, veuillez réessayer"
         }
     }
 
@@ -47,7 +48,7 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         this.__synchro.addSynchroElement(synchroElement);
 
-        console.log(this.__synchro); //debugger
+        console.log(this.__synchro); debugger
 
         return this;
     }
@@ -76,53 +77,12 @@ class UploadVideoSynchroSubTool extends SubTool {
     }
 
     /**
-     * @param {object} encodedMediaInfos
-     * @return {UploadVideoSynchroSubTool}
+     *
+     * @param {object} element
      */
-    saveEncodedMediaInfos(encodedMediaInfos)
+    getSynchroElementIndex(element)
     {
-
-        console.table(encodedMediaInfos);
-
-        if(!this.encodedMediaInfosIsAlreadyRegistered(encodedMediaInfos))
-        {
-            this.__encodedMediaInfos.push( encodedMediaInfos );
-        }
-
-        //console.table(this.__encodedMediaInfos);
-
-        //debugger
-
-        return this;
-    }
-
-    /**
-     * @return {array}
-     */
-    getAllEncodedMediasInfos()
-    {
-        return this.__encodedMediaInfos;
-    }
-
-    encodedMediaInfosIsAlreadyRegistered(encodedMediaInfos)
-    {
-        return this.getEncodedMediaInfosIndex(encodedMediaInfos) !== -1;
-    }
-
-    getEncodedMediaInfosIndex(encodedMediaInfos)
-    {
-        return this.__encodedMediaInfos.findIndex( mediaInfos => mediaInfos.fileName === encodedMediaInfos.fileName );
-    }
-
-    getSynchros()
-    {
-        this.__synchroIsSend = true;
-
-        let synchroToExport = this.__synchro.formatObjectToExport();
-
-        //console.log(synchroToExport); debugger
-
-        return JSON.stringify( synchroToExport );
+        return this.__synchro.getSynchroElements().findIndex( synchroElement => synchroElement.getId() === element.id );
     }
 
     getSynchroElementByName(name)
@@ -142,26 +102,11 @@ class UploadVideoSynchroSubTool extends SubTool {
         return JSON.stringify(element);
     }
 
-    synchroIsAlreadySend()
-    {
-        return this.__synchroIsSend;
-    }
-
-    synchroIsAlreadyRegistered(synchro)
-    {
-        return this.getRegisteredSynchroIndex(synchro) !== -1;
-    }
-
-    getRegisteredSynchroIndex(synchro)
-    {
-        return this.__synchros.findIndex( registeredSynchro =>  registeredSynchro.getName() === synchro.getName() );
-    }
-
     showSynchros()
     {
 
         let html =
-        `    
+            `    
             <div class="top">
             
                 <form name="synchro_edit_form" id="synchro_edit_form" action="/save/synchro/infos" method="post">
@@ -169,7 +114,11 @@ class UploadVideoSynchroSubTool extends SubTool {
                     <div class="synchro_name_container container">
     
                         <div class="label_container"><label for="synchro_name">Nom</label></div>
-                        <div class="input_container"><input type="text" id="synchro_name" name="synchro_edit_form[synchro_name]" placeholder="Nom de la synchro" class="synchro_name form_input"></div>
+                        <div class="input_container">
+                            <span class="error hidden"></span>
+                            <input type="hidden" name="synchro_edit_form[synchro][synchro_id]" class="synchro_id" value="">
+                            <input type="text" id="synchro_name" name="synchro_edit_form[synchro][name]" placeholder="Nom de la synchro" class="synchro_name form_input" value="${ this.__synchro.getName() }">
+                        </div>
                         <div class="synchro_action_button_container">
                             <button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button>
                             <button type="button" class="synchro_action_button"><i class="fas fa-pause synchro_action_button_icon"></i></button>
@@ -197,12 +146,13 @@ class UploadVideoSynchroSubTool extends SubTool {
     
                     <div class="synchro_element_name_container">
                         <span class="error hidden"></span>
-                        <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchros_elements][${index}][name]" value="${ mediaInfos.getName() }">
+                        <input type="hidden" class="form_input synchro_element_id" name="synchro_edit_form[synchro][synchros_elements][${index}][synchro_element_id]" value="${ mediaInfos.getId() }">
+                        <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchro][synchros_elements][${index}][name]" value="${ mediaInfos.getName() }">
                     </div>
     
                     <div class="synchro_element_position_container">
                         <span class="error hidden"></span>
-                        <input type="text" class="synchro_element_position form_input" title="position" name="synchro_edit_form[synchros_elements][${index}][position]" value="${ index +1 }">
+                        <input type="text" class="synchro_element_position form_input" title="position" name="synchro_edit_form[synchro][synchros_elements][${index}][position]" value="${ index +1 }">
                     </div>
     
                 </div>
@@ -533,12 +483,28 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                     if(inputValue > $('.synchro_elements_container .synchro_element').length)
                     {
-                        input.parent().find('.error').text(this.__errors.exced_position).removeClass( 'hidden' );
+                        input.parent().find('.error').text(this.__errors.exceed_position).removeClass( 'hidden' );
                         input.addClass('invalid');
                     }
 
                     if(!input.hasClass('invalid'))
+                    {
                         this.sortSynchroElementsByAttribute('data-order');
+
+                        let synchroElementId = parseInt( input.parents('.synchro_element').find('.synchro_element_id').attr('value') );
+                        let position = parseInt( input.parents('.synchro_element').find('.synchro_element_position').attr('value') );
+
+                        let synchroElementIndex = this.getSynchroElementIndex( { id: synchroElementId } );
+
+                        if(synchroElementIndex > -1)
+                        {
+                            let synchroElement = this.__synchro.getSynchroElements()[synchroElementIndex];
+
+                            synchroElement.setPosition(position);
+
+                            this.updateSynchroElements([synchroElement]);
+                        }
+                    }
 
                     input.off('blur');
 
@@ -564,19 +530,16 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         let output = true;
 
-        if(form.find('.form_input:empty').length > 0)
-        {
-            form.find('.form_input:empty').each( (index, element) => {
+        form.find('.form_input').each( (index, element) => {
 
+            if( $(element).val() === '' )
+            {
+                output = false;
                 $(element).parent().find('.error').text(this.__errors.empty_field).removeClass( 'hidden' );
                 $(element).addClass('invalid');
+            }
 
-            } )
-
-            $('.save_synchro_edits_button').attr('disabled', true);
-
-            output = false;
-        }
+        } )
 
         return output;
 
@@ -619,6 +582,33 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                         } )
                     }
+                    else
+                    {
+
+                        if(input.hasClass('synchro_name'))
+                        {
+                            this.__synchro.setName(inputValue);
+                        }
+                        else
+                        {
+                            let synchroElementId = parseInt( input.parents('.synchro_element').find('.synchro_element_id').attr('value') );
+                            let synchroElementName = input.parents('.synchro_element').find('.synchro_element_name').attr('value');
+                            let position = parseInt( input.parents('.synchro_element').find('.synchro_element_position').attr('value') );
+
+                            let synchroElementIndex = this.getSynchroElementIndex( { id: synchroElementId } );
+
+                            if(synchroElementIndex > -1)
+                            {
+                                let synchroElement = this.__synchro.getSynchroElements()[synchroElementIndex];
+
+                                synchroElement.setName(synchroElementName)
+                                    .setPosition(position);
+
+                                this.updateSynchroElements([synchroElement]);
+                            }
+                        }
+
+                    }
                 }
 
                 if($(`.step_3 .form_input.invalid`).length === 0)
@@ -647,53 +637,66 @@ class UploadVideoSynchroSubTool extends SubTool {
                 if(this.synchroEditFormIsValid())
                 {
 
-                    let formData = new FormData( $('.step_3 #synchro_edit_form')[0] );
-
+                    //console.log(JSON.stringify($('.step_3 #synchro_edit_form').serializeArray())); de
                     super.showLoadingPopup();
+
+                    //console.table(this.__synchro.getSynchroElements()); debugger
+
+                    //let elements = this.__synchro.getSynchroElements();
 
                     $.ajax({
                         url: `/save/synchro/infos`,
                         type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
+                        data: $('.step_3 #synchro_edit_form').serialize(),
+                        //data: JSON.stringify( this.__synchro.formatObjectToExport() ),
                         success: (response) => {
 
-                            //console.log(response); //debugger
+                            if(response.errors.length > 0)
+                            {
+
+                                response.errors.forEach( (error) => {
+
+                                    if(error.text === "Invalid synchro element id")
+                                    {
+                                        $(`#synchro_edit_form #${ error.subject } .form_input.synchro_element_name`).addClass('invalid');
+                                        $(`#synchro_edit_form #${ error.subject } .synchro_element_name_container .error`).text(this.__errors.invalid_synchro_element_id).removeClass('hidden');
+                                    }
+
+                                    else if(error.text === "Duplicate synchro element name")
+                                    {
+                                        $(`#synchro_edit_form #${ error.subject } .form_input.synchro_element_name`).addClass('invalid');
+                                        $(`#synchro_edit_form #${ error.subject } .synchro_element_name_container .error`).text(this.__errors.duplicate_name).removeClass('hidden');
+                                    }
+
+                                    else if(error.text === "Position already used")
+                                    {
+                                        $(`#synchro_edit_form #${ error.subject } .form_input.synchro_element_position`).addClass('invalid');
+                                        $(`#synchro_edit_form #${ error.subject } .synchro_element_position_container .error`).text(this.__errors.duplicate_position).removeClass('hidden');
+                                    }
+
+                                    else
+                                    {
+                                        console.log(error); debugger
+                                    }
+
+                                } )
+
+                            }
+                            else
+                            {
+                                $('#synchro_edit_form .synchro_id').val(response.synchro_infos.synchro_id);
+                                alert("OK !");
+                            }
 
                             //this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
 
                         },
                         error: (response) => {
 
+                            alert("Erreur interne !");
+
                             console.log(response); debugger
 
-                            let error = response.responseJSON;
-
-                            let subject = error.subject;
-
-                            switch (error.text)
-                            {
-
-                                case "520 Position already used":
-                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_position_container .error`).text(this.__errors.duplicate_position).removeClass( 'hidden' );
-                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_position`).addClass('invalid');
-                                    break;
-
-                                case "521 Duplicate Synchro Name":
-                                    $(`.step_3 .synchro_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
-                                    $(`.step_3 .synchro_name`).addClass('invalid');
-                                    break;
-
-                                case "522 Duplicate Synchro Element Name":
-                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
-                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_name`).addClass('invalid');
-                                    break;
-
-                                default:
-                                    console.error(error); debugger
-
-                            }
                         },
                         complete: () => {
                             super.hideLoadingPopup();

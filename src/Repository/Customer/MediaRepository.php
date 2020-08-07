@@ -416,7 +416,7 @@ class MediaRepository extends ServiceEntityRepository
             case "sync":
                 $media = new SynchroElement();
 
-                $synchro = $this->_em->getRepository(Synchro::class)->findOneByName($videoInfos['synchros']['name']);
+                /*$synchro = $this->_em->getRepository(Synchro::class)->findOneByName($videoInfos['synchros']['name']);
 
                 if(!$synchro)
                 {
@@ -426,7 +426,9 @@ class MediaRepository extends ServiceEntityRepository
                 }
 
                 $media->addSynchro($synchro)
-                      ->setPosition($videoInfos['position']);
+                      ->setPosition($videoInfos['position']);*/
+
+                $media->setPosition($videoInfos['position']);
 
                 break;
 
@@ -541,6 +543,17 @@ class MediaRepository extends ServiceEntityRepository
 
     }
 
+    public function findAllNames()
+    {
+        $names = [];
+
+        foreach ($this->findAll() as $media)
+        {
+            $names[] = $media->getName();
+        }
+
+        return $names;
+    }
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
         $column = 'PRO_'.$columnPrice.'_jour';

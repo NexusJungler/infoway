@@ -184,7 +184,7 @@ class FfmpegSchedule
                         'mediaProducts' => $taskMediaInfo['products'],
                         'mediaTags' => $taskMediaInfo['tags'],
                         'mimeType' => $taskMediaInfo['mimeType'],
-                        'synchros' => $taskMediaInfo['synchros'][0],
+                        //'synchros' => $taskMediaInfo['synchros'][0],
                         'position' => $taskMediaInfo['position'],
                     ];
 
@@ -213,7 +213,7 @@ class FfmpegSchedule
             $this->__conf['ffmpeg'] = 0;
             file_put_contents($this->__parameterBag->get('config_dir') . '/sys_flags.yml', Yaml::dump($this->__conf));
             //file_put_contents( __DIR__ . '/../log/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
-            file_put_contents( $this->__parameterBag->get('logs_dir') . '/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
+            //file_put_contents( $this->__parameterBag->get('logs_dir') . '/ffmpeg.log', date('Y-m-d H:i:s') . ' --> ' . count($tasks) . ' nouveaux médias téléchargés via protocole FTP ont été réencodés' . PHP_EOL, FILE_APPEND);
 
         }
 

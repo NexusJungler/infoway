@@ -40,7 +40,11 @@
                 <div class="synchro_name_container container">
 
                     <div class="label_container"><label for="synchro_name">Nom</label></div>
-                    <div class="input_container"><input type="text" id="synchro_name" class="synchro_name form_input"></div>
+                    <div class="input_container">
+                        <span class="error hidden"></span>
+                        <input type="hidden" id="synchro_name" name="synchro_edit_form[synchro][synchro_id]" class="synchro_id" value="">
+                        <input type="text" id="synchro_name" name="synchro_edit_form[synchro][name]" class="synchro_name form_input">
+                    </div>
                     <div class="synchro_action_button_container">
                         <button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button>
                         <button type="button" class="synchro_action_button"><i class="fas fa-pause synchro_action_button_icon"></i></button>
@@ -54,7 +58,7 @@
 
                     {% for i in 1..5 %}
 
-                        <div class="synchro_element" id="synchro_{{ i }}" data-order="{{ i }}">
+                        <div class="synchro_element" id="synchro_element_{{ i }}" data-order="{{ i }}">
 
                             <div class="synchro_element_preview_container">
                                 <video>
@@ -63,13 +67,14 @@
                             </div>
 
                             <div class="synchro_element_name_container">
-                                <span class="error invisible"></span>
-                                <input type="text" class="synchro_element_name form_input" title="nom du média" value="media_{{ i }}">
+                                <span class="error hidden"></span>
+                                <input type="hidden" name="synchro_edit_form[synchro][synchros_elements][{{ i-1 }}][id]" value="{{ i }}">
+                                <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchro][synchros_elements][{{ i-1 }}][name]" value="media_{{ i }}">
                             </div>
 
                             <div class="synchro_element_position_container">
-                                <span class="error invisible"></span>
-                                <input type="text" class="synchro_element_position form_input" title="position" value="{{ i }}">
+                                <span class="error hidden"></span>
+                                <input type="text" class="synchro_element_position form_input" title="position" name="synchro_edit_form[synchro][synchros_elements][{{ i-1 }}][position]" value="{{ i }}">
                             </div>
 
                         </div>

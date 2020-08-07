@@ -21,6 +21,7 @@ use App\Form\Customer\EditMediaType;
 use App\Form\MediasListType;
 use App\Repository\Admin\CustomerRepository;
 use App\Repository\Admin\FfmpegTasksRepository;
+use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
 use App\Service\MediasHandler;
 use App\Service\SessionManager;
@@ -108,6 +109,9 @@ class MediaController extends AbstractController
         if(empty($mediasToDisplayed))
             throw new NotFoundHttpException(sprintf("No media(s) found for this page !"));
 
+        $allMediasNames = $mediaRepo->findAllNames();
+        $allSynchrosNames = 0;
+
         //dd($numberOfPages);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
@@ -150,6 +154,8 @@ class MediaController extends AbstractController
             'numberOfPages' => $numberOfPages,
             'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
             'archivedMedias' => $allArchivedMedias,
+            'allMediasNames' => $allMediasNames,
+            'allSynchrosNames' => $allSynchrosNames,
         ]);
 
     }
@@ -401,12 +407,12 @@ class MediaController extends AbstractController
 
                 $synchroDatas = json_decode($request->request->get('synchro'));
 
-                $synchro = new Synchro();
-                $synchro->setName($synchroDatas->__name);
+                /*$synchro = new Synchro();
+                $synchro->setName($synchroDatas->__name);*/
 
                 $media = new SynchroElement();
-                $media->addSynchro($synchro)
-                      ->setPosition($synchroDatas->__position);
+                $media->setPosition($synchroDatas->__position);
+                      //->addSynchro($synchro);
 
             }
 
@@ -470,13 +476,99 @@ class MediaController extends AbstractController
     public function saveSynchroInfos(Request $request)
     {
 
-        dd($request->request);
+        //dd($request->request);
 
-        // 520 Position already used
-        //
-        // 521 Duplicate Synchro Name
-        //
-        // 522 Duplicate Synchro Element Name
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $customerName );
+        $synchroRep = $manager->getRepository(Synchro::class)->setEntityManager($manager);
+        $synchroElementRep = $manager->getRepository(SynchroElement::class)->setEntityManager($manager);
+
+        $arraySearchRecursive = new ArraySearchRecursiveService();
+
+        $synchroElementIds = $synchroElementNames = $synchroElementPositions = $errors = [];
+
+        $formData = $request->request->get('synchro_edit_form')['synchro'];
+
+        $synchro = (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) ? $synchroRep->find($formData['synchro_id']) : $synchroRep->findOneByName($formData['name']);
+
+        if(!$synchro)
+            $synchro = new Synchro();
+
+        $synchro->setName($formData['name']);
+
+        $synchroElementNames = array_map(fn($synchroElementInfos) => $synchroElementInfos['name'] , $formData['synchros_elements'] );
+        $synchroElementPositions = array_map(fn($synchroElementInfos) => $synchroElementInfos['position'] , $formData['synchros_elements'] );
+
+        foreach ($formData['synchros_elements'] as $key => $synchroElementInfos)
+        {
+
+            $synchroElement = $synchroElementRep->find( $synchroElementInfos['synchro_element_id'] );
+            if(!$synchroElement)
+            {
+                //throw new Exception(sprintf("No synchro element found with '%s' name", $synchroElementInfos['old_name']));
+                $errors[] = [
+                    'subject' => "synchro_element_" . ($key +1),
+                    'text' => "Invalid synchro element id"
+                ];
+            }
+            else
+            {
+
+                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['name'], $synchroElementNames) === 1 )
+                    $synchroElement->setName($synchroElementInfos['name']);
+
+                else
+                {
+                    $errors[] = [
+                        'subject' => "synchro_element_" . ($key +1),
+                        'text' => "Duplicate synchro element name"
+                    ];
+                }
+
+
+                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['position'], $synchroElementPositions) === 1 )
+                    $synchroElement->setPosition($synchroElementInfos['position']);
+
+                else
+                {
+                    $errors[] = [
+                        'subject' => "synchro_element_" . ($key +1),
+                        'text' => "Position already used"
+                    ];
+                }
+
+                if( false === $arraySearchRecursive->search("synchro_element_" . ($key +1), $errors) )
+                {
+                    $synchroElement->addSynchro($synchro);
+                    $synchroElementIds[] = [
+                        'element' => "synchro_element_" . ($key +1),
+                        'id' => $synchroElement->getId(),
+                    ];
+                }
+
+            }
+
+        }
+
+        if(empty($errors))
+        {
+
+            if(is_null($synchro->getId()))
+                $manager->persist($synchro);
+
+            $manager->flush();
+        }
+
+        $synchroInfos = [
+            'synchro_id' => $synchro->getId(),
+            'synchro_elements_infos' => $synchroElementIds
+        ];
+
+        return new JsonResponse([
+            'status' => (empty($errors) ? '200 OK' : 'NOK'),
+            'errors' => $errors,
+            'synchro_infos' => $synchroInfos
+        ]);
 
     }
 
@@ -1205,16 +1297,7 @@ class MediaController extends AbstractController
 
         $customer = strtolower($this->__sessionManager->get('current_customer')->getName());
 
-        $base = "/miniatures/" . $customer . "/";
-
-        if($media->getMediaType() === 'diff')
-        {
-            $miniatureLowPath = $base . $fileType . "/low/";
-        }
-        else
-        {
-            $miniatureLowPath = $base . "piece/";
-        }
+        $miniatureLowPath = "/miniatures/" . $customer . "/" . $fileType . $media->getMediaType() . "/low/";
 
         $miniatureLowPath .= $id . ( ($fileType === 'image') ? '.png' : '.mp4' );
         $miniatureMediumPath = str_replace("low","medium", $miniatureLowPath);

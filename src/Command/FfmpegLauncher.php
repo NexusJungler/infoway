@@ -5,15 +5,9 @@ namespace App\Command;
 
 
 use App\Service\FfmpegSchedule;
-use Doctrine\Persistence\ManagerRegistry;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 date_default_timezone_set('Europe/Paris');
 
@@ -27,41 +21,23 @@ date_default_timezone_set('Europe/Paris');
 class FfmpegLauncher extends Command
 {
 
-    use LockableTrait;
-
     // the name of the command (the part after "bin/console")
     // @see Symfony\Component\Console\Command\Command::validateName() for valid name regex
     protected static $defaultName = 'cron:encode-file';
 
     /**
-     * @var ManagerRegistry
-     */
-    private ManagerRegistry $managerRegistry;
-
-    /**
-     * @var ParameterBagInterface
-     */
-    private ParameterBagInterface $parameterBag;
-
-    /**
-     * @var LoggerInterface
-     */
-    private LoggerInterface $logger;
-    /**
      * @var FfmpegSchedule
      */
-    private FfmpegSchedule $ffmpegSchedule;
+    private FfmpegSchedule $__ffmpegSchedule;
 
     /**
      *
      * @param FfmpegSchedule $ffmpegSchedule
-     * @param LoggerInterface $commandLogger for write in log file (var/log/dev|prod_command.log) @see : https://symfony.com/doc/current/logging/channels_handlers.html#how-to-autowire-logger-channels
      */
-    public function __construct(FfmpegSchedule $ffmpegSchedule, LoggerInterface $commandLogger)
+    public function __construct(FfmpegSchedule $ffmpegSchedule)
     {
 
-        $this->ffmpegSchedule = $ffmpegSchedule;
-        $this->logger = $commandLogger;
+        $this->__ffmpegSchedule = $ffmpegSchedule;
 
         parent::__construct();
     }
@@ -91,21 +67,7 @@ class FfmpegLauncher extends Command
     public function execute (InputInterface $input, OutputInterface $output)
     {
 
-        if (!$this->lock())
-        {
-            //$output->writeln('<erro>The command is already running in another process.</erro>');
-            $this->logger->error(sprintf("Log[%s] -- %s : Encode cron is already running in another process !", __CLASS__, date('d/m/Y - G:i:s')));
-
-            return 0;
-        }
-
-        $this->logger->info(sprintf("Log[%s] -- %s : Encode cron start !", __CLASS__, date('d/m/Y - G:i:s')));
-
-        $this->ffmpegSchedule->runTasks();
-
-        $this->release();
-
-        $this->logger->info(sprintf("Log[%s] -- %s : Encode Cron end !", __CLASS__, date('d/m/Y - G:i:s')));
+        $this->__ffmpegSchedule->runTasks();
 
         return 0;
     }

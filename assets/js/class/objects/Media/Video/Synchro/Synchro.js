@@ -2,37 +2,47 @@ import Video from "../Video";
 import SynchroElement from "./SynchroElement";
 
 
-class Synchro extends Video
+class Synchro
 {
 
     constructor()
     {
-        super();
+        this.__id = null;
+        this.__name = "";
         this.__className = this.constructor.name;
         this.__synchroElements = [];
-        //this.__preview = "";
 
     }
 
-    /*getPreview()
+    getId()
     {
-        return this.__preview;
+        return this.__id;
     }
 
-    setPreview(preview) {
+    setId(id)
+    {
 
-        if( typeof preview === 'undefined')
-        {
-            preview = this.buildHtml();
-        }
+        if( typeof id !== "number" )
+            throw new Error(`${ this.__className }.id must be instance of number, but '${typeof id}' given !`);
 
-        if(typeof preview !== "string")
-            throw new Error(`${ this.__className }.preview must be instance of string, but '${typeof preview}' given !`);
-
-        this.__preview = preview;
+        this.__id = id;
 
         return this;
-    }*/
+    }
+
+    getName() {
+        return this.__name;
+    }
+
+    setName(name) {
+
+        if(typeof name !== "string")
+            throw new Error(`${ this.__className }.name must be instance of string, but '${typeof name}' given !`);
+
+        this.__name = name;
+
+        return this;
+    }
 
     getSynchroElements()
     {
@@ -47,10 +57,11 @@ class Synchro extends Video
 
         if(!this.synchroElementIsAlreadyRegistered(synchroElement))
         {
+            //debugger
             this.__synchroElements.push(synchroElement);
             synchroElement.addSynchro(this);
         }
-
+        //console.log(this.__synchroElements); debugger
         return this;
     }
 
@@ -101,7 +112,12 @@ class Synchro extends Video
 
         this.__synchroElements = Object.values(this.getSynchroElements()).map(synchroElement => {
 
-            synchroElement.getSynchros().map((synchro, index) => {
+            console.log(synchroElement.getSynchros()); debugger
+
+            synchroElement.getSynchros().forEach((synchro, index) => {
+
+
+
 
                 synchroElement.getSynchros()[index] = this.getName();
 

@@ -4,6 +4,8 @@
 namespace App\Service;
 
 
+use Exception;
+
 class ArraySearchRecursiveService
 {
 
@@ -53,6 +55,24 @@ class ArraySearchRecursiveService
 
         return $pos;
 
+    }
+
+    public function countOccurrence($search, array $simpleArray)
+    {
+
+        $number = 0;
+
+        foreach ($simpleArray as $item)
+        {
+
+            if(is_array($item))
+                throw new Exception("Attempt to count occurence in recursive array but this function accept only simple array !");
+
+            if($item === $search)
+                $number++;
+        }
+
+        return $number;
     }
 
 }

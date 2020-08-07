@@ -5,8 +5,8 @@ class Media
     {
         this.__className = this.constructor.name;
         this.__id = null;
-        this.__name = null;
-        this.__extension = null;
+        this.__name = "";
+        this.__extension = "";
         this.__height = null;
         this.__width = null;
         this.__html = null;
