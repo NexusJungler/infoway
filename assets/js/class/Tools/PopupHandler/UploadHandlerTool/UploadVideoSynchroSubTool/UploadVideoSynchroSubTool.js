@@ -2,7 +2,6 @@ import ParentTool from "../../../ParentTool";
 import SubTool from "../../../SubTool";
 import Synchro from "../../../../objects/Media/Video/Synchro/Synchro";
 import SynchroElement from "../../../../objects/Media/Video/Synchro/SynchroElement";
-import Utils from "../../../../Utils/Utils";
 
 class UploadVideoSynchroSubTool extends SubTool {
 
@@ -171,7 +170,12 @@ class UploadVideoSynchroSubTool extends SubTool {
     
                         <div class="label_container"><label for="synchro_name">Nom</label></div>
                         <div class="input_container"><input type="text" id="synchro_name" name="synchro_edit_form[synchro_name]" placeholder="Nom de la synchro" class="synchro_name form_input"></div>
-                        <div class="synchro_action_button_container"><button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button></div>
+                        <div class="synchro_action_button_container">
+                            <button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button>
+                            <button type="button" class="synchro_action_button"><i class="fas fa-pause synchro_action_button_icon"></i></button>
+                            <button type="button" class="synchro_action_button restart_video_btn"><i class="fas fa-step-backward synchro_action_button_icon"></i></button>
+                            <button type="button" class="synchro_action_button drag_video_btn"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
             
                     </div>
            
@@ -179,21 +183,21 @@ class UploadVideoSynchroSubTool extends SubTool {
         
         `;
 
-        this.getAllEncodedMediasInfos().forEach( (mediaInfos, index) => {
+        this.__synchro.getSynchroElements().forEach( (mediaInfos, index) => {
 
             html += `
             
-                <div class="synchro_element" id="synchro_element_${ index }">
+                <div class="synchro_element" id="synchro_element_${ index }" data-order="${ index+1 }">
 
                     <div class="synchro_element_preview_container">
                         <video>
-                            <source src="/miniatures/kfc/video/sync/low/${ mediaInfos.id }.mp4" type="video/mp4" />
+                            <source src="/miniatures/kfc/video/sync/low/${ mediaInfos.getId() }.mp4" type="video/mp4" />
                         </video>
                     </div>
     
                     <div class="synchro_element_name_container">
                         <span class="error hidden"></span>
-                        <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchros_elements][${index}][name]" value="${ mediaInfos.name }">
+                        <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchros_elements][${index}][name]" value="${ mediaInfos.getName() }">
                     </div>
     
                     <div class="synchro_element_position_container">
@@ -243,14 +247,9 @@ class UploadVideoSynchroSubTool extends SubTool {
         
         `;
 
-        this.__$location.find('')
+        this.__$location.find('.step_3').html(html);
 
         this.__$synchroContainer = $('.synchro_container');
-
-        console.log(this.__$synchroContainer)
-        debugger
-
-        this.__$synchroContainer.html(html);
 
         if($('#synchro_edit_form .form_input:empty').length > 0)
             $('.save_synchro_edits_button').attr('disabled', true);
@@ -326,22 +325,22 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         if(active)
         {
-            this.__$synchroContainer.on('click.onClickOnDraggableButton', '.drag_video_btn', e => {
+            this.__$location.on('click.onClickOnDraggableButton', '.drag_video_btn', e => {
 
                 if($(e.currentTarget).hasClass('active'))
                 {
                     //this.__$synchroContainer.find('.synchro_element').removeClass('draggable');
                     $(e.currentTarget).removeClass('active');
-                    this.__$synchroContainer.find('.form_input').removeAttr('readonly');
-                    this.__$synchroContainer.find('.synchro_element').removeClass('draggable');
+                    $('.step_3 .form_input').removeAttr('readonly');
+                    $('.synchro_elements_container .synchro_element').removeClass('draggable');
                     this.onMouseDownOnSynchroElement(false);
                 }
                 else
                 {
                     //this.__$synchroContainer.find('.synchro_element').addClass('draggable');
                     $(e.currentTarget).addClass('active');
-                    this.__$synchroContainer.find('.synchro_element').addClass('draggable');
-                    this.__$synchroContainer.find('.form_input').attr('readonly', true);
+                    $('.step_3 .form_input').attr('readonly', true);
+                    $('.synchro_elements_container .synchro_element').addClass('draggable');
                     this.onMouseDownOnSynchroElement(true);
                 }
 
@@ -349,7 +348,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         }
         else
         {
-            this.__$synchroContainer.off('click.onClickOnDraggableButton', '.drag_video_btn');
+            this.__$location.off('click.onClickOnDraggableButton', '.drag_video_btn');
         }
 
         return this;
@@ -361,7 +360,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         if(active)
         {
 
-            this.__$synchroContainer.on('mousedown.onMouseDownOnSynchroElement', '.synchro_element', e => {
+            $('.synchro_elements_container').on('mousedown.onMouseDownOnSynchroElement', '.synchro_element', e => {
 
                 // @see: https://stackoverflow.com/questions/4658300/jquery-sortable-without-jquery-ui
                 // @see: https://jsfiddle.net/606bs750/16/
@@ -380,7 +379,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                     let dragStartXPos = e.clientX;
                     let myXPos = originalXPos;
 
-                    $('.synchro_container .synchro_element').each( (index, element) => {
+                    $('.synchro_elements_container .synchro_element').each( (index, element) => {
                         $(element).attr('data-order', (index + 1));
                     });
 
@@ -461,13 +460,14 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                     $(window).on('mouseup', e => {
                         if(e.which===1) {
-                            $('.synchro_container .synchro_element').removeClass('ondrag');
+                            $('.synchro_elements_container .synchro_element').removeClass('ondrag');
                             $(window).off('mouseup mousemove');
 
                             this.sortSynchroElementsByAttribute('data-order');
 
-                            $('.synchro_container .synchro_element').removeAttr('style')
+                            $('.synchro_elements_container .synchro_element').removeAttr('style')
                                                                     .removeAttr('data-order');
+
                         }
                     })
 
@@ -479,7 +479,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         else
         {
 
-            this.__$synchroContainer.off('mousedown.onMouseDownOnSynchroElement', '.synchro_element');
+            $('.synchro_elements_container').off('mousedown.onMouseDownOnSynchroElement', '.synchro_element');
 
         }
 
@@ -489,7 +489,7 @@ class UploadVideoSynchroSubTool extends SubTool {
     sortSynchroElementsByAttribute(attribute, fieldSelector)
     {
 
-        let sorted = $('.synchro_container .synchro_element').sort( (a, b) => {
+        let sorted = $('.step_3 .synchro_element').sort( (a, b) => {
 
             let prevOrder, nextOrder = null;
 
@@ -514,7 +514,7 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         })
 
-        this.__$synchroContainer.find('.synchro_elements_container ').html(sorted);
+        $('.step_3 .synchro_elements_container ').html(sorted);
 
         return this;
     }
@@ -523,27 +523,32 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         if(active)
         {
-            this.__$synchroContainer.on('blur.onSynchroElementPositionChangeUpdateAllElementsPosition', '.synchro_element .synchro_element_position', e => {
+            $('.step_3').on('input.onSynchroElementPositionChangeUpdateAllElementsPosition', '.synchro_elements_container .synchro_element_position', e => {
 
                 let input = $(e.currentTarget);
                 let inputValue = input.val();
-                input.parent('.synchro_element').attr('data-order', inputValue);
+                input.parents('.synchro_element').attr('data-order', inputValue);
 
-                if(inputValue > this.__$synchroContainer.find('.synchro_element').length)
-                {
-                    input.parent().find('.error').text(this.__errors.exced_position).removeClass( 'hidden' );
-                    input.addClass('invalid');
-                }
+                input.on('blur', e => {
 
-                if(!input.hasClass('invalid'))
-                    this.sortSynchroElementsByAttribute('data-order');
+                    if(inputValue > $('.synchro_elements_container .synchro_element').length)
+                    {
+                        input.parent().find('.error').text(this.__errors.exced_position).removeClass( 'hidden' );
+                        input.addClass('invalid');
+                    }
+
+                    if(!input.hasClass('invalid'))
+                        this.sortSynchroElementsByAttribute('data-order');
+
+                    input.off('blur');
+
+                })
 
             })
         }
         else
         {
-            this.__$synchroContainer.off('blur.onSynchroElementPositionChangeUpdateAllElementsPosition', '.synchro_element .synchro_element_position');
-            //this.__$synchroContainer.off('click', '.synchro_elements_container');
+            $('.step_3').off('input.onSynchroElementPositionChangeUpdateAllElementsPosition', '.synchro_elements_container .synchro_element_position');
         }
 
         return this;
@@ -552,7 +557,7 @@ class UploadVideoSynchroSubTool extends SubTool {
     synchroEditFormIsValid()
     {
 
-        let form = $('#synchro_edit_form');
+        let form = $('.step_3 #synchro_edit_form');
 
         form.find(`.error`).empty().addClass('hidden');
         form.find(`.form_input`).removeClass('invalid');
@@ -581,10 +586,10 @@ class UploadVideoSynchroSubTool extends SubTool {
     {
         if(active)
         {
-            this.__$synchroContainer.on('input.onTypingInInputCheckDuplicateValue', '.synchro_elements_container .form_input', e => {
+            $('.step_3').on('input.onTypingInInputCheckDuplicateValue', '.form_input', e => {
 
-                this.__$synchroContainer.find(`.error`).text('').addClass('hidden');
-                this.__$synchroContainer.find(`.form_input`).removeClass('invalid');
+                $(`.step_3 .error`).text('').addClass('hidden');
+                $(`.step_3 .form_input`).removeClass('invalid');
 
                 let input = $(e.currentTarget);
                 let inputValue = input.val();
@@ -598,7 +603,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                 }
                 else
                 {
-                    let duplicateFields = this.__$synchroContainer.find(`.form_input[value='${ inputValue }']`);
+                    let duplicateFields = $(`.step_3 .form_input[value='${ inputValue }']`);
 
                     if(duplicateFields.length > 1)
                     {
@@ -616,7 +621,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                     }
                 }
 
-                if(this.__$synchroContainer.find(`.form_input.invalid`).length === 0)
+                if($(`.step_3 .form_input.invalid`).length === 0)
                     this.__$location.find('.save_synchro_edits_button').removeAttr('disabled');
 
                 else
@@ -626,7 +631,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         }
         else
         {
-            this.__$synchroContainer.off('input.onTypingInInputCheckDuplicateValue', '.synchro_elements_container .form_input');
+            $('.step_3').off('input.onTypingInInputCheckDuplicateValue', '.form_input');
         }
 
         return this;
@@ -642,7 +647,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                 if(this.synchroEditFormIsValid())
                 {
 
-                    let formData = new FormData( $('#synchro_edit_form')[0] );
+                    let formData = new FormData( $('.step_3 #synchro_edit_form')[0] );
 
                     super.showLoadingPopup();
 
@@ -671,18 +676,18 @@ class UploadVideoSynchroSubTool extends SubTool {
                             {
 
                                 case "520 Position already used":
-                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_position_container .error`).text(this.__errors.duplicate_position).removeClass( 'hidden' );
-                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_position`).addClass('invalid');
+                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_position_container .error`).text(this.__errors.duplicate_position).removeClass( 'hidden' );
+                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_position`).addClass('invalid');
                                     break;
 
                                 case "521 Duplicate Synchro Name":
-                                    this.__$synchroContainer.find(`.synchro_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
-                                    this.__$synchroContainer.find(`.synchro_name`).addClass('invalid');
+                                    $(`.step_3 .synchro_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
+                                    $(`.step_3 .synchro_name`).addClass('invalid');
                                     break;
 
                                 case "522 Duplicate Synchro Element Name":
-                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
-                                    this.__$synchroContainer.find(`#synchro_element_${ subject } .synchro_element_name`).addClass('invalid');
+                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_name_container .error`).text(this.__errors.duplicate_name).removeClass( 'hidden' );
+                                    $(`.step_3 #synchro_element_${ subject } .synchro_element_name`).addClass('invalid');
                                     break;
 
                                 default:
