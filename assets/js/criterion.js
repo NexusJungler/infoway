@@ -146,7 +146,7 @@ $(function(){
 
 // popup modification
     $('.btn-popup-delete-criterion').click(function () {
-        $('.add-popup-edit').addClass('is-open');
+        $('.add-popup-delete').addClass('is-open');
 
         $.each($(".criterion-poster input[type='checkbox']:checked"), (index, input) => {
             let selectedTagName = $(input).parents("td").find(".criterion-name").text();

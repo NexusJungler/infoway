@@ -1,7 +1,10 @@
 #setting-user{
-    margin-left: 2.5%;
+
+    .content_btn{
+        margin-top: 4rem;
+    }
     .setting-user-table{
-        margin-top: 2rem;
+        margin-top: 3rem;
     }
     
     .tab-content-title{
@@ -12,21 +15,64 @@
         }
     }
 
+    .bloc_title{
+        background: #899CA4 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #00000029;
+        border: 1px solid #4D646D;
+        border-radius: 6px 6px 0px 0px;
+        padding: 1rem;
+        color: #FFFFFF;
+        font: 2.1rem "Barlow";
+        p{
+            margin-left: 3rem;
+        }
+    }
+
     .table{
         .table-custome{
             .thead-content{
+                background: #E3E3E3 0 0 no-repeat padding-box;
+                border: 0.1rem solid #E3E3E3;
+                padding: 0.5rem;
+                width: 100%;
+                &::after{
+                    display: none;
+                }
                 th{
-                   width: 5rem;
+                    font: 1.8rem "Barlow";
+                    width: 5rem;
+                    color: #4D646D;
                     &:first-child{
-                        
+                        width: 1%;
+                    }
+                    &:nth-child(2){
+                        text-align: left;
                     }
                 }
             }
             .tbody-content{
+                border-color: #E3E3E3 ;
+                height: 44rem;
+                max-height: 44rem;
+                display: block;
+                overflow: auto;
+                tr{
+                    background-color: #FFFFFF;
+                    &:nth-child(even){
+                        background: #F1F7F9;
+                    }
+                }
                 td{
+                    font: 1.7rem "Barlow";
+                    padding: 1rem;
                     width: 5rem;
+                    text-align: center;
+                    border: 0;
                     &:first-child{
-                        
+                        width: 1%;
+                    }
+                    &:nth-child(2){
+                        text-align: left;
                     }
                 }
             }

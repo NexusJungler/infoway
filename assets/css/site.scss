@@ -1,3 +1,5 @@
+@import "site/create_site";
+
 .main-site{
 
     .display {
@@ -35,7 +37,6 @@
             &::after{
                 background-color: #306D7C;
             }
-
             tr{
                 th{
                     font: 1.6rem "Barlow";
@@ -100,6 +101,7 @@
                     }
                 }
                 td{
+                    padding: 0.5rem;
                     font: 1.4rem "Barlow";
                     vertical-align: middle;
                     &:nth-child(1){
@@ -116,6 +118,7 @@
                     }
                     &:nth-child(4){
                         width: 8%;
+
                     }
                     &:nth-child(5){
                         width: 3%;
@@ -151,6 +154,19 @@
                         text-align: center;
                         background-color: #F0F7F8;
                     }
+                }
+                .zone_diffusion{
+                    span{
+                        padding-right: 1rem;
+                    }
+                }
+                .container-tags{
+                    height: 2.5rem;
+                    padding: 0.3rem 1.4rem 0.3rem 1.9rem;
+                    background: #F6F6F6 0% 0% no-repeat padding-box;
+                    width: 65%;
+                    border: 0.1rem solid #4D646D;
+                    font: 1.3rem "Barlow";
                 }
             }
         }
@@ -317,12 +333,66 @@
 
 .main-site{
     .drop-btn{
+        position: relative;
         font: 1.8rem "Barlow";
         .drop-btn-icone{
-            position: relative;
+            position: absolute;
+            width: 2.4rem;
+            height: 2.4rem;
+            right: 0.4rem;
         }
     }
+    .display-content-poste{
+        &:hover{
+            .display-content-down{
+                display: block;
+                height: auto;
+                max-height: 25rem;
+                overflow: auto;
+            }
+        }
+    }
+    .display-content-down{
+        .container-input{
+            padding-left: 2.5rem;
+            font: 1.4rem "Barlow";
+            .container-rdo{
+                top: 0rem;
+                left: 0rem;
+                height: 1.7rem;
+                width: 1.7rem;
+                &:after {
+                    width: 1.3rem;
+                    height: 1.3rem;
+                }
+            }
+        }
+    }
+    .site-container .filters_container .filters_select_container{
+        .display-content-criterion{
+            .drop-btn{
+                width: 15rem;
+            }
+        }
+    }
+    .display-content-criterion{
+        .drop-btn{
+            border: 0;
+            width: 15rem;
+            .container-input{
+                background: #C1E4EB 0 0 no-repeat padding-box;
+                box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
+                border: 1px solid #4D646D;
+                padding: 0.2rem 1rem;
+                border-radius: 0.5rem;
+                font: 1.3rem "Barlow";
+            }
+        }
+    }
+
 }
+
+
 
 
 

@@ -7,9 +7,11 @@ import filterTableSite from "./site/FiltreTable/FiltreTable";
 $(function(){
     filtertablesite.enable();
 
-    $(".display-content-poste").find('.drop-btn').on('click', function() {
-        $(this).parent().find('.display-content-down').toggle();
-    });
+
+
+    // $(".display-content-poste").find('.drop-btn').on('click', function() {
+    //     $(this).parent().find('.display-content-down').toggle();
+    // });
 
     let nameFilter = [
         "filter_city",

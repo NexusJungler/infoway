@@ -18,8 +18,8 @@
                         <form class="enseigne">
                             <select name="enseigne" id="enseigne">
                                 <option value="">Sélectionner l'enseigne</option>
-                                {% for name in app.session.get('customerNames') %}
-                                    <option value="{{name}}" {% if (app.session.get('current_customer') is not null ) and (name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{name}}</option>
+                                {% for customer in app.session.get('customers') %}
+                                    <option value="{{customer.id}}" {% if (app.session.get('current_customer') is not null ) and (customer.name is same as(app.session.get('current_customer').name )) %} selected {% endif %} >{{customer.name}}</option>
                                 {% endfor %}
                             </select>
                             <p class="number__enseigne contenu_hide"><span></span> enseignes</p>
@@ -74,21 +74,23 @@
 
             <div class="all__user--account">
                 <div class="user__logo">
-                    <span class="username__first--letter">N</span>
+                    <p class="username__first--letter"></p>
                 </div>
                 <div class="user">
-                    {# <span class="user__name">
-                        {% if user.isLoggedIn %}
-                            {{ user.name }}!
-                        {% endif %}
-                    </span> #}
-                    <span class="user__name">Nadya</span>
+                     {#<span class="user__name">#}
+                        {#{% if user.isLoggedIn %}#}
+                            {#{{ user.name }}!#}
+                        {#{% endif %}#}
+                    {#</span> #}
+                    <span class="user__name">rupert</span>
                     <span class="user__rule">Admin</span>
                 </div>
 
             </div>
             <div class="logout">
-                <a href="path=/logout/">logout</a>
+                <a href="path=/logout/">
+                    <img class="logo_logout" src="{{ asset('/build/images/Quit.png') }}" alt="logo_logout">
+                </a>
             </div>
         </div>
     </div>

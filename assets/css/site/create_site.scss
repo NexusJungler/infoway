@@ -1,0 +1,104 @@
+.create_site{
+
+    .info-gestion-site{
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        ul{
+            display: flex;
+            text-align: center;
+            margin: 0 auto;
+            li{
+                padding-right: 3rem;
+                font: 2.1rem "Barlow";
+                color: #283338;
+            }
+        }
+    }
+
+    .form{
+        .row{
+            display: flex;
+            .col{
+                width: 100%;
+            }
+            .col2{
+                width: 50%;
+            }
+            .col3{
+                width: 25%;
+            }
+        }
+        .form_label{
+            font: 1.3rem "Barlow";
+            color: #4D646D;
+            width: 30%;
+        }
+        .form_input{
+            background: #FFFFFF 0 0 no-repeat padding-box;
+            border: 0.1rem solid #C0CCD1;
+            border-radius: 0.9rem;
+            height: 2.9rem;
+            width: 70%;
+        }
+    }
+
+    .menu-dropdown-site{
+        height: 630px;
+        .menu-list-site{
+            padding-left: 0;
+            max-width: 100%;
+            border-radius: 0.6rem 0.6rem 0 0;
+            .menu-submenu {
+                padding-bottom: 20px;
+                background: #F6F6F6 0% 0% no-repeat padding-box;
+            }
+            .accordion-toggle2{
+                background: #899CA4 0% 0% no-repeat padding-box;
+                border-radius: 6px 6px 0px 0px;
+                font: 2.6rem 'Barlow';
+                padding: 10px;
+                border: 1px solid #899CA4;
+                letter-spacing: 0;
+                color: white;
+                &:first-of-type {
+                    border-top: 0;
+                }
+            }
+
+            .accordion-toggle2, .accordion-content {
+                cursor: pointer;
+                font-size: 16px;
+                position: relative;
+                letter-spacing: 1px;
+            }
+
+            .accordion-content {
+                display: block;
+                padding: 5rem 3.5rem  ;
+                border: 1px solid #899CA4;
+            }
+
+            .accordion-toggle2.active-tab {
+
+            }
+        }
+    }
+
+
+
+    .content-identite{
+        display: flex;
+    }
+    .content-identite-site-right{
+        width: 65%;
+    }
+    .content-identite-site-left{
+        width: 35%;
+    }
+    .contenu_utilisateur{
+        border: 0.1rem solid #899CA4;
+        padding: 1rem;
+    }
+
+
+}

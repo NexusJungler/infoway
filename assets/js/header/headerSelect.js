@@ -5,12 +5,13 @@ class headerSelect{
         this.onHeaderSelect(true);
         this.onHeaderSelectSite(true);
         this.onButtonClickBackselect(true);
-
+        this.usernameFirstLetter(true);
     }
     disable(){
         this.onHeaderSelect(false);
         this.onHeaderSelectSite(false);
         this.onButtonClickBackselect(false);
+        this.usernameFirstLetter(false);
     }
 
     onLoadSelect(){
@@ -30,10 +31,11 @@ class headerSelect{
             $('#enseigne').change(function(){
 
                 let selectEnseigne = $('#enseigne').val();
+                let selectEnseigneName = $('#enseigne option:selected').text();
                 let nbEnseigne = selectEnseigne.length;
 
                 $('p.number__enseigne span').text(nbEnseigne);
-                $('.logo__enseigne #customer_logo').attr('src', "/build/images/"+selectEnseigne+".png");
+                $('.logo__enseigne #customer_logo').attr('src', "/build/images/"+selectEnseigneName+".png");
 
                if(selectEnseigne == null ) {
 
@@ -125,6 +127,16 @@ class headerSelect{
             $("all__enseigne .btn-back").off('click.onButtonClickBackselect');
         }
     }
+
+    usernameFirstLetter(active) {
+        if(active){
+            let firstLetter = $('.user__name').text().substr(0, 1);
+            $('p.username__first--letter').text(firstLetter);
+        }else{
+            $(".user__name").off('click.usernameFirstLetter');
+        }
+    }
+
 
 }
 

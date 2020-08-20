@@ -1,5 +1,4 @@
-select,
-button{
+select, button{
     outline: none;
 }
 
@@ -9,11 +8,9 @@ button{
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 130px;
+    height: 13rem;
     background-color: #324147;
     z-index: 10;
-
-
     /** HEADER LOGO **/
     .header_logo{
         width: 8%;
@@ -35,15 +32,21 @@ button{
         display: flex;
         width: 88%;
         background-color: #FFFFFF;
-
         /* block left */
         .header__block--left {
             display: flex;
             width: 50%;
         }
+
+        .number__enseigne, .number__site {
+            font: 1.5rem "Barlow";
+            color: #7BA2B1;
+            margin-left: 1.2rem;
+            position: relative;
+            top: -0.45rem;
+        }
     }
 }
-
 
 /***************************************************** gradient left*****************************************************************/
 
@@ -51,14 +54,20 @@ button{
     flex: 0 0 50%;
     max-width: 50%;
     background: linear-gradient(-271deg, #324147 1%, #4D646D 17%);
+
     .logo__enseigne {
         display: flex;
         height: 100%;
         flex-basis: 22%;
+        margin-top: 1.2rem;
         img {
             max-width: 100%;
             height: auto;
             object-fit: contain;
+        }
+        #customer_logo{
+            height: 10rem;
+            width: 10rem;
         }
     }
     .all__enseigne{
@@ -66,11 +75,11 @@ button{
         flex-direction: row;
         font: 1.2rem 'Barlow', sans-serif;
         color: #4D646D;
-        margin-left: 0.5rem;
-        margin-top: 1.2rem;
+        margin-left: 1rem;
+        margin-top: 1rem;
         .enseigne{
             select {
-                font: 1.6rem 'Barlow';
+                font: 1.7rem 'Barlow', Italic;
                 color: #FFFFFF;;
                 background-color: transparent!important;
                 border: 0em;
@@ -80,38 +89,23 @@ button{
                 }
             }
         }
-
         .btn_maj{
             background: #F57171 0% 0% no-repeat padding-box;
             box-shadow: 0.3rem 0.3rem 0.3rem #00000029;
-
-
         }
         .btn-back{
-            margin-top: rem(3px);
+            margin-top: 0.3rem;
         }
     }
-
 }
-
-
-.number__enseigne, .number__site {
-    font: 1.5rem "Barlow";
-    color: #7BA2B1;
-    margin-left: 1.2rem;
-    position: relative;
-    top: -0.45rem;
-}
-
 
 /***************************************************** gradient right *****************************************************************/
-
 
 .header__gradient-right {
     flex: 0 0 50%;
     max-width: 50%;
     align-items: center;
-    height: 130px;
+    height: 13rem;
     position: relative;
     z-index: 500;
     &::before {
@@ -122,7 +116,7 @@ button{
         position: absolute;
         width: 100%;
         height: 100%;
-        left: -37px;
+        left: -3.7rem;
     }
     .all__site{
         position: relative;
@@ -130,11 +124,11 @@ button{
         font: 1.2rem 'Barlow', sans-serif;
         color: #4D646D;
         margin-left: 0.5rem;
-        margin-top: 1.2rem;
+        margin-top: 2.2rem;
     }
     .site{
         select {
-            font: 1.8rem 'Barlow';
+            font: 1.7rem 'Barlow';
             color: #FFFFFF;;
             background-color: transparent!important;
             border: 0em;
@@ -159,34 +153,6 @@ button{
     pointer-events: none;
 }
 
-#customer_logo{
-    height: 8rem;
-}
-
-/* .btn-back span{
-    content: "";
-    position: absolute;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid red;
-}
-.btn-back span::after{
-    content: "";
-    position: absolute;
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
-    border-right: 9px solid transparent;
-} */
-
-/* .all__site{
-    margin-left: 0.3rem;
-} */
-
-/* .disabled {
-    background-color: #4D646D;
-    color: #C0CCD1;
-} */
-
 /************************************************************** HEADER BLOCK RIGHT **********************************************************/
 
 .header__block--right {
@@ -194,37 +160,44 @@ button{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width:30%;
-    padding-right: 70px;
+    width:50%;
+    padding-right: 2rem;
 }
 
 .all__user--account {
     display: flex;
     flex-direction: row;
+    .user__logo {
+        background-color: #4F9BAE;
+        border-radius: 50%;
+        border: 0.1rem solid #4F9BAE;
+        width: 4.5rem;
+        height: 4.5rem;
+        .username__first--letter{
+            text-align: center;
+            font-size: 2.6rem;
+            display: block;
+            color: #fff;
+            text-transform: uppercase;
+        }
+    }
+
+    .user {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        .user__name{
+            font: 2rem "Barlow";
+            color: #4F9BAE;
+            text-transform: capitalize;
+        }
+        .user__rule{
+            font: 1.8rem "Barlow";
+            color: #B1C1C8;
+        }
+    }
 }
 
-.user {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-}
-
-.user__logo {
-    background-color: #4F9BAE;
-    border-radius: 50%;
-    border: 1px solid #4F9BAE;
-    width: 45px;
-    height: 45px;
-}
-.username__first--letter{
-    text-align: center;
-    font-size: 2em;
-    margin-top: -0.2em;
-    margin-left: 0.3em;
-    display: inline-block;
-    color: #fff;
-
-}
 
 .clock__all {
 

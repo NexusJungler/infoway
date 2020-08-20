@@ -1,0 +1,263 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Site {% endblock %}
+
+{% block stylesheets %}
+    {{ parent () }}
+    {{ encore_entry_link_tags('site') }}
+{% endblock %}
+
+{% block body %}
+    <main class="main create_site">
+        <div class="main-content">
+            <section class="jumbotron">
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Site' , 'sousTitle': (sousTitle is defined) ? sousTitle : 'Gestion du Sites'} %}
+            </section>
+
+            <section class="wrapper_tabcontent">
+
+                <article class="tab-content-title">
+                    <h3 class="title">Gestion du Site</h3>
+                     <p>Créer</p>
+                </article>
+
+                {#<article class="display site-display ">#}
+                {#</article>#}
+
+                <article>
+
+                    <div class="info-gestion-site">
+                        <ul>
+                            <li>1.Identité</li>
+                            <li>2.Prix</li>
+                            <li>3.écrans</li>
+                            <li>4.Zone de diffusion</li>
+                            <li>5.Contenus thématiques</li>
+                            <li>6.Sources externes</li>
+                            <li>7.Maintenance</li>
+                            <li>8.Autre serives</li>
+                        </ul>
+                    </div>
+
+                </article>
+                <article>
+                    <div class="menu-dropdown-site">
+
+                        <ul class="menu-list-site accordion">
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >1.Identité</a>
+                            </li>
+                            <ul class="menu-submenu accordion-content">
+                                <div class="content-identite">
+                                    <div class="content-identite-site-right">
+                                        <form class="form">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label class="form_label">Nom du site</label>
+                                                    <input type="text" class="form_input">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form_label">Téléphone</label>
+                                                    <input type="text" class="form_input">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="">
+                                                    <label class="form_label">Email</label>
+                                                    <input type="text" class="form_input">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col2">
+                                                    <label class="form_label">Adresse</label>
+                                                    <input type="text" class="form_input" >
+                                                </div>
+                                                <div class="col3">
+                                                    <label class="form_label">code postal</label>
+                                                    <input type="text" class="form_input">
+                                                </div>
+                                                <div class="col3">
+                                                    <label class="form_label">Ville</label>
+                                                    <input type="text" class="form_input">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div>
+                                                    <label class="form_label">Observation</label>
+                                                    <input type="text" class="form_input">
+                                                </div>
+                                            </div>
+
+                                            <div >
+                                                <div>
+                                                    <label class="form_label">Fuseau Horaire</label>
+                                                    <input type="text" class="form_input" >
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div>
+                                                    <label class="form_label">Allumage des écrans par défaut :</label>
+                                                    <input type="text" class="form_input" >
+                                                </div>
+                                                <div>
+                                                    <label class="form_label">Extinction des écrans par défaut :</label>
+                                                    <input type="text" class="form_input" >
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="content-identite-site-left ">
+                                        <div class="contenu_utilisateur">
+                                            <table>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button>Suivant</button>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >2.Prix</a>
+                            </li>
+                            <ul class="menu-submenu accordion-content">
+                                <div class="row">
+                                    <div>
+                                        <label class="form_label">Devise</label>
+                                        <input type="text" class="form_input" >
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <label class="form_label">Devise</label>
+                                        <input type="text" class="form_input" >
+                                    </div>
+
+                                </div>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >3.écrans</a>
+                            </li>
+                            <ul  class="menu-submenu accordion-content">
+                                <div>
+                                    <p>affecter un nouveau device : </p>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td>Retirer l'affectation</td>
+                                            <td>Numéro de série</td>
+                                            <td>Modèle</td>
+                                            <td>SSP</td>
+                                            <td>Adresse MAC</td>
+                                            <td>Firmware Main</td>
+                                            <td>Firmware MAJ</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >4.Zone de diffusion</a>
+                            </li>
+                            <ul  class="menu-submenu accordion-content">
+                                <button class="btn"> Ajoute zone de diffusion</button>
+                                <div class="row">
+                                    <label>Zone de diffusion</label>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Configuration</label>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Affectation par défaut</label>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Modifier affectation</label>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                    <select>
+                                        <option>Menubord</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>écrans sélectionnés</label>
+                                </div>
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >5.Contenus thématiques</a>
+                            </li>
+                            <ul  class="menu-submenu accordion-content">
+
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >6.Sources externes</a>
+                            </li>
+                            <ul  class="menu-submenu accordion-content">
+
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >7.Maintenance</a>
+                            </li>
+                            <ul  class="menu-submenu accordion-content">
+
+                            </ul>
+                            <li id="nav1" class="toggle accordion-toggle2">
+                                <a class="menu-link" >8.Autre serives</a>
+                            </li>
+                            <ul  class="menu-submenu accordion-content">
+
+                            </ul>
+
+
+                        </ul>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('site') }}
+{% endblock javascripts %}

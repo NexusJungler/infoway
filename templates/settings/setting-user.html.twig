@@ -32,127 +32,41 @@
 
                     <form action="" method="post" name="user">
 
-                        <article class="display setting-display ">
+                        <article class="display">
                             <div class="display-content">
                                 <div class="display-btn">
                                     <a class="btn" href="{{ path('user::create') }} " role="button"><i class="fas fa-plus"></i>Créer utilisateur</a>
-                                    <button type="button" class="btn hide-btn "><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
+                                    <button type="button" class="btn hide-btn "><a href=""><i class="fas fa-plus"></i>Créer utilisateur identique</a></button>
                                     <button type="button" class="btn "><i class="far fa-edit"></i>Modifier</button>
                                     <button type="button" class="btn " data-tablelistdelete="user"><i class="fas fa-trash"></i>Supprimer</button>
                                 </div>
                             </div>
-                        </article > 
+                        </article>
 
-                        {# <div class="menu-dropdown-table">
-
-                            <ul class="menu-list-table accordion">
-                                <li id="nav1" class="toggle accordion-toggle">
-                                    <a class="menu-link" >Liste des utilisateurs par ordre alphabétique</a>
-                                </li>
-                            <ul class="menu-submenu accordion-content">
-                                <div class="table">
-                                    <table class="table-custome" >
-                                        <thead  class="table-info thead-content">
-                                            <tr>
-                                                <th>
-                                                    <div class="checkboxs-list" >
-                                                        <div class="dropdown mutliSelect">
-                                                            <div class="select-input">
-                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe">
-                                                                    <span class="multiSel">Orientation</span>
-                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="checkboxs-list" >
-                                                        <div class="dropdown mutliSelect">
-                                                            <div class="select-input">
-                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe2">
-                                                                    <span class="multiSel">Nbre d'écr.</span>
-                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="checkboxs-list" >
-                                                        <div class="dropdown mutliSelect">
-                                                            <div class="select-input">
-                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe3">
-                                                                    <span class="multiSel">TAGS à Choix unique</span>
-                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="checkboxs-list" >
-                                                        <div class="dropdown mutliSelect">
-                                                            <div class="select-input">
-                                                                <button type="button" class="btn-dropdown" id="select-groupe" data-down="down-groupe4">
-                                                                    <span class="multiSel">TAGS</span>
-                                                                    <div class="logo-icone"><i class="fas fa-angle-down"></i></div>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th>Prog.</th>
-                                                <th>Affichier</th>
-                                            </tr>
-                                        </thead>
-
-                                        <div class="div-tbody">
-                                            <tbody class="tbody tbody-content scrollbar-table">
-                                                <tr>
-                                                    <td>Horizonntal</td>
-                                                    <td>5</td>
-                                                    <td>nat</td>
-                                                    <td>gouter</td>
-                                                    <td><i class="icon icon-iy-programming"></i></td>
-                                                    <td><i class="icon icon-iy-programming"></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Horizonntal</td>
-                                                    <td>5</td>
-                                                    <td>nat</td>
-                                                    <td>gouter</td>
-                                                    <td><i class="icon icon-iy-programming"></i></td>
-                                                    <td><i class="icon icon-iy-programming"></i></td>
-                                                </tr>
-                                            </tbody>
-                                        </div>
-
-                                    </table>
-                                </div>
-                            </ul>
-
-                        </ul>
-                        </div> #}
-
-
+                        <article class="content_btn">
+                            <button type="button" class="btn">Trame modèle vierge</button>
+                            <button type="button" class="btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="15" viewBox="0 0 23.242 21.951"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(-4 -4)"><path class="a" d="M8,20.14v.646c2.183-3.329,4.648-5.1,7.747-5.165v3.874a1.393,1.393,0,0,0,1.476,1.291,1.518,1.518,0,0,0,1.14-.5c2.5-2.62,7.714-7.888,7.714-7.888s-5.218-5.271-7.715-7.924A1.629,1.629,0,0,0,17.223,4a1.392,1.392,0,0,0-1.476,1.291V9.165C9.73,9.165,8,15.455,8,20.14Z" transform="translate(1.165 0)"/><path class="a" d="M5.291,25.66H23.368a1.291,1.291,0,0,0,1.291-1.291V16.562c-.857.873-1.761,1.8-2.582,2.643v3.872H6.582V7.582h9.039V5H5.291A1.291,1.291,0,0,0,4,6.291V24.368A1.291,1.291,0,0,0,5.291,25.66Z" transform="translate(0 0.291)"/></g></svg>
+                                Exporter Utilisateurs
+                            </button>
+                            <button type="button" class="btn">Gestion des rôles</button>
+                        </article>
 
                         <article class="setting-user-table">
+                            <div class="bloc_title">
+                                <p>Liste des utilisateurs</p>
+                            </div>
                             <div class="table">
                                 <table class="table-custome" >
                                     <thead  class="table-info thead-content">
                                         <tr>
-                                            <th>Nom</th>    
-                                            <th>Prenom</th>
-                                            <th>Email</th> 
-                                            <th>Téléphone</th>
-                                            <th>Nbre Sites</th>
-                                            <th></th>  
-                                            <th></th> 
+                                            <th><input type="checkbox"></th>
+                                            <th>Nom de l'utilisateur</th>
+                                            <th>Rôle</th>
+                                            <th>Périmètres</th>
+                                            <th>Enseignes</th>
+                                            <th>Login</th>
+                                            <th>Contact</th>
                                         </tr>
                                     </thead>
                                     <tbody class="tbody tbody-content scrollbar-table">
@@ -160,26 +74,14 @@
                                     {%  if usersInCustomer is defined and usersInCustomer is iterable  %}
                                         {%  for  userInCustomer in usersInCustomer  %}
                                             <tr>
-                                                <td>{#
-                                                    #}{% if  userInCustomer.firstName is defined %}{#
-                                                    #}{{ userInCustomer.firstName }}{#
-                                                    #}{%  endif %}{#
-                                                #}</td>
-                                                <td>{#
-                                                    #}{% if  userInCustomer.lastName is defined %}{#
-                                                    #}{{ userInCustomer.lastName }}{#
-                                                    #}{%  endif %}{#
-                                                #}</td>
-                                                <td>{#
-                                                    #}{% if  userInCustomer.email is defined %}{#
-                                                    #}{{ userInCustomer.email }}{#
-                                                    #}{%  endif %}{#
-                                                #}</td>
-                                                <td>{#
-                                                    #}{% if  userInCustomer.phoneNumber is defined %}{#
-                                                    #}{{ userInCustomer.phoneNumber }}{#
-                                                    #}{%  endif %}{#
-                                                #}</td>
+                                                <td>
+                                                    <input type="checkbox" >
+                                                </td>
+                                                <td>{% if  userInCustomer.firstName is defined %}
+                                                        {{ userInCustomer.firstName }} {{ userInCustomer.lastName }}
+                                                    {%  endif %}
+                                                </td>
+                                                <td> Rôle </td>
                                                 <td>
                                                     {% if  userInCustomer.sitesIds is defined and userInCustomer.sitesIds is iterable %}
                                                     {{ userInCustomer.sitesIds | length }}
@@ -190,10 +92,20 @@
                                                         <a class="btn"  href="{{path('user::edit',{ id:userInCustomer.Id }) }}" role="button"><i class="fas fa-plus"></i>Modifier</a>
                                                     {%  endif %}
                                                 </td>
+                                                <td>
+                                                    {% if  userInCustomer.email is defined %}
+                                                        {{ userInCustomer.email }}
+                                                    {%  endif %}
+                                                </td>
+                                                <td>
+                                                    {% if  userInCustomer.phoneNumber is defined %}
+                                                        {{ userInCustomer.phoneNumber }}
+                                                    {%  endif %}
+                                                </td>
                                             </tr>
                                         {% endfor  %}
-                                    {%  endif  %}{#
-                                    #}</tbody>
+                                    {%  endif  %}
+                                    </tbody>
                                 </table>
                             </div> 
                         </article>

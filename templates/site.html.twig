@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Produits {% endblock %}
+{% block title %} Site {% endblock %}
 
 {% block stylesheets %}
     {{ parent () }}
@@ -11,14 +11,13 @@
     <main class="main main-site">
         <div class="main-content">
             <section class="jumbotron">
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Site' } %}
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Site' , 'sousTitle': (sousTitle is defined) ? sousTitle : 'Liste des Sites'} %}
             </section>
 
             <section class="wrapper_tabcontent">
                 <article class="display site-display ">
                     <div class="display-content">
                         <div class="display-btn">
-                            <p>site : </p>
                             <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Crèer un site </button>
                             <button type="button" class="btn duplicate-table"><a href=""><i class="fas fa-plus"></i>Dupliquer</a></button>
                             <button type="button" class="btn modified-table"><i class="far fa-edit"></i>Modifier</button>
@@ -26,22 +25,23 @@
                             <button type="button" class="btn tags-table">TAGS</button>
                         </div>
                     </div>
-                </article >
+                </article>
+
+
 
                 <article class="site-container">
 
                     <div class="filters_container">
 
-                        <div class="filters_select_container">
-
-                            <div class="display-content-poste">
+                        <div class="filters_select_container filters_select_site">
+                            <div class="display-content-poste" >
                                 <button type="button" class="drop-btn ">
-                                    <input type="checkbox" value="Menuboard">
-                                    <label class="container-input "> Catégories</label>
-                                     <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
+                                    <input type="checkbox" value="paris">
+                                    <label class="container-input "> Menuboard</label>
+                                    <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
                                 </button>
 
-                                <div class="display-content-down filter_by_categories">
+                                <div class="display-content-down filter_by_menuboard">
                                     {#{% for categorie in categories %}#}
                                         {#<div class="product-select-col">#}
                                             {#<label class="container-input">{{ categorie.name }}#}
@@ -62,25 +62,29 @@
                                             <span class="container-rdo"></span>
                                         </label>
                                     </div>
+                                    <div class="product-select-col">
+                                        <label class="container-input">Entrée de salle
+                                            <input type="checkbox" value="Entrée">
+                                            <span class="container-rdo"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="container-input">Priceboard
+                                            <input type="checkbox" value="Priceboard">
+                                            <span class="container-rdo"></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="display-content-poste">
+                            <div class="display-content-poste display-content-criterion">
                                 <button type="button" class="drop-btn ">
-                                    <input type="checkbox" value="Menuboard">
-                                    <label class="container-input "> 5 ECR</label>
+                                    <input type="checkbox" value="Critères">
+                                    <label class="container-input ">Critères</label>
                                     <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
                                 </button>
 
-                                <div class="display-content-down filter_by_categories">
-                                    {#{% for categorie in categories %}#}
-                                    {#<div class="product-select-col">#}
-                                    {#<label class="container-input">{{ categorie.name }}#}
-                                    {#<input type="checkbox" value="{{ categorie.id }}">#}
-                                    {#<span class="container-rdo"></span>#}
-                                    {#</label>#}
-                                    {#</div>#}
-                                    {#{% endfor %}#}
+                                <div class="display-content-down filter_by_criterion">
+
                                     <div class="product-select-col">
                                         <label class="container-input">Menuboard
                                             <input type="checkbox" value="Menuboard">
@@ -93,13 +97,42 @@
                                             <span class="container-rdo"></span>
                                         </label>
                                     </div>
+
                                 </div>
                             </div>
+                            <div class="display-content-poste">
+                                <button type="button" class="drop-btn ">
+                                    <input type="checkbox" value="Tags">
+                                    <label class="container-input ">Tags</label>
+                                    <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
+                                </button>
 
+                                <div class="display-content-down filter_by_tags">
+
+                                    <div class="product-select-col">
+                                        <label class="container-input">TF06
+                                            <input type="checkbox" value="TF06">
+                                            <span class="container-rdo"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="container-input">TF05
+                                            <input type="checkbox" value="TF05">
+                                            <span class="container-rdo"></span>
+                                        </label>
+                                    </div>
+                                    <div class="product-select-col">
+                                        <label class="container-input">PROMO
+                                            <input type="checkbox" value="PROMO">
+                                            <span class="container-rdo"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="filters_btn_container">
-                            <button type="button" class="btn"> FITRER </button>
+                            <button type="button" class="btn site-btn-filter"> FITRER </button>
                         </div>
 
                     </div>
@@ -141,7 +174,6 @@
                                                 <span>Offres</span>
                                             </div>
                                         </div>
-
                                     </th>
 
                                     <th>TAGS</th>
@@ -150,14 +182,15 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody-content">
+
                                     <tr>
                                         <td><input type="checkbox" name="select" id="selectAll"></td>
                                         <td>Q047</td>
-                                        <td data-format="Montpellier" class="city">Montpellier</td>
-                                        <td class="t">c
-                                            {#<span>Menuboard</span>#}
-                                            {#<span>Menuboard</span>#}
-                                            {#<span>Menuboard</span>#}
+                                        <td data-format="Montpellier" class="city montpellier">montpellier</td>
+                                        <td class="zone_diffusion">
+                                            <span> Menuboard </span>
+                                            <span> Entrée de salle</span>
+                                            <span> Vitrine</span>
                                         </td>
                                         <td>12 / 04 / 2020</td>
                                         <td>
@@ -165,64 +198,87 @@
                                                 <p class="container-criterion">Gamme Tous</p>
                                                 <p class="container-criterion">ptit Dej</p>
                                             </div>
-
                                         </td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: #000000;"></span>
+                                                <span class="current-tags-name">BBQ</span>
+                                            </p>
+
                                         </td>
                                         <td>Medium</td>
                                         <td>Amandine M.</td>
                                         <td>  0619301547 </td>
                                     </tr>
+
                                     <tr>
                                         <td><input type="checkbox" name="select" id="selectAll"></td>
                                         <td>Q047</td>
-                                        <td data-format="Paris" class="city">paris</td>
-                                        <td class="t">b</td>
+                                        <td data-format="Paris" class="city paris">paris</td>
+                                        <td class="zone_diffusion" >
+                                            <span> Menuboard</span>
+                                            <span> Priceboard</span>
+                                        </td>
                                         <td>12 / 04 / 2020</td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
-                                            <p class="container-tags"> Dej</p>
+                                            <p class="container-criterion" >Ptit</p>
+                                            <p class="container-criterion" > Dej</p>
                                         </td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: #000000;"></span>
+                                                <span class="current-tags-name">TF06</span>
+                                            </p>
                                         </td>
                                         <td>Medium</td>
                                         <td>Amandine M.</td>
-                                        <td>  0619301547 </td>
+                                        <td>0619301547</td>
                                     </tr>
+
                                     <tr>
                                         <td><input type="checkbox" name="select" id="selectAll"></td>
                                         <td>Q047</td>
                                         <td data-format="Paris" class="city">uk</td>
-                                        <td class="t">adggfd</td>
+                                        <td class="zone_diffusion">
+                                            <span data-zone="Vitrine">Vitrine</span>
+                                        </td>
                                         <td>12 / 04 / 2020</td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
-                                            <p class="container-tags"> Dej</p>
+                                            <p class="container-criterion" >Ptit</p>
+                                            <p class="container-criterion" > Dej</p>
                                         </td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: #000000;"></span>
+                                                <span class="current-tags-name">TF05</span>
+                                            </p>
                                         </td>
                                         <td>Medium</td>
                                         <td>Amandine M.</td>
                                         <td>  0619301547 </td>
-                                    </tr><tr>
+                                    </tr >
+
+                                    <tr >
                                         <td><input type="checkbox" name="select" id="selectAll"></td>
                                         <td>Q047</td>
-                                        <td data-format="Paris" class="city">paris</td>
-                                        <td class="t">d</td>
+                                        <td data-format="Paris" class="city paris">paris</td>
+                                        <td class="zone_diffusion">
+                                            <span>Priceboard</span>
+                                        </td>
                                         <td>12 / 04 / 2020</td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
-                                            <p class="container-tags"> Dej</p>
+                                            <p class="container-criterion" >Ptit</p>
+                                            <p class="container-criterion" > Dej</p>
                                         </td>
                                         <td>
-                                            <p class="container-tags">Ptit</p>
+                                            <p class="container-tags">
+                                                <span class="mini-cercle" style="background: #000000;"></span>
+                                                <span class="current-tags-name">PROMO</span>
+                                            </p>
                                         </td>
                                         <td>Medium</td>
                                         <td>Amandine M.</td>
-                                        <td>  0619301547 </td>
+                                        <td>0619301547</td>
                                     </tr>
 
                             </tbody>
@@ -231,110 +287,6 @@
 
                     </div>
                 </article>
-
-                {#<article class="table">#}
-                    {#<table class="table-custome table-site" >#}
-                        {#<thead  class="table-info thead-info">#}
-                            {#<tr>#}
-                                {#<th >#}
-
-                                    {#Site SWC#}
-                                    {#<button><i class="fas fa-plus" aria-hidden="true"></i></button>#}
-                                {#</th>#}
-                                {#<th class="header__item societe">#}
-                                    {#<a id="f-name" class="filter" href="#">#}
-                                        {#Société / Marque#}
-                                    {#</a>#}
-                                {#</th>#}
-                                {#<th class="groupe">#}
-                                    {#Groupe de prix#}
-                                {#</th>#}
-                                {#<th id="f-tags" class="selectif">#}
-                                    {#Critéré sélectif obligatoire<span> (l'un ou l'autre)</span>#}
-                                {#</th>#}
-                                {#<th class="critere">#}
-                                    {#Critérés#}
-                                {#</th>#}
-                            {#</tr>#}
-                        {#</thead>#}
-                        {#<tbody class="tbody tbody-content scrollbar-table">#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="1">Q040</td>#}
-                                {#<td class="societe"> <div class="tags-table"> <p class="container-tags">Quick cie</p> <p class="container-tags">Quick cie</p></div></td>#}
-                                {#<td class="groupe"><div class="tags-table"> <p class="container-tags">MEDIUM</p></div></td>#}
-                                {#<td class="selectif"><div class="tags-table"> <p class="container-tags">NAT</p></div></td>#}
-                                {#<td class="critere">#}
-                                    {#<div>#}
-                                        {#<p class="container-tags">Ptit</p>#}
-                                        {#<p class="container-tags"> Dej</p>#}
-                                        {#<p class="container-tags"> Anniv</p>#}
-                                    {#</div>#}
-                                {#</td>                  #}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="2">Q041</td>#}
-                                {#<td class="societe"><div> <p>Jack Russell</p></div></td>#}
-                                {#<td class="groupe" ><div> <p>PREMIUM</p></div></td>#}
-                                {#<td class="selectif"><div> <p>HALAL</p></div></td>#}
-                                {#<td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     #}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="2">Q041</td>#}
-                                {#<td class="societe"><div> <p>Jack Russell</p></div></td>#}
-                                {#<td class="groupe" ><div> <p>PREMIUM</p></div></td>#}
-                                {#<td class="selectif"><div> <p>HALAL</p></div></td>#}
-                                {#<td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     #}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="2">Q041</td>#}
-                                {#<td class="societe"><div> <p>Jack Russell</p></div></td>#}
-                                {#<td class="groupe" ><div> <p>PREMIUM</p></div></td>#}
-                                {#<td class="selectif"><div> <p>HALAL</p></div></td>#}
-                                {#<td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     #}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="2">Q041</td>#}
-                                {#<td class="societe"><div> <p>Jack Russell</p></div></td>#}
-                                {#<td class="groupe" ><div> <p>PREMIUM</p></div></td>#}
-                                {#<td class="selectif"><div> <p>HALAL</p></div></td>#}
-                                {#<td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     #}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="2">Q041</td>#}
-                                {#<td class="societe"><div> <p>Jack Russell</p></div></td>#}
-                                {#<td class="groupe" ><div> <p>PREMIUM</p></div></td>#}
-                                {#<td class="selectif"><div> <p>HALAL</p></div></td>#}
-                                {#<td class="critere"><div> <p>Ptit</p><p> Dej</p><p> Anniv</p></div></td>     #}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td><input type="checkbox" name="select" data-input-select="3">Q042</td>#}
-                                {#<td class="societe"><div> <p>Quick cie </p></div></td>#}
-                                {#<td class="groupe" ><div> <p>MEDIUM</p></div></td>#}
-                                {#<td class="selectif"><div> <p>NAT</p></div></td>#}
-                                {#<td class="critere">#}
-                                        {#<div id="menu">#}
-                                            {#<ul id="menu-closed">#}
-                                                {#<li><p class="container-tags">Start</p></li>#}
-                                                {#<li><p class="container-tags"> Events</p></li>#}
-                                                {#<li><p>Calendar</p></li>#}
-                                                {#<li><p>Portfolio</p></li>#}
-                                                {#<li><p>Blog</p></li>#}
-                                                {#<li><p>Products</p></li>#}
-                                                {#<li><p>Things</p></li>#}
-                                                {#<li><p>About</p></li>#}
-                                                {#<li><p>Contact</p></li>#}
-                                                {#<li><p>Login</p></li>#}
-                                                {#<li><a href="#menu-closed">X</a></li>#}
-                                                {# <li><a href="#menu">...</a></li> #}
-                                                {#<li><button id="text" >...</button></li>#}
-                                            {#</ul>#}
-                                        {#</div>#}
-                                {#</td>  #}
-                            {#</tr>#}
-                        {#</tbody>#}
-                        {##}
-                    {#</table>    #}
-                {#</article>  #}
 
             </section>
         </div>
