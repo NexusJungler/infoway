@@ -20,8 +20,12 @@ class UploadVideoSynchroSubTool extends SubTool {
             duplicate_name: "Ce nom est déjà utilisé",
             duplicate_position : "Cette position est déjà utilisée",
             exceed_position: "Cette position dépasse le nombre d'écran disponible",
-            invalid_synchro_element_id: "Une erreur est survenue, veuillez réessayer"
+            invalid_element_id: "Une erreur est survenue, veuillez réessayer",
         }
+
+        this.__existedSynchroNames = $('.step_3').data('existed_synchro');
+        $('.step_3').removeAttr('data-existed_synchro');
+
     }
 
     /**
@@ -63,10 +67,10 @@ class UploadVideoSynchroSubTool extends SubTool {
                 if(synchroElement.getName() === element.name)
                 {
                     synchroElement.setId( element.id )
-                                  .setWidth(element.width)
-                                  .setHeight(element.height)
-                                  .setExtension(element.extension)
-                                  .setCodec( element.codec );
+                        .setWidth(element.width)
+                        .setHeight(element.height)
+                        .setExtension(element.extension)
+                        .setCodec( element.codec );
                 }
 
             } )
@@ -372,10 +376,10 @@ class UploadVideoSynchroSubTool extends SubTool {
                                 nextSynchroElement.css({ left: ( parseInt(nextSynchroElement.css('left')) - nextSynchroElement.outerWidth(true) ) + 'px' });
 
                                 nextSynchroElement.attr('data-order', currentElementOnDrag.attr('data-order'))
-                                                  .find('.synchro_element_position_container .synchro_element_position').val(currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
+                                    .find('.synchro_element_position_container .synchro_element_position').val(currentElementOnDrag.find('.synchro_element_position_container .synchro_element_position').val());
 
                                 currentElementOnDrag.attr('data-order', tempOrder)
-                                                    .find('.synchro_element_position_container .synchro_element_position').val(tempPosition);
+                                    .find('.synchro_element_position_container .synchro_element_position').val(tempPosition);
 
 
                                 prevSynchroElement = nextSynchroElement;
@@ -416,7 +420,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                             this.sortSynchroElementsByAttribute('data-order');
 
                             $('.synchro_elements_container .synchro_element').removeAttr('style')
-                                                                    .removeAttr('data-order');
+                                .removeAttr('data-order');
 
                         }
                     })
@@ -587,7 +591,23 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                         if(input.hasClass('synchro_name'))
                         {
-                            this.__synchro.setName(inputValue);
+
+                            if( typeof this.__existedSynchroNames !== "undefined" )
+                            {
+
+                                if(!this.__existedSynchroNames.includes(inputValue + ", "))
+                                {
+                                    this.__synchro.setName(inputValue);
+                                }
+                                else
+                                {
+                                    input.parent().find('.error').text(this.__errors.duplicate_name).removeClass( 'hidden' );
+
+                                    input.addClass('invalid');
+                                }
+
+                            }
+
                         }
                         else
                         {
@@ -656,10 +676,22 @@ class UploadVideoSynchroSubTool extends SubTool {
 
                                 response.errors.forEach( (error) => {
 
-                                    if(error.text === "Invalid synchro element id")
+                                    if(error.text === "Invalid synchro id")
                                     {
-                                        $(`#synchro_edit_form #${ error.subject } .form_input.synchro_element_name`).addClass('invalid');
-                                        $(`#synchro_edit_form #${ error.subject } .synchro_element_name_container .error`).text(this.__errors.invalid_synchro_element_id).removeClass('hidden');
+                                        $(`#synchro_edit_form .form_input.synchro_name`).addClass('invalid');
+                                        $(`#synchro_edit_form .synchro_name_container .error`).text(this.__errors.invalid_element_id).removeClass('hidden');
+                                    }
+
+                                    else if(error.text === "Duplicate synchro name")
+                                    {
+                                        $(`#synchro_edit_form .form_input.synchro_name`).addClass('invalid');
+                                        $(`#synchro_edit_form .synchro_name_container .error`).text(this.__errors.duplicate_name).removeClass('hidden');
+                                    }
+
+                                    else if(error.text === "Invalid synchro element id")
+                                    {
+                                        $(`#synchro_edit_form #${ error.subject } .form_input`).addClass('invalid');
+                                        $(`#synchro_edit_form #${ error.subject } .synchro_element_name_container .error`).text(this.__errors.invalid_element_id).removeClass('hidden');
                                     }
 
                                     else if(error.text === "Duplicate synchro element name")
@@ -680,6 +712,8 @@ class UploadVideoSynchroSubTool extends SubTool {
                                     }
 
                                 } )
+
+                                this.__$location.find('.save_synchro_edits_button').attr('disabled', true);
 
                             }
                             else

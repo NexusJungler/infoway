@@ -2,21 +2,21 @@
 
 namespace App\Repository\Admin;
 
-use App\Entity\Admin\VideoThematicTheme;
+use App\Entity\Admin\VideoThematicThematicTheme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method VideoThematicTheme|null find($id, $lockMode = null, $lockVersion = null)
- * @method VideoThematicTheme|null findOneBy(array $criteria, array $orderBy = null)
- * @method VideoThematicTheme[]    findAll()
- * @method VideoThematicTheme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method VideoThematicThematicTheme|null find($id, $lockMode = null, $lockVersion = null)
+ * @method VideoThematicThematicTheme|null findOneBy(array $criteria, array $orderBy = null)
+ * @method VideoThematicThematicTheme[]    findAll()
+ * @method VideoThematicThematicTheme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VideoThematicThemeRepository extends ServiceEntityRepository
+class VideoThematicThematicThemeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, VideoThematicTheme::class);
+        parent::__construct($registry, VideoThematicThematicTheme::class);
     }
 
     // /**

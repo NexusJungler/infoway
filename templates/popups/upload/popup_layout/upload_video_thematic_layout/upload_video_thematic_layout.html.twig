@@ -22,7 +22,7 @@
             </tbody>
             {{ form_end(uploadMediaForm) }}#}
 
-            <tbody class="file_to_characterisation_list medias_collection">
+            <tbody class="file_to_characterisation_list medias_collection" data-thematic_theme_prototype="{{ (videoThematicThemesPrototype is defined) ? videoThematicThemesPrototype : "" }}">
 
             </tbody>
 
@@ -36,12 +36,12 @@
 
     <table>
         <thead>
-            <tr>
-                <th>Médias</th>
-                <th>Nom</th>
-                <th>Tags affectés</th>
-                <th>Thèmes associés</th>
-            </tr>
+        <tr>
+            <th>Médias</th>
+            <th>Nom</th>
+            <th>Tags affectés</th>
+            <th>Thèmes associés</th>
+        </tr>
         </thead>
 
         <tbody class="media_characterisation_resume_list">

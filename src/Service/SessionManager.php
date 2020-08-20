@@ -22,6 +22,9 @@ class SessionManager
         if(is_null($this->get($name)))
             $this->__session->set($name, $value);
 
+        else
+            $this->replace($name, $value);
+
         return $this;
 
     }
@@ -61,17 +64,18 @@ class SessionManager
         // if session variable is array
         if(is_array($this->get($name)))
         {
+
             $values = $this->addMissingKeysInArray($name, $values);
 
-            $this->__session->replace([
+            // la methode replace supprime certaines variable de la session !!
+            /*$this->__session->replace([
                 $name => $values
-            ]);
+            ]);*/
+
         }
-        else
-        {
-            $this->remove($name);
-            $this->set($name, $values);
-        }
+
+        $this->remove($name);
+        $this->set($name, $values);
 
         //dd($this->get($name), $values);
 

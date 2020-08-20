@@ -44,12 +44,10 @@ class AppController extends AbstractController
 
         $customers = $customerRepository->findAll();
 
-        ($sessionManager->get('customers') === null) ?
-            $sessionManager->set('customers', $customers) :
-            $sessionManager->replace('customers', $customers);
+        $sessionManager->set('customers', $customers);
 
-        // par default, on selectionne la première enseigne de la liste
         $sessionManager->set('current_customer', $customers[0]);
+
 
         //dump($location);
 

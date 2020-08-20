@@ -114,7 +114,7 @@ class UploadHandlerTool extends SubTool
 
         this.getAllAvailableAssociationItems();
 
-        //this.showStep(3)
+        this.showStep(3)
 
     }
 

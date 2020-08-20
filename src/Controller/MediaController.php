@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
+use App\Entity\Admin\ThematicTheme;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Image;
@@ -71,7 +72,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
+     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET"},
      * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
      * @param Request $request
      * @param string $mediasDisplayedType
@@ -79,7 +80,7 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
+    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1, SessionManager $sessionManager)
     {
 
         $managerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
@@ -91,6 +92,8 @@ class MediaController extends AbstractController
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
         $incrusteRepo = $manager->getRepository(Incruste::class)->setEntityManager( $manager );
         $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
+        $synchroRepo = $manager->getRepository(Synchro::class)->setEntityManager( $manager );
+        $videoThematicThemeRep = $this->getDoctrine()->getManager( 'default' )->getRepository(ThematicTheme::class);
 
         $products = $productRepo->findAll();
         $categories = $categoryRepo->findAll();
@@ -101,6 +104,28 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
+        if($mediasDisplayedType === "video_thematic")
+        {
+            //$videoThematicThemes = $videoThematicThemeRep->findAll();
+            $videoThematicThemesPrototype = "<select name='__name__' id='__id__'>";
+
+            $videoThematicThemesPrototype .= "<option value=''>Choisir un thème</option>";
+
+            foreach ($videoThematicThemeRep->findAll() as $theme)
+            {
+                $videoThematicThemesPrototype .= "<option value='" . $theme->getId() . "'>" .$theme->getName() . "</option>";
+            }
+
+            $videoThematicThemesPrototype .= "</select>";
+        }
+
+        if($mediasDisplayedType === "video_synchro")
+        {
+            $allSynchrosNames = $synchroRepo->findAllNames();
+
+            $this->__sessionManager->set('existed_synchro_names', $allSynchrosNames) ;
+        }
+
         if($this->__sessionManager->get('mediatheque_medias_number') === null)
             $this->__sessionManager->set('mediatheque_medias_number', 15);
 
@@ -110,7 +135,6 @@ class MediaController extends AbstractController
             throw new NotFoundHttpException(sprintf("No media(s) found for this page !"));
 
         $allMediasNames = $mediaRepo->findAllNames();
-        $allSynchrosNames = 0;
 
         //dd($numberOfPages);
 
@@ -155,7 +179,9 @@ class MediaController extends AbstractController
             'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
             'archivedMedias' => $allArchivedMedias,
             'allMediasNames' => $allMediasNames,
-            'allSynchrosNames' => $allSynchrosNames,
+            'allSynchrosNames' => isset($allSynchrosNames) ? $allSynchrosNames : [],
+            //'videoThematicThemes' => isset($videoThematicThemes) ? $videoThematicThemes : []
+            'videoThematicThemesPrototype' => isset($videoThematicThemesPrototype) ? $videoThematicThemesPrototype : "",
         ]);
 
     }
@@ -315,7 +341,7 @@ class MediaController extends AbstractController
         $path = $root . '/' . $file['name'];
 
         move_uploaded_file($file['tmp_name'], $path);
-       // copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
+        // copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
 
         /*$root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
@@ -412,7 +438,7 @@ class MediaController extends AbstractController
 
                 $media = new SynchroElement();
                 $media->setPosition($synchroDatas->__position);
-                      //->addSynchro($synchro);
+                //->addSynchro($synchro);
 
             }
 
@@ -496,6 +522,26 @@ class MediaController extends AbstractController
 
         $synchro->setName($formData['name']);
 
+        if( in_array($formData['name'], $this->__sessionManager->get('existed_synchro_names')) )
+        {
+
+            $errors[] = [
+                'subject' => "synchro",
+                'text' => "Duplicate synchro name"
+            ];
+
+        }
+
+        elseif( (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) && (intval($formData['synchro_id']) <= 0) )
+        {
+
+            $errors[] = [
+                'subject' => "synchro",
+                'text' => "Invalid synchro id"
+            ];
+
+        }
+
         $synchroElementNames = array_map(fn($synchroElementInfos) => $synchroElementInfos['name'] , $formData['synchros_elements'] );
         $synchroElementPositions = array_map(fn($synchroElementInfos) => $synchroElementInfos['position'] , $formData['synchros_elements'] );
 
@@ -565,10 +611,10 @@ class MediaController extends AbstractController
         ];
 
         return new JsonResponse([
-            'status' => (empty($errors) ? '200 OK' : 'NOK'),
-            'errors' => $errors,
-            'synchro_infos' => $synchroInfos
-        ]);
+                                    'status' => (empty($errors) ? '200 OK' : 'NOK'),
+                                    'errors' => $errors,
+                                    'synchro_infos' => $synchroInfos
+                                ]);
 
     }
 
@@ -658,7 +704,7 @@ class MediaController extends AbstractController
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
         //dd("ok");
-        
+
         /*
         // delete source
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
@@ -775,7 +821,7 @@ class MediaController extends AbstractController
     {
 
         $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) )
-                                         ->getRepository(Media::class);
+                          ->getRepository(Media::class);
 
         $mediaInfos = $mediaRepo->getMediaInfosForInfoSheetPopup(intval( $request->request->get('mediaId') ));
 
@@ -826,16 +872,16 @@ class MediaController extends AbstractController
         $customerName = strtolower($this->__sessionManager->get('current_customer')->getName());
 
         $mediaMiniatureExist = file_exists($this->__parameterBag->get('project_dir') . "/public/miniatures/" .
-                    $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
-                    . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+                                           $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
+                                           . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
         $mediaProgrammingMouldList = $this->__serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
 
         return new JsonResponse([
-            'mediaMiniatureExist' => $mediaMiniatureExist,
-            'customer' => $customerName,
-            'mediaProgrammingMouldList' => $mediaProgrammingMouldList
-        ]);
+                                    'mediaMiniatureExist' => $mediaMiniatureExist,
+                                    'customer' => $customerName,
+                                    'mediaProgrammingMouldList' => $mediaProgrammingMouldList
+                                ]);
 
     }
 
@@ -969,7 +1015,12 @@ class MediaController extends AbstractController
     public function updateNumberOfMediasDisplayedInMediatheque(Request $request)
     {
 
-        $this->updateMediathequeMediasNumber($request->request->get('mediatheque_medias_number'));
+        $number = intval($request->request->get('mediatheque_medias_number'));
+
+        if(!is_int($number) && $number <= 0)
+            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+        $this->__sessionManager->set('mediatheque_medias_number', $number);
 
         return new Response( "200 OK" );
 
@@ -1163,7 +1214,7 @@ class MediaController extends AbstractController
 
         return  'low';
     }
-    
+
     private function getMediasForMediatheque(ObjectManager &$manager, Request &$request, bool $serializeResults = false)
     {
 
@@ -1235,20 +1286,6 @@ class MediaController extends AbstractController
             $numberOfPages,
             $numberOfMediasAllowedToDisplayed,
         ];
-
-    }
-
-    private function updateMediathequeMediasNumber($number)
-    {
-
-        $number = intval($number);
-
-        if(!is_int($number))
-            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
-
-        ( $this->__sessionManager->get('mediatheque_medias_number') !== null ) ?
-            $this->__sessionManager->replace('mediatheque_medias_number', $number) :
-            $this->__sessionManager->set('mediatheque_medias_number', $number);
 
     }
 
@@ -1409,7 +1446,7 @@ class MediaController extends AbstractController
             }
 
         }
-        
+
         $card .= "<div class='media_name_container'>
                     <span class='media_name'>$mediaName</span>
                 </div>";

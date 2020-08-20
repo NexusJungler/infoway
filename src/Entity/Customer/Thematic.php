@@ -16,7 +16,7 @@ trait Thematic
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
     private $theme;
 
@@ -30,12 +30,12 @@ trait Thematic
         return $this->id;
     }
 
-    public function getTheme(): string
+    public function getTheme(): int
     {
         return $this->theme;
     }
 
-    public function setTheme(string $theme): self
+    public function setTheme(int $theme): self
     {
         $this->theme = $theme;
 
