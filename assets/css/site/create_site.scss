@@ -1,4 +1,5 @@
 .create_site{
+    font-family: "Barlow";
 
     .info-gestion-site{
         margin-top: 2rem;
@@ -141,5 +142,47 @@
     /**************************** Prix ************************/
 
 
+
+    .content_site_price{
+        .row{
+            display: flex;
+            padding-bottom: 2rem;
+            .col{
+                width: 100%;
+                display: flex;
+            }
+            .col2{
+                width: 50%;
+                display: flex;
+                margin-right: 2rem;
+                &:last-child{
+                    margin-right: 0;
+                }
+            }
+            .col3{
+                width: 15%;
+                display: flex;
+                margin-right: 2rem;
+                &:last-child{
+                    margin-right: 0;
+                }
+            }
+        }
+
+        label{
+            font-size: 1.3rem;
+            color: #4D646D;
+        }
+        select{
+            border: 1px solid #C0CCD1;
+            border-radius: 9px;
+            max-width: 30rem;
+            height: 3rem;
+            width: 100%;
+            padding: 0 1rem;
+            color: #4D646D;
+            font-size: 1.4rem;
+        }
+    }
 
 }

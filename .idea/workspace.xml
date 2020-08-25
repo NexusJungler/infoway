@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b237bda7-15f6-4ae8-877d-6e58489f2c4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/new_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/new_app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/header_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header_menu.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/site/create_site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/site/create_site.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/site/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -241,7 +234,7 @@
       <workItem from="1598022556271" duration="1215000" />
       <workItem from="1598345874743" duration="157000" />
       <workItem from="1598346115086" duration="240000" />
-      <workItem from="1598346399350" duration="11962000" />
+      <workItem from="1598346399350" duration="13414000" />
     </task>
     <servers />
   </component>
