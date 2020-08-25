@@ -24,7 +24,7 @@ class MediaType extends AbstractType
     {
 
         $builder->add('id', TextType::class, [
-                'label' => 'Id',
+                'label' => false,
                 'attr' => [
                     'class' => 'media_id',
                     'value' => '__MEDIA_ID__',
@@ -33,7 +33,7 @@ class MediaType extends AbstractType
             ])
 
             ->add('name', TextType::class, [
-                'label' => 'Nom',
+                'label' => false,
                 'attr' => [
                     'class' => 'media_name',
                     'value' => '__MEDIA_NAME__',
@@ -41,17 +41,17 @@ class MediaType extends AbstractType
                 ]
             ])
 
-            ->add('mediaType', TextType::class, [
-                'label' => 'Type du media',
+            /*->add('mediaType', TextType::class, [
+                'label' => false,
                 'attr' => [
                     'class' => 'media_type',
                     'value' => '__MEDIA_TYPE__',
                     'disabled' => true,
                 ]
-            ])
+            ])*/
 
             ->add('extension', TextType::class, [
-                'label' => 'Extension',
+                'label' => false,
                 'attr' => [
                     'class' => 'media_extension',
                     'value' => '__MEDIA_EXTENSION__',
@@ -59,21 +59,26 @@ class MediaType extends AbstractType
                 ]
             ])
 
-            ->add('diffusionStart', DateType::class, [
-                'label' => 'Début de diffusion',
+            ->add('diffusionStart', DateTimeType::class, [
+                'label' => 'Du',
+                'widget' => 'single_text',
+                'input_format' => 'd-m-Y H:i',
                 'attr' => [
                     'class' => 'media_diffusion_date_start',
                 ]
             ])
 
-            ->add('diffusionEnd', DateType::class, [
-                'label' => 'Fin de diffusion',
+            ->add('diffusionEnd', DateTimeType::class, [
+                'label' => 'Au',
+                'widget' => 'single_text',
+                'input_format' => 'd-m-Y H:i',
                 'attr' => [
                     'class' => 'media_diffusion_date_end',
                 ]
             ])
 
             ->add('tags', EntityType::class, [
+                'label' => false,
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -84,7 +89,7 @@ class MediaType extends AbstractType
             ])
 
             ->add('products', EntityType::class, [
-                'label' => 'Produits',
+                'label' => false,
                 'class' => Product::class,
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -95,7 +100,7 @@ class MediaType extends AbstractType
                 ])
 
             ->add('containIncruste', ChoiceType::class, [
-                'label' => 'Contient des incrutes',
+                'label' => false,
                 'attr' => [
                     'class' => 'media_contain_incruste',
                 ],
@@ -106,6 +111,7 @@ class MediaType extends AbstractType
                 'multiple'=> false,
                 'expanded'=> true,
                 'data' => false,
+                'mapped' => false,
             ])
 
             // @TODO: incrustes

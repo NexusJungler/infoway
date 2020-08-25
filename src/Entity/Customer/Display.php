@@ -45,8 +45,8 @@ class Display
 
     public function __clone()
     {
-        $this->id = null ;
-        $this->broadcastSlots = $this->broadcastSlots->map( fn( BroadcastSlot $broadcastSlot ) => clone $broadcastSlot ) ;
+       $this->id = null ;
+       $this->broadcastSlots = $this->broadcastSlots->map( fn( BroadcastSlot $broadcastSlot ) => clone $broadcastSlot ) ;
     }
 
     public function getId(): ?int

@@ -3,8 +3,10 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\DisplaySetting;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method DisplaySetting|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,10 +16,19 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class DisplaySettingRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, DisplaySetting::class);
     }
+
+    // /**
+    //  * @return DisplaySetting[] Returns an array of DisplaySetting objects
+    //  */
+
+
 
     // /**
     //  * @return DisplaySetting[] Returns an array of DisplaySetting objects

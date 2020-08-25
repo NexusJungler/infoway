@@ -187,7 +187,7 @@ class Video extends Media
         return $this->audioCodec;
     }
 
-    public function setAudioCodec(string $audioCodec): self
+    public function setAudioCodec(?string $audioCodec): self
     {
         $this->audioCodec = $audioCodec;
 
@@ -199,7 +199,7 @@ class Video extends Media
         return $this->audioDebit;
     }
 
-    public function setAudioDebit(string $audioDebit): self
+    public function setAudioDebit(?string $audioDebit): self
     {
         $this->audioDebit = $audioDebit;
 
@@ -211,7 +211,7 @@ class Video extends Media
         return $this->audioFrequence;
     }
 
-    public function setAudioFrequence(string $audioFrequence): self
+    public function setAudioFrequence(?string $audioFrequence): self
     {
         $this->audioFrequence = $audioFrequence;
 

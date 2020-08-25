@@ -5,16 +5,22 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\BroadcastSlot;
 use App\Entity\Customer\Display;
 use App\Entity\Customer\Image;
+use App\Entity\Customer\ImageElementGraphic;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\ProgrammingMould;
 use App\Entity\Customer\ScreenPlaylist;
 use App\Entity\Customer\ScreenPlaylistEntry;
+use App\Entity\Customer\Synchro;
+use App\Entity\Customer\SynchroElement;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
+use App\Entity\Customer\VideoElementGraphic;
+use App\Entity\Customer\VideoThematic;
 use App\Repository\Admin\AllergenRepository;
-use App\Repository\MainRepository;
+use App\Repository\RepositoryTrait;
 use App\Service\MediasHandler;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,7 +45,7 @@ use Symfony\Component\Serializer\Serializer;
 class MediaRepository extends ServiceEntityRepository
 {
 
-    use MainRepository;
+    use RepositoryTrait;
 
     private Serializer $serializer;
 
@@ -66,6 +72,24 @@ class MediaRepository extends ServiceEntityRepository
         $this->allergenRepository = $allergenRepository;
         $this->parameterBag = $parameterBag;
     }
+
+
+    /**
+     * Return all medias which is still used in app (not archived and where diffusionEnd is not past)
+     *
+     * @return Media[]
+     */
+    public function getAllMediasStillUsedInApp()
+    {
+
+        return $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                                      ->where("m.isArchived = false AND m.diffusionEnd > CURRENT_DATE()")
+                                      ->orderBy("m.id", "ASC")
+                                      ->getQuery()
+                                      ->getResult();
+
+    }
+
 
     /**
      * Return all tags which is associated with edia and media products
@@ -118,15 +142,7 @@ class MediaRepository extends ServiceEntityRepository
         foreach ($medias as $media)
         {
 
-            if($media instanceof Image)
-            {
-                $media->file_type = 'image';
-            }
-
-            else
-            {
-                $media->file_type = 'video';
-            }
+            $media->file_type = explode("/", $media->getMimeType())[0];
 
         }
 
@@ -145,6 +161,13 @@ class MediaRepository extends ServiceEntityRepository
 
         $medias = $this->findBy(['isArchived' => true]);
 
+        foreach ($medias as $media)
+        {
+
+            $media->file_type = explode("/", $media->getMimeType())[0];
+
+        }
+
         return [
             'number' => sizeof($medias),
             'medias' => $medias
@@ -155,120 +178,133 @@ class MediaRepository extends ServiceEntityRepository
 
     public function getMediaInByTypeForMediatheque(string $type, int $currentPage = 1, int $limit = 15)
     {
-        //dd($type, $currentPage, $limit);
-        // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
 
+        // recupère les medias qui n'ont pas et qui en contiennent, si ils doivent en contenir (boolean a true)
         switch ($type)
         {
 
-            // recupère les medias qui ont (boolean a true et tableau des incrustes non vide) et qui n'ont pas
-            // d'incruste(boolean a false et tableau des incrustes vide)
             case "medias":
-
-                $dql = "SELECT m FROM " . Media::class. " m 
-                
-                        LEFT JOIN " . Image::class . " i WITH m.id = i.id
-                        LEFT JOIN " . Video::class . " v WITH m.id = v.id
-                        
-                        WHERE ( (i.isArchived = false OR v.isArchived = false) AND (i.containIncruste = false OR v.containIncruste = false) ) 
-                        OR ( (i.containIncruste = true AND i.incrustes IS NOT EMPTY) AND (v.containIncruste = true AND v.incrustes IS NOT EMPTY) )
-                        
-                        ORDER BY m.createdAt DESC";
-
-                $medias = $this->paginate($dql, $currentPage, $limit);;
-
-                $orderedMedias['numberOfPages'] = intval( ceil($medias->count() / $limit) );
-
-                //$orderedMedias['medias_products_criterions'] = $this->getEntityManager()->getRepository(Product::class)->findProductsCriterions();
-
-                // sert pour choisir le nombre de media à afficher sur la page
-                for($i = 5; $i <= $medias->count()+5; $i+=5)
-                {
-                    $orderedMedias['mediatheque_medias_number'][] = $i;
-                }
-
-                $orderedMedias['medias'] = [];
-
-                $customerName = $this->getEntityManager()->getConnection()->getDatabase();
-
-                foreach ($medias as $index => $media)
-                {
-
-                    $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                          $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
-                                                          . ( ($media instanceof Image) ? 'png': 'mp4' ) );
-
-                    $mediaMiniatureMediumExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                             $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/medium/" . $media->getId() . "."
-                                                             . ( ($media instanceof Image) ? 'png': 'mp4' ) );
-
-                    $orderedMedias['medias'][$index] = [
-                        'media' => null,
-                        'file_type' => ($media instanceof Image) ? 'image': 'video',
-                        'media_products' => [],
-                        'media_tags' => [],
-                        'media_criterions' => [],
-                        'media_categories' => [],
-                        'miniature_low_exist' => $mediaMiniatureLowExist,
-                        'miniature_medium_exist' => $mediaMiniatureMediumExist,
-                    ];
-
-                    foreach ($media->getTags()->getValues() as $tag)
-                    {
-                        $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
-                    }
-
-                    foreach ($media->getProducts()->getValues() as $product)
-                    {
-
-                        $orderedMedias['medias'][$index]['media_products'][] = $product->getId();
-
-                        if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))
-                            $orderedMedias['medias'][$index]['media_categories'][] = $product->getCategory()->getId();
-
-                        foreach ($product->getCriterions()->getValues() as $criterion)
-                        {
-                            $orderedMedias['medias'][$index]['media_criterions'][] = $criterion->getId();
-                        }
-
-                        foreach ($product->getTags()->getValues() as $tag)
-                        {
-                            if(!in_array($tag->getId(), $orderedMedias['medias'][$index]['media_tags']))
-                                $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
-                        }
-
-                        foreach ($product->getAllergens()->getValues() as $allergen)
-                        {
-                            if(!in_array($allergen->getAllergenId(), $orderedMedias['medias'][$index]['media_tags']))
-                                $orderedMedias['medias'][$index]['media_tags'][] = $allergen->getAllergenId();
-                        }
-
-                    }
-
-                    $orderedMedias['medias'][$index]['media'] = $media;
-
-                }
-
-                //dd($orderedMedias);
+            case "diff":
+                /*$dql = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                                ->leftJoin(Image::class, "i", "WITH", "i.id = m.id")
+                                ->leftJoin(Video::class, "v", "WITH", "v.id = m.id");*/
+                $dql = $this->_em->createQueryBuilder()->select("m")->from(Media::class, "m")
+                                 ->leftJoin(Image::class, "i", "WITH", "i.id = m.id")
+                                 ->leftJoin(Video::class, "v", "WITH", "v.id = m.id");
 
                 break;
 
-            case "video_synchro":
-                die("Implemente video synchro recuperation logic");
+            case "sync":
+                $dql = $this->createQueryBuilder("m")
+                            ->leftJoin(SynchroElement::class, "vs", "WITH", 'vs.id = m.id')
+                            ->leftJoin(Video::class, "v", "WITH", 'v.id = m.id');
                 break;
 
-            case "video_thematic":
-                die("Implemente video thematic recuperation logic");
+            case "them":
+                $dql = $this->createQueryBuilder("m")
+                            ->leftJoin(VideoThematic::class, "vt", "WITH", 'vt.id = m.id')
+                            ->leftJoin(Video::class, "v", "WITH", 'v.id = m.id');
                 break;
 
-            case "element_graphic":
-                die("Implemente element graphic recuperation logic");
+            case "elmt":
+                $dql = $this->createQueryBuilder("m")
+                                 ->leftJoin(ImageElementGraphic::class, "i", "WITH", "m.id = i.id")
+                                 ->leftJoin(VideoElementGraphic::class, "v", "WITH", "m.id = v.id");
                 break;
 
             default:
                 throw new Exception(sprintf("Error : Unrecognized media type ! Trying to get medias with '%s' type but this media type is not exist ", $type));
 
         }
+
+        $dql = $dql->where("m.mediaType = :type")
+                   ->andWhere("m.isArchived = false")
+                   ->andWhere("m.containIncruste = false AND m.incrustes IS EMPTY")
+                   ->orWhere("m.containIncruste = true AND m.incrustes IS NOT EMPTY")
+                   ->setParameter("type", $type)
+                   ->orderBy("m.id", "ASC")
+                   ->setFirstResult($limit * ($currentPage - 1))
+                   ->setMaxResults($limit);
+
+        //dd($dql->getQuery()->getResult());
+
+        // pagination (see; https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html#pagination)
+        $medias = ( new Paginator($dql, $fetchJoinCollection = true))->setUseOutputWalkers(false);
+
+        $orderedMedias['numberOfPages'] = intval( ceil($medias->count() / $limit) );
+
+        // sert pour choisir le nombre de media à afficher sur la page
+        for($i = 5; $i <= $medias->count()+5; $i+=5)
+        {
+            $orderedMedias['mediatheque_medias_number'][] = $i;
+        }
+
+        $orderedMedias['medias'] = [];
+
+        $customerName = $this->getEntityManager()->getConnection()->getDatabase();
+
+        foreach ($medias as $index => $media)
+        {
+
+            $fileType = explode("/", $media->getMimeType())[0];
+
+            $mediaMiniatureLowExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                  $customerName. "/" . $fileType . "/" . $media->getMediaType() . '/low/' . $media->getId() . "."
+                                                  . ( ($fileType === 'image') ? 'png': 'mp4' ) );
+
+            $mediaMiniatureMediumExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
+                                                     $customerName. "/" . $fileType . "/" . $media->getMediaType() . '/medium/' . $media->getId() . "."
+                                                     . ( ($fileType === 'image') ? 'png': 'mp4' ) );
+
+            $orderedMedias['medias'][$index] = [
+                'media' => null,
+                'file_type' => $fileType,
+                'media_type' => $media->getMediaType(),
+                'media_products' => [],
+                'media_tags' => [],
+                'media_criterions' => [],
+                'media_categories' => [],
+                'miniature_low_exist' => $mediaMiniatureLowExist,
+                'miniature_medium_exist' => $mediaMiniatureMediumExist,
+            ];
+
+            foreach ($media->getTags()->getValues() as $tag)
+            {
+                $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+            }
+
+            foreach ($media->getProducts()->getValues() as $product)
+            {
+
+                $orderedMedias['medias'][$index]['media_products'][] = $product->getId();
+
+                if($product->getCategory() AND !in_array($product->getCategory()->getId(), $orderedMedias['medias'][$index]['media_categories']))
+                    $orderedMedias['medias'][$index]['media_categories'][] = $product->getCategory()->getId();
+
+                foreach ($product->getCriterions()->getValues() as $criterion)
+                {
+                    $orderedMedias['medias'][$index]['media_criterions'][] = $criterion->getId();
+                }
+
+                foreach ($product->getTags()->getValues() as $tag)
+                {
+                    if(!in_array($tag->getId(), $orderedMedias['medias'][$index]['media_tags']))
+                        $orderedMedias['medias'][$index]['media_tags'][] = $tag->getId();
+                }
+
+                foreach ($product->getAllergens()->getValues() as $allergen)
+                {
+                    if(!in_array($allergen->getAllergenId(), $orderedMedias['medias'][$index]['media_tags']))
+                        $orderedMedias['medias'][$index]['media_tags'][] = $allergen->getAllergenId();
+                }
+
+            }
+
+            $orderedMedias['medias'][$index]['media'] = $media;
+
+        }
+
+        //dd($orderedMedias);
 
         return $orderedMedias;
 
@@ -305,7 +341,7 @@ class MediaRepository extends ServiceEntityRepository
             {
                 $customerName = $this->getEntityManager()->getConnection()->getDatabase();
                 $media->media_low_miniature_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                                                                $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
+                                                                $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
                                                                 . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
                 $media->file_type = ($media instanceof Image) ? 'image': 'video';
@@ -356,6 +392,168 @@ class MediaRepository extends ServiceEntityRepository
 
     }
 
+
+    public function insertVideo(array $videoInfos)
+    {
+
+        switch ($videoInfos['mediaType'])
+        {
+
+            case "diff":
+                $media = new Video();
+                break;
+
+            case "them":
+                $media = new VideoThematic();
+                $media->setDate(new DateTime());
+                break;
+
+            case "elmt":
+                $media = new VideoElementGraphic();
+                $media->setContexte(null);
+                break;
+
+            case "sync":
+                $media = new SynchroElement();
+
+                /*$synchro = $this->_em->getRepository(Synchro::class)->findOneByName($videoInfos['synchros']['name']);
+
+                if(!$synchro)
+                {
+                    $synchro = new Synchro();
+                    $synchro->setName($videoInfos['synchros']['name']);
+                    $this->_em->persist($synchro);
+                }
+
+                $media->addSynchro($synchro)
+                      ->setPosition($videoInfos['position']);*/
+
+                $media->setPosition($videoInfos['position']);
+
+                break;
+
+            default:
+                throw new Exception( sprintf("Unrecognized mediaType : '%s'", $videoInfos['mediaType']) );
+
+        }
+
+        if(array_key_exists('audioCodec', $videoInfos) and array_key_exists('audioDebit', $videoInfos)
+            and array_key_exists('audioFrequence', $videoInfos) and array_key_exists('audioChannel', $videoInfos)
+            and array_key_exists('audioFrame', $videoInfos))
+        {
+            $media->setAudioCodec($videoInfos['audioCodec'])
+                  ->setAudioDebit($videoInfos['audioDebit'])
+                  ->setAudioFrequence($videoInfos['audioFrequence'])
+                  ->setAudioChannel($videoInfos['audioChannel'])
+                  ->setAudioFrame($videoInfos['audioFrame']);
+        }
+
+        $date = new DateTime($videoInfos['createdAt']);
+
+        $media->setSize($videoInfos['size'])
+              ->setFormat($videoInfos['format'])
+              ->setSampleSize($videoInfos['sampleSize'])
+              ->setEncoder($videoInfos['encoder'])
+              ->setVideoCodec($videoInfos['videoCodec'])
+              ->setVideoCodecLevel($videoInfos['videoCodecLevel'])
+              ->setVideoFrequence($videoInfos['videoFrequence'])
+              ->setVideoFrame($videoInfos['videoFrame'])
+              ->setVideoDebit($videoInfos['videoDebit'])
+              ->setDuration($videoInfos['duration'])
+              ->setMediaType($videoInfos['mediaType'])
+              ->setWidth($videoInfos['width'])
+              ->setHeight($videoInfos['height'])
+              ->setIsArchived(false)
+              ->setContainIncruste(false)
+              ->setName($videoInfos['fileName'])
+              ->setOrientation($videoInfos['orientation'])
+              ->setMimeType($videoInfos['mimeType'])
+              ->setRatio($videoInfos['ratio'])
+              ->setExtension($videoInfos['extension'])
+              ->setCreatedAt($date)
+              ->setDiffusionStart( $date )
+              ->setDiffusionEnd( $date->modify('+10 year') );
+
+        /*array_map( fn($product) => $media->addProduct($product), $videoInfos['mediaProducts']);
+        array_map( fn($tag) => $media->addTag($tag), $videoInfos['mediaTags']);*/
+
+        $this->_em->persist($media);
+        $this->_em->flush();
+
+        return $media;
+
+    }
+
+    public function insertImage(array $imageInfos)
+    {
+
+        switch ($imageInfos['mediaType'])
+        {
+
+            case "diff":
+                $media = new Image();
+                break;
+
+            case "elmt":
+                $media = new ImageElementGraphic();
+                $media->setContexte(null);
+                break;
+
+            default:
+                throw new Exception( sprintf("Unrecognized mediaType : '%s'", $imageInfos['mediaType']) );
+
+        }
+
+        $media->setName($imageInfos['filename'])
+               ->setMediaType($imageInfos['mediaType'])
+               ->setRatio($imageInfos['ratio'])
+               ->setContainIncruste(false)
+               ->setExtension($imageInfos['extension'])
+               ->setOrientation($imageInfos['orientation'])
+               ->setMimeType($imageInfos['mimeType'])
+               ->setIsArchived(false)
+               ->setWidth($imageInfos['width'])
+               ->setHeight($imageInfos['height'])
+               ->setSize($imageInfos['size'])
+               ->setCreatedAt(new DateTime())
+               ->setDiffusionStart( new DateTime() )
+               ->setDiffusionEnd( (new DateTime())->modify('+10 year') );
+
+        $this->_em->persist($media);
+        $this->_em->flush();
+
+        return $media;
+    }
+
+
+    public function removeUncompleteSynchros( array $synchros )
+    {
+
+        foreach ($synchros as $synchroInfos)
+        {
+
+            $synchro = $this->_em->getRepository(Synchro::class)->findOneByName($synchroInfos['name']);
+            if(!$synchro)
+                throw new Exception(sprintf("No Synchro foudn with name : '%s'", $synchroInfos['name']));
+
+            $this->_em->remove($synchro);
+            $this->_em->flush();
+
+        }
+
+    }
+
+    public function findAllNames()
+    {
+        $names = [];
+
+        foreach ($this->findAll() as $media)
+        {
+            $names[] = $media->getName();
+        }
+
+        return $names;
+    }
 
     public function getPriceValue($columnPrice, $id_pro, $grprix_data_id) {
         $column = 'PRO_'.$columnPrice.'_jour';
@@ -1137,15 +1335,6 @@ SELECT v.extension, m.id, m.filename FROM `media` as m LEFT JOIN `video` as v on
         return $infos;
 
     }
-    private function paginate(string $query, int $page = 1, int $limit = 15)
-    {
 
-        $query = $this->_em->createQuery($query)
-                           ->setFirstResult($limit * ($page - 1))
-                           ->setMaxResults($limit);
-
-        return ( new Paginator($query, $fetchJoinCollection = true))->setUseOutputWalkers(false);
-
-    }
 
 }

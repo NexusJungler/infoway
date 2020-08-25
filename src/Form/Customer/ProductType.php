@@ -110,14 +110,14 @@ class ProductType extends AbstractType
                     'by_reference' => true
                 ]
             )
-            ->add('elements', EntityType::class, [
+            /*->add('elements', EntityType::class, [
                     'class' => ElementGraphic::class,
                     'choice_label' => 'name',
                     'multiple' => true,
                     'required' => false,
                     'label_attr' => array('class' => 'label-custome'),
                 ]
-            )
+            )*/
             ->add('logo', TextType::class, [
                 'attr' => [
                     'class' => 'input-custome'

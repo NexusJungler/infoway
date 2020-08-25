@@ -41,14 +41,15 @@ class AppController extends AbstractController
             'date_format' => 'd-m-Y',
             'clock_format' => 24
         ];
-        $customers=$customerRepository->findAll();
 
-        ($sessionManager->get('customers') === null) ?
-            $sessionManager->set('customers', $customers) :
-            $sessionManager->replace('customers',$customers);
+        $customers = $customerRepository->findAll();
+
+        $sessionManager->set('customers', $customers);
+
+        $sessionManager->set('current_customer', $customers[0]);
+
 
         //dump($location);
-        $sessionManager->set('current_customer',$customers[0]);
 
         return $this->render("home/zone-diffusion.html.twig", [
             'customer' => $customer,
@@ -167,7 +168,7 @@ class AppController extends AbstractController
             'tags',
             'Q08'
         ];
-        return $this->render("site/show.html.twig", [
+        return $this->render("site.html.twig", [
             'customer' => $customer
         ]);
     }

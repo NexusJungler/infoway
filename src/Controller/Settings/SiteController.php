@@ -70,7 +70,7 @@ class SiteController extends AbstractController
 
             $site->setCustomer( $currentCustomer );
 
-            $entityManager = $this->getDoctrine()->getManager($currentCustomer->getName());
+            $entityManager = $this->getDoctrine()->getManager(strtolower($currentCustomer->getName()));
 
             $entityManager->persist($site);
             $entityManager->flush();

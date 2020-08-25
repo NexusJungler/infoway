@@ -67,13 +67,14 @@ class DisplaySettingController extends AbstractController
         $defaultTimeSlot = new TimeSlot() ;
         $defaultTimeSlot->setStartAt(new \DateTime('00:00'));
         $defaultTimeSlot->setEndAt(new \DateTime('00:00'));
-
+        $this->getDoctrine()->getManager('kfc')->persist( $defaultTimeSlot );
         $ProgrammingMould->addTimeSlot( $defaultTimeSlot ) ;
 
         $optionsToPassToForm = [
-            'allowPlaylistCreation' => false,
+            'allowPlaylistCreation' => true,
             'allowDisplaySettingChoice' => false,
-            'allowModelChoice'   => true
+            'allowModelChoice'   => true ,
+            'allowAllowedMediaTypeChoice' => true
         ];
 
         $form = $this->createForm(ProgrammingMouldType::class, $ProgrammingMould, $optionsToPassToForm );

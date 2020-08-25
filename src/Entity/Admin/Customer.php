@@ -66,6 +66,7 @@ class Customer
     {
         $this->users = new ArrayCollection();
         $this->sites = new ArrayCollection();
+        $this->uploadTasks = new ArrayCollection();
 
     }
 

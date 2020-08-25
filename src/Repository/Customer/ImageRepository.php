@@ -3,7 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Image;
-use App\Repository\MainRepository;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -17,7 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 class ImageRepository extends ServiceEntityRepository
 {
 
-    use MainRepository;
+    use RepositoryTrait;
 
     public function __construct(ManagerRegistry $registry)
     {

@@ -6,7 +6,7 @@ namespace App\Repository;
 
 use Doctrine\Persistence\ObjectManager;
 
-trait MainRepository
+trait RepositoryTrait
 {
 
     public function setEntityManager(ObjectManager $entityManager): self

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
+use App\Entity\Admin\ThematicTheme;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Image;
@@ -13,16 +14,19 @@ use App\Entity\Customer\Incruste;
 use App\Entity\Customer\Media;
 use App\Entity\Customer\MediasList;
 use App\Entity\Customer\Product;
+use App\Entity\Customer\Synchro;
+use App\Entity\Customer\SynchroElement;
 use App\Entity\Customer\Tag;
 use App\Entity\Customer\Video;
 use App\Form\Customer\EditMediaType;
 use App\Form\MediasListType;
 use App\Repository\Admin\CustomerRepository;
 use App\Repository\Admin\FfmpegTasksRepository;
+use App\Service\ArraySearchRecursiveService;
 use App\Service\FfmpegSchedule;
 use App\Service\MediasHandler;
 use App\Service\SessionManager;
-use App\Service\UploadCron;
+use App\Service\UploadedImageFormatsCreator;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,13 +46,13 @@ use \Doctrine\Persistence\ObjectManager;
 class MediaController extends AbstractController
 {
 
-    private SerializerInterface $serializer;
+    private SerializerInterface $__serializer;
 
-    private SessionManager $sessionManager;
+    private SessionManager $__sessionManager;
 
-    private ParameterBagInterface $parameterBag;
+    private ParameterBagInterface $__parameterBag;
 
-    private MediasHandler $mediasHandler;
+    private MediasHandler $__mediasHandler;
 
     public function __construct(SessionManager $sessionManager, ParameterBagInterface $parameterBag)
     {
@@ -60,15 +64,15 @@ class MediaController extends AbstractController
         ];
         $encoder =  new JsonEncoder();
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $circularReferenceHandlingContext);
-        $this->serializer = new Serializer( [ $normalizer, new DateTimeNormalizer() ] , [ $encoder ] );
+        $this->__serializer = new Serializer( [ $normalizer, new DateTimeNormalizer() ] , [ $encoder ] );
 
-        $this->sessionManager = $sessionManager;
-        $this->parameterBag = $parameterBag;
-        $this->mediasHandler = new MediasHandler($this->parameterBag);
+        $this->__sessionManager = $sessionManager;
+        $this->__parameterBag = $parameterBag;
+        $this->__mediasHandler = new MediasHandler($this->__parameterBag);
     }
 
     /**
-     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET", "POST"},
+     * @Route(path="/mediatheque/{mediasDisplayedType}/{page}", name="media::showMediatheque", methods={"GET"},
      * requirements={"mediasDisplayedType": "[a-z_]+", "page": "\d+"})
      * @param Request $request
      * @param string $mediasDisplayedType
@@ -76,10 +80,10 @@ class MediaController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1)
+    public function showMediatheque(Request $request, string $mediasDisplayedType, int $page = 1, SessionManager $sessionManager)
     {
 
-        $managerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $managerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $managerName );
 
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
@@ -88,6 +92,8 @@ class MediaController extends AbstractController
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
         $incrusteRepo = $manager->getRepository(Incruste::class)->setEntityManager( $manager );
         $criterionRepo = $manager->getRepository(Criterion::class)->setEntityManager( $manager );
+        $synchroRepo = $manager->getRepository(Synchro::class)->setEntityManager( $manager );
+        $videoThematicThemeRep = $this->getDoctrine()->getManager( 'default' )->getRepository(ThematicTheme::class);
 
         $products = $productRepo->findAll();
         $categories = $categoryRepo->findAll();
@@ -98,27 +104,51 @@ class MediaController extends AbstractController
         $mediasWaitingForIncrustation = $mediaRepo->getMediasInWaitingListForIncrustes();
         $allArchivedMedias = $mediaRepo->getAllArchivedMedias();
 
-        if($this->sessionManager->get('mediatheque_medias_number') === null)
-            $this->sessionManager->set('mediatheque_medias_number', 15);
+        if($mediasDisplayedType === "video_thematic")
+        {
+            //$videoThematicThemes = $videoThematicThemeRep->findAll();
+            $videoThematicThemesPrototype = "<select name='__name__' id='__id__'>";
+
+            $videoThematicThemesPrototype .= "<option value=''>Choisir un thème</option>";
+
+            foreach ($videoThematicThemeRep->findAll() as $theme)
+            {
+                $videoThematicThemesPrototype .= "<option value='" . $theme->getId() . "'>" .$theme->getName() . "</option>";
+            }
+
+            $videoThematicThemesPrototype .= "</select>";
+        }
+
+        if($mediasDisplayedType === "video_synchro")
+        {
+            $allSynchrosNames = $synchroRepo->findAllNames();
+
+            $this->__sessionManager->set('existed_synchro_names', $allSynchrosNames) ;
+        }
+
+        if($this->__sessionManager->get('mediatheque_medias_number') === null)
+            $this->__sessionManager->set('mediatheque_medias_number', 15);
 
         list($mediasToDisplayed, $numberOfPages, $numberOfMediasAllowedToDisplayed) = $this->getMediasForMediatheque($manager, $request);
 
         if(empty($mediasToDisplayed))
             throw new NotFoundHttpException(sprintf("No media(s) found for this page !"));
 
+        $allMediasNames = $mediaRepo->findAllNames();
+
         //dd($numberOfPages);
 
         // boolean pour savoir si le bouton d'upload doit être afficher ou pas
         $uploadIsAuthorizedOnPage = ($mediasDisplayedType !== 'template' AND $mediasDisplayedType !== 'incruste');
 
-        $mediaList = new MediasList();
-/*        $mediaList->addMedia( $mediaRepo->find(47) ) ;*/
+        /*$mediaList = new MediasList();
+         //$mediaList->addMedia( $mediaRepo->find(47) ) ;
 
         $uploadMediaForm = $this->createForm(MediasListType::class, $mediaList, [
             'attr' => [
                 'id' => 'medias_list_form'
             ]
-        ]);
+        ]);*/
 
         // @TODO: remplacer le formulaire dans la popup d'upload par le form créer par le formbuilder et laisser symfony gérer la validation (assert)
         /*$form->handleRequest($request);
@@ -128,11 +158,10 @@ class MediaController extends AbstractController
 
         }*/
 
-        if($request->isMethod('POST'))
-        {
-            return $this->saveMediaCharacteristic($request);
-        }
+        /*if($request->isMethod('POST'))
+            return $this->saveMediaCharacteristic($request);*/
 
+        //dd($mediasToDisplayed);
 
         return $this->render("media/media-image.html.twig", [
             'media_displayed' => $mediasDisplayedType, // will be used by js for get authorized extensions for upload
@@ -143,12 +172,16 @@ class MediaController extends AbstractController
             'criterions' => $criterions,
             'productsCriterions' => $productsCriterions,
             'productsTags' => $productsTags,
-            'uploadMediaForm' => $uploadMediaForm->createView(),
+            //'uploadMediaForm' => $uploadMediaForm->createView(),
             'mediasWaitingForIncrustation' => $mediasWaitingForIncrustation,
             'mediasToDisplayed' => $mediasToDisplayed,
             'numberOfPages' => $numberOfPages,
             'numberOfMediasAllowedToDisplayed' => $numberOfMediasAllowedToDisplayed,
             'archivedMedias' => $allArchivedMedias,
+            'allMediasNames' => $allMediasNames,
+            'allSynchrosNames' => isset($allSynchrosNames) ? $allSynchrosNames : [],
+            //'videoThematicThemes' => isset($videoThematicThemes) ? $videoThematicThemes : []
+            'videoThematicThemesPrototype' => isset($videoThematicThemesPrototype) ? $videoThematicThemesPrototype : "",
         ]);
 
     }
@@ -160,7 +193,7 @@ class MediaController extends AbstractController
     public function edit(Request $request, int $id)
     {
 
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
 
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
@@ -185,10 +218,10 @@ class MediaController extends AbstractController
             'mediaRepo' => $mediaRepo,
         ]);
 
-        $currentCustomerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $currentCustomerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
 
-        $miniature_medium_exist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
-                                              (($media instanceof Image) ? 'images': 'videos') . "/medium/". $media->getId() . "." .
+        $miniature_medium_exist = file_exists($this->__parameterBag->get('project_dir') . "/public/miniatures/" . $currentCustomerName . "/" .
+                                              (($media instanceof Image) ? 'image': 'video') . "/medium/". $media->getId() . "." .
                                               ( ($media instanceof Image) ? 'png' : 'mp4' ));
 
         $form->handleRequest($request);
@@ -252,16 +285,12 @@ class MediaController extends AbstractController
     public function uploadMedia(Request $request, CustomerRepository $customerRepository): Response
     {
 
-        if($request->request->get('media_type') === "video_synchro")
-            $type = "synchro";
+        $type = $request->request->get('media_type');
 
-        elseif($request->request->get('media_type') === "video_thematic")
-            $type = "thematics";
+        $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync', 'element_graphic' => 'elmt'];
 
-        else
-            $type = "medias";
-
-        $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync'];
+        if(!array_key_exists($type, $options))
+            throw new Exception(sprintf("Array key not found ! '%s' is given (Allow : %s)", $type, implode(', ', array_keys($options))));
 
         $mediaType = $options[$type];
 
@@ -273,82 +302,101 @@ class MediaController extends AbstractController
         $real_file_extension = $splash[1];
         $fileType = strstr($mimeType, '/', true);
 
-        $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
         $manager = $this->getDoctrine()->getManager( $customerName );
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
-        if($this->mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
-            return new Response("514 Corrupt File", Response::HTTP_INTERNAL_SERVER_ERROR);
+        if($this->__mediasHandler->fileIsCorrupt($file['tmp_name'], $fileType))
+            return new JsonResponse([ 'error' => '514 Corrupt File' ]);
 
         elseif(!in_array($real_file_extension, $this->getParameter("authorizedExtensions")))
-            return new Response("512 Bad Extension", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '512 Bad Extension' ]);
 
         elseif($mediaRepository->findOneByName( pathinfo($file['name'])['filename'] ) )
-            return new Response("515 Duplicate File", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '515 Duplicate File' ]);
 
         elseif(preg_match("/(\w)*\.(\w)*/", pathinfo($file['name'])['filename'] ))
-            return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '516 Invalid Filename' ]);
 
         elseif($file['name'] === "" or $file['name'] === null)
-            return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse([ 'error' => '517 Empty Filename' ]);
 
         /*else if(strlen(pathinfo($file['name'])['filename']) < 5)
             return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);*/
 
-        $root = $this->getParameter('project_dir') . '/../node_file_system/';
+        list($width, $height) = getimagesize($file['tmp_name']);
+
+        $root = $this->getParameter('project_dir') . '/../upload/source/' . $customerName . '/' . $splash[0] . '/' . $mediaType;
+
+        if($height === 2160) // 4k
+            $root .= '/HD/UHD-4k';
+
+        /*else if($height === 4320) // 8k
+            $root .= '/HD/UHD-8k';
+        */
+
+        if(!file_exists($root))
+            mkdir($root,0777, true);
+
+        $path = $root . '/' . $file['name'];
+
+        move_uploaded_file($file['tmp_name'], $path);
+        // copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
+
+        /*$root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $customerName . '/' . $mediaType . '/' . $file['name'];
 
         move_uploaded_file($file['tmp_name'], $path);
+        copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);*/
 
-        copy($path, $root . $customerName . '/' . $type . '/' . $file['name']);
+        $explode = explode('.', $file['name']);
+        $name = $explode[0];
 
-        // if is image, insert immediately
+        // if is image, insert in db
         if($splash[0] === 'image')
         {
 
             $taskInfo = [
-                'fileName' => $file['name'],
+                'fileName' => $name,
                 'customerName' => $customerName,
                 'mediaType' => $mediaType,
                 'uploadDate' => new DateTime(),
-                'extension' => $real_file_extension,
+                'extension' => $explode[1],
                 'mediaProducts' => [],
                 'mediaTags' => [],
                 'mediaContainIncruste' => false,
                 'mimeType' => $mimeType,
                 'isArchived' => false,
+                'height' => $height,
+                'width' => $width,
             ];
 
-            // don't duplicate code !!
-            // reuse this class
-            $cron = new UploadCron($taskInfo, $this->getDoctrine(), $this->parameterBag);
-            if( $cron->getErrors() !== [] )
+            $uploadedImageFormatsCreator = new UploadedImageFormatsCreator($this->__parameterBag);
+            $uploadedImageFormatsCreator->createImageFormats($taskInfo);
+
+            if(!empty($uploadedImageFormatsCreator->getErrors()))
             {
 
-                $errors = implode(' ; ', $cron->getErrors());
+                $errors = implode(' ; ', $uploadedImageFormatsCreator->getErrors());
 
-                if($errors === "bad ratio")
-                    return new Response("521 Bad ratio", Response::HTTP_INTERNAL_SERVER_ERROR);
+                if(preg_match("/bad ratio/i", $errors ))
+                    return new JsonResponse([ 'error' => '521 Bad ratio' ]);
 
                 else
-                    throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", implode(' ; ', $cron->getErrors())) );
+                    throw new Exception( sprintf("Internal Error : 1 or multiple errors during insert new image ! Errors : '%s'", $errors) );
 
             }
+            else
+                $media = $mediaRepository->insertImage($uploadedImageFormatsCreator->getImageInfos());
 
-            $name = explode('.',$file['name'])[0];
-            $media = $mediaRepository->findOneByName( $name );
-            if(!$media)
-                throw new Exception(sprintf("No media found with name : '%s'", $name));
+            $this->renameMediaWithId($media->getName(), $media->getId(), $uploadedImageFormatsCreator->getFilesToRenameList());
 
-            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/images/low/" . $media->getId() . ".png";
+            $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/" . $mediaType . '/low/' . $media->getId() . ".png";
 
             if(!file_exists($miniaturePath))
                 throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
-            $dpi = $this->mediasHandler->getImageDpi($miniaturePath);
-
-            //$highestFormat = $this->getMediaHigestFormat($media->getId(), "image");
-
+            $dpi = $this->__mediasHandler->getImageDpi($miniaturePath);
 
             $response = [
                 'id' => $media->getId(),
@@ -360,8 +408,8 @@ class MediaController extends AbstractController
                 'dpi' => $dpi,
                 'miniatureExist' => file_exists($miniaturePath),
                 'fileType' => 'image',
+                'mediaType' => $mediaType,
                 'customer' => $customerName,
-                //'highestFormat' => $highestFormat,
             ];
 
         }
@@ -375,19 +423,35 @@ class MediaController extends AbstractController
             if($fileType === 'video')
                 $media = new Video();
 
-            // need new Entity (e.g : for powerpoint, word, ...)
+            // need new Entity
             else
                 throw new Exception(sprintf("Need new media type implementation for type '%s'", $fileType));
+
+
+            if($type === 'synchros')
+            {
+
+                $synchroDatas = json_decode($request->request->get('synchro'));
+
+                /*$synchro = new Synchro();
+                $synchro->setName($synchroDatas->__name);*/
+
+                $media = new SynchroElement();
+                $media->setPosition($synchroDatas->__position);
+                //->addSynchro($synchro);
+
+            }
 
             $media->setName( str_replace( '.' . $real_file_extension, null, $fileName) )
                   ->setExtension($real_file_extension)
                   ->setMimeType($mimeType)
                   ->setContainIncruste(false)
                   ->setIsArchived(false)
-                  ->setOrientation(" ") // le serializer oblige à avoir une valeur
-                  ->setType($mediaType);
+                  ->setMediaType($mediaType);
 
-            $media = json_decode($this->serializer->serialize($media, 'json'), true);
+            $media = json_decode($this->__serializer->serialize($media, 'json'), true);
+
+            $media['createdAt'] = date('Y-m-d');
 
             $fileInfo = [
                 'fileName' => $fileName,
@@ -404,22 +468,22 @@ class MediaController extends AbstractController
                 'isArchived' => false,
             ];
 
-            list($width, $height, $codec) = $this->mediasHandler->getVideoDimensions($path);
+            list($width, $height, $codec) = $this->__mediasHandler->getVideoDimensions($path);
 
             // register Ffmpeg task
             // a CRON will do task after
-            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->parameterBag);
+            $ffmpegSchedule = new FfmpegSchedule($this->getDoctrine(), $this->__parameterBag);
             $id = $ffmpegSchedule->pushTask($fileInfo);
-
-            //$highestFormat = $this->getMediaHigestFormat($id, "video");
 
             $response = [
                 'id' => $id,
+                'fileName' => $fileName,
+                'fileNameWithoutExtension' => str_replace( '.' . $real_file_extension, null, $fileName),
                 'extension' => $real_file_extension,
                 'height' => $height,
                 'width' => $width,
                 'codec' => $codec ?? null,
-                'type' => 'video',
+                'fileType' => 'video',
                 'customer' => $customerName,
                 'mimeType' => 'video/mp4',
                 //'highestFormat' => $highestFormat,
@@ -427,14 +491,137 @@ class MediaController extends AbstractController
 
         }
 
-        // @TODO: if resolution 16/9, add color red on resolution in popup when user click save, confirm(error..., continue ?)
-
         return new JsonResponse($response, Response::HTTP_OK);
 
     }
 
+
+    /**
+     * @Route(path="/save/synchro/infos", name="media::saveSynchroInfos", methods={"POST"})
+     */
+    public function saveSynchroInfos(Request $request)
+    {
+
+        //dd($request->request);
+
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $customerName );
+        $synchroRep = $manager->getRepository(Synchro::class)->setEntityManager($manager);
+        $synchroElementRep = $manager->getRepository(SynchroElement::class)->setEntityManager($manager);
+
+        $arraySearchRecursive = new ArraySearchRecursiveService();
+
+        $synchroElementIds = $synchroElementNames = $synchroElementPositions = $errors = [];
+
+        $formData = $request->request->get('synchro_edit_form')['synchro'];
+
+        $synchro = (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) ? $synchroRep->find($formData['synchro_id']) : $synchroRep->findOneByName($formData['name']);
+
+        if(!$synchro)
+            $synchro = new Synchro();
+
+        $synchro->setName($formData['name']);
+
+        if( in_array($formData['name'], $this->__sessionManager->get('existed_synchro_names')) )
+        {
+
+            $errors[] = [
+                'subject' => "synchro",
+                'text' => "Duplicate synchro name"
+            ];
+
+        }
+
+        elseif( (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) && (intval($formData['synchro_id']) <= 0) )
+        {
+
+            $errors[] = [
+                'subject' => "synchro",
+                'text' => "Invalid synchro id"
+            ];
+
+        }
+
+        $synchroElementNames = array_map(fn($synchroElementInfos) => $synchroElementInfos['name'] , $formData['synchros_elements'] );
+        $synchroElementPositions = array_map(fn($synchroElementInfos) => $synchroElementInfos['position'] , $formData['synchros_elements'] );
+
+        foreach ($formData['synchros_elements'] as $key => $synchroElementInfos)
+        {
+
+            $synchroElement = $synchroElementRep->find( $synchroElementInfos['synchro_element_id'] );
+            if(!$synchroElement)
+            {
+                //throw new Exception(sprintf("No synchro element found with '%s' name", $synchroElementInfos['old_name']));
+                $errors[] = [
+                    'subject' => "synchro_element_" . ($key +1),
+                    'text' => "Invalid synchro element id"
+                ];
+            }
+            else
+            {
+
+                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['name'], $synchroElementNames) === 1 )
+                    $synchroElement->setName($synchroElementInfos['name']);
+
+                else
+                {
+                    $errors[] = [
+                        'subject' => "synchro_element_" . ($key +1),
+                        'text' => "Duplicate synchro element name"
+                    ];
+                }
+
+
+                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['position'], $synchroElementPositions) === 1 )
+                    $synchroElement->setPosition($synchroElementInfos['position']);
+
+                else
+                {
+                    $errors[] = [
+                        'subject' => "synchro_element_" . ($key +1),
+                        'text' => "Position already used"
+                    ];
+                }
+
+                if( false === $arraySearchRecursive->search("synchro_element_" . ($key +1), $errors) )
+                {
+                    $synchroElement->addSynchro($synchro);
+                    $synchroElementIds[] = [
+                        'element' => "synchro_element_" . ($key +1),
+                        'id' => $synchroElement->getId(),
+                    ];
+                }
+
+            }
+
+        }
+
+        if(empty($errors))
+        {
+
+            if(is_null($synchro->getId()))
+                $manager->persist($synchro);
+
+            $manager->flush();
+        }
+
+        $synchroInfos = [
+            'synchro_id' => $synchro->getId(),
+            'synchro_elements_infos' => $synchroElementIds
+        ];
+
+        return new JsonResponse([
+                                    'status' => (empty($errors) ? '200 OK' : 'NOK'),
+                                    'errors' => $errors,
+                                    'synchro_infos' => $synchroInfos
+                                ]);
+
+    }
+
+
     /**
      * @Route(path="/get/video/encoding/status", name="media::getMediaEncodingStatus", methods={"POST"})
+     * @throws Exception
      */
     public function getMediaEncodingStatus(Request $request, FfmpegTasksRepository $ffmpegTasksRepository)
     {
@@ -443,19 +630,21 @@ class MediaController extends AbstractController
         if(!$task)
             throw new Exception(sprintf("No Ffmpeg task found with id : '%d'", $request->request->get('id')));
 
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $customerName );
+        $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
+
         // finish with 0 errors
         if($task->getFinished() !== null AND $task->getErrors() === null)
         {
-
-            $customerName = strtolower( $this->sessionManager->get('current_customer')->getName() );
-            $manager = $this->getDoctrine()->getManager( $customerName );
-            $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
             $media = $mediaRepository->findOneByName( $task->getMedia()['name'] );
             if(!$media)
                 throw new Exception(sprintf("No Media found with name : '%s", $task->getMedia()['name']));
 
-            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/videos/low/" . $media->getId() . ".mp4";
+            $path = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . '/' . $media->getMediaType() . '/' . $media->getId() . ".mp4";
+
+            //dd($path);
 
             $response = [
                 'status' => 'Finished',
@@ -477,50 +666,95 @@ class MediaController extends AbstractController
 
         // finish with 1 or more errors
         elseif($task->getFinished() !== null AND $task->getErrors() !== null)
+        {
+
+            /*if($task->getMediatype() === 'sync')
+            {
+                $taskMedia = $task->getMedia();
+
+                $mediaRepository->removeUncompleteSynchros( $taskMedia['synchros'] );
+            }*/
+
             $response = ['status' => 'Finished', 'type' => '520 Encode error', 'error' => $task->getErrors()];
+        }
 
         // not finish
         else
             $response = ['status' => 'Running'];
 
-        return new JsonResponse($response , (array_key_exists('error', $response)) ? Response::HTTP_INTERNAL_SERVER_ERROR : Response::HTTP_OK);
+        return new JsonResponse($response);
 
     }
 
     /**
-     * @Route(path="/remove/media/{id}", name="media::removeMedia", methods={"POST"},
+     * @Route(path="/remove/media/{id}", name="media::removeMedia", methods={"POST", "GET"},
      * requirements={"id": "\d+"})
      */
     public function removeMedia(Request $request, int $id)
     {
 
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $customerName = $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
         //dd($id);
-        $media = $mediaRepository->find($id);
 
+        $media = $mediaRepository->find($id);
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
-        dd("ok");
-        
+        //dd("ok");
+
         /*
         // delete source
         $root = $this->getParameter('project_dir') . '/../node_file_system/';
         $path = $root . $managerName . '/' . $media->getType() . '/' . $media->getName() . '.' . $media->getExtension();
         unlink($path);*/
 
-        if($media instanceof Video)
-            $mediaType = 'video';
+        $fileType = explode("/", $media->getMimeType())[0];
+
+        $sizes = ['low', 'medium', 'high', 'HD', 'high/UHD-4k', 'high/UHD-8k', 'HD/UHD-4k', 'HD/UHD-8k', 'HIGH/UHD-4k', 'HIGH/UHD-8k'];
+
+        if($media->getMediaType() === 'elgp')
+        {
+            $path = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/piece/' . $media->getId() . '.' . ( ($fileType === 'image') ? '.png' : '.mp4' );
+            if(file_exists($path))
+                unlink($path);
+        }
+
+        else if( $media->getMediaType() === 'diff' )
+        {
+
+            foreach ($sizes as $size) {
+
+                // medias; VIDÉOS; VIDÉOS HORIZONTALES; VIDÉOS VERTICALES; IMAGES/PRODUITS FIXES/PLEIN ECRAN/
+
+                if( $media->getMediaType() === 'diff' )
+                    $path = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $fileType . '/' .$size .'/' . $media->getId() . '.' . ( ($fileType === 'image') ? '.png' : '.mp4' );
+
+                if(file_exists($path))
+                    unlink($path);
+            }
+
+        }
 
         else
-            $mediaType = 'image';
+        {
 
-        $sizes = ['low', 'medium', 'high', 'HD'];
+        }
+
         foreach ($sizes as $size) {
-            $path = $this->getParameter('project_dir') .'/../main/data_' . $managerName . '/PLAYER INFOWAY WEB/medias/' . $mediaType . '/' .$size .'/' . $media->getId() . '.' . $media->getExtension();
+
+            // medias; VIDÉOS; VIDÉOS HORIZONTALES; VIDÉOS VERTICALES; IMAGES/PRODUITS FIXES/PLEIN ECRAN/
+
+            if( $media->getMediaType() === 'diff' )
+                $path = $this->getParameter('project_dir') .'/../main/data_' . $customerName . '/PLAYER INFOWAY WEB/medias/' . $fileType . '/' .$size .'/' . $media->getId() . '.' . ( ($fileType === 'image') ? '.png' : '.mp4' );
+
+            else
+            {
+                // dossier 'AUTRES' pour 5asec,toujours utile ??
+                $path = "";
+            }
 
             if(file_exists($path))
                 unlink($path);
@@ -544,7 +778,7 @@ class MediaController extends AbstractController
     {
 
         $fileNameWithExtension = $request->request->get('file');
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $mediaRepository = $manager->getRepository(Media::class)->setEntityManager($manager);
 
@@ -570,7 +804,7 @@ class MediaController extends AbstractController
     public function mediaMiniatureExist(Request $request)
     {
 
-        $path = $this->parameterBag->get('project_dir'). '/public/' . $request->request->get('path');
+        $path = $this->__parameterBag->get('project_dir'). '/public/' . $request->request->get('path');
 
         if( file_exists($path) )
             return new Response( "200 OK" );
@@ -586,8 +820,8 @@ class MediaController extends AbstractController
     public function retrieveMediaInfosForPopup(Request $request)
     {
 
-        $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) )
-                                         ->getRepository(Media::class);
+        $mediaRepo = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) )
+                          ->getRepository(Media::class);
 
         $mediaInfos = $mediaRepo->getMediaInfosForInfoSheetPopup(intval( $request->request->get('mediaId') ));
 
@@ -604,7 +838,7 @@ class MediaController extends AbstractController
     public function updateMediaAssociatedData(Request $request, int $id, string $data)
     {
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $manager = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
         $media = $mediaRepo->find($id);
 
@@ -629,25 +863,25 @@ class MediaController extends AbstractController
     public function getProgrammingInfos(Request $request, int $id)
     {
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $manager = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
         $media = $mediaRepo->find($id);
         if(!$media)
             throw new Exception(sprintf("No media found with id : '%s'", $id));
 
-        $customerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $customerName = strtolower($this->__sessionManager->get('current_customer')->getName());
 
-        $mediaMiniatureExist = file_exists($this->parameterBag->get('project_dir') . "/public/miniatures/" .
-                    $customerName. "/" . ( ($media instanceof Image) ? 'images': 'videos') . "/low/" . $media->getId() . "."
-                    . ( ($media instanceof Image) ? 'png': 'mp4' ) );
+        $mediaMiniatureExist = file_exists($this->__parameterBag->get('project_dir') . "/public/miniatures/" .
+                                           $customerName. "/" . ( ($media instanceof Image) ? 'image': 'video') . "/low/" . $media->getId() . "."
+                                           . ( ($media instanceof Image) ? 'png': 'mp4' ) );
 
-        $mediaProgrammingMouldList = $this->serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
+        $mediaProgrammingMouldList = $this->__serializer->serialize($mediaRepo->getMediaProgrammingMouldList($media), 'json');
 
         return new JsonResponse([
-            'mediaMiniatureExist' => $mediaMiniatureExist,
-            'customer' => $customerName,
-            'mediaProgrammingMouldList' => $mediaProgrammingMouldList
-        ]);
+                                    'mediaMiniatureExist' => $mediaMiniatureExist,
+                                    'customer' => $customerName,
+                                    'mediaProgrammingMouldList' => $mediaProgrammingMouldList
+                                ]);
 
     }
 
@@ -657,7 +891,7 @@ class MediaController extends AbstractController
     public function replaceMedia(Request $request, string $location)
     {
 
-        $manager = $this->getDoctrine()->getManager( strtolower($this->sessionManager->get('current_customer')->getName()) );
+        $manager = $this->getDoctrine()->getManager( strtolower($this->__sessionManager->get('current_customer')->getName()) );
         $mediaRepo = $manager->getRepository(Media::class);
 
         $mediaToReplace = $mediaRepo->find($request->request->get('remplacementDatas')['mediaToReplaceId']);
@@ -670,7 +904,7 @@ class MediaController extends AbstractController
 
         $fileType = $request->request->get('remplacementDatas')['fileType'];
 
-        $currentCustomerName = strtolower($this->sessionManager->get('current_customer')->getNAme());
+        $currentCustomerName = strtolower($this->__sessionManager->get('current_customer')->getNAme());
 
         $remplacementDates = [
             'start' => $request->request->get('remplacementDatas')['remplacementDate']['start'],
@@ -692,7 +926,7 @@ class MediaController extends AbstractController
             foreach ($qualities as $quality)
             {
 
-                $source = $this->parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
+                $source = $this->__parameterBag->get('project_dir') . "/../main/data_" . $currentCustomerName . "/PLAYER INFOWAY WEB/medias/"
                 . $fileType . "/" . $quality . "/" . $mediaToReplace->getId() . "." . ( ($fileType === 'image') ? 'png': 'mp4' );
 
                 if(file_exists($source))
@@ -781,25 +1015,36 @@ class MediaController extends AbstractController
     public function updateNumberOfMediasDisplayedInMediatheque(Request $request)
     {
 
-        $this->updateMediathequeMediasNumber($request->request->get('mediatheque_medias_number'));
+        $number = intval($request->request->get('mediatheque_medias_number'));
+
+        if(!is_int($number) && $number <= 0)
+            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
+
+        $this->__sessionManager->set('mediatheque_medias_number', $number);
 
         return new Response( "200 OK" );
 
     }
 
-    private function saveMediaCharacteristic(Request $request)
+    /**
+     * @Route(path="/save/upload/medias/infos", name="media::saveMediaCharacteristic", methods={"POST"})
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function saveMediaCharacteristic(Request &$request)
     {
 
         $ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);
         $customerRepository = $this->getDoctrine()->getManager()->getRepository(Customer::class);
 
-        $customer = $customerRepository->find( $this->sessionManager->get('current_customer')->getId() ); // dynamic session variable (will change each time user select customer in select)
-        $manager = $this->getDoctrine()->getManager( strtolower( $this->sessionManager->get('current_customer')->getName() ) );
 
+        $manager = $this->getDoctrine()->getManager( strtolower( $this->__sessionManager->get('current_customer')->getName() ) );
 
         //dd($request->request, $customer);
 
-        $error = [  ];
+        $cards = $error = [];
 
         foreach ($request->request->get('medias_list')['medias'] as $index => $mediaInfos)
         {
@@ -828,70 +1073,47 @@ class MediaController extends AbstractController
             else
             {
 
-                $mediaInfos['mediaType'] = 'video';
-
-                if($request->request->get('media_type') === "video_synchro")
-                    $type = "synchro";
-
-                elseif($request->request->get('media_type') === "video_thematic")
-                    $type = "thematics";
-
-                else
-                    $type = "medias";
-
-                $options = ['medias' => 'diff', 'thematics' => 'them', 'synchros' => 'sync'];
-
-                $mediaType = $options[$type];
-
-                $fileName = $mediaInfos['name'] . '.' . $mediaInfos['extension'];
-
-                $root = $this->getParameter('project_dir') . '/../node_file_system/';
-                $path = $root . $customer->getName() . '/' . $mediaType . '/' . $fileName;
-
-                // check if date is valid and exist in gregorian calendar (@see: https://www.php.net/manual/en/function.checkdate.php)
-                // if date is not valid return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
-                // parameter order : ( int $month , int $day , int $year )
-                // form data order : year-month-day
-                if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
-                {
-                    $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
-                    break;
-                }
-
-                if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
-                {
-                    $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
-                    break;
-                }
-
-                $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart'] );
-                $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd'] );
-
-                if($diffusionEndDate < $diffusionStartDate)
-                {
-                    $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
-                    break;
-                }
+                //$mediaInfos['mediaType'] = 'video';
 
                 $media = $manager->getRepository(Media::class)->setEntityManager($manager)->find( $mediaInfos['id'] );
+                if(!$media)
+                    throw new Exception(sprintf("No media can be found with this id : '%s'", $mediaInfos['id']));
 
-                $media->setName( $mediaInfos['name'] )
-                      ->setContainIncruste( $mediaInfos['containIncrustations'] )
-                      ->setDiffusionStart($diffusionStartDate)
-                      ->setDiffusionEnd($diffusionEndDate);
-
-                // if user change file name
-                // rename uploaded file
-                if($media && $mediaInfos['name'] !== $media->getName() && file_exists($root . $customer->getName() . '/' . $mediaType . '/' . $media->getName() .'.' . $mediaInfos['extension']))
+                if( array_key_exists('diffusionStart', $mediaInfos) AND array_key_exists('diffusionEnd', $mediaInfos) )
                 {
 
-                    rename($root . $customer->getName() . '/' . $mediaType . '/' . $media->getName() .'.' . $mediaInfos['extension'], $path);
+                    // check if date is valid and exist in gregorian calendar (@see: https://www.php.net/manual/en/function.checkdate.php)
+                    // if date is not valid return new Response("519 Invalid diffusion date", Response::HTTP_INTERNAL_SERVER_ERROR);
+                    // parameter order : ( int $month , int $day , int $year )
+                    // form data order : year-month-day
+                    if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
+                    {
+                        $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
+                        break;
+                    }
 
-                    // debug
-                    // comment this at the end
-                    copy($path, $root . $customer->getName() . '/' . $type . '/' . $fileName);
+                    if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
+                    {
+                        $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
+                        break;
+                    }
+
+                    $diffusionStartDate = new DateTime( $mediaInfos['diffusionStart'] );
+                    $diffusionEndDate = new DateTime( $mediaInfos['diffusionEnd'] );
+
+                    if($diffusionEndDate < $diffusionStartDate)
+                    {
+                        $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
+                        break;
+                    }
+
+                    $media->setDiffusionStart($diffusionStartDate)
+                          ->setDiffusionEnd($diffusionEndDate)
+                          ->setContainIncruste( $mediaInfos['containIncrustations'] );
 
                 }
+
+                $media->setName( $mediaInfos['name'] );
 
                 if(array_key_exists('tags', $mediaInfos))
                 {
@@ -909,23 +1131,61 @@ class MediaController extends AbstractController
                 if(array_key_exists('products', $mediaInfos))
                 {
                     $media->getProducts()->clear();
+                    $categoriesId = [];
                     foreach ($mediaInfos['products'] as $k => $productId)
                     {
-                        $product = $manager->getRepository(Product::class)->setEntityManager($manager)->find($productId);
+                        $productRepo = $manager->getRepository(Product::class)->setEntityManager($manager);
+                        $product = $productRepo->find($productId);
                         if(!$product)
                             throw new Exception(sprintf("No Product found with id : '%d'", $productId));
 
+                        // lors de l'association d'un produit
+                        // le media recupère les tags du produit
+                        foreach ($product->getTags()->getValues() as $tag)
+                        {
+                            $media->addTag($tag);
+                        }
+
                         $media->addProduct($product);
+                        if(null !== $product->getCategory())
+                            $categoriesId[] = $product->getCategory()->getId();
+                        $criterionsId = $productRepo->getProductsCriterionsIds($product);
                     }
                 }
 
                 $manager->flush();
 
+                if($error === [])
+                {
+
+                    $cards[] = $this->buildNewMediaCard($mediaInfos, $media);
+
+                    /*$response[] = [
+                        'id' => $media->getId(),
+                        'createdAt' => $media->getCreatedAt()->format('Y-m-d'),
+                        'fileType' => ($media instanceof Image) ? 'image' : 'video',
+                        'orientation' => $media->getOrientation(),
+                        'diffStart' => $media->getDiffusionStart(),
+                        'diffEnd' => $media->getDiffusionEnd(),
+                        'customer' => $this->__sessionManager->get('current_customer')->getName(),
+                        'products' => $mediaInfos['products'] ?? [],
+                        'tags' => $mediaInfos['tags'] ?? [],
+                        'categories' => $categoriesId ?? [],
+                        'criterions' => $criterionsId ?? [],
+                    ];*/
+
+                }
+
             }
 
         }
 
-        return new JsonResponse( ($error === []) ? '200 OK' : $error , ($error === []) ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
+        if($error === [])
+        {
+            return new JsonResponse( $cards );
+        }
+
+        return new JsonResponse( $error , Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function getMediaHigestFormat(int $id, string $mediaType)
@@ -935,7 +1195,7 @@ class MediaController extends AbstractController
             'HD', 'high', 'medium', 'low'
         ];
 
-        $customerName = $this->sessionManager->get('current_customer')->getName();
+        $customerName = $this->__sessionManager->get('current_customer')->getName();
 
         $root = $path = $this->getParameter('project_dir') . "/../main/data_" . $customerName . "/PLAYER INFOWAY WEB/medias";
 
@@ -954,13 +1214,13 @@ class MediaController extends AbstractController
 
         return  'low';
     }
-    
+
     private function getMediasForMediatheque(ObjectManager &$manager, Request &$request, bool $serializeResults = false)
     {
 
         $mediaRepo = $manager->getRepository(Media::class)->setEntityManager( $manager );
 
-        $numberOfMediasDisplayedInMediatheque = $this->sessionManager->get('mediatheque_medias_number');
+        $numberOfMediasDisplayedInMediatheque = $this->__sessionManager->get('mediatheque_medias_number');
 
         $mediasDisplayedType = $request->get('mediasDisplayedType');
 
@@ -974,20 +1234,17 @@ class MediaController extends AbstractController
             die("TODO: get all templates");
         }
 
+        elseif($mediasDisplayedType === "medias")
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('diff', $page, $numberOfMediasDisplayedInMediatheque);
+
         elseif($mediasDisplayedType === "video_synchro")
-        {
-            die("TODO: get all video synchro");
-        }
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('sync', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "video_thematic")
-        {
-            die("TODO: get all video thematic");
-        }
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('them', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "element_graphic")
-        {
-            die("TODO: get all element graphic");
-        }
+            $mediasToDisplayed = $mediaRepo->getMediaInByTypeForMediatheque('elmt', $page, $numberOfMediasDisplayedInMediatheque);
 
         elseif($mediasDisplayedType === "incruste")
         {
@@ -1004,7 +1261,7 @@ class MediaController extends AbstractController
 
         if($serializeResults)
         {
-            $mediasToDisplayed = json_decode( $this->serializer->serialize($mediasToDisplayed, 'json'), true);
+            $mediasToDisplayed = json_decode( $this->__serializer->serialize($mediasToDisplayed, 'json'), true);
 
             foreach ($mediasToDisplayed['medias'] as &$mediaInfos)
             {
@@ -1032,20 +1289,6 @@ class MediaController extends AbstractController
 
     }
 
-    private function updateMediathequeMediasNumber($number)
-    {
-
-        $number = intval($number);
-
-        if(!is_int($number))
-            throw new Exception(sprintf("'mediatheque_medias_number' Session varaible cannot be update with '%s' value beacause it's not int!", $number));
-
-        ( $this->sessionManager->get('mediatheque_medias_number') !== null ) ?
-            $this->sessionManager->replace('mediatheque_medias_number', $number) :
-            $this->sessionManager->set('mediatheque_medias_number', $number);
-
-    }
-
     /**
      * Return an array which contain all filter content
      * @return array
@@ -1053,7 +1296,7 @@ class MediaController extends AbstractController
     private function getPopupFiltersContent()
     {
 
-        $managerName = strtolower($this->sessionManager->get('current_customer')->getName());
+        $managerName = strtolower($this->__sessionManager->get('current_customer')->getName());
         $manager = $this->getDoctrine()->getManager($managerName);
         $productRepo = $manager->getRepository(Product::class)->setEntityManager( $manager );
         $categoryRepo = $manager->getRepository(Category::class)->setEntityManager( $manager );
@@ -1069,5 +1312,197 @@ class MediaController extends AbstractController
 
     }
 
+    private function buildNewMediaCard(array &$mediaInfos, Media $media)
+    {
+
+        //$manager = $this->getDoctrine()->getManager( strtolower( $this->__sessionManager->get('current_customer')->getName() ) );
+        //$mediaRepo = $manager->getRepository(Media::class)->setEntityManager($manager);
+
+        $fileType = explode("/", $media->getMimeType())[0];
+        $mediaName = $media->getName();
+        $id = $media->getId();
+        $mediaCreatedAt = $media->getCreatedAt()->format("Y-m-d");
+        $mediaDiffStart = $media->getDiffusionStart()->format("Y-m-d");
+        $mediaDiffEnd = $media->getDiffusionEnd()->format("Y-m-d");
+        $orientation = strtolower( $media->getOrientation() );
+        $mediaMimeType = $media->getMimeType();
+        $width = $media->getWidth();
+        $height = $media->getHeight();
+        $extension = $media->getExtension();
+        $criterionsNames = [];
+        $tagsNamesAndColors = [];
+
+        $customer = strtolower($this->__sessionManager->get('current_customer')->getName());
+
+        $miniatureLowPath = "/miniatures/" . $customer . "/" . $fileType . $media->getMediaType() . "/low/";
+
+        $miniatureLowPath .= $id . ( ($fileType === 'image') ? '.png' : '.mp4' );
+        $miniatureMediumPath = str_replace("low","medium", $miniatureLowPath);
+
+        $miniatureLowExist = (file_exists($miniatureLowPath)) ? 'true': 'false';
+        $miniatureMediumExist = (file_exists($miniatureMediumPath)) ? 'true' : 'false';
+
+        $now = new \DateTime();
+
+        if($media->getDiffusionEnd() < new \DateTime()) $dateDiff = intval($media->getDiffusionEnd()->diff($now)->format("-%a"));
+
+        else $dateDiff = intval($media->getDiffusionEnd()->diff($now)->format("%a"));
+
+
+
+        $card =  "<div class='card card_$fileType' id='media_$id'  data-created_date='$mediaCreatedAt' data-file_type='$fileType' data-orientation='$orientation' data-media_diff_start='$mediaDiffStart' data-media_diff_end='$mediaDiffEnd' data-customer='$customer' ";
+
+        if (sizeof($media->getProducts()->getValues()) > 0)
+        {
+            $mediaCategoriesId = array_map(fn($product) => $product->getCategorie()->getId(), $media->getProducts()->getValues());
+            $mediaProductsCriterionsId = array_unique(array_map(fn($criterion) => $criterion->getId(), array_map(fn($product) => $product->getCriterions()->getValues(), $media->getProducts()->getValues())));
+            $criterionsNames[] = array_unique(array_map(fn($criterion) => $criterion->Name(), array_map(fn($product) => $product->getCriterions()->getValues(), $media->getProducts()->getValues())));
+
+            $card .= "data-products='" . implode(", ", $mediaInfos['products']) . "' data-categories='" . implode(", ", $mediaCategoriesId) . "'  data-criterions='" . implode(", ", $mediaProductsCriterionsId) . "'";
+
+            dd($mediaCategoriesId, $mediaProductsCriterionsId);
+        }
+        else
+            $card .= "data-products='none' data-categories='none' data-criterions='none'";
+
+        if (sizeof($media->getTags()->getValues()) > 0)
+        {
+            $card .= "data-tags='" . implode(", ", array_map(fn($tag) => $tag->getId(), $media->getTags()->getValues())) . "'";
+            $tagsNamesAndColors[] = array_unique(array_map(fn($tag) => ['name' => $tag->getName(), 'color' => $tag->getColor()], $media->getTags()->getValues()));
+        }
+        else
+            $card .= "data-tags='none'";
+
+
+        $card .= "<div class='card_header'>
+                    <div class='select_media_input_container'>
+                        <label class='container-input'>
+                            <input type='checkbox' class='select_media_input'>
+                            <span class='container-rdo-tags'></span>
+                        </label>
+                    </div>
+            
+                    <div class='media_actions_shortcuts_container'>";
+
+
+        if($dateDiff <= 14)
+        {
+            $card .= "<div class='shortcut shortcut_diff_date_modification alert_date'>
+                        <i class='far fa-clock'></i>
+                      </div>";
+        }
+        else
+        {
+            $card .= "<div class='shortcut shortcut_diff_date_modification'>
+                        <i class='far fa-clock'></i>
+                      </div>";
+        }
+
+        $card .= "<div class='shortcut'>
+                            <i class='fas fa-euro-sign'></i>
+                        </div>
+            
+                        <div class='shortcut'>
+                            <i class='fas fa-link shortcut_product_association'></i>
+                        </div>
+            
+                        <div class='shortcut'>
+                            <i class='fas fa-spinner'></i>
+                        </div>
+            
+                    </div>";
+
+        $card .= "<div class='card_body'> <div class='media_miniature_container media_$orientation' data-miniature_medium_exist='$miniatureMediumExist' data-size='$width*$height' data-extension='$extension'";
+
+        if($fileType === 'image')
+            $card .= "data-dpi='72' >";
+        else
+            $card .= "data-codec='" . $media->getVideoCodec(). "' >";
+
+        if(!$miniatureLowExist)
+            $card .= "<img class='media_miniature miniature_$fileType' src='/build/images/no-available-image.png' alt='/build/images/no-available-image.png'>";
+        else
+        {
+
+            if($fileType === 'image')
+            {
+                $card .= "<div class='media_container_img'>
+                            <div class='media_container_arrows show_expanded_miniature'>
+                                <i class='fas fa-expand-arrows-alt'></i>
+                            </div>
+                            <img class='media_miniature miniature_image' src='$miniatureLowPath' alt='$miniatureLowPath'>
+                        </div>";
+            }
+            else
+            {
+                $card .= "<div class='media_container_video'>
+                            <div class='media_container_arrows show_expanded_miniature'>
+                                <i class='fas fa-expand-arrows-alt'></i>
+                            </div>
+                            <video class='media_miniature miniature_video'>
+                                <source src='$miniatureLowPath' type='$mediaMimeType'>
+                            </video>
+                        </div>";
+            }
+
+        }
+
+        $card .= "<div class='media_name_container'>
+                    <span class='media_name'>$mediaName</span>
+                </div>";
+
+        $card .= "<div class='media_associated_items_container'>
+                    <div class='media_criterions_container associated_item'>";
+
+        if(sizeof($criterionsNames) > 0)
+        {
+            foreach ($criterionsNames as $criterionName)
+            {
+                $card .= "<p class='criterion'><span></span>$criterionName</p>";
+            }
+
+            $card .= "</div>";
+        }
+        else
+            $card .= "<p>0 critères </p></div>";
+
+        if(sizeof($tagsNamesAndColors) > 0)
+        {
+            foreach ($tagsNamesAndColors as $tagsNameAndColor)
+            {
+                $name = $tagsNameAndColor['name'];
+                $color = $tagsNameAndColor['color'];
+
+                $card .= "<p class='tag container-tags'>
+                            <span class='mini-cercle' style='background: $color;'></span>
+                            <span class='current-tags-name'>$name</span>
+                          </p>";
+            }
+
+            $card .= "</div></div>";
+        }
+        else
+            $card .= "<p>0 tags </p></div></div>";
+
+        return $card;
+
+    }
+
+    private function renameMediaWithId(string $mediaName, int $mediaId, array $filesToRenameWithId)
+    {
+
+        foreach ($filesToRenameWithId as $fileToRenameWithIdPath)
+        {
+
+            $path = str_replace($mediaName, $mediaId, $fileToRenameWithIdPath);
+
+            if(!file_exists($fileToRenameWithIdPath))
+                throw new Exception(sprintf("File not found : %s", $fileToRenameWithIdPath));
+
+            rename($fileToRenameWithIdPath, $path);
+
+        }
+
+    }
 
 }

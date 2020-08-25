@@ -5,8 +5,8 @@ namespace App\Repository\Customer;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Product;
 use App\Entity\Customer\Site;
-use App\Repository\MainRepository;
-use App\Repository\RepositoryInterface;
+use App\Repository\RepositoryTrait;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -22,7 +22,7 @@ use Exception;
 class ProductRepository extends ServiceEntityRepository
 {
 
-    use MainRepository;
+    use RepositoryTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -116,6 +116,37 @@ class ProductRepository extends ServiceEntityRepository
             function( Product $product ){ return $product->getId() ; }
             ,  $this->findAll() ) ;
 
+    }
+
+    public function getProductsCriterionsIds($productOrId)
+    {
+
+        $criterionsIds = [];
+
+        if(is_int($productOrId))
+        {
+            $product = $this->find($productOrId);
+            if(!$product)
+                throw new Exception(sprintf("Not product found with '%s' id !", $productOrId));
+
+            foreach ($product->getCriterions()->getValues() as $criterion)
+            {
+                $criterionsIds[] = $criterion->getId();
+            }
+
+
+        }
+        else
+        {
+
+            foreach ($productOrId->getCriterions()->getValues() as $criterion)
+            {
+                $criterionsIds[] = $criterion->getId();
+            }
+
+        }
+
+        return $criterionsIds;
     }
 
     // Eureka --> Surcharger la Méthode findAll() pour contrôler le lazy load !!

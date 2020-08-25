@@ -289,6 +289,8 @@
                             <select name="" id="medias_sortable_by_date">
                                 <option value="desc" selected>Les plus récents d'abord</option>
                                 <option value="asc">Les plus anciens d'abord</option>
+                                <option value="alpha_num_asc">A &rightarrow; Z</option>
+                                <option value="alpha_num_desc">Z &rightarrow; A</option>
                             </select>
                         </div>
 
@@ -377,6 +379,8 @@
         {% endif %}
 
         {% include "/popups/loading_popup/popup_loading.twig" %}
+
+        {% include "/popups/medias_archived_popup/medias_archived_popup.html.twig" %}
 
         {% include "/popups/medias_waiting_for_incrustes/popup_medias_waiting_incrustes.html.twig" %}
 

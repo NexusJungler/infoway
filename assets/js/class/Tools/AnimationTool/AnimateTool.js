@@ -1,8 +1,9 @@
 import Tool from "../Tool";
 import ShowMediaFilter from "./ShowMediaFilter/ShowMediaFilter";
+import ParentTool from "../ParentTool";
 
 
-class AnimateTool extends Tool{
+class AnimateTool extends ParentTool{
 
     constructor(){
         super();

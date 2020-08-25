@@ -5,6 +5,7 @@ namespace App\Repository\Customer;
 
 use App\Repository\Customer;
 use App\Entity\Customer\Tag;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -20,16 +21,13 @@ use Doctrine\Persistence\ObjectManager;
  */
 class TagRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
 
         parent::__construct($registry, Tag::class);
-    }
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-        return $this;
     }
 
 

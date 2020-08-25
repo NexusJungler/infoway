@@ -8,6 +8,7 @@ use App\Entity\Admin\UserSites;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Site;
 use App\Repository\Admin\UserSitesRepository;
+use App\Repository\RepositoryTrait;
 use Cassandra\Custom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -20,6 +21,9 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class SiteRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     private UserSitesRepository $userSiteRepo ;
 
     public function __construct(ManagerRegistry $registry, UserSitesRepository $userSiteRepo)

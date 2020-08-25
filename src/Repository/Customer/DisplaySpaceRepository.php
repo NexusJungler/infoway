@@ -3,6 +3,7 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\DisplaySpace;
+use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -14,11 +15,24 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class DisplaySpaceRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, DisplaySpace::class);
     }
 
+    public function getAllDisplaySpacesNameIndexedById()
+    {
+
+        $displaceSpacesFounded = $this->createQueryBuilder('d')
+            ->select('d.id','d.name')
+            ->getQuery()
+            ->getResult();
+
+        return array_column($displaceSpacesFounded, 'name', 'id');
+    }
     // /**
     //  * @return DisplaySpace[] Returns an array of DisplaySpace objects
     //  */

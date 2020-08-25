@@ -22,9 +22,9 @@
 
     <body>
 
-        {% if (message is defined) and (message is not null) %}
+        {#{% if (message is defined) and (message is not null) %}
             <div style="display: none" id="message" data-message="{{ message }}"></div>
-        {% endif %}
+        {% endif %}#}
 
         <header class="header" >
             {% embed 'header.html.twig' %}

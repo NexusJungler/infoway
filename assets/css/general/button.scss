@@ -1,9 +1,9 @@
-
-
 /* == button == */
 button{
     &:disabled{
-        cursor: not-allowed;
+        cursor          : not-allowed;
+        background-color: #C0CCD1;
+        border          : none;
     }
 }
 

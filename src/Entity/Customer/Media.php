@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="media_type", type="string")
- * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "element_graphic" = "ElementGraphic" })
+ * @ORM\DiscriminatorColumn(name="instance", type="string")
+ * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "image_element_graphic" = "ImageElementGraphic", "video_element_graphic" = "VideoElementGraphic", "video_thematic" = "VideoThematic", "video_synchro" = "SynchroElement" })
  * @UniqueEntity(fields={"name"})
  */
 class Media
@@ -37,7 +37,7 @@ class Media
     private $size;
 
     /**
-     * @ORM\Column(type="datetime", name="created_at", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="date", name="created_at")
      */
     private $createdAt;
 
@@ -83,9 +83,9 @@ class Media
     private $products;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, name="media_type")
      */
-    private $type;
+    private $mediaType;
 
     /**
      * @ORM\Column(type="string", nullable=false, name="mime_type")
@@ -98,12 +98,12 @@ class Media
     private $isArchived;
 
     /**
-     * @ORM\Column(type="string", nullable=false, name="orientation")
+     * @ORM\Column(type="string", nullable=true, name="orientation")
      */
     private $orientation;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false, name="contain_incruste")
      */
     private $containIncruste;
 
@@ -125,6 +125,7 @@ class Media
         $this->tags = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->incrustes = new ArrayCollection();
+        $this->orientation = " ";
     }
 
     public function getId(): ?int
@@ -292,14 +293,14 @@ class Media
         return $this;
     }
 
-    public function getType(): ?string
+    public function getMediaType(): ?string
     {
-        return $this->type;
+        return $this->mediaType;
     }
 
-    public function setType(string $type): self
+    public function setMediaType(string $mediaType): self
     {
-        $this->type = $type;
+        $this->mediaType = $mediaType;
 
         return $this;
     }

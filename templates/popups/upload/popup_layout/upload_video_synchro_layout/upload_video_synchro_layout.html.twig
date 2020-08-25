@@ -1,0 +1,118 @@
+<div class="popup_body_child container step step_2" data-step="2">
+
+    <form id="medias_list_form" name="medias_list">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Fichier</th>
+                <th>Téléchargement</th>
+                <th>Médias</th>
+                <th>Caractéristiques</th>
+                <th>Nom</th>
+                <th>Date de diffusion</th>
+                <th>Critères</th>
+                <th>Associer Tags</th>
+                <th>Associer Produits</th>
+            </tr>
+            </thead>
+
+            {#{{ form_start(uploadMediaForm) }}
+            <tbody class="file_to_characterisation_list medias_collection">
+            {{ form_row(uploadMediaForm) }}
+            </tbody>
+            {{ form_end(uploadMediaForm) }}#}
+
+            <tbody class="file_to_characterisation_list medias_collection">
+
+            </tbody>
+
+        </table>
+
+    </form>
+
+</div>
+
+<div class="popup_body_child container step step_3" data-step="3" data-existed_synchro="{{ allSynchrosNames | join(', ') }}">
+
+    <div class="top">
+        <form name="synchro_edit_form" id="synchro_edit_form" action="/save/synchro/infos" method="post">
+            <div class="synchro_name_container container">
+
+                <div class="label_container"><label for="synchro_name">Nom</label></div>
+                <div class="input_container">
+                    <span class="error hidden"></span>
+                    <input type="hidden" id="synchro_name" name="synchro_edit_form[synchro][synchro_id]" class="synchro_id" value="">
+                    <input type="text" id="synchro_name" name="synchro_edit_form[synchro][name]" class="synchro_name form_input">
+                </div>
+                <div class="synchro_action_button_container">
+                    <button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon"></i></button>
+                    <button type="button" class="synchro_action_button"><i class="fas fa-pause synchro_action_button_icon"></i></button>
+                    <button type="button" class="synchro_action_button restart_video_btn"><i class="fas fa-step-backward synchro_action_button_icon"></i></button>
+                    <button type="button" class="synchro_action_button drag_video_btn"><i class="fas fa-arrows-alt"></i></button>
+                </div>
+
+            </div>
+
+            <div class="synchro_elements_container container">
+
+                {% for i in 1..5 %}
+
+                    <div class="synchro_element" id="synchro_element_{{ i }}" data-order="{{ i }}">
+
+                        <div class="synchro_element_preview_container">
+                            <video>
+                                <source src="{{ "/miniatures/kfc/video/sync/low/156.mp4" }}" type="video/mp4" />
+                            </video>
+                        </div>
+
+                        <div class="synchro_element_name_container">
+                            <span class="error hidden"></span>
+                            <input type="hidden" name="synchro_edit_form[synchro][synchros_elements][{{ i-1 }}][synchro_element_id]" value="{{ i }}">
+                            <input type="text" class="synchro_element_name form_input" title="nom du média" name="synchro_edit_form[synchro][synchros_elements][{{ i-1 }}][name]" value="media_{{ i }}">
+                        </div>
+
+                        <div class="synchro_element_position_container">
+                            <span class="error hidden"></span>
+                            <input type="text" class="synchro_element_position form_input" title="position" name="synchro_edit_form[synchro][synchros_elements][{{ i-1 }}][position]" value="{{ i }}">
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </form>
+    </div>
+
+    <div class="bottom">
+
+        <div class="synchro_associated_data_container">
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>Critères</th>
+                    <th>Tags</th>
+                    <th>Produits associés</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td class="synchro_criterions_container"></td>
+                    <td class="synchro_tags_container"></td>
+                    <td class="synchro_products_container"></td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

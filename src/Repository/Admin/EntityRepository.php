@@ -3,7 +3,7 @@
 namespace App\Repository\Admin;
 
 use App\Entity\Admin\Entity;
-use App\Repository\RepositoryInterface;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -14,7 +14,7 @@ use Doctrine\Persistence\ObjectManager;
  * @method Entity[]    findAll()
  * @method Entity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EntityRepository extends ServiceEntityRepository implements RepositoryInterface
+class EntityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

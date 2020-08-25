@@ -34,6 +34,28 @@ parameters:
         - pdf
         - doc
         - docx
+        - mkv
+        - mov
+        - qt
+        - x-m4v
+
+#    authorizedMimeTypes:
+#        - image/jpg
+#        - image/jpeg
+#        - image/png,
+#        - image/bmp,
+#        - image/gif,
+#        - image/x-windows-bmp,
+#        - image/pjpeg,
+#        - image/svg+xml
+#        - image/pjpeg
+#        - image/svg+xml
+#        - video/mp4
+#        - video/avi
+#        - video/x-matroska
+#        - video/3gpp
+#        - video/quicktime
+
     passwordResetTokenTimer: 1 # 1h
     mailer_user: noreply@infoway.fr
     mailer_password: Annesivy1974

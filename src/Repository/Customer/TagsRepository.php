@@ -3,7 +3,8 @@
 namespace App\Repository\Customer;
 
 use App\Entity\Customer\Tag;
-use App\Repository\RepositoryInterface;
+use App\Repository\RepositoryTrait;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -14,19 +15,14 @@ use Doctrine\Persistence\ObjectManager;
  * @method Tag[]    findAll()
  * @method Tag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TagsRepository extends ServiceEntityRepository implements RepositoryInterface
+class TagsRepository extends ServiceEntityRepository
 {
+
+    use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
-    }
-
-
-    public function setEntityManager(ObjectManager $entityManager): self
-    {
-        $this->_em = $entityManager;
-
-        return $this;
     }
 
     // /**
