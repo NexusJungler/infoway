@@ -2,148 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b237bda7-15f6-4ae8-877d-6e58489f2c4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/css/site/create_site.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/site/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/new_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/new_app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/groupe-prix.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/groupe-prix.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/header_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header_menu.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/home_page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/home_page.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/settings/settings_user.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/settings_user.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/site.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/criterion.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/criterion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/header/headerSelect.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/header/headerSelect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/site.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/header.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/criterions_lists/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/criterions_lists/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/customers/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/customers/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/setting-user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/setting-user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/site.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/settings/criterion/list_criterion.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/site/create_site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/site/create_site.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Navbar/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/site/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site/show.html.twig" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/public/build/" />
-    <ignored path="$PROJECT_DIR$/vendor/behat/transliterator/" />
-    <ignored path="$PROJECT_DIR$/vendor/composer/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/annotations/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/cache/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/collections/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/common/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/data-fixtures/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/dbal/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/event-manager/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/inflector/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/instantiator/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/lexer/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/migrations/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/orm/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/persistence/" />
-    <ignored path="$PROJECT_DIR$/vendor/doctrine/reflection/" />
-    <ignored path="$PROJECT_DIR$/vendor/easycorp/easy-log-handler/" />
-    <ignored path="$PROJECT_DIR$/vendor/egulias/email-validator/" />
-    <ignored path="$PROJECT_DIR$/vendor/fig/link-util/" />
-    <ignored path="$PROJECT_DIR$/vendor/fzaninotto/faker/" />
-    <ignored path="$PROJECT_DIR$/vendor/jdorn/sql-formatter/" />
-    <ignored path="$PROJECT_DIR$/vendor/jms/metadata/" />
-    <ignored path="$PROJECT_DIR$/vendor/knplabs/knp-components/" />
-    <ignored path="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/laminas/laminas-code/" />
-    <ignored path="$PROJECT_DIR$/vendor/laminas/laminas-eventmanager/" />
-    <ignored path="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge/" />
-    <ignored path="$PROJECT_DIR$/vendor/monolog/monolog/" />
-    <ignored path="$PROJECT_DIR$/vendor/nikic/php-parser/" />
-    <ignored path="$PROJECT_DIR$/vendor/ocramius/package-versions/" />
-    <ignored path="$PROJECT_DIR$/vendor/ocramius/proxy-manager/" />
-    <ignored path="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common/" />
-    <ignored path="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock/" />
-    <ignored path="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver/" />
-    <ignored path="$PROJECT_DIR$/vendor/psr/cache/" />
-    <ignored path="$PROJECT_DIR$/vendor/psr/container/" />
-    <ignored path="$PROJECT_DIR$/vendor/psr/link/" />
-    <ignored path="$PROJECT_DIR$/vendor/psr/log/" />
-    <ignored path="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/apache-pack/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/asset/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/browser-kit/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/cache/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/cache-contracts/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/config/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/console/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/css-selector/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/debug/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/debug-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/debug-pack/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/dependency-injection/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/doctrine-bridge/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/dom-crawler/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/dotenv/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/event-dispatcher/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/expression-language/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/filesystem/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/finder/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/flex/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/form/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/framework-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/http-client/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/http-client-contracts/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/http-foundation/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/http-kernel/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/inflector/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/intl/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/maker-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/mime/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/monolog-bridge/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/monolog-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/options-resolver/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/orm-pack/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/phpunit-bridge/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/polyfill-php72/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/polyfill-php73/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/process/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/profiler-pack/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/property-access/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/property-info/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/routing/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/security-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/security-core/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/security-csrf/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/security-guard/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/security-http/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/serializer/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/serializer-pack/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/service-contracts/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/stopwatch/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/templating/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/test-pack/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/translation/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/translation-contracts/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/twig-bridge/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/twig-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/validator/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/var-dumper/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/var-exporter/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/web-link/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/web-profiler-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/web-server-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/symfony/yaml/" />
-    <ignored path="$PROJECT_DIR$/vendor/twig/twig/" />
-    <ignored path="$PROJECT_DIR$/vendor/vich/uploader-bundle/" />
-    <ignored path="$PROJECT_DIR$/vendor/webimpress/safe-writer/" />
-    <ignored path="$PROJECT_DIR$/vendor/webmozart/assert/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -151,6 +20,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -166,73 +36,6 @@
     <expand />
     <select />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="infoway" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/AppController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="169" column="39" selection-start-line="169" selection-start-column="39" selection-end-line="169" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/site.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/popup.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/setting.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/assets/js/show_allergens.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-190" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/product.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/general/form.scss">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/general/input-rdo.scss">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/general/popup.scss">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -241,113 +44,8 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>activ</find>
-      <find>.card</find>
-      <find>1rem</find>
-      <find>down</find>
-      <find>tag</find>
-      <find>show_only_videos</find>
-      <find>filter_by_orientation_or_type_container</find>
-      <find>show_only_horizontal_media</find>
-      <find>tool</find>
-      <find>filter</find>
-      <find>left_filter_container</find>
-      <find>hover</find>
-      <find>displays_screen_playlists</find>
-      <find>after</find>
-      <find>block body</find>
-      <find>hangeFilter</find>
-      <find>customerNames</find>
-      <find>conta</find>
-      <find>home_info-contact</find>
-      <find>btn-popup-delete-criterion</find>
-      <find>tags_action_delete</find>
-      <find>delete-tag</find>
-      <find>ActionForm</find>
-      <find>filter_city</find>
-      <find>pira</find>
-      <find>&gt;</find>
-      <find>menu-dropdown-table</find>
-      <find>menu-list-table</find>
-      <find>accordion-toggle</find>
-      <find>display-content-down</find>
-    </findStrings>
-    <replaceStrings>
-      <replace />
-      <replace>.thead-associations</replace>
-      <replace>table-container</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>C:\laragon\www\infoway</dir>
-      <dir>C:\laragon\www\infoway\assets\js\class\Tools</dir>
-      <dir>C:\laragon\www\infoway\assets\css</dir>
-      <dir>C:\laragon\www\infoway\assets\js</dir>
-      <dir>C:\laragon\www\infoway\src\Entity</dir>
-      <dir>C:\laragon\www\infoway\templates</dir>
-      <dir>C:\laragon\www\infoway\assets</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/templates/media/_media_card.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" />
-        <option value="$PROJECT_DIR$/templates/popups/medias_waiting_for_incrustes/popup_medias_waiting_incrustes.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup_association/product_association/popup_product_association.scss" />
-        <option value="$PROJECT_DIR$/templates/popups/associations/product_association/popup_product_association.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" />
-        <option value="$PROJECT_DIR$/assets/css/media/show_media.scss" />
-        <option value="$PROJECT_DIR$/assets/css/general/table.scss" />
-        <option value="$PROJECT_DIR$/templates/media/show_media.html.twig" />
-        <option value="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup_association/tag_association/popup_tag_association.scss" />
-        <option value="$PROJECT_DIR$/templates/products/show.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/show_products.js" />
-        <option value="$PROJECT_DIR$/webpack.config.js" />
-        <option value="$PROJECT_DIR$/templates/media/media-image.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/class/Table/Table.js" />
-        <option value="$PROJECT_DIR$/assets/css/Custome/display_down.scss" />
-        <option value="$PROJECT_DIR$/src/Entity/Customer/Display.php" />
-        <option value="$PROJECT_DIR$/src/Entity/Customer/BroadcastSlot.php" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup.scss" />
-        <option value="$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss" />
-        <option value="$PROJECT_DIR$/templates/home.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/header/header.js" />
-        <option value="$PROJECT_DIR$/assets/js/app.js" />
-        <option value="$PROJECT_DIR$/assets/css/general/button.scss" />
-        <option value="$PROJECT_DIR$/assets/js/class/Tools/PopupHandler/UploadHandlerTool/UploadHandlerTool.js" />
-        <option value="$PROJECT_DIR$/src/Controller/Settings/TagController.php" />
-        <option value="$PROJECT_DIR$/assets/js/header/headerSelect.js" />
-        <option value="$PROJECT_DIR$/templates/header.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/header_menu.scss" />
-        <option value="$PROJECT_DIR$/templates/home/home-info-contact.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/home_page.scss" />
-        <option value="$PROJECT_DIR$/templates/base.html.twig" />
-        <option value="$PROJECT_DIR$/templates/settings/user/modify.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/main.scss" />
-        <option value="$PROJECT_DIR$/templates/settings/setting-user.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/settings/settings_user.scss" />
-        <option value="$PROJECT_DIR$/assets/js/criterion.js" />
-        <option value="$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig" />
-        <option value="$PROJECT_DIR$/templates/settings/tags/index.html.twig" />
-        <option value="$PROJECT_DIR$/templates/settings/criterions_lists/index.html.twig" />
-        <option value="$PROJECT_DIR$/assets/css/app.scss" />
-        <option value="$PROJECT_DIR$/templates/site.html.twig" />
-        <option value="$PROJECT_DIR$/templates/settings/customers/show.html.twig" />
-        <option value="$PROJECT_DIR$/assets/js/site.js" />
-        <option value="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" />
-        <option value="$PROJECT_DIR$/assets/css/site.scss" />
-        <option value="$PROJECT_DIR$/assets/css/site/create_site.scss" />
-        <option value="$PROJECT_DIR$/assets/css/groupe-prix.scss" />
-        <option value="$PROJECT_DIR$/templates/site/show.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/AppController.php" />
-      </list>
-    </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP-7.4">
     <include_path>
@@ -470,120 +168,10 @@
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="389" />
-    <option name="y" value="-20" />
-    <option name="width" value="1557" />
-    <option name="height" value="1037" />
-  </component>
   <component name="ProjectId" id="1c7f5ECbrvGSyMX6ebDOt9PThKo" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="infoway" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="site" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="site" type="462c0819:PsiDirectoryNode" />
-              <item name="FiltreTable" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-              <item name="customers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-              <item name="tags" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="site" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="infoway" type="b2602c69:ProjectViewProjectNode" />
-              <item name="infoway" type="462c0819:PsiDirectoryNode" />
-              <item name="var" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -598,7 +186,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2018.3.6\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
@@ -613,18 +201,7 @@
       <recent name="C:\laragon\www\infoway\assets\css\general" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -660,361 +237,38 @@
       <workItem from="1596447061429" duration="92716000" />
       <workItem from="1597052366238" duration="1266000" />
       <workItem from="1597136421299" duration="653000" />
+      <workItem from="1597939165445" duration="717000" />
+      <workItem from="1598022556271" duration="1215000" />
+      <workItem from="1598345874743" duration="157000" />
+      <workItem from="1598346115086" duration="240000" />
+      <workItem from="1598346399350" duration="11962000" />
     </task>
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="593828000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49740395" visible="true" weight="0.16577825" />
-      <window_info id="Structure" order="1" sideWeight="0.5005192" side_tool="true" weight="0.1945629" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" sideWeight="0.5025961" side_tool="true" weight="0.20309168" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32917964" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3290993" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3281412" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32917964" />
-      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.32917964" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" x="0" y="0" width="434" height="896" id="Documentation" order="4" side_tool="true" weight="0.32995737" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49844238" visible="true" weight="0.20309168" />
-      <window_info id="Structure" order="1" sideWeight="0.5005192" side_tool="true" weight="0.1945629" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" sideWeight="0.50155765" side_tool="true" weight="0.16151386" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32917964" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3290993" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3281412" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32917964" />
-      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.32917964" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" x="0" y="0" width="434" height="896" id="Documentation" order="4" side_tool="true" weight="0.32995737" />
-    </layout-to-restore>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/css/main.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="41" selection-start-column="41" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/user/login_form.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/settings/settings_user.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/setting-user.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="55" column="50" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/criterion.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="148" column="28" selection-start-line="148" selection-start-column="28" selection-end-line="148" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions/edit.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-510" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions/_form.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-765" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="45" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/new.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-37" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/_criterions_list.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="49" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/edit.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-122" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/_delete_form.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="4" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
-          <caret line="83" column="58" selection-start-line="83" selection-start-column="58" selection-end-line="83" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/criterions_lists/_form.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="46" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/site/site.html.twig" />
-    <entry file="file://$PROJECT_DIR$/templates/site.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-end-line="299" selection-end-column="26" />
-          <folding>
-            <element signature="e#1610#4425#0#HTML" />
-            <element signature="e#6520#8605#0#HTML" />
-            <element signature="e#6190#8107#0#HTML" />
-            <element signature="e#11540#11568#0#HTML" expanded="true" />
-            <element signature="e#13090#13118#0#HTML" expanded="true" />
-            <element signature="e#14485#14513#0#HTML" expanded="true" />
-            <element signature="e#15922#15950#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/tags/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/tags/new.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/tags/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="88" column="38" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/settings/customers/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="32" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home/zone-diffusion.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="394" column="51" lean-forward="true" selection-start-line="394" selection-start-column="51" selection-end-line="395" selection-end-column="56" />
-          <folding>
-            <element signature="e#884#32541#0#HTML" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home/home-info.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home/home-enseigne.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home/home-company.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="11" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/common.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1332">
-          <caret line="127" column="18" selection-start-line="127" selection-start-column="18" selection-end-line="127" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/home_page.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="185" column="9" selection-start-line="185" selection-start-column="9" selection-end-line="226" selection-end-column="10" />
-          <folding>
-            <element signature="e#4258#5633#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/tags.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="90" column="2" selection-start-line="90" selection-start-column="2" selection-end-line="98" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="132" column="26" selection-start-line="132" selection-start-column="26" selection-end-line="132" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/groupe-prix.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2700">
-          <caret line="331" column="44" selection-start-line="331" selection-start-column="44" selection-end-line="331" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/site/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="728">
-          <caret line="221" column="62" selection-start-line="221" selection-start-column="62" selection-end-line="221" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/site/create_site.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" selection-start-line="16" selection-end-line="17" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/site.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6749">
-          <caret line="397" selection-start-line="397" selection-end-line="397" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/app_register.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="1" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/general/button.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="2" selection-start-line="9" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/settings/criterion/create_criterion.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5151">
-          <caret line="303" selection-start-line="303" selection-end-line="303" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/settings/criterion/edit_criterion.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/build/app.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
-          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/general/form.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/general/input-rdo.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/general/popup.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="169" column="39" selection-start-line="169" selection-start-column="39" selection-end-line="169" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/site.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-190" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/product.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/popup.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/setting.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/show_allergens.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="698" y="249" width="978" height="582" key="#JavaScript" timestamp="1598346602761">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="698" y="249" width="978" height="582" key="#JavaScript/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598346602761" />
+    <state x="718" y="236" key="#SCSS" timestamp="1598346719969">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="718" y="236" key="#SCSS/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598346719969" />
+    <state x="461" y="185" key="SettingsEditor" timestamp="1598346675590">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="461" y="185" key="SettingsEditor/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598346675590" />
+    <state x="667" y="273" width="585" height="534" key="find.popup" timestamp="1598356158771">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="667" y="273" width="585" height="534" key="find.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598356158771" />
+    <state x="623" y="235" key="search.everywhere.popup" timestamp="1598347955651">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="235" key="search.everywhere.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598347955651" />
   </component>
   <component name="masterDetails">
     <states>

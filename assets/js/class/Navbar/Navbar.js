@@ -14,7 +14,7 @@ class Navbar {
 
             if( $checkBox. is( ':checked' ) ){
 
-                $('.logo__infoway').addClass('logo__infoway-active');
+                $('.header_logo').addClass('logo__infoway-active');
 
                  $('.menu .nav').addClass('nav-active');
 
@@ -24,7 +24,7 @@ class Navbar {
                 $('.menu .nav .nav-menu > li .nav-sous-menu-mobile').hide();
                 
             } else{
-                $('.logo__infoway').removeClass('logo__infoway-active');
+                $('.header_logo').removeClass('logo__infoway-active');
 
                  $('.menu .nav').removeClass('nav-active');
                  $('.main ').removeClass('active-main');

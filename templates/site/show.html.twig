@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Site {% endblock %}
+{% block title %} Site | Gestion du Site {% endblock %}
 
 {% block stylesheets %}
     {{ parent () }}
@@ -18,14 +18,12 @@
 
                 <article class="tab-content-title">
                     <h3 class="title">Gestion du Site</h3>
-                     <p>Créer</p>
+                    <p>Créer</p>
                 </article>
 
-                {#<article class="display site-display ">#}
-                {#</article>#}
+                <article class="display"></article>
 
                 <article>
-
                     <div class="info-gestion-site">
                         <ul>
                             <li>1.Identité</li>
@@ -38,75 +36,96 @@
                             <li>8.Autre serives</li>
                         </ul>
                     </div>
-
                 </article>
+
                 <article>
+
                     <div class="menu-dropdown-site">
 
                         <ul class="menu-list-site accordion">
+
                             <li id="nav1" class="toggle accordion-toggle2">
                                 <a class="menu-link" >1.Identité</a>
                             </li>
+
                             <ul class="menu-submenu accordion-content">
                                 <div class="content-identite">
                                     <div class="content-identite-site-right">
                                         <form class="form">
                                             <div class="row">
-                                                <div class="col">
+                                                <div class="col2">
                                                     <label class="form_label">Nom du site</label>
-                                                    <input type="text" class="form_input">
+                                                    <input type="text" class="form_input" placeholder="Q122">
                                                 </div>
-                                                <div class="col">
+                                                <div class="col2">
                                                     <label class="form_label">Téléphone</label>
-                                                    <input type="text" class="form_input">
+                                                    <input type="text" class="form_input" placeholder="+33 6 48 75 12 00">
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="">
+                                                <div class="col2">
                                                     <label class="form_label">Email</label>
-                                                    <input type="text" class="form_input">
+                                                    <input type="text" class="form_input" placeholder="frd122@infoway.fr">
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col2">
                                                     <label class="form_label">Adresse</label>
-                                                    <input type="text" class="form_input" >
+                                                    <input type="text" class="form_input" placeholder="">
                                                 </div>
                                                 <div class="col3">
-                                                    <label class="form_label">code postal</label>
-                                                    <input type="text" class="form_input">
+                                                    <label class="form_label label_code">code postal</label>
+                                                    <input type="text" class="form_input code" placeholder="">
                                                 </div>
                                                 <div class="col3">
                                                     <label class="form_label">Ville</label>
-                                                    <input type="text" class="form_input">
+                                                    <input type="text" class="form_input" placeholder="">
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div>
-                                                    <label class="form_label">Observation</label>
-                                                    <input type="text" class="form_input">
+                                                <div class="col">
+                                                    <label class="form_label label_observation">Observation</label>
+                                                    <textarea type="text" class="form_input form_observation" placeholder="Ce site est Halal il propose en plus des moments évènementiels ..." ></textarea>
                                                 </div>
                                             </div>
 
-                                            <div >
-                                                <div>
+                                            <div class="row">
+                                                <div class="col2">
                                                     <label class="form_label">Fuseau Horaire</label>
                                                     <input type="text" class="form_input" >
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div>
+                                                <div class="col2" >
                                                     <label class="form_label">Allumage des écrans par défaut :</label>
-                                                    <input type="text" class="form_input" >
+                                                    <input type="time" class="form_input form_time" value="06:00">
+                                                </div>
+                                                <div class="col2" >
+                                                    <label class="form_label">Extinction des écrans par défaut :</label>
+                                                    <input type="time" class="form_input form_time" value="23:00">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="">
+                                                    <label class="form_label">Pour ce site définir</label>
                                                 </div>
                                                 <div>
-                                                    <label class="form_label">Extinction des écrans par défaut :</label>
-                                                    <input type="text" class="form_input" >
+                                                    <button type="button"> Critères</button>
+                                                    <div>
+
+                                                    </div>
                                                 </div>
+                                                <div>
+                                                    <button type="button"> TAGS </button>
+                                                    <div>
+
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                         </form>
@@ -114,7 +133,20 @@
                                     <div class="content-identite-site-left ">
                                         <div class="contenu_utilisateur">
                                             <table>
-
+                                                <thead>
+                                                    <tr>
+                                                        <th> </th>
+                                                        <th> Utilisateurs </th>
+                                                        <th> Rôle </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="checkbox" ></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -122,6 +154,8 @@
 
                                 <button>Suivant</button>
                             </ul>
+
+                            
                             <li id="nav1" class="toggle accordion-toggle2">
                                 <a class="menu-link" >2.Prix</a>
                             </li>
@@ -129,16 +163,36 @@
                                 <div class="row">
                                     <div>
                                         <label class="form_label">Devise</label>
-                                        <input type="text" class="form_input" >
+                                    </div>
+                                    <div>
+                                        <select name="" id="devise_select">
+                                            <option value="">Please choose</option>
+                                            <option value="dog">Dog</option>
+                                            <option value="cat">Cat</option>
+                                        </select>
                                     </div>
 
                                 </div>
                                 <div class="row">
                                     <div>
                                         <label class="form_label">Devise</label>
-                                        <input type="text" class="form_input" >
+                                        <select name="pets" id="prix_select">
+                                            <option value="">Please choose</option>
+                                            <option value="dog">Dog</option>
+
+                                        </select>
                                     </div>
 
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <label>Modification des prix locaux</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <label>Progrmation de nuit </label>
+                                    </div>
                                 </div>
                             </ul>
                             <li id="nav1" class="toggle accordion-toggle2">
@@ -226,28 +280,71 @@
                                 <a class="menu-link" >5.Contenus thématiques</a>
                             </li>
                             <ul  class="menu-submenu accordion-content">
+                                <div> Flux Temps réel
+                                    <div>Information en temps réel</div>
+                                    <div>
+                                        <div>météo</div>
+                                        <div>Info Trafic</div>
+                                    </div>
+                                    <div>
+                                        <div>Horaires des trains, du jour</div>
+                                        <div>Autre flux temps réel</div>
+                                    </div>
+                                </div>
+                                <div>Contenues divertissement
+                                    <div></div>
+                                    <div>Autre contenus thématiques</div>
+                                </div>
+                                <div>Pricebord
+                                    <div>
 
+                                    </div>
+                                    <div>
+                                        Autre priceboard
+                                    </div>
+                                </div>
+                                <div>Templates</div>
                             </ul>
+                            
+                            
                             <li id="nav1" class="toggle accordion-toggle2">
                                 <a class="menu-link" >6.Sources externes</a>
                             </li>
                             <ul  class="menu-submenu accordion-content">
-
+                                <div>Sources physique externes </div>
+                                <div>Flux externes</div>
                             </ul>
                             <li id="nav1" class="toggle accordion-toggle2">
                                 <a class="menu-link" >7.Maintenance</a>
                             </li>
                             <ul  class="menu-submenu accordion-content">
-
+                                <div>
+                                    <label>Monitoring</label>
+                                    <label>Site actif</label>
+                                    <label>MDC </label>
+                                    <label>Bande passante du site</label>
+                                    <label>Choix du device maître</label>
+                                </div>
                             </ul>
-                            <li id="nav1" class="toggle accordion-toggle2">
-                                <a class="menu-link" >8.Autre serives</a>
-                            </li>
-                            <ul  class="menu-submenu accordion-content">
-
-                            </ul>
-
-
+{#                            <li id="nav1" class="toggle accordion-toggle2">#}
+{#                                <a class="menu-link" >8.Autre serives</a>#}
+{#                            </li>#}
+{#                            <ul  class="menu-submenu accordion-content">#}
+{#                                <div>#}
+{#                                    <div>#}
+{#                                        Services WIFI#}
+{#                                        <div>#}
+{#                                            Box ADSL#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div>#}
+{#                                        service Tablette#}
+{#                                    </div>#}
+{#                                    <div>#}
+{#                                        Service Sonorisations#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </ul>#}
                         </ul>
                     </div>
                 </article>

@@ -1,5 +1,3 @@
-
-
 .font{
     font: 1.6rem "Barlow" ;
     letter-spacing: 0px;
@@ -51,21 +49,20 @@
     }
 }
 
-
 .content-criterion_multi{
     .info{
         font: 1.6rem "Barlow" ;
-        letter-spacing: 0px;
         color: #283338;
     }
+
     .info-multi{
         max-width: 19.7rem;
         width: 100%;
         height: 2.9rem;
         padding: 0.1rem 1rem;
         display: inline-flex;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        border: 0.1rem solid #C0CCD1;
+        background: #FFFFFF 0 0 no-repeat padding-box;
+        border: 0.3rem solid #C0CCD1;
         border-radius: 0.6rem;
         font: 1.6rem "Barlow";
         letter-spacing: 0;
@@ -75,7 +72,6 @@
 .content-criterion_list{
     .table{
         .table-custome{
-
             border-radius: 0;
             border: 0.1rem solid #899CA4;
             border-top: 0;
@@ -111,7 +107,6 @@
                 tr{
                     &:first-child{
                         text-align: right;
-
                     }
                     &:nth-child(2n+2){
                         background: #F6F6F6 0% 0% no-repeat padding-box;
