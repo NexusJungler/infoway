@@ -2,8 +2,9 @@ import ParentTool from "../../../ParentTool";
 import SubTool from "../../../SubTool";
 import Synchro from "../../../../objects/Media/Video/Synchro/Synchro";
 import SynchroElement from "../../../../objects/Media/Video/Synchro/SynchroElement";
+import UploadHandlerSubTool from "../UploadHandlerSubTool";
 
-class UploadVideoSynchroSubTool extends SubTool {
+class UploadVideoSynchroSubTool extends UploadHandlerSubTool {
 
     constructor()
     {
@@ -748,6 +749,21 @@ class UploadVideoSynchroSubTool extends SubTool {
         }
 
         return this;
+    }
+
+    showMediaInfoForEdit(encodedMediaInfos = [])
+    {
+
+        encodedMediaInfos.forEach( mediaInfos => {
+
+            //console.table(encodedMediaInfos); //debugger
+
+            let preview = super.getMediaPreview(mediaInfos);
+
+            this.__parent.showMediaInfoForEdit(mediaInfos, mediaInfos.index);
+
+        } )
+
     }
 
     enable()

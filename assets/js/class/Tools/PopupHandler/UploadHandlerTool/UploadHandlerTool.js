@@ -114,7 +114,7 @@ class UploadHandlerTool extends SubTool
 
         this.getAllAvailableAssociationItems();
 
-        this.showStep(3)
+        //this.showStep(3)
 
     }
 
@@ -172,9 +172,9 @@ class UploadHandlerTool extends SubTool
         this.__currentUploadManager = this.__subTools[ this.getSubToolIndex(subToolName) ];
         //console.log(this.__parent); debugger
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
-        //this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
-
+        //console.log(this.__currentUploadManager ); debugger
         return this;
     }
 
@@ -917,8 +917,10 @@ class UploadHandlerTool extends SubTool
                                         if(response.fileType !== 'video')
                                         {
                                             //this.__currentUploadManager.saveMediaInfos(response);
-
-                                            this.showMediaInfoForEdit(response, fileToUpload.index);
+                                            response.index = fileToUpload.index;
+                                            //this.__currentUploadManager.showMediaInfoForEdit(response);
+                                            this.__$fileToCharacterisationList.find(`#upload_${response.index}`).replaceWith( $(this.__currentUploadManager.showMediaInfoForEdit(response)) );
+                                            //this.showMediaInfoForEdit(response, fileToUpload.index);
                                         }
 
                                         else
@@ -950,14 +952,14 @@ class UploadHandlerTool extends SubTool
 
                                                         currentUpload.removeClass("valid_download");
 
+                                                        videoEncodingResult.index = fileToUpload.index;
+
                                                         if( this.__uploadMediaType === 'synchros' )
                                                         {
 
                                                             console.log("synchros"); //debugger
 
                                                             currentUpload.removeClass("waiting_encode");
-
-                                                            videoEncodingResult.index = fileToUpload.index;
 
                                                             this.__encodedMediaInfos.push( videoEncodingResult );
 
@@ -966,23 +968,28 @@ class UploadHandlerTool extends SubTool
 
                                                                 console.log("all files was encoded"); //debugger
 
+                                                                this.__currentUploadManager.updateSynchroElements( this.__encodedMediaInfos );
+
                                                                 if(this.__$location.find('.file_to_characterisation_list tr').length === 1)
-                                                                    this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
+                                                                    //this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
+                                                                    this.__currentUploadManager.showMediaInfoForEdit(this.__encodedMediaInfos);
 
                                                                 else
                                                                 {
 
                                                                     console.log("get all"); //debugger
 
-                                                                    this.__currentUploadManager.updateSynchroElements( this.__encodedMediaInfos );
+                                                                    this.__currentUploadManager.showMediaInfoForEdit(this.__encodedMediaInfos);
 
-                                                                    this.__encodedMediaInfos.forEach( encodedMediaInfos => {
+                                                                    //this.__$fileToCharacterisationList.find(`#upload_${videoEncodingResult.index}`).replaceWith( $(this.__currentUploadManager.showMediaInfoForEdit(videoEncodingResult)) );
+
+                                                                    /*this.__encodedMediaInfos.forEach( encodedMediaInfos => {
 
                                                                         //console.table(encodedMediaInfos); //debugger
 
                                                                         this.showMediaInfoForEdit(encodedMediaInfos, encodedMediaInfos.index);
 
-                                                                    } )
+                                                                    } )*/
 
                                                                 }
                                                             }
@@ -997,7 +1004,16 @@ class UploadHandlerTool extends SubTool
 
                                                         }
                                                         else
-                                                            this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
+                                                        {
+                                                            //this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
+                                                            //this.__currentUploadManager.showMediaInfoForEdit(videoEncodingResult);
+
+                                                            this.__$fileToCharacterisationList.find(`#upload_${videoEncodingResult.index}`).replaceWith( $(this.__currentUploadManager.showMediaInfoForEdit(videoEncodingResult)) );
+
+                                                        }
+
+                                                        if(this.__$location.find('.file_to_characterisation_list tr.upload_finished').length > 0)
+                                                            this.__$location.find('.save_edits_button').removeAttr('disabled');
 
                                                     }
                                                     else
@@ -1215,20 +1231,20 @@ class UploadHandlerTool extends SubTool
                     <span>${mediaInfos.extension}</span> <br> <span>${mediaInfos.width} * ${mediaInfos.height} px</span> <br> <span>${ (mediaInfos.fileType === 'image') ? mediaInfos.dpi + ' dpi' :  mediaInfos.codec}</span>
                 </td>
                 <td class="media_name_container"> 
-                    <input type="hidden" class="media_id" name="medias_list[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> 
+                    <input type="hidden" class="media_id" name="${ $('.step_2 form').attr('name') }[medias][${mediaInfos.index}][id]" value="${ mediaInfos.id }"> 
                     <span class="error hidden"></span> <br>
-                    <input type="text" name="medias_list[medias][${mediaInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
+                    <input type="text" name="${ $('.step_2 form').attr('name') }[medias][${mediaInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${mediaInfos.fileNameWithoutExtension}" required> </td>
                 <td class="media_diff_date_container"> 
                     <div class="diff_start_container">
                         <span class="error hidden"></span> <br> 
                         <label for="media_${mediaInfos.index}_diff_start">Du</label>
-                        <input type="date" name="medias_list[medias][${mediaInfos.index}][diffusionStart]" id="media_${mediaInfos.index}_diff_start" class="diffusion_dates start form_input" value="${year}-${month}-${day}">
+                        <input type="date" name="${ $('.step_2 form').attr('name') }[medias][${mediaInfos.index}][diffusionStart]" id="media_${mediaInfos.index}_diff_start" class="diffusion_dates start form_input" value="${year}-${month}-${day}">
                    </div>
 
                    <div class="diff_end_container">
                         <span class="error hidden"></span> <br> 
                         <label for="media_${mediaInfos.index}_diff_end">Au</label>
-                        <input type="date" name="medias_list[medias][${mediaInfos.index}][diffusionEnd]" id="media_${mediaInfos.index}_diff_end" class="diffusion_dates end form_input" min="${year}-${month}-${day}" value="${year + 10}-${month}-${day}">
+                        <input type="date" name="${ $('.step_2 form').attr('name') }[medias][${mediaInfos.index}][diffusionEnd]" id="media_${mediaInfos.index}_diff_end" class="diffusion_dates end form_input" min="${year}-${month}-${day}" value="${year + 10}-${month}-${day}">
                    </div>
                 </td>
                 <td class="associated_criterions_container">
@@ -1247,8 +1263,8 @@ class UploadHandlerTool extends SubTool
                     </div> 
                 </td>
                 <td> 
-                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="1">Oui</label> 
-                    <label class=""><input type="radio" name="medias_list[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="0" checked>Non</label>
+                    <label class=""><input type="radio" name="${ $('.step_2 form').attr('name') }[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="1">Oui</label> 
+                    <label class=""><input type="radio" name="${ $('.step_2 form').attr('name') }[medias][${mediaInfos.index}][containIncrustations]" class="form_input media_contain_incruste" value="0" checked>Non</label>
                 </td>`;
     }
 

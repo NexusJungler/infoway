@@ -22,7 +22,7 @@
             </tbody>
             {{ form_end(uploadMediaForm) }}#}
 
-            <tbody class="file_to_characterisation_list medias_collection" data-thematic_theme_prototype="{{ (videoThematicThemesPrototype is defined) ? videoThematicThemesPrototype : "" }}">
+            <tbody class="file_to_characterisation_list medias_collection" {% if videoThematicThemesPrototype is defined %} data-video_thematic_themes_prototype="{{ videoThematicThemesPrototype }}" {% endif %}>
 
             </tbody>
 

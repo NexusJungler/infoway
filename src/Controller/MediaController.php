@@ -107,16 +107,13 @@ class MediaController extends AbstractController
         if($mediasDisplayedType === "video_thematic")
         {
             //$videoThematicThemes = $videoThematicThemeRep->findAll();
-            $videoThematicThemesPrototype = "<select name='__name__' id='__id__'>";
-
-            $videoThematicThemesPrototype .= "<option value=''>Choisir un thème</option>";
+            $videoThematicThemesPrototype = "<option value=''>Choisir un thème</option>";
 
             foreach ($videoThematicThemeRep->findAll() as $theme)
             {
                 $videoThematicThemesPrototype .= "<option value='" . $theme->getId() . "'>" .$theme->getName() . "</option>";
             }
 
-            $videoThematicThemesPrototype .= "</select>";
         }
 
         if($mediasDisplayedType === "video_synchro")
@@ -484,6 +481,7 @@ class MediaController extends AbstractController
                 'width' => $width,
                 'codec' => $codec ?? null,
                 'fileType' => 'video',
+                'mediaType' => $mediaType,
                 'customer' => $customerName,
                 'mimeType' => 'video/mp4',
                 //'highestFormat' => $highestFormat,

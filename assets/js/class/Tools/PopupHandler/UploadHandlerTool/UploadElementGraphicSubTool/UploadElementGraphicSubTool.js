@@ -1,7 +1,8 @@
 import ParentTool from "../../../ParentTool";
 import SubTool from "../../../SubTool";
+import UploadHandlerSubTool from "../UploadHandlerSubTool";
 
-class UploadElementGraphicSubTool extends SubTool {
+class UploadElementGraphicSubTool extends UploadHandlerSubTool {
 
     constructor()
     {
@@ -9,27 +10,45 @@ class UploadElementGraphicSubTool extends SubTool {
         this.__name = this.constructor.name;
     }
 
-    setParent(parent)
+    showMediaInfoForEdit(elementGraphicInfos)
     {
-        if( !(parent instanceof ParentTool) )
-            throw new Error(`Attempt to set parent to ${this.__name}, but parentTool must be instance of ParentTool`);
 
-        this.__parent = parent;
-    }
-
-    getParent()
-    {
-        return this.__parent;
+        return `<td> 
+                    <p title="${ elementGraphicInfos.fileName }"><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ elementGraphicInfos.fileName }</p> 
+                </td>
+                <td>
+                    <progress class="progress_bar" id="progress_${ elementGraphicInfos.index }" max="100" value="100"></progress>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </td>
+                <td> 
+                    ${ super.getMediaPreview(elementGraphicInfos) } 
+                    <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="${ elementGraphicInfos.id }" aria-hidden="true"></i>
+                </td>
+                <td> 
+                    <input type="hidden" class="media_id" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }">
+                    <input type="hidden" name="medias_list[medias][${elementGraphicInfos.index}][id]" value="${ elementGraphicInfos.id }"> 
+                    <span class="error hidden"></span> <br>
+                    <input type="text" name="medias_list[medias][${elementGraphicInfos.index}][name]" class="form_input media_name" placeholder="Nom du media" value="${ elementGraphicInfos.fileNameWithoutExtension }" required>
+                 </td>
+                 <td class="associated_criterions_container">
+                
+                </td>
+                <td class="products_affectation_container"> 
+                    <button type="button" class="btn product_association_btn association_btn">Associer produits</button>
+                    <div class="associated_products_container">
+                        ${ this.__parent.buildAssociationInputsHtml('products', elementGraphicInfos.index) }
+                    </div> 
+                </td>`;
     }
 
     enable()
     {
-
+        super.enable();
     }
 
     disable()
     {
-
+        super.disable();
     }
 
 }
