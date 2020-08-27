@@ -413,6 +413,8 @@ class VideoEncodeManager
 
         }
 
+        // @TODO: si le media n'a pas été encodé dans tout les formats retourner false
+
         return true;
 
     }

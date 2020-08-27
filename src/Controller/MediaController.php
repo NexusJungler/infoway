@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Admin\Customer;
 use App\Entity\Admin\FfmpegTasks;
 use App\Entity\Admin\ThematicTheme;
+use App\Entity\Admin\VideoThematicThematicTheme;
 use App\Entity\Customer\Category;
 use App\Entity\Customer\Criterion;
 use App\Entity\Customer\Image;
@@ -27,6 +28,7 @@ use App\Service\FfmpegSchedule;
 use App\Service\MediasHandler;
 use App\Service\SessionManager;
 use App\Service\UploadedImageFormatsCreator;
+use App\Service\VideoThematicThemeHandler;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,6 +115,8 @@ class MediaController extends AbstractController
             {
                 $videoThematicThemesPrototype .= "<option value='" . $theme->getId() . "'>" .$theme->getName() . "</option>";
             }
+
+            //dd($videoThematicThemesPrototype);
 
         }
 
@@ -490,129 +494,6 @@ class MediaController extends AbstractController
         }
 
         return new JsonResponse($response, Response::HTTP_OK);
-
-    }
-
-
-    /**
-     * @Route(path="/save/synchro/infos", name="media::saveSynchroInfos", methods={"POST"})
-     */
-    public function saveSynchroInfos(Request $request)
-    {
-
-        //dd($request->request);
-
-        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
-        $manager = $this->getDoctrine()->getManager( $customerName );
-        $synchroRep = $manager->getRepository(Synchro::class)->setEntityManager($manager);
-        $synchroElementRep = $manager->getRepository(SynchroElement::class)->setEntityManager($manager);
-
-        $arraySearchRecursive = new ArraySearchRecursiveService();
-
-        $synchroElementIds = $synchroElementNames = $synchroElementPositions = $errors = [];
-
-        $formData = $request->request->get('synchro_edit_form')['synchro'];
-
-        $synchro = (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) ? $synchroRep->find($formData['synchro_id']) : $synchroRep->findOneByName($formData['name']);
-
-        if(!$synchro)
-            $synchro = new Synchro();
-
-        $synchro->setName($formData['name']);
-
-        if( in_array($formData['name'], $this->__sessionManager->get('existed_synchro_names')) )
-        {
-
-            $errors[] = [
-                'subject' => "synchro",
-                'text' => "Duplicate synchro name"
-            ];
-
-        }
-
-        elseif( (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) && (intval($formData['synchro_id']) <= 0) )
-        {
-
-            $errors[] = [
-                'subject' => "synchro",
-                'text' => "Invalid synchro id"
-            ];
-
-        }
-
-        $synchroElementNames = array_map(fn($synchroElementInfos) => $synchroElementInfos['name'] , $formData['synchros_elements'] );
-        $synchroElementPositions = array_map(fn($synchroElementInfos) => $synchroElementInfos['position'] , $formData['synchros_elements'] );
-
-        foreach ($formData['synchros_elements'] as $key => $synchroElementInfos)
-        {
-
-            $synchroElement = $synchroElementRep->find( $synchroElementInfos['synchro_element_id'] );
-            if(!$synchroElement)
-            {
-                //throw new Exception(sprintf("No synchro element found with '%s' name", $synchroElementInfos['old_name']));
-                $errors[] = [
-                    'subject' => "synchro_element_" . ($key +1),
-                    'text' => "Invalid synchro element id"
-                ];
-            }
-            else
-            {
-
-                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['name'], $synchroElementNames) === 1 )
-                    $synchroElement->setName($synchroElementInfos['name']);
-
-                else
-                {
-                    $errors[] = [
-                        'subject' => "synchro_element_" . ($key +1),
-                        'text' => "Duplicate synchro element name"
-                    ];
-                }
-
-
-                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['position'], $synchroElementPositions) === 1 )
-                    $synchroElement->setPosition($synchroElementInfos['position']);
-
-                else
-                {
-                    $errors[] = [
-                        'subject' => "synchro_element_" . ($key +1),
-                        'text' => "Position already used"
-                    ];
-                }
-
-                if( false === $arraySearchRecursive->search("synchro_element_" . ($key +1), $errors) )
-                {
-                    $synchroElement->addSynchro($synchro);
-                    $synchroElementIds[] = [
-                        'element' => "synchro_element_" . ($key +1),
-                        'id' => $synchroElement->getId(),
-                    ];
-                }
-
-            }
-
-        }
-
-        if(empty($errors))
-        {
-
-            if(is_null($synchro->getId()))
-                $manager->persist($synchro);
-
-            $manager->flush();
-        }
-
-        $synchroInfos = [
-            'synchro_id' => $synchro->getId(),
-            'synchro_elements_infos' => $synchroElementIds
-        ];
-
-        return new JsonResponse([
-                                    'status' => (empty($errors) ? '200 OK' : 'NOK'),
-                                    'errors' => $errors,
-                                    'synchro_infos' => $synchroInfos
-                                ]);
 
     }
 
@@ -1034,13 +915,12 @@ class MediaController extends AbstractController
     public function saveMediaCharacteristic(Request &$request)
     {
 
-        $ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);
-        $customerRepository = $this->getDoctrine()->getManager()->getRepository(Customer::class);
-
+        //$ffmpegTasksRepository = $this->getDoctrine()->getManager()->getRepository(FfmpegTasks::class);
+        //$customerRepository = $this->getDoctrine()->getManager()->getRepository(Customer::class);
 
         $manager = $this->getDoctrine()->getManager( strtolower( $this->__sessionManager->get('current_customer')->getName() ) );
 
-        //dd($request->request, $customer);
+        //dd($request->request);
 
         $cards = $error = [];
 
@@ -1050,21 +930,21 @@ class MediaController extends AbstractController
             if(preg_match("/(\w)*\.(\w)*/", $mediaInfos['name']))
             {
                 // return new Response("516 Invalid Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
-                $error = [ 'text' => '516 Invalid Filename', 'subject' => $index ];
+                $error[] = [ 'text' => 'Invalid Filename', 'subject' => $index ];
                 break;
             }
 
             elseif($mediaInfos['name'] === "" or $mediaInfos['name'] === null)
             {
                 // return new Response("517 Empty Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
-                $error = [ 'text' => '517 Empty Filename', 'subject' => $index ];
+                $error[] = [ 'text' => 'Empty Filename', 'subject' => $index ];
                 break;
             }
 
             /*elseif(strlen($mediaInfos['name']) < 5)
             {
                 // return new Response("518 Too short Filename", Response::HTTP_INTERNAL_SERVER_ERROR);
-                $error = [ 'text' => '518 Too short Filename', 'subject' => $index ];
+                $error = [ 'text' => 'Too short Filename', 'subject' => $index ];
                 break;
             }*/
 
@@ -1077,6 +957,25 @@ class MediaController extends AbstractController
                 if(!$media)
                     throw new Exception(sprintf("No media can be found with this id : '%s'", $mediaInfos['id']));
 
+                if($media->getMediaType() === "them")
+                {
+
+                    if(intval($mediaInfos['thematic']) <= 0)
+                    {
+                        $error[] = [ 'text' => 'Invalid thematic', 'subject' => $index ];
+                        throw new Exception(sprintf("Invalid thematic id given ! Can't parse to int thematic id ('%s' given)", $mediaInfos['thematic']));
+                    }
+
+                    $thematicTheme = $this->getDoctrine()->getManager('default')->getRepository(ThematicTheme::class)->find( $mediaInfos['thematic'] );
+                    if(!$thematicTheme)
+                        throw new Exception(sprintf("No thematic found with id '%s'", $mediaInfos['thematic']));
+
+                    $videoThematicThemeHandler = new VideoThematicThemeHandler($this->getDoctrine()->getManager('default'));
+
+                    $videoThematicThemeHandler->updateVideoThematicTheme($media, $thematicTheme);
+
+                }
+
                 if( array_key_exists('diffusionStart', $mediaInfos) AND array_key_exists('diffusionEnd', $mediaInfos) )
                 {
 
@@ -1086,13 +985,13 @@ class MediaController extends AbstractController
                     // form data order : year-month-day
                     if(!checkdate(substr($mediaInfos['diffusionStart'], 5, 2), substr($mediaInfos['diffusionStart'], 8, 2), substr($mediaInfos['diffusionStart'], 0, 4)))
                     {
-                        $error = [ 'text' => '519.1 Invalid diffusion start date', 'subject' => $index ];
+                        $error[] = [ 'text' => 'Invalid diffusion start date', 'subject' => $index ];
                         break;
                     }
 
                     if(!checkdate(substr($mediaInfos['diffusionEnd'], 5, 2) , substr($mediaInfos['diffusionEnd'], 8, 2), substr($mediaInfos['diffusionEnd'], 0, 4)))
                     {
-                        $error = [ 'text' => '519.2 Invalid diffusion end date', 'subject' => $index ];
+                        $error[] = [ 'text' => 'Invalid diffusion end date', 'subject' => $index ];
                         break;
                     }
 
@@ -1101,7 +1000,7 @@ class MediaController extends AbstractController
 
                     if($diffusionEndDate < $diffusionStartDate)
                     {
-                        $error = [ 'text' => '519 Invalid diffusion date', 'subject' => $index ];
+                        $error[] = [ 'text' => 'Invalid diffusion date', 'subject' => $index ];
                         break;
                     }
 
@@ -1183,7 +1082,129 @@ class MediaController extends AbstractController
             return new JsonResponse( $cards );
         }
 
-        return new JsonResponse( $error , Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new JsonResponse( $error );
+    }
+
+    /**
+     * @Route(path="/save/synchro/infos", name="media::saveSynchroInfos", methods={"POST"})
+     */
+    public function saveSynchroInfos(Request &$request)
+    {
+
+        //dd($request->request);
+
+        $customerName = strtolower( $this->__sessionManager->get('current_customer')->getName() );
+        $manager = $this->getDoctrine()->getManager( $customerName );
+        $synchroRep = $manager->getRepository(Synchro::class)->setEntityManager($manager);
+        $synchroElementRep = $manager->getRepository(SynchroElement::class)->setEntityManager($manager);
+
+        $arraySearchRecursive = new ArraySearchRecursiveService();
+
+        $synchroElementIds = $synchroElementNames = $synchroElementPositions = $errors = [];
+
+        $formData = $request->request->get('synchro_edit_form')['synchro'];
+
+        $synchro = (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) ? $synchroRep->find($formData['synchro_id']) : $synchroRep->findOneByName($formData['name']);
+
+        if(!$synchro)
+            $synchro = new Synchro();
+
+        $synchro->setName($formData['name']);
+
+        if( in_array($formData['name'], $this->__sessionManager->get('existed_synchro_names')) )
+        {
+
+            $errors[] = [
+                'subject' => "synchro",
+                'text' => "Duplicate synchro name"
+            ];
+
+        }
+
+        elseif( (array_key_exists('synchro_id', $formData) && !is_null($formData['synchro_id']) && !empty($formData['synchro_id'])) && (intval($formData['synchro_id']) <= 0) )
+        {
+
+            $errors[] = [
+                'subject' => "synchro",
+                'text' => "Invalid synchro id"
+            ];
+
+        }
+
+        $synchroElementNames = array_map(fn($synchroElementInfos) => $synchroElementInfos['name'] , $formData['synchros_elements'] );
+        $synchroElementPositions = array_map(fn($synchroElementInfos) => $synchroElementInfos['position'] , $formData['synchros_elements'] );
+
+        foreach ($formData['synchros_elements'] as $key => $synchroElementInfos)
+        {
+
+            $synchroElement = $synchroElementRep->find( $synchroElementInfos['synchro_element_id'] );
+            if(!$synchroElement)
+            {
+                //throw new Exception(sprintf("No synchro element found with '%s' name", $synchroElementInfos['old_name']));
+                $errors[] = [
+                    'subject' => "synchro_element_" . ($key +1),
+                    'text' => "Invalid synchro element id"
+                ];
+            }
+            else
+            {
+
+                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['name'], $synchroElementNames) === 1 )
+                    $synchroElement->setName($synchroElementInfos['name']);
+
+                else
+                {
+                    $errors[] = [
+                        'subject' => "synchro_element_" . ($key +1),
+                        'text' => "Duplicate synchro element name"
+                    ];
+                }
+
+
+                if( $arraySearchRecursive->countOccurrence($synchroElementInfos['position'], $synchroElementPositions) === 1 )
+                    $synchroElement->setPosition($synchroElementInfos['position']);
+
+                else
+                {
+                    $errors[] = [
+                        'subject' => "synchro_element_" . ($key +1),
+                        'text' => "Position already used"
+                    ];
+                }
+
+                if( false === $arraySearchRecursive->search("synchro_element_" . ($key +1), $errors) )
+                {
+                    $synchroElement->addSynchro($synchro);
+                    $synchroElementIds[] = [
+                        'element' => "synchro_element_" . ($key +1),
+                        'id' => $synchroElement->getId(),
+                    ];
+                }
+
+            }
+
+        }
+
+        if(empty($errors))
+        {
+
+            if(is_null($synchro->getId()))
+                $manager->persist($synchro);
+
+            $manager->flush();
+        }
+
+        $synchroInfos = [
+            'synchro_id' => $synchro->getId(),
+            'synchro_elements_infos' => $synchroElementIds
+        ];
+
+        return new JsonResponse([
+            'status' => (empty($errors) ? '200 OK' : 'NOK'),
+            'errors' => $errors,
+            'synchro_infos' => $synchroInfos
+        ]);
+
     }
 
     private function getMediaHigestFormat(int $id, string $mediaType)

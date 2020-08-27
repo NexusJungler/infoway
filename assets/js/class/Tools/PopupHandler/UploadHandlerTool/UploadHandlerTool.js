@@ -919,7 +919,7 @@ class UploadHandlerTool extends SubTool
                                             //this.__currentUploadManager.saveMediaInfos(response);
                                             response.index = fileToUpload.index;
                                             //this.__currentUploadManager.showMediaInfoForEdit(response);
-                                            this.__$fileToCharacterisationList.find(`#upload_${response.index}`).replaceWith( $(this.__currentUploadManager.showMediaInfoForEdit(response)) );
+                                            this.__$fileToCharacterisationList.find(`#upload_${response.index}`).html( $(this.__currentUploadManager.showMediaInfoForEdit(response)) );
                                             //this.showMediaInfoForEdit(response, fileToUpload.index);
                                         }
 
@@ -1008,7 +1008,7 @@ class UploadHandlerTool extends SubTool
                                                             //this.showMediaInfoForEdit(videoEncodingResult, fileToUpload.index);
                                                             //this.__currentUploadManager.showMediaInfoForEdit(videoEncodingResult);
 
-                                                            this.__$fileToCharacterisationList.find(`#upload_${videoEncodingResult.index}`).replaceWith( $(this.__currentUploadManager.showMediaInfoForEdit(videoEncodingResult)) );
+                                                            this.__$fileToCharacterisationList.find(`#upload_${videoEncodingResult.index}`).html( $(this.__currentUploadManager.showMediaInfoForEdit(videoEncodingResult)) );
 
                                                         }
 
@@ -1484,74 +1484,91 @@ class UploadHandlerTool extends SubTool
 
                             //console.log(response); //debugger
 
-                            this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
+                            if(response.errors.length > 0)
+                            {
 
-                            this.addNewMediaCardInMediatheque(response);
+                                response.errors.forEach( (error) => {
 
-                            this.__filesToUpload = [];
+                                    switch (error.text)
+                                    {
 
-                            this.showMediaEditingResume();
+                                        case "Duplicate File":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .form_input.media_name`).addClass('invalid');
+                                            break;
+
+                                        case "Invalid Filename":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container span.error`).text( this.__errors.invalid_error ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
+                                            break;
+
+                                        case "Empty Filename":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container span.error`).text( this.__errors.empty_error ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
+                                            break;
+
+                                        case "Too short Filename":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container span.error`).text( this.__errors.too_short_error ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
+                                            break;
+
+                                        case "Invalid diffusion date":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_date ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_diff_date_container .diffusion_dates`).addClass('invalid');
+                                            break;
+
+                                        case "Invalid diffusion start date":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_start_date ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_diff_date_container .diffusion_dates.start`).addClass('invalid');
+                                            break;
+
+                                        case "Invalid diffusion end date":
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
+                                            this.__$fileToCharacterisationList.find(`tr[data-index='${ error.subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
+                                            break;
+
+                                        default:
+                                            console.error(error); debugger
+
+                                    }
+
+                                } )
+
+                                this.__$fileToCharacterisationList.find('.unregistered').forEach( element => {
+
+                                    if( $(element).find('.invalid') < 0 )
+                                    {
+                                        $(element).removeClass('unregistered');
+                                    }
+
+                                } );
+
+                                this.__$location.find('.popup_footer .save_edits_button').attr('disabled', true);
+
+                            }
+                            else
+                            {
+                                this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
+
+                                let mediaCards = response;
+
+                                this.addNewMediaCardInMediatheque(mediaCards);
+
+                                this.showMediaEditingResume();
+                            }
 
                         },
                         error: (response) => {
-                            let error = response.responseJSON;
-                            /*console.log(response);
-                            console.log(error);
-                            console.log(error.subject); //debugger*/
-                            let subject = error.subject;
 
-                            // on supprime la class 'unregistered' sur les elements enregistrés jusqu'à l'erreur
-                            for (let i = 0; i < subject; i++)
-                            {
-                                $(`.media_list tbody tr[data-index='${ i }']`).removeClass('unregistered');
-                            }
+                            alert("Erreur interne !");
 
+                            console.log(response); debugger
 
-                            switch (error.text)
-                            {
-
-                                case "515 Duplicate File":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.duplicate_file ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "516 Invalid Filename":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.invalid_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "517 Empty Filename":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.empty_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "518 Too short Filename":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container span.error`).text( this.__errors.too_short_error ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_name_container .form_input.media_name`).addClass('invalid');
-                                    break;
-
-                                case "519 Invalid diffusion date":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_date ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates`).addClass('invalid');
-                                    break;
-
-                                case "519.1 Invalid diffusion start date":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_start_date ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.start`).addClass('invalid');
-                                    break;
-
-                                case "519.2 Invalid diffusion end date":
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container span.error`).text( this.__errors.invalid_diffusion_end_date ).removeClass( 'hidden' );
-                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ subject }'] .media_diff_date_container .diffusion_dates.end`).addClass('invalid');
-                                    break;
-
-                                default:
-                                    console.error(error); debugger
-
-                            }
                         },
                         complete: () => {
                             super.hideLoadingPopup();
+
+                            this.__filesToUpload = [];
                         },
 
                     });

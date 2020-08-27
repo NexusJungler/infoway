@@ -13,7 +13,7 @@ class VideoThematic extends Video
 
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=false, options={"default" : 0})
      */
     private $theme;
 
@@ -25,6 +25,7 @@ class VideoThematic extends Video
     public function __construct()
     {
         parent::__construct();
+        $this->theme = 0;
     }
 
     public function getTheme(): int
