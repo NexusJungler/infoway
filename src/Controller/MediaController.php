@@ -393,8 +393,8 @@ class MediaController extends AbstractController
 
             $miniaturePath = $this->getParameter('project_dir') . "/public/miniatures/" . $customerName . "/image/" . $mediaType . '/low/' . $media->getId() . ".png";
 
-            if(!file_exists($miniaturePath))
-                throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
+//            if(!file_exists($miniaturePath))
+//                throw new Exception(sprintf("Miniature file is not found ! This path is correct ? : '%s'", $miniaturePath));
 
             $dpi = $this->__mediasHandler->getImageDpi($miniaturePath);
 

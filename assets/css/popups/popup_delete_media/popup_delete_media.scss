@@ -4,7 +4,7 @@
             margin: 0 auto;
             height: 400px;
             width: 35%;
-
+			top: 25%;
             .popup_header{
                 height: 12%;
                 border: 1px solid #899CA4;
@@ -27,7 +27,9 @@
 
             .popup_footer{
                 height: 13%;
-                background: #E3E3E3 0% 0% no-repeat padding-box;
+                //background: #E3E3E3 0 0 no-repeat padding-box;
+				display: inline-flex;
+				padding: 1rem;
                 .actions_buttons_container{
                     &:not(:last-child){
                         margin-right: 2%;

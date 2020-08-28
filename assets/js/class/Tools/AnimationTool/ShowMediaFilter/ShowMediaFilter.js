@@ -38,7 +38,7 @@ class ShowMediaFilter extends SubTool
                     width: width
                 }, {
                     queue: false,
-                    duration: 1500
+                    duration: 10
                 })
 
             })

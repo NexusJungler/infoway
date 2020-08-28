@@ -7,7 +7,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
     &::after {
         content: '';
         top: 1rem;
-        left: 0%;
+        left: 0;
         width: 100%;
         border: 0.1rem solid #4D646D;
         position: relative;
@@ -31,8 +31,8 @@ $border--radius--grey : 0.1rem solid #4D646D;
         }
 
         svg{
-            font-size: rem(15px);
-            margin-right: rem(8px);
+            font-size: 1.5rem;
+            margin-right: 0.8rem
         }
         /* delete after */
         //.tags-table{
@@ -86,7 +86,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
     .drop-btn-icone{
         width: 21px;
         height: 21px;
-        background: #A4B4BB 0% 0% no-repeat padding-box;
+        background: #A4B4BB 0 0 no-repeat padding-box;
         border-radius: 3px;
         color: #E3E3E3;
         text-align: center;
@@ -235,7 +235,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
         height: 2.5rem;
         display: inline-block;
         text-align: center;
-        background: #EAF1F2 0% 0% no-repeat padding-box;
+        background: #EAF1F2 0 0 no-repeat padding-box;
         box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
         border: 0.1rem solid #4D646D;
         border-radius: 0.5rem;
@@ -251,7 +251,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
             width: 17rem;
             .drop-btn{
                 width: 20rem;
-                background: #E3E3E3 0% 0% no-repeat padding-box;
+                background: #E3E3E3 0 0 no-repeat padding-box;
                 border: none;
                 .drop-btn-icone {
                     top: -0.1rem;
@@ -274,7 +274,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
         .product-select-col{
             .container-tags{
                 width: 100%;
-                margin-left: 0rem;
+                margin-left: 0;
             }
             .container-rdo{
                 top: 0.7rem;
@@ -289,7 +289,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
         }
     }
     .container-input{
-        font: 1.6rem "Barlow";
+        font-size: 1.6rem ;
         color: #4D646D;
         text-align: left;
         .container-rdo{
@@ -324,14 +324,12 @@ $border--radius--grey : 0.1rem solid #4D646D;
 
 
 .filters_container{
+	font-family: "Barlow", serif;
     display: flex;
     flex-direction: row;
-    //width: 100%;
-
     input.filter{
         cursor: default;
     }
-
     .filter {
         cursor: pointer;
         span{
@@ -339,12 +337,10 @@ $border--radius--grey : 0.1rem solid #4D646D;
             color: #4D646D;
         }
     }
-
     .left_filter_container {
         width: 70%;
         display: flex;
         flex-direction: row;
-
         .filter_by_orientation_or_type_container {
             background-color: #FFF;
             border: 1px solid #C0CCD1;
@@ -359,9 +355,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 font-size: 30px;
                 color: #C0CCD1;
             }
-
             .filter.active {
-                //border: 3px solid #00B8F5;
                 i{
                     color: #00B8F5;
                 }
@@ -370,9 +364,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
             .filter.show_only_horizontal_media i {
                 transform: rotate(-90deg);
             }
-
         }
-
         .filters_by_associated_data_container {
             background-color: #E3E3E3;
             border: 1px solid #C0CCD1;
@@ -389,8 +381,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 justify-content: center;
                 align-items: center;
                 height: 2.9rem;
-                //background: #FFFFFF 0% 0% no-repeat padding-box;
-                //border: 0.6rem solid #C0CCD1;
                .display-content-poste{
                    .drop-btn{
                        width: 13rem;
@@ -407,7 +397,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 }
                 .container-criterion{
                     padding: 0.2rem 1.2rem;
-                    background: #C1E4EB 0% 0% no-repeat padding-box;
+                    background: #C1E4EB 0 0 no-repeat padding-box;
                     border: 0.1rem solid #4D646D;
                     border-radius: 0.5rem;
                 }
@@ -442,9 +432,9 @@ $border--radius--grey : 0.1rem solid #4D646D;
 
             .open_filter_content{
                 .btn{
-                    margin-right: 0px;
+                    margin-right: 0;
                     i{
-                        margin-right: 0px;
+                        margin-right: 0;
                     }
                 }
             }
@@ -453,24 +443,23 @@ $border--radius--grey : 0.1rem solid #4D646D;
 
                 .filter_validation_btn{
                     text-transform: uppercase;
-                    height: 31px;
-                    background: #899CA4 0% 0% no-repeat padding-box;
-                    box-shadow: 1px 2px 2px #00000029;
-                    border: 1px solid #899CA4;
-                    border-radius: 6px;
+                    height: 3.1rem;
+                    background: #899CA4 0 0 no-repeat padding-box;
+                    box-shadow: 0.1rem 0.2rem 0.2rem #00000029;
+                    border: 0.1rem solid #899CA4;
+                    border-radius: 0.6rem;
                     color: white;
                 }
 
             }
 
             .filter_container{
-                width: 0%;
-                //display: none;
+                width: 0;
                 opacity: 0;
-                transition: width 2s;
+                //transition: width 2s;
                 overflow: hidden;
                 .filters_by_associated_data_item{
-                    margin-right: 20px;
+                    margin-right: 2rem;
                 }
             }
             .filter_active{

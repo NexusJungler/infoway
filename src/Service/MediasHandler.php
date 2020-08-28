@@ -89,7 +89,7 @@ class MediasHandler
 
         if($cmdResultStatus !== 0)
         {
-            dump($cmdOutput);
+            dump($cmdOutput);die;
             throw new Exception(sprintf("Error during executing cmd : '%s'", $cmd));
         }
 

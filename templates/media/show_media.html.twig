@@ -181,7 +181,7 @@
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
                     {{ form_widget(form.name, {'attr': {'class': 'media_name'}}) }}
                 {% else %}
-                    <span class="media_name"></span>
+                    <p class="media_name"></p>
                 {% endif %}
             </div>
         </div>
@@ -232,7 +232,6 @@
                             <span class="current-tags-name">{{ tag.name }}</span>
                         </p>
 
-                        {#<span>{{ tag }}</span>#}
 
                     {% endfor %}
 

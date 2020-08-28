@@ -1,220 +1,187 @@
 .step_3{
+	font-family: "Barlow", serif;
+	height: 100%;
+	max-height: 100%;
+	.form_input.invalid{
+		border: 0.1rem solid red !important;
+	}
+	.top{
+		background-color: #C0CCD1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 70%;
+		max-height: 70%;
+		width: 100%;
+		#synchro_edit_form{
+			height: 100%;
+			width: 100%;
+		}
+		.synchro_name_container{
+			height: 2.6rem;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			div{
+				margin-right: 1%;
+				&.label_container{
+					width: 4.5rem;
+					height: inherit;
+					align-items: center;
+					display: flex;
+					label{
+						color: #4D646D;
+						font-size: 2.2rem;
+					}
+				}
+				&.input_container{
+					width: 28.6rem;
+					height: inherit;
+					.synchro_name{
+						width: inherit;
+						height: inherit;
+						background: #F6F6F6 ;
+						border-radius: 0.6rem;
+						border: none;
+						font-size: 1.4rem;
+						text-align: center;
+					}
+				}
+				&.synchro_action_button_container{
+					height: inherit;
+					width: 10rem;
+					display: flex;
+					flex-direction: row;
+					.synchro_action_button{
+						width: 50%;
+						height: inherit;
+						background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0 0 no-repeat padding-box;
+						border-radius: 0.6rem;
+						border: none;
+						text-align: center;
+						cursor: pointer;margin-right: 2%;
+						i{
+							color: #FFF;
+						}
+						&:disabled{
+							cursor: not-allowed;
+						}
+						&.active{
+							border: 0.3rem solid #00B8F5;
+						}
+					}
+				}
+			}
+		}
 
-  height: 100%;
-  max-height: 100%;
+		.container{
+			width: 100%;
+			margin-bottom: 2%;
+			padding: 3% 5% 0 5%;
+			&.synchro_elements_container{
+				position: relative;
+				display: grid;
+				overflow-x: auto;
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+				.synchro_element{
+					width: 25.6rem;
+					max-width: 25.6rem;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					position: relative;
+					left: 0;
+					.error{
+						color: red;
+					}
+					&.draggable{
+						cursor: move;
+						z-index: 99;
+					}
+					div{
+						margin-bottom: 2%;
+						&.synchro_element_preview_container{
+							width: 25.6rem;
+							height: 14.4rem;
+							border: 0.1rem solid #283338;
+							.synchro_element_preview{
 
-  .form_input.invalid{
-    border: 2px solid red !important;
-  }
+							}
+						}
+						&.synchro_element_name_container{
+							width: 25.6rem;
+							height: 2.5rem;
+							background-color: #F6F6F6 ;
 
-  .top{
+							.synchro_element_name{
+								width: inherit;
+								height: inherit;
+								color: #000;
+								font-size: 1.4rem;
+								border: none;
+								text-align: center;
+							}
+						}
+						&.synchro_element_position_container{
+							width: inherit;
+							height: 4rem;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							.synchro_element_position{
+								width: 3.9rem;
+								height: 2.4rem;
+								color: #000;
+								font-size: 1.4rem;
+								background: #FFFFFF;
+								border: 0.1rem solid #707070;
+								border-radius: 0.6rem;
+								text-align: center;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
-    background: #C0CCD1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 60%;
-    max-height: 60%;
-    width: 100%;
+	.bottom{
+		background: #FFF;
+		display: flex;
+		flex-direction: column;
+		height: 35%;
+		max-height: 35%;
+		table {
+			height: 100%;
+			width: 100%;
+			thead,tbody tr{
+				display: table;
+				width: 100%;
+				table-layout: fixed;
+			}
+			thead th, tbody td {
+				width: 52.3rem;
+			}
+			thead th {
 
-    #synchro_edit_form{
-      height: 100%;
-      width: 100%;
-    }
+				font-size: 2.6rem;
+				color: #4D646D;
+			}
+			tbody{
+				height: 13rem;
+				max-height: 13rem;
+				display: block;
+				overflow: auto;
+				background: #EBEBEB;
+			}
+			tbody tr td {
+				height: 13rem;
+			}
 
-    .synchro_name_container{
-      height: 26px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-
-      div{
-        margin-right: 1%;
-
-        &.label_container{
-          width: 45px;
-          height: inherit;
-          align-items: center;
-          display: flex;
-
-          label{
-            color: #4D646D;
-            font-size: 22px;
-          }
-
-        }
-
-        &.input_container{
-          width: 286px;
-          height: inherit;
-
-          .synchro_name{
-            width: inherit;
-            height: inherit;
-            background: #F6F6F6 0% 0% no-repeat padding-box;
-            border-radius: 6px;
-            border: none;
-            font-size: 14px;
-
-          }
-
-        }
-
-        &.synchro_action_button_container{
-          height: inherit;
-          width: 100px;
-          display: flex;
-          flex-direction: row;
-
-          .synchro_action_button{
-            width: 50%;
-            height: inherit;
-            background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
-            border-radius: 6px;
-            border: none;
-            text-align: center;
-            cursor: pointer;margin-right: 2%;
-
-            i{
-              color: #FFF;
-            }
-            
-            &:disabled{
-              cursor: not-allowed;
-            }
-
-            &.active{
-              border: 3px solid #00B8F5;
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-
-    .container{
-      width: 100%;
-      margin-bottom: 2%;
-      padding: 2% 5% 0 5%;
-
-      &.synchro_elements_container{
-        position: relative;
-        display: grid;
-        overflow-x: auto;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
-        .synchro_element{
-          width: 256px;
-          max-width: 256px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          position: relative;
-          left: 0;
-
-          .error{
-            color: red;
-          }
-
-          &.draggable{
-            cursor: move;
-            z-index: 99;
-          }
-
-          div{
-            margin-bottom: 2%;
-
-            &.synchro_element_preview_container{
-
-              width: 256px;
-              height: 144px;
-              border: 1px solid #283338;
-
-              .synchro_element_preview{
-
-              }
-
-            }
-
-            &.synchro_element_name_container{
-
-              width: 256px;
-              height: 25px;
-              background: #F6F6F6 0% 0% no-repeat padding-box;
-
-              .synchro_element_name{
-                width: inherit;
-                height: inherit;
-                color: #000;
-                font-size: 14px;
-                border: none;
-
-              }
-
-            }
-
-            &.synchro_element_position_container{
-              width: inherit;
-              height: 40px;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-
-              .synchro_element_position{
-                width: 39px;
-                height: 24px;
-                color: #000;
-                font-size: 14px;
-                background: #FFFFFF 0% 0% no-repeat padding-box;
-                border: 1px solid #707070;
-                border-radius: 6px;
-                text-align: center;
-
-              }
-
-            }
-
-          }
-
-        }
-
-
-      }
-
-    }
-
-  }
-
-  .bottom{
-    background: #FFF;
-    display: flex;
-    flex-direction: column;
-    height: 40%;
-    max-height: 40%;
-
-    table {
-      height: 100%;
-      width: 100%;
-
-      thead th, tbody td {
-        width: 523px;
-      }
-
-      thead th {
-        font-size: 3vh;
-      }
-
-      tbody td {
-        background: #EBEBEB;
-        height: 127px;
-      }
-
-    }
-
-  }
-
+			tbody tr td:nth-child(2) {
+				background-color: #E4E5E5;
+			}
+		}
+	}
 }
