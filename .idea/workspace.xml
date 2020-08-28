@@ -2,23 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b237bda7-15f6-4ae8-877d-6e58489f2c4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/css/media/media_list.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display_down.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/button.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/form.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/input-rdo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/input-rdo.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/media/edit_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/edit_media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/media/media_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/media_list.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/media/show_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/media/show_media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_delete_media/popup_delete_media.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_upload/popup_upload.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_upload/upload_video_synchro/upload_video_synchro.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_upload/upload_video_synchro/upload_video_synchro.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/class/Tools/AnimationTool/ShowMediaFilter/ShowMediaFilter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/MediasHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MediasHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/_media_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/_media_card.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/media-image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/media-image.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/media/show_media.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/media/show_media.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/associations/tag_association/popup_tag_association.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/upload/popup_layout/upload_media_diff_layout/upload_media_diff_layout.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload/popup_layout/upload_media_diff_layout/upload_media_diff_layout.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/popups/upload/popup_upload.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/menu_wrapper.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_archived/popup_media_archived.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_archived/popup_media_archived.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_info_sheet/popup_media_info_sheet.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/popups/popup_media_waiting_incrustation/popup_media_waiting_incrustation.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +245,7 @@
       <workItem from="1598345874743" duration="157000" />
       <workItem from="1598346115086" duration="240000" />
       <workItem from="1598346399350" duration="42188000" />
-      <workItem from="1598607187466" duration="937000" />
+      <workItem from="1598607187466" duration="9569000" />
     </task>
     <servers />
   </component>
@@ -274,10 +269,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="461" y="185" key="SettingsEditor/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598346675590" />
-    <state x="665" y="266" width="700" height="534" key="find.popup" timestamp="1598534072744">
+    <state x="697" y="343" width="700" height="534" key="find.popup" timestamp="1598623346438">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="665" y="266" width="700" height="534" key="find.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598534072744" />
+    <state x="697" y="343" width="700" height="534" key="find.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598623346438" />
     <state x="623" y="235" key="search.everywhere.popup" timestamp="1598347955651">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

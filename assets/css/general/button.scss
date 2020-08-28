@@ -51,7 +51,6 @@ button{
     background: #F57171 0% 0% no-repeat padding-box;
     box-shadow: 0.125rem 0.125rem 0.125rem #00000029;
     border: 0.0625rem solid #FFFFFF;
-    padding: 0.6rem 0.7rem;
     border-radius: 1rem 0 0 1rem;
     color: #FFFFFF;
     font-size: 1.5rem;
@@ -73,7 +72,6 @@ button{
 }
 
 .btn_hidden{
-    //pointer-events: none;
     background: #ABBBC0;
     border: 0.1rem solid #FFFFFF;
     cursor: not-allowed;
@@ -90,7 +88,7 @@ button{
 }
 
 .color_gray{
-    background: #899CA4 0% 0% no-repeat padding-box;
+    background: #899CA4 0 0 no-repeat padding-box;
 }
 
 /* header btn style */
@@ -103,21 +101,21 @@ button{
 
 .update__site, .update__all, .btn-back {
     width: auto;
-    padding: 5px 7px;
+    padding: 0.5rem 0.7rem;
     color: #fff;
-    font-size: 17px;
-    border-radius: 5px;
+    font-size: 1.7rem;
+    border-radius: 0.5rem;
     border: none;
 }
 
 .update__all {
     color: #fff;
     background-color: #F57171;
-    box-shadow: 3px 3px 3px #00000029;
+    box-shadow: 0.3rem 0.3rem 0.3rem #00000029;
 }
 
 .btn-back{
-    bottom: 0rem;
+    bottom: 0;
     background-color: transparent;
     color: #899CA4;
     border: 0.06rem solid #899CA4;

@@ -108,23 +108,23 @@
 
     .container-input-rdo{
         position: absolute;
-        top: 0px;
-        left: 15px;
-        height: 16px;
-        width: 16px;
+        top: 0;
+        left: 1.5rem;
+        height: 1.6rem;
+        width: 1.6rem;
         background-color:  white;
-        border-radius: 3px;
-        border: 1px solid #4D646D;
+        border-radius: 0.3rem;
+        border: 0.1rem solid #4D646D;
 
         &:after {
             content: "";
             position: absolute;
             display: none;
-            top: 1px;
-            left: 1px;
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
+            top: 0.1rem;
+            left: 0.1rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 0.3rem;
             background: #53B3C7;
         }
     }

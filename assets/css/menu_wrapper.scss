@@ -4,54 +4,54 @@
     display:flex;
     flex-direction: column;
     align-items: center;
-    background: #D4DCDF 0% 0% no-repeat padding-box;
+    background: #D4DCDF 0 0 no-repeat padding-box;
     padding-right: 3%;
 
     .wrapper-content{
-        background: #4D646D 0% 0% no-repeat padding-box;
+        background: #4D646D 0 0 no-repeat padding-box;
         border: 0.06rem solid #707070;
         border-bottom: 0;
-        border-radius: 0.6rem 0.68rem 0rem 0rem;
+        border-radius: 0.6rem 0.68rem 0 0;
         width: 95%;
-        overflow-x: auto;
+        //overflow-x: auto;
         overflow: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar;
         -webkit-overflow-scrolling: touch;
         white-space: nowrap;
         .tabs{
-            margin: 0rem;
-            padding: 0rem;
+            margin: 0;
+            padding: 0;
             list-style: none;
             display: inline-block;
-            -webkit-padding-start: 0px;
+            -webkit-padding-start: 0;
             li{
                 font: 1.8rem "Barlow";
-                letter-spacing: 0px;
+                letter-spacing: 0;
                 color: #4D646D;
                 display: inline-table;
                 padding: 0.6rem 0.9rem;
                 cursor: pointer;
                 width: 50%;
                 margin-right: 1rem;
-                background: transparent linear-gradient(180deg, #A4B4BB 0%, #C0CCD1 100%) 0% 0% no-repeat padding-box;
+                background: transparent linear-gradient(180deg, #A4B4BB 0%, #C0CCD1 100%) 0 0 no-repeat padding-box;
                 border: 0.06rem solid #4D646D;
-                border-radius: 0.6rem 0rem 0rem 0rem;
+                border-radius: 0.6rem 0 0 0;
                 opacity: 1;
                 text-align: center;
                 position: relative; 
                 &::after{
                     content: '';
                     display: block;
-                    background: transparent linear-gradient(180deg, #A4B4BB 0%, #C0CCD1 100%) 0% 0% no-repeat padding-box;
+                    background: transparent linear-gradient(180deg, #A4B4BB 0%, #C0CCD1 100%) 0 0 no-repeat padding-box;
                     transform: skewX(25deg);
                     position: absolute;
                     width: 25%;
                     height: 100%;
                     right: -1.6rem;
-                    top: 0rem;
+                    top: 0;
                     border-right: 0.06rem solid #4D646D;
                     border-bottom: 0.06rem solid #4D646D;
-                    border-radius: 0rem 0.4rem 0rem 0rem;
+                    border-radius: 0 0.4rem 0 0;
                     z-index: 2;
                 }  
                 .fa-plus{
@@ -66,22 +66,22 @@
                 
             }
             .creer {
-                background: transparent linear-gradient(355deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+                background: transparent linear-gradient(355deg, #2598AE 0%, #438492 100%) 0 0 no-repeat padding-box;
                 &::after {
                     content: '';
-                    background: transparent linear-gradient(355deg, #2598AE 0%, #438492 100%) 0% 0% no-repeat padding-box;
+                    background: transparent linear-gradient(355deg, #2598AE 0%, #438492 100%) 0 0 no-repeat padding-box;
                     z-index: 2;
                 }
             }
             
             .current{
-                background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+                background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0 0 no-repeat padding-box;
                 border-bottom: 0;
                 z-index: 2;
                 &::after{
                     content: '';
                     height: 100%;
-                    background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+                    background: transparent linear-gradient(180deg, #EBEBEB 0%, #FFFFFF 100%) 0 0 no-repeat padding-box;
                     z-index: 3;
                     border-bottom: 0;
                 }
@@ -92,7 +92,7 @@
         } 
         .tab-bloc{
             display: none;
-            background: transparent linear-gradient(180deg, #53B3C7 0%, #4F9BAE 100%) 0% 0% no-repeat padding-box;
+            background: transparent linear-gradient(180deg, #53B3C7 0%, #4F9BAE 100%) 0 0 no-repeat padding-box;
             border: 0.1rem solid #4D646D;
             height: 1.6rem;
             width: 1.6rem;
@@ -108,20 +108,20 @@
     }
     .nav-prev {
         display: none;
-        width: rem(25px);
-        height: rem(25px);
+        width: 2.5rem;
+        height: 2.5rem;
         position: absolute;
-        left: rem(40px);
-        margin-top: rem(-2px);
-        font-size: rem(25px);
+        left: 4rem;
+        margin-top: -0.2rem;
+        font-size: 2.5rem;
     }
     .nav-next {
-        width: rem(25px);
-        height: rem(25px);
+        width: 2.5rem;
+        height: 2.5rem;
         position: absolute;
-        right: rem(25px);
-        margin-top: -40px;
-        font-size: rem(25px);
+        right: 2.5rem;
+        margin-top: -4rem;
+        font-size: 2.5rem;
     }
 }
 
@@ -158,14 +158,14 @@
 /***************** MEDIA QUERY *****************/
 
 /* Tablette */
-@media (max-width: rem(900px))  {
+@media (max-width: 90rem)  {
     .wrapper{
         .nav-next {
-            right: rem(5px);
+            right: 0.5rem;
         }
         .nav-prev{
-            left: rem(12px);
-            margin-top: rem(2px);
+            left: 1.2rem;
+            margin-top: 0.2rem;
         }
     } 
 }
