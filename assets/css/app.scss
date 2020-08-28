@@ -1,15 +1,17 @@
+/* =============== Font ================== */
+@import 'general/bralow.scss';
+
 /* =============== RESET ================= */
 @import 'general/reset.scss';
-
-/* ============== Font ================== */
-@import 'general/bralow.scss';
 
 * {
     box-sizing: border-box
 }
+
 html {
     font-size: 10px;
 }
+
 p{
     margin: 0;
 }
@@ -20,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    font-family: 'Bralow';
+    font-family: "Barlow", normal;
     line-height: 1.625;
     margin     : 0;
     padding    : 0;
@@ -56,28 +58,22 @@ $border--radius--white: 0.1rem solid #FFFFFF;
     @return #{$remSize}rem;
 }
 
-/************************* Style CSS  ***************************/
 
-/** button style **/
+/* ======================= Button ======================= */
 @import "general/button.scss";
 
-/** style table **/
+/* ======================= Table ======================= */
 @import 'general/table';
 
-/** style scrollbar**/
+/* ======================= ScrollBar ======================= */
 @import 'general/scrollbar';
 
-
-@import 'custome/dropdown.scss';
-
-@import 'Custome/display_down.scss';
-
+/* ======================= Formulaire ======================= */
 @import 'general/form';
 
-@import 'media/edit_media.scss';
-
-/************************* CUSTOM ICON  ***************************/
+/* ======================= CUSTOM ICON  =======================*/
 @import 'custom_icon.scss';
+
 
 /************************* HEADER CSS ***************************/
 @import 'header_menu.scss';
@@ -92,6 +88,8 @@ $border--radius--white: 0.1rem solid #FFFFFF;
 /************************* BODY MENU WRAPPER CSS ***************************/
 @import 'menu_wrapper.scss';
 
+
+
 /************************* PAGE CSS ***************************/
 
 /** HOME**/
@@ -105,3 +103,8 @@ $border--radius--white: 0.1rem solid #FFFFFF;
 
 @import 'products/allergene/allergenes';
 
+@import 'custome/dropdown.scss';
+
+@import 'Custome/display_down.scss';
+
+@import 'media/edit_media.scss';
