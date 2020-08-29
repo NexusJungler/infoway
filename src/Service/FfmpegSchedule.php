@@ -202,7 +202,7 @@ class FfmpegSchedule
                 {
                     $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
 
-                    $videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
+                    //$videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
                 }
 
                 $this->updateTask($task, 'finished');

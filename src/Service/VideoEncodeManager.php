@@ -157,6 +157,11 @@ class VideoEncodeManager
                         $this->__videoInfos['position'] = $videoInfos['position'];
                     }
 
+                    // on écrit les infos du media dans un json
+                    // les infos seront recupérés plus tard après la caractérisation du media puis seront supprimé du fichier
+                    $pathToEncodedMediaInfosJson = $this->__parameterBag->get('project_dir') . '/..\upload\encoded_media_info.json';
+                    file_put_contents($pathToEncodedMediaInfosJson, json_encode($this->__videoInfos),FILE_APPEND);
+
                     return true;
                 }
 
