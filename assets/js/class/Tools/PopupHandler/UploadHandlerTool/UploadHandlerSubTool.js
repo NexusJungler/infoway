@@ -37,12 +37,12 @@ class UploadHandlerSubTool extends SubTool
         {
 
             if(mediaInfos.fileType === 'image')
-                preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.mediaType}/low/${mediaInfos.id}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.mediaType}/low/${mediaInfos.id}.png" />`;
+                preview = `<img class="preview" src="/miniatures/${mediaInfos.customer}/image/${mediaInfos.mediaType}/low/${mediaInfos.name}.png" alt="/miniatures/${mediaInfos.customer}/image/${mediaInfos.mediaType}/low/${mediaInfos.name}.png" />`;
 
 
             else
                 preview = `<video class="preview" controls>
-                                <source src="/miniatures/${mediaInfos.customer}/video/${mediaInfos.mediaType}/low/${mediaInfos.id}.mp4" type="${mediaInfos.mimeType}">
+                                <source src="/miniatures/${mediaInfos.customer}/video/${mediaInfos.mediaType}/low/${mediaInfos.name}.mp4" type="${mediaInfos.mimeType}">
                            </video>`;
 
         }

@@ -10,11 +10,74 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class MediasHandler
 {
 
-    private $parameterBag;
+    private $__parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
+        $this->__parameterBag = $parameterBag;
+    }
+
+    public function getVideoFileCharacteristics(string $pathToVideo)
+    {
+
+        $infofile = $video = $audio = $format = [];
+
+        $path_to_json = $this->__parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
+        exec('ffprobe -v quiet -print_format json -show_format -show_streams "' . $pathToVideo . '" > "' . $path_to_json . '"', $output, $error);
+
+        if (!$error) {
+            $datafile = file_get_contents($path_to_json);
+            $flux = json_decode($datafile, true);
+        } else {
+            throw new Exception(sprintf("Errors : %s", implode(", ", $output)));
+        }
+
+        if (isset($flux['streams'][0])) {
+            $video = $flux['streams'][0];
+        }
+        if (isset($flux['streams'][1])) {
+            $audio = $flux['streams'][1];
+        }
+        if (isset($flux['format'])) {
+            $format = $flux['format'];
+        }
+        $filter = array('codec_long_name', 'width', 'height', 'bit_rate', 'bits_per_raw_sample', 'nb_frames', 'creation_time', 'encoder', 'duration', 'level', 'avg_frame_rate', 'filename', 'format_long_name', 'size', 'major_brand', 'sample_rate', 'channels');
+
+        foreach ($video as $key => $value) {
+            if (in_array($key, $filter)) {
+                $infofile['video'][$key] = $value;
+            }
+            if ($key == 'tags') {
+                foreach ($value as $label => $info) {
+                    if (in_array($label, $filter)) {
+                        $infofile['video'][$label] = $info;
+                    }
+                }
+            }
+        }
+        foreach ($format as $key => $value) {
+            if (in_array($key, $filter)) {
+                $infofile['video'][$key] = $value;
+            }
+            if ($key == 'tags') {
+                foreach ($value as $label => $info) {
+                    if (in_array($label, $filter)) {
+                        $infofile['video'][$label] = $info;
+                    }
+                }
+            }
+        }
+
+        foreach ($audio as $key => $value) {
+            if (in_array($key, $filter)) {
+                $infofile['audio'][$key] = $value;
+            }
+        }
+
+        unset($infofile['audio']['avg_frame_rate'], $infofile['audio']['duration']);
+
+        return $infofile;
+
     }
 
     /**
@@ -25,7 +88,7 @@ class MediasHandler
      */
     public function getVideoDimensions(string $file) {
         //$path_to_json = $this->parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
-        $path_to_json = $this->parameterBag->get('project_dir') . '/..\upload\infofile.json';
+        $path_to_json = $this->__parameterBag->get('project_dir') . '/..\upload\infofile.json';
 
         if(!file_exists($path_to_json))
             throw new Exception(sprintf("Cannot found this file : '%s'", $path_to_json));
@@ -190,14 +253,14 @@ class MediasHandler
         {
 
             // if something is in error.log that file is considered as corrupt by ffmpeg
-            if(filesize( $this->parameterBag->get('project_dir') . "/public/error.log" ) !== 0)
+            if(filesize( $this->__parameterBag->get('project_dir') . "/public/error.log" ) !== 0)
                 $output = 1;
 
             else
                 $output = $cmdResultStatus;
 
             // remove log file created by ffmpeg
-            unlink($this->parameterBag->get('project_dir') . "/public/error.log");
+            unlink($this->__parameterBag->get('project_dir') . "/public/error.log");
 
         }
         else

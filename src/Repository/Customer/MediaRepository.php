@@ -448,8 +448,6 @@ class MediaRepository extends ServiceEntityRepository
                   ->setAudioFrame($videoInfos['audioFrame']);
         }
 
-        $date = new DateTime($videoInfos['createdAt']);
-
         $media->setSize($videoInfos['size'])
               ->setFormat($videoInfos['format'])
               ->setSampleSize($videoInfos['sampleSize'])
@@ -465,14 +463,14 @@ class MediaRepository extends ServiceEntityRepository
               ->setHeight($videoInfos['height'])
               ->setIsArchived(false)
               ->setContainIncruste(false)
-              ->setName($videoInfos['fileName'])
+              ->setName($videoInfos['name'])
               ->setOrientation($videoInfos['orientation'])
               ->setMimeType($videoInfos['mimeType'])
               ->setRatio($videoInfos['ratio'])
               ->setExtension($videoInfos['extension'])
-              ->setCreatedAt($date)
-              ->setDiffusionStart( $date )
-              ->setDiffusionEnd( $date->modify('+10 year') );
+              ->setCreatedAt(new DateTime($videoInfos['createdAt']))
+              ->setDiffusionStart( new DateTime($videoInfos['diffusionStart']) )
+              ->setDiffusionEnd( new DateTime($videoInfos['diffusionEnd']) );
 
         /*array_map( fn($product) => $media->addProduct($product), $videoInfos['mediaProducts']);
         array_map( fn($tag) => $media->addTag($tag), $videoInfos['mediaTags']);*/
@@ -504,7 +502,7 @@ class MediaRepository extends ServiceEntityRepository
 
         }
 
-        $media->setName($imageInfos['filename'])
+        $media->setName($imageInfos['name'])
                ->setMediaType($imageInfos['mediaType'])
                ->setRatio($imageInfos['ratio'])
                ->setContainIncruste(false)
@@ -515,9 +513,9 @@ class MediaRepository extends ServiceEntityRepository
                ->setWidth($imageInfos['width'])
                ->setHeight($imageInfos['height'])
                ->setSize($imageInfos['size'])
-               ->setCreatedAt(new DateTime())
-               ->setDiffusionStart( new DateTime() )
-               ->setDiffusionEnd( (new DateTime())->modify('+10 year') );
+               ->setCreatedAt(new DateTime($imageInfos['createdAt']))
+               ->setDiffusionStart( new DateTime($imageInfos['diffusionStart']) )
+               ->setDiffusionEnd( new DateTime($imageInfos['diffusionEnd']) );
 
         $this->_em->persist($media);
         $this->_em->flush();

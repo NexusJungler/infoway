@@ -945,9 +945,9 @@ class UploadHandlerTool extends SubTool
                                                     currentUpload.find('.cancel_upload').fadeIn();
 
                                                     if( currentUploadProgressBar.parents('.file_progress_bar_container').find('i').length === 0 )
-                                                        $('<i>', { class: (typeof videoEncodingResult.error !== "undefined") ? 'fas fa-times' : 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
+                                                        $('<i>', { class: (typeof videoEncodingResult.error !== "undefined" && videoEncodingResult.error === "" && videoEncodingResult.error === null) ? 'fas fa-times' : 'fas fa-check' }).appendTo( $(`#upload_${fileToUpload.index} .file_progress_bar_container`) )
 
-                                                    if(typeof videoEncodingResult.error === "undefined")
+                                                    if(typeof videoEncodingResult.error === "undefined" || videoEncodingResult.error === "" || videoEncodingResult.error === null)
                                                     {
 
                                                         currentUpload.removeClass("valid_download");
@@ -1550,7 +1550,26 @@ class UploadHandlerTool extends SubTool
                             {
                                 this.__$fileToCharacterisationList.find('.unregistered').removeClass('unregistered');
 
-                                let mediaCards = response;
+                                response.medias.forEach( (media, index) => {
+
+                                    this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .media_id`).val( media.id );
+
+                                    if( this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] video`).length > 0 )
+                                    {
+                                        let newSrc = this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .preview source`).attr('src').replace( this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .media_name`).val(), media.id );
+                                        this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .preview source`).attr('src', newSrc);
+
+                                        this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .preview`)[0].load();
+                                    }
+                                    else
+                                    {
+                                        let newSrc = this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .preview`).attr('src').replace( this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .media_name`).val(), media.id );
+                                        this.__$fileToCharacterisationList.find(`tr[data-index='${ index }'] .preview`).attr('src', newSrc);
+                                    }
+
+                                } )
+
+                                let mediaCards = response.cards;
 
                                 this.addNewMediaCardInMediatheque(mediaCards);
 
@@ -1642,7 +1661,7 @@ class UploadHandlerTool extends SubTool
 
             } )
 
-            this.__$location.find('.media_characterisation_resume_list').html( html );
+            this.__$location.find('.step_3 .media_characterisation_resume_list').html( html );
 
         }
 

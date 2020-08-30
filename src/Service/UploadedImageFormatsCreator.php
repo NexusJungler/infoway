@@ -19,7 +19,7 @@ class UploadedImageFormatsCreator
 
     private ParameterBagInterface $__parameterBag;
 
-    private string $__mediaOrientation = "";
+    private string $__orientation = "";
 
     private array $__acceptedRatios= [ 16/9, 9/16, 9/8, 8/9 ];
 
@@ -65,11 +65,11 @@ class UploadedImageFormatsCreator
         if($height === 2160) // 4k
             $this->__mediasSourceFolder .= '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $this->__encodeOutputSizesFolders['4k'];
 
-        /*else if($height === 4320) // 8k
+        else if($height === 4320) // 8k
             $this->__mediasSourceFolder .= '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $this->__encodeOutputSizesFolders['8k'];
-        */
+        
 
-        $pathToImg = $this->__mediasSourceFolder . '/' . $mediaInfos['fileName'] . '.' . $mediaInfos['extension'];
+        $pathToImg = $this->__mediasSourceFolder . '/' . $mediaInfos['name'] . '.' . $mediaInfos['extension'];
 
         if(!file_exists($pathToImg))
             throw new Exception(sprintf("File not found : %s", $pathToImg));
@@ -113,8 +113,8 @@ class UploadedImageFormatsCreator
 
                     if($width > 1920 && $height >1080)
                     {
-                        imagepng($source, $folder . '/' . $mediaInfos['fileName'] . '.png');
-                        $this->__filesToRenameWithId[] = $folder . '/' . $mediaInfos['fileName'] . '.png';
+                        imagepng($source, $folder . '/' . $mediaInfos['name'] . '.png');
+                        $this->__filesToRenameWithId[] = $folder . '/' . $mediaInfos['name'] . '.png';
                     }
 
                 }
@@ -129,7 +129,7 @@ class UploadedImageFormatsCreator
                     $output['low'][1] = 90;
                 }
 
-                $this->__mediaOrientation = 'Horizontal';
+                $this->__orientation = 'Horizontal';
 
                 break;
 
@@ -152,8 +152,8 @@ class UploadedImageFormatsCreator
 
                     if ($width > 1080 && $height >1920)
                     {
-                        imagepng($source, $folder . '/' . $mediaInfos['fileName'] . '.png');
-                        $this->__filesToRenameWithId[] = $folder . '/' . $mediaInfos['fileName'] . '.png';
+                        imagepng($source, $folder . '/' . $mediaInfos['name'] . '.png');
+                        $this->__filesToRenameWithId[] = $folder . '/' . $mediaInfos['name'] . '.png';
                     }
                 }
 
@@ -167,7 +167,7 @@ class UploadedImageFormatsCreator
                     $output['low'][1] = 160;
                 }
 
-                $this->__mediaOrientation = 'Vertical';
+                $this->__orientation = 'Vertical';
 
                 break;
 
@@ -177,7 +177,7 @@ class UploadedImageFormatsCreator
                     $output['high'][0] = 1080;
                     $output['high'][1] = 960;
                     if ($width > 1080 && $height > 960) {
-                        imagepng($source, $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['fileName'] . '.png');
+                        imagepng($source, $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['name'] . '.png');
                     }
                 }
 
@@ -191,7 +191,7 @@ class UploadedImageFormatsCreator
                     $output['low'][1] = 80;
                 }
 
-                $this->__mediaOrientation = 'Horizontal';
+                $this->__orientation = 'Horizontal';
 
                 break;
 
@@ -201,7 +201,7 @@ class UploadedImageFormatsCreator
                     $output['high'][0] = 960;
                     $output['high'][1] = 1080;
                     if ($width > 960 && $height > 1080) {
-                        imagepng($source, $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['fileName'] . '.png');
+                        imagepng($source, $this->__mediaFormatsOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $mediaInfos['name'] . '.png');
                     }
                 }
 
@@ -215,7 +215,7 @@ class UploadedImageFormatsCreator
                     $output['low'][1] = 90;
                 }
 
-                $this->__mediaOrientation = 'Vertical';
+                $this->__orientation = 'Vertical';
 
                 break;
 
@@ -255,7 +255,7 @@ class UploadedImageFormatsCreator
                 imagefilledrectangle($thumb, 0, 0, $output[$size][0], $output[$size][1], $transparent);
                 imagecopyresampled($thumb, $source, 0, 0, 0, 0, $output[$size][0], $output[$size][1], $width, $height);
 
-                $path = $this->__mediaFormatsOutputFolder . '/' .  $size . '/' . $mediaInfos['fileName'] . '.png';
+                $path = $this->__mediaFormatsOutputFolder . '/' .  $size . '/' . $mediaInfos['name'] . '.png';
 
                 if(!file_exists($this->__mediaFormatsOutputFolder . '/' .  $size))
                     mkdir($this->__mediaFormatsOutputFolder . '/' .  $size, 0777, true);
@@ -272,18 +272,48 @@ class UploadedImageFormatsCreator
         }
 
         $this->__uploadedImageInfos = [
-            'filename' => $mediaInfos['fileName'],
+            'name' => $mediaInfos['name'],
             'mediaType' => $mediaInfos['mediaType'],
-            'ratio' => "$width/$height",
+            'ratio' => $mediaInfos['ratio'],
+            'containIncruste' => false,
             'extension' => $mediaInfos['extension'],
-            'orientation' => $this->__mediaOrientation,
+            'orientation' => $this->__orientation,
             'mimeType' => $mediaInfos['mimeType'],
+            'isArchived' => false,
             'width' => $width,
             'height' => $height,
-            'size' => ( round(filesize($pathToImg)/(1024*1024), 2) > 0.00) ? round(filesize($pathToImg)/(1024*1024), 2) . ' Mo' : round(filesize($pathToImg), 2) . ' o'
+            'size' => ( round(filesize($pathToImg)/(1024*1024), 2) > 0.00) ? round(filesize($pathToImg)/(1024*1024), 2) . ' Mo' : round(filesize($pathToImg), 2) . ' o',
+            'createAt' => $mediaInfos['createAt'],
+            'diffusionStart' => $mediaInfos['diffusionStart'],
+            'diffusionEnd' => $mediaInfos['diffusionEnd'],
+            'fileType' => "image",
         ];
 
-        return true;
+        // on écrit les infos du media dans un json
+        // les infos seront recupérés plus tard après la caractérisation du media puis seront supprimé du fichier
+        $pathToMediaToInsertInfos = $this->__parameterBag->get('project_dir') . '/..\upload\media_to_insert.json';
+        if(!file_exists($pathToMediaToInsertInfos))
+            fopen($pathToMediaToInsertInfos, "w");
+
+        $fileContent = json_decode(file_get_contents($pathToMediaToInsertInfos,true));
+
+        if(!is_array($fileContent))
+        {
+            $id = 0;
+            $fileContent = [ $this->__uploadedImageInfos ];
+        }
+        else
+        {
+            $id = sizeof($fileContent);
+            $fileContent[] = $this->__uploadedImageInfos;
+        }
+
+        file_put_contents($pathToMediaToInsertInfos, json_encode($fileContent));
+
+        // @TODO: si tout les différents formats du media n'ont pas été créée, créer une erreur dans $this->__errors
+
+        // renvoie l'index ou se situe les infos du media dans le json
+        return $id;
 
     }
 

@@ -161,7 +161,7 @@ class FfmpegSchedule
 
                 $this->updateTask($task, 'started');
 
-                $taskInfo = [
+                /*$taskInfo = [
                     'fileName' => $taskMediaInfo['name'],
                     'customerName' => $customer_name,
                     'mediaType' => $task->getMediatype(),
@@ -188,7 +188,11 @@ class FfmpegSchedule
                         'position' => $taskMediaInfo['position'],
                     ];
 
-                }
+                }*/
+
+                $taskInfo = $taskMediaInfo;
+                $taskInfo['taskId'] = $task->getId();
+                $taskInfo['customerName'] = $customer_name;
 
                 $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
                 $videoEncodeManager->encodeMedia($taskInfo);
@@ -200,7 +204,8 @@ class FfmpegSchedule
                 }
                 else
                 {
-                    $media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
+                    // on insert plus le media directement après l'encodage, on attend la caractérisation
+                    //$media = $mediaRep->insertVideo($videoEncodeManager->getEncodedVideoInfos());
 
                     //$videoEncodeManager->renameMediaWithId($media->getName(), $media->getId());
                 }

@@ -60,7 +60,7 @@ class UploadMediaDiffSubTool extends UploadHandlerSubTool {
                 <td class="products_affectation_container"> 
                     <button type="button" class="btn product_association_btn association_btn">Associer produits</button>
                     <div class="associated_products_container">
-                        ${ this._parent.buildAssociationInputsHtml('products', mediaInfos.index) }
+                        ${ this.__parent.buildAssociationInputsHtml('products', mediaInfos.index) }
                     </div> 
                 </td>
                 <td> 
