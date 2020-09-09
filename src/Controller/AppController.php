@@ -168,7 +168,7 @@ class AppController extends AbstractController
             'tags',
             'Q08'
         ];
-        return $this->render("site.html.twig", [
+        return $this->render("site/show.html.twig", [
             'customer' => $customer
         ]);
     }

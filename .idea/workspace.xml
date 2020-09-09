@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b237bda7-15f6-4ae8-877d-6e58489f2c4b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/button.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/form.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/Custome/input-rdo.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/Custome/display-down.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/Custome/display-down.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/debug.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/debug.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/site/create_site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/site/create_site.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/site/FiltreTable/FiltreTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/site/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/site/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +166,11 @@
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
     </include_path>
   </component>
+  <component name="ProblemsViewState">
+    <hideBySeverity>
+      <option value="15" />
+    </hideBySeverity>
+  </component>
   <component name="ProjectId" id="1c7f5ECbrvGSyMX6ebDOt9PThKo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -187,15 +194,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\infoway\assets\css\fonts" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\laragon\www\infoway\assets\images" />
       <recent name="C:\laragon\www\infoway\assets\css\popups" />
       <recent name="C:\laragon\www\infoway\templates\media" />
       <recent name="C:\laragon\www\infoway\assets\css\products\allergene" />
       <recent name="C:\laragon\www\infoway\assets\css\general" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\infoway\assets\css\fonts" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -240,6 +247,7 @@
       <workItem from="1598346115086" duration="240000" />
       <workItem from="1598346399350" duration="42188000" />
       <workItem from="1598607187466" duration="13255000" />
+      <workItem from="1599467636347" duration="27360000" />
     </task>
     <servers />
   </component>
@@ -263,10 +271,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="461" y="185" key="SettingsEditor/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598346675590" />
-    <state x="697" y="343" width="700" height="534" key="find.popup" timestamp="1598633042602">
+    <state x="697" y="343" width="700" height="534" key="find.popup" timestamp="1599486157057">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="697" y="343" width="700" height="534" key="find.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1598633042602" />
+    <state x="697" y="343" width="700" height="534" key="find.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1599486157057" />
     <state x="623" y="235" key="search.everywhere.popup" timestamp="1598347955651">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

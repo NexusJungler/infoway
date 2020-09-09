@@ -1,17 +1,27 @@
 .create_site{
-    font-family: "Barlow";
+    font-family: "Barlow", sans-serif;
 
     .info-gestion-site{
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+        margin: 2rem 0 ;
         ul{
             display: flex;
             text-align: center;
             margin: 0 auto;
+            width: 91%;
             li{
-                padding-right: 3rem;
-                font: 2.1rem "Barlow";
-                color: #283338;
+                margin-right: 3rem;
+                font-size: 2rem ;
+                color: #899CA4;
+                padding: 0.3rem 1rem;
+                &:focus{
+                    &.drow_active{
+                        background-color: #C1E4EB;
+                        border-radius: 0.6rem;
+                        height: 4rem;
+                        color: #283338;
+                        font-weight: 600;
+                    }
+                }
             }
         }
     }
@@ -73,32 +83,69 @@
                 max-width: 9.5rem;
             }
         }
+    }
 
+    .accordion_identite{
+        .form{
+            .row{
+                &:nth-child(7){
+                    .col3,
+                    .col2{
+                        display: block;
+                    }
+                }
+            }
+        }
+        .bloc-tags,
+        .bloc_critere{
+            width: 35rem;
+            height: 11rem;
+            margin-top: 2rem;
+            background-color: #FFFFFF ;
+            border: 0.1rem solid #C0CCD1;
+            border-radius: 0.9rem;
+        }
+    }
 
+    /******* Select *******/
 
+    select{
+        border: 0.1rem solid #C0CCD1;
+        border-radius: 0.9rem;
+        max-width: 30rem;
+        height: 3rem;
+        width: 100%;
+        padding: 0 1rem;
+        color: #4D646D;
+        font-size: 1.4rem;
     }
 
     .menu-dropdown-site{
-        height: 630px;
+        height: 63rem;
         .menu-list-site{
             padding-left: 0;
             max-width: 100%;
             border-radius: 0.6rem 0.6rem 0 0;
             .menu-submenu {
-                padding-bottom: 20px;
-                background: #F6F6F6 0% 0% no-repeat padding-box;
+                padding-bottom: 2rem;
             }
-            .accordion-toggle2{
-                background: #899CA4 0% 0% no-repeat padding-box;
-                border-radius: 6px 6px 0px 0px;
-                font: 2.6rem 'Barlow';
-                padding: 10px;
-                border: 1px solid #899CA4;
+            .accordion-toggle2 a {
+                background-color: #C0CCD1;
+                border-radius: 0.6rem 0.6rem 0 0;
+                font-size: 2.6rem ;
+                padding: 1rem;
+                border: 0.1rem solid #899CA4;
                 letter-spacing: 0;
                 color: white;
+                display: block;
+                height: 5.8rem;
                 &:first-of-type {
                     border-top: 0;
                 }
+            }
+
+            .accordion-toggle2{
+                margin-top: 2rem;
             }
 
             .accordion-toggle2, .accordion-content {
@@ -107,23 +154,29 @@
                 position: relative;
                 letter-spacing: 1px;
             }
+            .menu-link:target{
+                display: block;
+            }
 
             .accordion-content {
                 display: block;
-                padding: 5rem 3.5rem  ;
-                border: 1px solid #899CA4;
+                //display: none;
             }
 
             .accordion-toggle2.active-tab {
-
+                background-color: #306D7C ;
             }
         }
     }
 
 
-
-    .content-identite{
+    .accordion_content_identite{
         display: flex;
+    }
+    .accordion_content_dropdown{
+        padding: 5rem 3.5rem;
+        border: 0.1rem solid #899CA4;
+        background: #F6F6F6 0 0 no-repeat padding-box;
     }
     .content-identite-site-right{
         width: 60%;
@@ -137,10 +190,13 @@
         padding: 1rem;
     }
 
+    .btn_next_slide{
+        padding: 3rem 0 1rem 0;
+        text-align: center;
+    }
 
 
     /**************************** Prix ************************/
-
 
 
     .content_site_price{
@@ -153,7 +209,6 @@
             }
             .col2{
                 width: 50%;
-                display: flex;
                 margin-right: 2rem;
                 &:last-child{
                     margin-right: 0;
@@ -161,7 +216,6 @@
             }
             .col3{
                 width: 15%;
-                display: flex;
                 margin-right: 2rem;
                 &:last-child{
                     margin-right: 0;
@@ -172,16 +226,6 @@
         label{
             font-size: 1.3rem;
             color: #4D646D;
-        }
-        select{
-            border: 1px solid #C0CCD1;
-            border-radius: 9px;
-            max-width: 30rem;
-            height: 3rem;
-            width: 100%;
-            padding: 0 1rem;
-            color: #4D646D;
-            font-size: 1.4rem;
         }
     }
 

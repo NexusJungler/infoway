@@ -10,8 +10,9 @@
 {% block body %}
     <main class="main create_site">
         <div class="main-content">
+
             <section class="jumbotron">
-                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Site' , 'sousTitle': (sousTitle is defined) ? sousTitle : 'Gestion du Sites'} %}
+                {% include 'home/home-info.html.twig' with { 'pageTitle': 'Sites' , 'sousTitle': (sousTitle is defined) ? sousTitle : 'Gestion du Sites'} %}
             </section>
 
             <section class="wrapper_tabcontent">
@@ -26,8 +27,8 @@
                 <article>
                     <div class="info-gestion-site">
                         <ul>
-                            <li>1.Identité</li>
-                            <li>2.Prix</li>
+                            <li class="drow_active"><a>1.Identité</a></li>
+                            <li ><a >2.Prix</a></li>
                             <li>3.écrans</li>
                             <li>4.Zone de diffusion</li>
                             <li>5.Contenus thématiques</li>
@@ -36,9 +37,6 @@
                             <li>8.Autre serives</li>
                         </ul>
                     </div>
-                </article>
-
-                <article>
 
                     <div class="menu-dropdown-site">
 
@@ -48,8 +46,8 @@
                                 <a class="menu-link" >1.Identité</a>
                             </li>
 
-                            <ul class="menu-submenu accordion-content">
-                                <div class="content-identite">
+                            <ul id="accordion-content_1" class="menu-submenu accordion-content accordion-content_1 accordion_identite">
+                                <div class="accordion_content_dropdown accordion_content_identite">
                                     <div class="content-identite-site-right">
                                         <form class="form">
                                             <div class="row">
@@ -95,7 +93,13 @@
                                             <div class="row">
                                                 <div class="col2">
                                                     <label class="form_label">Fuseau Horaire</label>
-                                                    <input type="text" class="form_input" >
+                                                    <select name="" id="devise_select">
+                                                        <option value="dog">GMT -2</option>
+                                                        <option value="cat">GMT -1 </option>
+                                                        <option value="" selected >paris GMT +1</option>
+                                                        <option value="dog">GMT +2</option>
+                                                        <option value="cat">GMT +3 </option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -110,18 +114,18 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="">
+                                                <div class="col3">
                                                     <label class="form_label">Pour ce site définir</label>
                                                 </div>
-                                                <div>
-                                                    <button type="button"> Critères</button>
-                                                    <div>
+                                                <div class="col2">
+                                                    <button type="button" class="btn "> Critères</button>
+                                                    <div class="bloc_critere">
 
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <button type="button"> TAGS </button>
-                                                    <div>
+                                                <div class="col2">
+                                                    <button type="button" class="btn"> TAGS </button>
+                                                    <div class="bloc-tags">
 
                                                     </div>
                                                 </div>
@@ -130,6 +134,8 @@
 
                                         </form>
                                     </div>
+
+
                                     <div class="content-identite-site-left ">
                                         <div class="contenu_utilisateur">
                                             <table>
@@ -152,67 +158,73 @@
                                     </div>
                                 </div>
 
-                                <button>Suivant</button>
+                                <div class="btn_next_slide">
+                                    <button type="button" class="btn accordion-nav2" data-open-next="2" >Suivant</button>
+                                </div>
+
                             </ul>
 
-                            
-                            <li id="nav1" class="toggle accordion-toggle2">
+                            <li id="nav2" class="toggle accordion-toggle2 ">
                                 <a class="menu-link" >2.Prix</a>
                             </li>
-                            <ul class="menu-submenu accordion-content content_site_price">
-
-                                <div class="row">
-                                    <div class="col3">
-                                        <label class="form_label">Devise</label>
-                                    </div>
-                                    <div class="col">
-                                        <select name="" id="devise_select">
-                                            <option value="">Devise par défaut</option>
-                                            <option value="dog">Dog</option>
-                                            <option value="cat">Cat</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col3">
-                                        <label class="form_label">Premium</label>
-                                    </div>
-                                    <div class="col">
-                                        <select name="pets" id="prix_select">
-                                            <option value="">Please choose</option>
-                                            <option value="dog">Dog</option>
-                                        </select>
+                            <ul  class="menu-submenu accordion-content accordion-content_2 content_site_price">
+                                <div class="accordion_content_dropdown">
+                                    <div class="row">
+                                        <div class="col3">
+                                            <label class="form_label">Devise</label>
+                                        </div>
+                                        <div class="col">
+                                            <select name="" id="devise_select">
+                                                <option value="">Devise par défaut</option>
+                                                <option value="dog">Dog</option>
+                                                <option value="cat">Cat</option>
+                                            </select>
+                                        </div>
                                     </div>
 
-                                </div>
-                                <div>
-                                    <div>
-                                        <input type="checkbox">
-                                        <label>Recommandé, prix modifiable</label>
+                                    <div class="row">
+                                        <div class="col3">
+                                            <label class="form_label">Premium</label>
+                                        </div>
+                                        <div class="col">
+                                            <select name="pets" id="prix_select">
+                                                <option value="">Please choose</option>
+                                                <option value="dog">Dog</option>
+                                            </select>
+                                        </div>
+
                                     </div>
                                     <div>
-                                        <input type="checkbox">
-                                        <label>Imposé au national, non modifiable</label>
-                                    </div>
+                                        <div>
+                                            <input type="checkbox">
+                                            <label>Recommandé, prix modifiable</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox">
+                                            <label>Imposé au national, non modifiable</label>
+                                        </div>
 
 
-                                </div>
-                                <div class="row">
-                                    <div>
-                                        <label>Modification des prix locaux</label>
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <label>Modification des prix locaux</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <label>Progrmation de nuit </label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div>
-                                        <label>Progrmation de nuit </label>
-                                    </div>
-                                </div>
+
+                                <button type="button" class="accordion-nav2" data-open-next="3" >Suivant</button>
                             </ul>
-                            <li id="nav1" class="toggle accordion-toggle2">
+
+                            <li id="nav3" class="toggle accordion-toggle2">
                                 <a class="menu-link" >3.écrans</a>
                             </li>
-                            <ul  class="menu-submenu accordion-content">
+                            <ul  class="menu-submenu accordion-content accordion-content_3">
                                 <div>
                                     <p>affecter un nouveau device : </p>
                                 </div>
@@ -229,14 +241,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <th>
 
+                                            </th>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </ul>
-                            <li id="nav1" class="toggle accordion-toggle2">
+                            <li id="nav4" class="toggle accordion-toggle2">
                                 <a class="menu-link" >4.Zone de diffusion</a>
                             </li>
-                            <ul  class="menu-submenu accordion-content">
+                            <ul  class="menu-submenu accordion-content accordion-content_4">
                                 <button class="btn"> Ajoute zone de diffusion</button>
                                 <div class="row">
                                     <label>Zone de diffusion</label>
@@ -290,10 +306,10 @@
                                     <label>écrans sélectionnés</label>
                                 </div>
                             </ul>
-                            <li id="nav1" class="toggle accordion-toggle2">
+                            <li id="nav5" class="toggle accordion-toggle2">
                                 <a class="menu-link" >5.Contenus thématiques</a>
                             </li>
-                            <ul  class="menu-submenu accordion-content">
+                            <ul  class="menu-submenu accordion-content accordion-content_5">
                                 <div> Flux Temps réel
                                     <div>Information en temps réel</div>
                                     <div>
@@ -321,10 +337,10 @@
                             </ul>
                             
                             
-                            <li id="nav1" class="toggle accordion-toggle2">
+                            <li id="nav6" class="toggle accordion-toggle2">
                                 <a class="menu-link" >6.Sources externes</a>
                             </li>
-                            <ul  class="menu-submenu accordion-content">
+                            <ul  class="menu-submenu accordion-content accordion-content_6">
                                 <div>Sources physique externes </div>
                                 <div>Flux externes</div>
                             </ul>

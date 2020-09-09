@@ -4,11 +4,13 @@ class filterTableSite{
         this.onChangeFilter(true);
         this.chechboxFilterSelect(true);
         this.ClickOpenMenubord(true);
+        this.ClickNextMenubord(true);
     }
     disable(){
         this.onChangeFilter(false);
         this.chechboxFilterSelect(false);
         this.ClickOpenMenubord(false);
+        this.ClickNextMenubord(false);
     }
 
     ClickOpenMenubord(active){
@@ -26,6 +28,41 @@ class filterTableSite{
 
         }
     }
+
+    ClickNextMenubord(active){
+        if(active){
+
+            $(".accordion-nav2").click(function (){
+                let open = $(this).data("open-next");
+                let nav = $("#nav"+ open)
+
+                nav.next().toggleClass("open").slideToggle("fast");
+                nav.toggleClass("active-tab .menu-link").toggleClass("active");
+
+                $(".accordion-content_"+ (open-1)).not($(this).next()).slideUp("fast").removeClass("open");
+                $("#nav"+ (open-1)).not($(this)).removeClass("active-tab .menu-link").removeClass("active");
+
+            })
+
+            // $(".info-gestion-site li ").click(function (){
+            //
+            //     let index =  $(this).index()+1;
+            //     let index_li = $("#nav"+ index);
+            //
+            //     console.log(index);
+            //
+            //     $(".accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
+            //     $(".accordion-toggle2").not($(this)).removeClass("active-tab .menu-link active");
+            //
+            //     index_li.next().toggleClass("open").slideToggle("fast");
+            //     index_li.toggleClass("active-tab .menu-link").toggleClass("active");
+            //
+            // })
+
+        }
+    }
+
+
 
     onChangeFilter(active) {
         if(active){
