@@ -38,6 +38,7 @@
                 width: 50%;
                 display: flex;
                 margin-right: 2rem;
+                margin-right: 2rem;
                 &:last-child{
                     margin-right: 0;
                 }
@@ -95,6 +96,26 @@
                     }
                 }
             }
+            .row_site{
+                .col3{
+                    width: 18%;
+                    margin-right: 0;
+                }
+            }
+            .row_screen{
+                .col2:first-child{
+                    width: 27%;
+                    .form_label{
+                        width: 56%;
+                    }
+                }
+                .col2:last-child{
+                    .form_label{
+                        width: 55%;
+                        padding: 1.2% 0;
+                    }
+                }
+            }
         }
         .bloc-tags,
         .bloc_critere{
@@ -105,6 +126,7 @@
             border: 0.1rem solid #C0CCD1;
             border-radius: 0.9rem;
         }
+
     }
 
     /******* Select *******/
@@ -118,7 +140,53 @@
         padding: 0 1rem;
         color: #4D646D;
         font-size: 1.4rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        box-shadow: none;
+        background-image: none;
     }
+
+    /* Remove IE arrow */
+    select::-ms-expand {
+        display: none;
+    }
+    /* Custom Select */
+    .select {
+        position: relative;
+        display: flex;
+        width: 20em;
+        height: 3em;
+        line-height: 3;
+        overflow: hidden;
+        border-radius: .25em;
+    }
+    select {
+        flex: 1;
+        padding: 0 .5em;
+        cursor: pointer;
+    }
+    /* Arrow */
+    .select::after {
+        content: '\25BC';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 1em;
+        background: #34495e;
+        cursor: pointer;
+        pointer-events: none;
+        -webkit-transition: .25s all ease;
+        -o-transition: .25s all ease;
+        transition: .25s all ease;
+    }
+    /* Transition */
+    .select:hover::after {
+        color: #f39c12;
+    }
+
 
     .menu-dropdown-site{
         height: 63rem;
@@ -227,6 +295,100 @@
             font-size: 1.3rem;
             color: #4D646D;
         }
+
+        .row_prog_night{
+            .col{
+                display: flex;
+            }
+        }
+
+        .submit-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-left: 1rem;
+            width: 17rem;
+            input{
+                display: none;
+            }
+
+            .rating-label {
+                position: relative;
+                text-align: center;
+                z-index: 3;
+                -webkit-box-flex: 3.34;
+                flex: 3.34;
+                cursor: pointer;
+                transition: 250ms;
+                font: 1.8rem "Barlow" ;
+                color: #4D646D;
+                &.rating-label-non {
+                    right: -1.5rem;
+                    text-align: left;
+                }
+                &.rating-label-oui {
+                    left: -2rem;
+                    text-align: right;
+                }
+            }
+        }
+
+        .toggle-rating-pill {
+            position: relative;
+            height: 2.6rem;
+            width: 5.4rem;
+            background: #899CA4 0% 0% no-repeat padding-box;
+            border-radius: 50rem;
+            transition: all 250ms;
+        }
+
+        .smile-rating-toggle {
+            position: absolute;
+            width: 2.2rem;
+            height: 2.2rem;
+            background-color: white;
+            top: 0.2rem;
+            left: 6rem;
+            border-radius: 50rem;
+            transition: all 250ms;
+            z-index: 4;
+        }
+
+        #prix_non:checked~.rating-label-non {
+            color: #4D646D;
+            font-weight: 700;
+        }
+
+        #prix_oui:checked~.rating-label-oui {
+            color: #4D646D;
+            font-weight: 700;
+        }
+        #prix_oui:checked~.smile-rating-toggle {
+            left: 8.8rem;
+        }
+
+        #prix_oui:checked~.toggle-rating-pill {
+            background: #53B3C7 0% 0% no-repeat padding-box;
+        }
+
+        #prog_night_non:checked~.rating-label-non {
+            color: #4D646D;
+            font-weight: 700;
+        }
+
+        #prog_night_oui:checked~.rating-label-oui {
+            color: #4D646D;
+            font-weight: 700;
+        }
+        #prog_night_oui:checked~.smile-rating-toggle {
+            left: 8.8rem;
+        }
+
+        #prog_night_oui:checked~.toggle-rating-pill {
+            background: #53B3C7 0% 0% no-repeat padding-box;
+        }
+
     }
 
 }

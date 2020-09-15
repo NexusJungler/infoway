@@ -60,23 +60,23 @@
             z-index: 1;
             transform: rotate(90deg);
         }
-    }    #displayed_elements_number_selection{
+    }
+    #displayed_elements_number_selection{
         background: #FFFFFF 0 0 no-repeat padding-box;
         border: 0.1rem solid #C0CCD1;
         border-radius: 0.6rem;
         font-size: 1.3rem ;
         letter-spacing: -0.13px;
         color: #4D646D;
-        padding: 3px;
+        padding: 0.3rem;
         position: relative;
-
     }
 }
 
 /** media diffusion **/
 
 .media_infos_diffusion{
-    margin-top: 20px;
+    margin-top: 2rem;
     display: flex;
 
     /** header **/
@@ -84,10 +84,10 @@
         display: flex;
         .icon_container{
             position: relative;
-            top: 6px;
+            top: 0.6rem;
         }
         .containeer_header_info{
-            font: 35px "Barlow";
+            font: 0.3rem "Barlow";
             color: #306D7C;
         }
     }
@@ -114,10 +114,10 @@
             background: #FFFFFF;
             color: #4D646D;
             display: none;
-            left: -16px;
-            padding: 9px 15px 2px 7px;
+            left: -1.6rem;
+            padding: 0.9rem 1.5rem 0.2rem 0.7rem;
             position: absolute;
-            top: 9px;
+            top: 0.9rem;
             width: 7.8rem;
             max-width: 100%;
             list-style: none;
@@ -130,29 +130,29 @@
     }
 
     .media_infos_diffusion_left{
-        margin-right: 50px;
+        margin-right: 5rem;
         width: 100%;
-        max-width: 1140px;
+        max-width: 114rem;
         .media_infos_diffusion_show{
-            height: 300px;
+            height: 30rem;
             .menu-list{
                 text-align: left;
                 padding-left: 0;
-                max-width: 1140px;
+                max-width: 114rem;
                 width: 100%;
-                border-radius: 6px 6px 0 0;
+                border-radius: 0.6rem 0.6rem 0 0;
                 .menu-link{
-                    font: 26px "Barlow";
+                    font-size: 2.6rem ;
                     color: #4D646D;
                 }
                 .accordion-toggle{
                     display: flex;
                     background: #899CA4 0 0 no-repeat padding-box;
-                    border-radius: 6px 6px 0 0;
-                    margin-bottom: 3px;
+                    border-radius: 0.6rem 0.6rem 0 0;
+                    margin-bottom: 0.3rem;
                     font-size:2.6rem ;
-                    padding: 10px;
-                    border: 1px solid #899CA4;
+                    padding: 1rem;
+                    border: 0.1rem solid #899CA4;
                     letter-spacing: 0;
                     color: white;
                     &:first-of-type {
@@ -162,9 +162,9 @@
 
                 .accordion-toggle, .accordion-content {
                     cursor: pointer;
-                    font-size: 16px;
+                    font-size: 1.6rem;
                     position: relative;
-                    letter-spacing: 1px;
+                    letter-spacing: 0.1rem;
                 }
 
                 .accordion-content {
@@ -198,7 +198,7 @@
                 }
                 .tbody-content{
                     background-color: #DDE1E4;
-                    height: 280px;
+                    height: 28rem;
                     display: block;
                     overflow: auto;
                     td{
@@ -221,7 +221,7 @@
 
     .media_infos_diffusion_right{
         max-width: 20%;
-        margin-right: 10px;
+        margin-right: 1rem;
         .table{
             .table-custome{
                 .thead-content{
@@ -245,11 +245,11 @@
                 }
                 .tbody-content{
                     background-color: #DDE1E4;
-                    height: 240px;
+                    height: 24rem;
                     display: block;
                     overflow: auto;
                     td{
-                        width: 45px;
+                        width: 4.5rem;
                         text-align: center;
                         border: 0;
                         &:nth-child(1){
@@ -277,7 +277,7 @@
                 color: #FFFFFF;
                 padding: 0.5rem 1rem;
                 position: relative;
-                width: 50px;
+                width: 5rem;
                 &:first-child{
                     width: 6%;
                 }
@@ -293,7 +293,7 @@
                 background-color: #F6F6F6;
             }
             td {
-                width: 50px;
+                width: 5rem;
                 &:first-child{
                     width: 8%;
                 }
@@ -315,15 +315,15 @@
 			.drop-btn {
 				width: 14rem;
 				.drop-btn-icone {
-					width: 20px;
-					height: 20px;
+					width: 2rem;
+					height: 2rem;
 					background: #A4B4BB 0 0 no-repeat padding-box;
-					border-radius: 3px;
+					border-radius: 0.3rem;
 					color: #E3E3E3;
 					text-align: center;
 					font-size: 1.8rem;
-					right: 3px;
-					top: 2px;
+					right: 0.3rem;
+					top: 0.2rem;
 					position: absolute;
 				}
 			}

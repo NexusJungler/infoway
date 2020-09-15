@@ -103,7 +103,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row row_screen">
                                                 <div class="col2" >
                                                     <label class="form_label">Allumage des écrans par défaut :</label>
                                                     <input type="time" class="form_input form_time" value="06:00">
@@ -113,7 +113,7 @@
                                                     <input type="time" class="form_input form_time" value="23:00">
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row row_site">
                                                 <div class="col3">
                                                     <label class="form_label">Pour ce site définir</label>
                                                 </div>
@@ -173,7 +173,7 @@
                                         <div class="col3">
                                             <label class="form_label">Devise</label>
                                         </div>
-                                        <div class="col">
+                                        <div class=" select">
                                             <select name="" id="devise_select">
                                                 <option value="">Devise par défaut</option>
                                                 <option value="dog">Dog</option>
@@ -194,6 +194,7 @@
                                         </div>
 
                                     </div>
+
                                     <div>
                                         <div>
                                             <input type="checkbox">
@@ -203,17 +204,48 @@
                                             <input type="checkbox">
                                             <label>Imposé au national, non modifiable</label>
                                         </div>
-
-
                                     </div>
+
                                     <div class="row">
                                         <div>
                                             <label>Modification des prix locaux</label>
                                         </div>
+                                        <div class="submit-rating">
+                                            <input type="radio" name="prix_locaux" class="form_input media_contain_incruste medias_list " id="prix_oui" value="1">
+                                            <input type="radio" name="prix_locaux" class="form_input input_non choice_media_contain_incruste " id="prix_non" value="0" checked>
+
+                                            <label for="prix_non" class="rating-label rating-label-non">Non</label>
+                                            <div class="smile-rating-toggle"></div>
+                                            <div class="toggle-rating-pill"></div>
+                                            <label for="prix_oui" class="rating-label rating-label-oui">Oui</label>
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row_prog_night">
+                                        <div class="col">
+                                            <label>Programmation de nuit </label>
+                                            <div class="submit-rating">
+                                                <input type="radio" name="prog_night" class="form_input media_contain_incruste medias_list " id="prog_night_oui" value="1">
+                                                <input type="radio" name="prog_night" class="form_input input_non choice_media_contain_incruste " id="prog_night_non" value="0" checked>
+
+                                                <label for="prog_night_non" class="rating-label rating-label-non">Non</label>
+                                                <div class="smile-rating-toggle"></div>
+                                                <div class="toggle-rating-pill"></div>
+                                                <label for="prog_night_oui" class="rating-label rating-label-oui">Oui</label>
+                                            </div>
+                                        </div>
                                         <div>
-                                            <label>Progrmation de nuit </label>
+                                            <div>
+                                                <label>Majoration des Prix (en % )</label>
+                                                <input type="text" class="" placeholder="">
+                                            </div>
+                                            <div>
+                                                <label>Heure de début</label>
+                                                <input type="time" class="form_input form_time" value="23:00">
+                                            </div>
+                                            <div class="">
+                                                <label>Heure de fin</label>
+                                                <input type="time" class="form_input form_time" value="23:00">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
