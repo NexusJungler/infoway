@@ -10,6 +10,7 @@ class Media
         this.__height = null;
         this.__width = null;
         this.__html = null;
+        this.__orientation = "";
     }
 
     getId()
@@ -83,6 +84,21 @@ class Media
             throw new Error(`${ this.__className }.width must be instance of number, but '${typeof width}' given !`);
 
         this.__width = width;
+
+        return this;
+    }
+
+    getOrientation()
+    {
+        return this.__orientation;
+    }
+
+    setOrientation(orientation)
+    {
+        if(typeof orientation !== "string")
+            throw new Error(`${ this.__className }.orientation must be instance of string, but '${typeof orientation}' given !`);
+
+        this.__orientation = orientation;
 
         return this;
     }

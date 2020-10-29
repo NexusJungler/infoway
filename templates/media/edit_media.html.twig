@@ -11,7 +11,7 @@
 
 
 {% block maincontent %}
-    <article id="picture" class="tab-content current media-show">
+    <article id="picture" class="tab-content current edit_media">
 
         <div id="tab-products" class="tab-content current content-product">
             <article class="tab-content-title">
@@ -27,9 +27,7 @@
                         <button type="button" class="btn duplicate_media_btn media_action_btn" id="duplicate"><i class="fas fa-plus"></i>Dupliquer</button>
                         <button type="button" class="btn btn-tags  media_action_btn tag_association_btn">TAG</button>
                         <button type="button" class="btn popup_comfirmation_delete delete_media_btn media_action_btn" ><i class="fas fa-trash"></i>Supprimer</button>
-
                     </div>
-
                 </div>
             </article>
         </div>
@@ -67,12 +65,11 @@
 
     {% include "/popups/associations/tag_association/popup_tag_association.html.twig" %}
 
+    {% include "/popups/deleting/popup_delete.html.twig" %}
+
+    {% include "/popups/media_remplacement_popup/media_remplacement_popup.html.twig" %}
+
     {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
-
-    {% include "/popups/deleting_media/popup_delete_media.html.twig" %}
-
-    {% include "/popups/media_remplacement_popup/remplacement_basic/popup_media_remplacement_basic.html.twig" %}
-
 
 {% endblock %}
 

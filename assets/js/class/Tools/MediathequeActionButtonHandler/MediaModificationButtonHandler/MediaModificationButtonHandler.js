@@ -15,16 +15,9 @@ class MediaModificationButtonHandler extends SubTool
         {
             $('.modify_media_btn').on('click.onClickOnModificationButtonRedirectToEditPage', e => {
 
-                if( $('.medias_list_container').length > 0 )
-                {
-                    const id = this.__parent.getMediasContainer().find(".select_media_input:checked").parents('.card').attr('id').replace('media_', '');
-                    //console.log(id); debugger
-                    window.location = `/edit/media/${id}`;
-                }
-                else
-                {
-                    debugger
-                }
+                const id = $(".select_media_input:checked").parents('.card').attr('id').replace('card_', '');
+
+                window.location.href = ($('.select_media_input:checked').parents('.card').hasClass('synchro')) ? `/edit/synchro/${id}` : `/edit/media/${id}`;
 
             })
         }

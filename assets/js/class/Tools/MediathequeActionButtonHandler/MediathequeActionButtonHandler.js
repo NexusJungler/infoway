@@ -2,6 +2,7 @@ import Tool from "../Tool";
 import ParentTool from "../ParentTool";
 import MediaDeletingButtonHandler from "./MediaDeletingButtonHandler/MediaDeletingButtonHandler";
 import MediaModificationButtonHandler from "./MediaModificationButtonHandler/MediaModificationButtonHandler";
+import MediaDuplicatingButtonHandler from "./MediaDuplicatingButtonHandler/MediaDuplicatingButtonHandler";
 
 class MediathequeActionButtonHandler extends ParentTool
 {
@@ -13,6 +14,7 @@ class MediathequeActionButtonHandler extends ParentTool
         this.__subTools = [
             new MediaDeletingButtonHandler(),
             new MediaModificationButtonHandler(),
+            new MediaDuplicatingButtonHandler(),
         ]
     }
 
@@ -20,9 +22,9 @@ class MediathequeActionButtonHandler extends ParentTool
     {
         if(active)
         {
-            this.getMediasContainer().on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input", e => {
+            $(".medias_list_container").on('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input", e => {
 
-                if(this.getMediasContainer().find(".select_media_input:checked").length === 0)
+                if($(".medias_list_container").find(".select_media_input:checked").length === 0)
                     $('.media_action_btn').attr('disabled', true);
 
                 else
@@ -30,7 +32,7 @@ class MediathequeActionButtonHandler extends ParentTool
 
                     $('.media_action_btn').removeAttr('disabled');
 
-                    if(this.getMediasContainer().find(".select_media_input:checked").length > 1)
+                    if($(".medias_list_container").find(".select_media_input:checked").length > 1)
                         $('.modify_media_btn').attr('disabled', true);
                 }
 
@@ -38,7 +40,7 @@ class MediathequeActionButtonHandler extends ParentTool
         }
         else
         {
-            this.getMediasContainer().off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input");
+            $(".medias_list_container").off('change.onMediaSelectionAndDeselectionChangeDeleteButtonState', ".select_media_input");
         }
 
         return this;

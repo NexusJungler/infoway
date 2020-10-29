@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller\Settings;
 
 
@@ -771,7 +770,7 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render("user/user_login.html.twig", [
+        return $this->render("settings/user/user_login.html.twig", [
             'page_title' => 'Mot de passe oublié',
             'form_title' => 'Mot de passe oublié ?',
             'form_subtitle' => 'Veuillez renseignez votre email',
@@ -881,7 +880,7 @@ class UserController extends AbstractController
             'tokenIsInvalid' => $tokenIsInvalid ?? false,
             'userNotFound' => $userNotFound ?? null
         ]);
-      
+
     }
 
     /**
@@ -1031,7 +1030,7 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render('user/user_login.html.twig', [
+        return $this->render('settings/user/user_login.html.twig', [
             'error' => $error ?? false,
             'tokenIsValid' => $tokenIsValid,
             'page_title' => 'Confirmation de votre compte',
@@ -1061,7 +1060,7 @@ class UserController extends AbstractController
             $tokenIsInvalid = false;
         }
 
-        return $this->render('user/cancel_password_reset_request.html.twig', [
+        return $this->render('settings/user/cancel_password_reset_request.html.twig', [
             'tokenIsInvalid' => $tokenIsInvalid
         ]);
 
@@ -1212,10 +1211,10 @@ class UserController extends AbstractController
     */
    public function updateUserCurrentCustomer(Request $request, SessionManager $sessionManager, CustomerRepository $customerRepository)
    {
-   
+
        if(!$request->request->get('customer'))
            throw new Exception("Missing 'customer' parameter in POST data !");
-   
+
        $customer = $customerRepository->find($request->request->get('customer'));
        if(!$customer)
            throw new Exception(sprintf("Internal Error : no customer found with the id '%s'", $request->request->get('customer')));
@@ -1226,7 +1225,7 @@ class UserController extends AbstractController
        return new Response("200 OK");
 
    }
-     
+
 
 
 }

@@ -157,7 +157,7 @@ class ClockManager extends Observable {
     enable() {
 
         this.createNewClock(this.__$clockContainer, this.__defaultTimeZone, true);
-        this.onMinutesChangeNotifyClocks();
+        //this.onMinutesChangeNotifyClocks();
         
         this.onClickOnButtonShowTimeZoneList(true);
         this.onClickOnCityNameAddNewClock(true);

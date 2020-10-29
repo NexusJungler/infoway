@@ -1,5 +1,9 @@
 import Tool from "../../../Tool";
 import SubTool from "../../../SubTool";
+import TagAssociationOnUpload from "./TagAssociationSubTool/TagAssociationOnUpload/TagAssociationOnUpload";
+import TagAssociationOnMedia from "./TagAssociationSubTool/TagAssociationOnMedia/TagAssociationOnMedia";
+import TagAssociationOnProduct from "./TagAssociationSubTool/TagAssociationOnProduct/TagAssociationOnProduct";
+import TagAssociationOnSite from "./TagAssociationSubTool/TagAssociationOnSite/TagAssociationOnSite";
 
 class TagAssociationHandlerTool extends SubTool
 {
@@ -11,20 +15,131 @@ class TagAssociationHandlerTool extends SubTool
         this.__$mediasCollection = $('.medias_collection');
         this.__$container = $('.popup_associate_tag_container');
         this.__$location = $('.popup_associate_tag');
-        this.__$tagsList = $('.tags_list');
+        this.__$tagsList = $('.tag_list');
         //this.__currentMedia = null;
         this.__currentMediaName = null;
         this.__currentMediaId = null;
         this.__mediasAssociationInfo = [];
         this.__isUpload = false;
+        this.__currentMediaPos = null;
+        this.__currentPage = "";
+        this.__currentTagAssociationManager = null;
+        this.__subTools = [
+            new TagAssociationOnUpload(),
+            new TagAssociationOnMedia(),
+            new TagAssociationOnProduct(),
+            new TagAssociationOnSite(),
+        ];
+    }
+
+    activeAllSubTools()
+    {
+
+        this.__subTools.map( subTool => {
+
+            subTool.setToolBox(this.getToolBox());
+            subTool.setParent(this.getParent());
+            subTool.enable();
+
+        } );
+
+        return this;
+
+    }
+
+    activeSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        //this.__currentTagAssociationManager = this.__subTools[ this.getSubToolIndex(subToolName) ];
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
+        this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
+        this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
+
+        return this;
+    }
+
+    disableSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        this.__subTools[ this.getSubToolIndex(subToolName) ].disable();
+        this.__currentTagAssociationManager = null;
+
+        return this;
+
+    }
+
+    activeTagAssociationSubTool()
+    {
+
+        if( $('.medias_list_container').length > 0 )
+        {
+            this.activeSubTool("TagAssociationOnUpload");
+            this.activeSubTool("TagAssociationOnProduct");
+        }
+
+        else if( $('.sites_list_container').length > 0 )
+            this.activeSubTool("TagAssociationOnSite");
+
+        else
+            this.activeSubTool("TagAssociationOnMedia");
+
+    }
+
+    disableTagAssociationSubTool()
+    {
+
+        this.__subTools.map( subTool => {
+
+            subTool.disable();
+
+        } )
+
+    }
+
+    disableAllSubTool()
+    {
+        this.__subTools.map( subTool => {
+
+            subTool.disable();
+
+        } );
+
+        return this;
+    }
+
+    getSubTool(subToolName)
+    {
+
+        if(!this.subToolIsRegistered(subToolName))
+            throw new Error(`'${subToolName}' subTool is not registered !`);
+
+        return this.__subTools[ this.getSubToolIndex(subToolName) ];
+
+    }
+
+    subToolIsRegistered(subToolName)
+    {
+        return this.getSubToolIndex( subToolName ) !== -1;
+    }
+
+    getSubToolIndex(subToolName)
+    {
+
+        return this.__subTools.findIndex( subTool =>  subTool.getName() === subToolName );
     }
 
     initializePopupContent()
     {
-        this.__$tagsList.find(`.choice_tag`).removeAttr('checked');
+        //this.__$tagsList.find(`.choice_tag`).removeAttr('checked');
         const index = this.__mediasAssociationInfo.findIndex( mediaAssociationInfo => mediaAssociationInfo.media === this.__currentMediaName );
 
-        if(index !== -1)
+        if(index >= -1)
         {
 
             this.__mediasAssociationInfo[index].tags.forEach( (associatedTagId) => {
@@ -37,133 +152,175 @@ class TagAssociationHandlerTool extends SubTool
 
         this.__$location.find('.media_name').text( this.__currentMediaName );
         this.__$container.addClass('is_open');
+        this.__parent.__popupIsOpen = true;
 
     }
 
     onClickOnTagAssociationButtonShowModal(active)
     {
 
-        if(active)
+        /*if(active)
         {
 
-            $('.tag_association_btn').on("click.onClickOnTagAssociationButtonShowModal", e => {
+            $(document).on("click.onClickOnTagAssociationButtonShowModal", '.tag_association_btn', e => {
 
-                if( $('.media_products_list').length > 0 )
+
+                let mediaTagsAssociatedIds = [];
+
+                if( $('.popup_upload_container.is_open').length > 0 ) // association is used after upload
                 {
+                    this.__isUpload = true;
+                    this.__currentMediaPos = $(e.currentTarget).parents('tr').data('index');
+                    this.__currentMediaName = $(e.currentTarget).parents('tr').find('.media_name_container .media_name').val();
 
-                    this.__currentMediaName = $('.tab_content_body_title_container .media_name').text();
-                    let mediaTagsAssociatedIds = [];
+                    this.activeSubTool("TagAssociationOnUpload");
 
-                    $('.media_tags_list').find('.tag_container').each( (index, container) => {
+                    $(`.popup_upload tr[data-index='${ this.__currentMediaPos }'] .associated_tags_container input[type='checkbox']`).each( (index, input) => {
 
-                        if( !$(container).hasClass('hidden') )
-                            mediaTagsAssociatedIds.push( $(container).data('tag_id') );
+                        if( $(input).is(':checked') )
+                        {
+
+                            if( isNaN( parseInt($(input).val(), 10) ) )
+                                throw new Error("Invalid product id !");
+
+                            mediaTagsAssociatedIds.push( $(input).val() );
+                        }
 
                     } )
 
+                }
+                else
+                {
+                    this.__isUpload = false;
+                    this.__currentMediaName = $('.media_name').text();
+                    this.__currentMediaId = $('.media_miniature_container').data('media_id');
+
+                    $('.media_tags_container .tag').each( (index, tag) => {
+
+                        if( !$(tag).hasClass('hidden') )
+                            mediaTagsAssociatedIds.push( $(tag).data('tag_id') );
+
+                    } )
+
+
+                }
+
+                const index = this.__mediasAssociationInfo.findIndex( mediaAssociationInfo => mediaAssociationInfo.media === this.__currentMediaName );
+
+                if(index < 0)
                     this.__mediasAssociationInfo.push( { media: this.__currentMediaName, tags: mediaTagsAssociatedIds } );
+                else
+                    this.__mediasAssociationInfo[index].tags = mediaTagsAssociatedIds;
 
-                }
-                else if( $('.popup_upload_container.is_open').length > 0 ) // association is used after upload
-                {
-                    this.__currentMediaName = $('.media_name_container .media_name').val();
-                }
-
+                //console.log(this.__mediasAssociationInfo);debugger
                 this.initializePopupContent();
-
-                /*$('.add-popup').css({ 'z-index': '0' });
-                this.__currentMedia = $(e.currentTarget).data('media');
-                this.__currentPos = $(e.currentTarget).parents('tr').attr('id');
-
-                // check if media is already associated with tag (in this case, update popup)
-                let registeredMediaInfosIndex = this.__mediasAssociationInfo.findIndex( mediaInfo =>  mediaInfo.media === this.__currentMedia );
-                if(registeredMediaInfosIndex !== -1)
-                {
-                    this.__mediasAssociationInfo[ registeredMediaInfosIndex ].tags.forEach( (id, index) => {
-
-                        this.__$tagsList.find(`tr[data-tag_id='${ id }'] .choice_tag`).prop('checked', true);
-
-                    } )
-                }
-
-                this.__$location.find('.modal-title-container .media_name').text( this.__currentMedia );
-                this.__$location.fadeIn();*/
 
             })
 
         }
         else
         {
-            $('.tag_association_btn').off("click.onClickOnTagAssociationButtonShowModal");
-        }
+            $(document).on("click.onClickOnTagAssociationButtonShowModal", '.tag_association_btn');
+        }*/
 
         return this;
     }
 
-    onClickOnCloseButtonCloseTagAssociationModal(active)
+    onClickOnCloseButton(active)
     {
 
         if(active)
         {
-            this.__$location.find('.close_modal_button').on('click.onClickOnCloseButtonCloseTagAssociationModal', e => {
+            this.__$location.find('.close_modal_button').on('click.onClickOnCloseButton', e => {
 
-                this.__$container.removeClass('is_open');
-
-                // reset
-                this.__$location.find('.choice_tag').removeAttr('checked');
-
-                if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
+                if( ( (this.__$tagsList.find('.new_association').length > 0 || this.__$tagsList.find('.dissociated').length > 0) && confirm("Vous n'avez pas validés vos dernières modifications ! Voulez-vous vraiment continuer ?") ) ||
+                    (this.__$tagsList.find('.new_association').length === 0 && this.__$tagsList.find('.dissociated').length === 0)  )
                 {
-                    //this.updateMediaAssociatedTags( { media: this.__currentMedia, products: [] } );
+
+                    this.__$container.removeClass('is_open');
+                    this.__parent.__popupIsOpen = false;
+
+                    // reset
+                    //this.__$tagsList.find('.choice_tag').removeAttr('checked');
+                    this.__$tagsList.find('.choice_tag').prop('checked', false);
+                    this.__$tagsList.find('tr').removeClass('new_association dissociated');
+
+                    if( $(e.currentTarget).hasClass('cancel') && this.__isUpload )
+                        this.__mediasAssociationInfo = [];
+
                 }
 
             })
         }
         else
         {
-            this.__$location.find('.close_modal_button').off('click.onClickOnCloseButtonCloseTagAssociationModal');
+            this.__$location.find('.close_modal_button').off('click.onClickOnCloseButton');
         }
 
         return this;
     }
-
 
     onInputStateChange(active)
     {
-        if(active)
+        /*if(active)
         {
 
             this.__$tagsList.find('.choice_tag').on('change.onInputStateChange', e => {
 
-                const tag_id = $( $(e.currentTarget) ).parents('tr').data('tag_id');
-                const index = this.__mediasAssociationInfo.findIndex( mediaAssociationInfo => mediaAssociationInfo.media === this.__currentMediaName );
+                const checkbox = $(e.currentTarget);
+                const checkboxParentTr = $(e.currentTarget).parents('tr');
+                const tag_id = $(e.currentTarget).parents('tr').data('tag_id');
 
-                if(index !== -1)
+                checkboxParentTr.removeClass('new_association dissociated');
+
+                if( this.__isUpload )
                 {
 
-                    if($(e.currentTarget).is(':checked') && $('.media_tags_list').find(`div[data-tag_id='${ tag_id }'] .tag_checkbox:checked`).length === 0)
+                    let tagIsAlreadyAssociatedWithCurrentMedia = $(`.popup_upload tr[data-index='${ this.__currentMediaPos }'] .associated_tags_container input[type='checkbox'][value='${ tag_id }']`).is(':checked');
+
+                    if(checkbox.is(':checked') && !tagIsAlreadyAssociatedWithCurrentMedia)
                     {
-                        $( $(e.currentTarget) ).parents('tr').addClass('new_association');
+                        checkbox.prop('checked', true);
+                        checkboxParentTr.addClass('new_association');
                     }
-                    else if( !($(e.currentTarget).is(':checked')) && $('.media_tags_list').find(`div[data-tag_id='${ tag_id }'] .tag_checkbox:checked`).length > 0)
+                    else if( !(checkbox.is(':checked')) )
                     {
-                        $( $(e.currentTarget) ).parents('tr').addClass('dissociated');
+                        checkbox.prop('checked', false);
+
+                        if(tagIsAlreadyAssociatedWithCurrentMedia)
+                            checkboxParentTr.addClass('dissociated');
+                    }
+
+                }
+                else
+                {
+                    if(checkbox.is(':checked') && $('.media_tags_container').find(`.tag[data-tag_id='${ tag_id }'] .tag_checkbox:checked`).length === 0)
+                    {
+                        checkbox.attr('checked', true);
+                        checkboxParentTr.addClass('new_association');
+                    }
+                    else if( !(checkbox.is(':checked')))
+                    {
+                        checkbox.removeAttr('checked');
+
+                        if($('.media_tags_container').find(`.tag[data-tag_id='${ tag_id }'] .tag_checkbox:checked`).length > 0)
+                            checkboxParentTr.addClass('dissociated');
                     }
                     else
                     {
-                        $( $(e.currentTarget) ).parents('tr').removeClass('new_association dissociated');
+                        checkboxParentTr.removeClass('new_association dissociated');
                     }
-
-                    this.handleMediaInfosModification();
-
                 }
 
+                this.handleMediaInfosModification();
+
             })
+
         }
         else
         {
-            this.__$tagsList.find('.choice_tag').off('change.onInputStateChange');
-        }
+            this.__$tagsList.off('click.onInputStateChange', '.container-rdo-tags');
+        }*/
 
         return this;
     }
@@ -178,33 +335,49 @@ class TagAssociationHandlerTool extends SubTool
     }
 
 
-    onClickOnValidationAssociateTagsOnProduct(active)
+    onClickOnValidationAssociateTagsOnMedia(active)
     {
 
         if(active)
         {
-            this.__$location.find('.validate_association_btn').on('click.onClickOnValidationAssociateTagsOnProduct', e => {
+            this.__$location.find('.validate_association_btn').on('click.onClickOnValidationAssociateTagsOnMedia', e => {
 
                 let tagsToMedia = [];
                 this.__$tagsList.find('.choice_tag').each( (index, element) => {
 
+                    $(element).parents('tr').removeClass('new_association dissociated');
                     const tag_id = $(element).parents('tr').data('tag_id');
 
                     // association is used after upload
                     if( $('.popup_upload_container.is_open').length > 0 )
                     {
-                        debugger;
+
+                        const tagCheckbox = $(`.popup_upload tr[data-index='${ this.__currentMediaPos }'] .associated_tags_container input[type='checkbox'][value='${ tag_id }']`);
+                        const tagLabel = $(`.popup_upload tr[data-index='${ this.__currentMediaPos }'] .associated_tags_container label[for='${ tagCheckbox.attr('id') }']`);
+
+                        if( $(element).is(':checked') )
+                        {
+                            tagCheckbox.attr('checked', true);
+                            tagLabel.css( { 'display': 'inline-block' } );
+                        }
+
+                        else
+                        {
+                            tagCheckbox.removeAttr('checked');
+                            tagLabel.css( { 'display': 'none' } );
+                        }
+
                     }
                     else
                     {
 
-                        $('.media_tags_list').find(`div[data-tag_id='${ tag_id }'] .tag_checkbox`).prop('checked', $(element).is(':checked'));
+                        $('.media_tags_container').find(`.tag[data-tag_id='${ tag_id }'] .tag_checkbox`).prop('checked', $(element).is(':checked'));
 
                         if($(element).is(':checked'))
-                            $('.media_tags_list').find(`div[data-tag_id='${ tag_id }']`).removeClass('hidden');
+                            $('.media_tags_container').find(`.tag[data-tag_id='${ tag_id }']`).removeClass('hidden');
 
                         else
-                            $('.media_tags_list').find(`div[data-tag_id='${ tag_id }']`).addClass('hidden');
+                            $('.media_tags_container').find(`.tag[data-tag_id='${ tag_id }']`).addClass('hidden');
 
                     }
 
@@ -238,7 +411,7 @@ class TagAssociationHandlerTool extends SubTool
         }
         else
         {
-            this.__$location.find('.validate_association_btn').off('click.onClickOnValidationAssociateTagsOnProduct');
+            this.__$location.find('.validate_association_btn').off('click.onClickOnValidationAssociateTagsOnMedia');
         }
 
         return this;
@@ -269,18 +442,24 @@ class TagAssociationHandlerTool extends SubTool
 
     enable() {
         super.enable();
+
+        this.activeTagAssociationSubTool();
+
         this.onClickOnTagAssociationButtonShowModal(true)
-            .onClickOnCloseButtonCloseTagAssociationModal(true)
-            .onClickOnValidationAssociateTagsOnProduct(true)
+            .onClickOnCloseButton(true)
+            .onClickOnValidationAssociateTagsOnMedia(true)
             .onInputStateChange(true)
         ;
     }
 
     disable() {
         super.disable();
+
+        this.disableTagAssociationSubTool();
+
         this.onClickOnTagAssociationButtonShowModal(false)
-            .onClickOnCloseButtonCloseTagAssociationModal(false)
-            .onClickOnValidationAssociateTagsOnProduct(false)
+            .onClickOnCloseButton(false)
+            .onClickOnValidationAssociateTagsOnMedia(false)
             .onInputStateChange(false)
         ;
     }

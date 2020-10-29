@@ -67,11 +67,11 @@ $border--radius--grey : 0.1rem solid #4D646D;
 .display-dates{
     position: relative;
     display: inline-block;
-    //&:hover .display-content-down {
-    //    display: block;
-    //    height: 300px;
-    //    overflow: auto;
-    //}
+    &:hover .display-content-down {
+        display: block;
+        height: 300px;
+        overflow: auto;
+    }
 }
 
 .drop-btn{
@@ -100,7 +100,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
     background-color: #f9f9f9;
     min-width: 100%;
     box-shadow: 0 0.8rem 1.6rem 0 rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 100;
     padding: 0.6rem;
 }
 
@@ -146,7 +146,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
             width: 50%;
             justify-content: flex-end;
         }
-
     }
 }
 
@@ -171,7 +170,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 margin-right: 5%;
             }
         }
-
 
         .show_media_waiting_incrustation_container  {
             position: relative;
@@ -224,9 +222,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
 
 .filter_container_association{
     display: flex;
-    .filter{
-        margin: 0 1rem ;
-    }
+
     .display-content-columns {
         padding: 0;
     }
@@ -253,9 +249,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 width: 20rem;
                 background: #E3E3E3 0 0 no-repeat padding-box;
                 border: none;
-                .drop-btn-icone {
-                    top: -0.1rem;
-                }
                 .container-input{
                     .container-rdo{
                         top: 0.7rem;
@@ -294,9 +287,8 @@ $border--radius--grey : 0.1rem solid #4D646D;
         text-align: left;
         .container-rdo{
             left: -2rem;
-
-
         }
+
         .container-rdo {
             position: absolute;
             top: 0.4rem;
@@ -321,8 +313,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
     }
 }
 
-
-
 .filters_container{
 	font-family: "Barlow", serif;
     display: flex;
@@ -333,7 +323,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
     .filter {
         cursor: pointer;
         span{
-            font-size: 12px;
+            font-size: 1.2rem;
             color: #4D646D;
         }
     }
@@ -343,16 +333,16 @@ $border--radius--grey : 0.1rem solid #4D646D;
         flex-direction: row;
         .filter_by_orientation_or_type_container {
             background-color: #FFF;
-            border: 1px solid #C0CCD1;
+            border: 0.1rem solid #C0CCD1;
             display: flex;
             flex-direction: row;
             width: 30%;
             justify-content: space-around;
             text-align: center;
-            padding: 13px 5px;
+            padding: 1.3rem 0.5rem;
             height: 7.3rem;
             i{
-                font-size: 30px;
+                font-size: 3rem;
                 color: #C0CCD1;
             }
             .filter.active {
@@ -367,7 +357,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
         }
         .filters_by_associated_data_container {
             background-color: #E3E3E3;
-            border: 1px solid #C0CCD1;
+            border: 0.1rem solid #C0CCD1;
             display: flex;
             flex-direction: row;
             width: 30%;
@@ -390,18 +380,31 @@ $border--radius--grey : 0.1rem solid #4D646D;
                    }
                }
             }
+
             .filter_by_criterions_container{
                 .drop-btn{
                     background-color: transparent;
                     border: 0;
                 }
-                .container-criterion{
-                    padding: 0.2rem 1.2rem;
-                    background: #C1E4EB 0 0 no-repeat padding-box;
-                    border: 0.1rem solid #4D646D;
-                    border-radius: 0.5rem;
+                .display-content-poste{
+                    .container-criterion{
+                        padding: 0.2rem 1.2rem;
+                        background: #C1E4EB 0 0 no-repeat padding-box;
+                        border: 0.1rem solid #4D646D;
+                        border-radius: 0.5rem;
+                    }
                 }
 
+
+                .display-content-down{
+                    .container-criterion{
+                        padding: 0.2rem;
+                        background-color: transparent;
+                        border: 0;
+                        border-radius: 0;
+                        font-size: 1.5rem;
+                    }
+                }
             }
 
             .filter_by_tags_container{
@@ -418,8 +421,9 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 }
                 .container-tags{
                     width: 100%;
-                    font: 1.6rem "Barlow";
+                    font-size: 1.5rem;
                     padding: 0.1rem 1.4rem 0.3rem 1.9rem;
+                    margin-bottom: 0.5rem;
                 }
                 .product-select-col{
                     .container-tags{
@@ -427,8 +431,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
                     }
                 }
             }
-
-
 
             .open_filter_content{
                 .btn{
@@ -450,13 +452,11 @@ $border--radius--grey : 0.1rem solid #4D646D;
                     border-radius: 0.6rem;
                     color: white;
                 }
-
             }
 
             .filter_container{
                 width: 0;
                 opacity: 0;
-                //transition: width 2s;
                 overflow: hidden;
                 .filters_by_associated_data_item{
                     margin-right: 1rem;
@@ -468,9 +468,7 @@ $border--radius--grey : 0.1rem solid #4D646D;
                 opacity: 1;
                 overflow: inherit;
             }
-
         }
-
     }
 
     .right_filter_container {
@@ -507,7 +505,6 @@ $border--radius--grey : 0.1rem solid #4D646D;
                         color: #4F9BAE;
                         text-decoration: underline;
                     }
-
                 }
 
                 .page_navigation_arrow{
@@ -516,15 +513,8 @@ $border--radius--grey : 0.1rem solid #4D646D;
                     &.prev{
                         margin-right: 10%;
                     }
-
                 }
-
             }
-
         }
-
     }
-
 }
-
-

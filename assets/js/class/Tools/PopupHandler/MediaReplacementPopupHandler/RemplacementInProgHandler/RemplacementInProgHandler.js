@@ -1,6 +1,7 @@
 import SubTool from "../../../SubTool";
+import MediaReplacementSubTool from "../MediaReplacementSubTool";
 
-class RemplacementInProgHandler extends SubTool
+class RemplacementInProgHandler extends MediaReplacementSubTool
 {
 
     constructor()

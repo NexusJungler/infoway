@@ -2,7 +2,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('mediatheque') }}
+
+    {% if app.request.attributes.get('_route') is same as('media::showMediatheque') %}
+        {{ encore_entry_link_tags('mediatheque') }}
+    {% endif %}
+
 {% endblock %}
 
 {% block body %}
@@ -41,5 +45,9 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('mediatheque') }}
+
+    {% if app.request.attributes.get('_route') is same as('media::showMediatheque') %}
+        {{ encore_entry_script_tags('mediatheque') }}
+    {% endif %}
+
 {% endblock javascripts %}

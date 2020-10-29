@@ -14,7 +14,8 @@ class MediaExpandedMiniatureDisplayHandler extends SubTool
             name: null,
             customer: null,
             mediumFileExist: null,
-            fileType: null
+            fileType: null,
+            mediaType: null,
         };
     }
 
@@ -27,12 +28,12 @@ class MediaExpandedMiniatureDisplayHandler extends SubTool
         {
 
             if(this.__currentMediaInfos.fileType === 'image')
-                miniature = `<img class="media_expanded_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/images/medium/${ this.__currentMediaInfos.id }.png"
-                             alt="/miniatures/${ this.__currentMediaInfos.customer }/images/medium/${ this.__currentMediaInfos.id }.png" />`;
+                miniature = `<img class="media_expanded_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/image/${ this.__currentMediaInfos.mediaType }/medium/${ this.__currentMediaInfos.id }.png"
+                             alt="/miniatures/${ this.__currentMediaInfos.customer }/image/${ this.__currentMediaInfos.mediaType }/medium/${ this.__currentMediaInfos.id }.png" />`;
 
             else
                 miniature = `<video class="media_expanded_miniature miniature_video" controls>
-                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/videos/medium/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
+                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/video/${ this.__currentMediaInfos.mediaType }/medium/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
                              </video>`;
 
         }
@@ -41,9 +42,10 @@ class MediaExpandedMiniatureDisplayHandler extends SubTool
 
         this.__$location.find('.media_name').text( this.__currentMediaInfos.name );
 
-        this.__$location.find('.expanded_miniature_container').html(miniature);
+        this.__$location.find('.popup_body').html(miniature);
 
         this.__$container.addClass('is_open');
+        this.__parent.__popupIsOpen = true;
     }
 
     onClickOnMiniatureExpandedIcon(active)
@@ -53,28 +55,45 @@ class MediaExpandedMiniatureDisplayHandler extends SubTool
 
             $('.show_expanded_miniature').on('click.onClickOnMiniatureExpandedIcon', e => {
 
-                const mediaMediumMiniatureExist = $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist');
+                const mediaMediumMiniatureExist = (typeof $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist') !== "undefined") ? $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist') : $(e.currentTarget).parents('.card').data('miniature_medium_exist');
 
-
-                if(typeof mediaMediumMiniatureExist === 'undefined')
-                    console.error("Missing data-miniature_medium_exist on media miniature container !");
-
-                else
+                if(typeof mediaMediumMiniatureExist !== 'undefined')
                 {
-                    const id = $(e.currentTarget).parents('.card').attr('id').replace('media_', '');
-                    const fileType = $(e.currentTarget).parents('.card').data('file_type');
-                    const customer = $(e.currentTarget).parents('.card').data('customer');
-                    const name = $(e.currentTarget).parents('.card').find('.media_name_container .media_name').text();
+
+                    let id, fileType, customer, name, mediaType;
+
+                    if( $(e.currentTarget).parents('.card').length > 0 )
+                    {
+
+                        id = $(e.currentTarget).parents('.card').attr('id').replace('card_', '');
+                        fileType = $(e.currentTarget).parents('.card').data('file_type');
+                        customer = $(e.currentTarget).parents('.card').data('customer');
+                        name = $(e.currentTarget).parents('.card').find('.media_name').text();
+                        mediaType = $(e.currentTarget).parents('.card').data('media_type');
+
+                    }
+                    else
+                    {
+
+                        id = $(e.currentTarget).parents('.media_miniature_container').data('media_id');
+                        fileType = $(e.currentTarget).parents('.media_miniature_container').data('file_type');
+                        customer = $(e.currentTarget).parents('.media_miniature_container').data('customer');
+                        name = $('.middle .media_name').val();
+                        mediaType = $(e.currentTarget).parents('.media_miniature_container').data('media_type');
+
+                    }
 
                     this.__currentMediaInfos = {
                         id: id,
                         name: name,
                         customer: customer,
                         mediumFileExist: mediaMediumMiniatureExist,
-                        fileType: fileType
+                        fileType: fileType,
+                        mediaType: mediaType,
                     };
 
                     this.initializePopupContent();
+
                 }
 
             })
@@ -95,6 +114,7 @@ class MediaExpandedMiniatureDisplayHandler extends SubTool
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
 
                 this.__$container.removeClass('is_open');
+                this.__parent.__popupIsOpen = false;
                 this.__$location.find('.expanded_miniature_container').empty();
                 this.__$location.find('.media_name').empty();
 

@@ -10,7 +10,6 @@ use App\Repository\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-
 use Exception;
 
 /**
@@ -43,7 +42,6 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
-
     public function findProductsAssociatedDatas(string $data = 'tags')
     {
 
@@ -61,6 +59,10 @@ class ProductRepository extends ServiceEntityRepository
 
                 foreach ($product->getTags()->getValues() as $tag)
                 {
+
+                    /*if(!in_array($tag, $productsAssociatedDatas))
+                        $productsAssociatedDatas[] = $tag;*/
+
                     $productsAssociatedDatas[$tag->getId()]['ids'][] = $tag->getId();
                     $productsAssociatedDatas[$tag->getId()]['names'][] = $tag->getName();
                 }
@@ -72,6 +74,10 @@ class ProductRepository extends ServiceEntityRepository
 
                 foreach ($product->getCriterions()->getValues() as $criterion)
                 {
+
+                    /*if(!in_array($criterion, $productsAssociatedDatas))
+                        $productsAssociatedDatas[] = $criterion;*/
+
                     $productsAssociatedDatas[$product->getId()]['ids'][] = $criterion->getId();
                     $productsAssociatedDatas[$product->getId()]['names'][] = $criterion->getName();
                 }
@@ -79,7 +85,7 @@ class ProductRepository extends ServiceEntityRepository
             }
 
             else
-                throw new Exception(sprintf("Unrecognized 'data' parameter value ! Expected 'tags' or 'criterions', but '%s' given ", $data));
+                throw new Exception(sprintf("Unrecognized parameter value ! Expected 'tags' or 'criterions', but '%s' given ", $data));
 
 
         }

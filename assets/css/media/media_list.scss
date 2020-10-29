@@ -1,34 +1,42 @@
-.medias_list_container {
-	display: grid;
-	justify-content: center;
+@import "nav_tags";
+
+.no-associated_item{
+    font-size: 1.4rem;
+    width: 30%;
+    color: #283338;
+    margin-bottom: 0.5rem;
+}
+
+
+
+
+.medias_cards,
+.medias_list_container_cards{
+    display: flex;
+    flex-wrap: wrap;
 	width: 100%;
 	padding: 0.5rem;
 	margin: 3% auto 0 auto;
 	height: 100%;
 	max-height: 124rem;
-	overflow: auto;
-	grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+
 	.card_video{
-		background-color: #B1C1C8;
+        background-color: #C0CCD1;
+        border: 0.1rem solid #C0CCD1;
 	}
 	.card_image{
-		background-color: #E3E3E3;
+		background-color: #C0CCD1;
+        border: 0.1rem solid #C0CCD1;
 	}
 	.card{
-		height: 40rem;
+		height: 39rem;
+        width: 29rem;
 		cursor: pointer;
-		padding: 4% 3%;
+		padding:0.5%;
 		display: flex;
 		flex-direction: column;
-		margin-right: 2rem;
-		margin-bottom: 5%;
-		&:nth-child(5+n5){
-			margin-right: 0%;
-		}
-
-		&:hover{
-			//background: #53B3C7 0% 0% no-repeat padding-box;
-		}
+		margin-right: 1rem;
+		margin-bottom: 1%;
 
 		&.hidden{
 			display: none;
@@ -100,6 +108,7 @@
 			display: flex;
 			flex-direction: column;
 			margin-bottom: 5%;
+            z-index: 4;
 			.media_miniature_container{
 				height: 24rem;
 				width: 100%;
@@ -128,9 +137,9 @@
 				opacity: 0.8;
 				transition: opacity 1s ;
 				i{
-					top: 0.2rem;
 					font-size: 2.5rem;
 					position: relative;
+                    padding: 0.3rem;
 				}
 			}
 		}
@@ -149,6 +158,7 @@
 				width: 25.5rem;
 				height: 14.5rem;
 				border: 0.4rem solid #4D646D;
+                margin: 0 auto;
 			}
 			.media_miniature{
 				height: 100%;
@@ -156,11 +166,11 @@
 			}
 			.media_container_arrows{
 				top: 5.3rem;
-				right: 0.7rem;
+				right: 1.7rem;
 			}
 		}
 
-		.media_Vertical{
+		.media_vertical{
 			padding: 1rem 0;
 			position: relative;
 			.media_container_img,
@@ -178,8 +188,8 @@
 				margin-bottom: auto;
 			}
 			.media_container_arrows{
-				right: 7.5rem;
-				top: 1.5rem;
+				right: 8rem;
+				top: 1.7rem;
 			}
 		}
 
@@ -187,7 +197,7 @@
 			background-color: #FFF;
 			color: #4D646D;
 			text-align: center;
-			height: 10%;
+			height: 3rem;
 			margin-bottom: 3%;
 			font: 1.6rem "Barlow";
 			padding: 0.5rem;
@@ -204,6 +214,8 @@
 			height: 15%;
 			margin-bottom: 3%;
 			.associated_item{
+                position: relative;
+                z-index: 0;
 				width: 100%;
 				display: flex;
 				flex-direction: row;
@@ -212,7 +224,10 @@
 					width: 50%;
 				}
 				p.tag{
-					width: 50%;
+					width: 100%;
+                    .current-tags-name{
+                        font-size: 1.4rem;
+                    }
 				}
 			}
 		}

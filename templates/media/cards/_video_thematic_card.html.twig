@@ -1,0 +1,130 @@
+{% for videoInfos in video_thematics %}
+
+    {% set video = videoInfos['media'] %}
+
+    <div class="card card_video" id="card_{{ video.id }}" data-media_type="{{ video.mediaType }}" data-created_date="{{ video.createdAt|date('Y-m-d') }}" data-file_type="video" data-orientation="{{ video.orientation | lower }}"
+
+         data-media_diff_start="{{ video.diffusionStart | date('d/m/Y') }}" data-media_diff_end="{{ video.diffusionEnd | date('d/m/Y') }}" data-customer="{{ app.session.get('current_customer').name| lower }}"
+
+            {% if (videoInfos['tagsIds'] is not empty) %}
+                data-tags="{{ videoInfos['tagsIds']|join(', ') }}"
+            {% else %}
+                data-tags="none"
+            {% endif %} >
+
+        <div class="card_header">
+            <div class="select_media_input_container">
+                <label class="container-input">
+                    <input type="checkbox" class="select_media_input">
+                    <span class="container-rdo-tags"></span>
+                </label>
+            </div>
+            
+            <div class="video_theme_container">
+                <span class="video_theme" title="{{ (videoInfos['theme'] is not null) ? videoInfos['theme'].name : "Aucun theme" }}">
+                    {{ (videoInfos['theme'] is not null) ? videoInfos['theme'].name : "Aucun theme" }}
+                </span>
+            </div>
+
+            <div class="media_actions_shortcuts_container">
+                <div class="shortcut shortcut_diff_date_modification {% if video.diffusionEnd | date('d-m-Y') | get_date_diff_from_now < 0 or video.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}alert_date{% endif %}">
+                    <i class="far fa-clock"></i>
+                </div>
+
+                {#<div class="shortcut">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+
+                <div class="shortcut">
+                    <i class="fas fa-link shortcut_product_association"></i>
+                </div>#}
+
+                <div class="shortcut">
+                    <i class="fas fa-spinner"></i>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card_body">
+
+            <div class="media_miniature_container media_{{ video.orientation | lower }}" data-miniature_medium_exist="{{ (videoInfos['miniatureMediumExist'] is defined and videoInfos['miniatureMediumExist'] is same as(true)) ? 'true' : 'false' }}" data-size="{{ video.width }}*{{ video.height }}" data-extension="{{ video.extension }}" data-codec="{{ video.videoCodec }}" >
+
+                {% if videoInfos['miniatureLowExist'] is same as(false) %}
+
+                    <img class="media_miniature miniature_{{ video['file_type'] }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+
+                {% else %}
+
+                    <div class="media_container_video">
+                        <div class="media_container_arrows show_expanded_miniature">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <video class="media_miniature miniature_video">
+                            <source src="{{ "/miniatures/" ~ app.session.get('current_customer').name| lower  ~ '/video/them/low/' ~ video.id ~ ".mp4" }}" type="video/mp4">
+                        </video>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="media_name_container">
+                <p class="media_name" title="{{ video.name }}">{{ video.name }}</p>
+            </div>
+
+            <div class="media_associated_items_container">
+
+                {#<div class="media_criterions_container associated_item">
+
+                    {% if video.products is not empty %}
+
+                        {% for product in video.products %}
+
+                            {% for criterion in product.criterions %}
+
+                                <p class="criterion"><span></span>{{ criterion.name }}</p>
+
+                            {% endfor%}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 critères </p>
+
+                    {% endif %}
+
+                </div>#}
+
+                <div class="media_tags_container associated_item">
+
+                    {% if video.tags is not empty %}
+                        <ul class="nav_tags">
+                            {% for tag in video.tags %}
+                                <li>
+                                    <p class="tag container-tags">
+                                        <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                        <span class="current-tags-name">{{ tag.name }}</span>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+
+                    {% else %}
+
+                        <p>0 tags </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endfor %}

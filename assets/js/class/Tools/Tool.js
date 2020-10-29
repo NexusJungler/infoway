@@ -4,7 +4,7 @@ class Tool {
 
     constructor()
     {
-        this.__name = null;
+        this.__name = this.constructor.name;
         this.__isActived = false;
         this.__toolBox = null;
         this.__subTools = [];
@@ -60,11 +60,34 @@ class Tool {
     showLoadingPopup()
     {
         $('.popup_loading_container').addClass('is_open');
+
+        return this;
     }
 
     hideLoadingPopup()
     {
         $('.popup_loading_container').removeClass('is_open');
+        this.resetLoadingPopupText();
+
+        return this;
+    }
+
+    changeLoadingPopupText(text)
+    {
+
+        if( typeof text !== "string" )
+            throw new Error(`parameter of Tool.changeLoadingPopupText() must be a string but '${ typeof text }' given !`);
+
+        $('.popup_loading_container .loading_message').text( text )
+
+        return this;
+    }
+
+    resetLoadingPopupText()
+    {
+        $('.popup_loading_container .loading_message').text( "Veuillez patienter..." )
+
+        return this;
     }
 
     isActive()
@@ -74,20 +97,12 @@ class Tool {
 
     enable()
     {
-        if(!this.isActive())
-        {
-            // console.log(`'${this.__name}' is enabled !`);
-            this.__isActived = true;
-        }
+        this.__isActived = true;
     }
 
     disable()
     {
-        if(this.isActive())
-        {
-            // console.log(`'${this.__name}' is disabled !`);
-            this.__isActived = false;
-        }
+        this.__isActived = false;
     }
 
 }

@@ -28,7 +28,7 @@ class VideoEncodeManager
 
     private array $__errors = [];
 
-    private MediasHandler $__mediaHandler;
+    private MediaInfosHandler $__mediaHandler;
 
     private array $__acceptedRatios= [ 16/9, 9/16, 9/8, 8/9 ];
 
@@ -38,13 +38,15 @@ class VideoEncodeManager
 
     private array $__filesToRenameWithId = [];
 
+    private array $__currentMediaOutputFormat = [];
+
     public function __construct(ParameterBagInterface $parameterBag)
     {
 
         $this->__parameterBag = $parameterBag;
         $this->__mediasSourceFolder = $parameterBag->get('project_dir') . '/../upload/source';
-        $this->__mediasEncodeOutputFolder = $parameterBag->get('project_dir') . '/../upload/medias_encode';
-        $this->__mediaHandler = new MediasHandler($parameterBag);
+        $this->__mediasEncodeOutputFolder = $parameterBag->get('project_dir') . '/../upload/medias';
+        $this->__mediaHandler = new MediaInfosHandler($parameterBag);
 
     }
 
@@ -69,19 +71,20 @@ class VideoEncodeManager
         $this->__mediasSourceFolder .= '/' . $videoInfos['customerName'] . '/video/' . $videoInfos['mediaType'];
         $this->__mediasEncodeOutputFolder .= '/' . $videoInfos['customerName'] . '/video/' . $videoInfos['mediaType'];
 
+        if($videoInfos['height'] === 2160)
+            $this->__mediasSourceFolder .= '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $this->__encodeOutputSizesFolders['4k'];
+
+        else if($videoInfos['height'] === 4320)
+            $this->__mediasSourceFolder .= '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . $this->__encodeOutputSizesFolders['8k'];
+
         if(!file_exists($this->__mediasSourceFolder))
             mkdir($this->__mediasSourceFolder, 0777, true);
 
         if(!file_exists($this->__mediasEncodeOutputFolder))
             mkdir($this->__mediasEncodeOutputFolder, 0777, true);
 
-        $mediaSource = $this->__mediasSourceFolder . '/' . $videoInfos['fileName'] . '.' . $videoInfos['extension'];
+        $mediaSource = $this->__mediasSourceFolder . '/' . $videoInfos['name'] . '.' . $videoInfos['extension'];
 
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $mediaSource);
-        $splash = explode('/', $mimeType);
-        $fileType = $splash[0];
-        $real_file_extension = $splash[1];
 
         if(!file_exists($mediaSource))
         {
@@ -89,73 +92,46 @@ class VideoEncodeManager
             return false;
         }
 
-        else if(!in_array($real_file_extension, $this->__parameterBag->get("authorizedExtensions")))
+        else if(!in_array($videoInfos['extension'], $this->__parameterBag->get("authorizedExtensions")))
         {
-            $this->__errors[] = "bad extension($real_file_extension)";
+            $this->__errors[] = "bad extension(" . $videoInfos['extension'] . ")";
             return false;
         }
 
         else
         {
 
-            list($width, $height) = $this->__mediaHandler->getVideoDimensions($mediaSource);
+            /*list($width, $height) = $this->__mediaHandler->getVideoDimensions($mediaSource);
 
-            $ratio = $width/$height;
+            $ratio = $width/$height;*/
 
-            if(!in_array($ratio, $this->__acceptedRatios))
+            if(!in_array($videoInfos['width'] / $videoInfos['height'], $this->__acceptedRatios))
             {
-                $this->__errors[] = "bad ratio($width/$height)";
+                $this->__errors[] = "bad ratio(" . $videoInfos['width'] . "/" . $videoInfos['height'] . ")";
                 return false;
             }
             else
             {
 
-                if($this->encodeVideo($mediaSource, ['fileName' => $videoInfos['fileName'], 'ratio'=> $ratio, 'width' => $width, 'height' => $height, 'mediaType' => $videoInfos['mediaType']]))
+                if($this->encodeVideo($mediaSource, $videoInfos))
                 {
 
-                    $data = $this->getVideoFileCharacteristics($mediaSource);
-                    $audioCharacteristics = null;
+                    $videoInfos['orientation'] = $this->__orientation;
+                    $this->__videoInfos = $videoInfos;
 
-                    $videoCharacteristics = $data['video'];
-
-                    if(array_key_exists('audio',$data))
-                        $audioCharacteristics = $data['audio'];
-
-                    $level_array = str_split($videoCharacteristics['level']);
-                    $level = implode('.', $level_array);
-
-                    $this->__videoInfos = [
-                        'size' => round($videoCharacteristics['size'] / (1024 * 1024), 2) . ' Mo',
-                        'format' => $videoCharacteristics['major_brand'],
-                        'sampleSize' => $videoCharacteristics['bits_per_raw_sample'] . ' bits',
-                        'encoder' => $videoCharacteristics['encoder'],
-                        'videoCodec' => $videoCharacteristics['codec_long_name'],
-                        'videoCodecLevel' => $level,
-                        'videoFrequence' => substr($videoCharacteristics['avg_frame_rate'], 0, -2) . ' img/s',
-                        'videoFrame' => $videoCharacteristics['nb_frames'],
-                        'videoDebit' => (int)($videoCharacteristics['bit_rate'] / 1000) . ' kbit/s',
-                        'duration' => round($videoCharacteristics['duration'], 2) . ' secondes',
-                        'mediaType' => $videoInfos['mediaType'],
-                        'width' => $width,
-                        'height' => $height,
-                        'createdAt' => $videoInfos['createdAt'],
-                        'fileName' => $videoInfos['fileName'],
-                        'orientation' => $this->__orientation,
-                        'mimeType' => $videoInfos['mimeType'],
-                        'ratio' => "$width/$height",
-                        'extension' => $videoInfos['extension'],
-                        'audioCodec' => ($audioCharacteristics !== null) ? $audioCharacteristics['codec_long_name'] : null,
-                        'audioDebit' => ($audioCharacteristics !== null) ? (int)($audioCharacteristics['bit_rate'] / 1000) . ' kbit/s' : null,
-                        'audioFrequence' => ($audioCharacteristics !== null) ? $audioCharacteristics['sample_rate'] . ' Hz' : null,
-                        'audioChannel' => ($audioCharacteristics !== null) ? $audioCharacteristics['channels'] : null,
-                        'audioFrame' => ($audioCharacteristics !== null) ? $audioCharacteristics['nb_frames'] : null,
-                    ];
-
-                    if($videoInfos['mediaType'] === 'sync')
+                    /*if($videoInfos['mediaType'] === 'sync')
                     {
                         //$this->__videoInfos['synchros'] = $videoInfos['synchros'];
                         $this->__videoInfos['position'] = $videoInfos['position'];
-                    }
+                    }*/
+
+                    /*$this->__videoInfos['fileType'] = "video";
+
+                    // on écrit les infos du media dans un json
+                    // les infos seront recupérés plus tard après la caractérisation du media puis seront supprimé du fichier
+                    $mediaToInsertDatasHandler = new MediaToInsertDatasHandler($this->__parameterBag);
+
+                    $mediaToInsertDatasHandler->saveMediaInfosInJson($this->__videoInfos );*/
 
                     return true;
                 }
@@ -170,7 +146,7 @@ class VideoEncodeManager
     private function encodeVideo(string $videoPath, array $videoInfos)
     {
 
-        switch ($videoInfos['ratio'])
+        switch ($videoInfos['width'] / $videoInfos['height'])
         {
 
             case 16/9:  // Plein Ecran Horizontal
@@ -181,26 +157,51 @@ class VideoEncodeManager
                 }
 
                 if ($videoInfos['width'] > 1920 && $videoInfos['height'] > 1080) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
+                    if($videoInfos['height'] === 2160) // 4k
+                    {
+                        $this->__currentMediaOutputFormat[] = '4k';
+                    }
+
+                    else if($videoInfos['height'] === 4320) // 8k
+                    {
+                        $this->__currentMediaOutputFormat[] = '8k';
+                    }
+
                     $max_size = true;
                     $output_high = "1920*1080";
                     $HD = true; // On se prépare à copier la source dans 'HD' si la résolution dépasse le format high
                 }
 
-                if ($videoInfos['width'] == 1920 && $videoInfos['height'] == 1080) {
+                if ($videoInfos['width'] === 1920 && $videoInfos['height'] === 1080) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
                     $max_size = true;
                     $output_high = "1920*1080";
 
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    if(!file_exists($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high']))
+                        mkdir($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'], 0777, true);
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['name'] . '.mp4');
 
                     /*if($videoInfos['mediaType'] != 'sync') {
-                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
+                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['name'] . '.mp4');
                     }*/
                 }
 
                 if($videoInfos['width'] >= 1280 && $videoInfos['height'] >= 720) {
+
+                    $this->__currentMediaOutputFormat[] = 'medium';
+
                     $output_medium = "1280*720";
                     $medium_size = true;
                 }
+
+                $this->__currentMediaOutputFormat[] = 'low';
+
                 $output_low = "160*90";
 
                 $this->__orientation = 'Horizontal';
@@ -215,26 +216,51 @@ class VideoEncodeManager
                 }
 
                 if ($videoInfos['width'] > 1080 && $videoInfos['height'] > 1920) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
+                    if($videoInfos['height'] === 2160) // 4k
+                    {
+                        $this->__currentMediaOutputFormat[] = '4k';
+                    }
+
+                    else if($videoInfos['height'] === 4320) // 8k
+                    {
+                        $this->__currentMediaOutputFormat[] = '8k';
+                    }
+
                     $max_size = true;
                     $output_high = "1080*1920";
                     $HD = true;
                 }
 
                 if ($videoInfos['width'] == 1080 && $videoInfos['height'] == 1920) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
                     $max_size = true;
                     $output_high = "1080*1920";
 
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    if(!file_exists($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high']))
+                        mkdir($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'], 0777, true);
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['name'] . '.mp4');
 
                     /*if($videoInfos['mediaType'] != 'sync') {
-                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
+                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['name'] . '.mp4');
                     }*/
                 }
 
                 if($videoInfos['width'] >= 720 && $videoInfos['height'] >= 1280) {
+
+                    $this->__currentMediaOutputFormat[] = 'medium';
+
                     $output_medium = "720*1280";
                     $medium_size = true;
                 }
+
+                $this->__currentMediaOutputFormat[] = 'low';
+
                 $output_low = "90*160";
 
                 $this->__orientation = 'Vertical';
@@ -249,26 +275,41 @@ class VideoEncodeManager
                 }
 
                 if ($videoInfos['width'] > 1080 && $videoInfos['height'] > 960) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
                     $max_size = true;
                     $output_high = "1080*960";
                     $HD = true;
                 }
 
                 if ($videoInfos['width'] == 1080 && $videoInfos['height'] == 960) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
                     $max_size = true;
                     $output_high = "1080*960";
 
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    if(!file_exists($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high']))
+                        mkdir($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'], 0777, true);
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['name'] . '.mp4');
 
                     /*if($videoInfos['mediaType'] != 'sync') {
-                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
+                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['name'] . '.mp4');
                     }*/
                 }
 
                 if($videoInfos['width'] >= 720 && $videoInfos['height'] >= 640) {
+
+                    $this->__currentMediaOutputFormat[] = 'medium';
+
                     $medium_size = true;
                     $output_medium = "720*640";
                 }
+
+                $this->__currentMediaOutputFormat[] = 'low';
+
                 $output_low = "90*80";
 
                 $this->__orientation = 'Horizontal';
@@ -283,26 +324,41 @@ class VideoEncodeManager
                 }
 
                 if ($videoInfos['width'] > 960 && $videoInfos['height'] > 1080) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
                     $max_size = true;
                     $output_high = "960*1080";
                     $HD = true;
                 }
 
                 if ($videoInfos['width'] == 960 && $videoInfos['height'] == 1080) {
+
+                    $this->__currentMediaOutputFormat[] = 'high';
+
                     $max_size = true;
                     $output_high = "960*1080";
 
-                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['fileName'] . '.mp4');
+                    if(!file_exists($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high']))
+                        mkdir($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'], 0777, true);
+
+                    copy($videoPath, $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'] . '/' . $videoInfos['name'] . '.mp4');
 
                     /*if($videoInfos['mediaType'] != 'sync') {
-                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['fileName'] . '.mp4');
+                        copy($videoPath, $old_path . 'HIGH/' . $videoInfos['name'] . '.mp4');
                     }*/
                 }
 
                 if ($videoInfos['width'] >= 640 && $videoInfos['height'] >= 720) {
+
+                    $this->__currentMediaOutputFormat[] = 'medium';
+
                     $medium_size = true;
                     $output_medium = "640*720";
                 }
+
+                $this->__currentMediaOutputFormat[] = 'low';
+
                 $output_low = "80*90";
 
                 $this->__orientation = 'Vertical';
@@ -311,7 +367,7 @@ class VideoEncodeManager
 
         }
 
-        if ($max_size) {
+        if (isset($max_size) && $max_size) {
 
             $copyFolder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'];
 
@@ -329,31 +385,23 @@ class VideoEncodeManager
             {
 
                 if($videoInfos['height'] === 2160)
-                    exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset ultrafast -profile:v high -level 4.2 -r 25 -crf 23 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['fileName'] . '.mp4"', $output, $cmdResultStatus);
+                    exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset ultrafast -profile:v high -level 4.2 -r 25 -crf 23 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['name'] . '.mp4"', $output, $cmdResultStatus);
 
                 if($videoInfos['height'] === 4320)
-                    exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset ultrafast -profile:v high -level 4.2 -r 25 -crf 20 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['fileName'] . '.mp4"', $output, $cmdResultStatus);
+                    exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset ultrafast -profile:v high -level 4.2 -r 25 -crf 20 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['name'] . '.mp4"', $output, $cmdResultStatus);
 
             }
 
             else
-                exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset slower -profile:v high -level 4.2 -r 25 -crf 11 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['fileName'] . '.mp4"', $output, $cmdResultStatus);
-
-            //exec('ffmpeg -y -i "' . $videoPath . '" -r 25 -s ' . $output_high . ' -vcodec libx264 -b:v 4M -minrate 4M -maxrate 4M -profile:v high -level:v 4.2 -acodec copy -y "' . $copyFolder . '/' . $videoInfos['fileName'] . '.mp4"', $output, $cmdResultStatus);
-
-            //dd('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -loglevel error -x264-params keyint_min=1:keyint=3:scenecut=0:bframes=0 -vcodec libx264 -preset slower -profile:v high -level 4.2 -r 25 -b:v 15000000 -maxrate 30000000 -bufsize 15000000 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['fileName'] . '.mp4"');
-
-            // -s 1920*1080 -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=3:scenecut=0:bframes=0 -vcodec libx264 -preset slower -profile:v high -level 4.2 -r 25 -b:v 15000000 -maxrate 30000000 -bufsize 15000000 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart
-
-            //exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -loglevel debug -x264-params keyint_min=1:keyint=3:scenecut=0:bframes=0 -vcodec libx264 -preset slower -profile:v high -level 4.2 -r 25 -b:v 15000000 -maxrate 30000000 -bufsize 15000000 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['fileName'] . '.mp4"', $output,$cmdResultStatus);
+                exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_high . ' -vf yadif,format=yuv420p -x264-params keyint_min=1:keyint=6:scenecut=80:bframes=0:open-gop=0 -vcodec libx264 -preset slower -profile:v high -level 4.2 -r 25 -crf 11 -coder cabac -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $copyFolder . '/' . $videoInfos['name'] . '.mp4"', $output, $cmdResultStatus);
 
             if($cmdResultStatus === 1)
             {
-                dump($output);
+                dump($output); die;
                 throw new Exception("Erreur lors de l'encodage du média en high");
             }
 
-            $this->__filesToRenameWithId[] = $copyFolder . '/' . $videoInfos['fileName'] . '.mp4';
+            $this->__filesToRenameWithId[] = $copyFolder . '/' . $videoInfos['name'] . '.mp4';
 
             if($videoInfos['mediaType'] != 'them') {
 
@@ -370,15 +418,15 @@ class VideoEncodeManager
                     if(!file_exists($copyFolder))
                         mkdir($copyFolder, 0777, true);
 
-                    copy($videoPath, $copyFolder . '/' . $videoInfos['fileName'] . '.mp4');
+                    copy($videoPath, $copyFolder . '/' . $videoInfos['name'] . '.mp4');
 
-                    $this->__filesToRenameWithId[] = $copyFolder . '/' . $videoInfos['fileName'] . '.mp4';
+                    $this->__filesToRenameWithId[] = $copyFolder . '/' . $videoInfos['name'] . '.mp4';
                 }
 
             }
         }
 
-        if($medium_size) {
+        if(isset($medium_size) && $medium_size) {
 
             if(!file_exists($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium']))
                 mkdir($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'], 0777, true);
@@ -386,34 +434,74 @@ class VideoEncodeManager
             if(!file_exists($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low']))
                 mkdir($this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'], 0777, true);
 
-            exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_medium . ' -vf yadif,format=yuv420p -x264-params keyint_min=2:keyint=12:scenecut=80:open-gop=0 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -crf 17 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'] . '/' . $videoInfos['fileName'] . '.mp4"', $output, $cmdResultStatus);
+            exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_medium . ' -vf yadif,format=yuv420p -x264-params keyint_min=2:keyint=12:scenecut=80:open-gop=0 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -crf 17 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'] . '/' . $videoInfos['name'] . '.mp4"', $output, $cmdResultStatus);
 
-            //exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_medium . ' -vf yadif,format=yuv420p -loglevel debug -x264-params keyint_min=2:keyint=9:scenecut=0 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -b:v 4000000 -maxrate 8000000 -bufsize 4000000 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart  "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'] . '/' . $videoInfos['fileName'] . '.mp4"', $output,$cmdResultStatus);
+            //exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_medium . ' -vf yadif,format=yuv420p -loglevel debug -x264-params keyint_min=2:keyint=9:scenecut=0 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -b:v 4000000 -maxrate 8000000 -bufsize 4000000 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart  "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'] . '/' . $videoInfos['name'] . '.mp4"', $output,$cmdResultStatus);
 
             if($cmdResultStatus !== 0)
             {
-                dump($output);
+                dump($output);die;
                 throw new Exception("Erreur lors de l'encodage du média en medium");
             }
 
-            $this->__filesToRenameWithId[] = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'] . '/' . $videoInfos['fileName'] . '.mp4';
+            $this->__filesToRenameWithId[] = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'] . '/' . $videoInfos['name'] . '.mp4';
 
             // Création de la vignette si au moins le format "medium" existe
-            //exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_low . ' -vf yadif,format=yuv420p -loglevel debug -x264-params keyint_min=2:keyint=9:scenecut=0 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -b:v 1000000 -maxrate 2000000 -bufsize 1000000 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart  "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['fileName'] . '.mp4"', $output,$cmdResultStatus);
+            //exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_low . ' -vf yadif,format=yuv420p -loglevel debug -x264-params keyint_min=2:keyint=9:scenecut=0 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -b:v 1000000 -maxrate 2000000 -bufsize 1000000 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart  "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['name'] . '.mp4"', $output,$cmdResultStatus);
 
-            exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_low . ' -vf yadif,format=yuv420p -x264-params keyint_min=2:keyint=12:scenecut=40 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -crf 20 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['fileName'] . '.mp4"', $output,$cmdResultStatus);
+            exec('ffmpeg -y -i "' . $videoPath . '" -s ' . $output_low . ' -vf yadif,format=yuv420p -x264-params keyint_min=2:keyint=12:scenecut=40 -vcodec libx264 -preset slower -profile:v baseline -level 3.2 -r 25 -crf 20 -coder vlc -flags cgop -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart "' . $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['name'] . '.mp4"', $output,$cmdResultStatus);
 
             if($cmdResultStatus !== 0)
             {
-                dump($output);
+                dump($output);die;
                 throw new Exception("Erreur lors de l'encodage du média en low");
             }
 
-            $this->__filesToRenameWithId[] = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['fileName'] . '.mp4';
+            $this->__filesToRenameWithId[] = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'] . '/' . $videoInfos['name'] . '.mp4';
 
         }
 
-        return true;
+        // si le media n'a pas été encodé dans tout les formats retourner false
+        return $this->allMediaOutputFormatsIsCreated($videoInfos);
+
+
+    }
+
+    private function allMediaOutputFormatsIsCreated(array $videoInfos): bool
+    {
+
+        $HDFolder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['HD'] . '/' . ( (in_array('4k', $this->__currentMediaOutputFormat)) ? $this->__encodeOutputSizesFolders['4k'] : ((in_array('8k', $this->__currentMediaOutputFormat)) ? $this->__encodeOutputSizesFolders['8k'] : "") );
+        $highFolder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['high'];
+        $mediumForlder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['medium'];
+        $lowFolder = $this->__mediasEncodeOutputFolder . '/' . $this->__encodeOutputSizesFolders['low'];
+
+        if( in_array('4k', $this->__currentMediaOutputFormat) && !file_exists($HDFolder . '/' . $videoInfos['name']. ".mp4") )
+        {
+            $this->__errors[] = "Incomplete encodage (Missing HD/4K format)";
+            return false;
+        }
+        else if( in_array('8k', $this->__currentMediaOutputFormat) && !file_exists($HDFolder . '/' . $videoInfos['name']. ".mp4") )
+        {
+            $this->__errors[] = "Incomplete encodage (Missing HD/8K format)";
+            return false;
+        }
+        else if( in_array('high', $this->__currentMediaOutputFormat) && !file_exists($highFolder . '/' . $videoInfos['name']. ".mp4") )
+        {
+            $this->__errors[] = "Incomplete encodage (Missing high format)";
+            return false;
+        }
+        else if( in_array('medium', $this->__currentMediaOutputFormat) && !file_exists($mediumForlder . '/' . $videoInfos['name']. ".mp4") )
+        {
+            $this->__errors[] = "Incomplete encodage (Missing medium format)";
+            return false;
+        }
+        else if( in_array('low', $this->__currentMediaOutputFormat) && !file_exists($lowFolder . '/' . $videoInfos['name']. ".mp4") )
+        {
+            $this->__errors[] = "Incomplete encodage (Missing low format)";
+            return false;
+        }
+        else
+            return true;
 
     }
 
@@ -431,69 +519,6 @@ class VideoEncodeManager
             rename($filesToRenameWithIdPath, $path);
 
         }
-
-    }
-
-    private function getVideoFileCharacteristics(string $pathToVideo)
-    {
-
-        $infofile = $video = $audio = $format = [];
-
-        $path_to_json = $this->__parameterBag->get('project_dir') . '/..\inetpub\wwwroot\tmp\infofile.json';
-        exec('ffprobe -v quiet -print_format json -show_format -show_streams "' . $pathToVideo . '" > "' . $path_to_json . '"', $output, $error);
-
-        if (!$error) {
-            $datafile = file_get_contents($path_to_json);
-            $flux = json_decode($datafile, true);
-        } else {
-            throw new Exception(sprintf("Errors : %s", implode(", ", $output)));
-        }
-
-        if (isset($flux['streams'][0])) {
-            $video = $flux['streams'][0];
-        }
-        if (isset($flux['streams'][1])) {
-            $audio = $flux['streams'][1];
-        }
-        if (isset($flux['format'])) {
-            $format = $flux['format'];
-        }
-        $filter = array('codec_long_name', 'width', 'height', 'bit_rate', 'bits_per_raw_sample', 'nb_frames', 'creation_time', 'encoder', 'duration', 'level', 'avg_frame_rate', 'filename', 'format_long_name', 'size', 'major_brand', 'sample_rate', 'channels');
-
-        foreach ($video as $key => $value) {
-            if (in_array($key, $filter)) {
-                $infofile['video'][$key] = $value;
-            }
-            if ($key == 'tags') {
-                foreach ($value as $label => $info) {
-                    if (in_array($label, $filter)) {
-                        $infofile['video'][$label] = $info;
-                    }
-                }
-            }
-        }
-        foreach ($format as $key => $value) {
-            if (in_array($key, $filter)) {
-                $infofile['video'][$key] = $value;
-            }
-            if ($key == 'tags') {
-                foreach ($value as $label => $info) {
-                    if (in_array($label, $filter)) {
-                        $infofile['video'][$label] = $info;
-                    }
-                }
-            }
-        }
-
-        foreach ($audio as $key => $value) {
-            if (in_array($key, $filter)) {
-                $infofile['audio'][$key] = $value;
-            }
-        }
-
-        unset($infofile['audio']['avg_frame_rate'], $infofile['audio']['duration']);
-
-        return $infofile;
 
     }
 

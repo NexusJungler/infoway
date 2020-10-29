@@ -13,7 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\Customer\MediaRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="instance", type="string")
- * @ORM\DiscriminatorMap({ "media" = "Media", "image" = "Image", "video" = "Video", "image_element_graphic" = "ImageElementGraphic", "video_element_graphic" = "VideoElementGraphic", "video_thematic" = "VideoThematic", "video_synchro" = "SynchroElement" })
+ * @ORM\DiscriminatorMap({ "media" = "Media", "element_graphic" = "ElementGraphic", "media_diffusable" = "MediaDiffusable",
+ *     "image" = "Image", "video" = "Video", "image_element_graphic" = "ImageElementGraphic", "video_element_graphic" = "VideoElementGraphic",
+ *     "video_thematic" = "VideoThematic", "synchro_element" = "SynchroElement" })
  * @UniqueEntity(fields={"name"})
  */
 class Media
@@ -72,13 +74,13 @@ class Media
     private $width;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Tag", inversedBy="media", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="media")
      * @ORM\JoinTable(name="medias_tags")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Product", inversedBy="media")
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="media")
      */
     private $products;
 

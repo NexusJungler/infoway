@@ -8,13 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\Customer\ImageElementGraphicRepository")
  * @ORM\Table(name="image_element_graphic")
  */
-class ImageElementGraphic extends Image
+class ImageElementGraphic extends ElementGraphic
 {
-
-    use ElementGraphic;
 
     public function __construct()
     {
         parent::__construct();
     }
+
 }

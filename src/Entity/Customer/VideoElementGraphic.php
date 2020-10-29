@@ -8,13 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\Customer\VideoElementGraphicRepository")
  * @ORM\Table(name="video_element_graphic")
  */
-class VideoElementGraphic extends Video
+class VideoElementGraphic extends ElementGraphic
 {
-
-    use ElementGraphic;
 
     public function __construct()
     {
         parent::__construct();
     }
+
 }

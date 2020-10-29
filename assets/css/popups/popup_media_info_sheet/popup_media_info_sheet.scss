@@ -1,424 +1,560 @@
 .popup_media_info_sheet_container{
     font-family: "Barlow", serif;
-    &.is_open{
-        .popup{
+    &.is_open {
+        .popup {
             width: 90%;
             height: 75%;
-            .popup_header{
+
+            .popup_header {
                 height: 6%;
                 border: 0.1rem solid #899CA4;
                 border-radius: 0.7rem 0.7rem 0 0;
             }
-            .popup_body{
+
+            .popup_body {
                 display: flex;
                 flex-direction: column;
                 background-color: #FFFFFF;
                 color: #000;
-                height: 90%;
+                height: 88%;
                 overflow-y: auto;
-                .popup_body_item{
+
+                //* date*//
+                .date_edit{
+                    background-color: #F6F6F6;
+                    font-size: 1.9rem;
+                    letter-spacing: 0;
+                    text-align: left;
+                    color:#899CA4;
+                    &.no_valide{
+                        color: #F57171;
+                    }
+                }
+                .media_name_container{
+                    .media_name{
+                        background-color: #FFFFFF ;
+                        border: 0.1rem solid #C0CCD1;
+                        border-radius: 0.9rem;
+                        padding: 1% 1%;
+                        width: 100%;
+                        text-align: left;
+                        font-size: 2rem;
+                    }
+
+                }
+
+                .popup_body_item {
                     width: 100%;
                     display: flex;
                     flex-direction: column;
-                    &.media_infos_container{
+
+                    .media_infos_top_item_top{
+                        text-align: left;
+
+                        .media_type{
+                            font-size: 4.8rem;
+                            color: #899CA4;
+                            text-transform : uppercase;
+                            //&::after{
+                            //    content: '';
+                            //    top: 1rem;
+                            //    left: 0;
+                            //    height: 20%;
+                            //    width: 0.2rem;
+                            //    border: 0.1rem solid #4D646D;
+                            //    position: relative;
+                            //
+                            //
+                            //}
+                        }
+                        .media_name{
+                            font-size: 2.8rem;
+                            letter-spacing: 0;
+                            color: #4D646D;
+                        }
+                    }
+                    &.media_infos_container {
                         height: 100%;
                         display: flex;
                         flex-direction: column;
                         padding-left: 2%;
-                        .container_header{
+
+                        .container_header {
                             margin-bottom: 1rem;
-                            .container_header_title{
-                                font-size: 3.5rem ;
+
+                            .container_header_title {
+                                font-size: 3.5rem;
                                 letter-spacing: 0;
                                 color: #306D7C;
                             }
-                            .icon_container{
+
+                            .icon_container {
                                 width: 3rem;
                                 height: 3rem;
                                 background-color: #4F9BAE;
                                 color: #FFF;
                                 border-radius: 0.6rem;
                                 margin-right: 1rem;
-                                i{
-                                    font-size: 2.2rem;
-                                    padding: 0.4rem 0.3rem;
-                                }
+                                //
+                                //i {
+                                //    font-size: 2.2rem;
+                                //    padding: 0.4rem 0.3rem;
+                                //}
                             }
                         }
-                        .media_infos_item{
+
+                        .media_infos_item {
                             width: 100%;
-                                &.media_infos_top{
-                                    height: 60%;
-                                }
-                            &.media_infos_bottom{
+
+                            &.media_infos_top {
+                                height: 60%;
+                            }
+
+                            &.media_infos_bottom {
                                 height: 40%;
                             }
                         }
-                        .media_infos_top{
+
+                        .media_infos_top {
                             display: flex;
                             flex-direction: column;
-                            .media_infos_top_item{
+
+                            .media_infos_top_item {
                                 display: flex;
                                 flex-direction: row;
                                 width: 100%;
-                                &.media_infos_top_item_top{
+
+                                &.media_infos_top_item_top {
                                     height: 10%;
                                     display: flex;
                                     flex-direction: row;
                                     align-items: center;
                                     margin-top: 1%;
                                     margin-bottom: 1%;
-                                    .media_type{
-                                        color: #899CA4  ;
+
+                                    .media_type {
+                                        color: #899CA4;
                                         text-transform: uppercase;
-                                        font-size: 4.8rem  ;
+                                        font-size: 4.8rem;
                                         letter-spacing: 0;
-                                        &::after{
+
+                                        &::after {
                                             content: '';
                                             border-right: 0.2rem solid #899CA4;;
                                             height: 2rem;
-                                            margin: auto 2rem ;
+                                            margin: auto 2rem;
                                         }
                                     }
-                                    .media_title{
-                                       font-size: 2.8rem;
+
+                                    .media_title {
+                                        font-size: 2.8rem;
                                         color: #4D646D;
                                     }
                                 }
-                                &.media_infos_top_item_bottom{
+
+                                &.media_infos_top_item_bottom {
                                     display: flex;
                                     flex-direction: row;
                                     height: 89%;
-                                    .side{
+
+                                    .side {
                                         height: 100%;
-                                        &.left_side{
+
+                                        &.left_side {
                                             width: 70%;
-                                            .media_miniature_container{
+
+                                            .media_miniature_container {
                                                 height: 100%;
                                                 width: 100%;
                                                 display: flex;
                                                 justify-content: center;
                                                 align-items: center;
                                                 background-image: repeating-linear-gradient(45deg, black 12%, white 13%);
-                                                .media_miniature{
+
+                                                .media_miniature {
                                                     max-width: 100%;
                                                     max-height: 100%;
                                                     object-fit: contain;
-                                                    &.not_found{
+
+                                                    &.not_found {
                                                         width: 100%;
                                                         height: 100%;
                                                     }
                                                 }
                                             }
                                         }
-                                        &.right_side{
+
+                                        &.right_side {
                                             width: 30%;
                                             padding-left: 3%;
-                                            .container_header{
+
+                                            .container_header {
                                                 display: flex;
                                                 flex-direction: row;
                                             }
 
-                                            .media_validity_container{
+                                            .media_validity_container {
                                                 display: flex;
                                                 flex-direction: column;
-                                                .container_header{
+
+
+                                                .container_header {
                                                     width: 90%;
-                                                    span{
+
+                                                    span {
                                                         font-size: 2.3rem;
                                                         letter-spacing: 0;
                                                         color: #306D7C;
                                                     }
-                                                    .icon_container{
-                                                        &.alert_date{
-                                                          background-color: #F57171;
+
+                                                    .icon_container {
+                                                        &.alert_date {
+                                                            background-color: #F57171 !important;
                                                         }
                                                     }
                                                 }
-                                                .container_body{
+
+                                                .container_body {
                                                     text-align: left;
                                                     background-color: #F6F6F6;
                                                     width: 90%;
                                                     color: #899CA4;
                                                     font-size: 1.9rem;
-                                                    span{
+
+                                                    span {
                                                         letter-spacing: 0.1rem;
-                                                        &.date-coming-soon{
+
+                                                        &.date-coming-soon {
                                                             color: #F57171;
+
+                                                            .container_body_child {
+                                                                span {
+                                                                    letter-spacing: 1px;
+
+                                                                    &.alert_date {
+                                                                        color: #F57171 !important;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    .media_incrustations_container {
+                                                        width: 42.6rem;
+                                                        height: 29.6rem;
+                                                        margin-top: 10%;
+
+                                                        .container_header {
+                                                            .icon_container {
+                                                                position: relative;
+                                                                top: 0.6rem;
+                                                            }
+                                                        }
+
+                                                        .container_table_media {
+                                                            width: 100%;
+
+                                                            thead {
+                                                                font-size: 1.6rem;
+                                                                letter-spacing: 0;
+                                                                color: #899CA4;
+
+                                                                th {
+                                                                    &:nth-child(1) {
+                                                                        width: 50%;
+                                                                    }
+
+                                                                    &:nth-child(n+2) {
+                                                                        padding: 0.3rem 0;
+                                                                        width: 15%;
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            .media_incrustations_list {
+                                                                .container-input .container-rdo-tags {
+                                                                    top: 0.2rem;
+                                                                    left: 1.6rem;
+                                                                }
+
+                                                                tr {
+                                                                    background: #F6F6F6 0 0 no-repeat padding-box;
+
+                                                                    &:nth-child(even) {
+                                                                        background: #FFFFFF 0 0 no-repeat padding-box;
+                                                                    }
+                                                                }
+
+                                                                td {
+                                                                    padding: 0.5rem 1.5rem 0.6rem 1.5rem;
+                                                                    position: relative;
+                                                                    text-align: center;
+
+                                                                    &:nth-child(1) {
+                                                                        width: 50%;
+                                                                        text-align: left;
+                                                                        font-size: 1.6rem;
+                                                                        letter-spacing: 0;
+                                                                        color: #4D646D;
+                                                                    }
+
+                                                                    &:nth-child(n+2) {
+                                                                        width: 15%;
+                                                                    }
+
+                                                                    input[type="checkbox"] {
+                                                                        position: absolute;
+                                                                        opacity: 0;
+                                                                        cursor: pointer;
+                                                                        height: 0;
+                                                                        width: 0;
+
+                                                                        &:checked ~ .custom_checkbox {
+                                                                            background-color: #4F9BAE;
+                                                                        }
+                                                                    }
+
+                                                                    .custom_checkbox {
+                                                                        position: absolute;
+                                                                        top: 15%;
+                                                                        left: 40%;
+                                                                        width: 1.7rem;
+                                                                        height: 1.7rem;
+                                                                        background-color: #FFF;
+                                                                        border: 0.1rem solid #4D646D;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        .container_body {
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            border: 0.1rem solid #C0CCD1;
+                                                            border-radius: 0.6rem;
+                                                            overflow-y: auto;
+
+                                                            &.empty {
+                                                                display: flex;
+                                                                flex-direction: row;
+                                                                justify-content: center;
+                                                                align-items: center;
+                                                                background-color: #899CA4;
+                                                                color: #FFF;
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                }
 
-                                            .media_incrustations_container{
+                                .media_infos_bottom {
+                                    display: flex;
+                                    flex-direction: row;
+                                    margin-top: 2%;
+
+                                    .side {
+                                        height: 100%;
+
+                                        .container {
+                                            display: flex;
+                                            flex-direction: row;
+                                            text-align: left;
+                                            margin-top: 1.5%;
+                                            margin-bottom: 1%;
+
+                                            .container_child {
+                                                .container_child_title {
+                                                    font-size: 1.6rem;
+                                                    letter-spacing: 0;
+                                                    color: #4D646D;
+                                                }
+
+                                                .container-tags {
+                                                    width: 10%;
+                                                }
+                                            }
+
+                                            .container_child_tags {
+                                                text-align: center;
+                                                background: #2696AE 0 0 no-repeat padding-box;
+                                                position: relative;
+                                                height: 3.1rem;
+                                                width: 10.8rem;
+                                                box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
+                                                border: 0.1rem solid #FFFFFF;
+                                                border-radius: 0.6rem 0 0 0.6rem;
+                                                color: #FFFFFF;
+                                                font-size: 1.8rem;
+                                                @extend .mini-cercle;
+                                            }
+
+                                            .container_child:first-child {
+                                                width: 16%;
+                                            }
+
+                                            .container_child:last-child {
+                                                width: 88%;
+                                            }
+                                        }
+
+                                        &.left_side {
+                                            width: 70%;
+
+                                            .media_name_container {
+                                                height: 3.8rem;
+                                                border: 0.1rem solid #C0CCD1;
+                                                border-radius: 0.9rem;
+                                                display: flex;
+                                                flex-direction: row;
+                                                align-items: center;
+                                                padding-left: 1%;
+                                                padding-right: 1%;
+
+                                                .media_name {
+                                                    text-align: left;
+                                                    width: 100%;
+                                                    font-size: 2rem;
+                                                    letter-spacing: 0;
+                                                    color: #4D646D
+                                                }
+                                            }
+
+                                            .media_characteristics {
+                                                font-size: 1.8rem;
+                                                color: #4D646D;
+                                            }
+
+                                            .media_characteristics span:not(:first-child) {
+                                                margin-left: 2%;
+                                            }
+
+                                            .container.associated_data_container {
+                                                border: 0.1rem solid #899CA4;
+                                                border-radius: 0.6rem;
+                                                height: 6.4rem;
+                                                display: flex;
+                                                flex-direction: row;
+                                                align-items: center;
+
+                                                .container_child:first-child {
+                                                    width: 13%;
+                                                    background-color: #EBEBEB;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    border-radius: 0.6rem 0 0 0.6rem;
+                                                    height: 100%;
+                                                }
+
+                                                .media_tags_container {
+                                                    padding: 10px;
+                                                }
+
+                                                .container_child:last-child {
+                                                    width: 90%;
+                                                    text-align: left;
+                                                }
+
+                                                .container_child_criteres,
+                                                .container_child_allergenes {
+                                                    text-align: center;
+                                                    padding: 0 1.5rem;
+                                                    background: #899CA4 0 0 no-repeat padding-box;
+                                                    box-shadow: 0.1rem 0.2rem 0.2rem #00000029;
+                                                    border: 0.1rem solid #FFFFFF;
+                                                    border-radius: 0.6rem;
+                                                    width: 10.8rem;
+                                                    height: 3.1rem;
+                                                }
+                                            }
+
+                                            .media_diffusion_spaces_container {
+                                                margin-top: 3%;
+                                                height: 3.5rem;
+                                                display: flex;
+                                                flex-direction: column;
+
+                                                .container_header {
+                                                    width: 100%;
+                                                    height: 3.5rem;
+                                                    background-color: #F6F6F6;
+                                                    text-align: left;
+                                                    display: flex;
+                                                    flex-direction: row;
+                                                    vertical-align: middle;
+                                                    border: 0.1rem solid #C0CCD1;
+                                                    border-radius: 0.6rem 0.6rem 0 0;
+                                                    align-items: center;
+                                                    padding-right: 1%;
+                                                    padding-left: 1%;
+
+                                                    .icon_container {
+                                                        width: 2.3rem;
+                                                        height: 2.3rem;
+
+                                                        i {
+                                                            font-size: 15px;
+                                                        }
+                                                    }
+
+                                                    .containeer_header_info {
+                                                        font-size: 1.9rem;
+                                                        letter-spacing: 0;
+                                                        color: #4D646D;
+                                                    }
+
+                                                    .arrow {
+                                                        text-align: right;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        &.right_side {
+                                            width: 30%;
+                                            padding-left: 3%;
+
+                                            .media_products_associated_container {
                                                 width: 42.6rem;
                                                 height: 29.6rem;
-                                                margin-top: 10%;
-                                                .container_header{
-                                                    .icon_container{
+
+                                                .container_header {
+                                                    display: flex;
+                                                    flex-direction: row;
+
+                                                    .icon_container {
                                                         position: relative;
                                                         top: 0.6rem;
                                                     }
                                                 }
-                                                .container_table_media{
-                                                    width: 100%;
-                                                    thead{
-                                                        font-size: 1.6rem;
-                                                        letter-spacing: 0;
-                                                        color: #899CA4;
-                                                        th{
-                                                            &:nth-child(1){
-                                                                width: 50%;
-                                                            }
-                                                            &:nth-child(n+2){
-                                                                padding: 0.3rem 0;
-                                                                 width: 15%;
-                                                            }
-                                                        }
-                                                    }
-                                                    .media_incrustations_list{
-                                                        .container-input .container-rdo-tags {
-                                                            top: 0.2rem;
-                                                            left: 1.6rem;
-                                                        }
-                                                        tr{
-                                                            background: #F6F6F6 0 0 no-repeat padding-box;
-                                                            &:nth-child(even){
-                                                                background: #FFFFFF 0 0 no-repeat padding-box;
-                                                            }
-                                                        }
-                                                        td{
-                                                            padding: 0.5rem 1.5rem 0.6rem 1.5rem;
-                                                            position: relative;
-                                                            text-align: center;
-                                                            &:nth-child(1){
-                                                                width: 50%;
-                                                                text-align: left;
-                                                                font-size: 1.6rem;
-                                                                letter-spacing: 0;
-                                                                color: #4D646D;
-                                                            }
-                                                            &:nth-child(n+2){
-                                                                width: 15%;
-                                                            }
 
-                                                            input[type="checkbox"] {
-                                                                position: absolute;
-                                                                opacity: 0;
-                                                                cursor: pointer;
-                                                                height: 0;
-                                                                width: 0;
-
-                                                                &:checked ~ .custom_checkbox {
-                                                                    background-color: #4F9BAE;
-                                                                }
-                                                            }
-                                                            .custom_checkbox{
-                                                                position: absolute;
-                                                                top: 15%;
-                                                                left: 40%;
-                                                                width: 1.7rem;
-                                                                height: 1.7rem;
-                                                                background-color: #FFF;
-                                                                border: 0.1rem solid #4D646D;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                .container_body{
+                                                .container_body {
                                                     width: 100%;
                                                     height: 100%;
                                                     border: 0.1rem solid #C0CCD1;
                                                     border-radius: 0.6rem;
                                                     overflow-y: auto;
-                                                    &.empty{
-                                                        display: flex;
-                                                        flex-direction: row;
-                                                        justify-content: center;
-                                                        align-items: center;
-                                                        background-color: #899CA4;
-                                                        color: #FFF;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .media_infos_bottom{
-                            display: flex;
-                            flex-direction: row;
-                            margin-top: 2%;
-                            .side{
-                                height: 100%;
-                                .container{
-                                    display: flex;
-                                    flex-direction: row;
-                                    text-align: left;
-                                    margin-top: 1.5%;
-                                    margin-bottom: 1%;
-                                    .container_child{
-                                        .container_child_title{
-                                            font-size: 1.6rem;
-                                            letter-spacing: 0;
-                                            color: #4D646D;
-                                        }
-                                        .container-tags{
-                                            width: 10%;
-                                        }
-                                    }
-                                    .container_child_tags{
-                                        text-align: center;
-                                        background: #2696AE 0 0 no-repeat padding-box;
-                                        position: relative;
-                                        height: 3.1rem;
-                                        width: 10.8rem;
-                                        box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
-                                        border: 0.1rem solid #FFFFFF;
-                                        border-radius: 0.6rem 0 0 0.6rem;
-                                        color: #FFFFFF;
-                                        font-size: 1.8rem;
-                                        @extend .mini-cercle;
-                                    }
-                                    .container_child:first-child{
-                                        width: 16%;
-                                    }
 
-                                    .container_child:last-child{
-                                        width: 88%;
-                                    }
-                                }
-                                &.left_side{
-                                    width: 70%;
-                                    .media_name_container{
-                                        height: 3.8rem;
-                                        border: 0.1rem solid #C0CCD1;
-                                        border-radius: 0.9rem;
-                                        display: flex;
-                                        flex-direction: row;
-                                        align-items: center;
-                                        padding-left: 1%;
-                                        padding-right: 1%;
-                                        .media_name{
-                                            text-align: left;
-                                            width: 100%;
-                                            font-size: 2rem;
-                                            letter-spacing: 0;
-                                            color: #4D646D
-                                        }
-                                    }
-                                    .media_characteristics{
-                                        font-size: 1.8rem;
-                                        color: #4D646D;
-                                    }
-                                    .media_characteristics span:not(:first-child){
-                                        margin-left: 2%;
-                                    }
-                                    .container.associated_data_container{
-                                        border: 0.1rem solid #899CA4;
-                                        border-radius: 0.6rem;
-                                        height: 6.4rem;
-                                        display: flex;
-                                        flex-direction: row;
-                                        align-items: center;
-                                        .container_child:first-child{
-                                            width: 13%;
-                                            background-color: #EBEBEB;
-                                            display: flex;
-                                            justify-content: center;
-                                            align-items: center;
-                                            border-radius: 0.6rem 0 0 0.6rem;
-                                            height: 100%;
-                                        }
-                                        .media_tags_container{
-                                            padding: 10px;
-                                        }
-                                        .container_child:last-child{
-                                            width: 90%;
-                                            text-align: left;
-                                        }
-                                        .container_child_criteres,
-                                        .container_child_allergenes{
-                                            text-align: center;
-                                            padding: 0 1.5rem;
-                                            background: #899CA4 0 0 no-repeat padding-box;
-                                            box-shadow: 0.1rem 0.2rem 0.2rem #00000029;
-                                            border: 0.1rem solid #FFFFFF;
-                                            border-radius: 0.6rem;
-                                            width: 10.8rem;
-                                            height: 3.1rem;
-                                        }
-                                    }
-                                    .media_diffusion_spaces_container{
-                                        margin-top: 3%;
-                                        height: 3.5rem;
-                                        display: flex;
-                                        flex-direction: column;
-                                        .container_header{
-                                            width: 100%;
-                                            height: 3.5rem;
-                                            background-color: #F6F6F6;
-                                            text-align: left;
-                                            display: flex;
-                                            flex-direction: row;
-                                            vertical-align: middle;
-                                            border: 0.1rem solid #C0CCD1;
-                                            border-radius: 0.6rem 0.6rem 0 0;
-                                            align-items: center;
-                                            padding-right: 1%;
-                                            padding-left: 1%;
-                                            .icon_container{
-                                                width: 2.3rem;
-                                                height: 2.3rem;
-                                                i{
-                                                    font-size: 15px;
-                                                }
-                                            }
-                                            .containeer_header_info{
-                                                font-size: 1.9rem;
-                                                letter-spacing: 0;
-                                                color: #4D646D;
-                                            }
-                                            .arrow{
-                                                text-align: right;
-                                            }
-                                        }
-                                    }
-                                }
-                                &.right_side{
-                                    width: 30%;
-                                    padding-left: 3%;
-                                    .media_products_associated_container{
-                                        width: 42.6rem;
-                                        height: 29.6rem;
-                                        .container_header{
-                                            display: flex;
-                                            flex-direction: row;
-                                            .icon_container{
-                                                position: relative;
-                                                top: 0.6rem;
-                                            }
-                                        }
-                                        .container_body{
-                                            width: 100%;
-                                            height: 100%;
-                                            border: 0.1rem solid #C0CCD1;
-                                            border-radius: 0.6rem;
-                                            overflow-y: auto;
-                                            table{
-                                                width: 100%;
-                                                tr{
-                                                    background-color: #F6F6F6;
-                                                    width: 100%;
-                                                    text-align: left;
+                                                    table {
+                                                        width: 100%;
 
-                                                    &:nth-child(odd){
-                                                        background-color: #EBECEC;
-                                                    }
-                                                    td{
-                                                        padding: 0.5rem 1.5rem 0.6rem;
-                                                        font-size: 1.6rem;
+                                                        tr {
+                                                            background-color: #F6F6F6;
+                                                            width: 100%;
+                                                            text-align: left;
+
+                                                            &:nth-child(odd) {
+                                                                background-color: #EBECEC;
+                                                            }
+
+                                                            td {
+                                                                padding: 0.5rem 1.5rem 0.6rem;
+                                                                font-size: 1.6rem;
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -428,13 +564,19 @@
                             }
                         }
                     }
+
+                    .popup_footer {
+                        height: 6%;
+
+                        .actions_buttons_container {
+                            padding: 0.5rem;
+                        }
+                    }
                 }
             }
+
             .popup_footer{
-                height: 6%;
-                .actions_buttons_container{
-                    padding: 0.5rem;
-                }
+                padding: 1rem;
             }
         }
     }

@@ -7,6 +7,7 @@ class ParentTool extends Tool
     constructor()
     {
         super();
+        this.__name = this.constructor.name;
         this.__$mediasContainer = $(".medias_list_container");
         this.__subTools = [];
 
@@ -19,6 +20,7 @@ class ParentTool extends Tool
 
     getMediasContainer()
     {
+        this.__$mediasContainer = $(".medias_list_container")
         return this.__$mediasContainer;
     }
 
@@ -49,6 +51,7 @@ class ParentTool extends Tool
         if(!this.subToolIsRegistered(subToolName))
             throw new Error(`'${subToolName}' subTool is not registered !`);
         //console.log(this.__subTools[ this.getSubToolIndex(subToolName) ]); debugger
+        //console.log(this.getToolBox()); debugger
         this.__subTools[ this.getSubToolIndex(subToolName) ].setToolBox(this.getToolBox());
         this.__subTools[ this.getSubToolIndex(subToolName) ].setParent(this);
         this.__subTools[ this.getSubToolIndex(subToolName) ].enable();
@@ -57,6 +60,8 @@ class ParentTool extends Tool
         {
 
             subToolToolsToActive.map( (subToolToolToActive) => {
+
+
 
                 if(subToolToolToActive === "all")
                     this.__subTools[ this.getSubToolIndex(subToolName) ].activeAllSubTools();

@@ -1,0 +1,79 @@
+.medias_synchro_cards{
+    display: grid;
+    .synchro_container{
+        background-color: #C0CCD1 ;
+        border: 0.05rem solid #707070;
+        height: 26rem;
+        display: inline-block;
+        padding: 1.5rem;
+        margin: 3% auto auto 0;
+        max-width: 154rem;
+    }
+    .top{
+        display: flex;
+        padding-bottom: 1.5rem;
+        .left{
+            display: flex;
+            width: 50%;
+            .synchro_name_container{
+                background-color: #F6F6F6 ;
+                width: 25rem;
+                height: 2.6rem;
+                padding: 0.1rem;
+                border-radius: 0.6rem;
+                font-size: 1.4rem;
+                color: #283338;
+                text-align: center;
+                margin-right: 1rem;
+            }
+            .synchro_action_button_container{
+                display: flex;
+
+                .synchro_action_button{
+                    background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0 0 no-repeat padding-box;
+                    border-radius: 0.6rem;
+                    border: 0;
+                    width: 2.6rem;
+                    height: 2.6rem;
+                    margin-right: 0.5rem;
+                    i{
+                        color: white;
+                    }
+                }
+            }
+        }
+        .right{
+            width: 50%;
+            .media_actions_shortcuts_container{
+                display: flex;
+                justify-content: flex-end;
+                .shortcut{
+                    background: transparent linear-gradient(180deg, #2598AE 0%, #438492 100%) 0 0 no-repeat padding-box;
+                    border-radius: 0.6rem;
+                    border: 0;
+                    width: 2.6rem;
+                    height: 2.6rem;
+                    margin-right: 0.5rem;
+                    text-align: center;
+                    i{
+                        color: white;
+                        font-size: 1.4rem;
+                        padding: 0.6rem;
+                    }
+                }
+            }
+        }
+    }
+    .synchro_elements_container{
+        display: flex;
+        .media_horizontal{
+            margin-right: 1rem;
+            width: 25.5rem;
+            height: 14.5rem;
+            video{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

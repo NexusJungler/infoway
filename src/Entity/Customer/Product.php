@@ -61,7 +61,7 @@ class Product
     private $logo;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", name="created_at")
      */
     private $createdAt;
 
@@ -89,15 +89,12 @@ class Product
     /**
      * @ORM\OneToMany(targetEntity="ProductAllergen", mappedBy="product", cascade={"persist"})
      */
-    private $product_allergens;
+    //private $product_allergens;
 
     /**
      * @ORM\ManyToMany(targetEntity="Media", mappedBy="products", cascade={"persist"})
      */
     private $medias;
-
-    private $elements;
-
 
     /**
      * @ORM\OneToMany(targetEntity="Incruste", mappedBy="product", orphanRemoval=true)
@@ -109,9 +106,8 @@ class Product
         $this->tags = new ArrayCollection();
         $this->criterions = new ArrayCollection();
         $this->allergens = new ArrayCollection();
-        $this->product_allergens = new ArrayCollection();
+        //$this->product_allergens = new ArrayCollection();
         $this->medias = new ArrayCollection() ;
-        $this->elements = new ArrayCollection();
         $this->incrustes = new ArrayCollection();
     }
 
@@ -300,10 +296,8 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|ProductAllergen[]
-     */
-    public function getProductAllergens(): Collection
+
+/*    public function getProductAllergens(): Collection
     {
         return $this->product_allergens;
     }
@@ -324,7 +318,7 @@ class Product
         }
 
         return $this;
-    }
+    }*/
 
     /**
      * @return Collection|Allergen[]
@@ -401,31 +395,6 @@ class Product
             $this->medias[] = $substitute;
         }
 
-        return $this;
-    }
-
-    /**
-     * @return Collection|ImageElementGraphic[]|VideoElementGraphic[]
-     */
-    public function getElementGraphics(): Collection
-    {
-        return $this->elements;
-    }
-
-    public function addElementGraphic($element): self
-    {
-        if (!$this->elements->contains($element)) {
-            $this->elements[] = $element;
-        }
-
-        return $this;
-    }
-
-    public function removeElementGraphic($element): self
-    {
-        if ($this->elements->contains($element)) {
-            $this->elements->removeElement($element);
-        }
         return $this;
     }
 

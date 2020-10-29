@@ -9,7 +9,7 @@ button{
 
 .btn{
     height: 3.1rem;
-    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0 0 no-repeat padding-box;
     border: 0.06rem solid #306D7C;
     padding: 0.30rem 0.7rem 0.6rem;
     font: 1.6rem 'Barlow', medium;
@@ -18,7 +18,7 @@ button{
     box-shadow: 0 0.3rem 0.6rem #00000029;
     border-radius: 0.6rem;
     &:hover{
-        background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+        background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0 0 no-repeat padding-box;
     }
     i{
         margin-right: 1rem;
@@ -28,7 +28,6 @@ button{
 
 
 .btn_file{
-    //height: 31px;
     border: 0.06rem solid #306D7C;
     padding: 0.30rem 0.7rem 0.6rem;
     font: 1.6rem 'Barlow', medium;
@@ -37,9 +36,6 @@ button{
     box-shadow: 0 0.3rem 0.6rem #00000029;
     border-radius: 0.6rem;
     letter-spacing: 0;
-    //&:hover{
-    //    background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
-    //}
     i{
         margin-right: 10px;
     }
@@ -62,7 +58,7 @@ button{
         top: 1rem;
         width: 0.9rem;
         height: 0.9rem;
-        background:#e8e4e4 0% 0% no-repeat padding-box;
+        background:#e8e4e4 0 0 no-repeat padding-box;
         box-shadow: 0.2rem 0.2rem 0.2rem  #00000029;
         border : $border--radius--white;
         opacity: 1;

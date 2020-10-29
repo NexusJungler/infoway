@@ -7,70 +7,84 @@ class MediaReplacementPopupHandler extends SubTool
     {
         super();
         this.__name = this.constructor.name;
-        this.__$container = $('.popup_media_remplacement_basic_container');
-        this.__$location = $('.popup_media_remplacement_basic');
+        this.__$container = $('.popup_media_remplacement_container');
+        this.__$location = $('.popup_media_remplacement');
         this.__$mediaSubstitutesContainer = $('.substitutes_container');
-
-        this.__subTools = [
-
-        ];
 
         this.__currentMediaInfos = {
             id: null,
             name: null,
             customer: null,
-            type: null,
+            fileType: null,
+            mediaType: null,
             extension: null,
             mediaLowMiniatureExist: null,
+            progrommingInfos: null,
         };
 
         this.__replacementInfos = {
             mediaToReplaceId: null,
-            mediaToReplaceType: null,
-            fileType: null,
+            mediaToReplaceMediaType: null,
+            mediaToReplaceFileType: null,
             substituteId: null,
+            substituteFileType: null,
+            substituteMediaType: null,
             remplacementDate: {
                 start: null,
                 end: null,
             }
         };
+
+        this.__errors= {
+            empty_field: "Ce champ ne peut pas être vide",
+            remplacement_date_is_past: "Merci de choisir une date récente",
+            remplacement_date_end_is_past: "Cette date doit être supérieur à la date de début",
+            invalid_date : "Date invalide",
+        };
+
     }
 
     async initializePopupContent()
     {
 
-        if(this.__currentMediaInfos.mediaLowMiniatureExist === null)
-        {
-            const url = `/miniatures/${ this.__currentMediaInfos.customer }/${ this.__currentMediaInfos.type }/low/${ this.__currentMediaInfos.id }.${ (this.__currentMediaInfos.type === 'image') ? 'png' : 'mp4' }`;
-            this.__currentMediaInfos.mediaLowMiniatureExist = await this.mediaLowMiniatureExist(url);
-            let miniature = '';
+        let miniature = '';
 
-            if(this.__currentMediaInfos.mediaLowMiniatureExist === false)
-                miniature = `<img class="media_miniature miniature_${ this.__currentMediaInfos.type }" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">`;
+        if(this.__currentMediaInfos.mediaLowMiniatureExist === false)
+            miniature = `<img class="media_miniature miniature_${ this.__currentMediaInfos.type }" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">`;
+
+        else
+        {
+
+            if(this.__currentMediaInfos.fileType === 'image')
+                miniature = `<img class="media_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/image/${ this.__currentMediaInfos.mediaType }/low/${ this.__replacementInfos.mediaToReplaceId }.png"
+                             alt="/miniatures/${ this.__currentMediaInfos.customer }/image/${ this.__currentMediaInfos.mediaType }/low/${ this.__replacementInfos.mediaToReplaceId }.png" />`;
 
             else
-            {
-
-                if(this.__currentMediaInfos.type === 'image')
-                    miniature = `<img class="media_miniature miniature_img" src="/miniatures/${ this.__currentMediaInfos.customer }/images/low/${ this.__replacementInfos.mediaId }.png"
-                             alt="/miniatures/${ this.__currentMediaInfos.customer }/images/low/${ this.__replacementInfos.mediaId }.png" />`;
-
-                else
-                    miniature = `<video class="media_miniature miniature_video" controls>
-                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/videos/low/${ this.__currentMediaInfos.id }.mp4" type="video/mp4">          
+                miniature = `<video class="media_miniature miniature_video" controls>
+                                <source src="/miniatures/${ this.__currentMediaInfos.customer }/video/${ this.__currentMediaInfos.mediaType }/low/${ this.__currentMediaInfos.mediaToReplaceId }.mp4" type="video/mp4">          
                              </video>`;
 
-            }
-
-            $(miniature).appendTo( this.__$location.find('.media_miniature_container') );
         }
 
-        this.__$location.find('.media_associated_datas_container').append( $('.media_criterions_container').clone(true) );
-        this.__$location.find('.media_associated_datas_container').append( $('.media_tags_list').clone(true) );
+        this.__$location.find('.media_to_replace_miniature_container').html( miniature );
+
+        this.__$location.find('.media_associated_datas_container').empty();
+
+        $('.container_child.media_tags_container .tag:not(.hidden)').each( ( index, tag ) => {
+
+            $(tag).clone(true).appendTo( this.__$location.find('.media_associated_datas_container ') )
+
+        } )
+
+        $('.container_child.media_criterions_container .criterion:not(.hidden)').each( ( index, criterion ) => {
+
+            $(criterion).clone(true).appendTo( this.__$location.find('.media_associated_datas_container') )
+
+        } )
 
     }
 
-    getMediaProgrammingInfos(mediaId)
+    async getMediaProgrammingInfos(mediaId)
     {
 
         return new Promise( (resolve, reject) => {
@@ -81,20 +95,19 @@ class MediaReplacementPopupHandler extends SubTool
                 data: {},
                 success: (response) => {
 
-                    $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
-
                     resolve(response);
 
                 },
                 error: (response, status, error) => {
-
-                    $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
 
                     console.error(response); debugger
 
                     reject(response);
 
                 },
+                complete: () => {
+
+                }
             });
 
         } )
@@ -130,34 +143,45 @@ class MediaReplacementPopupHandler extends SubTool
         {
             $('.media_replacement_btn').on("click.onClickOnMediaReplacementButton", async(e) => {
 
-                // filter_by_media_category_container
+                super.showLoadingPopup();
 
-                $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
+                this.__currentMediaInfos.progrommingInfos = await this.getMediaProgrammingInfos( parseInt($('.media_miniature_container').data('media_id')) );
 
-                this.__replacementInfos.mediaToReplaceId = $('.col.top .media_miniature_container').data('media_id');
-                this.__replacementInfos.fileType = $('.col.top .media_miniature_container').data('file_type');
+                this.__replacementInfos.mediaToReplaceId = $('.media_miniature_container').data('media_id');
+                this.__replacementInfos.mediaToReplaceFileType = $('.media_miniature').parents('.card').data('file_type');
+                this.__replacementInfos.mediaToReplaceMediaType = $('.media_miniature').parents('.card').data('media_type');
 
-                const mediaNameText = $('.col.middle .media_name_container .media_name').val();
+                const mediaNameText = $('#edit_media_name').val();
 
                 this.__$location.find('.media_name_container').html( `<p class="media_name">${mediaNameText}</p>` );
 
-                const remplacementDateMin = $('.col.top .media_diff_start_container .media_diff_start').val();
+                /*let date = new Date(),
+                    day = ( (date.getDate() < 10) ? ('0' + date.getDate()) : date.getDate() ),
+                    month = ( ((date.getMonth()+1) < 10) ? ('0' + (date.getMonth()+1)) : (date.getMonth()+1) ),
+                    year = date.getFullYear();*/
 
-                this.__$location.find('.remplacement_date_choice_input.remplacement_date_start').prop('min', remplacementDateMin);
+                let remplacementDateMin = $('#edit_media_diffusionStart').val();
 
-                this.__currentMediaInfos = {
-                    id: this.__replacementInfos.mediaToReplaceId,
-                    name: mediaNameText,
-                    customer: $('.media_miniature').parents('.media_miniature_container').data('customer'),
-                    type: ($('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image') ? 'images' : 'videos',
-                    extension: ( $('.media_miniature').parents('.media_miniature_container').data('file_type') === 'image' ) ? 'png' : 'mp4',
-                };
+                this.__$location.find('.remplacement_date_start').attr('min', remplacementDateMin);
+                //this.__$location.find('.remplacement_date_end').attr('min', year + '-' + month + '-' + day);
+                this.__$location.find('.remplacement_date_end').attr('min', remplacementDateMin);
+
+                this.__currentMediaInfos.id = this.__replacementInfos.mediaToReplaceId;
+                this.__currentMediaInfos.name = mediaNameText
+                this.__currentMediaInfos.customer = $('.media_miniature').parents('.card').data('customer');
+                this.__currentMediaInfos.fileType = ($('.media_miniature').parents('.card').data('file_type') === 'image') ? 'image' : 'video';
+                this.__currentMediaInfos.mediaType = $('.media_miniature').parents('.card').data('media_type');
+                this.__currentMediaInfos.extension = ( $('.media_miniature').parents('.card').data('file_type') === 'image' ) ? 'png' : 'mp4';
+                this.__currentMediaInfos.mediaLowMiniatureExist = $('.media_miniature').parents('.card').data('miniature_medium_exist');
+
+                //console.log(this.__currentMediaInfos); debugger
 
                 await this.initializePopupContent();
 
-                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+                super.hideLoadingPopup();
 
                 this.__$container.addClass('is_open');
+                this.__parent.__popupIsOpen = true;
 
             })
         }
@@ -171,8 +195,8 @@ class MediaReplacementPopupHandler extends SubTool
 
     closePopup()
     {
-
         this.__$container.removeClass('is_open');
+        this.__parent.__popupIsOpen = false;
         this.__$location.find('.media_substitute_name').text('');
         this.__$mediaSubstitutesContainer.find('.card.selected .choice_substitute').prop('checked', false);
         this.__$mediaSubstitutesContainer.find('.card.selected').removeClass('selected');
@@ -214,6 +238,8 @@ class MediaReplacementPopupHandler extends SubTool
                     cardSelected.removeClass('selected');
                     this.__$location.find('.media_substitute_name').text('');
                     this.__replacementInfos.substituteId = null;
+                    this.__replacementInfos.substituteFileType = null;
+                    this.__replacementInfos.substituteMediaType = null;
                 }
                 else
                 {
@@ -223,7 +249,8 @@ class MediaReplacementPopupHandler extends SubTool
                     cardSelected.addClass('selected');
 
                     this.__replacementInfos.substituteId = cardSelected.data('media_id');
-                    this.__replacementInfos.substituteType = cardSelected.data('media_id');
+                    this.__replacementInfos.substituteFileType = cardSelected.data('file_type');
+                    this.__replacementInfos.substituteMediaType = cardSelected.data('media_type');
 
                     cardSelected.find('.choice_substitute').prop('checked', true);
 
@@ -254,27 +281,56 @@ class MediaReplacementPopupHandler extends SubTool
         {
             this.__$location.find('.validate_remplacement_btn').on('click.onClickOnRemplacementValidationButton', e => {
 
-                if(this.__$location.find('.remplacement_date_start').val() === "")
-                    this.__$location.find('.remplacement_date_start').addClass('empty');
+                this.__$location.find('.error').text('');
+                this.__$location.find('.form_input').removeClass('invalid');
+                this.__$location.find('.media_substitute_name').removeClass('invalid');
+                this.__replacementInfos.remplacementDate.start = this.__$location.find('.remplacement_date_start').val();
+                this.__replacementInfos.remplacementDate.end = this.__$location.find('.remplacement_date_end').val();
+                let isValid = true;
 
-                else
-                    this.__$location.find('.remplacement_date_start').removeClass('empty');
+                if(this.__$location.find('.media_substitute_name').text() === "")
+                {
+                    isValid = false;
+                    this.__$location.find('.media_substitute_name').addClass('invalid');
+                    this.__$location.find('.media_substitute_name').parent().prev('.error').text( this.__errors.empty_field );
+                }
+
+                if(this.__$location.find('.remplacement_date_start').val() === "")
+                {
+                    isValid = false;
+                    this.__$location.find('.remplacement_date_start').addClass('invalid');
+                    this.__$location.find('.remplacement_date_start').parent().prev('.error').text( this.__errors.empty_field );
+                }
 
                 if(this.__$location.find('.remplacement_date_end').val() === "")
-                    this.__$location.find('.remplacement_date_end').addClass('empty');
-
-                else
-                    this.__$location.find('.remplacement_date_end').removeClass('empty');
-
-                if(this.__replacementInfos.substituteId !== null && this.__$location.find('.remplacement_date_start').val() !== "" && this.__$location.find('.remplacement_date_end').val() !== "")
                 {
-
-                    this.__replacementInfos.remplacementDate.start = this.__$location.find('.remplacement_date_start').val();
-                    this.__replacementInfos.remplacementDate.end = this.__$location.find('.remplacement_date_end').val();
-
-                    if(confirm(`Le média '${ this.__currentMediaInfos.name }' sera remplacé puis archivé ! Êtres-vous sûr de vouloir continuer ?`))
-                        this.sendRemplacementDatas();
+                    isValid = false;
+                    this.__$location.find('.remplacement_date_end').addClass('invalid');
+                    this.__$location.find('.remplacement_date_end').parent().prev('.error').text( this.__errors.empty_field );
                 }
+
+                if(this.__replacementInfos.substituteId === null || this.__replacementInfos.substituteId === "")
+                {
+                    isValid = false;
+                    console.error("Erreur !");
+                }
+
+                /*if((new Date(this.__replacementInfos.remplacementDate.end)) < (new Date()))
+                {
+                    isValid = false;
+                    this.__$location.find('.remplacement_date_end').addClass('invalid');
+                    this.__$location.find('.remplacement_date_end').parent().prev('.error').text( this.__errors.remplacement_date_is_past );
+                }*/
+
+                if( (new Date(this.__replacementInfos.remplacementDate.end)) < (new Date(this.__replacementInfos.remplacementDate.start)) )
+                {
+                    isValid = false;
+                    this.__$location.find('.remplacement_date_end').addClass('invalid');
+                    this.__$location.find('.remplacement_date_end').parent().prev('.error').text( this.__errors.remplacement_date_end_is_past );
+                }
+
+                if( (isValid) && (confirm(`Le média '${ this.__currentMediaInfos.name }' sera remplacé puis archivé ! Êtres-vous sûr de vouloir continuer ?`)) )
+                    this.sendRemplacementDatas();
 
             })
         }
@@ -288,11 +344,12 @@ class MediaReplacementPopupHandler extends SubTool
 
     sendRemplacementDatas()
     {
-
-        $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
+        /*console.log(this.__replacementInfos); debugger*/
+        super.changeLoadingPopupText("Remplacement en cours...");
+        super.showLoadingPopup();
 
         $.ajax({
-            url: `/replace/media/in/mediatheque`,
+            url: `/replace/media`,
             type: "POST",
             data: {remplacementDatas: this.__replacementInfos},
             success: (response) => {
@@ -303,12 +360,61 @@ class MediaReplacementPopupHandler extends SubTool
                 alert("Error !");
             },
             complete: () => {
-                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+                super.hideLoadingPopup();
             }
 
         })
 
     }
+
+    onClickOnFileTypeOrMediaTypeFilter(active)
+    {
+
+        if(active)
+        {
+            this.__$location.find('.filter_by_file_type_media_type_container .filter').on('click.onClickOnFileTypeOrMediaTypeFilter', e => {
+
+                let filter = $(e.currentTarget);
+                this.__$location.find('.media_substitute_name').text('');
+                this.__$mediaSubstitutesContainer.find('.card.selected .choice_substitute').prop('checked', false);
+
+                if(filter.hasClass('filter_by_file_type'))
+                    this.filterSubstituteByFileType( filter.data('target') );
+
+                else if(filter.hasClass('filter_by_media_type'))
+                    this.filterSubstituteByMediaType( filter.data('target') );
+
+            })
+        }
+        else
+        {
+            this.__$location.find('.filter_by_file_type_media_type_container .filter').off('click.onClickOnFileTypeOrMediaTypeFilter');
+        }
+
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} fileType
+     */
+    filterSubstituteByFileType(fileType)
+    {
+        this.__$mediaSubstitutesContainer.find(`.substitute`).addClass('hidden');
+        this.__$mediaSubstitutesContainer.find(`.substitute[data-file_type*='${ fileType }']`).removeClass('hidden');
+    }
+
+    /**
+     *
+     * @param {string} mediaType
+     */
+    filterSubstituteByMediaType(mediaType)
+    {
+        this.__$mediaSubstitutesContainer.find(`.substitute`).addClass('hidden');
+        this.__$mediaSubstitutesContainer.find(`.substitute[data-media_type*='${ mediaType }']`).removeClass('hidden');
+    }
+
+
 
     enable()
     {
@@ -317,6 +423,7 @@ class MediaReplacementPopupHandler extends SubTool
             .onClickOnPopupCloseButton(true)
             .onClickOnSubstitute(true)
             .onClickOnRemplacementValidationButton(true)
+            .onClickOnFileTypeOrMediaTypeFilter(true)
         ;
     }
 
@@ -327,6 +434,7 @@ class MediaReplacementPopupHandler extends SubTool
             .onClickOnPopupCloseButton(false)
             .onClickOnSubstitute(false)
             .onClickOnRemplacementValidationButton(false)
+            .onClickOnFileTypeOrMediaTypeFilter(false)
         ;
     }
 

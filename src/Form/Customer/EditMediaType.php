@@ -47,16 +47,16 @@ class EditMediaType extends AbstractType
 
                 ])
 
-                ->add('diffusionStart', DateTimeType::class,[
+                ->add('diffusionStart', DateType::class,[
                     'widget' => 'single_text',
-                    'input_format' => 'd-m-Y H:i',
+                    'input_format' => 'd-m-Y',
                     'label' => 'Début',
                     'choice_translation_domain' => true,
                 ])
 
-                ->add('diffusionEnd', DateTimeType::class,[
+                ->add('diffusionEnd', DateType::class,[
                     'widget' => 'single_text',
-                    'input_format' => 'd-m-Y H:i',
+                    'input_format' => 'd-m-Y',
                     'label' => 'Fin',
                     'choice_translation_domain' => true,
                 ])

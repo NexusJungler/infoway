@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des rôles{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('edit_all_roles') }}
+{% endblock %}
+
+{% block body %}
+
+    <main class="main main_setting">
+        <div class="main-content">
+
+            <section class="jumbotron">
+
+                {% block settingtitle %}
+                    {% include 'home/home-info.html.twig' with { 'pageTitle': 'Configuration', 'sousTitle': 'Utilisateur' } %}
+                {% endblock %}
+
+                {% block wrapper %}
+                    {% include 'wrapper/wrapper_settings.html.twig'  %}
+                {% endblock %}
+
+            </section>
+
+            <section class="wrapper_tabcontent">
+
+                <article id="setting-user" class="tab-content current constent-user">
+
+                    <div class="tab-content-title">
+
+                        <div class="container">
+                            <i class="fas fa-user-circle account_icon"></i>
+                            <h3 class="title">Gestion Des Rôles</h3>
+                        </div>
+
+                        <div class="container">
+                            <button type="button" class="btn delete_role_btn" disabled><i class="fas fa-trash"></i>Supprimer</button>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-content-body">
+
+                        <div class="roles_list_container">
+
+                            <span class="list_title">Rôles</span>
+
+                            <table class="roles_list">
+
+                                <thead>
+                                    <tr>
+                                        <th> <input type="checkbox" class="select_all_roles_checkbox"> Niveau hiérarchique </th>
+                                        <th> Nom </th>
+                                        <th> Description </th>
+                                        <th> Ordre </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {{ form_start(editRolesForm) }}
+
+                                        {% for role in editRolesForm.roles %}
+                                            {% set currentRole = role.vars.data  %}
+                                            <tr data-role_id="{{ currentRole.id }}">
+                                                <td><input type="checkbox" class="select_role_checkbox"> {{ form_widget(role.level,{ 'attr': {'class': 'role_level form_input'} }) }}</td>
+                                                <td>{{ form_widget(role.name,{ 'attr': {'class': 'role_name form_input'} }) }}</td>
+                                                <td>{{ form_widget(role.description,{ 'attr': {'class': 'role_description form_input'} }) }}</td>
+                                                <td>
+
+                                                    <div class="role_order_modify_btn_container hidden">
+                                                        <i class="fas fa-arrow-up"></i>
+                                                        <i class="fas fa-arrow-down"></i>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+
+                                    {{ form_end(editRolesForm) }}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div class="roles_permissions_list_container">
+
+                            <span class="list_title">Permissions</span>
+                            <button type="button"class="btn show_role_permissions_table_btn">Afficher</button>
+
+                            <table class="roles_permissions_list hidden">
+
+                                <thead>
+                                    <tr>
+                                        <th>Utilisation dans l'application</th>
+                                        {% for role in roles %}
+                                            <th>{{ role.name }}</th>
+                                        {% endfor %}
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section >
+
+            {% include "/popups/loading_popup/popup_loading.twig" %}
+
+            {% include "/popups/deleting/popup_delete.html.twig" %}
+
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('edit_all_roles') }}
+{% endblock javascripts %}

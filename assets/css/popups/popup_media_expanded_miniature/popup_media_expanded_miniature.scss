@@ -1,0 +1,31 @@
+.popup_media_expanded_miniature_container{
+
+  &.is_open{
+    .popup{
+      width: 90%;
+      max-height: 75%;
+      .popup_header{
+        height: 10%;
+        border: 1px solid #899CA4;
+        border-radius: 7px 7px 0 0;
+
+        .popup_header_item{
+          &:first-child{
+            width: 80%;
+          }
+        }
+      }
+
+      .popup_body{
+        height: 65%;
+
+        img,video {
+          height: 100%;
+        }
+
+      }
+
+    }
+  }
+
+}

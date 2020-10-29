@@ -2,40 +2,44 @@
     {{ form_start(form) }}
 {% endif %}
 
-<div class="col top">
+<div class="top row">
     <div class="left_side side">
 
         {% if media is defined %}
-        <div class="media_miniature_container media_{{media.orientation }} " data-media_id="{{ media.id }} " >
+
+        <div class="media_miniature_container media_{{media.orientation | lower }} " data-customer="{{ app.session.get('current_customer').name| lower }}" data-miniature_medium_exist="{{ (miniature_medium_exist is same as(true)) ? "true" : "false" }}"
+        data-media_id="{{ media.id }}" data-media_type="{{ media.mediaType }}" data-file_type="{{ fileType }}" data-miniature_low_exist="{{ (miniature_low_exist is same as(true)) ? "true" : "false" }}" >
+
         {% else %}
         <div class="media_miniature_container" >
         {% endif %}
 
-            <div class="media_container_{{ (media_type is defined and media_type is same as('image')) ? 'img' : 'video' }}">
+            <div class="media_container_{{ (fileType is defined and fileType is same as('image')) ? 'img' : 'video' }}">
 
-                {% if miniature_low_exist is defined and miniature_low_exist is same as(false) %}
+                {% if media is defined %}
 
-                    <img class="media_miniature miniature_{{ media_type }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
+                    {% if miniature_medium_exist is defined and miniature_medium_exist is same as(false) %}
 
-                {% else %}
+                        <img class="media_miniature miniature_{{ fileType }}" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">
 
-                    {% if media_type is defined and media_type is same as('image') %}
+                    {% else %}
 
-                         <div class="media_container_arrows">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                         </div>
+                             <div class="media_container_arrows">
+                                <i class="fas fa-expand-arrows-alt show_expanded_miniature"></i>
+                             </div>
 
-                          <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/images/medium/{{ media.id }}.png"
-                          alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/images/medium/{{ media.id }}.png">
+                        {% if fileType is same as('image') %}
 
-                    {% elseif media_type is defined and media_type is same as('video') %}
+                              <img class="media_miniature miniature_image" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/image/{{ media.mediaType }}/medium/{{ media.id }}.png"
+                              alt="/miniatures/{{ app.session.get('current_customer').name | lower }}/image/{{ media.mediaType }}/medium/{{ media.id }}.png">
 
-                        <div class="media_container_arrows">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </div>
-                        <video class="media_miniature miniature_video">
-                            <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/videos/medium/{{ media.id }}.mp4" type="{{ media.mimeType }}">
-                        </video>
+                        {% else %}
+
+                                <video class="media_miniature miniature_video">
+                                    <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/video/{{ media.mediaType }}/medium/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                                </video>
+
+                        {% endif %}
 
                     {% endif %}
 
@@ -61,7 +65,7 @@
 
             </div>
 
-            <div class="container_body {{ (app.request.attributes.get('_route') is same as('media::edit')) ? 'edit' : '' }}">
+            <div class="container_body date_edit {{ (app.request.attributes.get('_route') is same as('media::edit')) ? 'edit' : '' }}">
                 {% if app.request.attributes.get('_route') is same as('media::edit') %}
                     <div class="media_diff_start_container container_body_child">
                         <div class="label_container">
@@ -129,9 +133,7 @@
                     </thead>
                     <tbody class="media_incrustations_list">
                         {% if media_incrustations is defined %}
-
                             {% for productName, incrusteTypes in media_incrustations %}
-
                                 <tr>
                                     <td>{{ productName }}</td>
                                     <td>
@@ -147,9 +149,7 @@
                                         <span class="custom_checkbox"></span>
                                     </td>
                                 </tr>
-
                             {% endfor %}
-
                         {% endif %}
                     </tbody>
                 </table>
@@ -162,14 +162,14 @@
 </div>
 
 {% if app.request.attributes.get('_route') is same as('media::edit') %}
-    <div class="col">
+    <div class="col btn_media_update_image">
         <div class="media_update_btn_container">
-            <button type="button" class="btn">Mettre à jour le média</button>
+            <button type="button" class="btn media_replacement_btn">Mettre à jour le média</button>
         </div>
     </div>
 {% endif %}
 
-<div class="col middle">
+<div class="row middle">
 
     <div class="left_side side">
 
@@ -203,11 +203,30 @@
             </div>
             <div class="container_child media_criterions_container">
 
-                {% if media_criterions is defined %}
+                {% if app.request.attributes.get('_route') is not same as('media::edit') and mediaCriterions is defined %}
 
-                    {% for criterion in media_criterions %}
+                    {% for criterionName in mediaCriterions %}
 
-                        <span>{{ criterion }}</span>
+                        <span>{{ criterionName }}</span>
+
+                    {% endfor %}
+
+                {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
+
+                    {% set criterionsDisplayed = [] %}
+
+                    {% for product in form.products %}
+
+                        {% set currentProduct = product.vars.data  %}
+
+                        {% for criterion in currentProduct.criterions %}
+
+                            {% if criterion not in criterionsDisplayed %}
+                                {% set criterionsDisplayed = criterionsDisplayed | merge([criterion]) %}
+                                <span class="{{ (product.vars.checked is same as(false)) ? 'hidden': '' }}" data-product_id="{{ currentProduct.id }}">{{ criterion.name }}</span>
+                            {% endif %}
+
+                        {% endfor %}
 
                     {% endfor %}
 
@@ -224,23 +243,31 @@
             </div>
             <div class="container_child media_tags_container">
 
-                {% if media_tags is defined %}
+                {% if app.request.attributes.get('_route') is not same as('media::edit') and media is defined %}
 
-                    {% for tag in media_tags %}
-                        <p class="tag container-tags">
+                    {% for tag in media.tags %}
+
+                        <p class="tag container-tags" data-tag_id="{{ tag.id }}">
                             <span class="mini-cercle" style="background: {{tag.color}};"></span>
                             <span class="current-tags-name">{{ tag.name }}</span>
                         </p>
 
+                    {% endfor %}
+
+                {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
+
+                    {% for tag in form.tags %}
+
+                        {% set currentTag = tag.vars.data  %}
+
+                        <p class="tag container-tags {{ (tag.vars.checked is same as(false)) ? 'hidden': '' }}" data-tag_id="{{ currentTag.id }}">
+                            <span class="hidden">{{ form_widget(tag, { 'attr': { 'class': 'tag_checkbox' } }) }}</span>
+                            <span class="mini-cercle" style="background: {{currentTag.color}};"></span>
+                            <span class="current-tags-name">{{ form_label(tag) }}</span>
+                        </p>
 
                     {% endfor %}
 
-                {% endif %}
-
-                {% if app.request.attributes.get('_route') is same as('media::edit') %}
-                    <div style="display: none">
-                        {{ form_widget(form.tags) }}
-                    </div>
                 {% endif %}
 
             </div>
@@ -252,11 +279,33 @@
             </div>
             <div class="container_child media_allergens_container">
 
-                {% if media_allergens is defined %}
 
-                    {% for allergen in media_allergens %}
-                        <span>{{ allergen }}</span>
+                {% if app.request.attributes.get('_route') is not same as('media::edit') and mediaAllergens is defined %}
+
+                    {% for allergenName in mediaAllergens %}
+
+                        <span>{{ allergenName }}</span>
+
                     {% endfor %}
+
+                {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
+
+                    {#{% set allergensDisplayed = [] %}
+
+                    {% for product in form.products %}
+
+                        {% set currentProduct = product.vars.data  %}
+
+                        {% for criterion in currentProduct.criterions %}
+
+                            {% if criterion not in criterionsDisplayed %}
+                                {% set criterionsDisplayed = criterionsDisplayed | merge([criterion]) %}
+                                <span class="{{ (product.vars.checked is same as(false)) ? 'hidden': '' }}" data-product_id="{{ currentProduct.id }}">{{ criterion.name }}</span>
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% endfor %}#}
 
                 {% endif %}
 
@@ -290,31 +339,31 @@
             </div>
             <div class="container_body table">
                 <table class="table-custome">
-
                     <tbody class="media_products_list tbody tbody-content scrollbar-table">
+                        {% if media is defined and app.request.attributes.get('_route') is not same as('media::edit') and media is defined %}
 
-                    {% if media is defined and app.request.attributes.get('_route') is not same as('media::edit') %}
+                            {% for product in media.products %}
 
-                        {% for product in media.products %}
+                                <tr data-product_id="{{ product.id }}">
+                                    <td>{{ product.name }}</td>
+                                </tr>
 
-                            <tr data-product_id="{{ product.id }}">
-                                <td>{{ product.name }}</td>
-                            </tr>
+                            {% endfor %}
 
-                        {% endfor %}
+                        {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
 
-                    {% elseif app.request.attributes.get('_route') is same as('media::edit') %}
+                            {% for product in form.products %}
 
-                        {% for product in form.products %}
+                                {% set currentProduct = product.vars.data  %}
 
-                            <tr data-product_id="{{ product.vars.name }}" class="{{ (product.vars.data is same as(false)) ? 'hidden': '' }}">
-                                <td class="hidden">{{ form_widget(product, { 'attr': { 'class': 'product_checkbox' } }) }}</td>
-                                <td class="product_name">{{ form_label(product) }}</td>
-                            </tr>
+                                <tr data-product_id="{{ product.vars.name }}" class="{{ (product.vars.checked is same as(false)) ? 'hidden': '' }}">
+                                    <td class="hidden">{{ form_widget(product, { 'attr': { 'class': 'product_checkbox' } }) }}</td>
+                                    <td class="product_name">{{ form_label(product) }}</td>
+                                </tr>
 
-                        {% endfor %}
+                            {% endfor %}
 
-                    {% endif %}
+                        {% endif %}
 
                     </tbody>
 
@@ -341,9 +390,10 @@
 
 {% if app.request.attributes.get('_route') is same as('media::edit') %}
 
-<div class="col save_media_edit_btn_container">
-    <button type="submit" class="btn save_media_edit_btn">Valider</button>
-</div>
+    <div class="save_media_edit_btn_container">
+        <button type="button" class="btn btn_back">Annuler</button>
+        <button type="submit" class="btn save_media_edit_btn">Modifier</button>
+    </div>
 
     {{ form_end(form) }}
 

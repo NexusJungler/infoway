@@ -8,23 +8,18 @@
                 <div class="item icon-container">
                     <i class="fas fa-hourglass-half icon"></i>
                 </div>
-
                 <div class="item title_container">
                     <p class="title">Médias archivés</p>
                 </div>
-
                 <div class="item medias_number_container">
                     <p class="medias_number">{{ archivedMedias['number'] }}</p>
                 </div>
-
             </div>
 
             <div class="right_side popup_header_item">
-
                 <div class="item close_popup_button_container">
                     <button type="button" class="close_modal_button">X</button>
                 </div>
-
             </div>
 
         </div>
@@ -36,118 +31,116 @@
                 <table class="table-custome">
 
                     <thead class="thead-content">
-                    <tr>
-                        <th></th>
-                        <th>Médias</th>
-                        <th>Caractéristiques</th>
-                        <th>Nom</th>
-                        <th>Critères affectés</th>
-                        <th>TAGS affectés</th>
-                        <th>Produits associés</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>Médias</th>
+                            <th>Caractéristiques</th>
+                            <th>Nom</th>
+                            <th>Critères affectés</th>
+                            <th>TAGS affectés</th>
+                            <th>Produits associés</th>
+                        </tr>
                     </thead>
 
                     <tbody class="archived_medias_list tbody-content scrollbar">
+                        {% for media in archivedMedias['medias'] %}
 
-                    {% for media in archivedMedias['medias'] %}
+                            <tr>
+                                <td class="select_media_col">
+                                    <div class="media_selection_container container">
+                                        <label class="container-input">
+                                            <input type="checkbox" class="select_media container_child" data-media="{{ media.id }}">
+                                            <span class="container-input-rdo"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="media_miniature_col">
+                                    <div class="media_miniature_container container">
+                                        {% if media.file_type is same as('image') %}
 
-                        <tr>
-                            <td class="select_media_col">
-                                <div class="media_selection_container container">
-                                    <label class="container-input">
-                                        <input type="checkbox" class="select_media container_child" data-media="{{ media.id }}">
-                                        <span class="container-input-rdo"></span>
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="media_miniature_col">
-                                <div class="media_miniature_container container">
-                                    {% if media.file_type is same as('image') %}
+                                            <img class="media_miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/image/low/{{ media.id }}.png"
+                                                 alt="/miniatures/{{ app.session.get('current_customer').name| lower }}/image/low/{{ media.id }}.png">
+                                            <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
+                                        {% else %}
 
-                                        <img class="media_miniature" src="/miniatures/{{ app.session.get('current_customer').name| lower }}/image/low/{{ media.id }}.png"
-                                             alt="/miniatures/{{ app.session.get('current_customer').name| lower }}/image/low/{{ media.id }}.png">
-                                        <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
-                                    {% else %}
+                                            <video class="media-miniature container_child" controls>
+                                                <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/video/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
+                                            </video>
+                                            <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="media_characteristics_col">
+                                    <div class="media_characteristics_container container">
+                                        <span>{{ media.width }}*{{ media.height }}px</span> <br>
+                                        <span>{{ media.extension }}</span> <br>
+                                        {% if media.file_type is same as('image') %}
+                                            <span>72dpi</span>
+                                        {% else %}
+                                            <span>{{ media.videoCodec }}</span>
+                                        {% endif%}
+                                    </div>
+                                </td>
+                                <td class="media_name_col">
+                                    <div class="media_name_container container">
+                                        <p class="media_name container_child">{{ media.name }}</p>
+                                    </div>
+                                </td>
+                                <td class="media_associated_criterions_col">
+                                    <div class="media_criterions_container container">
+                                        {% if (media.products.values is empty) or (media.products.values| length is same as(1) and productsCriterions[media.products.values[0].id]['names'] is empty)  %}
 
-                                        <video class="media-miniature container_child" controls>
-                                            <source src="/miniatures/{{ app.session.get('current_customer').name| lower }}/video/low/{{ media.id }}.mp4" type="{{ media.mimeType }}">
-                                        </video>
-                                        <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
-                                    {% endif %}
-                                </div>
-                            </td>
-                            <td class="media_characteristics_col">
-                                <div class="media_characteristics_container container">
-                                    <span>{{ media.width }}*{{ media.height }}px</span> <br>
-                                    <span>{{ media.extension }}</span> <br>
-                                    {% if media.file_type is same as('image') %}
-                                        <span>72dpi</span>
-                                    {% else %}
-                                        <span>{{ media.videoCodec }}</span>
-                                    {% endif%}
-                                </div>
-                            </td>
-                            <td class="media_name_col">
-                                <div class="media_name_container container">
-                                    <p class="media_name container_child">{{ media.name }}</p>
-                                </div>
-                            </td>
-                            <td class="media_associated_criterions_col">
-                                <div class="media_criterions_container container">
-                                    {% if (media.products.values is empty) or (media.products.values| length is same as(1) and productsCriterions[media.products.values[0].id]['names'] is empty)  %}
+                                            <span class="container_child">Aucun critère</span>
 
-                                        <span class="container_child">Aucun critère</span>
+                                        {% else %}
 
-                                    {% else %}
+                                            {% for product in media.products.values %}
 
-                                        {% for product in media.products.values %}
+                                                {% for criterion in productsCriterions[product.id]['names'] %}
+                                                    <span class="container_child">{{ criterion }}</span>
+                                                {% endfor %}
 
-                                            {% for criterion in productsCriterions[product.id]['names'] %}
-                                                <span class="container_child">{{ criterion }}</span>
                                             {% endfor %}
 
-                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="media_associated_tags_col">
+                                    <div class="media_tags_container container">
+                                        {% if media.tags.values is empty %}
+                                            <span class="container_child">Aucun tag</span>
+                                        {% else %}
 
-                                    {% endif %}
-                                </div>
-                            </td>
-                            <td class="media_associated_tags_col">
-                                <div class="media_tags_container container">
-                                    {% if media.tags.values is empty %}
-                                        <span class="container_child">Aucun tag</span>
-                                    {% else %}
+                                            {% for tag in media.tags.values %}
+                                                <p class="container-tags">
+                                                    <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                                    <span class="current-tags-name container_child">{{tag.name }}</span>
+                                                </p>
+                                            {% endfor %}
 
-                                        {% for tag in media.tags.values %}
-                                            <p class="container-tags">
-                                                <span class="mini-cercle" style="background: {{tag.color}};"></span>
-                                                <span class="current-tags-name container_child">{{tag.name }}</span>
-                                            </p>
-                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="media_associated_products_col">
+                                    <div class="media_products_container container scrollbar_popup">
+                                        {% if media.products.values is empty %}
 
-                                    {% endif %}
-                                </div>
-                            </td>
-                            <td class="media_associated_products_col">
-                                <div class="media_products_container container scrollbar_popup">
-                                    {% if media.products.values is empty %}
+                                            <span class="container_child">Aucun produit</span>
 
-                                        <span class="container_child">Aucun produit</span>
+                                        {% else %}
 
-                                    {% else %}
+                                            {% for product in media.products.values %}
+                                                <div class=" media_products_cintainer_bloc">
+                                                    <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
+                                                </div>
+                                            {% endfor %}
 
-                                        {% for product in media.products.values %}
-                                            <div class=" media_products_cintainer_bloc">
-                                                <span class="container_child">{{ product.name }}</span> {% if media.products.values | length > 1 %} <br> {% endif %}
-                                            </div>
-                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
 
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-
-                    {% endfor %}
-
+                        {% endfor %}
                     </tbody>
 
                 </table>

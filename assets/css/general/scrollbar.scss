@@ -3,13 +3,13 @@
 .scrollbar{
     &::-webkit-scrollbar-track{
         -webkit-box-shadow: inset 0 0 0.6rem rgba(0,0,0,0.3);
-        background-color: #F6F6F6  0% 0% no-repeat padding-box;
+        background: #F6F6F6  0 0 no-repeat padding-box;
         border: 0.1rem solid #4D646D;
         border-radius: 1.5rem;
     }
     &::-webkit-scrollbar{
         width: 2.5rem;
-        background-color: #F6F6F6  0% 0% no-repeat padding-box;
+        background: #F6F6F6  0 0 no-repeat padding-box;
         border: 0.1rem solid #4D646D;
         border-radius: 2.5rem;
     }

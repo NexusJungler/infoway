@@ -1,34 +1,33 @@
-/** Function for converting  px to rem **/
-@function rem($size) {
-    $remSize: $size / 16px;
-    @return #{$remSize}rem;
-}
-
 .tab-create-user{
-    margin-left: 2.5%;
-    /* Title */
+    /** Title **/
     .tab-content-title {
-        display: flex;
-        padding-top: 0.5rem;
-        h3{
-            color: #4F9BAE;
-            font: 2.2rem 'Barlow', bold;
-            display: flex;
-            font-weight: 800;
-            &::after {
-                content: '';
-                border-left: 0.15rem solid #4F9BAE;    
-                position: relative;
-                margin: 0.3rem 0.5rem;
-                height: 2rem;
-            }
-        }
-        p{
-            color: #4F9BAE;
-            font: 1.4rem 'Barlow', sans-serif;
-            margin-top: 1.1rem;
+        display: block;
+        &::after {
+            content: '';
+            top: 3.8rem;
+            left: 0;
+            width: 100%;
+            border-bottom: 0.2rem solid #4D646D;
+            position: relative;
+            display: block;
         }
     }
+
+    .create-user_container{
+        margin-top: 7rem;
+    }
+
+    .create-user_title{
+        h3{
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #899CA4;
+            letter-spacing: 0;
+        }
+    }
+
+
+
 
     /** FORM CREER UTILISATEUR **/
     .form-content{

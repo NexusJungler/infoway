@@ -3,12 +3,14 @@ class filterTableSite{
     enable(){
         this.onChangeFilter(true);
         this.chechboxFilterSelect(true);
+        this.chechboxFilterSelectMedia(true);
         this.ClickOpenMenubord(true);
         this.ClickNextMenubord(true);
     }
     disable(){
         this.onChangeFilter(false);
         this.chechboxFilterSelect(false);
+        this.chechboxFilterSelectMedia(false);
         this.ClickOpenMenubord(false);
         this.ClickNextMenubord(false);
     }
@@ -168,6 +170,78 @@ class filterTableSite{
                 // .first().change()
         }else{
             $(".site-btn-filter").off('click.chechboxFilterSelect');
+        }
+    }
+
+    chechboxFilterSelectMedia(active){
+        if(active){
+
+            $(".filter_validation_btn").on("click", function () {
+
+                let checkedSelectMedia = $(".filters_by_associated_data_container input:checked").length;
+
+
+
+                if ( checkedSelectMedia >= 1){
+
+                    $(".table-custome .tbody-content tr ").each((index, tr) => {
+
+                        $(tr).hide();
+
+                        let menuboardValues = $(".filter_by_categories input:checkbox:checked").map( (index, input) => $(input).val() );
+                        let criterionValues =  $(".filter_by_criterion input:checkbox:checked").map( (index, input) => $(input).val() );
+                        let tagsValues = $(".filter_by_tag input:checkbox:checked").map( (index, input) => $(input).val() );
+                        let counter = 0;
+
+                        console.log(menuboardValues);
+
+                        $('.filters_by_associated_data_container .display-content-poste').map( (index, filterCheckboxContainer) => {
+
+                            if( $(filterCheckboxContainer).find('input:checkbox:checked').length > 0 )
+                                counter++;
+                        });
+
+                        let i = 0;
+
+                        if(menuboardValues.length > 0){
+
+                            menuboardValues.each( (index,value) => {
+                                if($(tr).attr("data-categories").indexOf(value) >= 0)
+                                    i++;
+                            });
+                        }
+
+                        if(criterionValues.length > 0){
+
+                            criterionValues.each( (index,value) => {
+                                if($(tr).attr("data-product_criterions").indexOf(value) >= 0)
+                                    i++;
+                            });
+                        }
+
+                        if(tagsValues.length > 0){
+                            tagsValues.each( (index,value) => {
+                                if($(tr).attr("data-tags").indexOf(value) >= 0)
+                                    i++;
+                            });
+                        }
+
+                        if(i === counter)
+                            $(tr).show();
+
+                    });
+
+                }else{
+
+                    $(".table-custome .tbody-content tr").show();
+
+                }
+
+            })
+
+
+        }else{
+            $(".filter_validation_btn").off('click.chechboxFilterSelect');
         }
     }
 

@@ -26,7 +26,7 @@ class AppController extends AbstractController
 //        if($this->getUser() === null)
 //            return $this->redirectToRoute("user::login");
 
-        $customer = [
+        /*$customer = [
             'ARES',
             'Q087',
             'AEAS',
@@ -40,7 +40,7 @@ class AppController extends AbstractController
             'timezone' => 'Europe/Paris',
             'date_format' => 'd-m-Y',
             'clock_format' => 24
-        ];
+        ];*/
 
         $customers = $customerRepository->findAll();
 
@@ -52,8 +52,8 @@ class AppController extends AbstractController
         //dump($location);
 
         return $this->render("home/zone-diffusion.html.twig", [
-            'customer' => $customer,
-            'location' => $location
+            /*'customer' => $customer,
+            'location' => $location*/
         ]);
     }
 

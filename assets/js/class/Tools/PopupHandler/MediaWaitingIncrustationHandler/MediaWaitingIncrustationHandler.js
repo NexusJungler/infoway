@@ -21,6 +21,7 @@ class MediaWaitingIncrustationHandler extends SubTool
             $('#show_media_waiting_incrustation').on('click.onClickOnWaitingListButtonOpenModal', e => {
 
                 this.__$container.addClass('is_open');
+                this.__parent.__popupIsOpen = true;
 
             })
         }
@@ -39,6 +40,7 @@ class MediaWaitingIncrustationHandler extends SubTool
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
 
                 this.__$container.removeClass('is_open');
+                this.__parent.__popupIsOpen = false;
 
             })
         }

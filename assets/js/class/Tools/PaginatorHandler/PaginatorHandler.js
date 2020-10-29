@@ -200,7 +200,7 @@ class PaginatorHandler extends Tool
         {
             $("#medias_sortable_by_date").on("change.onMediasSortableTypeChange", e => {
 
-                const mediasCards = $(".medias_list_container .card");
+                const mediasCards = $(".medias_list_container_cards .card");
 
                 if( $(e.currentTarget).val() === 'asc' || $(e.currentTarget).val() === 'desc' )
                     mediasCards.sort( this.sortByDate('created_date', $(e.currentTarget).val()) );
@@ -211,7 +211,7 @@ class PaginatorHandler extends Tool
                 else
                     debugger
 
-                $(".medias_list_container").html(mediasCards)
+                $(".medias_list_container_cards").html(mediasCards)
 
             })
         }

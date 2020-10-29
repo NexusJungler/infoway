@@ -18,6 +18,11 @@
             height: 75rem;
             max-height: 100%;
             background-color: #FFF;
+
+            .invisible{
+                visibility: hidden;
+            }
+
             .popup_header{
 				padding: 2.8rem;
                 .popup_header_child{
@@ -297,9 +302,9 @@
                                         padding: 1%;
                                         width: 10%;
                                         vertical-align: middle;
-                                        &:nth-child(4){
-                                            width: 6%;
-                                        }
+                                        //&:nth-child(4){
+                                        //    width: 6%;
+                                        //}
                                     }
                                 }
                             }
@@ -311,17 +316,15 @@
                                 display: block;
                                 width: 100%;
                                 font: 1.6rem "Barlow";
-                                //letter-spacing: -0.16px;
                                 color: #283338;
-								//border: 0.1rem solid #F6F6F6;
                                 tr{
                                     height: 12.5rem;
-                                    background: #C0CCD1 0 0 no-repeat padding-box;
+                                    background-color: #C0CCD1 ;
                                     &:nth-child(even){
                                         background-color: #F6F6F6;
                                     }
                                     td{
-                                        //width: 10%;
+                                        width: 10%;
                                         vertical-align: middle;
 
                                         &:nth-child(1){
@@ -331,10 +334,9 @@
                                             }
                                             p{
                                                 white-space: nowrap;
-                                                width: 14rem;
+                                                width: 13rem;
                                                 overflow: hidden;
                                                 text-overflow: ellipsis;
-                                                //text-overflow: clip;
                                                 position: relative;
                                                 left: 1rem;
                                             }
@@ -355,25 +357,23 @@
                                                 }
                                             }
                                         }
-                                        &:nth-child(4){
-                                            width: 6%;
-                                        }
+
                                         &:nth-child(5){
                                             padding: 0 1%;
-                                            width: 11%;
                                             input.form_input{
                                                 font-size: 1.7rem;
+                                                border-radius: 0.6rem;
                                                 border: 0.1rem solid #A4B4BB;
-                                                border-radius: 0.1rem;
-                                                background: #FFFFFF 0 0 no-repeat padding-box;
+                                                background-color: #FFFFFF ;
                                                 color: #343434;
                                                 width: 18rem;
                                             }
 
                                         }
                                         &:nth-child(6){
+
                                             label{
-                                                font: 1.7rem "Barlow";
+                                                font: 1.4rem "Barlow";
                                                 text-transform: uppercase;
                                                 letter-spacing: 0;
                                                 color: #343434;
@@ -391,7 +391,7 @@
                                             }
                                             .diffusion_dates{
                                                 border: 0.1rem solid #A4B4BB;
-                                                border-radius: 0.3rem;
+                                                border-radius: 0.6rem;
                                                 position: relative;
                                                 width: 11rem;
                                                 height: 2.5rem;
@@ -400,11 +400,11 @@
                                                     content: "\f054";
                                                     font-family: FontAwesome, serif;
                                                     position: absolute;
-                                                    padding: 0.2rem 0.4rem 0.1rem 0.3rem;
+                                                    padding: 0.2rem 0.5rem;
                                                     text-align: center;
                                                     border-radius: 0.2rem;
-                                                    font-size: 1.4rem;
-                                                    right: 0.3rem;
+                                                    font-size: 1.5rem;
+                                                    right: 0.2rem;
                                                     z-index: 1;
                                                     transform: rotate(90deg);
                                                     color: white;
@@ -412,6 +412,14 @@
                                                     cursor: pointer;
                                                 }
                                             }
+                                        }
+                                        &:nth-child(8){
+                                            padding-top: 1rem;
+                                            vertical-align: inherit;
+                                        }
+                                        &:nth-child(9){
+                                            padding-top: 1rem;
+                                            vertical-align: inherit;
                                         }
                                     }
                                 }
@@ -432,7 +440,7 @@
 
                                 .products_affectation_container, .tags_affectation_container{
 
-                                    input[type=radio], label{
+                                    input[type=checkbox], label{
                                         display: none;
                                     }
 

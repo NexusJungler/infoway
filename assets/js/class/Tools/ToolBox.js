@@ -12,6 +12,7 @@ import AnimateTool from "./AnimationTool/AnimateTool";
 import MediathequeActionButtonHandler from "./MediathequeActionButtonHandler/MediathequeActionButtonHandler";
 import MediaReplacementPopupHandler from "./PopupHandler/MediaReplacementPopupHandler/MediaReplacementPopupHandler";
 import DraggableTool from "./DraggableTool/DraggableTool";
+import RolePermissionHandler from "./RolePermissionHandler/RolePermissionHandler";
 
 class ToolBox
 {
@@ -34,15 +35,26 @@ class ToolBox
     {
         this.__tools = [
             new CustomerCreatorHandler(),
-            //new ArchivedMediasHandlerTool(),
             new PaginatorHandler(),
             new FilterMediasTool(),
             new PopupHandler(),
             new MediathequeActionButtonHandler(),
             new AnimateTool(),
-            new MediaReplacementPopupHandler(),
             new DraggableTool(),
+            new RolePermissionHandler(),
         ];
+    }
+
+    activeTools(...toolNames)
+    {
+
+        toolNames.forEach(toolName => {
+
+            this.activeTool(toolName);
+
+        })
+
+        return this;
     }
 
     activeTool(toolName)
@@ -53,6 +65,9 @@ class ToolBox
 
         if(this.toolIsRegistered(toolName))
         {
+            /*console.log(toolName);
+            console.log(this.__tools);
+            console.log(this.__tools[ this.getToolIndex(toolName) ]); debugger*/
             this.__tools[ this.getToolIndex(toolName) ].setToolBox(this);
             this.__tools[ this.getToolIndex(toolName) ].enable();
         }
@@ -77,6 +92,18 @@ class ToolBox
                 throw new Error(`'${tool.getName()}' tool is not registered !`);
 
         } );
+
+        return this;
+    }
+
+    disableTools(...toolNames)
+    {
+
+        toolNames.forEach( toolName => {
+
+            this.disableTool(toolName);
+
+        } )
 
         return this;
     }

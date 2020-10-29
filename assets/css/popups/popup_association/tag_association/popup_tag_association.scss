@@ -4,8 +4,8 @@
         transition: none;
         .popup {
             margin-top: 10%;
-            width: 40%;
-            height: 25%;
+            width: 42%;
+            height: 45%;
             transition: none;
             .popup_body{
                 height: 75%;
@@ -31,7 +31,7 @@
                 align-items: center;
                 .container_body{
                     height: 30rem;
-                    max-height: 26.5rem;
+                    max-height: 29rem;
                     display: block;
                     overflow: auto;
                     width: 100%;
@@ -76,7 +76,6 @@
                 }
             }
             .btn-add-container-tag{
-                //padding: 0.1rem 0.5rem;
                 height: 2.7rem;
                 box-shadow: 0.2rem 0.2rem 0.2rem #00000029;
                 border: 1px solid #4D646D;
@@ -90,7 +89,6 @@
                             color: #2598AE;
                         }
                     }
-
                 }
                 .mini-cercle{
                     background-color: white;
@@ -115,7 +113,7 @@
         }
         .popup_footer{
             padding: 1rem;
-            height: 15%;
+            height: 12%;
             background: #EBEBEB;
         }
     }

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\ImageRepository")
  */
-class Image extends Media
+class Image extends MediaDiffusable
 {
 
     public function __construct()

@@ -39,7 +39,16 @@ class RoleRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getAllRolesOrderedByLevel(string $order = "ASC")
+    {
 
+        return $this->createQueryBuilder('r')
+                    ->orderBy('r.level', $order)
+                    ->getQuery()
+                    ->getResult()
+            ;
+
+    }
 
 
     // /**

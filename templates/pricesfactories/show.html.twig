@@ -7,7 +7,6 @@
     {{ encore_entry_link_tags('show_factories') }}
 {% endblock %}
 
-
 {% block body %}
     <main class="main main_produits">
         <div class="main-content">
@@ -25,7 +24,7 @@
             </section>
 
             <section class="wrapper_tabcontent">
-                <article id="tab-products" class="tab-content current group-price-content">
+                <div id="tab-products" class="tab-content current group-price-content">
 
                     <article class="display product-display ">
 
@@ -34,7 +33,7 @@
                             <article class="display-content-columns">
 
                                 <div class="display-content-poste">
-                                    <button type="button" class="drop-btn" >Afficher des colonnes <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                    <button type="button" class="drop-btn" >Afficher des colonnes <span class="drop-btn-icone"><i class="fas fa-angle-down"></i></span></button>
                                     <div class="display-content-down">
                                         <div class="product-select-col">
                                             <label class="mutliselect-chkbox"> Tags optionnels
@@ -71,7 +70,6 @@
                                 <p>Groupe : </p>
                                 <a class="btn" href="{{ path('app:create-product') }}" role="button"><i class="fas fa-plus"></i>Type de prix</a>
                                 <a class="btn" href="{{ path('pricesfactory::create') }}" role="button"><i class="fas fa-plus"></i>Ajouter</a>
-                                {# <button type="button" class="btn add-table"><i class="fas fa-plus"></i>Ajouter</button> #}
                                 <button type="button" class="btn duplicate-table"><i class="fas fa-plus"></i>Dupliquer</button>
                                 <button type="button" class="btn modified-table" id="edit"><i class="far fa-edit"></i>Modifier</button>
                                 <button type="button" class="btn delete-table" id="delete"><i class="fas fa-trash"></i>Supprimer</button>
@@ -114,7 +112,7 @@
                                                 <td>EURO</td>
                                                 <td><i class="fa fa-download" aria-hidden="true"></i></td>
                                                 <td class="site">
-                                                    <button type="bitton" class="btn"><i class="fas fa-arrow-right"></i></button>
+                                                    <button type="button" class="btn"><i class="fas fa-arrow-right"></i></button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -136,44 +134,42 @@
                                             </tr>
                                         </thead>
                                         <tbody class="tbody tbody-content">
-                                                <tr>
-                                                    <td class="site">
-                                                        <p>
-                                                            <span>Test</span>
-                                                            {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
-                                                        </p>
-                                                    </td>
-                                                    <td>Dumbea</td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    <td class="site">
-                                                        <p>
-                                                            <span>Test</span>
-                                                            {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
-                                                        </p>
-                                                    </td>
-                                                    <td>Dumbea</td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    <td class="site">
-                                                        <p>
-                                                            <span>Test</span>
-                                                            {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
-                                                        </p>
-                                                    </td>
-                                                    <td>Dumbea</td>
-                                                    
-                                                </tr>
+                                            <tr>
+                                                <td class="site">
+                                                    <p>
+                                                        <span>Test</span>
+                                                        {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
+                                                    </p>
+                                                </td>
+                                                <td>Dumbea</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="site">
+                                                    <p>
+                                                        <span>Test</span>
+                                                        {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
+                                                    </p>
+                                                </td>
+                                                <td>Dumbea</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="site">
+                                                    <p>
+                                                        <span>Test</span>
+                                                        {# <input type="checkbox" name="sites[{{ site.id }}]" class="site"> #}
+                                                    </p>
+                                                </td>
+                                                <td>Dumbea</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </form>
                             </div>
                         </div>
-                        
-                        
-                        <button id="display_prices" class="btn"><p class='btn-text-show'>Afficher les prix </p></button>
+
+                        <button id="display_prices" class="btn"><span class='btn-text-show'>Afficher les prix </span></button>
 
                         <section id="display_prices">
                             <form method="post" action="{{ path('pricesfactories::saveprices') }}">
@@ -184,11 +180,11 @@
 
                     </article>
 
-                </article>
+                </div>
             </section>
 
         </div>    
-    <main>
+    </main>
     
 
     {% block javascripts %}

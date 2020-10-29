@@ -20,7 +20,7 @@
         display: flex
     }
     .home_info-title{
-        font-family: "barlow";
+        font-family: "barlow",sans-serif;
         font-size: 2.7rem;
         font-style: normal;
         color: #306D7C;
@@ -70,7 +70,22 @@
         font: 2.5rem 'Barlow';
         border: 0.1rem solid #899CA4;
         padding: 1.5rem;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
+        background: #FFFFFF 0 0 no-repeat padding-box;
+        p {
+            position: relative;
+        }
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+
+    .company_diffusion{
+        width: 50%;
+        margin-right: 5em;
+        font: 2.5rem 'Barlow';
+        border: 0.1rem solid #899CA4;
+        padding: 1.5rem;
+        background: #FFFFFF 0 0 no-repeat padding-box;
         p {
             position: relative;
         }
@@ -105,7 +120,7 @@
         flex-wrap: wrap;
         padding: 2rem 1rem 2rem 2rem;
         width: 100%;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
+        background: #FFFFFF 0 0 no-repeat padding-box;
         img{
             width: 3.25em;
         }
@@ -138,6 +153,19 @@
     }
 }
 
+
+/** home admin **/
+
+.home-admin{
+
+    .company{
+        .company_diffusion{
+            display: flex;
+            width: 60%;
+        }
+    }
+
+}
 
 /** Zone de diffusion **/
  .home-table{
@@ -174,34 +202,34 @@
              height: 8.25rem;
              overflow: auto;
              border: 0.06rem solid #C0CCD1;
-             border-top: 0rem;
+             border-top: 0;
              z-index: 1;
          }
      }
 
      .home-table-left{
-         margin-right: 50px;
-         max-width: 840px;
+         margin-right: 5rem;
+         max-width: 84rem;
 
          .menu-dropdown-table{
-             height: 630px;
+             height: 63rem;
 
              .menu-list-table{
                  padding-left: 0;
                  max-width: 100%;
-                 width: 850px;
-                 border-radius: 6px 6px 0px 0px;
+                 width: 85rem;
+                 border-radius: 0.6rem 0.6rem 0 0;
                  .menu-submenu {
-                     padding-bottom: 20px;
-                     background: #F6F6F6 0% 0% no-repeat padding-box;
+                     padding-bottom: 2rem;
+                     background: #F6F6F6 0 0 no-repeat padding-box;
                  }
                  .accordion-toggle{
-                     background: #899CA4 0% 0% no-repeat padding-box;
-                     border-radius: 6px 6px 0px 0px;
-                     margin-bottom: 3px;
-                     font:rem(26px) 'Barlow', medium;
-                     padding: 10px;
-                     border: 1px solid #899CA4;
+                     background: #899CA4 0 0 no-repeat padding-box;
+                     border-radius: 0.6rem 0.6rem 0 0;
+                     margin-bottom: 0.3rem;
+                     font-size: 2.6rem;
+                     padding: 1rem;
+                     border: 0.1rem solid #899CA4;
                      letter-spacing: 0;
                      color: white;
                      &:first-of-type {
@@ -211,9 +239,9 @@
     
                  .accordion-toggle, .accordion-content {
                      cursor: pointer;
-                     font-size: 16px;
+                     font-size: 1.6rem;
                      position: relative;
-                     letter-spacing: 1px;
+                     letter-spacing: 0.1rem;
                  }
                 
                    .accordion-content {
@@ -230,7 +258,7 @@
              .table-custome{
                  .thead-content{
                      &::after{
-                         background: #A4B4BB 0% 0% no-repeat padding-box;
+                         background: #A4B4BB 0 0 no-repeat padding-box;
                          border-bottom: 0;
                      }
                      th{
@@ -248,7 +276,7 @@
                  }
                  .tbody-content{
                      background-color: #DDE1E4;
-                     height: 280px;
+                     height: 28rem;
                      display: block;
                      overflow: auto;
                    
@@ -281,9 +309,9 @@
          .table{
              .table-custome{
                  .thead-content{
-                     background: #FFFFFF 0% 0% no-repeat padding-box;
+                     background-color: #FFFFFF ;
                      &::after{
-                         background: #FFFFFF 0% 0% no-repeat padding-box;
+                         background-color: #FFFFFF ;
                      }
                      th{
                          color: black;
@@ -301,12 +329,12 @@
                  }
                  .tbody-content{
                      background-color: #DDE1E4;
-                     height: 580px;
+                     height: 58rem;
                      display: block;
                      overflow: auto;
                    
                      td{
-                         width: 45px;
+                         width: 4.5rem;
                          text-align: center;
                          border: 0;
                          &:nth-child(1){
@@ -330,7 +358,7 @@
      .table-custome{
          .thead-info,
          .thead-content {
-             background: #A4B4BB 0% 0% no-repeat padding-box;
+             background: #A4B4BB 0 0 no-repeat padding-box;
              th{
                  font: 0.8rem 'Barlow', medium;
                  color: #FFFFFF;
@@ -341,7 +369,7 @@
                      width: 6%;
                  }
                  span{
-                     font: rem(14px) 'Barlow', italic;
+                     font: 1.4rem 'Barlow', italic;
                  }
              }
          }
@@ -359,7 +387,7 @@
                      width: 8%;
                  }
                  input{
-                     margin: 0;
+
                      margin-right: 15px;
                  }
                
@@ -387,7 +415,7 @@
 
 /** tablette **/
 
-@media (max-width: rem(900px))  {
+@media (max-width: 90rem)  {
     .home-information{
         .home_info-contact{
             p{
@@ -399,7 +427,7 @@
                     
                 }
                 span{
-                    margin-left: rem(124px);
+                    margin-left: 12.4rem;
                 }
             }
             .info_contact-hotline {
@@ -410,12 +438,13 @@
     
     .home_enseignes-row{
         .home_enseignes-bloc {
-            padding: rem(5px);
+            padding: 0.5rem;
             .home_enseignes-col{
                 width: 25%;
             }
         }
     }
+
     #company {
         margin: 0;
         .company-bloc{

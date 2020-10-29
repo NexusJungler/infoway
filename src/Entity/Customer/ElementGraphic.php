@@ -6,8 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-
-trait ElementGraphic
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\Customer\ElementGraphicRepository")
+ */
+class ElementGraphic extends Media
 {
 
     /**
@@ -16,14 +18,10 @@ trait ElementGraphic
      */
     private $contexte;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="elementGraphics")
-     */
-    private $products;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        parent::__construct();
     }
 
     public function getContexte(): ?Contexte

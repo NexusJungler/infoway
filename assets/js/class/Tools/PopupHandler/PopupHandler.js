@@ -16,11 +16,14 @@ class PopupHandler extends ParentTool
     {
         super();
         this.__name = this.constructor.name;
+        this.__$container = "";
+        this.__$location = "";
+        this.__popupIsOpen = false;
         this.__subTools = [
             new MediaInfoSheetHandler(),
             new MediaWaitingIncrustationHandler(),
             new UploadHandlerTool(),
-            //new MediaReplacementPopupHandler(),
+            new MediaReplacementPopupHandler(),
             new AssociationPopupHandler(),
             new MediaExpandedMiniatureDisplayHandler(),
             new ArchivedMediasHandlerTool()

@@ -55,7 +55,6 @@ class headerSelect{
 
                    $('.logo__enseigne img').show();
 
-
                    $('p.number__enseigne').show();
                    $('.btn_maj').show();
                    $('#select_site').removeClass('select-pointer_events');

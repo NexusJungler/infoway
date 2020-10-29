@@ -17,31 +17,23 @@ class MediaInfoSheetHandler extends SubTool
     {
         if(active)
         {
+
             this.__parent.getMediasContainer().find('.media_miniature').on('click.onClickOnMediaMiniatureShowMediaInfoSheet', async(e) => {
 
-                if(!this.__toolIsActive)
+                const mediaId = $(e.currentTarget).parents('.card').attr('id').replace('card_', '');
+                const customer = $('.medias_list_container').data('customer');
+
+                if(await this.retrieveMediaAssociatedInfos(mediaId) === true)
                 {
 
-                    this.__toolIsActive = true;
-
-                    const mediaId = $(e.currentTarget).parents('.card').attr('id').replace('media_', '');
-                    const customer = $('.medias_list_container').data('customer');
-
-                    let mediaInfosExist = false;
-
-                    if(!this.mediaInfosIsAlreadyRegistered(mediaId))
-                        mediaInfosExist = await this.retrieveMediaAssociatedInfos(mediaId);
-
-                    else
-                        mediaInfosExist = true;
-
+                    const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
 
                     const isImage = $(e.currentTarget).hasClass('miniature_image');
 
                     let miniature = null;
                     const mediaMediumMiniatureExist = $(e.currentTarget).parents('.media_miniature_container').data('miniature_medium_exist');
 
-                    let path = `/miniatures/${customer}/${ (isImage === true) ? 'images' : 'videos'  }/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
+                    let path = `/miniatures/${customer}/${ (isImage === true) ? 'image' : 'video'  }/${mediaInfos.mediaType}/medium/${mediaId}.${ (isImage === true) ? 'png' : 'mp4' }`;
 
                     if(this.getMediaRegisteredInfos(mediaId).miniatureExist === null)
                     {
@@ -72,35 +64,32 @@ class MediaInfoSheetHandler extends SubTool
 
                     else
                         this.__$location.find('.media_type').text('video');
-
                     this.__$location.find('.media_miniature_container').html( miniature );
-                    this.__$location.find('.media_title').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
+                    this.__$location.find('.media_name').text( $(e.currentTarget).parents('.card').find('.media_name').text() );
                     this.__$location.find('.media_validity_container .media_diff_start').text( $(e.currentTarget).parents('.card').data('media_diff_start') );
                     this.__$location.find('.media_validity_container .media_diff_end').text( $(e.currentTarget).parents('.card').data('media_diff_end') );
 
                     if(this.getDaysDiffBetweenDates($(e.currentTarget).parents('.card').data('media_diff_end'), new Date()) <= 14)
-                        this.__$location.find('.media_validity_container .media_diff_end').addClass('date_coming_soon');
+                    {
+                        this.__$location.find('.media_validity_container .icon_container').addClass('alert_date');
+                        this.__$location.find('.media_validity_container .media_diff_end').addClass('alert_date');
+                    }
 
                     this.__$location.find('.media_infos_bottom .media_name_container .media_name').text( $(e.currentTarget).parents('.card_body').find('.media_name').text() );
 
                     this.showMediaCharacteristics(mediaId, isImage);
 
-                    if(mediaInfosExist)
-                    {
-                        const mediaInfos = this.getMediaRegisteredInfos(mediaId).infos;
-
-                        this.showMediaIncrustes(mediaInfos.media_incrustations);
-                        this.showMediaCriterions(mediaInfos.media_criterions);
-                        this.showMediaTags(mediaInfos.media_tags);
-                        this.showMediaAllergens(mediaInfos.media_allergens);
-                        this.showMediaAssociatedProducts(mediaInfos.media_products);
-                    }
-
-                    $('.popup_loading_container').removeClass('is_open');
-
-                    this.__$container.addClass('is_open');
-
+                    this.showMediaIncrustes(mediaInfos.mediaIncrustations);
+                    this.showMediaCriterions(mediaInfos.mediaCriterions);
+                    this.showMediaTags(mediaInfos.mediaTags);
+                    this.showMediaAllergens(mediaInfos.mediaAllergens);
+                    this.showMediaAssociatedProducts(mediaInfos.mediaProducts);
                 }
+
+                super.hideLoadingPopup();
+
+                this.__$container.addClass('is_open');
+                this.__parent.__popupIsOpen = true;
 
             })
         }
@@ -118,9 +107,8 @@ class MediaInfoSheetHandler extends SubTool
         {
             this.__$location.find('.close_modal_button').on('click.onClickOnPopupCloseButton', e => {
 
-                this.__toolIsActive = false;
-
-                this.__$container.removeClass('is_open');
+                this.__$container.removeClass('is_open')
+                this.__parent.__popupIsOpen = false;
                 this.__$location.find('.media_criterions_container').empty();
                 this.__$location.find('.media_tags_container').empty();
                 this.__$location.find('.media_allergens_container').empty();
@@ -168,7 +156,9 @@ class MediaInfoSheetHandler extends SubTool
     {
 
         $('.popup_loading_container .loading_message').text('Chargement du contenu en cours...');
-        $('.popup_loading_container').addClass('is_open');
+        //$('.popup_loading_container').addClass('is_open');
+
+        super.showLoadingPopup();
 
         return new Promise( (resolve, reject) => {
 
@@ -180,18 +170,26 @@ class MediaInfoSheetHandler extends SubTool
 
                     console.log(response); //debugger
 
-                    this.__mediasInfos.push({ id: mediaId, infos: response, miniatureExist: null });
+                    let index = this.__mediasInfos.findIndex( mediaInfos => mediaInfos.id === mediaId );
+                    if( index > -1 )
+                        this.__mediasInfos[index] = { id: mediaId, infos: response, miniatureExist: null };
+
+                    else
+                        this.__mediasInfos.push({ id: mediaId, infos: response, miniatureExist: null });
 
                     resolve(true);
 
                 },
                 error: (response, status, error) => {
 
+                    console.error(response); debugger
+
                     resolve(false);
 
-                    console.error(response); //debugger
-
                 },
+                complete: () => {
+                    super.hideLoadingPopup();
+                }
             })
 
         } );

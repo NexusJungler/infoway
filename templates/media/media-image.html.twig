@@ -2,6 +2,14 @@
 
 {% block title %} Médiathèque {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('edit_media') }}
+    {% if media_displayed is defined and media_displayed is same as('video_synchro') %}
+
+    {% endif %}
+{% endblock %}
+
 {% block maincontent %}
     <div id="picture" class="tab-content current media-show">
 
@@ -55,9 +63,7 @@
 
         <article class="media-show_container ">
             <div class="filters_container">
-
                 <div class="left_filter_container">
-
                     <div class="filter_by_orientation_or_type_container">
 
                         <div class="filter_media_by_orientation show_only_horizontal_media filter">
@@ -65,51 +71,50 @@
                             <br>
                             <span>Horizontal</span>
                         </div>
-
                         <div class="filter_media_by_orientation show_only_vertical_media filter">
                             <i class="fas fa-mobile"></i>
                             <br>
                             <span>Vertical</span>
                         </div>
-
                         <div class="filter_media_by_type show_only_images filter">
                             <i class="far fa-file-image"></i>
                             <br>
                             <span>Images</span>
                         </div>
-
                         <div class="filter_media_by_type show_only_videos filter">
                             <i class="far fa-file-video"></i>
                             <br>
                             <span>Videos</span>
                         </div>
-
                     </div>
-
 
                     <div class="filters_by_associated_data_container ">
 
-                        <div class="filter_by_categories_container filters_by_associated_data_item">
+                        {% if media_displayed is defined and media_displayed is same as('video_synchro') %}
 
-                            {#<div class="apply_filter_container">#}
-                            {#<input type="checkbox" class="apply_filter" data-target="categories">#}
-                            {#</div>#}
+                        {% endif %}
+
+                        <div class="filter_by_categories_container filters_by_associated_data_item">
 
                             <div class="filter_select_container">
                                 <div class="display-content-columns">
                                     <div class="display-content-poste">
-                                        <button type="button" class="drop-btn "> Catégories  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
+                                        <button type="button" class="drop-btn "> Catégories
+                                            <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
+                                        </button>
+
                                         <div class="display-content-down filter_by_categories">
                                             {% for categorie in categories %}
                                                 <div class="product-select-col">
-                                                    <label class="container-input">{{ categorie.name }}
-                                                        <input type="checkbox" value="{{ categorie.id }}">
-                                                        <span class="container-rdo"></span>
-                                                    </label>
+                                                    <div class="container-input">
+                                                        <input type="checkbox" value="{{ categorie.id }}" id="categorie_{{ categorie.id }}">
+                                                        <label class="container-rdo" for="categorie_{{ categorie.id }}"></label>
+                                                    </div>
+                                                    <label for="categorie_{{ categorie.id }}">{{ categorie.name }}</label>
                                                 </div>
                                             {% endfor %}
-
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -120,57 +125,30 @@
 
                             <div class="filter_by_products_container filters_by_associated_data_item">
 
-
-                                {#<div class="apply_filter_container">#}
-                                {#<input type="checkbox" class="apply_filter" data-target="products">#}
-                                {#</div>#}
-
                                 <div class="filter_select_container">
                                     <div class="display-content-columns">
                                         <div class="display-content-poste">
-                                            <button type="button" class="drop-btn drop-width "> Produits  <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div></button>
-                                            <div class="display-content-down filter_by_categories">
+                                            <button type="button" class="drop-btn drop-width "> Produits
+                                                <div class="drop-btn-icone"><i class="fas fa-angle-down"></i></div>
+                                            </button>
+                                            <div class="display-content-down filter_by_produit">
                                                 {% for product in products %}
                                                     <div class="product-select-col">
-                                                        <label class="container-input">{{ product.name }}
-                                                            <input type="checkbox" value="{{ product.id }}">
-                                                            <span class="container-rdo"></span>
-                                                        </label>
+                                                        <div class="container-input">
+                                                            <input type="checkbox" value="{{ product.id }}" id="product_{{ product.id }}">
+                                                            <label class="container-rdo" for="product_{{ product.id }}" ></label>
+                                                        </div>
+                                                        <label for="product_{{ product.id }}">{{ product.name }}</label>
                                                     </div>
                                                 {% endfor %}
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {#<div class="filter_select_container">#}
-
-                                {#<select class="filter_by_products">#}
-                                {#<option value="" selected>Produits</option>#}
-                                {#{% for product in products %}#}
-                                {#<option value="{{ product.id }}">{{ product.name }}</option>#}
-                                {#{% endfor %}#}
-                                {#</select>#}
-                                {#</div>#}
-
                             </div>
 
                             <div class="filter_by_criterions_container filters_by_associated_data_item">
-
-                                {#<div class="apply_filter_container">#}
-                                    {#<label class="container-input">#}
-                                        {#<input type="checkbox" class="apply_filter" data-target="criterions">#}
-                                        {#<span class="container-rdo"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-
-                                {#<select class="filter_by_criterions">#}
-                                    {#<option value="" selected>Critères</option>#}
-                                    {#{% for criterion in criterions %}#}
-                                        {#<option value="{{ criterion.id }}">{{ criterion.name }}</option>#}
-                                    {#{% endfor %}#}
-                                {#</select>#}
 
                                 <div class="filter_select_container">
 
@@ -189,51 +167,24 @@
                                             </button>
 
                                             <div class="display-content-down filter_by_criterions">
-                                                <div class="product-select-col">
-                                                    <label class="container-input">
-                                                        <input type="checkbox" value="">
-                                                        <span class="container-rdo"></span>
-                                                    </label>
-                                                    <span class="container-criterion">text</span>
-                                                </div>
                                                 {% for criterion in criterions %}
                                                     <div class="product-select-col">
-                                                        <label class="container-input">
-                                                            <input type="checkbox" value="{{ criterion.id }}">
-                                                            <span class="container-rdo"></span>
-                                                        </label>
-                                                        <span class="container-criterion">{{ criterion.name }}</span>
+                                                        <div class="container-input">
+                                                            <input type="checkbox" value="{{ criterion.id }}" id="criterion_{{ criterion.id }}">
+                                                            <label class="container-rdo" for="criterion_{{ criterion.id }}"></label>
+                                                        </div>
+                                                        <label class="container-criterion" for="criterion_{{ criterion.id }}" >{{ criterion.name }}</label>
                                                     </div>
                                                 {% endfor %}
                                             </div>
 
                                         </div>
                                     </div>
-
                                 </div>
 
                             </div>
 
-
-
                             <div class="filter_by_tags_container filters_by_associated_data_item">
-
-                                {#<div class="apply_filter_container">#}
-                                    {#<label class="container-input">#}
-                                        {#<input type="checkbox" class="apply_filter" data-target="tags">#}
-                                        {#<span class="container-rdo"></span>#}
-                                    {#</label>#}
-                                {#</div>#}
-                                {##}
-                                {#<div class="filter_select_container">#}
-                                    {#<select class="filter_by_tags">#}
-                                        {#<option value="" selected>Tags</option>#}
-                                        {#{% for tag in tags %}#}
-                                            {#<option value="{{ tag.id }}">{{ tag.name }}</option>#}
-                                        {#{% endfor %}#}
-                                    {#</select>#}
-                                {#</div>#}
-
 
                                 <div class="display-content-columns">
                                     <div class="display-content-poste apply_filter_container">
@@ -252,16 +203,16 @@
                                             </div>
                                         </button>
 
-                                        <div class="display-content-down filter_by_criterions">
+                                        <div class="display-content-down filter_by_tag">
                                             {% for tag in tags %}
                                                 <div class="product-select-col">
-                                                    <label class="container-input">
-                                                        <input type="checkbox" value="{{ tag.id }}">
-                                                        <span class="container-rdo"></span>
-                                                    </label>
+                                                    <div class="container-input">
+                                                        <input type="checkbox" value="{{ tag.id }}" id="tags_{{ tag.id }}">
+                                                        <label class="container-rdo" for="tags_{{ tag.id }}"></label>
+                                                    </div>
                                                     <p class="container-tags">
                                                         <span class="mini-cercle" style="background: {{tag.color}};"></span>
-                                                        <span class="current-tags-name">{{ tag.name }}</span>
+                                                        <label class="current-tags-name" for="tags_{{ tag.id }}" >{{ tag.name }}</label>
                                                     </p>
                                                 </div>
                                             {% endfor %}
@@ -280,14 +231,11 @@
                         </div>
 
                         <div class="filter_validation_btn_container">
-                            <button class="filter_validation_btn btn" type="button"><i class="fas fa-plus"></i>Filtrer</button>
+                            <button class="filter_media_btn btn" type="button"><i class="fas fa-plus"></i>Filtrer</button>
                         </div>
-
                     </div>
 
                 </div>
-
-
 
                 <div class="right_filter_container">
 
@@ -300,7 +248,6 @@
                                 <option value="alpha_num_desc">Z &rightarrow; A</option>
                             </select>
                         </div>
-
                     </div>
 
                     <div class="pagination_container">
@@ -338,19 +285,6 @@
 
                                         {% endif %}
 
-                                        {#{% if not loop.first and not loop.last %}
-
-                                            {% if i < 3 %}
-                                                <a class="page {% if i is same as(1) %}current_page{% endif %}" href="">{{ i }}</a>
-
-                                            {% else %}
-
-                                                <span>...</span>
-
-                                            {% endif %}
-
-                                        {% endif %}#}
-
                                     {% endfor %}
 
                                     <i class="fas fa-chevron-right page_navigation_arrow next"></i>
@@ -367,14 +301,39 @@
 
             </div>
 
-            <div class="medias_list_container" data-customer="{{ (app.session.get('current_customer') is not null) ? app.session.get('current_customer').name | lower : '' }}">
-                {% for mediaInfos in mediasToDisplayed['medias'] %}
+            <div class="medias_list_container " data-current_location="{{ app.request.attributes.get('_route') }}" data-customer="{{ (app.session.get('current_customer') is not null) ? app.session.get('current_customer').name | lower : '' }}">
 
-                    {% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],
+                {% if media_displayed is defined and media_displayed is same as('element_graphic') %}
+
+                    <div  class="medias_list_container_cards  medias_element_cards">
+                        {% include "/media/cards/_element_graphic_card.html.twig" with { 'element_graphics' : mediasToDisplayed['medias'] } %}
+                    </div>
+
+                {% elseif media_displayed is defined and media_displayed is same as('medias') %}
+
+                    <div class="medias_list_container_cards  medias_cards">
+                        {% include "/media/cards/_media_card.html.twig" with { 'medias' : mediasToDisplayed['medias'] } %}
+                    </div>
+
+                {% elseif media_displayed is defined and media_displayed is same as('video_synchro') %}
+
+                    <div class="medias_list_container_cards medias_synchro_cards" >
+                        {% include "/media/cards/_synchro_card.html.twig" with { 'synchros' : mediasToDisplayed['medias'] } %}
+                    </div>
+
+                {% elseif media_displayed is defined and media_displayed is same as('video_thematic') %}
+
+                    <div class="medias_list_container_cards medias_thematics_cards">
+                        {% include "/media/cards/_video_thematic_card.html.twig" with { 'video_thematics' : mediasToDisplayed['medias'] } %}
+                    </div>
+
+
+                {% endif %}
+
+                {#{% include "/media/_media_card.html.twig" with { 'media': mediaInfos['media'], 'media_products': mediaInfos['media_products'],
                         'media_categories': mediaInfos['media_categories'], 'media_tags': mediaInfos['media_tags'], 'media_criterions': mediaInfos['media_criterions'],
-                        'file_type': mediaInfos['file_type'], 'miniature_low_exist': mediaInfos['miniature_low_exist'], 'miniature_medium_exist': mediaInfos['miniature_medium_exist'] } %}
+                        'file_type': mediaInfos['file_type'], 'miniature_low_exist': mediaInfos['miniature_low_exist'], 'miniature_medium_exist': mediaInfos['miniature_medium_exist'] } %}#}
 
-                {% endfor %}
             </div>
 
         </article>
@@ -399,9 +358,9 @@
 
         {% include "/popups/media_info_sheet/popup_media_info_sheet.twig" %}
 
-        {% include "/popups/deleting_media/popup_delete_media.html.twig" %}
+        {% include "/popups/deleting/popup_delete.html.twig" %}
 
-        {% include "/popups/media_expanded_miniature_popup/media_expanded_miniature_popup.html.twig" %}
+        {% include "/popups/duplicating_media/popup_duplicating_media.html.twig" %}
 
     </div>
 {% endblock %}

@@ -9,8 +9,10 @@ class MediaDeletingButtonHandler extends SubTool
         super();
         this.__name = this.constructor.name;
         this.__mediasToDelete = [];
-        this.__$container = $(".popup_delete_medias_container");
-        this.__$location = $(".popup_delete_medias");
+        this.__$container = $(".popup_delete_container");
+        this.__$location = $(".popup_delete");
+        this.__btnLocation = "";
+        this.__mediaType = "";
     }
 
     onClickOnDeletingButtonShowPopup(active)
@@ -20,18 +22,30 @@ class MediaDeletingButtonHandler extends SubTool
         {
             $('.delete_media_btn').on('click.onClickOnDeletingButtonShowPopup', e => {
 
-                const mediaName = $('.media_name_container .media_name').text() || $('.media_name_container .media_name').val();
-
-                $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.media_to_delete_list_container .media_to_delete_list') );
+                let mediaToDeleteNames = [];
 
                 let mediaId = null;
 
                 if( $('.medias_list_container').length > 0 )
                 {
 
+                    this.__btnLocation = "mediatheque";
+
                     this.__parent.getMediasContainer().find('.select_media_input_container .select_media_input:checked').each( (index, input) => {
 
-                        mediaId = $(input).parents('.card').attr('id').replace('media_', '');
+                        if($(input).parents('.card').hasClass('synchro'))
+                        {
+                            this.__mediaType = "synchro";
+                            mediaId = $(input).parents('.card').attr('id').replace('card_', '');
+                            mediaToDeleteNames.push( $(input).parents('.card').find('.synchro_name_container .synchro_name').text() );
+                        }
+                        else
+                        {
+                            this.__mediaType = "media";
+                            mediaId = $(input).parents('.card').attr('id').replace('card_', '');
+                            mediaToDeleteNames.push( $(input).parents('.card').find('.media_name_container .media_name').text() );
+                        }
+
                         this.__mediasToDelete.push({ id: mediaId });
 
                     } )
@@ -39,9 +53,21 @@ class MediaDeletingButtonHandler extends SubTool
                 }
                 else
                 {
+
+                    this.__btnLocation = "editPage";
+
+                    mediaToDeleteNames.push( $('.media_name_container .media_name').val() );
                     mediaId = $('.media_miniature_container').data('media_id');
                     this.__mediasToDelete.push({ id: mediaId });
                 }
+
+                //console.log(mediaToDeleteNames); debugger;
+
+                mediaToDeleteNames.forEach( mediaName => {
+
+                    $(`<li>${mediaName}</li>`).appendTo( this.__$location.find('.delete_list_container .delete_list') );
+
+                } );
 
                 this.__$container.addClass('is_open');
 
@@ -59,45 +85,72 @@ class MediaDeletingButtonHandler extends SubTool
     {
         if(active)
         {
-            this.__$location.find('.media_deleting_confirmation_btn').on('click.onClickOnConfirmationButtonDeleteMedia', e => {
+            this.__$location.find('.deleting_confirmation_btn').on('click.onClickOnConfirmationButtonDeleteMedia', e => {
 
                 let mediaDeleted = 0;
                 let mediasToDeleteNumber = this.__mediasToDelete.length;
 
-                $('.popup_loading_container').css({ 'z-index': 100000 }).addClass('is_open');
+                super.changeLoadingPopupText("Suppression du ou des média(s)...");
+                super.showLoadingPopup();
 
-                this.__mediasToDelete.forEach( (mediaToDelete) => {
+                this.__mediasToDelete.forEach( (mediaToDelete, index) => {
 
                     const mediaId = mediaToDelete.id;
 
+                    //super.showLoadingPopup();
+
                     $.ajax({
-                       url: `/remove/media/${mediaId}`,
-                        type: "POST",
-                        data: {},
-                        success: (response) => {
+                       url: (this.__mediaType === "media") ? `/remove/media/${mediaId}` : `/remove/synchro/${mediaId}`,
+                       type: "POST",
+                       data: {},
+                       success: (response) => {
 
-                           $(`#media_${mediaId}`).remove();
-                           mediaDeleted++;
+                           if(response.status === "200 OK")
+                           {
 
-                            if(mediaDeleted === mediasToDeleteNumber)
-                            {
+                               if(this.__btnLocation === "editPage")
+                                   location.href = "/mediatheque/medias";
 
-                                $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
+                               else
+                               {
 
-                                this.resetPopup();
+                                   $(`#card_${mediaId}`).remove();
 
-                                this.__$container.removeClass('is_open');
-                            }
+                                   mediaDeleted++;
+
+                                   if(mediaDeleted === mediasToDeleteNumber)
+                                   {
+
+                                       this.resetPopup();
+
+                                       this.__$container.removeClass('is_open');
+
+                                       if(this.__parent.getMediasContainer().find(".select_media_input:checked").length === 0)
+                                           $('.media_action_btn').attr('disabled', true);
+
+                                   }
+
+                               }
+
+                           }
+                           else
+                           {
+                               console.log(response); debugger
+                               alert(`Erreur durant la suppression du media n°${mediaId}`)
+                           }
 
                         },
-                        error: (response, status, error) => {
+                       error: (response, status, error) => {
 
-                            $('.popup_loading_container').css({ 'z-index': '' }).removeClass('is_open');
-
-                            console.error(response); //debugger
-                            alert(`Erreur durant la suppression du media '${mediaId}'`)
+                            console.error(response); debugger
+                            alert(`Erreur durant la suppression du media n°${mediaId}`)
 
                         },
+                       complete: () => {
+
+                           super.hideLoadingPopup();
+
+                        }
                     });
 
                 } );
@@ -106,7 +159,7 @@ class MediaDeletingButtonHandler extends SubTool
         }
         else
         {
-            this.__$location.find('.media_deleting_confirmation_btn').off('click.onClickOnConfirmationButtonDeleteMedia');
+            this.__$location.find('.deleting_confirmation_btn').off('click.onClickOnConfirmationButtonDeleteMedia');
         }
 
         return this;
@@ -136,7 +189,7 @@ class MediaDeletingButtonHandler extends SubTool
     resetPopup()
     {
         this.__mediasToDelete = [];
-        this.__$location.find('.media_to_delete_list_container .media_to_delete_list').empty();
+        this.__$location.find('.delete_list_container .delete_list').empty();
     }
 
 

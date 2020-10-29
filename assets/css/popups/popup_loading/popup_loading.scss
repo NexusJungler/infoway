@@ -1,6 +1,6 @@
 .popup_loading_container{
   &.is_open{
-
+    z-index: 1000000;
     .popup{
 
       height: 30%;

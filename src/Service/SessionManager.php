@@ -61,19 +61,6 @@ class SessionManager
         if(is_null($this->get($name)))
             throw new NoSuchIndexException(sprintf("Error ! Cause : session variable '%s' not found !", $name));
 
-        // if session variable is array
-        if(is_array($this->get($name)))
-        {
-
-            $values = $this->addMissingKeysInArray($name, $values);
-
-            // la methode replace supprime certaines variable de la session !!
-            /*$this->__session->replace([
-                $name => $values
-            ]);*/
-
-        }
-
         $this->remove($name);
         $this->set($name, $values);
 

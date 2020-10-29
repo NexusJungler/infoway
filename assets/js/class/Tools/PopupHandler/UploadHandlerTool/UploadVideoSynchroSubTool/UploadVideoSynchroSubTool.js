@@ -2,8 +2,9 @@ import ParentTool from "../../../ParentTool";
 import SubTool from "../../../SubTool";
 import Synchro from "../../../../objects/Media/Video/Synchro/Synchro";
 import SynchroElement from "../../../../objects/Media/Video/Synchro/SynchroElement";
+import UploadHandlerSubTool from "../UploadHandlerSubTool";
 
-class UploadVideoSynchroSubTool extends SubTool {
+class UploadVideoSynchroSubTool extends UploadHandlerSubTool {
 
     constructor()
     {
@@ -28,6 +29,87 @@ class UploadVideoSynchroSubTool extends SubTool {
 
     }
 
+    initMediaCardPrototype()
+    {
+
+        this.__mediaCardPrototype = `
+            <div class="synchro_container" id="__ID__" data-created_date="__SYNCHRO_CREATED_AT__" data-media_diff_start="__SYNCHRO_DIFF_START__"
+                 data-media_diff_end="__SYNCHRO_DIFF_END__" data-customer="__SYNCHRO_CUSTOMER__" data-products="__SYNCHRO_PRODUCTS_ID__" 
+                 data-criterions="__SYNCHRO_CRITERIONS_ID__" data-categories="__SYNCHRO_CATEGORIES_ID__" data-tags="__SYNCHRO_TAGS_ID__" >
+            
+                <div class="container top">
+            
+                    <div class='left'>
+                    
+                        <div class='select_synchro_input_container'>
+                            <input type='checkbox' class='select_synchro_input'>
+                        </div>
+                        
+                        <div class='synchro_name_container'>
+                            <p class='synchro_name' title="__SYNCHRO_NAME__"> __SYNCHRO_NAME__ </p>
+                        </div>
+                        
+                        <div class='synchro_action_button_container'>
+                            <button type='button' class='synchro_action_button'><i class='fas fa-play synchro_action_button_icon' aria-hidden='true'></i></button>
+                            <button type='button' class='synchro_action_button'><i class='fas fa-pause synchro_action_button_icon' aria-hidden='true'></i></button>
+                            <button type='button' class='synchro_action_button restart_video_btn'><i class='fas fa-step-backward synchro_action_button_icon' aria-hidden='true'></i></button>
+                            <button type='button' class='synchro_action_button drag_video_btn'><i class='fas fa-arrows-alt' aria-hidden='true'></i></button>
+                        </div>
+                        
+                    </div>
+            
+                    <div class='right'>
+                    
+                        <div class='media_actions_shortcuts_container'>
+            
+                            <div class='shortcut shortcut_diff_date_modification '>
+                                <i class='far fa-clock' aria-hidden='true'></i>
+                            </div>
+            
+                            <div class='shortcut'>
+                                <i class='fas fa-euro-sign' aria-hidden='true'></i>
+                            </div>
+            
+                            <div class='shortcut'>
+                                <i class='fas fa-link shortcut_product_association' aria-hidden='true'></i>
+                            </div>
+            
+                            <div class='shortcut'>
+                                <i class='fas fa-spinner' aria-hidden='true'></i>
+                            </div>
+            
+                        </div>
+                        
+                    </div>
+            
+                </div>
+            
+                <div class="container middle">
+            
+                    <div class="synchro_elemens_container">
+                        
+                    </div>
+                    
+                </div>
+            
+                <div class="container bottom">
+            
+                    <div class="synchro_criterions_container">
+
+                    </div>
+            
+                    <div class="synchro_tags_container">
+
+                    </div>
+            
+                </div>
+            
+            </div>`;
+
+        return this;
+
+    }
+
     /**
      * @param {object} element
      * @returns {UploadVideoSynchroSubTool}
@@ -43,7 +125,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         {
             //console.log(lastItem); debugger
 
-            // par défaut la position est à 0
+            // par défaut la position est à 1
             // on incremente la position de l'element si la position est déjà utilisé par le dernier synchroElement dans la liste
             if(lastItem.getPosition() === synchroElement.getPosition())
                 synchroElement.setPosition( synchroElement.getPosition() +1 );
@@ -52,7 +134,7 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         this.__synchro.addSynchroElement(synchroElement);
 
-        console.log(this.__synchro); debugger
+        console.log(this.__synchro); //debugger
 
         return this;
     }
@@ -69,6 +151,7 @@ class UploadVideoSynchroSubTool extends SubTool {
                     synchroElement.setId( element.id )
                         .setWidth(element.width)
                         .setHeight(element.height)
+                        .setOrientation(element.orientation)
                         .setExtension(element.extension)
                         .setCodec( element.codec );
                 }
@@ -106,7 +189,7 @@ class UploadVideoSynchroSubTool extends SubTool {
         return JSON.stringify(element);
     }
 
-    showSynchros()
+    showMediaEditingResume()
     {
 
         let html =
@@ -167,6 +250,36 @@ class UploadVideoSynchroSubTool extends SubTool {
 
         html += "</div></form></div>";
 
+        let associatedTags = "", associatedProducts = "", associatedCriterions = "";
+
+        this.__$location.find('.step_2 tr').each( (index, element) => {
+
+            $(element).find(".associated_tags_container input[type='checkbox']:checked").each( (index, input) => {
+
+                let tagName = $(`label[for='${ $(input).attr('id') }']`).text();
+                if(tagName !== "" && (typeof tagName !== "undefined") && associatedTags.indexOf(tagName) === -1 )
+                {
+                    associatedTags += `<p class="tag container-tags">
+                                            <span class="mini-cercle" style="${ $(input).data('style') }"></span>
+                                            <span class="current-tags-name">${ tagName }</span>
+                                       </p>`;
+                }
+
+            } )
+
+            $(element).find(".associated_products_container input[type='checkbox']:checked").each( (index, input) => {
+
+                let productName = $(`label[for='${ $(input).attr('id') }']`).text();
+                if(productName !== "" && (typeof productName !== "undefined") && associatedProducts.indexOf(productName) === -1)
+                {
+                    associatedProducts += `<span> ${ productName } </span>`;
+                    associatedCriterions += $(input).data('criterions');
+                }
+
+            } )
+
+        } )
+
         html += `
         
             <div class="bottom">
@@ -186,9 +299,9 @@ class UploadVideoSynchroSubTool extends SubTool {
                         <tbody>
         
                             <tr>
-                                <td class="synchro_criterions_container"></td>
-                                <td class="synchro_tags_container"></td>
-                                <td class="synchro_products_container"></td>
+                                <td class="synchro_criterions_container"> ${ (associatedCriterions) ? associatedCriterions : "Aucun critère(s)" } </td>
+                                <td class="synchro_tags_container"> ${ (associatedTags) ? associatedTags : "Aucun tag(s)" } </td>
+                                <td class="synchro_products_container"> ${ (associatedProducts) ? associatedProducts : "Aucun produit(s)" } </td>
                             </tr>
         
                         </tbody>
@@ -209,6 +322,68 @@ class UploadVideoSynchroSubTool extends SubTool {
             $('.save_synchro_edits_button').attr('disabled', true);
 
         return this;
+
+    }
+
+    showMediaInfoForEdit(videoSynchroInfos)
+    {
+
+        let now = new Date();
+        let month = (now.getMonth() + 1);
+        month = (month < 10) ? '0' + month : month;
+        let day = (now.getDate() < 10 ) ? '0' + now.getDate() : now.getDate();
+        let year = now.getFullYear();
+
+        videoSynchroInfos.forEach( (element) => {
+
+            let html = `<td> <p title="${ element.fileName }"><i class="fas fa-trash-alt cancel-upload" aria-hidden="true"></i> ${ element.fileName }</p> </td>
+                <td>
+                    <progress class="progress_bar" id="progress_${ element.index }" max="100" value="100"></progress>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </td>
+                <td> 
+                    ${ super.getMediaPreview(element) } 
+                    <i class="fas fa-expand-alt show_expanded_miniature" data-media_id="${ element.id }" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <span>${element.extension}</span> <br> <span>${element.width} * ${element.height} px</span> <br> <span>${ (element.fileType === 'image') ? element.dpi + ' dpi' :  element.codec}</span>
+                </td>
+                <td class="media_name_container"> 
+                    <input type="hidden" class="media_id" name="${ $('.step_2 form').attr('name') }[medias][${element.index}][id]" value="${ element.id }"> 
+                    <span class="error hidden"></span> <br>
+                    <input type="text" name="${ $('.step_2 form').attr('name') }[medias][${element.index}][name]" class="form_input media_name" title="${ element.fileNameWithoutExtension }" placeholder="Nom du media" value="${element.fileNameWithoutExtension}" required> </td>
+                <td class="media_diff_date_container"> 
+                    <div class="diff_start_container">
+                        <span class="error hidden"></span> <br> 
+                        <label for="media_${element.index}_diff_start">Du</label>
+                        <input type="date" name="${ $('.step_2 form').attr('name') }[medias][${element.index}][diffusionStart]" id="media_${element.index}_diff_start" class="diffusion_dates start form_input" value="${year}-${month}-${day}">
+                   </div>
+
+                   <div class="diff_end_container">
+                        <span class="error hidden"></span> <br> 
+                        <label for="media_${element.index}_diff_end">Au</label>
+                        <input type="date" name="${ $('.step_2 form').attr('name') }[medias][${element.index}][diffusionEnd]" id="media_${element.index}_diff_end" class="diffusion_dates end form_input" min="${year}-${month}-${day}" value="${year + 10}-${month}-${day}">
+                   </div>
+                </td>
+                <td class="associated_criterions_container">
+                
+                </td>
+                <td class="tags_affectation_container"> 
+                    <button type="button" class="btn tag_association_btn association_btn">Associer tags</button>
+                    <div class="associated_tags_container">
+                        ${ this.__parent.buildAssociationInputsHtml('tags', element.index) }
+                    </div> 
+                </td>
+                <td class="products_affectation_container"> 
+                    <button type="button" class="btn product_association_btn association_btn">Associer produits</button>
+                    <div class="associated_products_container">
+                        ${ this.__parent.buildAssociationInputsHtml('products', element.index) }
+                    </div> 
+                </td>`;
+
+            this.__$location.find(`#upload_${element.index}`).html(html)
+
+        } )
 
     }
 
@@ -718,7 +893,10 @@ class UploadVideoSynchroSubTool extends SubTool {
                             }
                             else
                             {
-                                $('#synchro_edit_form .synchro_id').val(response.synchro_infos.synchro_id);
+                                $('#synchro_edit_form .synchro_id').val(response.synchroInfos.id);
+
+                                this.buildMediaCard(response);
+
                                 alert("OK !");
                             }
 
@@ -748,6 +926,82 @@ class UploadVideoSynchroSubTool extends SubTool {
         }
 
         return this;
+    }
+
+    buildMediaCard(newSynchroInfos)
+    {
+
+        const synchroInfos = newSynchroInfos.synchroInfos;
+        const synchroElementsPreviews = newSynchroInfos.synchroElementsPreviews;
+        let synchroCard = this.__mediaCardPrototype;
+
+        synchroCard = synchroCard.replace(/__ID__/gi, "card_" + synchroInfos.id);
+        synchroCard = synchroCard.replace(/__SYNCHRO_CREATED_AT__/gi, synchroInfos.createdAt);
+        synchroCard = synchroCard.replace(/__SYNCHRO_DIFF_START__/gi, synchroInfos.diffStart);
+        synchroCard = synchroCard.replace(/__SYNCHRO_DIFF_END__/gi, synchroInfos.diffEnd);
+        synchroCard = synchroCard.replace(/__SYNCHRO_CUSTOMER__/gi, synchroInfos.customer);
+        synchroCard = synchroCard.replace(/__SYNCHRO_PRODUCTS_ID__/gi, (synchroInfos.products.length > 0) ? synchroInfos.products.join(', ') : "none");
+        synchroCard = synchroCard.replace(/__SYNCHRO_CRITERIONS_ID__/gi, (synchroInfos.criterions.length > 0) ? synchroInfos.criterions.join(', ') : "none");
+        synchroCard = synchroCard.replace(/__SYNCHRO_CATEGORIES_ID__/gi, (synchroInfos.categories.length > 0) ? synchroInfos.categories.join(', ') : "none");
+        synchroCard = synchroCard.replace(/__SYNCHRO_TAGS_ID__/gi, (synchroInfos.tags.length > 0) ? synchroInfos.tags.join(', ') : "none");
+        synchroCard = synchroCard.replace(/__SYNCHRO_NAME__/gi, synchroInfos.name);
+
+        synchroCard = $(synchroCard);
+
+        synchroElementsPreviews.forEach( (synchroElementPreview) => {
+
+            $(synchroElementPreview).appendTo( synchroCard.find('.synchro_elemens_container') );
+
+        } )
+
+        if( $(".medias_list_container").find(`#card_${ synchroInfos.id }`).length === 0 )
+            synchroCard.appendTo( $(".medias_list_container") );
+
+        else
+            $(".medias_list_container").find(`#card_${ synchroInfos.id }`).replaceWith( synchroCard );
+
+    }
+
+    notifyServerToDeleteSynchroElements()
+    {
+
+        let ids = this.__synchro.getSynchroElements().map( (synchroElement) => synchroElement.getId() );
+
+        ids = ids.filter( (id) => id !== null )
+
+        //console.log(ids); debugger
+
+        if(ids.length > 0)
+        {
+
+            super.changeLoadingPopupText( "Suppression des medias..." );
+            super.showLoadingPopup();
+
+            $.ajax({
+                url: `/remove/multiple/medias`,
+                type: "POST",
+                data: { mediasToDelete:  ids },
+                success: (response) => {
+
+                    if(response.error.length > 0)
+                    {
+                        console.error(`Error during deleting media with ids : ${ response.error.join(', ') }`);
+                        debugger;
+                    }
+
+                },
+                error: (response, status, error) => {
+                    debugger
+                },
+                complete: () => {
+
+                    super.hideLoadingPopup();
+
+                }
+            });
+
+        }
+
     }
 
     enable()

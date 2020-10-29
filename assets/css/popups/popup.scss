@@ -213,7 +213,8 @@
 }
 
 // import popup children css
-@import "popup_delete_media/popup_delete_media";
+@import "popup_delete/popup_delete";
+@import "popup_duplicate_media/popup_duplicate_media";
 @import "popup_loading/popup_loading";
 @import "popup_media_info_sheet/popup_media_info_sheet";
 @import "popup_media_waiting_incrustation/popup_media_waiting_incrustation";
@@ -221,6 +222,6 @@
 @import "popup_association/popup_association";
 @import "popup_association/product_association/popup_product_association";
 @import "popup_association/tag_association/popup_tag_association";
-@import "popup_media_remplacement/remplacement_basic/popup_media_remplacement_basic";
-//@import "popup_media_expanded_miniature/popup_media_expanded_miniature";
+@import "popup_media_remplacement/popup_media_remplacement";
+@import "popup_media_expanded_miniature/popup_media_expanded_miniature";
 @import "popup_upload/popup_upload";

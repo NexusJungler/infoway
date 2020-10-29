@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Customer\VideoRepository")
  */
-class Video extends Media
+class Video extends MediaDiffusable
 {
     /**
      * @ORM\Column(type="string", length=255)

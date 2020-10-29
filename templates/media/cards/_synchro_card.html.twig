@@ -1,0 +1,166 @@
+{% for synchro in synchros %}
+
+    <div class="synchro_container synchro card " id="card_{{ synchro.id }}" data-media_type="synchro" data-created_date="{{ synchro.createdAt }}" data-media_diff_start="{{ synchro.diffusionStart }}" data-orientation="{{ synchro.orientation | lower }}"
+         data-media_diff_end="{{ synchro.diffusionEnd }}" data-customer="{{ synchro.customer }}" data-products="{{ (synchro.productIds is not empty) ? synchro.productIds|join(', ') : 'none' }}"
+         data-criterions="{{ (synchro.criterionIds is not empty) ? synchro.criterionIds|join(', ') : 'none' }}" data-categories="{{ (synchro.categorieIds is not empty) ? synchro.categorieIds|join(', ') : 'none' }}"
+         data-tags="{{ (synchro.tagIds is not empty) ? synchro.tagIds|join(', ') : 'none' }}">
+
+        <div class="container top">
+
+            <div class="left">
+
+                <div class="select_media_input_container">
+                    <input type="checkbox" class="select_media_input">
+                </div>
+
+                <div class="synchro_name_container">
+                    <p class="synchro_name"> {{ synchro.name }} </p>
+                </div>
+
+                <div class="synchro_action_button_container">
+                    <button type="button" class="synchro_action_button"><i class="fas fa-play synchro_action_button_icon" aria-hidden="true"></i></button>
+                    <button type="button" class="synchro_action_button"><i class="fas fa-pause synchro_action_button_icon" aria-hidden="true"></i></button>
+                    <button type="button" class="synchro_action_button restart_video_btn"><i class="fas fa-step-backward synchro_action_button_icon" aria-hidden="true"></i></button>
+{#                    <button type="button" class="synchro_action_button drag_video_btn"><i class="fas fa-arrows-alt" aria-hidden="true"></i></button>#}
+                </div>
+
+            </div>
+
+            <div class="right">
+
+                <div class="media_actions_shortcuts_container">
+
+                    <div class="shortcut shortcut_diff_date_modification {% if synchro.diffusionEnd | date('d-m-Y') | get_date_diff_from_now < 0 or synchro.diffusionEnd | date('d-m-Y') | get_date_diff_from_now <= 14 %}alert_date{% endif %}">
+                        <i class="far fa-clock" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="shortcut">
+                        <i class="fas fa-euro-sign" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="shortcut">
+                        <i class="fas fa-link shortcut_product_association" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="shortcut">
+                        <i class="fas fa-spinner" aria-hidden="true"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container middle">
+
+{#            <div class="synchro_elements_container ">#}
+
+{#                {% for synchroElement in synchro.synchroElements %}#}
+
+{#                    {% if synchroElement.lowMiniatureExist is same as(true) %}#}
+
+{#                        <div class="synchro_element media_{{ synchroElement.orientation | lower }}" data-id="{{ synchroElement.id }}" data-file_type="video"  >#}
+{#                            <video class="media_{{ synchroElement.orientation | lower }}_video">#}
+{#                                <source src="/miniatures/{{ synchro.customer }}/video/sync/low/{{ synchroElement.id }}.mp4" type="video/mp4">#}
+{#                            </video>#}
+{#                        </div>#}
+
+
+{#                    {% else %}#}
+
+{#                        <img class="media_miniature miniature_video" src="/build/images/no-available-image.png" alt="/build/images/no-available-image.png">#}
+
+{#                    {% endif %}#}
+
+{#                {% endfor %}#}
+
+{#            </div>#}
+            <div class="synchro_elements_container ">
+
+
+
+                <div class="synchro_element media_horizontal" data-id="27" data-file_type="video">
+                    <video class="media_horizontal_video">
+                        <source src="/miniatures/kfc/video/sync/low/27.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="synchro_element media_horizontal" data-id="27" data-file_type="video">
+                    <video class="media_horizontal_video">
+                        <source src="/miniatures/kfc/video/sync/low/27.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+
+
+{#                <div class="synchro_element media_horizontal" data-id="28" data-file_type="video">#}
+{#                    <video class="media_horizontal_video">#}
+{#                        <source src="/miniatures/kfc/video/sync/low/28.mp4" type="video/mp4">#}
+{#                    </video>#}
+{#                </div>#}
+{#                <div class="synchro_element media_horizontal" data-id="28" data-file_type="video">#}
+{#                    <video class="media_horizontal_video">#}
+{#                        <source src="/miniatures/kfc/video/sync/low/28.mp4" type="video/mp4">#}
+{#                    </video>#}
+{#                </div>#}
+
+
+            </div>
+
+        </div>
+
+        <div class="container bottom">
+
+            <div class="media_associated_items_container">
+
+                <div class="synchro_criterions_container associated_item">
+
+                    {% if synchro.products is not empty %}
+
+                        {% for product in synchro.products %}
+
+                            {% for criterion in product.criterions %}
+
+                                <p class="criterion"><span></span>{{ criterion.name }}</p>
+
+                            {% endfor%}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 critères </p>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="synchro_tags_container associated_item">
+
+                    {% if synchro.tags is not empty %}
+
+                        {% for tag in synchro.tags %}
+
+                            <p class="tag container-tags">
+                                <span class="mini-cercle" style="background: {{tag.color}};"></span>
+                                <span class="current-tags-name">{{ tag.name }}</span>
+                            </p>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>0 tags </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endfor %}

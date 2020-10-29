@@ -59,7 +59,7 @@
 
         <div class="header__block--right">
             <div class="clock__all">
-                <div class="clock-container" {% if location is defined %} data-city="{{ location.city }}" data-timezone="{{ location.timezone }}" data-date_format="{{ location.date_format }}" data-clock_format="{{ location.clock_format }}" {% endif %}>
+                <div class="clock-container" {#{% if location is defined %} data-city="{{ location.city }}" data-timezone="{{ location.timezone }}" data-date_format="{{ location.date_format }}" data-clock_format="{{ location.clock_format }}" {% endif %}#}>
                 </div>
 
                 <i class="arrow-down" id="showTimeZoneList"></i>

@@ -1,4 +1,7 @@
 @import "media_list";
+@import "media_synchro";
+@import "media_thematic";
+
 
 .media-show{
 	font-family: "Barlow", serif;
@@ -306,9 +309,42 @@
 }
 
 /* media filter categories */
+
+.filters_by_associated_data_item{
+    .display-content-down{
+        .product-select-col{
+            display: flex;
+            label{
+                font-size: 1.5rem;
+                margin-left: 0.5rem;
+            }
+        }
+        .container-input{
+            .container-rdo {
+                position: relative;
+                display: block;
+                height: 1.5rem;
+                width: 1.5rem;
+                left: 0;
+                top: 0.5rem;
+                &:after {
+                    width: 1.1rem;
+                    height: 1.1rem;
+                    border-radius: 0.3rem;
+                    background: #53B3C7;
+                }
+            }
+        }
+    }
+}
+
+
 .media-show_container{
     margin-top: 4rem;
     margin-bottom: 4rem;
+
+
+
 	.filters_by_associated_data_container{
 		.filter_by_categories_container,
         .filter_by_products_container{
@@ -334,6 +370,9 @@
             position: relative;
             top: -0.4rem;
             .display-content-poste{
+                .display-content-down{
+                    left: -2rem;
+                }
                 .drop-btn{
                     width: 12rem;
                     .drop-btn-icone{
@@ -354,12 +393,24 @@
                     }
                 }
             }
+            .filter_by_criterions{
+                .container-input{
+                    .container-rdo{
+                        left: 0;
+
+                    }
+                }
+            }
         }
+
         .filter_by_tags_container{
             margin-left: 2rem;
             position: relative;
             top: -0.4rem;
             .display-content-poste{
+                .display-content-down{
+                    left: -2rem;
+                }
                 .drop-btn{
                     width: 12rem;
                     .drop-btn-icone{
@@ -377,6 +428,13 @@
                     &:after {
                         width: 1.1rem;
                         height: 1.1rem;
+                    }
+                }
+            }
+            .display-content-down{
+                .container-input{
+                    .container-rdo{
+                        left: -1rem;
                     }
                 }
             }

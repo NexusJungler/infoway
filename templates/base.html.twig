@@ -13,14 +13,11 @@
             <link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             {{ encore_entry_link_tags('app') }}
-
-            {#<link href="https://file.myfontastic.com/FVqhjvFpRBCZQjWy3VpicD/icons.css" rel="stylesheet">#}
-            {# <link href="node_modules/select2/dist/css/select2.min.css" rel="stylesheet" /> #}
             {#{{ encore_entry_link_tags('modal_message') }}#}
         {% endblock %}
     </head>
 
-    <body>
+    <body class="scrollbar">
 
         {#{% if (message is defined) and (message is not null) %}
             <div style="display: none" id="message" data-message="{{ message }}"></div>
@@ -39,18 +36,18 @@
                     <nav class="nav">
                         <ul class="nav-menu"> 
                             <li class="nav__menu-home active">
-                                <a href="/" class=""><i class="icon icon-picto-accueil"></i></a>
+                                <a href="/" class=""><i class="fas fa-home"></i></a>
                             </li>
                             <li class="nav-menu-hover">
-                                <a href="{{ path('customers_new') }}" ><span class="nav-menu-title">Configuration</span><i class="icon icon-picto-nav-sites"></i></a>
-
+                                <a href="{{ path('customers_new') }}" ><span class="nav-menu-title">Configuration</span>
+                                    <i class="fas fa-sliders-h"></i>
+                                </a>
                                 <ul class="nav-sous-menu">
                                     <li><a href="{{ path('customers_new') }}"><span> Enseignes </span></a></li>
                                     <li><a href="{{ path('users:view') }}"><span> Utilisateurs </span></a></li>
                                     <li><a href="{{ path('criterions_lists_index') }}"><span> Critères </span></a></li>
                                     <li><a href="{{ path('tags_index') }}"><span> TAGS </span></a></li>
                                 </ul>
-
                                 <ul class="nav-sous-menu-mobile">
                                     <li><a href="{{ path('customers_new') }}"><span class="nav-mobile-title"> Configuration </span></a></li>
                                     <li><a href="{{ path('customers_new') }}" ><span> Enseignes </span></a></li>
@@ -58,28 +55,22 @@
                                     <li><a href="{{ path('criterions_lists_index') }}"><span> Critères </span></a></li>
                                     <li><a href="{{ path('tags_index') }}"><span> TAGS </span></a></li>
                                 </ul>
-
                             </li>
 
                             <li class="nav-menu-hover">
-                                <a href="/site"><span class="nav-menu-title">Sites</span><i class="icon icon-picto-nav-sites"></i></a>
-
-                                {#<ul class="nav-sous-menu">#}
-                                    {#<li><a href=""><span>Prix</span></a></li>#}
-                                    {#<li><a href=""><span>Playlist/Room</span></a></li>#}
-                                    {#<li><a href=""><span>Info Ecrans</span></a></li>#}
-                                {#</ul>#}
-
+                                <a href="/site"><span class="nav-menu-title">Sites</span>
+                                    <i class="fas fa-store-alt"></i>
+                                </a>
                                 <ul class="nav-sous-menu-mobile">
                                     <li><a href="/site"><span class="nav-mobile-title">Sites</span></a></li>
-                                    {#<li><a href=""><span >Prix</span></a></li>#}
-                                    {#<li><a href=""><span> Playlist/Room</span></a></li>#}
-                                    {#<li><a href=""><span >Info Ecrans</span></a></li>#}
                                 </ul>
                             </li>
 
                             <li class="nav-menu-hover">
-                                <a href="{{ path('products::show') }}"><span class="nav-menu-title">Produits</span><i class="icon icon-picto-produit"></i></a>
+                                <a href="{{ path('products::show') }}">
+                                    <span class="nav-menu-title">Produits</span>
+                                    <i class="fas fa-parking"></i>
+                                </a>
 
                                 <ul class="nav-sous-menu">
                                     <li><a href="{{ path('products::show') }}"><span> Produits </span></a></li>
@@ -89,8 +80,9 @@
                                     <li><a href="{{ path('allergens::show') }}"><span> Allergènes </span></a></li>
                                 </ul>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="{{ path('products::show') }}"><span class="nav-mobile-title">Produits</span></a></li>
-                                    {#<li><a href="{{ path('products::show') }}"><span> Produits </span></a></li>#}
+                                    <li><a href="{{ path('products::show') }}">
+                                            <span class="nav-mobile-title">Produits</span></a>
+                                    </li>
                                     <li><a href="{{ path('categories::show') }}"><span> Catégories</span></a></li>
                                     <li><a href="{{ path('pricesfactories::show') }}"><span> Prix </span></a></li>
                                     <li><a href="{{ path('pricesfactories::show') }}"><span> Rupture </span></a></li>
@@ -98,7 +90,9 @@
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">
-                                <a href="/programming"><span class="nav-menu-title">Programmation</span><i class="icon icon-picto-nav-calendrier"></i></a>
+                                <a href="/programming"><span class="nav-menu-title">Programmation</span>
+                                    <i class="far fa-calendar-alt"></i>
+                                </a>
                                 <ul class="nav-sous-menu">
                                     <li><a href=""><span >Prix</span></a></li>
                                     <li><a href=""><span> Playlist/Room</span></a></li>
@@ -112,18 +106,65 @@
                                 </ul>
                             </li >
                             <li class="nav-menu-hover">
-                                <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias'}) }}"><span class="nav-menu-title">Médiathèque</span><i class="icon icon-picto-mediathque"></i></a>
+                                <a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias'}) }}">
+                                    <span class="nav-menu-title">Médiathèque</span>
+                                    <i class="fas fa-images"></i>
+                                </a>
                                 <ul class="nav-sous-menu-mobile">
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias', page: 1}) }}"><span class="nav-mobile-title">Medias</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_synchro', page: 1}) }}"><span class="nav-mobile-title">Vidéos Synchro</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_thematic', page: 1}) }}"><span class="nav-mobile-title">Vidéos Thématique</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'element_graphic', page: 1}) }}"><span class="nav-mobile-title">Éléments graphiques</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'template', page: 1}) }}"><span class="nav-mobile-title">Templates</span></a></li>
-                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'incruste', page: 1}) }}"><span class="nav-mobile-title">Incrustes</span></a></li>
+                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'medias', page: 1}) }}">
+                                            <span class="nav-mobile-title">Medias</span></a>
+                                    </li>
+                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_synchro', page: 1}) }}">
+                                            <span class="nav-mobile-title">Vidéos Synchro</span></a>
+                                    </li>
+                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'video_thematic', page: 1}) }}">
+                                            <span class="nav-mobile-title">Vidéos Thématique</span></a>
+                                    </li>
+                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'element_graphic', page: 1}) }}">
+                                            <span class="nav-mobile-title">Éléments graphiques</span></a>
+                                    </li>
+                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'template', page: 1}) }}">
+                                            <span class="nav-mobile-title">Templates</span></a>
+                                    </li>
+                                    <li><a href="{{ path('media::showMediatheque', {mediasDisplayedType: 'incruste', page: 1}) }}">
+                                            <span class="nav-mobile-title">Incrustes</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-menu-hover">
+                                <a href="/info"><span class="nav-menu-title">Template</span><i class="far fa-address-card"></i></a>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/info"><span class="nav-mobile-title">Template</span></a></li>
                                 </ul>
                             </li>
                             <li class="nav-menu-hover">
-                                <a href="/info"><span class="nav-menu-title">Infos</span><i class="icon icon-picto-infos"></i></a>
+                                <a href="/info">
+                                    <span class="nav-menu-title">Monitoring</span>
+                                    <i class="fas fa-search"></i>
+                                </a>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li><a href="/info"><span class="nav-mobile-title">Monitoring</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-menu-hover">
+                                <a href="/info">
+                                    <span class="nav-menu-title">Ticket</span>
+                                    <i class="fas fa-wrench"></i>
+                                </a>
+                                <ul class="nav-sous-menu-mobile">
+                                    <li>
+                                        <a href="/info"><span class="nav-mobile-title">Ticket</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-menu-hover">
+                                <a href="/info">
+                                    <span class="nav-menu-title">Infos</span>
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
                                 <ul class="nav-sous-menu-mobile">
                                     <li><a href="/info"><span class="nav-mobile-title">Infos</span></a></li>
                                 </ul>

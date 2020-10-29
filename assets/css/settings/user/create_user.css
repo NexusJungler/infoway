@@ -1,0 +1,238 @@
+.tab-create-user {
+  /** Title **/
+  /** FORM CREER UTILISATEUR **/
+  /** TABLE **/ }
+  .tab-create-user .tab-content-title {
+    display: block; }
+    .tab-create-user .tab-content-title::after {
+      content: '';
+      top: 3.8rem;
+      left: 0;
+      width: 100%;
+      border-bottom: 0.2rem solid #4D646D;
+      position: relative;
+      display: block; }
+  .tab-create-user .create-user_container {
+    margin-top: 7rem; }
+  .tab-create-user .create-user_title h3 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    color: #899CA4;
+    letter-spacing: 0; }
+  .tab-create-user .form-content {
+    width: 700px;
+    max-width: 100%;
+    padding-right: 25px; }
+    .tab-create-user .form-content .row .row:first-child {
+      padding-right: 2rem; }
+      .tab-create-user .form-content .row .row:first-child .form-label {
+        width: 45%; }
+    .tab-create-user .form-content .row .input-custome {
+      width: 16.8rem;
+      max-width: 100%;
+      height: 2rem; }
+    .tab-create-user .form-content .row .form-label {
+      width: 21%; }
+    .tab-create-user .form-content .col-email .input-custome,
+    .tab-create-user .form-content .col-phone .input-custome {
+      width: 100%; }
+    .tab-create-user .form-content .col-email {
+      position: relative; }
+      .tab-create-user .form-content .col-email .form-error {
+        position: absolute;
+        bottom: 0;
+        color: red; }
+    .tab-create-user .form-content .error-active {
+      padding-bottom: 15px; }
+  .tab-create-user .select {
+    display: block;
+    position: relative;
+    height: 2rem;
+    width: 100%;
+    opacity: 0.5; }
+    .tab-create-user .select .select-list {
+      height: 2rem;
+      width: 100%;
+      border: 0.06rem solid #C0CCD1;
+      border-radius: 0.4rem;
+      padding: 0.2rem 0.4rem 0.4rem 1rem;
+      font: 1rem 'Barlow', lighter; }
+      .tab-create-user .select .select-list option {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font: 1.0375rem "Barlow", medium; }
+    .tab-create-user .select::before {
+      content: "\f107";
+      font-family: FontAwesome;
+      position: absolute;
+      color: #E3E3E3;
+      top: 0px;
+      right: 0;
+      height: 32px;
+      width: 32px;
+      text-align: center;
+      font-size: 24px;
+      border-radius: 0.3rem;
+      background: #A4B4BB 0% 0% no-repeat padding-box;
+      pointer-events: none; }
+  .tab-create-user .select-active {
+    opacity: 1; }
+  .tab-create-user .form-content-chkbox .row .form-label {
+    width: 15%;
+    max-width: 20%; }
+  .tab-create-user .form-content-chkbox .row .row-chkbox {
+    padding-top: 0.5rem; }
+    .tab-create-user .form-content-chkbox .row .row-chkbox .checkbox {
+      margin-right: 1rem; }
+  .tab-create-user .form-content-table {
+    display: flex; }
+    .tab-create-user .form-content-table .table-titel {
+      font: 28px 'Barlow', medium;
+      margin-bottom: 10px;
+      color: #899CA4;
+      letter-spacing: 0px; }
+    .tab-create-user .form-content-table .table .table-custome {
+      border-radius: 0; }
+      .tab-create-user .form-content-table .table .table-custome .container-chkbox {
+        margin-bottom: 0; }
+      .tab-create-user .form-content-table .table .table-custome .thead-content {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border-radius: 0; }
+        .tab-create-user .form-content-table .table .table-custome .thead-content::after {
+          background: #FFFFFF 0% 0% no-repeat padding-box;
+          border-radius: 0; }
+        .tab-create-user .form-content-table .table .table-custome .thead-content th {
+          color: #899CA4;
+          width: 200px;
+          padding: 0.5rem 0.9rem 0.4rem; }
+          .tab-create-user .form-content-table .table .table-custome .thead-content th:nth-child(2n+2) {
+            background-color: #efefef;
+            color: #306D7C; }
+        .tab-create-user .form-content-table .table .table-custome .thead-content th:first-child {
+          width: 20%; }
+      .tab-create-user .form-content-table .table .table-custome .tbody-content {
+        background-color: #E3E3E3;
+        height: 500px;
+        display: block;
+        overflow: auto; }
+        .tab-create-user .form-content-table .table .table-custome .tbody-content tr td {
+          color: #4D646D;
+          border-right: 0px;
+          width: 200px; }
+          .tab-create-user .form-content-table .table .table-custome .tbody-content tr td .container-chkbox {
+            padding-top: 1px;
+            margin-bottom: 0; }
+          .tab-create-user .form-content-table .table .table-custome .tbody-content tr td:nth-child(2) .container-chkbox {
+            margin-bottom: 10px; }
+        .tab-create-user .form-content-table .table .table-custome .tbody-content tr td:first-child {
+          width: 19%; }
+        .tab-create-user .form-content-table .table .table-custome .tbody-content tr:nth-child(2n+2) {
+          background-color: #C7D0D4; }
+          .tab-create-user .form-content-table .table .table-custome .tbody-content tr:nth-child(2n+2) td .container-chkbox {
+            margin-bottom: 10px; }
+    .tab-create-user .form-content-table .content-table-left {
+      margin-right: 50px;
+      max-width: 680px; }
+      .tab-create-user .form-content-table .content-table-left .table {
+        width: 100%; }
+        .tab-create-user .form-content-table .content-table-left .table .thead-content tr th:first-child {
+          width: 30%;
+          text-align: left; }
+        .tab-create-user .form-content-table .content-table-left .table .thead-content tr th:last-child {
+          width: 100px; }
+        .tab-create-user .form-content-table .content-table-left .table .tbody-content tr {
+          background: #C1C9CC; }
+          .tab-create-user .form-content-table .content-table-left .table .tbody-content tr td {
+            height: 37px;
+            padding: 0.3rem 0.5rem 0.3rem 0.5rem; }
+            .tab-create-user .form-content-table .content-table-left .table .tbody-content tr td:first-child {
+              padding: 0.3rem 0.5rem 0.3rem 0.9rem;
+              width: 29%;
+              text-transform: uppercase; }
+            .tab-create-user .form-content-table .content-table-left .table .tbody-content tr td:nth-child(2) {
+              background: #9BABB2 0% 0% no-repeat padding-box; }
+            .tab-create-user .form-content-table .content-table-left .table .tbody-content tr td:last-child {
+              width: 113px;
+              text-align: center; }
+          .tab-create-user .form-content-table .content-table-left .table .tbody-content tr:nth-child(2) {
+            background-color: #EFEFEF; }
+            .tab-create-user .form-content-table .content-table-left .table .tbody-content tr:nth-child(2) td:nth-child(2) {
+              background: #C0CCD1 0% 0% no-repeat padding-box; }
+        .tab-create-user .form-content-table .content-table-left .table .tbody-content .btn-display-teach {
+          background: transparent linear-gradient(180deg, #306D7C 0%, #18373E 100%) 0% 0% no-repeat padding-box;
+          border-radius: 6px;
+          border: 0;
+          color: white; }
+    .tab-create-user .form-content-table .content-table-right {
+      max-width: 830px; }
+      .tab-create-user .form-content-table .content-table-right .table {
+        width: 100%; }
+        .tab-create-user .form-content-table .content-table-right .table .table-custome .thead-content th {
+          text-align: left; }
+          .tab-create-user .form-content-table .content-table-right .table .table-custome .thead-content th:first-child {
+            width: 15%; }
+          .tab-create-user .form-content-table .content-table-right .table .table-custome .thead-content th:nth-child(2) {
+            width: 90px;
+            background-color: transparent; }
+        .tab-create-user .form-content-table .content-table-right .table .table-custome .tbody-content tr {
+          display: block;
+          height: 37px;
+          background-color: #BAC4C9; }
+          .tab-create-user .form-content-table .content-table-right .table .table-custome .tbody-content tr:nth-child(2) {
+            background-color: #E3E3E3; }
+        .tab-create-user .form-content-table .content-table-right .table .table-custome .tbody-content .current {
+          display: table; }
+        .tab-create-user .form-content-table .content-table-right .table .table-custome .tbody-content td:first-child {
+          padding: 0.3rem 0.5rem 0.3rem 0.9rem;
+          width: 14%; }
+        .tab-create-user .form-content-table .content-table-right .table .table-custome .tbody-content td:nth-child(2) {
+          width: 85px; }
+  .tab-create-user .form-content-btn {
+    text-align: end;
+    margin-top: 30px; }
+  .tab-create-user .input-custome.error {
+    border: 1px solid red; }
+
+/** MEDIA **/
+/** PC **/
+@media (max-width: rem(1250px)) {
+  .tab-create-user .form-content-table {
+    display: block; }
+    .tab-create-user .form-content-table .content-table-left {
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px; }
+    .tab-create-user .form-content-table .content-table-right {
+      max-width: 100%; } }
+@media (max-width: rem(1024px)) {
+  .tab-create-user .form-content-table {
+    display: block; }
+    .tab-create-user .form-content-table .content-table-left {
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px; }
+    .tab-create-user .form-content-table .content-table-right {
+      max-width: 100%; } }
+/* Tablette */
+@media (max-width: rem(900px)) {
+  .tab-create-user .form-content:first-child > .row:first-child {
+    display: block; }
+    .tab-create-user .form-content:first-child > .row:first-child .form-label {
+      width: 21%; }
+    .tab-create-user .form-content:first-child > .row:first-child .input-custome {
+      width: 100%; }
+    .tab-create-user .form-content:first-child > .row:first-child .row:first-child {
+      padding-right: 0rem; }
+      .tab-create-user .form-content:first-child > .row:first-child .row:first-child .form-label {
+        width: 21%; }
+  .tab-create-user .form-content .input-custome {
+    width: 100%; }
+  .tab-create-user .form-content .row-chkbox {
+    padding-left: 5px; }
+    .tab-create-user .form-content .row-chkbox .container-chkbox {
+      padding-right: 12px; }
+    .tab-create-user .form-content .row-chkbox .checkmark-chkbox {
+      top: 2px; } }
+
+/*# sourceMappingURL=create_user.css.map */

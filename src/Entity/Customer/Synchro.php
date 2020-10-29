@@ -2,6 +2,7 @@
 
 namespace App\Entity\Customer;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,12 +25,18 @@ class Synchro
     private $name;
 
     /**
+     * @ORM\Column(type="date", name="created_at")
+     */
+    private $createdAt;
+
+    /**
      * @ORM\ManyToMany(targetEntity="SynchroElement", inversedBy="synchros", orphanRemoval=true)
      */
     private $videos;
 
     public function __construct()
     {
+        $this->createdAt = new DateTime();
         $this->videos = new ArrayCollection();
     }
 
@@ -46,6 +53,18 @@ class Synchro
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

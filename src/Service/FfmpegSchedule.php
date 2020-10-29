@@ -161,7 +161,7 @@ class FfmpegSchedule
 
                 $this->updateTask($task, 'started');
 
-                $taskInfo = [
+                /*$taskInfo = [
                     'fileName' => $taskMediaInfo['name'],
                     'customerName' => $customer_name,
                     'mediaType' => $task->getMediatype(),
@@ -188,7 +188,11 @@ class FfmpegSchedule
                         'position' => $taskMediaInfo['position'],
                     ];
 
-                }
+                }*/
+
+                $taskInfo = $taskMediaInfo;
+                $taskInfo['taskId'] = $task->getId();
+                $taskInfo['customerName'] = $customer_name;
 
                 $videoEncodeManager = new VideoEncodeManager($this->__parameterBag);
                 $videoEncodeManager->encodeMedia($taskInfo);

@@ -1,17 +1,8 @@
 /** SCSS **/
-import '../css/general/reset.scss';
 import '../css/app.scss';
 
-// css
-require('../css/custom-style.css');
-require('../css/class/managers/clockManager.css');
-require('../css/debug.css');
-
-
-import {ClockManager} from "./class/Managers/ClockManager/ClockManager";
 import {Tabmenu} from "./class/Tabmenu/Tabmenu";
 import {Changeimage} from "./class/image/Changeimage";
-import {Checkbox} from "./class/checkbox/checkbox";
 import {Table} from "./class/Table/Table";
 import {Navbar} from "./class/Navbar/Navbar";
 
@@ -58,11 +49,11 @@ form.FormValidate();
 // let chech_box = new Checkbox();
 // chech_box.chech();
 
-const clock= new ClockManager();
-clock.enable();
+/*const clock= new ClockManager();
+clock.enable();*/
 
-const toolBox = new ToolBox();
-toolBox.activeTool("CustomerCreatorHandler");
+/*const toolBox = new ToolBox();
+toolBox.activeTool("CustomerCreatorHandler");*/
 
 $(".enseigne select#enseigne").on("change", e => {
 

@@ -20,7 +20,7 @@ class VideoThematicThematicTheme
     private $id;
 
     /**
-     * @ORM\Column(type="integer", name="video_thematic_id")
+     * @ORM\Column(type="integer", name="video_thematic_id", unique=true)
      */
     private $videoThematicId;
 

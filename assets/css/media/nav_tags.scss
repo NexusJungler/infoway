@@ -1,0 +1,25 @@
+.nav_tags{
+    display: flex;
+    flex-wrap: wrap;
+    height: 2.5rem;
+    overflow: hidden;
+    background-color: #C0CCD1;
+    li{
+        width: 11rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    &.open{
+        height: auto;
+        max-height: 12rem;
+        overflow: auto;
+    }
+}
+
+.open_tags{
+    font-size: 31px;
+    position: absolute;
+    top: -21px;
+    right: 6px;
+}
+

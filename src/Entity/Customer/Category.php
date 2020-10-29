@@ -29,7 +29,7 @@ class Category
     private $note;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", name="created_at")
      */
     private $createdAt;
 
@@ -45,6 +45,7 @@ class Category
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->products = new ArrayCollection();
     }
 
